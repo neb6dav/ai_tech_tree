@@ -1,0 +1,38 @@
+AI Research Tech Tree content and data license
+
+SPDX-License-Identifier: CC-BY-SA-4.0
+
+Except where a record, file, quotation, or notice states otherwise, the
+original atlas prose, annotations, classifications, relationship records,
+review metadata, and knowledge-graph data in this repository are licensed
+under the Creative Commons Attribution-ShareAlike 4.0 International License:
+
+https://creativecommons.org/licenses/by-sa/4.0/
+
+Copyright (c) 2026 @neb6dav and contributors.
+
+Recommended attribution:
+
+  AI Research Tech Tree, created and maintained by @neb6dav, with public
+  contributors, version [VERSION], https://github.com/neb6dav/ai_tech_tree
+
+When sharing or adapting covered material, you must provide appropriate
+credit, link to the license, indicate whether changes were made, and distribute
+adaptations under the same license. No additional restrictions may be applied
+that prevent recipients from exercising the rights granted by the license.
+
+This license does not cover:
+
+- the software and build tooling, which are licensed separately under MIT in
+  LICENSE-CODE;
+- papers, books, abstracts, images, quotations, Wikipedia content, repository
+  records, or other third-party material linked, cited, or reproduced under a
+  separate license, exception, or public-domain status;
+- names, logos, trademarks, or rights of publicity; or
+- material explicitly marked with different rights information.
+
+Facts and bibliographic identifiers may not be protected by copyright in some
+jurisdictions, but this notice does not make a legal determination about any
+particular record. See THIRD_PARTY_NOTICES.md for attribution and rights
+boundaries. The Creative Commons deed and legal code control if this notice
+conflicts with them.

@@ -1,0 +1,2206 @@
+{
+  "schemaVersion": "1.0.0",
+  "layoutVersion": "network-v1",
+  "algorithm": "deterministic-lane-force-v1",
+  "seed": "ai-research-tech-tree-network-v1",
+  "iterations": 260,
+  "sourceDigest": "adba6c674ffbd596402d4fdba9df267d097cf4f2c1ab55b44704d24e6d716357",
+  "nodeCount": 339,
+  "relationshipCount": 711,
+  "coordinateSystem": {
+    "dimensions": 2,
+    "units": "layout",
+    "extent": [
+      -1800,
+      1800
+    ]
+  },
+  "lanes": [
+    {
+      "id": "roots",
+      "label": "ROOTS · MATH, NEURO & CYBERNETICS",
+      "order": 0,
+      "nodeCount": 23,
+      "centroid": {
+        "x": -113.126721,
+        "y": -1041.44031
+      }
+    },
+    {
+      "id": "symbolic",
+      "label": "SYMBOLIC AI & KNOWLEDGE",
+      "order": 1,
+      "nodeCount": 32,
+      "centroid": {
+        "x": 593.794446,
+        "y": -1274.254071
+      }
+    },
+    {
+      "id": "search",
+      "label": "SEARCH, PLANNING & GAMES",
+      "order": 2,
+      "nodeCount": 12,
+      "centroid": {
+        "x": 973.018987,
+        "y": -810.193497
+      }
+    },
+    {
+      "id": "rl",
+      "label": "REINFORCEMENT LEARNING & AGENTS",
+      "order": 3,
+      "nodeCount": 29,
+      "centroid": {
+        "x": 950.000002,
+        "y": -241.554424
+      }
+    },
+    {
+      "id": "neural",
+      "label": "NEURAL ARCHITECTURES",
+      "order": 4,
+      "nodeCount": 30,
+      "centroid": {
+        "x": 1063.078411,
+        "y": 300.588712
+      }
+    },
+    {
+      "id": "training",
+      "label": "TRAINING, SCALE & EFFICIENCY",
+      "order": 5,
+      "nodeCount": 24,
+      "centroid": {
+        "x": 864.057169,
+        "y": 755.341377
+      }
+    },
+    {
+      "id": "language",
+      "label": "LANGUAGE & LLMs",
+      "order": 6,
+      "nodeCount": 38,
+      "centroid": {
+        "x": 458.02272,
+        "y": 978.27705
+      }
+    },
+    {
+      "id": "vision",
+      "label": "VISION & MULTIMODAL",
+      "order": 7,
+      "nodeCount": 15,
+      "centroid": {
+        "x": -94.363036,
+        "y": 1087.257721
+      }
+    },
+    {
+      "id": "generative",
+      "label": "GENERATIVE MEDIA",
+      "order": 8,
+      "nodeCount": 14,
+      "centroid": {
+        "x": -462.796151,
+        "y": 1186.84226
+      }
+    },
+    {
+      "id": "prob",
+      "label": "PROBABILISTIC & STATISTICAL ML",
+      "order": 9,
+      "nodeCount": 21,
+      "centroid": {
+        "x": -899.372624,
+        "y": 893.227965
+      }
+    },
+    {
+      "id": "alt",
+      "label": "EVOLUTIONARY, NEUROMORPHIC & EXOTIC",
+      "order": 10,
+      "nodeCount": 20,
+      "centroid": {
+        "x": -1305.343969,
+        "y": 440.26751
+      }
+    },
+    {
+      "id": "robotics",
+      "label": "ROBOTICS & EMBODIED AI",
+      "order": 11,
+      "nodeCount": 18,
+      "centroid": {
+        "x": -1210.949657,
+        "y": 5.24378
+      }
+    },
+    {
+      "id": "safety",
+      "label": "SAFETY, ALIGNMENT & INTERPRETABILITY",
+      "order": 12,
+      "nodeCount": 31,
+      "centroid": {
+        "x": -1171.645378,
+        "y": -563.089822
+      }
+    },
+    {
+      "id": "systems",
+      "label": "COMPUTE, SYSTEMS & DATA",
+      "order": 13,
+      "nodeCount": 18,
+      "centroid": {
+        "x": -647.533134,
+        "y": -777.767271
+      }
+    },
+    {
+      "id": "science",
+      "label": "AI FOR SCIENCE & APPLICATIONS",
+      "order": 14,
+      "nodeCount": 14,
+      "centroid": {
+        "x": -214.166447,
+        "y": -856.450877
+      }
+    }
+  ],
+  "nodes": [
+    {
+      "id": "a3cppo",
+      "laneId": "rl",
+      "x": 718.318333,
+      "y": -409.055169
+    },
+    {
+      "id": "adaboost",
+      "laneId": "prob",
+      "x": -892.455434,
+      "y": 1257.594871
+    },
+    {
+      "id": "adaline",
+      "laneId": "neural",
+      "x": 1263.690013,
+      "y": 139.172945
+    },
+    {
+      "id": "adam",
+      "laneId": "training",
+      "x": 1149.320839,
+      "y": 1094.077294
+    },
+    {
+      "id": "advexamples",
+      "laneId": "safety",
+      "x": -1028.403841,
+      "y": -420.734707
+    },
+    {
+      "id": "advicetaker",
+      "laneId": "symbolic",
+      "x": 361.384934,
+      "y": -1515.191575
+    },
+    {
+      "id": "agentbench",
+      "laneId": "rl",
+      "x": 413.357451,
+      "y": -245.142599
+    },
+    {
+      "id": "agentsllm",
+      "laneId": "rl",
+      "x": 252.441116,
+      "y": 25.242655
+    },
+    {
+      "id": "aicontrol",
+      "laneId": "safety",
+      "x": -1172.177389,
+      "y": -767.63826
+    },
+    {
+      "id": "aiwinter2",
+      "laneId": "symbolic",
+      "x": 754.882176,
+      "y": -1697.179077
+    },
+    {
+      "id": "aixi",
+      "laneId": "safety",
+      "x": -703.17415,
+      "y": -674.055591
+    },
+    {
+      "id": "alexnet",
+      "laneId": "vision",
+      "x": -95.502439,
+      "y": 504.049727
+    },
+    {
+      "id": "alife",
+      "laneId": "alt",
+      "x": -1441.01013,
+      "y": 760.175094
+    },
+    {
+      "id": "alphachip",
+      "laneId": "systems",
+      "x": -675.697059,
+      "y": -1166.734626
+    },
+    {
+      "id": "alphaevolve",
+      "laneId": "alt",
+      "x": -641.836712,
+      "y": 215.277264
+    },
+    {
+      "id": "alphafold",
+      "laneId": "science",
+      "x": 70.633033,
+      "y": -723.856176
+    },
+    {
+      "id": "alphafold3",
+      "laneId": "science",
+      "x": -220.442002,
+      "y": -676.803099
+    },
+    {
+      "id": "alphago",
+      "laneId": "rl",
+      "x": 1362.738456,
+      "y": -430.404532
+    },
+    {
+      "id": "alphazero",
+      "laneId": "rl",
+      "x": 1097.517364,
+      "y": -512.685062
+    },
+    {
+      "id": "alvinn",
+      "laneId": "robotics",
+      "x": -712.152132,
+      "y": 74.862874
+    },
+    {
+      "id": "ameurisko",
+      "laneId": "symbolic",
+      "x": 879.511322,
+      "y": -1612.48266
+    },
+    {
+      "id": "analogai",
+      "laneId": "alt",
+      "x": -1566.722973,
+      "y": 563.93387
+    },
+    {
+      "id": "asimov",
+      "laneId": "safety",
+      "x": -1740.667938,
+      "y": -463.92601
+    },
+    {
+      "id": "astar",
+      "laneId": "search",
+      "x": 539.969198,
+      "y": -760.369075
+    },
+    {
+      "id": "attention",
+      "laneId": "neural",
+      "x": 1165.856874,
+      "y": 652.209763
+    },
+    {
+      "id": "autoencoders",
+      "laneId": "neural",
+      "x": 804.689827,
+      "y": 779.88096
+    },
+    {
+      "id": "backdoors",
+      "laneId": "safety",
+      "x": -1313.739327,
+      "y": -429.537378
+    },
+    {
+      "id": "backprop",
+      "laneId": "neural",
+      "x": 853.438357,
+      "y": 172.137918
+    },
+    {
+      "id": "bandits",
+      "laneId": "rl",
+      "x": 903.667961,
+      "y": -298.158573
+    },
+    {
+      "id": "batchnorm",
+      "laneId": "training",
+      "x": 1103.091792,
+      "y": 929.949891
+    },
+    {
+      "id": "bayesnets",
+      "laneId": "prob",
+      "x": -1026.455307,
+      "y": 710.479249
+    },
+    {
+      "id": "bayesopt",
+      "laneId": "prob",
+      "x": -715.780735,
+      "y": 370.195396
+    },
+    {
+      "id": "benchmarkcrisis",
+      "laneId": "systems",
+      "x": -573.650256,
+      "y": -491.159099
+    },
+    {
+      "id": "bengio03",
+      "laneId": "language",
+      "x": 855.904034,
+      "y": 1119.09903
+    },
+    {
+      "id": "bert",
+      "laneId": "language",
+      "x": 372.009873,
+      "y": 872.514138
+    },
+    {
+      "id": "bitterlesson",
+      "laneId": "training",
+      "x": 871.524112,
+      "y": 463.508705
+    },
+    {
+      "id": "blackboard",
+      "laneId": "symbolic",
+      "x": 646.435171,
+      "y": -1634.109117
+    },
+    {
+      "id": "boltzmann",
+      "laneId": "neural",
+      "x": 1115.901673,
+      "y": 367.442154
+    },
+    {
+      "id": "bostondynamics",
+      "laneId": "robotics",
+      "x": -1547.520497,
+      "y": -293.32491
+    },
+    {
+      "id": "capsules",
+      "laneId": "neural",
+      "x": 1413.37398,
+      "y": 288.336057
+    },
+    {
+      "id": "catforget",
+      "laneId": "training",
+      "x": 1448.074218,
+      "y": 793.834746
+    },
+    {
+      "id": "causal",
+      "laneId": "prob",
+      "x": -1209.905961,
+      "y": 1142.553437
+    },
+    {
+      "id": "cbr",
+      "laneId": "symbolic",
+      "x": 529.121054,
+      "y": -1556.323465
+    },
+    {
+      "id": "cellauto",
+      "laneId": "alt",
+      "x": -1191.079597,
+      "y": 371.614669
+    },
+    {
+      "id": "chatgpt",
+      "laneId": "language",
+      "x": 41.700589,
+      "y": 745.961009
+    },
+    {
+      "id": "chineseroom",
+      "laneId": "roots",
+      "x": -16.467978,
+      "y": -1657.604048
+    },
+    {
+      "id": "chinook",
+      "laneId": "search",
+      "x": 1336.068753,
+      "y": -982.115615
+    },
+    {
+      "id": "chomsky",
+      "laneId": "language",
+      "x": 585.449729,
+      "y": 196.505404
+    },
+    {
+      "id": "clip",
+      "laneId": "vision",
+      "x": -55.2152,
+      "y": 1375.95827
+    },
+    {
+      "id": "cnn89",
+      "laneId": "neural",
+      "x": 691.056962,
+      "y": 364.801517
+    },
+    {
+      "id": "codegen",
+      "laneId": "language",
+      "x": 449.458113,
+      "y": 797.979061
+    },
+    {
+      "id": "cog",
+      "laneId": "robotics",
+      "x": -1797.428066,
+      "y": -67.954478
+    },
+    {
+      "id": "cogrev",
+      "laneId": "roots",
+      "x": 236.604333,
+      "y": -971.154888
+    },
+    {
+      "id": "complexity71",
+      "laneId": "roots",
+      "x": -541.507758,
+      "y": -626.80424
+    },
+    {
+      "id": "computegap",
+      "laneId": "systems",
+      "x": -775.152487,
+      "y": -954.41283
+    },
+    {
+      "id": "conceptualdep",
+      "laneId": "language",
+      "x": 843.108231,
+      "y": 698.788476
+    },
+    {
+      "id": "concreteproblems",
+      "laneId": "safety",
+      "x": -1063.317623,
+      "y": -721.611378
+    },
+    {
+      "id": "conformal",
+      "laneId": "prob",
+      "x": -971.299474,
+      "y": 812.594
+    },
+    {
+      "id": "conndebate",
+      "laneId": "roots",
+      "x": 421.754478,
+      "y": -878.002511
+    },
+    {
+      "id": "constitutional",
+      "laneId": "safety",
+      "x": -1307.072328,
+      "y": -858.467726
+    },
+    {
+      "id": "contexteng",
+      "laneId": "language",
+      "x": 163.509532,
+      "y": 873.595382
+    },
+    {
+      "id": "continual",
+      "laneId": "training",
+      "x": 1372.245829,
+      "y": 1062.985641
+    },
+    {
+      "id": "continuousrl",
+      "laneId": "rl",
+      "x": 593.81333,
+      "y": -159.897831
+    },
+    {
+      "id": "cot",
+      "laneId": "language",
+      "x": 708.323291,
+      "y": 725.500128
+    },
+    {
+      "id": "csp",
+      "laneId": "search",
+      "x": 939.858417,
+      "y": -657.476471
+    },
+    {
+      "id": "curiosity",
+      "laneId": "rl",
+      "x": 1189.671812,
+      "y": -266.065358
+    },
+    {
+      "id": "cyc",
+      "laneId": "symbolic",
+      "x": 902.25753,
+      "y": -1316.237301
+    },
+    {
+      "id": "darpagc",
+      "laneId": "robotics",
+      "x": -1341.576579,
+      "y": 410.406575
+    },
+    {
+      "id": "dartmouth",
+      "laneId": "roots",
+      "x": -186.160136,
+      "y": -1431.926892
+    },
+    {
+      "id": "datacentric",
+      "laneId": "training",
+      "x": 196.114461,
+      "y": 242.930699
+    },
+    {
+      "id": "datawalls",
+      "laneId": "systems",
+      "x": -880.767375,
+      "y": -900.543133
+    },
+    {
+      "id": "dbn",
+      "laneId": "neural",
+      "x": 1095.636782,
+      "y": 556.266157
+    },
+    {
+      "id": "debate",
+      "laneId": "safety",
+      "x": -1622.294049,
+      "y": -794.359779
+    },
+    {
+      "id": "deepblue",
+      "laneId": "search",
+      "x": 782.730322,
+      "y": -619.786922
+    },
+    {
+      "id": "deepface",
+      "laneId": "vision",
+      "x": -349.675472,
+      "y": 991.975031
+    },
+    {
+      "id": "deeprlrobot",
+      "laneId": "robotics",
+      "x": -642.033084,
+      "y": -196.325997
+    },
+    {
+      "id": "dendral",
+      "laneId": "symbolic",
+      "x": 235.027928,
+      "y": -1563.612373
+    },
+    {
+      "id": "denseretrieval",
+      "laneId": "language",
+      "x": 425.331207,
+      "y": 1179.861613
+    },
+    {
+      "id": "detection",
+      "laneId": "vision",
+      "x": -210.273899,
+      "y": 864.561832
+    },
+    {
+      "id": "diffusion",
+      "laneId": "generative",
+      "x": -270.859666,
+      "y": 630.636631
+    },
+    {
+      "id": "diffusionllm",
+      "laneId": "language",
+      "x": 174.967009,
+      "y": 1245.855079
+    },
+    {
+      "id": "distillation",
+      "laneId": "training",
+      "x": 883.825498,
+      "y": 870.723387
+    },
+    {
+      "id": "distributed",
+      "laneId": "systems",
+      "x": -780.320021,
+      "y": -763.218622
+    },
+    {
+      "id": "dit",
+      "laneId": "generative",
+      "x": -612.845804,
+      "y": 1336.423987
+    },
+    {
+      "id": "dlogic",
+      "laneId": "symbolic",
+      "x": 759.976358,
+      "y": -1179.81056
+    },
+    {
+      "id": "dlspeech",
+      "laneId": "language",
+      "x": 711.600301,
+      "y": 1323.096634
+    },
+    {
+      "id": "dltheory",
+      "laneId": "training",
+      "x": 1291.840987,
+      "y": 809.314283
+    },
+    {
+      "id": "dna",
+      "laneId": "alt",
+      "x": -1303.84525,
+      "y": 288.194007
+    },
+    {
+      "id": "dopamine",
+      "laneId": "rl",
+      "x": 1661.815654,
+      "y": -318.955826
+    },
+    {
+      "id": "dota5",
+      "laneId": "rl",
+      "x": 1465.844122,
+      "y": -252.175058
+    },
+    {
+      "id": "dp",
+      "laneId": "training",
+      "x": 353.851972,
+      "y": 489.21059
+    },
+    {
+      "id": "dpo",
+      "laneId": "safety",
+      "x": -1376.511455,
+      "y": -629.97534
+    },
+    {
+      "id": "dqn",
+      "laneId": "rl",
+      "x": 343.124919,
+      "y": -350.838597
+    },
+    {
+      "id": "dtrees",
+      "laneId": "prob",
+      "x": -715.135132,
+      "y": 700.805636
+    },
+    {
+      "id": "eliza",
+      "laneId": "language",
+      "x": 4.423938,
+      "y": 266.339242
+    },
+    {
+      "id": "elmo",
+      "laneId": "language",
+      "x": 617.877443,
+      "y": 1110.910995
+    },
+    {
+      "id": "em",
+      "laneId": "prob",
+      "x": -1050.005024,
+      "y": 1208.638079
+    },
+    {
+      "id": "energy",
+      "laneId": "systems",
+      "x": -1066.62976,
+      "y": -1335.776812
+    },
+    {
+      "id": "equivariance",
+      "laneId": "neural",
+      "x": 740.937956,
+      "y": -72.026537
+    },
+    {
+      "id": "evals",
+      "laneId": "safety",
+      "x": -891.636049,
+      "y": -414.55185
+    },
+    {
+      "id": "evolrobotics",
+      "laneId": "robotics",
+      "x": -1757.14321,
+      "y": 114.353008
+    },
+    {
+      "id": "evolstrat",
+      "laneId": "alt",
+      "x": -1570.97598,
+      "y": 862.984217
+    },
+    {
+      "id": "expertshells",
+      "laneId": "symbolic",
+      "x": 863.989112,
+      "y": -1481.113844
+    },
+    {
+      "id": "facedetect",
+      "laneId": "vision",
+      "x": -231.882995,
+      "y": 1613.213897
+    },
+    {
+      "id": "fairness",
+      "laneId": "safety",
+      "x": -1140.042036,
+      "y": -127.318005
+    },
+    {
+      "id": "federated",
+      "laneId": "training",
+      "x": 989.742283,
+      "y": 981.982261
+    },
+    {
+      "id": "fifthgen",
+      "laneId": "symbolic",
+      "x": 776.246312,
+      "y": -1383.494488
+    },
+    {
+      "id": "flash",
+      "laneId": "training",
+      "x": 323.31767,
+      "y": 112.482778
+    },
+    {
+      "id": "flowmatching",
+      "laneId": "generative",
+      "x": -478.355499,
+      "y": 1111.4731
+    },
+    {
+      "id": "flows",
+      "laneId": "generative",
+      "x": -717.162139,
+      "y": 1448.484302
+    },
+    {
+      "id": "frames",
+      "laneId": "symbolic",
+      "x": 574.114069,
+      "y": -1195.002554
+    },
+    {
+      "id": "frameworks",
+      "laneId": "systems",
+      "x": -349.185449,
+      "y": -577.733408
+    },
+    {
+      "id": "freeenergy",
+      "laneId": "roots",
+      "x": -299.047411,
+      "y": -949.175
+    },
+    {
+      "id": "friendlyai",
+      "laneId": "safety",
+      "x": -1479.468905,
+      "y": -732.007318
+    },
+    {
+      "id": "frontier26",
+      "laneId": "language",
+      "x": 273.121423,
+      "y": 602.606079
+    },
+    {
+      "id": "fusion",
+      "laneId": "science",
+      "x": -108.215156,
+      "y": -1318.565447
+    },
+    {
+      "id": "fuzzy",
+      "laneId": "symbolic",
+      "x": 371.578985,
+      "y": -1675.380254
+    },
+    {
+      "id": "ga",
+      "laneId": "alt",
+      "x": -1426.743842,
+      "y": 571.564569
+    },
+    {
+      "id": "gametheory",
+      "laneId": "roots",
+      "x": 253.158528,
+      "y": -667.648005
+    },
+    {
+      "id": "gan",
+      "laneId": "generative",
+      "x": -428.308474,
+      "y": 809.437325
+    },
+    {
+      "id": "gap_activeinf",
+      "laneId": "roots",
+      "x": 181.504476,
+      "y": -1399.718388
+    },
+    {
+      "id": "gap_agents",
+      "laneId": "safety",
+      "x": -915.054718,
+      "y": -605.210161
+    },
+    {
+      "id": "gap_biolearn",
+      "laneId": "alt",
+      "x": -1460.104201,
+      "y": 201.836474
+    },
+    {
+      "id": "gap_causal",
+      "laneId": "prob",
+      "x": -800.20626,
+      "y": 850.025192
+    },
+    {
+      "id": "gap_data",
+      "laneId": "systems",
+      "x": -876.630315,
+      "y": -1222.141324
+    },
+    {
+      "id": "gap_dreamtrain",
+      "laneId": "generative",
+      "x": -707.713214,
+      "y": 978.692366
+    },
+    {
+      "id": "gap_energyllm",
+      "laneId": "neural",
+      "x": 1432.969168,
+      "y": 654.856551
+    },
+    {
+      "id": "gap_interp",
+      "laneId": "safety",
+      "x": -1602.937751,
+      "y": -659.25419
+    },
+    {
+      "id": "gap_memory",
+      "laneId": "training",
+      "x": 1243.135149,
+      "y": 1231.273846
+    },
+    {
+      "id": "gap_neurosym",
+      "laneId": "symbolic",
+      "x": 755.767185,
+      "y": -1044.87826
+    },
+    {
+      "id": "gap_openended",
+      "laneId": "rl",
+      "x": 1038.990776,
+      "y": -264.746142
+    },
+    {
+      "id": "gap_quant",
+      "laneId": "alt",
+      "x": -1800,
+      "y": 536.744544
+    },
+    {
+      "id": "gap_scilab",
+      "laneId": "science",
+      "x": -594.825926,
+      "y": -1406.857809
+    },
+    {
+      "id": "gap_swarm",
+      "laneId": "robotics",
+      "x": -1298.313961,
+      "y": -91.599992
+    },
+    {
+      "id": "gap_tabular",
+      "laneId": "prob",
+      "x": -1008.931546,
+      "y": 942.444265
+    },
+    {
+      "id": "gato",
+      "laneId": "rl",
+      "x": 1196.706207,
+      "y": -138.095486
+    },
+    {
+      "id": "genie",
+      "laneId": "generative",
+      "x": -385.422748,
+      "y": 1208.680425
+    },
+    {
+      "id": "genomics",
+      "laneId": "science",
+      "x": -218.437985,
+      "y": -1017.581615
+    },
+    {
+      "id": "gnn",
+      "laneId": "neural",
+      "x": 572.091589,
+      "y": -248.924025
+    },
+    {
+      "id": "goalmisgen",
+      "laneId": "safety",
+      "x": -1235.994063,
+      "y": -588.063797
+    },
+    {
+      "id": "godel",
+      "laneId": "roots",
+      "x": -272.594278,
+      "y": -1642.472975
+    },
+    {
+      "id": "govern",
+      "laneId": "safety",
+      "x": -1047.055642,
+      "y": -227.282
+    },
+    {
+      "id": "gp",
+      "laneId": "prob",
+      "x": -1134.79593,
+      "y": 937.465501
+    },
+    {
+      "id": "gp92",
+      "laneId": "alt",
+      "x": -1262.08797,
+      "y": 633.444304
+    },
+    {
+      "id": "gpgpu",
+      "laneId": "systems",
+      "x": -310.363787,
+      "y": -338.222266
+    },
+    {
+      "id": "gps",
+      "laneId": "symbolic",
+      "x": 681.520201,
+      "y": -1288.882786
+    },
+    {
+      "id": "gpt2",
+      "laneId": "language",
+      "x": 487.398799,
+      "y": 1095.805371
+    },
+    {
+      "id": "gpt3",
+      "laneId": "language",
+      "x": 592.449917,
+      "y": 1238.365318
+    },
+    {
+      "id": "gpt4",
+      "laneId": "language",
+      "x": -71.813706,
+      "y": 642.345334
+    },
+    {
+      "id": "graphicalmodels",
+      "laneId": "prob",
+      "x": -1318.391569,
+      "y": 1070.220413
+    },
+    {
+      "id": "groundedplanning",
+      "laneId": "robotics",
+      "x": -589.816331,
+      "y": -20.811184
+    },
+    {
+      "id": "grpo",
+      "laneId": "training",
+      "x": 1153.059451,
+      "y": 797.974411
+    },
+    {
+      "id": "hebb49",
+      "laneId": "roots",
+      "x": -49.58028,
+      "y": -588.386688
+    },
+    {
+      "id": "hf",
+      "laneId": "systems",
+      "x": -358.182585,
+      "y": -149.322423
+    },
+    {
+      "id": "hmmspeech",
+      "laneId": "language",
+      "x": 288.32844,
+      "y": 842.169114
+    },
+    {
+      "id": "hodgkin52",
+      "laneId": "roots",
+      "x": -506.549678,
+      "y": -1255.13915
+    },
+    {
+      "id": "hopfield",
+      "laneId": "neural",
+      "x": 1112.158668,
+      "y": 48.858127
+    },
+    {
+      "id": "hrl",
+      "laneId": "rl",
+      "x": 1543.455664,
+      "y": -443.817849
+    },
+    {
+      "id": "htm",
+      "laneId": "alt",
+      "x": -1044.949551,
+      "y": 350.429442
+    },
+    {
+      "id": "hubel59",
+      "laneId": "roots",
+      "x": -157.441423,
+      "y": -228.575877
+    },
+    {
+      "id": "humanoid26",
+      "laneId": "robotics",
+      "x": -1442.668928,
+      "y": -29.007318
+    },
+    {
+      "id": "hypernet",
+      "laneId": "neural",
+      "x": 1539.428179,
+      "y": 519.907032
+    },
+    {
+      "id": "ilp",
+      "laneId": "symbolic",
+      "x": 309.393499,
+      "y": -804.683287
+    },
+    {
+      "id": "imagenet",
+      "laneId": "vision",
+      "x": -392.844179,
+      "y": 379.205698
+    },
+    {
+      "id": "imitation",
+      "laneId": "rl",
+      "x": 303.986939,
+      "y": -132.094457
+    },
+    {
+      "id": "inferecon",
+      "laneId": "systems",
+      "x": -428.437536,
+      "y": -646.297514
+    },
+    {
+      "id": "instruct",
+      "laneId": "language",
+      "x": 170.624153,
+      "y": 1021.56511
+    },
+    {
+      "id": "instructiontune",
+      "laneId": "language",
+      "x": 415.622932,
+      "y": 1386.603598
+    },
+    {
+      "id": "internetdata",
+      "laneId": "systems",
+      "x": -702.366543,
+      "y": -1033.169722
+    },
+    {
+      "id": "interp",
+      "laneId": "safety",
+      "x": -1110.839005,
+      "y": -330.998335
+    },
+    {
+      "id": "ir",
+      "laneId": "language",
+      "x": 305.541522,
+      "y": 734.483278
+    },
+    {
+      "id": "itp",
+      "laneId": "symbolic",
+      "x": 215.517948,
+      "y": -1265.028468
+    },
+    {
+      "id": "jailbreaks",
+      "laneId": "safety",
+      "x": -917.735136,
+      "y": -244.388206
+    },
+    {
+      "id": "kalman",
+      "laneId": "prob",
+      "x": -542.319462,
+      "y": 362.827021
+    },
+    {
+      "id": "kgraphs",
+      "laneId": "symbolic",
+      "x": 670.145127,
+      "y": -697.683897
+    },
+    {
+      "id": "kolmo",
+      "laneId": "roots",
+      "x": 13.44571,
+      "y": -1408.133477
+    },
+    {
+      "id": "layernorm",
+      "laneId": "training",
+      "x": 984.375836,
+      "y": 736.909152
+    },
+    {
+      "id": "lighthill",
+      "laneId": "symbolic",
+      "x": 912.324644,
+      "y": -1119.639809
+    },
+    {
+      "id": "linattn",
+      "laneId": "neural",
+      "x": 1088.099615,
+      "y": 259.315109
+    },
+    {
+      "id": "lisp",
+      "laneId": "symbolic",
+      "x": 182.140317,
+      "y": -1072.199787
+    },
+    {
+      "id": "lispmachines",
+      "laneId": "symbolic",
+      "x": 501.096186,
+      "y": -1423.388925
+    },
+    {
+      "id": "llmsearch",
+      "laneId": "search",
+      "x": 1277.305211,
+      "y": -543.070618
+    },
+    {
+      "id": "llmserving",
+      "laneId": "systems",
+      "x": -365.63755,
+      "y": -421.849996
+    },
+    {
+      "id": "logicprog",
+      "laneId": "roots",
+      "x": -125.144652,
+      "y": -1536.982785
+    },
+    {
+      "id": "longctx",
+      "laneId": "language",
+      "x": 162.1619,
+      "y": 467.433213
+    },
+    {
+      "id": "lora",
+      "laneId": "training",
+      "x": 1030.139002,
+      "y": 1199.281306
+    },
+    {
+      "id": "lstm",
+      "laneId": "neural",
+      "x": 1033.773239,
+      "y": 449.714032
+    },
+    {
+      "id": "lt56",
+      "laneId": "symbolic",
+      "x": 369.90364,
+      "y": -1360.215102
+    },
+    {
+      "id": "maml",
+      "laneId": "training",
+      "x": 1244.71258,
+      "y": 984.089498
+    },
+    {
+      "id": "mapelites",
+      "laneId": "alt",
+      "x": -1105.372674,
+      "y": 508.478859
+    },
+    {
+      "id": "markov",
+      "laneId": "roots",
+      "x": -2.566,
+      "y": -439.449722
+    },
+    {
+      "id": "marl",
+      "laneId": "rl",
+      "x": 709.765924,
+      "y": -308.145464
+    },
+    {
+      "id": "marr",
+      "laneId": "vision",
+      "x": 37.141505,
+      "y": 1116.790241
+    },
+    {
+      "id": "materials",
+      "laneId": "science",
+      "x": -103.686438,
+      "y": -751.528738
+    },
+    {
+      "id": "mathai",
+      "laneId": "science",
+      "x": 112.798453,
+      "y": -873.605419
+    },
+    {
+      "id": "mcculloch43",
+      "laneId": "roots",
+      "x": -24.145519,
+      "y": -1007.0867
+    },
+    {
+      "id": "mcmc",
+      "laneId": "prob",
+      "x": -886.611172,
+      "y": 1108.221948
+    },
+    {
+      "id": "mcp",
+      "laneId": "systems",
+      "x": -479.771104,
+      "y": -359.085695
+    },
+    {
+      "id": "mcts",
+      "laneId": "search",
+      "x": 1160.668568,
+      "y": -630.313225
+    },
+    {
+      "id": "mdp",
+      "laneId": "rl",
+      "x": 878.365884,
+      "y": -505.726447
+    },
+    {
+      "id": "mead",
+      "laneId": "alt",
+      "x": -1206.670525,
+      "y": 173.942047
+    },
+    {
+      "id": "mechinterp",
+      "laneId": "safety",
+      "x": -821.61063,
+      "y": -482.936409
+    },
+    {
+      "id": "medicine",
+      "laneId": "science",
+      "x": -226.217176,
+      "y": 52.012866
+    },
+    {
+      "id": "minimaxab",
+      "laneId": "search",
+      "x": 1002.656274,
+      "y": -1001.808992
+    },
+    {
+      "id": "mixedprecision",
+      "laneId": "training",
+      "x": 320.768312,
+      "y": 290.345315
+    },
+    {
+      "id": "mlcompiler",
+      "laneId": "systems",
+      "x": -619.850965,
+      "y": -950.545413
+    },
+    {
+      "id": "modelbased",
+      "laneId": "rl",
+      "x": 811.48957,
+      "y": -203.608879
+    },
+    {
+      "id": "modelediting",
+      "laneId": "safety",
+      "x": -1095.632373,
+      "y": -606.528601
+    },
+    {
+      "id": "modelleak",
+      "laneId": "safety",
+      "x": -791.193768,
+      "y": -255.085075
+    },
+    {
+      "id": "moe",
+      "laneId": "neural",
+      "x": 1251.894995,
+      "y": 363.021675
+    },
+    {
+      "id": "moore",
+      "laneId": "systems",
+      "x": -561.793365,
+      "y": -848.478091
+    },
+    {
+      "id": "moravec",
+      "laneId": "robotics",
+      "x": -1619.690895,
+      "y": 34.08609
+    },
+    {
+      "id": "mtgeorgetown",
+      "laneId": "language",
+      "x": 548.113635,
+      "y": 954.286953
+    },
+    {
+      "id": "mturk",
+      "laneId": "systems",
+      "x": -921.71226,
+      "y": -760.861342
+    },
+    {
+      "id": "multimodal",
+      "laneId": "vision",
+      "x": -118.181117,
+      "y": 1091.260105
+    },
+    {
+      "id": "musicgen",
+      "laneId": "generative",
+      "x": -434.856644,
+      "y": 1324.329847
+    },
+    {
+      "id": "mycin",
+      "laneId": "symbolic",
+      "x": 544.289639,
+      "y": -1716.703895
+    },
+    {
+      "id": "neat",
+      "laneId": "alt",
+      "x": -981.22645,
+      "y": 472.794531
+    },
+    {
+      "id": "neocognitron",
+      "laneId": "neural",
+      "x": 1012.818866,
+      "y": 139.645024
+    },
+    {
+      "id": "neural3d",
+      "laneId": "vision",
+      "x": 117.172234,
+      "y": 1490.875835
+    },
+    {
+      "id": "neuralode",
+      "laneId": "neural",
+      "x": 737.091715,
+      "y": 231.030012
+    },
+    {
+      "id": "neuraloperator",
+      "laneId": "science",
+      "x": -235.97315,
+      "y": -1180.266639
+    },
+    {
+      "id": "neuralprog",
+      "laneId": "symbolic",
+      "x": 609.93954,
+      "y": -520.68527
+    },
+    {
+      "id": "neuralstyle",
+      "laneId": "generative",
+      "x": -581.747514,
+      "y": 1201.173587
+    },
+    {
+      "id": "neuralverify",
+      "laneId": "safety",
+      "x": -1050.445289,
+      "y": -887.151696
+    },
+    {
+      "id": "neuromorphic",
+      "laneId": "alt",
+      "x": -1572.052946,
+      "y": 348.420004
+    },
+    {
+      "id": "neurosymbolic",
+      "laneId": "symbolic",
+      "x": 699.881384,
+      "y": -835.94342
+    },
+    {
+      "id": "ngram",
+      "laneId": "language",
+      "x": 648.289952,
+      "y": 968.704236
+    },
+    {
+      "id": "nmt",
+      "laneId": "language",
+      "x": 896.611302,
+      "y": 1324.544962
+    },
+    {
+      "id": "nonmono",
+      "laneId": "symbolic",
+      "x": 739.621593,
+      "y": -1531.075733
+    },
+    {
+      "id": "ntm",
+      "laneId": "neural",
+      "x": 1060.549542,
+      "y": -43.898448
+    },
+    {
+      "id": "nucleus",
+      "laneId": "language",
+      "x": 416.003965,
+      "y": 1520.892752
+    },
+    {
+      "id": "offlinerl",
+      "laneId": "rl",
+      "x": 1023.169841,
+      "y": -170.684156
+    },
+    {
+      "id": "oodshift",
+      "laneId": "safety",
+      "x": -974.468148,
+      "y": -117.662231
+    },
+    {
+      "id": "openended",
+      "laneId": "rl",
+      "x": 491.41752,
+      "y": -11.806616
+    },
+    {
+      "id": "openweights",
+      "laneId": "language",
+      "x": 347.05095,
+      "y": 1010.518713
+    },
+    {
+      "id": "optical",
+      "laneId": "alt",
+      "x": -1660.675958,
+      "y": 452.224297
+    },
+    {
+      "id": "optimaltransport",
+      "laneId": "prob",
+      "x": -1023.72468,
+      "y": 1089.503904
+    },
+    {
+      "id": "pac",
+      "laneId": "prob",
+      "x": -893.82934,
+      "y": 726.112588
+    },
+    {
+      "id": "patternrec",
+      "laneId": "prob",
+      "x": -564.050971,
+      "y": 852.431995
+    },
+    {
+      "id": "pdp86",
+      "laneId": "neural",
+      "x": 1363.007872,
+      "y": 112.76095
+    },
+    {
+      "id": "perceptron",
+      "laneId": "neural",
+      "x": 636.640778,
+      "y": -2.438212
+    },
+    {
+      "id": "perceptronsbook",
+      "laneId": "neural",
+      "x": 1294.051403,
+      "y": -60.519653
+    },
+    {
+      "id": "pinn",
+      "laneId": "science",
+      "x": -149.499956,
+      "y": -870.37949
+    },
+    {
+      "id": "planningpddl",
+      "laneId": "search",
+      "x": 889.456704,
+      "y": -772.677215
+    },
+    {
+      "id": "poker",
+      "laneId": "search",
+      "x": 1090.528272,
+      "y": -848.968843
+    },
+    {
+      "id": "policygrad",
+      "laneId": "rl",
+      "x": 873.744918,
+      "y": -116.297127
+    },
+    {
+      "id": "probprog",
+      "laneId": "prob",
+      "x": -833.692201,
+      "y": 551.602102
+    },
+    {
+      "id": "prolog",
+      "laneId": "symbolic",
+      "x": 456.819565,
+      "y": -1251.270649
+    },
+    {
+      "id": "promptengineering",
+      "laneId": "language",
+      "x": 459.86505,
+      "y": 1286.914016
+    },
+    {
+      "id": "proteinlm",
+      "laneId": "science",
+      "x": -193.950754,
+      "y": -530.249549
+    },
+    {
+      "id": "provablysafe",
+      "laneId": "safety",
+      "x": -1140.528134,
+      "y": -1065.668232
+    },
+    {
+      "id": "qlearning",
+      "laneId": "rl",
+      "x": 1187.049546,
+      "y": -410.913536
+    },
+    {
+      "id": "quant",
+      "laneId": "training",
+      "x": 470.472728,
+      "y": 400.921228
+    },
+    {
+      "id": "quantumml",
+      "laneId": "alt",
+      "x": -1429.935269,
+      "y": 308.194646
+    },
+    {
+      "id": "rag",
+      "laneId": "language",
+      "x": 552.058592,
+      "y": 843.539065
+    },
+    {
+      "id": "rbm",
+      "laneId": "neural",
+      "x": 1452.956121,
+      "y": 401.814754
+    },
+    {
+      "id": "reasoning",
+      "laneId": "language",
+      "x": 530.194261,
+      "y": 565.918613
+    },
+    {
+      "id": "recsys",
+      "laneId": "prob",
+      "x": -718.311923,
+      "y": 1114.177666
+    },
+    {
+      "id": "relu",
+      "laneId": "training",
+      "x": 665.893923,
+      "y": 582.248965
+    },
+    {
+      "id": "reservoir",
+      "laneId": "alt",
+      "x": -705.03063,
+      "y": 536.178966
+    },
+    {
+      "id": "resnet",
+      "laneId": "neural",
+      "x": 804.82791,
+      "y": 602.472867
+    },
+    {
+      "id": "resolution",
+      "laneId": "symbolic",
+      "x": 601.172691,
+      "y": -1358.42364
+    },
+    {
+      "id": "rlbook",
+      "laneId": "rl",
+      "x": 955.422628,
+      "y": -449.813605
+    },
+    {
+      "id": "rlhf",
+      "laneId": "safety",
+      "x": -663.885458,
+      "y": -388.45127
+    },
+    {
+      "id": "rlvr",
+      "laneId": "rl",
+      "x": 747.166078,
+      "y": 66.428694
+    },
+    {
+      "id": "rnn",
+      "laneId": "neural",
+      "x": 753.895221,
+      "y": 468.802841
+    },
+    {
+      "id": "roberts63",
+      "laneId": "vision",
+      "x": 53.963979,
+      "y": 591.624795
+    },
+    {
+      "id": "rtfm",
+      "laneId": "robotics",
+      "x": -837.059863,
+      "y": 121.306303
+    },
+    {
+      "id": "sam",
+      "laneId": "vision",
+      "x": -48.908066,
+      "y": 1655.032209
+    },
+    {
+      "id": "samuel",
+      "laneId": "rl",
+      "x": 1434.826865,
+      "y": -666.388033
+    },
+    {
+      "id": "satsolvers",
+      "laneId": "search",
+      "x": 677.023327,
+      "y": -945.363011
+    },
+    {
+      "id": "scalinglaws",
+      "laneId": "training",
+      "x": 436.459271,
+      "y": 591.545291
+    },
+    {
+      "id": "sciagents",
+      "laneId": "science",
+      "x": -388.019121,
+      "y": -809.499135
+    },
+    {
+      "id": "selfdriving",
+      "laneId": "robotics",
+      "x": -1113.076004,
+      "y": 216.613493
+    },
+    {
+      "id": "selfdrivinglab",
+      "laneId": "science",
+      "x": -490.601662,
+      "y": -1072.367644
+    },
+    {
+      "id": "selfgenagents",
+      "laneId": "rl",
+      "x": 917.861371,
+      "y": -17.93441
+    },
+    {
+      "id": "selfsup",
+      "laneId": "training",
+      "x": 793.801396,
+      "y": 1212.449635
+    },
+    {
+      "id": "semanticnets",
+      "laneId": "symbolic",
+      "x": 516.662157,
+      "y": -616.601245
+    },
+    {
+      "id": "semweb",
+      "laneId": "symbolic",
+      "x": 392.668164,
+      "y": -1130.66524
+    },
+    {
+      "id": "seq2seq",
+      "laneId": "language",
+      "x": 662.992247,
+      "y": 864.310059
+    },
+    {
+      "id": "sgd",
+      "laneId": "training",
+      "x": 628.282328,
+      "y": 702.721373
+    },
+    {
+      "id": "shakey",
+      "laneId": "robotics",
+      "x": -913.797233,
+      "y": 2.811032
+    },
+    {
+      "id": "shannon37",
+      "laneId": "roots",
+      "x": -351.113984,
+      "y": -1087.439449
+    },
+    {
+      "id": "shannon48",
+      "laneId": "roots",
+      "x": 165.828765,
+      "y": -578.380909
+    },
+    {
+      "id": "shannonchess",
+      "laneId": "search",
+      "x": 854.040301,
+      "y": -927.582007
+    },
+    {
+      "id": "shrdlu",
+      "laneId": "symbolic",
+      "x": 557.054658,
+      "y": -1016.162022
+    },
+    {
+      "id": "sift",
+      "laneId": "vision",
+      "x": -256.863256,
+      "y": 1241.361865
+    },
+    {
+      "id": "simenv",
+      "laneId": "robotics",
+      "x": -816.069138,
+      "y": -49.194122
+    },
+    {
+      "id": "slam",
+      "laneId": "robotics",
+      "x": -1318.402343,
+      "y": 63.158772
+    },
+    {
+      "id": "smt",
+      "laneId": "language",
+      "x": 754.441584,
+      "y": 1479.89995
+    },
+    {
+      "id": "soar",
+      "laneId": "symbolic",
+      "x": 995.687732,
+      "y": -1437.091271
+    },
+    {
+      "id": "solomonoff",
+      "laneId": "roots",
+      "x": -247.960632,
+      "y": -1309.541568
+    },
+    {
+      "id": "speechfm",
+      "laneId": "language",
+      "x": 318.431776,
+      "y": 1242.825116
+    },
+    {
+      "id": "spiking",
+      "laneId": "alt",
+      "x": -1070.983806,
+      "y": -11.824641
+    },
+    {
+      "id": "ssm",
+      "laneId": "neural",
+      "x": 924.415532,
+      "y": 328.62566
+    },
+    {
+      "id": "stats25",
+      "laneId": "prob",
+      "x": -453.355078,
+      "y": 664.244213
+    },
+    {
+      "id": "strips",
+      "laneId": "search",
+      "x": 1125.922499,
+      "y": -1032.789969
+    },
+    {
+      "id": "subsumption",
+      "laneId": "robotics",
+      "x": -1446.876656,
+      "y": -183.414963
+    },
+    {
+      "id": "subword",
+      "laneId": "language",
+      "x": 586.588415,
+      "y": 1550.240054
+    },
+    {
+      "id": "superalign",
+      "laneId": "safety",
+      "x": -1324.889234,
+      "y": -737.148112
+    },
+    {
+      "id": "superintbook",
+      "laneId": "safety",
+      "x": -1426.521622,
+      "y": -967.774016
+    },
+    {
+      "id": "svm",
+      "laneId": "prob",
+      "x": -853.235275,
+      "y": 988.424398
+    },
+    {
+      "id": "swarm",
+      "laneId": "alt",
+      "x": -1665.574922,
+      "y": 660.743044
+    },
+    {
+      "id": "tdgammon",
+      "laneId": "rl",
+      "x": 1490.708666,
+      "y": -121.899825
+    },
+    {
+      "id": "tdlearning",
+      "laneId": "rl",
+      "x": 1347.576511,
+      "y": -325.20967
+    },
+    {
+      "id": "testtime",
+      "laneId": "training",
+      "x": 989.473163,
+      "y": 567.152521
+    },
+    {
+      "id": "titans",
+      "laneId": "neural",
+      "x": 1299.769983,
+      "y": 569.831162
+    },
+    {
+      "id": "topicmodels",
+      "laneId": "prob",
+      "x": -1274.332637,
+      "y": 1297.225396
+    },
+    {
+      "id": "tpu",
+      "laneId": "systems",
+      "x": -929.447992,
+      "y": -1080.258564
+    },
+    {
+      "id": "transfer",
+      "laneId": "training",
+      "x": 793.849255,
+      "y": 980.280234
+    },
+    {
+      "id": "transformer",
+      "laneId": "neural",
+      "x": 508.057437,
+      "y": 269.09801
+    },
+    {
+      "id": "treebank",
+      "laneId": "language",
+      "x": 704.101486,
+      "y": 1177.36559
+    },
+    {
+      "id": "turing36",
+      "laneId": "roots",
+      "x": 84.52206,
+      "y": -1149.685183
+    },
+    {
+      "id": "turingtest",
+      "laneId": "roots",
+      "x": -84.119846,
+      "y": -1132.579911
+    },
+    {
+      "id": "txt2img",
+      "laneId": "generative",
+      "x": -529.041291,
+      "y": 1429.508475
+    },
+    {
+      "id": "unet",
+      "laneId": "vision",
+      "x": -49.548923,
+      "y": 825.44979
+    },
+    {
+      "id": "unimate",
+      "laneId": "robotics",
+      "x": -1585.551344,
+      "y": -136.460229
+    },
+    {
+      "id": "universalapprox",
+      "laneId": "neural",
+      "x": 1537.637504,
+      "y": 273.098767
+    },
+    {
+      "id": "unlearning",
+      "laneId": "safety",
+      "x": -1125.599054,
+      "y": -490.832147
+    },
+    {
+      "id": "vae",
+      "laneId": "generative",
+      "x": -251.460566,
+      "y": 1085.224564
+    },
+    {
+      "id": "vanishing",
+      "laneId": "neural",
+      "x": 1331.634572,
+      "y": 432.368201
+    },
+    {
+      "id": "video",
+      "laneId": "generative",
+      "x": -682.173361,
+      "y": 1590.092678
+    },
+    {
+      "id": "visuomotor",
+      "laneId": "robotics",
+      "x": -1017.917568,
+      "y": 124.883083
+    },
+    {
+      "id": "vit",
+      "laneId": "vision",
+      "x": -82.614246,
+      "y": 1185.912172
+    },
+    {
+      "id": "vjepa",
+      "laneId": "vision",
+      "x": 267.786539,
+      "y": 1381.594345
+    },
+    {
+      "id": "vonneumann45",
+      "laneId": "roots",
+      "x": -401.259287,
+      "y": -1189.907145
+    },
+    {
+      "id": "vqcodes",
+      "laneId": "generative",
+      "x": -311.199633,
+      "y": 1485.392674
+    },
+    {
+      "id": "w2s",
+      "laneId": "safety",
+      "x": -1540.752854,
+      "y": -946.380635
+    },
+    {
+      "id": "watson",
+      "laneId": "language",
+      "x": 280.552835,
+      "y": 1088.517493
+    },
+    {
+      "id": "wavenet",
+      "laneId": "generative",
+      "x": -87.999563,
+      "y": 976.241682
+    },
+    {
+      "id": "weather",
+      "laneId": "science",
+      "x": -251.892415,
+      "y": -810.76438
+    },
+    {
+      "id": "weizenbaum",
+      "laneId": "safety",
+      "x": -1219.55061,
+      "y": -287.783035
+    },
+    {
+      "id": "wiener48",
+      "laneId": "roots",
+      "x": -693.074069,
+      "y": -817.331613
+    },
+    {
+      "id": "wienerwarn",
+      "laneId": "safety",
+      "x": -1477.808125,
+      "y": -533.003007
+    },
+    {
+      "id": "word2vec",
+      "laneId": "language",
+      "x": 603.836872,
+      "y": 1411.526605
+    },
+    {
+      "id": "wordnet",
+      "laneId": "language",
+      "x": 518.631771,
+      "y": 697.141129
+    },
+    {
+      "id": "worldmodels18",
+      "laneId": "rl",
+      "x": 595.984624,
+      "y": 433.810663
+    },
+    {
+      "id": "xcon",
+      "laneId": "symbolic",
+      "x": 635.291456,
+      "y": -1474.970289
+    }
+  ]
+}

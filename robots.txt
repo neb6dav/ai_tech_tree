@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://neb6dav.github.io/ai_tech_tree/sitemap.xml

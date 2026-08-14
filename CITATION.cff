@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: "If you use the AI Research Tech Tree, please cite the specific tagged release."
+title: "AI Research Tech Tree"
+type: dataset
+authors:
+  - name: "@neb6dav"
+    website: "https://github.com/neb6dav"
+version: 0.1.0
+date-released: "2026-08-13"
+repository-code: "https://github.com/neb6dav/ai_tech_tree"
+url: "https://neb6dav.github.io/ai_tech_tree/"
+license: CC-BY-SA-4.0
+abstract: >-
+  A public-beta, evidence-linked research atlas of artificial-intelligence
+  developments, open research directions, landmark works, and explicitly
+  typed relationships, presented through chronological, network, and list
+  views with machine-readable knowledge-graph exports.
+keywords:
+  - artificial intelligence
+  - history of artificial intelligence
+  - research atlas
+  - knowledge graph
+  - technology tree
+  - research methods

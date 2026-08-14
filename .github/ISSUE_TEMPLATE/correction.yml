@@ -1,0 +1,112 @@
+name: Correct a node or source
+description: Propose a factual, chronological, classification, wording, or citation correction.
+title: "[Correction]: "
+labels:
+  - correction
+  - needs-triage
+assignees:
+  - neb6dav
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for improving the atlas. State what the source directly supports, preserve uncertainty, and do not upload restricted full text. “No source found” means the current audit did not locate support; it does not prove a claim false.
+
+  - type: dropdown
+    id: correction_type
+    attributes:
+      label: Correction type
+      options:
+        - Description or factual claim
+        - Date or chronology
+        - Title, author, or identity
+        - Classification or branch
+        - Source, link, or rights information
+        - Review or evidence state
+        - Accessibility or presentation
+    validations:
+      required: true
+
+  - type: input
+    id: stable_id
+    attributes:
+      label: Stable node or record ID
+      description: Copy the ID from the record panel or machine-readable export. Write “unknown” only if none is available.
+      placeholder: node-or-record-id
+    validations:
+      required: true
+
+  - type: input
+    id: edition
+    attributes:
+      label: Edition, version, or page URL
+      description: Include the tagged version or shared URL, including its node parameter when available.
+      placeholder: v0.1.0 or https://…?view=timeline&node=…
+    validations:
+      required: true
+
+  - type: textarea
+    id: current_claim
+    attributes:
+      label: Current claim or behavior
+      description: Quote only the smallest relevant portion of atlas text, or describe the exact current behavior.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed_change
+    attributes:
+      label: Proposed correction
+      description: Give exact replacement wording or a specific requested change.
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Supporting sources and locators
+      description: Provide DOI, arXiv ID, stable URL, ISBN, archive record, or full citation plus page, section, figure, table, or revision where practical.
+      placeholder: |
+        1. Source and stable URL/identifier — page or section — what it directly supports
+        2. Additional or conflicting source — locator — relevance
+    validations:
+      required: true
+
+  - type: textarea
+    id: uncertainty
+    attributes:
+      label: Limits, conflicts, or uncertainty
+      description: Identify what the sources do not establish and any competing account. Write “none known” if appropriate.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: ai_use
+    attributes:
+      label: Material AI assistance
+      description: AI output is not evidence. Select “Used” if a tool materially assisted discovery, drafting, transformation, or analysis.
+      options:
+        - Not used
+        - Used and disclosed below
+    validations:
+      required: true
+
+  - type: textarea
+    id: ai_details
+    attributes:
+      label: AI-assistance disclosure
+      description: If used, name the task the tool performed and what you personally verified. Otherwise write “not applicable.”
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: declarations
+    attributes:
+      label: Contributor declarations
+      options:
+        - label: I opened and reviewed every source I rely on; a search snippet or AI answer is not my evidence.
+          required: true
+        - label: I have not included confidential information or unlawfully reproduced third-party material.
+          required: true
+        - label: I agree to follow the repository Code of Conduct.
+          required: true

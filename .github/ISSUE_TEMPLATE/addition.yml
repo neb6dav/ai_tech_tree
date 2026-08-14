@@ -1,0 +1,125 @@
+name: Propose a development or open direction
+description: Propose a sourced node that fills a meaningful gap in the atlas.
+title: "[Addition]: "
+labels:
+  - proposed-addition
+  - needs-triage
+assignees:
+  - neb6dav
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The atlas is selective rather than exhaustive. Explain the understanding gap this record fills, not only that the work exists or is popular. Do not submit unreviewed bulk AI output.
+
+  - type: dropdown
+    id: record_type
+    attributes:
+      label: Proposed record type
+      options:
+        - Historical or current development
+        - Open research direction
+        - Landmark paper, book, report, dataset, or standard
+    validations:
+      required: true
+
+  - type: input
+    id: title
+    attributes:
+      label: Proposed title
+      placeholder: Concise, neutral record title
+    validations:
+      required: true
+
+  - type: input
+    id: date
+    attributes:
+      label: Date or date range
+      description: State what event the date represents, such as preprint circulation, publication, presentation, or release.
+      placeholder: 2017 — conference publication
+    validations:
+      required: true
+
+  - type: input
+    id: branch
+    attributes:
+      label: Proposed branch or classification
+      description: Name an existing branch when possible and flag cross-branch relevance.
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Proposed description
+      description: Use neutral, evidence-bounded wording. Avoid unsupported priority or exclusivity claims.
+    validations:
+      required: true
+
+  - type: textarea
+    id: significance
+    attributes:
+      label: Gap filled and significance
+      description: Explain what readers currently misunderstand or cannot trace without this record.
+    validations:
+      required: true
+
+  - type: textarea
+    id: sources
+    attributes:
+      label: Supporting sources and locators
+      description: Prefer the original work plus a rigorous secondary source for broader historical significance where available.
+      placeholder: |
+        1. Primary source — DOI/URL/identifier — page or section — supported claim
+        2. Secondary source — DOI/URL — page or section — supported significance
+    validations:
+      required: true
+
+  - type: textarea
+    id: relationships
+    attributes:
+      label: Candidate relationships
+      description: For each candidate, give an existing stable node ID, direction, relationship meaning, and whether a source explicitly supports it. Editorial associations are allowed if labeled honestly.
+      placeholder: source-id -> proposed node — documented dependency — source/locator
+    validations:
+      required: true
+
+  - type: textarea
+    id: uncertainty
+    attributes:
+      label: Conflicts, limitations, or priority uncertainty
+      description: Identify competing accounts, review-status limits, or claims the sources do not establish.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: ai_use
+    attributes:
+      label: Material AI assistance
+      options:
+        - Not used
+        - Used and disclosed below
+    validations:
+      required: true
+
+  - type: textarea
+    id: ai_details
+    attributes:
+      label: AI-assistance disclosure
+      description: If used, say what the tool did and what you personally verified. Otherwise write “not applicable.”
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: declarations
+    attributes:
+      label: Contributor declarations
+      options:
+        - label: I opened and reviewed every source I rely on; an AI answer or search snippet is not my evidence.
+          required: true
+        - label: This proposal fills a stated atlas gap and is not an unreviewed bulk import.
+          required: true
+        - label: I have not included confidential information or unlawfully reproduced third-party material.
+          required: true
+        - label: I agree to follow the repository Code of Conduct.
+          required: true

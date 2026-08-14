@@ -1,0 +1,137 @@
+name: Correct or propose a relationship
+description: Add, remove, redirect, reclassify, or reassess a graph edge.
+title: "[Relationship]: "
+labels:
+  - relationship-review
+  - needs-triage
+assignees:
+  - neb6dav
+body:
+  - type: markdown
+    attributes:
+      value: |
+        An edge is not automatically a claim of causality. Specify its direction, meaning, and evidence state. Network proximity and centrality are visual consequences of the recorded graph, not independent evidence.
+
+  - type: dropdown
+    id: change_type
+    attributes:
+      label: Requested change
+      options:
+        - Add a relationship
+        - Remove a relationship
+        - Reverse or redirect a relationship
+        - Change relationship type
+        - Change evidence or review state
+        - Correct the relationship note or source
+    validations:
+      required: true
+
+  - type: input
+    id: source_id
+    attributes:
+      label: Source node stable ID
+      placeholder: source-node-id
+    validations:
+      required: true
+
+  - type: input
+    id: target_id
+    attributes:
+      label: Target node stable ID
+      placeholder: target-node-id
+    validations:
+      required: true
+
+  - type: input
+    id: edition
+    attributes:
+      label: Edition, version, or shared URL
+      placeholder: v0.1.0 or https://…?view=network&node=…
+    validations:
+      required: true
+
+  - type: textarea
+    id: semantics
+    attributes:
+      label: Proposed direction and meaning
+      description: Explain exactly what source → target means. If direction is not meaningful, say so.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: relationship_type
+    attributes:
+      label: Best relationship category
+      options:
+        - Documented influence or dependency
+        - Partial support
+        - Contextual or indirect relationship
+        - Editorial association
+        - Hypothesis
+        - Unassessed pending review
+        - Unsure; maintainer review requested
+    validations:
+      required: true
+
+  - type: textarea
+    id: current_record
+    attributes:
+      label: Current relationship record
+      description: Describe the current type, direction, note, evidence state, and source. Write “not present” for a new edge.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed_record
+    attributes:
+      label: Exact proposed relationship record
+      description: State the replacement type, direction, note, and evidence/review state.
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Supporting or contradicting sources and locators
+      description: Identify whether each source explicitly supports the edge or only its context.
+      placeholder: Source — DOI/URL — page or section — direct, partial, contextual, or contradicting
+    validations:
+      required: true
+
+  - type: textarea
+    id: uncertainty
+    attributes:
+      label: Alternative interpretation or uncertainty
+      description: Explain plausible competing directions, meanings, or missing evidence.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: ai_use
+    attributes:
+      label: Material AI assistance
+      options:
+        - Not used
+        - Used and disclosed below
+    validations:
+      required: true
+
+  - type: textarea
+    id: ai_details
+    attributes:
+      label: AI-assistance disclosure
+      description: If used, say what the tool did and what you personally verified. Otherwise write “not applicable.”
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: declarations
+    attributes:
+      label: Contributor declarations
+      options:
+        - label: I understand that association, proximity, and centrality do not by themselves establish influence or causality.
+          required: true
+        - label: I opened and reviewed every source I rely on; an AI answer or search snippet is not my evidence.
+          required: true
+        - label: I agree to follow the repository Code of Conduct.
+          required: true

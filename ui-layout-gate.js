@@ -50,6 +50,7 @@ for (const [fragment, label] of [
   ['svg.overview #nodes,svg.overview #edgesAll,svg.overview #edgesHi{display:none}', 'overview aggregation replaces individual nodes'],
   ['role="group" aria-label="Grouped overview markers.', 'accessible overview cluster group'],
   ["if(cluster.nodes.length===1){const nd=cluster.nodes[0];select(nd.id);flyTo(nd,Math.max(k,.95));return;}", 'single overview markers open their detail panel'],
+  ['function renderNodeAudit(nd){', 'detail-panel evidence renderer is defined'],
   ["activateOverviewCluster(cluster);", 'pointer and keyboard cluster activation'],
   ["nodeId:targetNode?.getAttribute('data-id')||null", 'pointer-origin node fallback'],
   ["nodeId=g?.getAttribute('data-id')||started?.nodeId", 'release hit-test fallback'],
@@ -90,6 +91,53 @@ for (const [fragment, label] of [
 const scripts = executableScripts();
 assert.equal(scripts.length, 6, 'Expected six executable inline scripts plus JSON and JSON-LD data scripts');
 scripts.forEach((body, index) => new vm.Script(body, { filename: `inline-script-${index + 1}.js` }));
+
+const applicationScript = scripts.find(body => body.includes('function openPanel(nd)'));
+assert(applicationScript, 'Main application script is missing');
+for (const helper of ['appendStatusProfile', 'renderResearchGuide', 'renderNodeAudit', 'renderSourceActions', 'appendRelationGroup']) {
+  assert(new RegExp(`function ${helper}\\(`).test(applicationScript), `Detail panel calls undefined critical helper ${helper}`);
+}
+assert.equal((applicationScript.match(/function renderNodeAudit\(nd\)\{/g) || []).length, 1, 'Evidence renderer must have exactly one definition');
+assert(applicationScript.includes(';renderNodeAudit(nd);renderSourceActions(nd);'), 'Detail panel no longer invokes its evidence renderer');
+const auditRendererMatch = applicationScript.match(/function renderNodeAudit\(nd\)\{[^{}]*\}/);
+assert(auditRendererMatch, 'Evidence renderer cannot be isolated for its regression probe');
+const auditRoot = {
+  children: [],
+  replaceChildren() { this.children.length = 0; },
+  appendChild(child) { this.children.push(child); return child; }
+};
+const auditCalls = [];
+const auditContext = {
+  document: {
+    getElementById(id) { assert.equal(id, 'pAudit'); return auditRoot; },
+    createElement(tagName) {
+      return {
+        tagName,
+        className: '',
+        textContent: '',
+        children: [],
+        append(...children) { this.children.push(...children); },
+        appendChild(child) { this.children.push(child); return child; }
+      };
+    }
+  },
+  nodeAuditById: new Map([['transformer', {
+    development: { state: 'confirmed' },
+    mapStatus: { state: 'editorial_only' }
+  }]]),
+  appendAuditLine(root, label, claim) {
+    auditCalls.push({ label, state: claim.state });
+    root.appendChild({ label, state: claim.state });
+  }
+};
+vm.runInNewContext(`${auditRendererMatch[0]};globalThis.renderAuditProbe=renderNodeAudit;`, auditContext);
+auditContext.renderAuditProbe({ id: 'transformer' });
+assert.deepEqual(auditCalls, [
+  { label: 'Development', state: 'confirmed' },
+  { label: 'Map status', state: 'editorial_only' }
+], 'Transformer evidence renderer did not render both audit claims');
+assert(auditRoot.children.some(child => child.tagName === 'strong' && child.textContent === 'Wikipedia cross-check'), 'Evidence renderer omitted its heading');
+assert(auditRoot.children.some(child => child.tagName === 'details' && child.className === 'auditLimits'), 'Evidence renderer omitted its interpretation limits');
 
 assert.equal(data.dataset.edition, '2026-08-13-public-beta-1');
 assert.equal(data.nodes.length, 339);

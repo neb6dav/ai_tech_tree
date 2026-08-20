@@ -5,7 +5,7 @@ active_work_package: "WP-011-B"
 issue_url: "https://github.com/neb6dav/ai_tech_tree/issues/6"
 pr_url: "https://github.com/neb6dav/ai_tech_tree/pull/7"
 base_sha: "85108c78fa86c86634d4c0944839696369e687cd"
-last_completed_checkpoint: "WP-011-B/C4.2"
+last_completed_checkpoint: "WP-011-B/C4.3-A"
 last_verified_commands:
   - command: "npm run build"
     status: "PASS"
@@ -128,17 +128,22 @@ last_verified_commands:
     runtime: "Node v24.14.1, npm 11.11.0, and Git 2.55"
     verified_by: "root"
     scope: "Exact C4.3-A code commit ac00753; core gates and 300 Node tests; planned/development identity; candidate-only ready fixture; 17/17 release inputs; 77 tracked entries; zero filters; manifest SHA-256 48c8e91a88b2087ed3e43b57020aaaa3e30b989106cc34fa8d2f2f919c61fad4; artifact budgets and 1,465 staged-site references"
+  - command: "Reconcile C4.3-A Windows/Ubuntu parity workflow and downloaded candidates"
+    status: "PASS"
+    runtime: "GitHub Actions Node v24.19.0 and npm 11.17.0"
+    verified_by: "root"
+    scope: "Workflow 32410116422; all four jobs green; artifacts 9421789032, 9421820079, and 9421828420 contain byte-identical four-file candidates; archive SHA-256 5f9c0ad74c2e9462db27082c3218613019d6bd0b9cb1f2938bc22a41e86d6301; standalone manifest e13c0a8bb324bfd744e3632ef92cea6d9bde2fe2d5089cd71583311fc0c907d6; 15/15 archive-to-preview and 14/14 local-to-CI payload parity; downloaded preview passes 1,465 references; PR evidence https://github.com/neb6dav/ai_tech_tree/pull/7#issuecomment-5360868990"
 next_exact_action: >-
-  Commit this verification-only PLAN ledger update, verify the final branch
-  head remains exact-clean, then push the authorized branch and reconcile the
-  hosted Windows/Ubuntu candidate artifacts; perform no release or deployment.
+  Design C4.4 release-mode asset and manual promotion tooling behind the
+  existing planned-state and authorization gates; do not apply C4.3-B ready
+  identity, create a tag or Release, change settings, deploy, or call production.
 known_blockers:
   - "WP-011-B is stacked on verified draft PR #5 until WP-011-A is separately authorized to merge."
   - "No merge, annotated tag, GitHub Release, environment approval, or public deployment is authorized."
   - "The C3 source must remain visibly labeled as an untagged development edition until C4 prepares an authorized release artifact."
   - "Browser performance metrics and automated preview screenshots remain pending WP-012-A."
   - "The github-pages environment has no required reviewer and permits administrator bypass; immutable GitHub Releases are disabled. These external controls require separate authorization before any C4 promotion run."
-release_gate_status: "wp_011_b_c4_2_remotely_verified_c4_3_a_exact_clean_pending_push"
+release_gate_status: "wp_011_b_c4_3_a_remotely_verified_c4_4_ready_to_design"
 release_details:
   version: "v0.1.1"
   title: "Publication-contract repair"
@@ -162,13 +167,13 @@ release_details:
       artifact_id: 9392055435
       artifact_tar_sha256: "f04f46196b74982f9d725f032278f9b7ed48ae1ffd82db0dcff3fc39f739f9c4"
     active_checkpoint:
-      id: "C4.3"
-      title: "Stable release identity preparation"
-      status: "exact_clean_verified_pending_push"
+      id: "C4.4"
+      title: "Release-mode assets and manual promotion tooling"
+      status: "ready_to_design"
       next_exact_action: >-
-        Commit the verification-only ledger, verify the final clean branch
-        head, push it, and reconcile hosted validation; do not change the real
-        v0.1.1 specification from planned in this checkpoint.
+        Define the fail-closed stable-asset, GitHub Release, Pages promotion,
+        rollback, and post-deployment verification boundaries without changing
+        the real planned identity or exercising any external mutation.
     scope:
       - "Publish stable and compatibility Opportunity endpoints."
       - "Move exported human URLs to the root application."

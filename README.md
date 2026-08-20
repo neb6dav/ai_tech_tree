@@ -148,11 +148,39 @@ exercise fixture-only plan and receipt behavior entirely in memory; that test
 coverage carries no adapter, output, network, mutation, or production-evidence
 capability.
 
-B2.1 deliberately stops before operational decision guards. Fresh live-control
-consumption and ambiguity/reconciliation guards belong to B2.2; rollback-state
-guards belong to B2.3; and a durable, runner-accessible rollback bundle belongs
-to B3. None of those later capabilities, any GitHub mutation, or any release or
-deployment authority is supplied or implied by the B2.1 receipt vocabulary.
+C4.4-B2.2 extends that vocabulary with a pure, deterministic, in-memory
+fixture decision. It consumes bounded, copied receipt and lifecycle-chain bytes
+plus explicit evaluation anchors and returns exactly one of `reconcile`,
+`block`, or `proceed-to-b2.3-read-only-preflight`. Malformed, conflicting,
+missing, swapped, or ambiguous caller-supplied evidence reconciles; well-formed
+but known-ineligible evidence blocks. Drift or malformed bytes in the fixed
+repository policy trust anchors throw and fail closed before a decision is
+emitted. The current real policy is still planned, and the B1 receipt is still
+injected-test-only and promotion-ineligible, so current repository evidence can
+only block or reconcile. No live audit has run.
+
+`proceed-to-b2.3-read-only-preflight` is deliberately narrow: it means only
+that one pinned, subject-matched, fresh fixture observation is suitable for the
+next read-only preflight. It is never release or deployment eligibility and
+never authorization. Every B2.2 decision remains fixture-only,
+production-ineligible, and external-mutation-unauthorized. The pure decision
+logic has no network transport, filesystem writer, subprocess, ambient
+environment or credential input, adapter, execution flag, output path, or
+new or operational package/workflow entry point. The existing fixed-root
+`plan:promotion-lifecycle` command remains plan-only. The existing
+`test:promotion-lifecycle` command, and therefore workflows that run ordinary
+`npm test`, exercise the pure decision logic only with in-memory fixtures; they
+cannot supply operational receipts, persist a decision, authorize an action, or
+turn a test outcome into evidence. The active workflow inventory remains
+exactly `pages.yml` and `validate.yml`, byte-for-byte unchanged.
+
+B2.2 is a decision vocabulary, not an operational state machine. B2.3 must
+still resolve the lifecycle evidence and authority references to exact bytes,
+bind live tool, workflow, release-specification, and annotated-tag facts,
+recheck freshness at use time, and handle operational ambiguity and rollback
+eligibility. B3 must still prove a durable, runner-accessible recovery bundle
+and its storage. No B2.2 result supplies a tag, Release, upload, deployment,
+rollback, settings change, production request, or authority to perform one.
 
 The post-deployment verifier is network-free by default. It accepts only a separately supplied, exact local release manifest plus its SHA-256, annotated tag, and commit; rejects preview or internally inconsistent release identity; and prints the fixed-origin GET plan without contacting the site. A later, separately authorized promotion run must add `--execute` to perform the bounded 12-minute verification:
 

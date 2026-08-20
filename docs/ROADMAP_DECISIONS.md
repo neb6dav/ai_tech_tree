@@ -117,13 +117,39 @@ lifecycle output as operational evidence. The ordinary validation suite does
 exercise the pure fixture-only implementation in memory, with no adapter,
 output, network, mutation, or production-evidence capability.
 
-B2.1 is a data-integrity boundary, not an operational state machine. Fresh
-live-control consumption and unknown-result reconciliation are reserved for
-B2.2; rollback eligibility and ambiguity guards are reserved for B2.3; and the
-durable, runner-accessible rollback package and its storage proof are reserved
-for B3. Those later checkpoints require their own review and authorization.
-Nothing in B2.1 authorizes a tag, Release, asset upload, deployment,
-publication, rollback, settings change, or production request.
+B2.1 is a data-integrity boundary, not an operational state machine. B2.2 adds
+only a pure, deterministic, in-memory fixture decision over bounded copied
+control-receipt and lifecycle-chain bytes with explicit evaluation anchors. Its
+complete outcome vocabulary is `reconcile`, `block`, and
+`proceed-to-b2.3-read-only-preflight`. Malformed, conflicting, missing, swapped,
+or ambiguous caller-supplied evidence reconciles, while well-formed known-
+ineligible evidence blocks. Drift or malformed bytes in the fixed repository
+policy trust anchors throw and fail closed before a decision is emitted.
+Because the real control policy remains planned and the available B1 receipt
+remains injected-test-only and promotion-ineligible, current repository
+evidence cannot proceed and no live audit has run.
+
+The proceed outcome is not a promotion outcome. It says only that one pinned,
+subject-matched, fresh fixture observation is suitable for the next read-only
+B2.3 preflight. Every decision remains fixture-only, production-ineligible, and
+external-mutation-unauthorized. The decision logic has no network transport,
+filesystem writer, subprocess, ambient environment or token, adapter,
+execution flag, output path, or new operational package/workflow entry point.
+The fixed-root `plan:promotion-lifecycle` command remains plan-only. Existing
+`test:promotion-lifecycle`, and therefore workflows that run ordinary
+`npm test`, exercise only pure in-memory fixtures and cannot supply operational
+receipts, persist a decision, authorize an action, or elevate a test result to
+evidence. The active workflow inventory remains exactly `pages.yml` and
+`validate.yml`, byte-for-byte unchanged.
+
+B2.2 does not resolve the lifecycle evidence and authority references to exact
+bytes, bind the live tool, workflow, release specification, and annotated tag,
+recheck freshness at use time, or decide operational ambiguity and rollback
+eligibility; those remain B2.3 work. The durable, runner-accessible rollback
+package and its storage proof remain B3 work. Those checkpoints require their
+own review and authorization. Nothing in B2.1 or B2.2 authorizes a tag, Release,
+asset upload, deployment, publication, rollback, settings change, or production
+request.
 
 ## Explicit deferrals
 

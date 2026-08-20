@@ -8,6 +8,7 @@ import { fileURLToPath } from 'node:url';
 import {
   buildPromotionLifecyclePlan,
   createFixtureLifecycleReceipt,
+  decideFreshControlConsumption,
   loadPromotionLifecyclePolicy,
   promotionLifecycleConstants,
   runCli,
@@ -15,6 +16,7 @@ import {
   validateLifecycleReceipt,
   validatePromotionLifecyclePolicy
 } from '../scripts/promotion-lifecycle.mjs';
+import { loadPromotionPolicy } from '../scripts/github-control-audit.mjs';
 import { loadReleaseSpec } from '../scripts/release-spec.mjs';
 
 const REPOSITORY_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -24,6 +26,7 @@ const RELEASE_SPEC_RECORD = await loadReleaseSpec(
   promotionLifecycleConstants.expectedPolicy.releaseSpecPath
 );
 const RELEASE_SPEC_SHA256 = digest(RELEASE_SPEC_RECORD.bytes);
+const CONTROL_POLICY_RECORD = await loadPromotionPolicy(REPOSITORY_ROOT);
 const BASE_SUBJECT = Object.freeze({
   repositoryId: 987654321,
   repositoryOwnerId: 123456789,
@@ -48,6 +51,18 @@ function clone(value) {
 
 function canonicalBytes(value) {
   return Buffer.from(`${JSON.stringify(value)}\n`, 'utf8');
+}
+
+function sortedJsonData(value) {
+  if (Array.isArray(value)) return value.map(sortedJsonData);
+  if (value && typeof value === 'object') {
+    return Object.fromEntries(Object.keys(value).sort().map(key => [key, sortedJsonData(value[key])]))
+  }
+  return value;
+}
+
+function canonicalControlBytes(value) {
+  return canonicalBytes(sortedJsonData(value));
 }
 
 function hashCanonical(domain, value) {
@@ -134,6 +149,128 @@ function fullChain(subject = BASE_SUBJECT) {
     parentReceiptBytes: tag.bytes
   });
   return { source, tag, bundle, bytes: [source.bytes, tag.bytes, bundle.bytes] };
+}
+
+function controlEvidence(expectedCommit = BASE_SUBJECT.sourceCommit) {
+  const phases = [
+    ['/repos/neb6dav/ai_tech_tree', {}],
+    ['/repos/neb6dav/ai_tech_tree/git/ref/heads/main', {}],
+    ['/repos/neb6dav/ai_tech_tree/rulesets', { includes_parents: 'false', page: 1, per_page: 100 }],
+    ['/repos/neb6dav/ai_tech_tree/rulesets/101', {}],
+    ['/repos/neb6dav/ai_tech_tree/rulesets/202', {}],
+    ['/repos/neb6dav/ai_tech_tree/rules/branches/main', {}],
+    ['/repos/neb6dav/ai_tech_tree/environments/github-pages', {}],
+    ['/repos/neb6dav/ai_tech_tree/environments/github-pages/deployment-branch-policies', { page: 1, per_page: 100 }],
+    ['/repos/neb6dav/ai_tech_tree/pages', {}],
+    ['/repos/neb6dav/ai_tech_tree/immutable-releases', {}],
+    ['/repos/neb6dav/ai_tech_tree/actions/workflows/validate.yml', {}],
+    ['/repos/neb6dav/ai_tech_tree/actions/workflows/303/runs', {
+      branch: 'main', event: 'push', head_sha: expectedCommit, status: 'success', page: 1, per_page: 100
+    }],
+    ['/repos/neb6dav/ai_tech_tree/actions/runs/404/jobs', { filter: 'latest', page: 1, per_page: 100 }],
+    ['/repos/neb6dav/ai_tech_tree/git/ref/heads/main', {}]
+  ];
+  return phases.map(([requestPath, query], index) => ({
+    sequence: index + 1,
+    method: 'GET',
+    path: requestPath,
+    query,
+    status: 200,
+    bytes: 16 + index,
+    sha256: digest(Buffer.from(`control response ${index + 1}`, 'utf8'))
+  }));
+}
+
+function currentControlReceipt({
+  expectedCommit = BASE_SUBJECT.sourceCommit,
+  observedAt = '2026-08-20T22:03:00.000Z',
+  mutate = null
+} = {}) {
+  const evidence = controlEvidence(expectedCommit);
+  const receipt = {
+    schemaVersion: '1.0.0',
+    toolVersion: '1.0.0',
+    scope: 'injected-control-response-shape-test',
+    evidenceSource: 'injected-test-only',
+    promotionEligible: false,
+    policy: {
+      path: CONTROL_POLICY_RECORD.path,
+      sha256: CONTROL_POLICY_RECORD.sha256,
+      schemaVersion: CONTROL_POLICY_RECORD.policy.schemaVersion,
+      status: CONTROL_POLICY_RECORD.policy.status
+    },
+    repository: CONTROL_POLICY_RECORD.policy.repository.fullName,
+    release: {
+      version: CONTROL_POLICY_RECORD.policy.release.version,
+      tag: CONTROL_POLICY_RECORD.policy.release.tag,
+      environment: CONTROL_POLICY_RECORD.policy.release.environment
+    },
+    expectedCommit,
+    observedAt,
+    expiresAt: new Date(
+      new Date(observedAt).valueOf() + CONTROL_POLICY_RECORD.policy.limits.receiptFreshnessSeconds * 1000
+    ).toISOString(),
+    requestCount: evidence.length,
+    responseBytes: evidence.reduce((total, item) => total + item.bytes, 0),
+    attestations: {
+      githubControlsObservedLive: false,
+      releaseSpecVerified: false,
+      tagTargetVerified: false,
+      toolSourceVerifiedAtExpectedCommit: false,
+      workflowBlobVerifiedAtExpectedCommit: false
+    },
+    checks: {
+      repositoryIdentity: true,
+      mainRefBookended: true,
+      mainRuleset: true,
+      tagRuleset: true,
+      effectiveMainRules: true,
+      protectedEnvironment: true,
+      pages: true,
+      immutableReleases: true,
+      exactValidationRun: true,
+      exactValidationJob: true
+    },
+    rulesetEvidence: { mainId: 101, tagId: 202 },
+    validationEvidence: { workflowId: 303, runId: 404, jobId: 505, event: 'push', conclusion: 'success' },
+    evidence,
+    summary: {
+      status: 'fixture-controls-match-policy',
+      auditorRequestedOnlyGets: true,
+      transportSideEffectsAttested: false,
+      externalMutationAuthorized: false
+    }
+  };
+  if (mutate) mutate(receipt);
+  return receipt;
+}
+
+function controlCandidate(receiptBytes) {
+  return { receiptSha256: digest(receiptBytes), receiptBytes };
+}
+
+function decisionFixture({
+  chain = fullChain(),
+  subject = BASE_SUBJECT,
+  receipt = currentControlReceipt({ expectedCommit: subject.sourceCommit }),
+  receiptBytes = canonicalControlBytes(receipt),
+  completeness = 'complete',
+  selectedSha256 = digest(receiptBytes),
+  candidates = [controlCandidate(receiptBytes)],
+  expectedControlReceiptSha256 = selectedSha256,
+  evaluatedAt = '2026-08-20T22:04:00.000Z',
+  expectedHeadSha256 = chain.bundle?.sha256 || chain.at(-1)?.sha256
+} = {}) {
+  return {
+    policyRecord: POLICY_RECORD,
+    receiptBytesList: chain.bytes || chain,
+    expectedHeadSha256,
+    expectedSubject: clone(subject),
+    controlPolicyRecord: CONTROL_POLICY_RECORD,
+    controlObservation: { completeness, selectedSha256, candidates },
+    expectedControlReceiptSha256,
+    evaluatedAt
+  };
 }
 
 test('loads only the reviewed planned fixture policy', () => {
@@ -223,10 +360,11 @@ test('plan is deterministic, reports the real planned release, and grants no aut
   assert.equal(first.releaseSpec.sha256, RELEASE_SPEC_SHA256);
   assert.equal(first.productionEligible, false);
   assert.deepEqual(first.capabilities, {
-    fixedFileReads: true,
-    inMemoryFixtureReceiptCreation: true,
-    fixtureChainValidation: true,
-    networkAccess: false,
+      fixedFileReads: true,
+      inMemoryFixtureReceiptCreation: true,
+      fixtureChainValidation: true,
+      fixtureControlConsumptionDecision: true,
+      networkAccess: false,
     filesystemWrites: false,
     externalMutation: false,
     productionEvidenceValidation: false
@@ -301,6 +439,32 @@ test('record envelopes reject accessors before reading caller-controlled bytes',
     /bytes must be an enumerable data property/iu
   );
   assert.equal(releaseByteReads, 0);
+
+  let nestedSpecReads = 0;
+  const hostileSpec = {};
+  for (const [key, value] of Object.entries(RELEASE_SPEC_RECORD.spec)) {
+    Object.defineProperty(hostileSpec, key, key === 'status'
+      ? {
+          enumerable: true,
+          get() {
+            nestedSpecReads += 1;
+            return value;
+          }
+        }
+      : { enumerable: true, value });
+  }
+  assert.throws(
+    () => buildPromotionLifecyclePlan({
+      policyRecord: POLICY_RECORD,
+      releaseSpecRecord: {
+        path: RELEASE_SPEC_RECORD.path,
+        bytes: RELEASE_SPEC_RECORD.bytes,
+        spec: hostileSpec
+      }
+    }),
+    /status must be an enumerable data property/iu
+  );
+  assert.equal(nestedSpecReads, 0);
 });
 
 test('CLI emits only the deterministic fixed-root plan and rejects every operand', async () => {
@@ -664,7 +828,615 @@ test('rejects unsafe byte sizes, identifiers, receipt sizes, and timestamps', ()
 test('source is limited to fixed reads and in-memory hashing', async () => {
   const source = await readFile(path.join(REPOSITORY_ROOT, 'scripts/promotion-lifecycle.mjs'), 'utf8');
   const builtins = [...source.matchAll(/^import .* from '(node:[^']+)'/gmu)].map(match => match[1]);
-  assert.deepEqual(builtins, ['node:crypto', 'node:fs/promises', 'node:path', 'node:url']);
+  assert.deepEqual(builtins, ['node:crypto', 'node:fs/promises', 'node:path', 'node:url', 'node:util']);
   assert.equal(source.includes('import' + '('), false);
   assert.match(source, /import \{ readFile \} from 'node:fs\/promises'/u);
+});
+
+test('B2.2 policy binds the exact B1 policy and exposes the chain head observation time', () => {
+  const controlDecision = POLICY_RECORD.policy.controlDecision;
+  assert.equal(controlDecision.scope, 'fixture-only');
+  assert.equal(controlDecision.controlPolicyPath, CONTROL_POLICY_RECORD.path);
+  assert.equal(controlDecision.controlPolicySha256, CONTROL_POLICY_RECORD.sha256);
+  assert.equal(controlDecision.requiredLifecycleState, 'stable-bundle-verified');
+  assert.equal(controlDecision.maxControlReceiptCandidates, 4);
+  assert.ok(controlDecision.maxControlReceiptBytes > 0);
+  assert.deepEqual(controlDecision.decisions, [
+    'reconcile',
+    'block',
+    'proceed-to-b2.3-read-only-preflight'
+  ]);
+  assert.equal(new Set(controlDecision.reasonCodes).size, controlDecision.reasonCodes.length);
+
+  const fixture = fullChain();
+  const chain = validateLifecycleChain(fixture.bytes, {
+    policyRecord: POLICY_RECORD,
+    expectedHeadSha256: fixture.bundle.sha256,
+    expectedSubject: clone(BASE_SUBJECT)
+  });
+  assert.equal(chain.headObservedAt, fixture.bundle.receipt.observedAt);
+});
+
+test('current canonical B1 fixture evidence deterministically blocks and grants no authority', () => {
+  const first = decideFreshControlConsumption(decisionFixture());
+  const second = decideFreshControlConsumption(decisionFixture());
+  assert.ok(first.bytes.equals(second.bytes));
+  assert.equal(first.sha256, second.sha256);
+  assert.deepEqual(first.decision, second.decision);
+  assert.equal(first.decision.outcome, 'block');
+  assert.equal(first.decision.scope, 'fixture-only');
+  assert.equal(first.decision.productionEligible, false);
+  assert.equal(first.decision.externalMutationAuthorized, false);
+  assert.equal(first.decision.nextAction, 'resolve-blockers-before-b2.3');
+  assert.deepEqual(first.decision.reasonCodes, [
+    'control-policy-planned',
+    'control-receipt-injected',
+    'control-receipt-promotion-ineligible',
+    'control-repository-ids-unbound',
+    'control-release-spec-unbound',
+    'control-receipt-attestations-incomplete'
+  ]);
+  assert.equal(
+    first.decision.inputs.expectedControlReceiptSha256,
+    first.decision.inputs.observationSelectedControlReceiptSha256
+  );
+  assert.equal(
+    first.decision.inputs.observationSelectedControlReceiptSha256,
+    first.decision.inputs.consumedControlReceiptSha256
+  );
+  assert.deepEqual(first.decision.context.subject, BASE_SUBJECT);
+  assert.deepEqual(first.decision.context.lifecycle, {
+    policyPath: POLICY_RECORD.path,
+    policySha256: POLICY_RECORD.sha256,
+    chainId: first.decision.inputs.lifecycleChainId,
+    headSha256: first.decision.inputs.lifecycleHeadSha256,
+    headObservedAt: '2026-08-20T22:02:00.000Z',
+    receiptCount: 3,
+    currentState: 'stable-bundle-verified',
+    complete: true
+  });
+  assert.deepEqual(first.decision.context.controlPolicy, {
+    path: CONTROL_POLICY_RECORD.path,
+    sha256: CONTROL_POLICY_RECORD.sha256,
+    status: 'planned',
+    receiptFreshnessSeconds: 300,
+    maxClockSkewSeconds: 30
+  });
+  assert.equal(first.decision.context.observation.completeness, 'complete');
+  assert.equal(first.decision.context.observation.candidateCount, 1);
+  assert.equal(first.decision.context.observation.distinctCandidateCount, 1);
+  assert.match(first.decision.context.observation.inventorySha256, /^[0-9a-f]{64}$/u);
+  assert.deepEqual(first.decision.context.selectedReceipt, {
+    sha256: first.decision.inputs.consumedControlReceiptSha256,
+    byteLength: first.decision.context.selectedReceipt.byteLength,
+    observedAt: '2026-08-20T22:03:00.000Z',
+    expiresAt: '2026-08-20T22:08:00.000Z',
+    evidenceSource: 'injected-test-only',
+    promotionEligible: false,
+    validationWorkflowId: 303,
+    validationRunId: 404,
+    validationJobId: 505
+  });
+  assert.ok(first.decision.context.selectedReceipt.byteLength > 0);
+  assert.equal(JSON.stringify(first.decision).includes('receiptBytes'), false);
+  assert.ok(first.bytes.equals(canonicalBytes(first.decision)));
+  const material = {
+    schemaVersion: first.decision.schemaVersion,
+    kind: first.decision.kind,
+    scope: first.decision.scope,
+    productionEligible: first.decision.productionEligible,
+    externalMutationAuthorized: first.decision.externalMutationAuthorized,
+    outcome: first.decision.outcome,
+    evaluatedAt: first.decision.evaluatedAt,
+    reasonCodes: first.decision.reasonCodes,
+    nextAction: first.decision.nextAction,
+    inputs: first.decision.inputs,
+    context: first.decision.context
+  };
+  assert.equal(
+    first.decision.decisionId,
+    hashCanonical(promotionLifecycleConstants.decisionIdDomain, material)
+  );
+});
+
+test('control observation selection reconciles unknown, missing, excessive, and ambiguous evidence', async t => {
+  const primaryBytes = canonicalControlBytes(currentControlReceipt());
+  const alternateBytes = canonicalControlBytes(currentControlReceipt({
+    observedAt: '2026-08-20T22:03:01.000Z'
+  }));
+  const primary = controlCandidate(primaryBytes);
+  const alternate = controlCandidate(alternateBytes);
+  const cases = [
+    {
+      name: 'unknown completeness',
+      overrides: { completeness: 'unknown' },
+      reasons: ['control-observation-unknown']
+    },
+    {
+      name: 'no selection',
+      overrides: { selectedSha256: null },
+      reasons: ['control-selection-missing']
+    },
+    {
+      name: 'selection not found',
+      overrides: { selectedSha256: 'f'.repeat(64) },
+      reasons: ['control-selection-not-found']
+    },
+    {
+      name: 'empty complete observation',
+      overrides: { selectedSha256: null, candidates: [] },
+      reasons: ['control-observation-missing', 'control-selection-missing']
+    },
+    {
+      name: 'more candidates than the reviewed bound',
+      overrides: { candidates: Array.from({ length: 5 }, () => ({
+        receiptSha256: primary.receiptSha256,
+        receiptBytes: Buffer.from(primary.receiptBytes)
+      })) },
+      reasons: ['control-observation-limit-exceeded']
+    },
+    {
+      name: 'multiple distinct candidates',
+      overrides: { candidates: [primary, alternate] },
+      reasons: ['control-observation-ambiguous']
+    }
+  ];
+  for (const item of cases) {
+    await t.test(item.name, () => {
+      const result = decideFreshControlConsumption(decisionFixture({
+        receiptBytes: primaryBytes,
+        ...item.overrides
+      }));
+      assert.equal(result.decision.outcome, 'reconcile');
+      for (const reason of item.reasons) assert.ok(result.decision.reasonCodes.includes(reason));
+      assert.equal(result.decision.productionEligible, false);
+      assert.equal(result.decision.externalMutationAuthorized, false);
+    });
+  }
+
+  const duplicate = decideFreshControlConsumption(decisionFixture({
+    receiptBytes: primaryBytes,
+    candidates: [
+      { receiptSha256: primary.receiptSha256, receiptBytes: Buffer.from(primary.receiptBytes) },
+      { receiptSha256: primary.receiptSha256, receiptBytes: Buffer.from(primary.receiptBytes) }
+    ]
+  }));
+  assert.equal(duplicate.decision.outcome, 'reconcile');
+  assert.ok(duplicate.decision.reasonCodes.includes('control-observation-duplicate'));
+  assert.equal(duplicate.decision.reasonCodes.includes('control-observation-ambiguous'), false);
+  assert.equal(duplicate.decision.context.observation.candidateCount, 2);
+  assert.equal(duplicate.decision.context.observation.distinctCandidateCount, 1);
+});
+
+test('an independent out-of-band receipt anchor must agree with the observation selection', () => {
+  const conflicting = decideFreshControlConsumption(decisionFixture({
+    expectedControlReceiptSha256: 'f'.repeat(64)
+  }));
+  assert.equal(conflicting.decision.outcome, 'reconcile');
+  assert.ok(conflicting.decision.reasonCodes.includes('control-selection-anchor-conflict'));
+  assert.equal(conflicting.decision.inputs.expectedControlReceiptSha256, 'f'.repeat(64));
+  assert.notEqual(
+    conflicting.decision.inputs.expectedControlReceiptSha256,
+    conflicting.decision.inputs.observationSelectedControlReceiptSha256
+  );
+  assert.equal(conflicting.decision.inputs.consumedControlReceiptSha256, null);
+  assert.equal(conflicting.decision.context.selectedReceipt, null);
+
+  const malformed = decideFreshControlConsumption(decisionFixture({
+    expectedControlReceiptSha256: 'NOT-A-DIGEST'
+  }));
+  assert.equal(malformed.decision.outcome, 'reconcile');
+  assert.ok(malformed.decision.reasonCodes.includes('control-receipt-anchor-invalid'));
+  assert.equal(malformed.decision.inputs.expectedControlReceiptSha256, null);
+});
+
+test('control receipt admission rejects hash swaps, oversize bytes, and noncanonical serializations', async t => {
+  const receipt = currentControlReceipt();
+  const canonical = canonicalControlBytes(receipt);
+  const noncanonicalCases = [
+    ['minified without canonical key sorting', Buffer.from(JSON.stringify(receipt), 'utf8'), 'control-receipt-noncanonical'],
+    ['pretty printed', Buffer.from(`${JSON.stringify(receipt, null, 2)}\n`, 'utf8'), 'control-receipt-noncanonical'],
+    ['CRLF', Buffer.from(`${JSON.stringify(receipt, null, 2).replaceAll('\n', '\r\n')}\r\n`, 'utf8'), 'control-receipt-noncanonical'],
+    ['trailing whitespace', Buffer.concat([canonical, Buffer.from(' ', 'utf8')]), 'control-receipt-noncanonical'],
+    ['UTF-8 BOM', Buffer.concat([Buffer.from([0xef, 0xbb, 0xbf]), canonical]), 'control-receipt-invalid'],
+    ['duplicate JSON key', Buffer.from(`{"schemaVersion":"1.0.0",${canonical.toString('utf8').slice(1)}`, 'utf8'), 'control-receipt-invalid']
+  ];
+  for (const [name, bytes, reason] of noncanonicalCases) {
+    await t.test(name, () => {
+      const result = decideFreshControlConsumption(decisionFixture({ receiptBytes: bytes }));
+      assert.equal(result.decision.outcome, 'reconcile');
+      assert.ok(result.decision.reasonCodes.includes(reason));
+      assert.equal(result.decision.inputs.consumedControlReceiptSha256, null);
+      assert.equal(result.decision.context.selectedReceipt, null);
+    });
+  }
+
+  const swapped = {
+    receiptSha256: '0'.repeat(64),
+    receiptBytes: Buffer.from(canonical)
+  };
+  const hashMismatch = decideFreshControlConsumption(decisionFixture({
+    receiptBytes: canonical,
+    selectedSha256: swapped.receiptSha256,
+    candidates: [swapped]
+  }));
+  assert.equal(hashMismatch.decision.outcome, 'reconcile');
+  assert.ok(hashMismatch.decision.reasonCodes.includes('control-receipt-sha-mismatch'));
+
+  const oversizedBytes = Buffer.alloc(
+    POLICY_RECORD.policy.controlDecision.maxControlReceiptBytes + 1,
+    0x20
+  );
+  const oversized = decideFreshControlConsumption(decisionFixture({ receiptBytes: oversizedBytes }));
+  assert.equal(oversized.decision.outcome, 'reconcile');
+  assert.ok(oversized.decision.reasonCodes.includes('control-receipt-oversized'));
+  assert.equal(oversized.decision.inputs.consumedControlReceiptSha256, null);
+});
+
+test('receipt relabeling reconciles and fixed policy relabeling throws before evidence use', () => {
+  const relabeledReceipt = currentControlReceipt({
+    mutate(receipt) {
+      receipt.evidenceSource = 'github-api-live';
+      receipt.promotionEligible = true;
+    }
+  });
+  const relabeled = decideFreshControlConsumption(decisionFixture({
+    receipt: relabeledReceipt,
+    receiptBytes: canonicalControlBytes(relabeledReceipt)
+  }));
+  assert.equal(relabeled.decision.outcome, 'reconcile');
+  assert.ok(relabeled.decision.reasonCodes.includes('control-receipt-invalid'));
+
+  const readyPolicy = clone(CONTROL_POLICY_RECORD.policy);
+  readyPolicy.status = 'ready';
+  const readyBytes = Buffer.from(`${JSON.stringify(readyPolicy, null, 2)}\n`, 'utf8');
+  const hostilePolicyRecord = {
+    path: CONTROL_POLICY_RECORD.path,
+    sha256: digest(readyBytes),
+    bytes: readyBytes,
+    policy: readyPolicy
+  };
+  const hostileInput = decisionFixture();
+  hostileInput.controlPolicyRecord = hostilePolicyRecord;
+  assert.throws(
+    () => decideFreshControlConsumption(hostileInput),
+    /reviewed B1 policy bytes/iu
+  );
+});
+
+test('explicit evaluation time enforces canonical timestamps and inclusive freshness edges', () => {
+  for (const evaluatedAt of [
+    '2026-08-20T22:04:00Z',
+    '2026-08-20T18:04:00.000-04:00',
+    '2026-02-30T00:00:00.000Z',
+    '2026-08-19T23:59:59.999Z',
+    'not-a-time'
+  ]) {
+    const invalid = decideFreshControlConsumption(decisionFixture({ evaluatedAt }));
+    assert.equal(invalid.decision.outcome, 'reconcile');
+    assert.ok(invalid.decision.reasonCodes.includes('evaluated-at-invalid'));
+    assert.equal(invalid.decision.evaluatedAt, null);
+  }
+
+  const atEarlyBoundary = decideFreshControlConsumption(decisionFixture({
+    evaluatedAt: '2026-08-20T22:02:30.000Z'
+  }));
+  assert.equal(atEarlyBoundary.decision.outcome, 'block');
+  assert.equal(atEarlyBoundary.decision.reasonCodes.includes('control-receipt-not-yet-valid'), false);
+
+  const beforeEarlyBoundary = decideFreshControlConsumption(decisionFixture({
+    evaluatedAt: '2026-08-20T22:02:29.999Z'
+  }));
+  assert.equal(beforeEarlyBoundary.decision.outcome, 'reconcile');
+  assert.ok(beforeEarlyBoundary.decision.reasonCodes.includes('control-receipt-not-yet-valid'));
+
+  const atExpiry = decideFreshControlConsumption(decisionFixture({
+    evaluatedAt: '2026-08-20T22:08:00.000Z'
+  }));
+  assert.equal(atExpiry.decision.reasonCodes.includes('control-receipt-stale'), false);
+
+  const afterExpiry = decideFreshControlConsumption(decisionFixture({
+    evaluatedAt: '2026-08-20T22:08:00.001Z'
+  }));
+  assert.ok(afterExpiry.decision.reasonCodes.includes('control-receipt-stale'));
+});
+
+test('chain readiness blocks known incompleteness while chain ambiguity reconciles', () => {
+  const complete = fullChain();
+  const partial = { bytes: complete.bytes.slice(0, 2), bundle: complete.tag };
+  const partialDecision = decideFreshControlConsumption(decisionFixture({ chain: partial }));
+  assert.equal(partialDecision.decision.outcome, 'block');
+  assert.ok(partialDecision.decision.reasonCodes.includes('lifecycle-chain-incomplete'));
+  assert.ok(partialDecision.decision.reasonCodes.includes('lifecycle-state-not-ready'));
+
+  for (const hostile of [
+    { bytes: [complete.source.bytes, complete.bundle.bytes], bundle: complete.bundle },
+    { bytes: [complete.tag.bytes, complete.source.bytes], bundle: complete.source },
+    { bytes: [complete.source.bytes.subarray(0, complete.source.bytes.length - 1)], bundle: complete.source },
+    { bytes: [...complete.bytes, complete.bundle.bytes], bundle: complete.bundle }
+  ]) {
+    const result = decideFreshControlConsumption(decisionFixture({ chain: hostile }));
+    assert.equal(result.decision.outcome, 'reconcile');
+    assert.ok(result.decision.reasonCodes.includes('lifecycle-chain-invalid'));
+  }
+
+  const wrongHead = decisionFixture();
+  wrongHead.expectedHeadSha256 = 'f'.repeat(64);
+  const wrongHeadResult = decideFreshControlConsumption(wrongHead);
+  assert.equal(wrongHeadResult.decision.outcome, 'reconcile');
+  assert.ok(wrongHeadResult.decision.reasonCodes.includes('lifecycle-chain-invalid'));
+});
+
+test('control identity conflicts and pre-chain observations cannot be consumed', () => {
+  const alternateSubject = { ...clone(BASE_SUBJECT), sourceCommit: 'abcdef0123456789abcdef0123456789abcdef01' };
+  const alternateChain = fullChain(alternateSubject);
+  const originalReceipt = currentControlReceipt();
+  const identityConflict = decideFreshControlConsumption(decisionFixture({
+    chain: alternateChain,
+    subject: alternateSubject,
+    receipt: originalReceipt,
+    receiptBytes: canonicalControlBytes(originalReceipt)
+  }));
+  assert.equal(identityConflict.decision.outcome, 'reconcile');
+  assert.ok(identityConflict.decision.reasonCodes.includes('control-lifecycle-identity-conflict'));
+  assert.ok(identityConflict.decision.reasonCodes.includes('control-receipt-invalid'));
+
+  const preChainReceipt = currentControlReceipt({ observedAt: '2026-08-20T22:02:00.000Z' });
+  const preChain = decideFreshControlConsumption(decisionFixture({
+    receipt: preChainReceipt,
+    receiptBytes: canonicalControlBytes(preChainReceipt),
+    evaluatedAt: '2026-08-20T22:03:00.000Z'
+  }));
+  assert.equal(preChain.decision.outcome, 'block');
+  assert.ok(preChain.decision.reasonCodes.includes('control-observed-before-lifecycle-head'));
+});
+
+test('decision evidence envelopes reject accessors and proxies without reading hostile values', () => {
+  const topLevel = decisionFixture();
+  let topReads = 0;
+  const hostileTop = {};
+  for (const [key, value] of Object.entries(topLevel)) {
+    Object.defineProperty(hostileTop, key, key === 'controlObservation'
+      ? {
+          enumerable: true,
+          get() {
+            topReads += 1;
+            return value;
+          }
+        }
+      : { enumerable: true, value });
+  }
+  const rejectedTop = decideFreshControlConsumption(hostileTop);
+  assert.equal(topReads, 0);
+  assert.equal(rejectedTop.decision.outcome, 'reconcile');
+  assert.deepEqual(rejectedTop.decision.reasonCodes, ['decision-input-invalid']);
+
+  const base = decisionFixture();
+  let observationReads = 0;
+  const hostileObservation = {};
+  Object.defineProperties(hostileObservation, {
+    completeness: { enumerable: true, value: 'complete' },
+    selectedSha256: { enumerable: true, value: base.expectedControlReceiptSha256 },
+    candidates: {
+      enumerable: true,
+      get() {
+        observationReads += 1;
+        return base.controlObservation.candidates;
+      }
+    }
+  });
+  base.controlObservation = hostileObservation;
+  const rejectedObservation = decideFreshControlConsumption(base);
+  assert.equal(observationReads, 0);
+  assert.equal(rejectedObservation.decision.outcome, 'reconcile');
+  assert.ok(rejectedObservation.decision.reasonCodes.includes('control-observation-invalid'));
+
+  const candidateInput = decisionFixture();
+  let byteReads = 0;
+  const validCandidate = candidateInput.controlObservation.candidates[0];
+  const hostileCandidate = {};
+  Object.defineProperties(hostileCandidate, {
+    receiptSha256: { enumerable: true, value: validCandidate.receiptSha256 },
+    receiptBytes: {
+      enumerable: true,
+      get() {
+        byteReads += 1;
+        return validCandidate.receiptBytes;
+      }
+    }
+  });
+  candidateInput.controlObservation = {
+    completeness: 'complete',
+    selectedSha256: candidateInput.expectedControlReceiptSha256,
+    candidates: [hostileCandidate]
+  };
+  const rejectedCandidate = decideFreshControlConsumption(candidateInput);
+  assert.equal(byteReads, 0);
+  assert.equal(rejectedCandidate.decision.outcome, 'reconcile');
+  assert.ok(rejectedCandidate.decision.reasonCodes.includes('control-observation-invalid'));
+
+  let proxyTraps = 0;
+  const proxyInput = decisionFixture();
+  proxyInput.controlObservation = new Proxy(proxyInput.controlObservation, {
+    ownKeys() {
+      proxyTraps += 1;
+      throw new Error('hostile ownKeys trap');
+    }
+  });
+  const rejectedProxy = decideFreshControlConsumption(proxyInput);
+  assert.equal(proxyTraps, 0);
+  assert.equal(rejectedProxy.decision.outcome, 'reconcile');
+  assert.ok(rejectedProxy.decision.reasonCodes.includes('control-observation-invalid'));
+});
+
+test('decision snapshots mutable buffers once and does not trust Buffer instance methods', () => {
+  const receiptBytes = canonicalControlBytes(currentControlReceipt());
+  const originalDigest = digest(receiptBytes);
+  receiptBytes.equals = () => false;
+  receiptBytes.compare = () => 1;
+  const input = decisionFixture({
+    receiptBytes,
+    selectedSha256: originalDigest,
+    expectedControlReceiptSha256: originalDigest,
+    candidates: [{ receiptSha256: originalDigest, receiptBytes }]
+  });
+  const result = decideFreshControlConsumption(input);
+  const decisionBytes = Buffer.from(result.bytes);
+  assert.equal(result.decision.outcome, 'block');
+  assert.equal(result.decision.inputs.consumedControlReceiptSha256, originalDigest);
+  receiptBytes.fill(0x20);
+  assert.ok(result.bytes.equals(decisionBytes));
+  assert.equal(result.sha256, digest(decisionBytes));
+
+  const afterMutation = decideFreshControlConsumption(input);
+  assert.equal(afterMutation.decision.outcome, 'reconcile');
+  assert.ok(afterMutation.decision.reasonCodes.includes('control-receipt-sha-mismatch'));
+});
+
+test('reconcile dominates known blockers and reason ordering is policy-stable', () => {
+  const malformedBytes = Buffer.concat([
+    Buffer.from([0xef, 0xbb, 0xbf]),
+    canonicalControlBytes(currentControlReceipt())
+  ]);
+  const result = decideFreshControlConsumption(decisionFixture({ receiptBytes: malformedBytes }));
+  assert.equal(result.decision.outcome, 'reconcile');
+  assert.ok(result.decision.reasonCodes.includes('control-receipt-invalid'));
+  assert.ok(result.decision.reasonCodes.includes('control-policy-planned'));
+  const policyOrder = new Map(
+    POLICY_RECORD.policy.controlDecision.reasonCodes.map((reason, index) => [reason, index])
+  );
+  const indexes = result.decision.reasonCodes.map(reason => policyOrder.get(reason));
+  assert.deepEqual(indexes, [...indexes].sort((left, right) => left - right));
+});
+
+test('benign object and Buffer proxies are rejected before any proxy trap', () => {
+  const forwardingInput = decisionFixture();
+  forwardingInput.controlObservation = new Proxy(forwardingInput.controlObservation, {});
+  const forwarding = decideFreshControlConsumption(forwardingInput);
+  assert.equal(forwarding.decision.outcome, 'reconcile');
+  assert.ok(forwarding.decision.reasonCodes.includes('control-observation-invalid'));
+
+  const bytes = canonicalControlBytes(currentControlReceipt());
+  const anchor = digest(bytes);
+  let bufferTrapCount = 0;
+  const proxyBytes = new Proxy(bytes, {
+    getPrototypeOf(target) {
+      bufferTrapCount += 1;
+      return Object.getPrototypeOf(target);
+    },
+    getOwnPropertyDescriptor(target, property) {
+      bufferTrapCount += 1;
+      return Object.getOwnPropertyDescriptor(target, property);
+    },
+    get(target, property, receiver) {
+      bufferTrapCount += 1;
+      return receiver === proxyBytes ? target[property] : undefined;
+    }
+  });
+  const proxyBufferInput = decisionFixture();
+  proxyBufferInput.controlObservation = {
+    completeness: 'complete',
+    selectedSha256: anchor,
+    candidates: [{ receiptSha256: anchor, receiptBytes: proxyBytes }]
+  };
+  proxyBufferInput.expectedControlReceiptSha256 = anchor;
+  const proxyBuffer = decideFreshControlConsumption(proxyBufferInput);
+  assert.equal(bufferTrapCount, 0);
+  assert.equal(proxyBuffer.decision.outcome, 'reconcile');
+  assert.ok(proxyBuffer.decision.reasonCodes.includes('control-observation-invalid'));
+});
+
+test('shadowed and derived Buffer structures reject without invoking length accessors', () => {
+  const original = canonicalControlBytes(currentControlReceipt());
+  const anchor = digest(original);
+  let ownLengthReads = 0;
+  const ownLength = Buffer.from(original);
+  Object.defineProperty(ownLength, 'length', {
+    configurable: true,
+    get() {
+      ownLengthReads += 1;
+      return Number.MAX_SAFE_INTEGER;
+    }
+  });
+  const ownInput = decisionFixture();
+  ownInput.controlObservation = {
+    completeness: 'complete',
+    selectedSha256: anchor,
+    candidates: [{ receiptSha256: anchor, receiptBytes: ownLength }]
+  };
+  ownInput.expectedControlReceiptSha256 = anchor;
+  const ownResult = decideFreshControlConsumption(ownInput);
+  assert.equal(ownLengthReads, 0);
+  assert.equal(ownResult.decision.outcome, 'reconcile');
+  assert.ok(ownResult.decision.reasonCodes.includes('control-observation-invalid'));
+
+  let prototypeLengthReads = 0;
+  const derived = Buffer.from(original);
+  const derivedPrototype = Object.create(Buffer.prototype);
+  Object.defineProperty(derivedPrototype, 'length', {
+    configurable: true,
+    get() {
+      prototypeLengthReads += 1;
+      return original.length;
+    }
+  });
+  Object.setPrototypeOf(derived, derivedPrototype);
+  const derivedInput = decisionFixture();
+  derivedInput.controlObservation = {
+    completeness: 'complete',
+    selectedSha256: anchor,
+    candidates: [{ receiptSha256: anchor, receiptBytes: derived }]
+  };
+  derivedInput.expectedControlReceiptSha256 = anchor;
+  const derivedResult = decideFreshControlConsumption(derivedInput);
+  assert.equal(prototypeLengthReads, 0);
+  assert.equal(derivedResult.decision.outcome, 'reconcile');
+  assert.ok(derivedResult.decision.reasonCodes.includes('control-observation-invalid'));
+});
+
+test('oversized lifecycle bytes and unbounded observation digests reconcile with bounded output', () => {
+  const oversizedInput = decisionFixture();
+  oversizedInput.receiptBytesList = [Buffer.alloc(POLICY_RECORD.policy.limits.maxReceiptBytes + 1, 0x20)];
+  const oversized = decideFreshControlConsumption(oversizedInput);
+  assert.equal(oversized.decision.outcome, 'reconcile');
+  assert.ok(oversized.decision.reasonCodes.includes('lifecycle-chain-invalid'));
+  assert.ok(oversized.byteLength < 10_000);
+
+  const huge = 'a'.repeat(1_000_000);
+  const selectedInput = decisionFixture();
+  selectedInput.controlObservation.selectedSha256 = huge;
+  const selected = decideFreshControlConsumption(selectedInput);
+  assert.equal(selected.decision.outcome, 'reconcile');
+  assert.ok(selected.decision.reasonCodes.includes('control-observation-invalid'));
+  assert.equal(selected.decision.context.observation.selectedSha256, null);
+  assert.ok(selected.byteLength < 10_000);
+
+  const candidateInput = decisionFixture();
+  candidateInput.controlObservation.candidates[0].receiptSha256 = huge;
+  const candidate = decideFreshControlConsumption(candidateInput);
+  assert.equal(candidate.decision.outcome, 'reconcile');
+  assert.ok(candidate.decision.reasonCodes.includes('control-observation-invalid'));
+  assert.equal(candidate.decision.context.observation.inventorySha256, null);
+  assert.ok(candidate.byteLength < 10_000);
+  assert.ok(selected.bytes.equals(candidate.bytes));
+});
+
+test('evaluation may equal the lifecycle head but cannot precede it', () => {
+  const receipt = currentControlReceipt({ observedAt: '2026-08-20T22:02:30.000Z' });
+  const bytes = canonicalControlBytes(receipt);
+  const equality = decideFreshControlConsumption(decisionFixture({
+    receipt,
+    receiptBytes: bytes,
+    evaluatedAt: '2026-08-20T22:02:00.000Z'
+  }));
+  assert.equal(equality.decision.reasonCodes.includes('lifecycle-head-after-evaluation'), false);
+  assert.equal(equality.decision.reasonCodes.includes('control-receipt-not-yet-valid'), false);
+
+  const before = decideFreshControlConsumption(decisionFixture({
+    receipt,
+    receiptBytes: bytes,
+    evaluatedAt: '2026-08-20T22:01:59.999Z'
+  }));
+  assert.equal(before.decision.outcome, 'reconcile');
+  assert.ok(before.decision.reasonCodes.includes('lifecycle-head-after-evaluation'));
 });

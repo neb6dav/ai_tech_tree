@@ -218,11 +218,20 @@ last_verified_commands:
     runtime: "GitHub Actions Node v24.19.0/npm 11.17.0 plus exact synthetic Node v24.14.1/npm 11.11.0"
     verified_by: "root plus read-only reconciliation agent"
     scope: "Workflow 32426136950; all seven jobs green; tested merge SHA 8621d5630911ed0258a30a909a0726edcb294076 with tree equal to pushed head; preview artifact 9427494998 passed 1,465 references, release identity 2/2, and performance gates; manifest SHA-256 36110a2fd02b0b0f23a586e1166ffe66308234df5f104f2cc157575a259da45a; 17/17 inputs, 86 tracked entries, zero filters; no tag, release, setting, deployment, or production request"
+  - command: "npm run test:promotion-lifecycle; npm run test:promotion-controls; npm run test:workflow-policy; git diff --check"
+    status: "PASS"
+    runtime: "Node v24.14.1 and npm 11.11.0"
+    verified_by: "root"
+    scope: "C4.4-B2.2 local checkpoint: 45 lifecycle-decision, 15 promotion-control, and 129 workflow/package-policy tests; exact independent receipt anchors, bounded canonical bytes, accessor/proxy/exotic-buffer rejection, deterministic reconcile/block/read-only-preflight outcomes, and byte-locked workflow/transitive source closure"
+  - command: "Independent hostile C4.4-B2.2 decision and integration review"
+    status: "PASS after findings resolved"
+    verified_by: "root plus independent read-only reviewer"
+    scope: "Corrected missing out-of-band anchor and audit context, early-clock semantics, proxy and Buffer accessor execution, duplicate observations, lifecycle-future evaluation, unbounded digest strings and lifecycle buffers, and fixed-anchor documentation; source locks policy 61f2a9c9...77246, implementation 7d775ee0...ca34c, and tests ae7cf29a...d33bf; no production eligibility, external mutation, network, writer, adapter, token, release, or deploy capability"
 next_exact_action: >-
-  Stop at the remotely verified C4.4-B2.1 boundary. On the next continuation,
-  begin C4.4-B2.2 with fresh-control consumption and fail-closed ambiguity and
-  reconciliation decisions only; do not add rollback, live mutation, release,
-  or deployment capability.
+  Commit the hostile-reviewed C4.4-B2.2 snapshot, run the exact-clean full
+  repository gate at that commit, push it, and reconcile the hosted seven-job
+  validation and preview artifact before recording B2.2 complete. Do not add
+  rollback, live mutation, release, or deployment capability.
 known_blockers:
   - "WP-011-B is stacked on verified draft PR #5 until WP-011-A is separately authorized to merge."
   - "No merge, annotated tag, GitHub Release, environment approval, or public deployment is authorized."
@@ -230,7 +239,7 @@ known_blockers:
   - "Browser performance metrics and automated preview screenshots remain pending WP-012-A."
   - "The github-pages environment has no required reviewer and permits administrator bypass; immutable GitHub Releases are disabled. These external controls require separate authorization before any C4 promotion run."
   - "No active no-bypass tag ruleset protects v0.1.1, and the verified production recovery artifact is local rather than durable and runner-accessible."
-release_gate_status: "wp_011_b_c4_4_b2_1_remote_verified_b2_2_ready"
+release_gate_status: "wp_011_b_c4_4_b2_1_remote_verified_b2_2_local_hostile_verified_pending_commit"
 release_details:
   version: "v0.1.1"
   title: "Publication-contract repair"
@@ -256,11 +265,12 @@ release_details:
     active_checkpoint:
       id: "C4.4-B2.2"
       title: "Fresh-control consumption and ambiguity/reconciliation decisions"
-      status: "ready_to_implement"
+      status: "local_hostile_verified_pending_checkpoint_commit"
       next_exact_action: >-
-        Resume only on the next continuation. Add deterministic, fail-closed
-        decision guards for fresh control evidence and unknown external state;
-        retain fixture-only/no-mutation boundaries and defer rollback to B2.3.
+        Commit this exact seven-file snapshot, run the exact-clean full gate,
+        push, and reconcile hosted validation plus the downloaded preview;
+        retain fixture-only, production-ineligible, no-mutation boundaries and
+        defer rollback to B2.3.
     scope:
       - "Publish stable and compatibility Opportunity endpoints."
       - "Move exported human URLs to the root application."

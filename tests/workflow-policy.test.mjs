@@ -33,9 +33,17 @@ const REVIEWED_PROMOTION_CONTROL_SOURCE_SHA256 = Object.freeze({
   'tests/github-control-audit.test.mjs': '474d4fe90c462ac74d512a2eb082ea3f5938de7518ee660c357f4d62683836da'
 });
 const REVIEWED_PROMOTION_LIFECYCLE_SOURCE_SHA256 = Object.freeze({
-  'config/promotion-lifecycle-policy.v1.json': '2858c8e9514befe9b9872dbd3004f819bb2580d5481f5813cd499ff95865d2e1',
-  'scripts/promotion-lifecycle.mjs': 'cf67a056ea8ff175bb644c78d14fae528d4839c268a30e2342911b3cbedee4e8',
-  'tests/promotion-lifecycle.test.mjs': '2f06e7fbb90f953a854b08eacd893ba7bfe05af4003e357924a39c1c5a32c582'
+  'config/github-promotion-policy.v1.json': 'a1dc1ec4b814f09e668b1b1d6669853240dcb732541e0d0b580ec3f5a959215c',
+  'config/promotion-lifecycle-policy.v1.json': '61f2a9c91fe24ec232af591385f3d3995c3c4412015e816fc27b9b0142777246',
+  'scripts/github-control-audit.mjs': '2b5d5fd0aa23056bc00bcfa01cf11b24f345465d9c4f98a403f858a16f010995',
+  'scripts/promotion-lifecycle.mjs': '7d775ee0d5f3c8ac4a081cede2434fffb3509f6ae8e5fa5c3056ca8310fca34c',
+  'scripts/release-spec.mjs': 'ba57496454c0e565bd6b315e8c52aba6998774aff27d6c55eac32e141074e89f',
+  'scripts/strict-json.mjs': '32319f64ee28a8e4c0329d24ef26c8ef26c94f12d77f9f20656f7e744111de7e',
+  'tests/promotion-lifecycle.test.mjs': 'ae7cf29a1baa68169b437e215a158df8801bbb4dd2e61eea6b237d1da3cd33bf'
+});
+const REVIEWED_WORKFLOW_SOURCE_SHA256 = Object.freeze({
+  'pages.yml': 'f694db57bce2edcbb916ee1c845f7d33b9245546f063421dadace235073fddfa',
+  'validate.yml': '8182b87623070f8260433fa9eb58909e75676705fee2511cd5efe8c874e9c31e'
 });
 const REVIEWED_SYNTHETIC_SOURCE_SHA256 = Object.freeze({
   'scripts/release-assets.mjs': '8841efff842e00dd93bf69a849b7701ae519bfd70b9bc5618c440ee37b90f83f',
@@ -213,6 +221,23 @@ function validateWorkflowInventory(names) {
     EXPECTED_WORKFLOW_FILES,
     '.github/workflows must contain only the reviewed Pages hold and validation workflows'
   );
+}
+
+function validateWorkflowSourceBytes(sources) {
+  assert.deepEqual(
+    [...sources.keys()].sort(),
+    Object.keys(REVIEWED_WORKFLOW_SOURCE_SHA256).sort(),
+    'workflow byte closure must contain exactly the reviewed Pages hold and validation workflows'
+  );
+  for (const [name, expectedDigest] of Object.entries(REVIEWED_WORKFLOW_SOURCE_SHA256)) {
+    const bytes = sources.get(name);
+    assert.ok(Buffer.isBuffer(bytes), `workflow byte closure is missing ${name}`);
+    assert.equal(
+      createHash('sha256').update(bytes).digest('hex'),
+      expectedDigest,
+      `${name} must remain byte-for-byte unchanged`
+    );
+  }
 }
 
 function allEntries(value, currentPath = '$', entries = []) {
@@ -1005,8 +1030,15 @@ function validatePromotionLifecycleSourceBoundary(reviewedSources = reviewedProm
   const planner = reviewedSources.get('scripts/promotion-lifecycle.mjs').toString('utf8');
   const tests = reviewedSources.get('tests/promotion-lifecycle.test.mjs').toString('utf8');
   const policyBytes = reviewedSources.get('config/promotion-lifecycle-policy.v1.json');
-  const sourcePairs = [['planner', planner], ['hostile tests', tests]];
+  const sourcePairs = [
+    ['planner', planner],
+    ['hostile tests', tests],
+    ['release-spec parser', reviewedSources.get('scripts/release-spec.mjs').toString('utf8')],
+    ['strict JSON parser', reviewedSources.get('scripts/strict-json.mjs').toString('utf8')]
+  ];
   const allowedStaticImports = new Set([
+    '../scripts/github-control-audit.mjs',
+    './github-control-audit.mjs',
     '../scripts/promotion-lifecycle.mjs',
     '../scripts/release-spec.mjs',
     './release-spec.mjs',
@@ -1032,7 +1064,18 @@ function validatePromotionLifecycleSourceBoundary(reviewedSources = reviewedProm
     }
     assert.doesNotMatch(source, /(?:^|['"])(?:node:)?(?:http|https|http2|net|tls|dgram|dns)(?:\/|['"])/mu, `${label} must not import a network primitive`);
     assert.doesNotMatch(source, /\b(?:fetch|WebSocket|EventSource|XMLHttpRequest|getBuiltinModule|sendBeacon)\b/u, `${label} must not reference a network client or dynamic builtin resolver`);
-    assert.doesNotMatch(source, /\b(?:eval|Function|Reflect|Proxy)\b|\bimport\s*\(/u, `${label} must not construct executable or dynamically imported code`);
+    assert.doesNotMatch(
+      source,
+      /\b(?:eval|Function|Reflect)\b|\bimport\s*\(/u,
+      `${label} must not construct executable or dynamically imported code`
+    );
+    if (label !== 'hostile tests') {
+      assert.doesNotMatch(
+        source,
+        /\bnew\s+Proxy\b|\bProxy\s*\(|\b(?:globalThis|window|self)\s*(?:\.\s*Proxy|\[\s*['"]Proxy['"]\s*\])/u,
+        `${label} must not construct or obtain a Proxy capability`
+      );
+    }
     assert.doesNotMatch(source, /node:child_process|\b(?:execFile|execFileSync|execSync|spawn|spawnSync|fork)\s*\(/u, `${label} must not launch a subprocess`);
     assert.doesNotMatch(
       source,
@@ -1059,8 +1102,37 @@ function validatePromotionLifecycleSourceBoundary(reviewedSources = reviewedProm
   assert.equal(policy.mode, 'fixture-only', 'promotion lifecycle policy must remain fixture-only');
   assert.equal(policy.subject?.repositoryFullName, 'neb6dav/ai_tech_tree', 'promotion lifecycle policy must retain the fixed repository');
   assert.equal(policy.subject?.tag, 'v0.1.1', 'promotion lifecycle policy must retain the fixed release tag');
+  assert.equal(policy.controlDecision?.scope, 'fixture-only', 'control decisions must remain fixture-only');
+  assert.equal(
+    policy.controlDecision?.controlPolicyPath,
+    'config/github-promotion-policy.v1.json',
+    'control decisions must remain bound to the reviewed B1 policy path'
+  );
+  assert.equal(
+    policy.controlDecision?.controlPolicySha256,
+    REVIEWED_PROMOTION_CONTROL_SOURCE_SHA256['config/github-promotion-policy.v1.json'],
+    'control decisions must remain bound to the reviewed B1 policy bytes'
+  );
+  assert.equal(
+    policy.controlDecision?.requiredLifecycleState,
+    'stable-bundle-verified',
+    'control decisions must require the complete B2.1 fixture chain'
+  );
+  assert.deepEqual(policy.controlDecision?.decisions, [
+    'reconcile',
+    'block',
+    'proceed-to-b2.3-read-only-preflight'
+  ], 'control decisions must retain the exact non-promoting outcome vocabulary');
   assert.match(planner, /fixture-only/iu, 'planner must label its receipt boundary fixture-only');
   assert.match(planner, /(?:promotion|production)-ineligible/iu, 'planner must label its receipts promotion-ineligible');
+  assert.match(planner, /export function decideFreshControlConsumption\(input\)/u);
+  assert.match(planner, /productionEligible:\s*false/u, 'every fixture decision must remain production-ineligible');
+  assert.match(planner, /externalMutationAuthorized:\s*false/u, 'every fixture decision must deny external mutation authority');
+  assert.match(
+    tests,
+    /new Proxy\(proxyInput\.controlObservation/u,
+    'source-locked hostile tests must retain the accessor/proxy snapshot boundary'
+  );
   assert.match(planner, /export async function loadPromotionLifecyclePolicy\(\.\.\.argumentsList\)/u);
   assert.match(planner, /argumentsList\.length !== 0/u, 'policy loader must reject every caller-controlled path argument');
   assert.match(planner, /if \(!Array\.isArray\(argv\) \|\| argv\.length !== 0\)/u, 'plan CLI must reject every operand');
@@ -1118,10 +1190,15 @@ const reviewedPromotionControlSources = new Map([
   ['tests/github-control-audit.test.mjs', promotionControlTestBytes],
   ['config/github-promotion-policy.v1.json', promotionControlPolicyBytes]
 ]);
-const reviewedPromotionLifecycleSources = new Map([
-  ['scripts/promotion-lifecycle.mjs', promotionLifecycleScriptBytes],
-  ['tests/promotion-lifecycle.test.mjs', promotionLifecycleTestBytes],
-  ['config/promotion-lifecycle-policy.v1.json', promotionLifecyclePolicyBytes]
+const reviewedPromotionLifecycleSources = new Map(await Promise.all(
+  Object.keys(REVIEWED_PROMOTION_LIFECYCLE_SOURCE_SHA256).map(async relativePath => [
+    relativePath,
+    await readFile(path.join(REPOSITORY_ROOT, ...relativePath.split('/')))
+  ])
+));
+const reviewedWorkflowSources = new Map([
+  ['pages.yml', pagesBytes],
+  ['validate.yml', validateBytes]
 ]);
 const validateWorkflow = parseStrictYaml(validateBytes, 'validate workflow');
 const pagesWorkflow = parseStrictYaml(pagesBytes, 'Pages hold workflow');
@@ -1130,6 +1207,7 @@ const packageLockDocument = parseStrictJson(packageLockBytes, 'package-lock.json
 
 test('workflow directory contains only the reviewed validation and Pages hold files', () => {
   validateWorkflowInventory(workflowNames);
+  validateWorkflowSourceBytes(reviewedWorkflowSources);
 });
 
 test('validation CI is candidate-and-synthetic-only, cross-platform, byte-compared, and read-only', () => {
@@ -1190,6 +1268,7 @@ test('promotion-lifecycle source policy rejects capability and trust-anchor drif
     ['direct network client', `${planner}\nglobalThis['fetch']('https://example.invalid/');\n`, tests, policy],
     ['dynamic builtin', `${planner}\nprocess.getBuiltinModule('https');\n`, tests, policy],
     ['dynamic import', `${planner}\nawait import('node:fs');\n`, tests, policy],
+    ['Proxy construction', `${planner}\nconst proxy = new Proxy({}, {});\n`, tests, policy],
     ['child process', `${planner}\nspawnSync('git', ['status']);\n`, tests, policy],
     ['filesystem write', `${planner}\nawait writeFile('receipt.json', '{}');\n`, tests, policy],
     ['credential', `${planner}\nconst GITHUB_TOKEN = 'fixture';\n`, tests, policy],
@@ -1197,15 +1276,27 @@ test('promotion-lifecycle source policy rejects capability and trust-anchor drif
     ['mutating method', `${planner}\nconst method = 'POST';\n`, tests, policy],
     ['execution CLI', `${planner}\nconst flag = '--execute';\n`, tests, policy],
     ['output CLI in hostile tests', planner, `${tests}\nconst flag = '--output';\n`, policy],
+    ['adapter CLI in hostile tests', planner, `${tests}\nconst flag = '--adapter';\n`, policy],
     ['policy trust anchor', planner, tests, policy.replace('neb6dav/ai_tech_tree', 'fork/ai_tech_tree')]
   ];
   for (const [name, hostilePlanner, hostileTests, hostilePolicy] of mutations) {
     await t.test(name, () => {
-      const sources = new Map([
-        ['scripts/promotion-lifecycle.mjs', Buffer.from(hostilePlanner)],
-        ['tests/promotion-lifecycle.test.mjs', Buffer.from(hostileTests)],
-        ['config/promotion-lifecycle-policy.v1.json', Buffer.from(hostilePolicy)]
-      ]);
+      const sources = new Map(reviewedPromotionLifecycleSources);
+      sources.set('scripts/promotion-lifecycle.mjs', Buffer.from(hostilePlanner));
+      sources.set('tests/promotion-lifecycle.test.mjs', Buffer.from(hostileTests));
+      sources.set('config/promotion-lifecycle-policy.v1.json', Buffer.from(hostilePolicy));
+      assert.throws(() => validatePromotionLifecycleSourceBoundary(sources));
+    });
+  }
+  for (const relativePath of [
+    'config/github-promotion-policy.v1.json',
+    'scripts/github-control-audit.mjs',
+    'scripts/release-spec.mjs',
+    'scripts/strict-json.mjs'
+  ]) {
+    await t.test(`${relativePath} transitive drift`, () => {
+      const sources = new Map(reviewedPromotionLifecycleSources);
+      sources.set(relativePath, Buffer.concat([sources.get(relativePath), Buffer.from('\n')]));
       assert.throws(() => validatePromotionLifecycleSourceBoundary(sources));
     });
   }

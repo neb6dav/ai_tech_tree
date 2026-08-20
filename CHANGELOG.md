@@ -4,6 +4,21 @@ All notable public changes to the AI Research Tech Tree will be documented here.
 
 ## [Unreleased]
 
+### Added
+
+- A bounded diffusion-models Opportunity View for tracing capabilities, refinements, applications, constraints, competing approaches, and testable research opportunities.
+- A separately maintained Opportunity-map schema, source dataset, validation gate, deterministic renderer, structured outline, and typed cross-links to Timeline and Network records.
+- Persistent interpretation guidance stating that paths have uniform, non-quantitative width and that hypothetical or incomplete evidence uses distinct styling.
+
+### Changed
+
+- Extended the deterministic build, Content Security Policy hashes, release checks, accessibility checks, and contribution guidance to cover the Opportunity View.
+
+### Known limitations
+
+- The diffusion-models map is an alpha literature import. Its `importStatus` records whether source-by-source human validation is still outstanding.
+- Opportunity status is branch- and context-specific; the view does not measure total remaining research value or establish that a technology is globally exhausted.
+
 ### Planned
 
 - Continue node-level and relationship-level evidence review.

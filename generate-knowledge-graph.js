@@ -85,7 +85,7 @@ function omitEmpty(object) {
 
 function extractModel(html) {
   const scripts = scriptsIn(html);
-  assert(scripts.length === 8, `Expected 8 script elements, found ${scripts.length}`);
+  assert(scripts.length === 10, `Expected 10 script elements, found ${scripts.length}`);
   const findScript = (description, predicate) => {
     const matches = scripts.filter(predicate);
     assert(matches.length === 1, `Expected exactly one ${description} script, found ${matches.length}`);
@@ -95,9 +95,15 @@ function extractModel(html) {
   const atlasData = findScript('atlas data', script => /const\s+NODES\s*=\s*\[\]/.test(script[1]));
   const wikipediaAudit = findScript('Wikipedia audit data', script => /^<script\b[^>]*\bid="wiki-audit-data"[^>]*>/i.test(script[0]));
   const researchGuide = findScript('research guide data', script => /^<script\b[^>]*\bid="research-guide-data"[^>]*>/i.test(script[0]));
+  const opportunityData = findScript('opportunity data', script => /^<script\b[^>]*\bid="opportunity-data"[^>]*>/i.test(script[0]));
+  findScript('opportunity view engine', script => /^<script\b[^>]*\bid="opportunity-view-engine"[^>]*>/i.test(script[0]));
   const networkLayout = findScript('network layout data', script => /^<script\b[^>]*\bid="network-layout-data"[^>]*>/i.test(script[0]));
   findScript('network view engine', script => /^<script\b[^>]*\bid="network-view-engine"[^>]*>/i.test(script[0]));
   assert(/^<script\b[^>]*\btype="application\/json"[^>]*>/i.test(scripts.find(script => script[1] === networkLayout)[0]), 'Network layout script must use application/json');
+  assert(/^<script\b[^>]*\btype="application\/json"[^>]*>/i.test(scripts.find(script => script[1] === opportunityData)[0]), 'Opportunity data script must use application/json');
+  const parsedOpportunityData = JSON.parse(opportunityData || '{}');
+  assert(parsedOpportunityData.metadata?.id === 'diffusion-models-opportunity-map', 'Opportunity data is missing metadata.id=diffusion-models-opportunity-map');
+  assert(parsedOpportunityData.metadata?.anchorAtlasNodeId === 'diffusion', 'Opportunity data is missing its diffusion atlas anchor');
   const parsedNetworkLayout = JSON.parse(networkLayout || '{}');
   assert(parsedNetworkLayout.layoutVersion === 'network-v1', 'Network layout data is missing layoutVersion=network-v1');
   const engine = findScript('atlas engine', script => script[1].includes('/* ---------- layout ---------- */'));
@@ -116,8 +122,10 @@ function extractModel(html) {
   vm.runInContext(researchGuide, context, { filename: 'research-guide.js' });
   const layoutAt = engine.indexOf('/* ---------- layout ---------- */');
   assert(layoutAt >= 0, 'Engine layout marker not found');
+  const opportunityAt = engine.indexOf('/* ---------- time-oriented capability and opportunity graph ---------- */');
+  assert(opportunityAt >= 0, 'Opportunity engine marker not found');
   const networkAt = engine.indexOf('/* ---------- deterministic 2-D relationship network ---------- */');
-  const extractionAt = networkAt >= 0 ? Math.min(networkAt, layoutAt) : layoutAt;
+  const extractionAt = Math.min(opportunityAt, networkAt >= 0 ? networkAt : Infinity, layoutAt);
   const exportCode = `
     ;globalThis.__KG_MODEL__={
       project:PROJECT_META,
@@ -787,7 +795,7 @@ function applyKnowledgeGraph(html, datasetGraph) {
 
   const scripts = scriptsIn(html).map(match => match[1]);
   const styles = [...html.matchAll(/<style(?:\s[^>]*)?>([\s\S]*?)<\/style>/gi)].map(match => match[1]);
-  assert(scripts.length === 8 && styles.length === 2, `Unexpected inline body counts: ${scripts.length} scripts, ${styles.length} styles`);
+  assert(scripts.length === 10 && styles.length === 2, `Unexpected inline body counts: ${scripts.length} scripts, ${styles.length} styles`);
   const cspHash = body => `'sha256-${crypto.createHash('sha256').update(body, 'utf8').digest('base64')}'`;
   const policy = [
     "default-src 'none'",

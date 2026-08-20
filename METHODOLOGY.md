@@ -8,12 +8,14 @@ The project favors transparent uncertainty over false completeness. A visible ev
 
 ## Units of analysis
 
-The atlas contains two principal node types:
+The historical atlas contains two principal node types:
 
 1. **Developments**: publications, demonstrations, methods, systems, findings, datasets, institutions, or other events judged consequential to the research history represented by a branch.
 2. **Open directions**: unresolved questions or prospective areas included to support research orientation. These are not historical developments and must be visibly distinguished from them.
 
 Relationships are separate records with stable source and target identifiers. A node's presence does not imply endorsement, and an edge's presence does not automatically imply direct influence or causation.
+
+The Opportunity View uses a separate ontology because a historical development and an opportunity assessment answer different questions. Its records distinguish precursors, core developments, capabilities, refinements, complements, applications, demonstrated outcomes, constraints, stalled attempts, competing approaches, and open opportunities. Typed `atlasLinks` connect a capability record to a historical atlas record without merging their meanings or evidence states.
 
 ## Inclusion criteria
 
@@ -62,6 +64,16 @@ Every relationship should be interpreted through its declared type, direction, e
 
 “No source found in the current audit” means only that the stated review did not locate and attach support. It is not a negative finding about the real-world relationship.
 
+## Opportunity-view interpretation
+
+The Opportunity View asks what a bounded development enabled, where those capabilities were applied, what constrained them, what competing approaches changed their use, and what testable possibilities remain. It is a time-oriented braided capability graph, not a quantitative Sankey diagram and not a genealogy of every downstream work.
+
+Every path uses one fixed visual width. Width does not encode publication volume, adoption, scientific importance, commercial value, evidential confidence, remaining research value, or probability of success. Relationship type, status, evidence grade, explanatory text, and cited sources carry the meaning. Dashed paths identify incomplete, unassessed, or hypothetical support.
+
+Status is assessed only within a declared scope. Terms such as `locally_saturated`, `constraint_bound`, or `displaced_in_this_context` may be used only for the named capability, application, benchmark, or operating regime. They must not be generalized into a claim that the underlying technology is globally exhausted. An open opportunity must state a falsifiable question, proposed mechanism, unmet need, adjacent-work and novelty-search scope, minimal experiment, baselines, disconfirming result, likely resources, blockers, and failure reasons. Open opportunities and candidate-application edges remain hypothesis-grade.
+
+The first Opportunity map is a bounded diffusion-models alpha: 60 nodes, 94 relationships (93 report rows plus one explicitly contextual editorial connectivity edge), 78 source URLs, eight branches, eight constraints, eight hypothesis cards, and nine unresolved claims. It remains `imported_unreviewed`; that status distinguishes research extracted from the report from records that have received source-by-source human validation. The structured outline is a complete non-graph reading path, while cross-view controls return linked records to the Timeline or Network.
+
 ## Network-view interpretation
 
 The Network view is a visual projection of the recorded graph. Its coordinates are generated deterministically for a versioned layout so the same release can be reproduced. Layout forces may group connected nodes and separate weakly connected regions.
@@ -93,12 +105,13 @@ Substantive changes are made through GitHub issues and pull requests. Git histor
 
 ## Generation and reproducibility
 
-For this public beta, `ai-research-tech-tree.html` remains the canonical application source and contains the atlas records used by the interface. Source code under `src/` and the build, layout, injection, export, and validation scripts are maintained source.
+For this public beta, `ai-research-tech-tree.html` remains the canonical application source and contains the historical atlas records used by the interface. The Opportunity map is maintained separately in `src/data/opportunities/diffusion-models.alpha.json` and validated against `src/data/opportunities/opportunity-map.schema.json` plus cross-view integrity rules. Source code under `src/` and the build, layout, injection, export, and validation scripts are maintained source.
 
 The following are reproducible generated artifacts and must not be edited directly:
 
 - `index.html`;
 - `network-atlas.bundle.js`;
+- `opportunity-atlas.bundle.js`;
 - `network-layout-v1.json`; and
 - the JSON, JSON-LD, and NDJSON graph exports.
 

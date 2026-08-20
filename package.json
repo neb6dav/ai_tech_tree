@@ -5,10 +5,12 @@
   "description": "Build tooling for the AI Research Tech Tree static atlas.",
   "scripts": {
     "build:network": "esbuild src/network-view.js --bundle --format=iife --global-name=NetworkAtlas --platform=browser --target=es2020 --outfile=network-atlas.bundle.js --minify --legal-comments=eof",
+    "build:opportunity": "esbuild src/opportunity-view.js --bundle --format=iife --global-name=OpportunityAtlas --platform=browser --target=es2020 --outfile=opportunity-atlas.bundle.js --minify --legal-comments=eof",
     "build:layout": "node generate-network-layout.js",
     "build": "node build.js",
     "test:network": "node network-gate.js",
-    "test": "node release-gate.js && node accessibility-gate.js && node ui-layout-gate.js && node network-gate.js"
+    "test:opportunity": "node opportunity-gate.js",
+    "test": "node release-gate.js && node accessibility-gate.js && node ui-layout-gate.js && node network-gate.js && node opportunity-gate.js"
   },
   "dependencies": {
     "@cosmos.gl/graph": "3.4.0"

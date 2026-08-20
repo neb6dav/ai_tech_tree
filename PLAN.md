@@ -5,7 +5,7 @@ active_work_package: "WP-011-B"
 issue_url: "https://github.com/neb6dav/ai_tech_tree/issues/6"
 pr_url: "https://github.com/neb6dav/ai_tech_tree/pull/7"
 base_sha: "85108c78fa86c86634d4c0944839696369e687cd"
-last_completed_checkpoint: "WP-011-B/C4.4-A2"
+last_completed_checkpoint: "WP-011-B/C4.4-B1"
 last_verified_commands:
   - command: "npm run build"
     status: "PASS"
@@ -184,10 +184,20 @@ last_verified_commands:
     status: "PASS"
     verified_by: "root plus independent read-only reviewer"
     scope: "The original adjacent release-tooling matrix remained green; the follow-up hostile review reproduced and closed unknown-field, unknown-enum, hidden deployment-policy page, cross-run job, custom-domain, legacy Pages source, and malformed or expired certificate false-green paths, then returned SHIP; no live audit or external mutation"
+  - command: "npm run build; AI_TREE_REQUIRE_CLEAN=true AI_TREE_STAGE_MODE=preview AI_TREE_COMMIT_SHA=c6bd208f397532cdf0c0dde984739b5dc2eb0120 npm test"
+    status: "PASS"
+    runtime: "Node v24.14.1, npm 11.11.0, and Git 2.55"
+    verified_by: "root"
+    scope: "Exact C4.4-B1 hardening commit c6bd208; all core and publication gates including 15 promotion-control and 104 workflow-policy tests; 17/17 release inputs, 83 tracked entries, zero filters, 1,465 staged-site references, and local manifest SHA-256 1d05fcc0af173d0ad7667dd2421bb5813fabe0b24410c2c6ac5886031fc4d093"
+  - command: "Reconcile C4.4-B1 hardening hosted validation and downloaded preview"
+    status: "PASS"
+    runtime: "GitHub Actions Node v24.19.0/npm 11.17.0 plus exact synthetic Node v24.14.1/npm 11.11.0"
+    verified_by: "root plus read-only reconciliation agent"
+    scope: "Workflow 32423679013; all seven jobs green; tested merge SHA 47145ebb59084861a5633ab1bd555c1f3102488e; preview artifact 9426639317 passed 1,465 contract references and release identity 2/2; 17/17 inputs, 83 tracked entries, zero filters; CI manifest SHA-256 aa1fbfb510659c7f3b3bdb11761d6ae2353273693464cf8b5f8b7b4be9fa1eeb; no live audit, tag, release, settings, deployment, or production smoke"
 next_exact_action: >-
-  Commit the locally verified C4.4-B1 fail-closed API-response hardening and
-  updated ledger; run the exact clean-commit full repository gate, then push
-  and reconcile hosted validation before declaring B1 complete.
+  Implement C4.4-B2.1 as a pure, fixture-only lifecycle receipt primitive and
+  linear state table with a deterministic plan-only CLI; add exact package and
+  capability-policy closure without enabling network or external mutation.
 known_blockers:
   - "WP-011-B is stacked on verified draft PR #5 until WP-011-A is separately authorized to merge."
   - "No merge, annotated tag, GitHub Release, environment approval, or public deployment is authorized."
@@ -195,7 +205,7 @@ known_blockers:
   - "Browser performance metrics and automated preview screenshots remain pending WP-012-A."
   - "The github-pages environment has no required reviewer and permits administrator bypass; immutable GitHub Releases are disabled. These external controls require separate authorization before any C4 promotion run."
   - "No active no-bypass tag ruleset protects v0.1.1, and the verified production recovery artifact is local rather than durable and runner-accessible."
-release_gate_status: "wp_011_b_c4_4_a2_remote_verified_b1_hardening_locally_verified_pending_commit"
+release_gate_status: "wp_011_b_c4_4_b1_remote_verified_b2_1_ready"
 release_details:
   version: "v0.1.1"
   title: "Publication-contract repair"
@@ -219,13 +229,14 @@ release_details:
       artifact_id: 9392055435
       artifact_tar_sha256: "f04f46196b74982f9d725f032278f9b7ed48ae1ffd82db0dcff3fc39f739f9c4"
     active_checkpoint:
-      id: "C4.4-B1"
-      title: "Read-only GitHub promotion-control audit"
-      status: "hardening_locally_verified_pending_commit"
+      id: "C4.4-B2.1"
+      title: "Fixture-only lifecycle receipt primitives and linear state table"
+      status: "ready_to_implement"
       next_exact_action: >-
-        Commit the three hardened control-audit files plus this ledger, run the
-        exact clean-commit full gate, push the branch, reconcile the hosted
-        workflow and preview, then record remote evidence before B2 begins.
+        Add the fixed planned lifecycle policy, canonical receipt parser and
+        validator, deterministic allowed-transition table, fixture-only API,
+        plan-only CLI, focused hostile tests, package wiring, and capability
+        locks; do not add a live adapter, workflow, tag, release, or deploy path.
     scope:
       - "Publish stable and compatibility Opportunity endpoints."
       - "Move exported human URLs to the root application."

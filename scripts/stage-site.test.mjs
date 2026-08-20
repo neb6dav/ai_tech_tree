@@ -54,7 +54,11 @@ async function writeBaseFixture(root, config = baseConfig()) {
   await write(root, 'package-lock.json', '{"lockfileVersion":3}\n');
   await write(root, 'data.json', JSON.stringify({
     generatorVersion: '4.5.6',
-    dataset: { edition: '2026-test-edition', dataDigest: 'b'.repeat(64) }
+    dataset: {
+      edition: '2026-test-edition',
+      releaseState: 'Test development edition',
+      dataDigest: 'b'.repeat(64)
+    }
   }));
   await write(root, 'index.html', '<!doctype html><title>Fixture</title>\n');
   await write(root, 'public/data/z.json', '{"z":1}\n');
@@ -89,6 +93,7 @@ test('stages a deterministic tree and sorted release manifest', async () => {
   ]);
   assert.equal(manifest.edition, '2026-test-edition');
   assert.equal(manifest.version, '1.2.3');
+  assert.equal(manifest.releaseState, 'Test development edition');
   assert.equal(manifest.commit, 'a'.repeat(40));
   assert.equal(manifest.tag, 'v1.2.3');
   assert.equal(manifest.generatorVersion, '4.5.6');
@@ -103,7 +108,7 @@ test('stages a deterministic tree and sorted release manifest', async () => {
     node: process.version,
     npm: '11.11.0',
     packageLockVersion: 3,
-    stageSite: '1.1.0'
+    stageSite: '1.2.0'
   });
   assert.deepEqual(manifest.sourceState, {
     kind: 'unavailable',
@@ -134,6 +139,20 @@ test('stages a deterministic tree and sorted release manifest', async () => {
     createHash('sha256').update(indexBytes).digest('hex')
   );
   await assert.rejects(readFile(path.join(root, '_site', 'stale.txt')), error => error.code === 'ENOENT');
+});
+
+test('requires an explicit dataset release state for the staged identity', async () => {
+  const root = await makeRoot();
+  await writeBaseFixture(root);
+  await write(root, 'data.json', JSON.stringify({
+    generatorVersion: '4.5.6',
+    dataset: { edition: '2026-test-edition', releaseState: '   ' }
+  }));
+
+  await assert.rejects(
+    stageSite({ repositoryRoot: root, environment }),
+    /dataset releaseState must be a non-empty, trimmed string/u
+  );
 });
 
 test('check-only validates and hashes without replacing an existing output tree', async () => {

@@ -17,8 +17,8 @@ import path from 'node:path';
 import process from 'node:process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
-const SCRIPT_VERSION = '1.1.0';
-const RELEASE_MANIFEST_SCHEMA_VERSION = '1.1.0';
+const SCRIPT_VERSION = '1.2.0';
+const RELEASE_MANIFEST_SCHEMA_VERSION = '1.2.0';
 const CONFIG_SCHEMA_VERSION = '1.0.0';
 const DEFAULT_CONFIG_PATH = 'config/pages-stage.v1.json';
 const REQUIRED_OUTPUT_DIRECTORY = '_site';
@@ -27,6 +27,7 @@ const SCRIPT_DIRECTORY = path.dirname(fileURLToPath(import.meta.url));
 const DEFAULT_REPOSITORY_ROOT = path.resolve(SCRIPT_DIRECTORY, '..');
 
 const MEDIA_TYPES = new Map([
+  ['.cff', 'text/yaml; charset=utf-8'],
   ['.css', 'text/css; charset=utf-8'],
   ['.csv', 'text/csv; charset=utf-8'],
   ['.gif', 'image/gif'],
@@ -726,6 +727,7 @@ async function buildReleaseMetadata(
   const datasetDocument = datasetFile.document;
   const version = assertNonEmptyString(packageDocument.version, 'package version');
   const edition = assertNonEmptyString(datasetDocument.dataset?.edition, 'dataset edition');
+  const releaseState = assertNonEmptyString(datasetDocument.dataset?.releaseState, 'dataset releaseState');
   const generatorVersion = assertNonEmptyString(datasetDocument.generatorVersion, 'dataset generatorVersion');
   const dataDigest = datasetDocument.dataset?.dataDigest ?? null;
   if (dataDigest !== null && !/^[0-9a-f]{64}$/iu.test(dataDigest)) {
@@ -745,6 +747,7 @@ async function buildReleaseMetadata(
   return {
     edition,
     version,
+    releaseState,
     commit,
     tag: resolveTag(repositoryRoot, environment),
     sourceState: resolveSourceState(
@@ -782,6 +785,7 @@ function buildReleaseManifest(config, metadata, hydratedPlan, configPath, config
     },
     edition: metadata.edition,
     version: metadata.version,
+    releaseState: metadata.releaseState,
     commit: metadata.commit,
     tag: metadata.tag,
     sourceState: metadata.sourceState,

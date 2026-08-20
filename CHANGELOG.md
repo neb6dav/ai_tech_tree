@@ -4,15 +4,22 @@ All notable public changes to the AI Research Tech Tree will be documented here.
 
 ## [Unreleased]
 
+**Target: v0.1.1 development edition.** This section describes an untagged release candidate. It does not claim that `v0.1.1` has been tagged, released, or deployed.
+
 ### Added
 
 - A bounded diffusion-models Opportunity View for tracing capabilities, refinements, applications, constraints, competing approaches, and testable research opportunities.
 - A separately maintained Opportunity-map schema, source dataset, validation gate, deterministic renderer, structured outline, and typed cross-links to Timeline and Network records.
 - Persistent interpretation guidance stating that paths have uniform, non-quantitative width and that hypothetical or incomplete evidence uses distinct styling.
+- A versioned staged-site manifest with exact source provenance, payload media types, byte lengths, and SHA-256 checksums.
+- Stable Opportunity data and schema URLs plus compatibility endpoints for previously advertised paths.
+- A visible development-edition label linked to the exact staged build manifest, with persistent repository and contribution destinations.
 
 ### Changed
 
 - Extended the deterministic build, Content Security Policy hashes, release checks, accessibility checks, and contribution guidance to cover the Opportunity View.
+- Moved exported atlas record URLs to the root application while retaining the former HTML filename as a state-preserving compatibility entry point.
+- Synchronized the v0.1.1 development identity across the package, application, datasets, citation metadata, changelog, sitemap, and staged manifest.
 
 ### Known limitations
 

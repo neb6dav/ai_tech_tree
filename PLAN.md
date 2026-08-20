@@ -5,42 +5,42 @@ active_work_package: "WP-011-B"
 issue_url: "https://github.com/neb6dav/ai_tech_tree/issues/6"
 pr_url: "https://github.com/neb6dav/ai_tech_tree/pull/7"
 base_sha: "85108c78fa86c86634d4c0944839696369e687cd"
-last_completed_checkpoint: "WP-011-B/C2"
+last_completed_checkpoint: "WP-011-B/C3"
 last_verified_commands:
   - command: "npm run build"
     status: "PASS"
     runtime: "Node v24.14.1"
     verified_by: "root"
-    scope: "WP-011-B/C2 integrated source and generated artifacts; 4,510,487-byte initial document"
+    scope: "WP-011-B/C3 deterministic regeneration; 4,516,265-byte initial document and synchronized development identity"
   - command: "npm test"
     status: "PASS"
     runtime: "Node v24.14.1 and npm 11.11.0"
     verified_by: "root"
-    scope: "Core gates, 69 focused unit tests, 13-file staging, artifact budgets, and staged-site contract"
-  - command: "npm run test:site-contract"
+    scope: "Core gates, 72 focused unit tests, 14-file staging, release identity, artifact budgets, and 1,465-reference staged-site contract"
+  - command: "Playwright Chromium responsive and no-JavaScript probes"
+    status: "PASS"
+    runtime: "Chromium through @playwright/cli"
+    verified_by: "root"
+    scope: "Toolbar geometry at 320/375/740/1366/2300px; named mobile Menu; modal focus and inert recovery; 32x32 repository target; nonoverlapping no-JS cards at 320-740px; zero console errors"
+  - command: "Independent hostile C3 identity and runtime reviews"
+    status: "PASS after findings resolved"
+    verified_by: "root plus two read-only reviewers"
+    scope: "Manifest releaseState, pre-release issue wording, recovery ledger, mobile accessible name, pointer target, and no-JS overlap corrected and reprobed"
+  - command: "Reconcile downloaded C2 CI preview"
     status: "PASS"
     runtime: "Node v24.14.1"
     verified_by: "root"
-    scope: "1462 internal references and 9 unique staged resources; 1356 node URLs application-state verified at the root app"
-  - command: "Verify clean release manifest and reconcile downloaded CI preview"
-    status: "PASS"
-    runtime: "Node v24.14.1"
-    verified_by: "root"
-    scope: "Local manifest D09BE93D...; CI merge artifact 13/13 payload files byte-identical, 14/14 inputs matched commit"
-  - command: "Parse workflow YAML and project JSON; node --check new scripts; git diff --check"
-    status: "PASS"
-    verified_by: "root"
-    scope: "WP-011-B/C1 exact committed tree"
+    scope: "Workflow 32385263895 green; CI preview contract checked 1462 references; 13/13 payload files byte-identical to the local C2 stage"
 next_exact_action: >-
-  Stage only the named WP-011-B C2 source, test, documentation, and generated
-  files; commit the root-URL checkpoint; verify that exact commit in isolation;
-  then push and reconcile the updated draft-PR preview.
+  Commit the locally verified C3 identity checkpoint, prove the exact clean
+  committed tree, push it to draft PR #7, and reconcile the downloaded CI
+  preview before beginning C4 release-promotion controls.
 known_blockers:
   - "WP-011-B is stacked on verified draft PR #5 until WP-011-A is separately authorized to merge."
   - "No merge, annotated tag, GitHub Release, environment approval, or public deployment is authorized."
-  - "Release identity remains 0.1.0 until the dedicated C3 synchronization checkpoint."
+  - "The C3 source must remain visibly labeled as an untagged development edition until C4 prepares an authorized release artifact."
   - "Browser performance metrics and automated preview screenshots remain pending WP-012-A."
-release_gate_status: "wp_011_b_c2_local_complete_pending_commit"
+release_gate_status: "wp_011_b_c3_locally_verified_checkpoint_pending"
 release_details:
   version: "v0.1.1"
   title: "Publication-contract repair"
@@ -58,12 +58,12 @@ release_details:
       number: 7
       url: "https://github.com/neb6dav/ai_tech_tree/pull/7"
     active_checkpoint:
-      id: "C2"
-      title: "Root application URLs in machine exports"
-      status: "local_complete_pending_commit"
+      id: "C3"
+      title: "Synchronized development-edition identity and contribution access"
+      status: "locally_verified"
       next_exact_action: >-
-        Commit the reviewed C2 source and generated artifacts, verify the exact
-        clean commit in isolation, then push and reconcile remote CI.
+        Commit C3, run exact clean committed-tree verification, push the
+        authorized branch update, and reconcile the CI preview artifact.
     scope:
       - "Publish stable and compatibility Opportunity endpoints."
       - "Move exported human URLs to the root application."
@@ -130,12 +130,27 @@ pass the complete build and test gate, exact clean committed-tree verification,
 an independent hostile review, remote CI run `32384084390`, and byte-for-byte
 payload reconciliation of its downloaded preview.
 
-C2 now generates dataset `humanUrl` as `./` and all 339 atlas record URLs as
+C2 generates dataset `humanUrl` as `./` and all 339 atlas record URLs as
 `./#node=<stable-id>` in JSON, JSON-LD, NDJSON, and embedded JSON-LD. The full
-gate and an independent hostile review verify 1,356 root record references,
+gate, independent hostile review, pushed checkpoint `36b4daa`, remote workflow
+`32385263895`, and downloaded preview verify 1,356 root record references,
 cross-format ownership, legacy-alias rejection, and misdirection mutations.
-This checkpoint is locally complete pending its authorized commit, isolated
-committed-tree verification, push, and preview reconciliation.
+All 13 C2 payload files were byte-identical between the local and CI stages;
+their manifests differed only by the expected pull-request merge commit.
+
+C3 synchronizes package `0.1.1`, dataset edition
+`2026-08-20-public-beta-2`, and `Development edition` across the application,
+machine exports, citation metadata, staged release manifest, documentation,
+and contribution forms without claiming a tag or release. Persistent
+Repository, Contribute, citation, and exact-manifest links now appear in the
+toolbar, Guide, and no-JavaScript surface. The staged manifest schema/tool
+`1.2.0` records the validated publication state as well as version, edition,
+commit, and tag. The final local gate passes 72 focused tests, a 14-file stage,
+artifact budgets, and 1,465 contract references. Real Chromium verifies the
+responsive toolbar, modal focus/inert behavior, 32-pixel repository target,
+and nonoverlapping no-JavaScript cards. Two hostile reviews' P1/P2 findings
+were corrected and reprobed. C3 is locally complete pending its authorized
+commit, exact clean committed-tree proof, push, and preview reconciliation.
 
 ## Release boundary
 

@@ -496,8 +496,9 @@ function assertHtmlIntegration(html, jsonldBytes, data, layoutBytes, bundleBytes
     !linkTags.some(tag => tag.includes('href="./src/data/opportunities/diffusion-models.alpha.json"')),
     'Legacy Opportunity data URL must not be advertised as a discovery alternate.'
   );
-  const noScript = html.match(/<noscript>([\s\S]*?)<\/noscript>/i)?.[1];
-  assert(noScript, 'Missing no-JavaScript fallback');
+  const noScriptBlocks = [...html.matchAll(/<noscript>([\s\S]*?)<\/noscript>/gi)].map(match => match[1]);
+  assert(noScriptBlocks.length, 'Missing no-JavaScript fallback');
+  const noScript = noScriptBlocks.join('\n');
   const staticBody = noScript.match(/<tbody>([\s\S]*?)<\/tbody>/i)?.[1];
   assert(staticBody, 'Missing static index table');
   assert.equal((staticBody.match(/<tr\b/gi) || []).length, 339);
@@ -594,8 +595,8 @@ function main() {
   assert.equal(document['@id'], data.namespace.datasetIri);
   assert.equal(data.schemaVersion, 2);
   assert.equal(data.generatorVersion, '1.3.1');
-  assert.equal(data.dataset.edition, '2026-08-13-public-beta-1');
-  assert.equal(data.dataset.releaseState, 'Public beta');
+  assert.equal(data.dataset.edition, '2026-08-20-public-beta-2');
+  assert.equal(data.dataset.releaseState, 'Development edition');
   assert.equal(data.dataset.asOf, '2026-08-04');
   assert.equal(data.dataset.canonicalUrl, 'https://neb6dav.github.io/ai_tech_tree/');
   assert.deepEqual(data.dataset.authors, ['@neb6dav']);

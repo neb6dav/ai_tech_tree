@@ -9,8 +9,8 @@
     "identifier": "urn:uuid:7d0547f2-6239-5a56-82a3-1c846701c866",
     "name": "AI Research Tech Tree",
     "description": "A navigable atlas of selected AI research developments, their recorded relationships, and research directions from 1879 through 2026.",
-    "edition": "2026-08-13-public-beta-1",
-    "releaseState": "Public beta",
+    "edition": "2026-08-20-public-beta-2",
+    "releaseState": "Development edition",
     "asOf": "2026-08-04",
     "temporalCoverage": "1879/2026",
     "humanUrl": "./",
@@ -49,7 +49,9 @@
       "Added a centered, versioned first-visit guide with an optional left dock, action-labeled theme switching, and verified two-theme contrast.",
       "Made the docked guide a reserved left column so branch, era, timeline, list, empty-state and map text remain unobscured.",
       "Added a deterministic, evidence-aware 2-D Network view with synchronized selection, filters, theme, trace and share state.",
-      "Packaged the atlas as a collaborative public-beta repository with citation, licensing, correction and contribution workflows."
+      "Packaged the atlas as a collaborative public-beta repository with citation, licensing, correction and contribution workflows.",
+      "Published stable Opportunity endpoints and root application record URLs with compatibility paths.",
+      "Added an exact staged-build manifest and persistent repository and contribution access."
     ],
     "counts": {
       "atlasEntries": 339,
@@ -193,7 +195,7 @@
         "encodingFormat": "application/x-ndjson"
       }
     ],
-    "dataDigest": "351db514160d24f0f857cb79ce9876b582b638747112974618bb00f7c8649d16"
+    "dataDigest": "426d467a47283eeaa729769300a849c2351d038a41647c5ea8c4e79ef2327ce9"
   },
   "lanes": [
     {

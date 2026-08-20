@@ -1,6 +1,6 @@
 {
   "name": "ai-research-tech-tree",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "description": "Build tooling for the AI Research Tech Tree static atlas.",
   "engines": {
@@ -24,7 +24,8 @@
     "test:performance-budget": "node scripts/performance-budget-test.cjs",
     "test:publication-compatibility": "node --test tests/publication-compatibility.test.cjs",
     "test:export-human-urls": "node --test tests/export-human-urls.test.cjs",
-    "test:publication": "npm run test:stage-site && npm run test:site-contract:unit && npm run test:performance-budget:unit && npm run test:publication-compatibility && npm run test:export-human-urls && npm run stage:site && npm run test:performance-budget && npm run test:site-contract",
+    "test:release-identity": "node --test tests/release-identity.test.cjs",
+    "test:publication": "npm run test:stage-site && npm run test:site-contract:unit && npm run test:performance-budget:unit && npm run test:publication-compatibility && npm run test:export-human-urls && npm run stage:site && npm run test:release-identity && npm run test:performance-budget && npm run test:site-contract",
     "test": "npm run test:core && npm run test:publication"
   },
   "dependencies": {

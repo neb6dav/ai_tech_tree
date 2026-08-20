@@ -19,6 +19,7 @@ const APPLICATION_STATE_COMPATIBILITY_PAIRS = Object.freeze([
 ]);
 
 const MIME_TYPES = Object.freeze({
+  '.cff': 'text/yaml; charset=utf-8',
   '.csv': 'text/csv; charset=utf-8',
   '.css': 'text/css; charset=utf-8',
   '.gif': 'image/gif',
@@ -42,6 +43,7 @@ const MIME_TYPES = Object.freeze({
 });
 
 const EXPECTED_MIME_TYPES = Object.freeze({
+  '.cff': Object.freeze(['text/yaml', 'application/yaml']),
   '.csv': Object.freeze(['text/csv']),
   '.css': Object.freeze(['text/css']),
   '.gif': Object.freeze(['image/gif']),

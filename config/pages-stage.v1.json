@@ -58,6 +58,12 @@
     },
     {
       "kind": "file",
+      "source": "CITATION.cff",
+      "target": "CITATION.cff",
+      "mediaType": "text/yaml; charset=utf-8"
+    },
+    {
+      "kind": "file",
       "source": "src/data/opportunities/diffusion-models.alpha.json",
       "target": "data/opportunities/diffusion-models.alpha.json",
       "mediaType": "application/json; charset=utf-8"

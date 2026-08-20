@@ -2,11 +2,12 @@
 
 The AI Research Tech Tree is a public, evidence-linked atlas of artificial-intelligence research developments, open directions, landmark works, and recorded relationships. It combines a chronological Timeline, a structural Network, a capability-oriented Opportunity View, and an accessible List.
 
-**Release status: public beta.** The atlas is a curated research aid, not a complete literature review, a peer-reviewed historical account, or a claim that every displayed relationship is causal. Records expose their available sources and review state so that gaps can be inspected and improved in public.
+**Release channel: public beta.** This branch targets an untagged `v0.1.1` development edition; source builds and pull-request previews are not citable releases. The latest tagged release remains `v0.1.0`, and each staged preview records its exact commit and checksums in `release-manifest.json`. The atlas is a curated research aid, not a complete literature review, a peer-reviewed historical account, or a claim that every displayed relationship is causal. Records expose their available sources and review state so that gaps can be inspected and improved in public.
 
 - Public site: <https://neb6dav.github.io/ai_tech_tree/>
+- Repository: <https://github.com/neb6dav/ai_tech_tree>
 - Maintainer: [@neb6dav](https://github.com/neb6dav)
-- Corrections and additions: use the repository's issue forms or submit a pull request
+- Corrections and additions: [open a structured issue](https://github.com/neb6dav/ai_tech_tree/issues/new/choose) or submit a pull request
 
 ## What the views mean
 
@@ -82,7 +83,7 @@ git diff --exit-code
 
 `npm test` runs the existing data, accessibility, layout, Network, and Opportunity gates; unit-tests the staging, contract, and deterministic artifact-budget tools; assembles `_site` from the versioned staging manifest; and verifies its publication contract under the `/ai_tech_tree/` project path. Browser-only performance metrics remain recorded but unmeasured until the `WP-012-A` browser harness.
 
-The release manifest records the exact observed Node and npm versions and every payload file's media type, byte count, and SHA-256. In clean-source mode, staging also proves that the configuration, metadata, individual artifacts, and complete directory inputs are regular committed blobs from the advertised `HEAD`; symlinks, gitlinks, Git LFS pointers, replacement objects, index concealment flags, dirty submodules, and generated or Git-administration input paths fail closed. The manifest cannot contain its own digest without a cryptographic self-reference, so it explicitly excludes itself; WP-011-B supplies the checksum of the complete release archive. Local dirty-tree staging remains available for pre-commit review but is labeled non-clean and cannot be deployed.
+The release manifest records the target package version, dataset edition, publication state, exact full commit, observed Node and npm versions, and every payload file's media type, byte count, and SHA-256. In clean-source mode, staging also proves that the configuration, metadata, individual artifacts, and complete directory inputs are regular committed blobs from the advertised `HEAD`; symlinks, gitlinks, Git LFS pointers, replacement objects, index concealment flags, dirty submodules, and generated or Git-administration input paths fail closed. The manifest cannot contain its own digest without a cryptographic self-reference, so it explicitly excludes itself; WP-011-B supplies the checksum of the complete release archive. Local dirty-tree staging remains available for pre-commit review but is labeled non-clean and cannot be deployed.
 
 The static contract uses a pinned browser-compatible HTML attribute decoder, rejects nested `iframe[srcdoc]` browsing contexts, validates live-document fragments without treating inert `<template>` contents as targets, and checks JSON Schema reference closure and application-state ID uniqueness. Explicit runtime-fragment declarations are labeled `runtime-declared-pending-browser`, not statically verified; their browser proof belongs to `WP-012-A`. Nested JSON Schema `$id` scopes are intentionally prohibited until the validator implements their full base-URI semantics.
 

@@ -8,7 +8,7 @@ import { Graph } from '@cosmos.gl/graph'
  * translates WebGL interactions back to the host's original node/edge records.
  */
 
-export const VERSION = '0.1.0'
+export const VERSION = '0.1.1'
 export const COSMOS_GRAPH_VERSION = '3.4.0'
 
 export const THEMES = Object.freeze({

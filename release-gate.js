@@ -21,6 +21,8 @@ const FILES = {
   ndjson: 'ai-research-tech-tree.ndjson',
   layout: 'network-layout-v1.json',
   bundle: 'network-atlas.bundle.js',
+  opportunityData: path.join('src', 'data', 'opportunities', 'diffusion-models.alpha.json'),
+  opportunityBundle: 'opportunity-atlas.bundle.js',
   generator: 'generate-knowledge-graph.js',
   layoutGenerator: 'generate-network-layout.js',
   build: 'build.js'
@@ -394,10 +396,10 @@ function parseCsp(value) {
   }));
 }
 
-function assertHtmlIntegration(html, jsonldBytes, data, layoutBytes, bundleBytes) {
+function assertHtmlIntegration(html, jsonldBytes, data, layoutBytes, bundleBytes, opportunityDataBytes, opportunityBundleBytes) {
   const scripts = extractBodies(html, 'script');
   const styles = extractBodies(html, 'style');
-  assert.equal(scripts.length, 8);
+  assert.equal(scripts.length, 10);
   assert.equal(styles.length, 2);
   const graphScripts = scripts.filter(script => /\btype=["']application\/ld\+json["']/i.test(script.attributes));
   assert.equal(graphScripts.length, 1);
@@ -421,6 +423,17 @@ function assertHtmlIntegration(html, jsonldBytes, data, layoutBytes, bundleBytes
   assert.equal(networkEngines[0].body, bundleBytes.toString('utf8').replace(/\r\n/g, '\n').trimEnd(), 'Embedded and sidecar network engines differ');
   assert.match(networkEngines[0].body, /COSMOS_GRAPH_VERSION/);
   assert.match(networkEngines[0].body, /3\.4\.0/);
+  const opportunityData = scripts.filter(script => /\bid=["']opportunity-data["']/i.test(script.attributes));
+  assert.equal(opportunityData.length, 1, 'Expected one embedded Opportunity View payload');
+  assert.match(opportunityData[0].attributes, /\btype=["']application\/json["']/i);
+  const parsedOpportunityData = JSON.parse(opportunityData[0].body);
+  assert.equal(parsedOpportunityData.metadata?.id, 'diffusion-models-opportunity-map');
+  assert.equal(parsedOpportunityData.metadata?.anchorAtlasNodeId, 'diffusion');
+  assert.deepEqual(parsedOpportunityData, JSON.parse(opportunityDataBytes.toString('utf8')), 'Embedded and maintained Opportunity View data differ');
+  const opportunityEngines = scripts.filter(script => /\bid=["']opportunity-view-engine["']/i.test(script.attributes));
+  assert.equal(opportunityEngines.length, 1, 'Expected one embedded Opportunity View engine');
+  assert.match(opportunityEngines[0].body, /OpportunityAtlas/);
+  assert.equal(opportunityEngines[0].body, opportunityBundleBytes.toString('utf8').replace(/\r\n/g, '\n').trimEnd(), 'Embedded and sidecar Opportunity View engines differ');
 
   const cspMatch = html.match(/<meta\s+http-equiv="Content-Security-Policy"\s+content="([^"]+)"/i);
   assert(cspMatch, 'Missing Content-Security-Policy meta tag');
@@ -436,12 +449,13 @@ function assertHtmlIntegration(html, jsonldBytes, data, layoutBytes, bundleBytes
   assert.deepEqual(csp['base-uri'], ["'none'"]);
 
   const executable = scripts.filter(script => !/\btype=["']application\/(?:ld\+json|json)["']/i.test(script.attributes));
-  assert.equal(executable.length, 6);
+  assert.equal(executable.length, 7);
   executable.forEach((script, index) => new vm.Script(script.body, { filename: `inline-script-${index + 1}.js` }));
   executable
     .filter(script => !/\bid=["']network-view-engine["']/i.test(script.attributes))
     .forEach(script => assert(!/\.innerHTML\s*=|\.outerHTML\s*=|insertAdjacentHTML\s*\(|document\.write\s*\(/.test(script.body), 'HTML injection sink found'));
   assert(!/\.outerHTML\s*=|insertAdjacentHTML\s*\(|document\.write\s*\(/.test(networkEngines[0].body), 'Unsafe third-party network-engine DOM sink found');
+  assert(!/\.innerHTML\s*=|\.outerHTML\s*=|insertAdjacentHTML\s*\(|document\.write\s*\(/.test(opportunityEngines[0].body), 'Unsafe Opportunity View DOM sink found');
 
   const markup = html.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '').replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, '');
   assert(!/\son[a-z][\w-]*\s*=/i.test(markup));
@@ -459,6 +473,9 @@ function assertHtmlIntegration(html, jsonldBytes, data, layoutBytes, bundleBytes
     const linkTags = [...html.matchAll(/<link\b[^>]*>/gi)].map(match => match[0]);
     assert(linkTags.some(tag => /\brel=["']alternate["']/i.test(tag) && tag.includes(`type="${type}"`) && tag.includes(`href="${href}"`)), `Missing alternate ${href}`);
   }
+  const linkTags = [...html.matchAll(/<link\b[^>]*>/gi)].map(match => match[0]);
+  const opportunityHref = './src/data/opportunities/diffusion-models.alpha.json';
+  assert(linkTags.some(tag => /\brel=["']alternate["']/i.test(tag) && tag.includes('type="application/json"') && tag.includes(`href="${opportunityHref}"`)), `Missing alternate ${opportunityHref}`);
   const noScript = html.match(/<noscript>([\s\S]*?)<\/noscript>/i)?.[1];
   assert(noScript, 'Missing no-JavaScript fallback');
   const staticBody = noScript.match(/<tbody>([\s\S]*?)<\/tbody>/i)?.[1];
@@ -534,7 +551,9 @@ function main() {
     json: read(FILES.json),
     ndjson: read(FILES.ndjson),
     layout: read(FILES.layout),
-    bundle: read(FILES.bundle)
+    bundle: read(FILES.bundle),
+    opportunityData: read(FILES.opportunityData),
+    opportunityBundle: read(FILES.opportunityBundle)
   };
   assert.equal(Buffer.compare(buffers.index, buffers.html), 0, 'Generated index.html differs from the canonical HTML artifact');
   const html = buffers.html.toString('utf8');
@@ -580,13 +599,21 @@ function main() {
   assertGraphClosure(document, data.namespace.datasetIri);
   assertGraphParity(data, document);
   assertNdjsonParity(data, records);
-  const csp = assertHtmlIntegration(html, buffers.jsonld, data, buffers.layout, buffers.bundle);
+  const csp = assertHtmlIntegration(
+    html,
+    buffers.jsonld,
+    data,
+    buffers.layout,
+    buffers.bundle,
+    buffers.opportunityData,
+    buffers.opportunityBundle
+  );
   const determinism = deterministicRegeneration(buffers);
   const graphBody = extractBodies(html, 'script').find(script => /\btype=["']application\/ld\+json["']/i.test(script.attributes)).body;
   const mutationProbes = runMutationProbes(document, data, Buffer.from(graphBody), buffers.jsonld);
 
   const report = {};
-  for (const key of ['html', 'index', 'jsonld', 'json', 'ndjson', 'layout', 'bundle']) {
+  for (const key of ['html', 'index', 'jsonld', 'json', 'ndjson', 'layout', 'bundle', 'opportunityData', 'opportunityBundle']) {
     const buffer = buffers[key];
     report[FILES[key]] = {
       bytes: buffer.length,

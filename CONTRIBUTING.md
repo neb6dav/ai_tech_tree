@@ -11,6 +11,7 @@ Use a structured GitHub issue when you want to:
 - correct a node, date, description, classification, or source;
 - propose a development or open direction; or
 - add, remove, redirect, or reclassify a relationship.
+- revise a capability, application, constraint, status assessment, or testable hypothesis in an Opportunity map.
 
 Open a pull request when the proposed change is sufficiently precise to implement and you can include the rebuilt artifacts. Discussion before a large batch change is strongly encouraged.
 
@@ -35,6 +36,10 @@ For a relationship, also state:
 - whether the source explicitly documents the relationship; and
 - the appropriate evidence/review state.
 
+For an Opportunity View record, identify the bounded map and stable record ID, then distinguish among a documented capability, an application, a constraint, a competing approach, and a proposed opportunity. Status claims must define their local scope and cite the source IDs that support that scope. Do not describe a technology as globally mature, saturated, displaced, or exhausted.
+
+An open-opportunity proposal must include a falsifiable question, proposed mechanism, unmet need, adjacent-work summary, novelty-search status and scope, minimal experiment, comparison baselines, disconfirming result, estimated resources, blockers or required complements, and plausible failure reasons. Candidate applications and open opportunities must remain hypothesis-grade. If a literature import has not received source-by-source human review, preserve `imported_unreviewed` rather than upgrading it to `validated`.
+
 A search-result snippet, unsourced model output, or citation title alone is not sufficient evidence. ArXiv presence does not establish peer review. Wikipedia is useful for orientation and cross-checking, but high-consequence claims should use an underlying primary or rigorous secondary source when available.
 
 ## Local workflow
@@ -50,12 +55,12 @@ A search-result snippet, unsourced model output, or citation title alone is not 
    npm test
    ```
 
-5. Inspect the generated diff and the application in both light and dark themes and, when relevant, in Timeline, Network, and List views.
+5. Inspect the generated diff and the application in both light and dark themes and, when relevant, in Timeline, Network, Opportunity, and List views.
 6. Commit maintained-source changes and the generated artifact changes produced by the build.
 7. From the committed tree, rerun `npm run build`, `npm test`, and `git diff --exit-code` to prove that generation is reproducible and complete.
 8. Complete every applicable section of the pull-request template.
 
-For this beta, maintained source includes `ai-research-tech-tree.html`, `src/network-view.js`, and the build, layout, injection, export, and validation scripts. Generated files include `index.html`, `network-atlas.bundle.js`, `network-layout-v1.json`, and the JSON, JSON-LD, and NDJSON graph exports. See the README for the complete boundary.
+For this beta, maintained source includes `ai-research-tech-tree.html`, `src/network-view.js`, `src/opportunity-view.js`, `src/opportunity-layout.cjs`, `src/data/opportunities/`, and the build, layout, injection, export, and validation scripts. Generated files include `index.html`, `network-atlas.bundle.js`, `opportunity-atlas.bundle.js`, `network-layout-v1.json`, and the JSON, JSON-LD, and NDJSON historical graph exports. See the README for the complete boundary.
 
 ## Pull-request scope
 

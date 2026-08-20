@@ -70,7 +70,7 @@ assert(nearestOwnLane / layout.nodes.length >= 0.7, 'Lane clustering signal is t
 
 const scriptBodies = [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)]
   .map(match => ({ attributes: match[1], body: match[2] }));
-assert.equal(scriptBodies.length, 8, 'Expected eight inline script elements');
+assert.equal(scriptBodies.length, 10, 'Expected ten inline script elements');
 const embeddedLayouts = scriptBodies.filter(script => /\bid=["']network-layout-data["']/i.test(script.attributes));
 assert.equal(embeddedLayouts.length, 1, 'Expected one embedded network layout');
 assert.match(embeddedLayouts[0].attributes, /\btype=["']application\/json["']/i);

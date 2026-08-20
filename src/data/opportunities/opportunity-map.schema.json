@@ -1,0 +1,1077 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://neb6dav.github.io/ai_tech_tree/src/data/opportunities/opportunity-map.schema.json",
+  "title": "AI Research Tech Tree Opportunity Map",
+  "description": "Evidence-aware, time-oriented capability, application, constraint, and opportunity data for one atlas anchor.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schemaVersion",
+    "metadata",
+    "nodes",
+    "relationships",
+    "sources",
+    "applicationBranches",
+    "constraints",
+    "openOpportunities",
+    "unresolvedClaims"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "minLength": 1
+    },
+    "schemaVersion": {
+      "const": "1.0.0"
+    },
+    "metadata": {
+      "$ref": "#/$defs/metadata"
+    },
+    "nodes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/node"
+      }
+    },
+    "relationships": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/relationship"
+      }
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/source"
+      }
+    },
+    "applicationBranches": {
+      "type": "array",
+      "maxItems": 8,
+      "items": {
+        "$ref": "#/$defs/applicationBranch"
+      }
+    },
+    "constraints": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/constraint"
+      }
+    },
+    "openOpportunities": {
+      "type": "array",
+      "maxItems": 10,
+      "items": {
+        "$ref": "#/$defs/openOpportunity"
+      }
+    },
+    "unresolvedClaims": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/unresolvedClaim"
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "metadata": {
+            "properties": {
+              "status": {
+                "const": "pending_research"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "nodes": {
+            "minItems": 1,
+            "maxItems": 1
+          },
+          "relationships": {
+            "maxItems": 0
+          },
+          "sources": {
+            "maxItems": 0
+          },
+          "applicationBranches": {
+            "maxItems": 0
+          },
+          "constraints": {
+            "maxItems": 0
+          },
+          "openOpportunities": {
+            "maxItems": 0
+          },
+          "unresolvedClaims": {
+            "maxItems": 0
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "metadata": {
+            "properties": {
+              "status": {
+                "const": "alpha"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "nodes": {
+            "minItems": 35,
+            "maxItems": 60
+          },
+          "relationships": {
+            "minItems": 60,
+            "maxItems": 100
+          },
+          "sources": {
+            "minItems": 1
+          },
+          "applicationBranches": {
+            "minItems": 1,
+            "maxItems": 8
+          },
+          "openOpportunities": {
+            "maxItems": 10
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*(?:[._:-][a-z0-9]+)*$"
+    },
+    "year": {
+      "type": "integer",
+      "minimum": 1800,
+      "maximum": 2100
+    },
+    "nodeType": {
+      "enum": [
+        "precursor",
+        "core_development",
+        "capability",
+        "refinement",
+        "complement",
+        "application",
+        "demonstrated_outcome",
+        "constraint",
+        "failed_or_stalled_attempt",
+        "competing_or_substitute_approach",
+        "open_opportunity"
+      ]
+    },
+    "relationshipType": {
+      "enum": [
+        "documented_historical_influence",
+        "derives_from",
+        "adapts_formalism_from",
+        "later_mathematical_equivalence",
+        "enables",
+        "improves",
+        "combines_with",
+        "applied_to",
+        "mitigates_constraint",
+        "blocked_by",
+        "competes_with",
+        "displaced_in_context_by",
+        "reopened_by",
+        "retrospective_analogy",
+        "candidate_application"
+      ]
+    },
+    "evidenceGrade": {
+      "enum": [
+        "direct",
+        "partial",
+        "contextual",
+        "editorial",
+        "unassessed",
+        "hypothesis"
+      ]
+    },
+    "evidenceType": {
+      "enum": [
+        "primary_source",
+        "independent_confirmation",
+        "systematic_review",
+        "survey_or_review",
+        "benchmark",
+        "official_documentation",
+        "historical_account",
+        "editorial_analysis",
+        "novelty_search",
+        "no_source_found"
+      ]
+    },
+    "opportunityStatusState": {
+      "enum": [
+        "rapidly_expanding",
+        "actively_improving",
+        "mature_but_useful",
+        "locally_saturated",
+        "constraint_bound",
+        "displaced_in_this_context",
+        "reopened_by_a_new_complement",
+        "evidence_mixed",
+        "not_yet_assessed"
+      ]
+    },
+    "relationshipStatus": {
+      "enum": [
+        "demonstrated",
+        "partially_supported",
+        "contested",
+        "unassessed",
+        "hypothesis"
+      ]
+    },
+    "sourceIdArray": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/id"
+      }
+    },
+    "nodeIdArray": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/id"
+      }
+    },
+    "relationshipIdArray": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/id"
+      }
+    },
+    "constraintIdArray": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/id"
+      }
+    },
+    "timeDomain": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "startYear",
+        "endYear"
+      ],
+      "properties": {
+        "startYear": {
+          "$ref": "#/$defs/year"
+        },
+        "endYear": {
+          "$ref": "#/$defs/year"
+        },
+        "focusStartYear": {
+          "$ref": "#/$defs/year"
+        }
+      }
+    },
+    "visualBand": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "label",
+        "order",
+        "nodeTypes"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "order": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "nodeTypes": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/nodeType"
+          }
+        }
+      }
+    },
+    "importStatus": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state",
+        "notes"
+      ],
+      "properties": {
+        "state": {
+          "enum": [
+            "not_started",
+            "in_progress",
+            "imported_unreviewed",
+            "validated",
+            "superseded"
+          ]
+        },
+        "notes": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reportId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reportAsOf": {
+          "type": "string",
+          "format": "date"
+        },
+        "reportUrl": {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https://"
+        },
+        "importedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "anchorAtlasNodeId",
+        "asOf",
+        "status",
+        "summary",
+        "timeDomain",
+        "visualBands",
+        "importStatus",
+        "pathWidthMode"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "anchorAtlasNodeId": {
+          "$ref": "#/$defs/id"
+        },
+        "asOf": {
+          "type": "string",
+          "format": "date"
+        },
+        "status": {
+          "enum": [
+            "pending_research",
+            "alpha",
+            "in_review",
+            "published",
+            "archived"
+          ]
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "timeDomain": {
+          "$ref": "#/$defs/timeDomain"
+        },
+        "visualBands": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/visualBand"
+          }
+        },
+        "importStatus": {
+          "$ref": "#/$defs/importStatus"
+        },
+        "pathWidthMode": {
+          "const": "fixed"
+        }
+      }
+    },
+    "statusAssessment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state",
+        "scope",
+        "evidenceGrade",
+        "sourceIds"
+      ],
+      "properties": {
+        "state": {
+          "$ref": "#/$defs/opportunityStatusState"
+        },
+        "scope": {
+          "type": "string",
+          "minLength": 1
+        },
+        "evidenceGrade": {
+          "$ref": "#/$defs/evidenceGrade"
+        },
+        "sourceIds": {
+          "$ref": "#/$defs/sourceIdArray"
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "atlasLinkRelation": {
+      "enum": [
+        "same_as",
+        "precursor_of",
+        "descendant_of",
+        "capability_of",
+        "refinement_of",
+        "complement_to",
+        "application_of",
+        "outcome_of",
+        "constraint_on",
+        "competitor_to",
+        "opportunity_for",
+        "related_to"
+      ]
+    },
+    "atlasLink": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "atlasNodeId",
+        "relation"
+      ],
+      "properties": {
+        "atlasNodeId": {
+          "$ref": "#/$defs/id"
+        },
+        "relation": {
+          "$ref": "#/$defs/atlasLinkRelation"
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "grade",
+        "claim",
+        "sourceIds"
+      ],
+      "properties": {
+        "type": {
+          "$ref": "#/$defs/evidenceType"
+        },
+        "grade": {
+          "$ref": "#/$defs/evidenceGrade"
+        },
+        "claim": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourceIds": {
+          "$ref": "#/$defs/sourceIdArray"
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "node": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "title",
+        "summary",
+        "bandId",
+        "status",
+        "evidence",
+        "atlasLinks"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "type": {
+          "$ref": "#/$defs/nodeType"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "year": {
+          "$ref": "#/$defs/year"
+        },
+        "yearEnd": {
+          "$ref": "#/$defs/year"
+        },
+        "yearPrecision": {
+          "enum": [
+            "exact",
+            "year",
+            "range",
+            "ongoing",
+            "undated"
+          ]
+        },
+        "domain": {
+          "type": "string",
+          "minLength": 1
+        },
+        "tags": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "bandId": {
+          "$ref": "#/$defs/id"
+        },
+        "status": {
+          "$ref": "#/$defs/statusAssessment"
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidence"
+          }
+        },
+        "atlasLinks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/atlasLink"
+          }
+        }
+      }
+    },
+    "relationship": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "sourceNodeId",
+        "targetNodeId",
+        "status",
+        "evidence",
+        "atlasLinks"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "type": {
+          "$ref": "#/$defs/relationshipType"
+        },
+        "sourceNodeId": {
+          "$ref": "#/$defs/id"
+        },
+        "targetNodeId": {
+          "$ref": "#/$defs/id"
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "$ref": "#/$defs/relationshipStatus"
+        },
+        "evidence": {
+          "$ref": "#/$defs/evidence"
+        },
+        "atlasLinks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/atlasLink"
+          }
+        }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "title",
+        "url"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "type": {
+          "enum": [
+            "paper",
+            "book",
+            "report",
+            "dataset",
+            "benchmark",
+            "documentation",
+            "webpage",
+            "repository",
+            "patent",
+            "thesis",
+            "interview",
+            "other"
+          ]
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "authors": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "year": {
+          "$ref": "#/$defs/year"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https://"
+        },
+        "doi": {
+          "type": "string",
+          "pattern": "^10\\.[0-9]{4,9}/\\S+$"
+        },
+        "arxivId": {
+          "type": "string",
+          "pattern": "^(?:[a-z-]+(?:\\.[A-Z]{2})?/\\d{7}|\\d{4}\\.\\d{4,5})(?:v\\d+)?$"
+        },
+        "citation": {
+          "type": "string",
+          "minLength": 1
+        },
+        "accessedAt": {
+          "type": "string",
+          "format": "date"
+        },
+        "notes": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "applicationBranch": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "summary",
+        "anchorNodeId",
+        "nodeIds",
+        "relationshipIds",
+        "constraintIds",
+        "status",
+        "sourceIds"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "anchorNodeId": {
+          "$ref": "#/$defs/id"
+        },
+        "nodeIds": {
+          "$ref": "#/$defs/nodeIdArray"
+        },
+        "relationshipIds": {
+          "$ref": "#/$defs/relationshipIdArray"
+        },
+        "constraintIds": {
+          "$ref": "#/$defs/constraintIdArray"
+        },
+        "status": {
+          "$ref": "#/$defs/statusAssessment"
+        },
+        "sourceIds": {
+          "$ref": "#/$defs/sourceIdArray"
+        }
+      }
+    },
+    "constraint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "summary",
+        "category",
+        "nodeId",
+        "affectsNodeIds",
+        "mitigatedByNodeIds",
+        "relationshipIds",
+        "status",
+        "evidence"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "category": {
+          "enum": [
+            "sampling_latency",
+            "compute_energy",
+            "data_licensing",
+            "privacy_memorization",
+            "evaluation",
+            "controllability",
+            "spatial_temporal_identity_consistency",
+            "physical_causal_consistency",
+            "out_of_distribution_robustness",
+            "likelihood",
+            "deployment_cost",
+            "safety_misuse",
+            "hard_constraints",
+            "competition",
+            "other"
+          ]
+        },
+        "nodeId": {
+          "$ref": "#/$defs/id"
+        },
+        "affectsNodeIds": {
+          "$ref": "#/$defs/nodeIdArray"
+        },
+        "mitigatedByNodeIds": {
+          "$ref": "#/$defs/nodeIdArray"
+        },
+        "relationshipIds": {
+          "$ref": "#/$defs/relationshipIdArray"
+        },
+        "status": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "state",
+            "scope",
+            "evidenceGrade",
+            "sourceIds"
+          ],
+          "properties": {
+            "state": {
+              "enum": [
+                "active",
+                "partially_mitigated",
+                "mitigated_in_context",
+                "uncertain",
+                "not_yet_assessed"
+              ]
+            },
+            "scope": {
+              "type": "string",
+              "minLength": 1
+            },
+            "evidenceGrade": {
+              "$ref": "#/$defs/evidenceGrade"
+            },
+            "sourceIds": {
+              "$ref": "#/$defs/sourceIdArray"
+            }
+          }
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidence"
+          }
+        }
+      }
+    },
+    "noveltySearch": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "scope",
+        "result",
+        "sourceIds"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "not_started",
+            "partial",
+            "completed"
+          ]
+        },
+        "scope": {
+          "type": "string",
+          "minLength": 1
+        },
+        "asOf": {
+          "type": "string",
+          "format": "date"
+        },
+        "result": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourceIds": {
+          "$ref": "#/$defs/sourceIdArray"
+        }
+      }
+    },
+    "openOpportunity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "nodeId",
+        "title",
+        "summary",
+        "falsifiableQuestion",
+        "proposedMechanism",
+        "unmetNeed",
+        "adjacentWorkSummary",
+        "noveltySearch",
+        "blockerConstraintIds",
+        "requiredComplementNodeIds",
+        "minimalExperiment",
+        "baselines",
+        "disconfirmingResult",
+        "resources",
+        "crowdedness",
+        "tractability",
+        "failureReasons",
+        "evidenceGrade",
+        "status",
+        "sourceIds"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "nodeId": {
+          "$ref": "#/$defs/id"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "falsifiableQuestion": {
+          "type": "string",
+          "minLength": 1
+        },
+        "proposedMechanism": {
+          "type": "string",
+          "minLength": 1
+        },
+        "unmetNeed": {
+          "type": "string",
+          "minLength": 1
+        },
+        "adjacentWorkSummary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "noveltySearch": {
+          "$ref": "#/$defs/noveltySearch"
+        },
+        "blockerConstraintIds": {
+          "$ref": "#/$defs/constraintIdArray"
+        },
+        "requiredComplementNodeIds": {
+          "$ref": "#/$defs/nodeIdArray"
+        },
+        "minimalExperiment": {
+          "type": "string",
+          "minLength": 1
+        },
+        "baselines": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "disconfirmingResult": {
+          "type": "string",
+          "minLength": 1
+        },
+        "resources": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "crowdedness": {
+          "enum": [
+            "low",
+            "medium",
+            "high",
+            "unknown"
+          ]
+        },
+        "tractability": {
+          "enum": [
+            "low",
+            "medium",
+            "high",
+            "unknown"
+          ]
+        },
+        "failureReasons": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "evidenceGrade": {
+          "const": "hypothesis"
+        },
+        "status": {
+          "enum": [
+            "hypothesis",
+            "prioritized_for_test",
+            "testing",
+            "supported_in_scope",
+            "not_supported_in_scope",
+            "deferred"
+          ]
+        },
+        "sourceIds": {
+          "$ref": "#/$defs/sourceIdArray"
+        }
+      }
+    },
+    "unresolvedClaim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "claim",
+        "reason",
+        "status",
+        "relatedNodeIds",
+        "relatedRelationshipIds",
+        "sourceIds"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "claim": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reason": {
+          "enum": [
+            "missing_primary_source",
+            "influence_not_verified",
+            "priority_dispute",
+            "replication_unclear",
+            "benchmark_not_comparable",
+            "scope_unclear",
+            "novelty_unverified",
+            "conflicting_evidence",
+            "other"
+          ]
+        },
+        "status": {
+          "enum": [
+            "open",
+            "partially_resolved",
+            "resolved",
+            "deferred"
+          ]
+        },
+        "relatedNodeIds": {
+          "$ref": "#/$defs/nodeIdArray"
+        },
+        "relatedRelationshipIds": {
+          "$ref": "#/$defs/relationshipIdArray"
+        },
+        "sourceIds": {
+          "$ref": "#/$defs/sourceIdArray"
+        },
+        "notes": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

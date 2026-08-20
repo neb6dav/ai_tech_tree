@@ -95,6 +95,14 @@ assert(/<[^>]+\bid="networkStatus"(?=[^>]*\brole="status")(?=[^>]*\baria-live="p
 assert(/<[^>]+\bid="networkNote"(?=[^>]*\brole="note")[^>]*>/i.test(html), 'Network interpretation warning must use note semantics');
 assert(html.includes('Proximity does not establish'), 'Network view must warn against interpreting proximity as evidence');
 assert(html.includes('Network view is unavailable'), 'Network rendering failure must expose a readable fallback');
+assert(/<button\b(?=[^>]*\bdata-view="opportunity")(?=[^>]*\baria-pressed="false")[^>]*>\s*Opportunity\s*<\/button>/i.test(html), 'Opportunity selector must expose its pressed state');
+assert(/<[^>]+\bid="opportunityView"(?=[^>]*\baria-labelledby="opportunityTitle")(?=[^>]*\baria-describedby="opportunityIntro opportunityNote")[^>]*>/i.test(html), 'Opportunity view must be labelled and described by visible copy');
+assert(/<[^>]+\bid="opportunityStatus"(?=[^>]*\brole="status")(?=[^>]*\baria-live="polite")[^>]*>/i.test(html), 'Opportunity status must be announced politely');
+assert(/<[^>]+\bid="opportunityNote"(?=[^>]*\brole="note")[^>]*>/i.test(html), 'Opportunity interpretation warning must use note semantics');
+assert(html.includes('Width is uniform and does not represent volume, importance, value, certainty, or remaining opportunity.'), 'Opportunity view must state that path width is non-quantitative');
+assert(/<[^>]+\bid="opportunityCanvas"(?=[^>]*\brole="group")(?=[^>]*\baria-label=)[^>]*>/i.test(html), 'Opportunity canvas must expose a readable group label');
+assert(/<details\b[^>]*\bid="opportunityOutlineDetails"[^>]*>[\s\S]*?<summary>Opportunity outline<\/summary>[\s\S]*?\bid="opportunityOutline"/i.test(html), 'Opportunity view must include a structured non-canvas outline');
+assert(html.includes('The Opportunity View is unavailable.'), 'Opportunity rendering failure must expose a readable fallback');
 
 console.log(JSON.stringify({
   status: 'PASS',
@@ -102,5 +110,6 @@ console.log(JSON.stringify({
   wcagTargets: { normalText: 4.5, controlsAndGraphics: 3 },
   contrast: report,
   staticContracts: 'PASS',
-  networkAccessibility: 'PASS'
+  networkAccessibility: 'PASS',
+  opportunityAccessibility: 'PASS'
 }, null, 2));

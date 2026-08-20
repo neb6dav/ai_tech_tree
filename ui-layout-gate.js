@@ -74,6 +74,21 @@ for (const [fragment, label] of [
 ]) requireText(fragment, label);
 
 for (const [fragment, label] of [
+  ['id="opportunityView"', 'opportunity-view host'],
+  ['data-view="opportunity"', 'opportunity view selector'],
+  ['body[data-view="opportunity"]', 'opportunity view visibility rules'],
+  ['id="opportunity-data" type="application/json"', 'embedded maintained opportunity data'],
+  ['id="opportunity-view-engine"', 'embedded opportunity rendering engine'],
+  ['OpportunityAtlas.create', 'opportunity engine initialization'],
+  ["next==='opportunity'", 'opportunity view state normalization'],
+  ['id="opportunityBtn" hidden>Explore opportunities', 'timeline-to-opportunity cross-navigation'],
+  ['data-atlas-view', 'opportunity-to-atlas cross-navigation'],
+  ['#opportunityView{overflow-y:auto;overscroll-behavior:contain}', 'scrollable mobile opportunity host'],
+  ['#opportunityCanvas{flex:0 0 clamp(140px,38dvh,260px);min-height:140px}', 'viewport-bounded mobile opportunity canvas'],
+  ['@media (max-width:740px) and (max-height:480px){#opportunityCanvas{flex-basis:120px;min-height:120px}}', 'short-height opportunity canvas fallback']
+]) requireText(fragment, label);
+
+for (const [fragment, label] of [
   ['id="stats"', 'footer statistics markup'],
   ['#stats', 'footer statistics style'],
   ['zoomPct', 'footer zoom percentage'],
@@ -89,7 +104,7 @@ for (const [fragment, label] of [
 ]) forbidText(fragment, label);
 
 const scripts = executableScripts();
-assert.equal(scripts.length, 6, 'Expected six executable inline scripts plus JSON and JSON-LD data scripts');
+assert.equal(scripts.length, 7, 'Expected seven executable inline scripts plus JSON and JSON-LD data scripts');
 scripts.forEach((body, index) => new vm.Script(body, { filename: `inline-script-${index + 1}.js` }));
 
 const applicationScript = scripts.find(body => body.includes('function openPanel(nd)'));

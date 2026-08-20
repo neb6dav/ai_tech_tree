@@ -23,10 +23,19 @@ const PROMOTION_CONTROL_AUDITOR_PATH = path.join(REPOSITORY_ROOT, 'scripts', 'gi
 const PROMOTION_CONTROL_TEST_PATH = path.join(REPOSITORY_ROOT, 'tests', 'github-control-audit.test.mjs');
 const PROMOTION_CONTROL_POLICY_PATH = path.join(REPOSITORY_ROOT, 'config', 'github-promotion-policy.v1.json');
 const SAFE_PROMOTION_CONTROL_PLAN_COMMAND = 'node scripts/github-control-audit.mjs';
+const PROMOTION_LIFECYCLE_SCRIPT_PATH = path.join(REPOSITORY_ROOT, 'scripts', 'promotion-lifecycle.mjs');
+const PROMOTION_LIFECYCLE_TEST_PATH = path.join(REPOSITORY_ROOT, 'tests', 'promotion-lifecycle.test.mjs');
+const PROMOTION_LIFECYCLE_POLICY_PATH = path.join(REPOSITORY_ROOT, 'config', 'promotion-lifecycle-policy.v1.json');
+const SAFE_PROMOTION_LIFECYCLE_PLAN_COMMAND = 'node scripts/promotion-lifecycle.mjs';
 const REVIEWED_PROMOTION_CONTROL_SOURCE_SHA256 = Object.freeze({
   'config/github-promotion-policy.v1.json': 'a1dc1ec4b814f09e668b1b1d6669853240dcb732541e0d0b580ec3f5a959215c',
   'scripts/github-control-audit.mjs': '2b5d5fd0aa23056bc00bcfa01cf11b24f345465d9c4f98a403f858a16f010995',
   'tests/github-control-audit.test.mjs': '474d4fe90c462ac74d512a2eb082ea3f5938de7518ee660c357f4d62683836da'
+});
+const REVIEWED_PROMOTION_LIFECYCLE_SOURCE_SHA256 = Object.freeze({
+  'config/promotion-lifecycle-policy.v1.json': '2858c8e9514befe9b9872dbd3004f819bb2580d5481f5813cd499ff95865d2e1',
+  'scripts/promotion-lifecycle.mjs': 'cf67a056ea8ff175bb644c78d14fae528d4839c268a30e2342911b3cbedee4e8',
+  'tests/promotion-lifecycle.test.mjs': '2f06e7fbb90f953a854b08eacd893ba7bfe05af4003e357924a39c1c5a32c582'
 });
 const REVIEWED_SYNTHETIC_SOURCE_SHA256 = Object.freeze({
   'scripts/release-assets.mjs': '8841efff842e00dd93bf69a849b7701ae519bfd70b9bc5618c440ee37b90f83f',
@@ -49,6 +58,7 @@ const EXPECTED_PACKAGE_SCRIPTS = Object.freeze({
   'build:synthetic-stable-fixture': 'node scripts/synthetic-stable-fixture.mjs',
   'plan:release-finalization': 'node scripts/release-finalization-plan.mjs',
   'plan:promotion-controls': SAFE_PROMOTION_CONTROL_PLAN_COMMAND,
+  'plan:promotion-lifecycle': SAFE_PROMOTION_LIFECYCLE_PLAN_COMMAND,
   'stage:site': 'node scripts/stage-site.mjs',
   'verify:stable-bundle': 'node scripts/verify-stable-bundle.mjs',
   'test:core': 'node release-gate.js && node accessibility-gate.js && node ui-layout-gate.js && node network-gate.js && node opportunity-gate.js',
@@ -61,6 +71,7 @@ const EXPECTED_PACKAGE_SCRIPTS = Object.freeze({
   'test:stable-bundle': 'node --test tests/stable-bundle.test.mjs',
   'test:release-finalization-plan': 'node --test tests/release-finalization-plan.test.mjs',
   'test:promotion-controls': 'node --test tests/github-control-audit.test.mjs',
+  'test:promotion-lifecycle': 'node --test tests/promotion-lifecycle.test.mjs',
   'test:post-deploy-smoke': SAFE_POST_DEPLOY_TEST_COMMAND,
   'test:workflow-policy': 'node --test tests/workflow-policy.test.mjs',
   'test:site-contract:unit': 'node --test tests/site-contract-test.test.cjs',
@@ -70,7 +81,7 @@ const EXPECTED_PACKAGE_SCRIPTS = Object.freeze({
   'test:publication-compatibility': 'node --test tests/publication-compatibility.test.cjs',
   'test:export-human-urls': 'node --test tests/export-human-urls.test.cjs',
   'test:release-identity': 'node --test tests/release-identity.test.cjs',
-  'test:publication': 'npm run test:release-spec && npm run test:release-ref && npm run test:release-assets && npm run test:release-finalization-plan && npm run test:promotion-controls && npm run test:post-deploy-smoke && npm run test:workflow-policy && npm run test:stage-site && npm run test:site-contract:unit && npm run test:performance-budget:unit && npm run test:publication-compatibility && npm run test:export-human-urls && npm run stage:site && npm run test:release-identity && npm run test:performance-budget && npm run test:site-contract',
+  'test:publication': 'npm run test:release-spec && npm run test:release-ref && npm run test:release-assets && npm run test:release-finalization-plan && npm run test:promotion-controls && npm run test:promotion-lifecycle && npm run test:post-deploy-smoke && npm run test:workflow-policy && npm run test:stage-site && npm run test:site-contract:unit && npm run test:performance-budget:unit && npm run test:publication-compatibility && npm run test:export-human-urls && npm run stage:site && npm run test:release-identity && npm run test:performance-budget && npm run test:site-contract',
   test: 'npm run test:core && npm run test:publication'
 });
 const PULL_REQUEST_ONLY = "github.event_name == 'pull_request'";
@@ -261,6 +272,11 @@ function assertNoControlPlaneCapabilities(workflow, label, { allowPagesArtifact 
       value,
       /scripts[\\/]github-control-audit\.mjs|\bnpm\s+run\s+plan:promotion-controls\b/iu,
       `${label} must not execute the GitHub promotion-control audit`
+    );
+    assert.doesNotMatch(
+      value,
+      /scripts[\\/]promotion-lifecycle\.mjs|\bnpm\s+run\s+plan:promotion-lifecycle\b/iu,
+      `${label} must not execute the operational promotion-lifecycle plan entry point`
     );
     assert.doesNotMatch(
       value,
@@ -661,7 +677,10 @@ function commandWithoutAllowedLocalTestReferences(command) {
   return command
     .replaceAll('test:post-deploy-smoke', 'test:safe-local-smoke')
     .replaceAll('test:promotion-controls', 'test:read-only-control-tests')
-    .replace(/tests[\\/]post-deploy-smoke\.test\.mjs/giu, 'tests/safe-local-smoke.test.mjs');
+    .replaceAll('test:promotion-lifecycle', 'test:fixture-lifecycle-tests')
+    .replace(/tests[\\/]post-deploy-smoke\.test\.mjs/giu, 'tests/safe-local-smoke.test.mjs')
+    .replace(/scripts[\\/]promotion-lifecycle\.mjs/giu, 'scripts/fixture-event-plan.mjs')
+    .replace(/tests[\\/]promotion-lifecycle\.test\.mjs/giu, 'tests/fixture-event-plan.test.mjs');
 }
 
 function assertNoPackagePromotionCapabilities(scripts) {
@@ -748,6 +767,7 @@ function validatePackageTestClosure(
     'test:release-assets',
     'test:release-finalization-plan',
     'test:promotion-controls',
+    'test:promotion-lifecycle',
     'test:post-deploy-smoke',
     'test:workflow-policy'
   ]) {
@@ -756,6 +776,7 @@ function validatePackageTestClosure(
   assert.equal(scripts['test:release-assets'], 'node --test tests/release-assets.test.mjs');
   assert.equal(scripts['test:stable-bundle'], 'node --test tests/stable-bundle.test.mjs');
   assert.equal(scripts['test:promotion-controls'], 'node --test tests/github-control-audit.test.mjs');
+  assert.equal(scripts['test:promotion-lifecycle'], 'node --test tests/promotion-lifecycle.test.mjs');
   assert.equal(scripts['test:post-deploy-smoke'], 'node --test tests/post-deploy-smoke.test.mjs');
   assert.equal(scripts['test:workflow-policy'], 'node --test tests/workflow-policy.test.mjs');
   assert.equal(
@@ -787,6 +808,21 @@ function validatePackageTestClosure(
     reachable.has('plan:promotion-controls'),
     false,
     'the plan-only GitHub control audit must not execute through the ordinary npm test closure'
+  );
+  assert.equal(
+    scripts['plan:promotion-lifecycle'],
+    SAFE_PROMOTION_LIFECYCLE_PLAN_COMMAND,
+    'promotion-lifecycle inspection must default to the reviewed plan-only CLI with no flags'
+  );
+  assert.equal(
+    reachable.has('plan:promotion-lifecycle'),
+    false,
+    'the plan-only promotion lifecycle must not execute through the ordinary npm test closure'
+  );
+  assert.equal(
+    reachable.has('test:promotion-lifecycle'),
+    true,
+    'ordinary validation must retain the reviewed in-memory fixture lifecycle tests'
   );
   assert.equal(
     reachable.has('test:stable-bundle'),
@@ -849,7 +885,7 @@ function validateSyntheticHelperBoundary(fixtureBytes, verifierBytes, reviewedSo
     ['synthetic fixture builder', fixtureText],
     ['stable bundle verifier', verifierText]
   ]) {
-    const staticImports = [...source.matchAll(/(?:\bfrom\s+|^\s*import\s+)['"]([^'"]+)['"]/gmu)]
+    const staticImports = [...source.matchAll(/^import(?:\s+[\s\S]*?\s+from\s+|\s*)['"]([^'"]+)['"];/gmu)]
       .map(match => match[1])
       .sort();
     assert.deepEqual(staticImports, allowedImports.get(label), `${label} must use only its exact reviewed static imports`);
@@ -956,6 +992,88 @@ function validatePromotionControlSourceBoundary(reviewedSources = reviewedPromot
   assert.match(tests, /assert\.ok\(fixture\.calls\.every\(call => call\.method === 'GET'\)\)/u);
 }
 
+function validatePromotionLifecycleSourceBoundary(reviewedSources = reviewedPromotionLifecycleSources) {
+  assert.deepEqual(
+    [...reviewedSources.keys()].sort(),
+    Object.keys(REVIEWED_PROMOTION_LIFECYCLE_SOURCE_SHA256).sort(),
+    'promotion-lifecycle closure must contain exactly the reviewed policy, planner, and hostile test sources'
+  );
+  for (const [relativePath, bytes] of reviewedSources) {
+    assert.ok(Buffer.isBuffer(bytes), `promotion-lifecycle closure is missing ${relativePath}`);
+  }
+
+  const planner = reviewedSources.get('scripts/promotion-lifecycle.mjs').toString('utf8');
+  const tests = reviewedSources.get('tests/promotion-lifecycle.test.mjs').toString('utf8');
+  const policyBytes = reviewedSources.get('config/promotion-lifecycle-policy.v1.json');
+  const sourcePairs = [['planner', planner], ['hostile tests', tests]];
+  const allowedStaticImports = new Set([
+    '../scripts/promotion-lifecycle.mjs',
+    '../scripts/release-spec.mjs',
+    './release-spec.mjs',
+    './strict-json.mjs',
+    'node:assert/strict',
+    'node:crypto',
+    'node:fs/promises',
+    'node:path',
+    'node:test',
+    'node:url',
+    'node:util'
+  ]);
+  for (const [label, source] of sourcePairs) {
+    const staticImports = [...source.matchAll(/^import(?:\s+[\s\S]*?\s+from\s+|\s*)['"]([^'"]+)['"];/gmu)]
+      .map(match => match[1]);
+    assert.equal(
+      (source.match(/^import\b/gmu) || []).length,
+      staticImports.length,
+      `${label} may use only explicit reviewed static imports`
+    );
+    for (const specifier of staticImports) {
+      assert.ok(allowedStaticImports.has(specifier), `${label} imports unsupported capability ${specifier}`);
+    }
+    assert.doesNotMatch(source, /(?:^|['"])(?:node:)?(?:http|https|http2|net|tls|dgram|dns)(?:\/|['"])/mu, `${label} must not import a network primitive`);
+    assert.doesNotMatch(source, /\b(?:fetch|WebSocket|EventSource|XMLHttpRequest|getBuiltinModule|sendBeacon)\b/u, `${label} must not reference a network client or dynamic builtin resolver`);
+    assert.doesNotMatch(source, /\b(?:eval|Function|Reflect|Proxy)\b|\bimport\s*\(/u, `${label} must not construct executable or dynamically imported code`);
+    assert.doesNotMatch(source, /node:child_process|\b(?:execFile|execFileSync|execSync|spawn|spawnSync|fork)\s*\(/u, `${label} must not launch a subprocess`);
+    assert.doesNotMatch(
+      source,
+      /\b(?:writeFile|appendFile|mkdir|mkdtemp|rm|rmdir|unlink|rename|copyFile|cp|symlink|link|chmod|chown|truncate|createWriteStream)\b/u,
+      `${label} must not expose a filesystem-write primitive`
+    );
+    assert.doesNotMatch(
+      source,
+      /\b(?:GH_TOKEN|GITHUB_TOKEN|ACTIONS_RUNTIME_TOKEN|NODE_AUTH_TOKEN)\b|\$\{\{\s*(?:secrets\.|github\.token\b)|\bAuthorization\s*:/u,
+      `${label} must not receive or construct a credential`
+    );
+    assert.doesNotMatch(source, /\bprocess\.env\b/u, `${label} must not inspect ambient environment credentials or controls`);
+    assert.doesNotMatch(source, /\b(?:POST|PUT|PATCH|DELETE)\b/u, `${label} must not name a mutating HTTP method`);
+    assert.doesNotMatch(
+      source,
+      /\b(?:curl|wget|Invoke-WebRequest|Invoke-RestMethod|gh)\b|\bgit\s+(?:push|tag|update-ref)\b|deploy-pages|upload-release-asset/iu,
+      `${label} must not expose an external mutation client`
+    );
+    assert.doesNotMatch(source, /--(?:execute|output|adapter)\b/u, `${label} must not expose an execution, output, or adapter CLI`);
+  }
+
+  const policy = parseStrictJson(policyBytes, 'promotion lifecycle policy');
+  assert.equal(policy.status, 'planned', 'promotion lifecycle policy must remain planned');
+  assert.equal(policy.mode, 'fixture-only', 'promotion lifecycle policy must remain fixture-only');
+  assert.equal(policy.subject?.repositoryFullName, 'neb6dav/ai_tech_tree', 'promotion lifecycle policy must retain the fixed repository');
+  assert.equal(policy.subject?.tag, 'v0.1.1', 'promotion lifecycle policy must retain the fixed release tag');
+  assert.match(planner, /fixture-only/iu, 'planner must label its receipt boundary fixture-only');
+  assert.match(planner, /(?:promotion|production)-ineligible/iu, 'planner must label its receipts promotion-ineligible');
+  assert.match(planner, /export async function loadPromotionLifecyclePolicy\(\.\.\.argumentsList\)/u);
+  assert.match(planner, /argumentsList\.length !== 0/u, 'policy loader must reject every caller-controlled path argument');
+  assert.match(planner, /if \(!Array\.isArray\(argv\) \|\| argv\.length !== 0\)/u, 'plan CLI must reject every operand');
+
+  for (const [relativePath, expectedDigest] of Object.entries(REVIEWED_PROMOTION_LIFECYCLE_SOURCE_SHA256)) {
+    assert.equal(
+      createHash('sha256').update(reviewedSources.get(relativePath)).digest('hex'),
+      expectedDigest,
+      `${relativePath} must match its reviewed SHA-256`
+    );
+  }
+}
+
 const [
   workflowNames,
   validateBytes,
@@ -966,6 +1084,9 @@ const [
   promotionControlAuditorBytes,
   promotionControlTestBytes,
   promotionControlPolicyBytes,
+  promotionLifecycleScriptBytes,
+  promotionLifecycleTestBytes,
+  promotionLifecyclePolicyBytes,
   packageLockBytes,
   nvmrcBytes,
   nodeVersionBytes
@@ -979,6 +1100,9 @@ const [
   readFile(PROMOTION_CONTROL_AUDITOR_PATH),
   readFile(PROMOTION_CONTROL_TEST_PATH),
   readFile(PROMOTION_CONTROL_POLICY_PATH),
+  readFile(PROMOTION_LIFECYCLE_SCRIPT_PATH),
+  readFile(PROMOTION_LIFECYCLE_TEST_PATH),
+  readFile(PROMOTION_LIFECYCLE_POLICY_PATH),
   readFile(PACKAGE_LOCK_PATH),
   readFile(NVMRC_PATH),
   readFile(NODE_VERSION_PATH)
@@ -993,6 +1117,11 @@ const reviewedPromotionControlSources = new Map([
   ['scripts/github-control-audit.mjs', promotionControlAuditorBytes],
   ['tests/github-control-audit.test.mjs', promotionControlTestBytes],
   ['config/github-promotion-policy.v1.json', promotionControlPolicyBytes]
+]);
+const reviewedPromotionLifecycleSources = new Map([
+  ['scripts/promotion-lifecycle.mjs', promotionLifecycleScriptBytes],
+  ['tests/promotion-lifecycle.test.mjs', promotionLifecycleTestBytes],
+  ['config/promotion-lifecycle-policy.v1.json', promotionLifecyclePolicyBytes]
 ]);
 const validateWorkflow = parseStrictYaml(validateBytes, 'validate workflow');
 const pagesWorkflow = parseStrictYaml(pagesBytes, 'Pages hold workflow');
@@ -1023,6 +1152,10 @@ test('promotion-control plan and tests remain network-incapable and source-locke
   validatePromotionControlSourceBoundary();
 });
 
+test('promotion-lifecycle plan and fixture tests remain capability-free and source-locked', () => {
+  validatePromotionLifecycleSourceBoundary();
+});
+
 test('promotion-control source policy rejects network, subprocess, and trust-anchor drift', async t => {
   const auditor = promotionControlAuditorBytes.toString('utf8');
   const tests = promotionControlTestBytes.toString('utf8');
@@ -1044,6 +1177,36 @@ test('promotion-control source policy rejects network, subprocess, and trust-anc
         ['config/github-promotion-policy.v1.json', Buffer.from(hostilePolicy)]
       ]);
       assert.throws(() => validatePromotionControlSourceBoundary(sources));
+    });
+  }
+});
+
+test('promotion-lifecycle source policy rejects capability and trust-anchor drift', async t => {
+  const planner = promotionLifecycleScriptBytes.toString('utf8');
+  const tests = promotionLifecycleTestBytes.toString('utf8');
+  const policy = promotionLifecyclePolicyBytes.toString('utf8');
+  const mutations = [
+    ['network import', `${planner}\nimport https from 'node:https';\n`, tests, policy],
+    ['direct network client', `${planner}\nglobalThis['fetch']('https://example.invalid/');\n`, tests, policy],
+    ['dynamic builtin', `${planner}\nprocess.getBuiltinModule('https');\n`, tests, policy],
+    ['dynamic import', `${planner}\nawait import('node:fs');\n`, tests, policy],
+    ['child process', `${planner}\nspawnSync('git', ['status']);\n`, tests, policy],
+    ['filesystem write', `${planner}\nawait writeFile('receipt.json', '{}');\n`, tests, policy],
+    ['credential', `${planner}\nconst GITHUB_TOKEN = 'fixture';\n`, tests, policy],
+    ['ambient environment', `${planner}\nconst ambient = process.env;\n`, tests, policy],
+    ['mutating method', `${planner}\nconst method = 'POST';\n`, tests, policy],
+    ['execution CLI', `${planner}\nconst flag = '--execute';\n`, tests, policy],
+    ['output CLI in hostile tests', planner, `${tests}\nconst flag = '--output';\n`, policy],
+    ['policy trust anchor', planner, tests, policy.replace('neb6dav/ai_tech_tree', 'fork/ai_tech_tree')]
+  ];
+  for (const [name, hostilePlanner, hostileTests, hostilePolicy] of mutations) {
+    await t.test(name, () => {
+      const sources = new Map([
+        ['scripts/promotion-lifecycle.mjs', Buffer.from(hostilePlanner)],
+        ['tests/promotion-lifecycle.test.mjs', Buffer.from(hostileTests)],
+        ['config/promotion-lifecycle-policy.v1.json', Buffer.from(hostilePolicy)]
+      ]);
+      assert.throws(() => validatePromotionLifecycleSourceBoundary(sources));
     });
   }
 });
@@ -1106,6 +1269,7 @@ test('workflow policy rejects capability and parity regressions', async t => {
     ['deployment action', workflow => { workflow.jobs['candidate-assets-parity'].steps.push({ uses: 'actions/deploy-pages@v4' }); }],
     ['production smoke command', workflow => { workflow.jobs['build-and-test'].steps.push({ run: 'node scripts/post-deploy-smoke.mjs --execute' }); }],
     ['promotion-control audit command', workflow => { workflow.jobs['build-and-test'].steps.push({ run: 'npm run plan:promotion-controls' }); }],
+    ['promotion-lifecycle plan command', workflow => { workflow.jobs['build-and-test'].steps.push({ run: 'npm run plan:promotion-lifecycle' }); }],
     ['ambient GitHub token', workflow => { workflow.jobs['build-and-test'].env = { GITHUB_TOKEN: '${{ github.token }}' }; }],
     ['stable asset command', workflow => {
       stepByName(workflow.jobs['candidate-assets'], 'Build exact candidate assets').run =
@@ -1256,6 +1420,12 @@ test('Pages and package policies reject promotion or production-smoke regression
       `${EXPECTED_PAGES_BUILD}npm run plan:promotion-controls\n`;
     assert.throws(() => validatePagesHold(hostile));
   });
+  await t.test('promotion-lifecycle plan enters Pages build', () => {
+    const hostile = clone(pagesWorkflow);
+    stepByName(hostile.jobs.build, 'Build, validate, and stage the public artifact').run =
+      `${EXPECTED_PAGES_BUILD}npm run plan:promotion-lifecycle\n`;
+    assert.throws(() => validatePagesHold(hostile));
+  });
   await t.test('production smoke enters npm test closure', () => {
     const hostile = clone(packageDocument);
     hostile.scripts.test += ' && npm run smoke:production';
@@ -1267,6 +1437,13 @@ test('Pages and package policies reject promotion or production-smoke regression
     hostile.scripts['plan:promotion-controls'] += ' --execute';
     assert.throws(() => validatePackageTestClosure(hostile));
   });
+  for (const forbiddenArgument of ['--execute', '--output receipt.json', '--adapter ./live.mjs']) {
+    await t.test(`promotion-lifecycle plan rejects ${forbiddenArgument.split(' ')[0]}`, () => {
+      const hostile = clone(packageDocument);
+      hostile.scripts['plan:promotion-lifecycle'] += ` ${forbiddenArgument}`;
+      assert.throws(() => validatePackageTestClosure(hostile));
+    });
+  }
   await t.test('semicolon cannot conceal an npm production-smoke dependency', () => {
     const hostile = clone(packageDocument);
     hostile.scripts.test += '; npm run smoke:production';

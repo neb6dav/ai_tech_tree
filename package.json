@@ -18,6 +18,7 @@
     "build:synthetic-stable-fixture": "node scripts/synthetic-stable-fixture.mjs",
     "plan:release-finalization": "node scripts/release-finalization-plan.mjs",
     "plan:promotion-controls": "node scripts/github-control-audit.mjs",
+    "plan:promotion-lifecycle": "node scripts/promotion-lifecycle.mjs",
     "stage:site": "node scripts/stage-site.mjs",
     "verify:stable-bundle": "node scripts/verify-stable-bundle.mjs",
     "test:core": "node release-gate.js && node accessibility-gate.js && node ui-layout-gate.js && node network-gate.js && node opportunity-gate.js",
@@ -30,6 +31,7 @@
     "test:stable-bundle": "node --test tests/stable-bundle.test.mjs",
     "test:release-finalization-plan": "node --test tests/release-finalization-plan.test.mjs",
     "test:promotion-controls": "node --test tests/github-control-audit.test.mjs",
+    "test:promotion-lifecycle": "node --test tests/promotion-lifecycle.test.mjs",
     "test:post-deploy-smoke": "node --test tests/post-deploy-smoke.test.mjs",
     "test:workflow-policy": "node --test tests/workflow-policy.test.mjs",
     "test:site-contract:unit": "node --test tests/site-contract-test.test.cjs",
@@ -39,7 +41,7 @@
     "test:publication-compatibility": "node --test tests/publication-compatibility.test.cjs",
     "test:export-human-urls": "node --test tests/export-human-urls.test.cjs",
     "test:release-identity": "node --test tests/release-identity.test.cjs",
-    "test:publication": "npm run test:release-spec && npm run test:release-ref && npm run test:release-assets && npm run test:release-finalization-plan && npm run test:promotion-controls && npm run test:post-deploy-smoke && npm run test:workflow-policy && npm run test:stage-site && npm run test:site-contract:unit && npm run test:performance-budget:unit && npm run test:publication-compatibility && npm run test:export-human-urls && npm run stage:site && npm run test:release-identity && npm run test:performance-budget && npm run test:site-contract",
+    "test:publication": "npm run test:release-spec && npm run test:release-ref && npm run test:release-assets && npm run test:release-finalization-plan && npm run test:promotion-controls && npm run test:promotion-lifecycle && npm run test:post-deploy-smoke && npm run test:workflow-policy && npm run test:stage-site && npm run test:site-contract:unit && npm run test:performance-budget:unit && npm run test:publication-compatibility && npm run test:export-human-urls && npm run stage:site && npm run test:release-identity && npm run test:performance-budget && npm run test:site-contract",
     "test": "npm run test:core && npm run test:publication"
   },
   "dependencies": {

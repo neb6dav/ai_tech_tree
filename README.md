@@ -127,6 +127,33 @@ The policy describes the required future state and remains planned, not satisfie
 
 The required-check context is never accepted by itself: the response verifier also binds the active `validate.yml` workflow, a successful `push` run at the independently supplied commit, and its exact required job. The protected-branch environment policy assumes a later manual dispatch from protected `main` while the release tooling independently binds the annotated tag; it does not assume or authorize a tag-triggered deployment.
 
+C4.4-B2.1 adds only the fixture-scoped, append-only promotion-lifecycle receipt
+contract and its deterministic plan:
+
+```text
+npm run plan:promotion-lifecycle
+```
+
+The command reads the fixed lifecycle and release policies and prints a plan;
+it accepts no execution, output, or adapter option and performs no network
+request, filesystem write, external mutation, or authorization step. Ordinary
+tests exercise strict receipt and byte-chain validation with fixture evidence.
+Those receipts describe test events only: a B1 injected control receipt is not
+live control evidence and cannot make a B2.1 receipt eligible for promotion.
+The two active workflows remain the exact validation workflow and reusable
+build-only Pages hold. Neither may invoke the plan CLI, persist or consume a
+lifecycle receipt, or use lifecycle output as operational evidence. Their
+ordinary `npm test` gate does deliberately import the pure implementation and
+exercise fixture-only plan and receipt behavior entirely in memory; that test
+coverage carries no adapter, output, network, mutation, or production-evidence
+capability.
+
+B2.1 deliberately stops before operational decision guards. Fresh live-control
+consumption and ambiguity/reconciliation guards belong to B2.2; rollback-state
+guards belong to B2.3; and a durable, runner-accessible rollback bundle belongs
+to B3. None of those later capabilities, any GitHub mutation, or any release or
+deployment authority is supplied or implied by the B2.1 receipt vocabulary.
+
 The post-deployment verifier is network-free by default. It accepts only a separately supplied, exact local release manifest plus its SHA-256, annotated tag, and commit; rejects preview or internally inconsistent release identity; and prints the fixed-origin GET plan without contacting the site. A later, separately authorized promotion run must add `--execute` to perform the bounded 12-minute verification:
 
 ```text

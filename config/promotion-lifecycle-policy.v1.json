@@ -1,0 +1,53 @@
+{
+  "schemaVersion": "1.0.0",
+  "status": "planned",
+  "mode": "fixture-only",
+  "releaseSpecPath": "config/releases/v0.1.1.json",
+  "subject": {
+    "repositoryOwner": "neb6dav",
+    "repositoryName": "ai_tech_tree",
+    "repositoryFullName": "neb6dav/ai_tech_tree",
+    "gitObjectFormat": "sha1",
+    "version": "0.1.1",
+    "tag": "v0.1.1"
+  },
+  "limits": {
+    "maxReceiptBytes": 8192,
+    "maxChainLength": 3,
+    "maxReferenceBytes": 536870912,
+    "notBefore": "2026-08-20T00:00:00.000Z",
+    "notAfter": "9999-12-31T23:59:59.999Z"
+  },
+  "states": [
+    "unstarted",
+    "source-finalized",
+    "tag-verified",
+    "stable-bundle-verified"
+  ],
+  "transitions": [
+    {
+      "sequence": 1,
+      "eventType": "source-finalized",
+      "fromState": "unstarted",
+      "toState": "source-finalized",
+      "evidenceRole": "source-finalization-record",
+      "authorityRole": "source-finalization-authorization"
+    },
+    {
+      "sequence": 2,
+      "eventType": "tag-verified",
+      "fromState": "source-finalized",
+      "toState": "tag-verified",
+      "evidenceRole": "annotated-tag-verification-record",
+      "authorityRole": "annotated-tag-authorization"
+    },
+    {
+      "sequence": 3,
+      "eventType": "stable-bundle-verified",
+      "fromState": "tag-verified",
+      "toState": "stable-bundle-verified",
+      "evidenceRole": "stable-bundle-verification-record",
+      "authorityRole": "stable-bundle-build-authorization"
+    }
+  ]
+}

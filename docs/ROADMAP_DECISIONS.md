@@ -105,6 +105,26 @@ eligibility is designed for a manual promotion dispatch from protected `main`;
 the annotated tag is verified independently, and no tag-triggered deployment
 is assumed.
 
+C4.4-B2.1 defines a strict, append-only lifecycle receipt vocabulary and a
+deterministic plan-only CLI. It has no network transport, filesystem writer,
+external adapter, token, execution mode, or mutation operation. All receipts
+constructed at this checkpoint are explicitly fixture-only and
+promotion-ineligible. In particular, a B1 injected control receipt is not live
+GitHub control evidence and cannot satisfy or elevate a B2.1 event. The active
+workflow inventory remains exactly `pages.yml` and `validate.yml`. Neither may
+invoke the lifecycle plan CLI, persist or consume a lifecycle receipt, or use
+lifecycle output as operational evidence. The ordinary validation suite does
+exercise the pure fixture-only implementation in memory, with no adapter,
+output, network, mutation, or production-evidence capability.
+
+B2.1 is a data-integrity boundary, not an operational state machine. Fresh
+live-control consumption and unknown-result reconciliation are reserved for
+B2.2; rollback eligibility and ambiguity guards are reserved for B2.3; and the
+durable, runner-accessible rollback package and its storage proof are reserved
+for B3. Those later checkpoints require their own review and authorization.
+Nothing in B2.1 authorizes a tag, Release, asset upload, deployment,
+publication, rollback, settings change, or production request.
+
 ## Explicit deferrals
 
 ### Through v0.2.0

@@ -5,7 +5,7 @@ active_work_package: "WP-011-B"
 issue_url: "https://github.com/neb6dav/ai_tech_tree/issues/6"
 pr_url: "https://github.com/neb6dav/ai_tech_tree/pull/7"
 base_sha: "85108c78fa86c86634d4c0944839696369e687cd"
-last_completed_checkpoint: "WP-011-B/C4.3-A"
+last_completed_checkpoint: "WP-011-B/C4.4-A1"
 last_verified_commands:
   - command: "npm run build"
     status: "PASS"
@@ -133,10 +133,19 @@ last_verified_commands:
     runtime: "GitHub Actions Node v24.19.0 and npm 11.17.0"
     verified_by: "root"
     scope: "Workflow 32410116422; all four jobs green; artifacts 9421789032, 9421820079, and 9421828420 contain byte-identical four-file candidates; archive SHA-256 5f9c0ad74c2e9462db27082c3218613019d6bd0b9cb1f2938bc22a41e86d6301; standalone manifest e13c0a8bb324bfd744e3632ef92cea6d9bde2fe2d5089cd71583311fc0c907d6; 15/15 archive-to-preview and 14/14 local-to-CI payload parity; downloaded preview passes 1,465 references; PR evidence https://github.com/neb6dav/ai_tech_tree/pull/7#issuecomment-5360868990"
+  - command: "npm run build; AI_TREE_REQUIRE_CLEAN=true AI_TREE_STAGE_MODE=preview AI_TREE_COMMIT_SHA=59a0248015200ed9af17ab27232e1d0c12c2415e npm test"
+    status: "PASS"
+    runtime: "Node v24.14.1, npm 11.11.0, and Git 2.55"
+    verified_by: "root"
+    scope: "Exact C4.4-A1 code commit 59a0248; core gates and 327 Node tests; 33 release-asset and 54 workflow-policy tests; 17/17 release inputs; 77 tracked entries; zero filters; preview tag and promotion null; manifest SHA-256 2495ca369d042696c8c6c7d4a67ea99225beda9aac33bdc3a8ef5d588120f259; artifact budgets and 1,465 staged-site references"
+  - command: "Independent hostile C4.4-A1 stable-asset and integration reviews"
+    status: "PASS after findings resolved"
+    verified_by: "root plus two independent read-only reviewers"
+    scope: "Canonical stage configuration, Node/npm/lock identity, non-null data digest, no-lazy-fetch Git policy, executing-tool-to-commit binding, deterministic stable bundle closure, second annotated-ref verification with cleanup, real planned-identity rejection, and build-only workflow hold returned SHIP"
 next_exact_action: >-
-  Implement C4.4-A1's network-free stable-asset builder and synthetic
-  annotated-tag acceptance matrix while preserving the real planned identity
-  and the build-only workflow hold.
+  Implement C4.4-A2's Windows/Ubuntu synthetic stable-bundle parity and
+  standalone offline bundle verification while preserving the real planned
+  identity and the build-only workflow hold.
 known_blockers:
   - "WP-011-B is stacked on verified draft PR #5 until WP-011-A is separately authorized to merge."
   - "No merge, annotated tag, GitHub Release, environment approval, or public deployment is authorized."
@@ -144,7 +153,7 @@ known_blockers:
   - "Browser performance metrics and automated preview screenshots remain pending WP-012-A."
   - "The github-pages environment has no required reviewer and permits administrator bypass; immutable GitHub Releases are disabled. These external controls require separate authorization before any C4 promotion run."
   - "No active no-bypass tag ruleset protects v0.1.1, and the verified production recovery artifact is local rather than durable and runner-accessible."
-release_gate_status: "wp_011_b_c4_4_a1_implementing_offline_only"
+release_gate_status: "wp_011_b_c4_4_a1_locally_verified_a2_implementing_offline_only"
 release_details:
   version: "v0.1.1"
   title: "Publication-contract repair"
@@ -168,12 +177,13 @@ release_details:
       artifact_id: 9392055435
       artifact_tar_sha256: "f04f46196b74982f9d725f032278f9b7ed48ae1ffd82db0dcff3fc39f739f9c4"
     active_checkpoint:
-      id: "C4.4-A1"
-      title: "Network-free stable release assets"
+      id: "C4.4-A2"
+      title: "Cross-platform synthetic stable-asset parity"
       status: "implementing"
       next_exact_action: >-
-        Add and hostile-test a local stable-asset mode that consumes only a
-        ready synthetic fixture with a verified annotated tag; leave the real
+        Add and hostile-test read-only CI fixtures that construct the same local
+        synthetic annotated tag on Windows and Ubuntu, compare all four stable
+        bundle files byte-for-byte, and verify the bundle offline; leave the real
         release specification planned and perform no network or external mutation.
     scope:
       - "Publish stable and compatibility Opportunity endpoints."

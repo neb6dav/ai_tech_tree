@@ -5,7 +5,7 @@ active_work_package: "WP-011-B"
 issue_url: "https://github.com/neb6dav/ai_tech_tree/issues/6"
 pr_url: "https://github.com/neb6dav/ai_tech_tree/pull/7"
 base_sha: "85108c78fa86c86634d4c0944839696369e687cd"
-last_completed_checkpoint: "WP-011-B/C4.2-A"
+last_completed_checkpoint: "WP-011-B/C4.2-B"
 last_verified_commands:
   - command: "npm run build"
     status: "PASS"
@@ -68,17 +68,30 @@ last_verified_commands:
     status: "PASS"
     verified_by: "root plus independent hostile reviewer"
     scope: "Four commit-named candidate files; 15-entry USTAR; extracted site passes 1,465 references; archive SHA-256 faf694cd7509d53ba60384cca88e7f0b06691a948a70884c2254f56aecf268b4; standalone manifest 75b600a044bb8a25d2543a48216d3b6a284fa7ee7a48ce3db01fadebd6957fc0; no tag, release, deployment, environment, settings, or network mutation performed"
+  - command: "Reconcile pushed C4.2-A validation preview"
+    status: "PASS"
+    verified_by: "root"
+    scope: "Workflow 32401757630 green; artifact 9418749682 passed 1,465 contract references; 14/14 payload files byte-identical to the local exact-clean stage; CI and local source closure both 17/17"
+  - command: "npm run build; AI_TREE_REQUIRE_CLEAN=true AI_TREE_STAGE_MODE=preview AI_TREE_COMMIT_SHA=9ef84c682d4c3a6652bec2276ec4c29e951e5d64 npm test"
+    status: "PASS"
+    runtime: "Node v24.14.1, npm 11.11.0, and Git 2.55"
+    verified_by: "root"
+    scope: "Exact C4.2-B code commit 9ef84c6; 78 synthetic/loopback smoke tests, 12 candidate-asset tests, 21 release-ref tests, 53 stage-site tests, all core and publication gates, 17/17 inputs, 74 tracked entries, zero filters, and 1,465 staged-site references; manifest SHA-256 7643aceb7a59e0efa38fa6cb541039edcf26af0c202fe676f44306976f4a73ba"
+  - command: "Independent hostile C4.2-B smoke-verifier review"
+    status: "PASS after findings resolved"
+    verified_by: "root plus independent read-only reviewer"
+    scope: "Full release-identity closure, fixed-origin planning, absolute deadline, drained concurrency, narrow retry policy, honest artifact-bound client-state labels, byte/transfer/path budgets, and zero-production-request boundary returned SHIP"
 next_exact_action: >-
-  Finish the C4.2-B hostile corrections for full release-identity closure,
-  absolute deadline enforcement, drained retries, and artifact-bound state
-  labeling; then run the focused and full gates before its separate push.
+  Implement C4.2-C read-only validation-workflow candidate generation,
+  Windows/Ubuntu inner-byte parity, a fail-closed workflow-policy test, and
+  14-day verified candidate upload without changing the Pages workflow.
 known_blockers:
   - "WP-011-B is stacked on verified draft PR #5 until WP-011-A is separately authorized to merge."
   - "No merge, annotated tag, GitHub Release, environment approval, or public deployment is authorized."
   - "The C3 source must remain visibly labeled as an untagged development edition until C4 prepares an authorized release artifact."
   - "Browser performance metrics and automated preview screenshots remain pending WP-012-A."
   - "The github-pages environment has no required reviewer and permits administrator bypass; immutable GitHub Releases are disabled. These external controls require separate authorization before any C4 promotion run."
-release_gate_status: "wp_011_b_c4_2_a_locally_verified_c4_2_b_implementing"
+release_gate_status: "wp_011_b_c4_2_b_locally_verified_c4_2_c_ready"
 release_details:
   version: "v0.1.1"
   title: "Publication-contract repair"
@@ -102,13 +115,13 @@ release_details:
       artifact_id: 9392055435
       artifact_tar_sha256: "f04f46196b74982f9d725f032278f9b7ed48ae1ffd82db0dcff3fc39f739f9c4"
     active_checkpoint:
-      id: "C4.2-B"
-      title: "Bounded post-deployment smoke tooling"
-      status: "implementing"
+      id: "C4.2-C"
+      title: "Cross-platform candidate validation workflow"
+      status: "ready_to_implement"
       next_exact_action: >-
-        Correct the hostile-review findings, prove plan mode makes zero network
-        requests, and verify bounded execution only against injected and
-        loopback fixtures; do not contact the public site.
+        Add PR-only Ubuntu and Windows candidate builds, byte-parity validation,
+        a verified 14-day candidate artifact, and workflow safety assertions;
+        retain contents-read permissions and the build-only Pages hold.
     scope:
       - "Publish stable and compatibility Opportunity endpoints."
       - "Move exported human URLs to the root application."
@@ -251,7 +264,23 @@ The extracted archive independently passes all 1,465 contract references.
 Hostile findings on Setext headings, Markdown injection, and unverifiable
 external-state wording were corrected before the reviewer returned SHIP.
 C4.2-A performs and attests no tag, GitHub Release, deployment, environment
-approval, settings change, or network request. C4.2-B is the active boundary.
+approval, settings change, or network request.
+
+The pushed C4.2-A ledger passed workflow `32401757630`; downloaded preview
+artifact `9418749682` passes all 1,465 contract references and its 14/14
+payloads are byte-identical to the local exact-clean stage. C4.2-B adds a
+fixed-origin post-deployment verifier whose default mode produces a plan and
+makes zero requests. Its executable mode requires explicit local manifest
+bytes, digest, tag, and commit; verifies complete release identity and every
+public payload between matching starting and ending manifests; enforces MIME,
+URL, transfer, concurrency, and absolute-deadline bounds; and labels fragment
+states as artifact-bound rather than browser-verified. Exact clean commit
+`9ef84c6` passes 78 synthetic/loopback smoke tests and the complete repository
+gate with 17/17 inputs, 74 tracked entries, zero filters, and 1,465 references.
+Hostile-review findings on identity drift, late success, detached workers,
+retry scope, transfer multiplication, and representative-state overclaim were
+corrected before the final SHIP verdict. No public-site request was made.
+C4.2-C is the next boundary.
 
 ## Release boundary
 

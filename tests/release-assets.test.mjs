@@ -720,7 +720,10 @@ test('stable mode rejects config mismatch, relative or linked roots, all ambient
   );
   await assert.rejects(
     buildStableReleaseAssets(stableBuildOptions(fixture, {
-      repositoryRoot: path.relative(path.resolve('.'), fixture.root),
+      // A relative path between different Windows drives becomes absolute.
+      // Use an unambiguously relative spelling so this assertion exercises
+      // the API boundary on every runner layout.
+      repositoryRoot: path.join('relative', 'repository-root'),
       outputDirectory: path.join(fixture.base, 'relative-root')
     })),
     /explicit absolute canonical path/u

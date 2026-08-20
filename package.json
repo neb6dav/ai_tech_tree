@@ -18,13 +18,18 @@
     "test:network": "node network-gate.js",
     "test:opportunity": "node opportunity-gate.js",
     "test:stage-site": "node --test scripts/stage-site.test.mjs",
-    "test:publication": "npm run test:stage-site && npm run stage:site",
+    "test:site-contract:unit": "node --test tests/site-contract-test.test.cjs",
+    "test:site-contract": "node scripts/site-contract-test.cjs",
+    "test:performance-budget:unit": "node --test tests/performance-budget-test.test.cjs",
+    "test:performance-budget": "node scripts/performance-budget-test.cjs",
+    "test:publication": "npm run test:stage-site && npm run test:site-contract:unit && npm run test:performance-budget:unit && npm run stage:site && npm run test:performance-budget && npm run test:site-contract",
     "test": "npm run test:core && npm run test:publication"
   },
   "dependencies": {
     "@cosmos.gl/graph": "3.4.0"
   },
   "devDependencies": {
+    "entities": "8.0.0",
     "esbuild": "0.25.12"
   }
 }

@@ -1,11 +1,12 @@
 import assert from 'node:assert/strict';
+import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { mkdtemp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
 
-import { stageSite } from './stage-site.mjs';
+import { normalizeManifestPath, stageSite } from './stage-site.mjs';
 
 const temporaryRoots = new Set();
 
@@ -102,7 +103,26 @@ test('stages a deterministic tree and sorted release manifest', async () => {
     node: process.version,
     npm: '11.11.0',
     packageLockVersion: 3,
-    stageSite: '1.0.0'
+    stageSite: '1.1.0'
+  });
+  assert.deepEqual(manifest.sourceState, {
+    kind: 'unavailable',
+    clean: null,
+    requiredClean: false,
+    repositoryTopLevel: null,
+    repositoryRootMatchesTopLevel: null,
+    head: null,
+    commitMatchesHead: null,
+    changedEntryCount: null,
+    statusSha256: null,
+    flaggedIndexEntryCount: null,
+    indexFlagsSha256: null,
+    inputCount: 7,
+    matchedInputCount: null,
+    directorySourceCount: 1,
+    matchedDirectorySourceCount: null,
+    inputsMatchCommit: null,
+    inputVerificationSha256: null
   });
   assert.equal(manifest.manifest.selfHashExcluded, true);
   assert.equal(manifest.manifest.filesCoverage, 'all-payload-files');
@@ -171,6 +191,42 @@ test('refuses any configured output other than repository-local _site', async ()
   await assert.rejects(stageSite({ repositoryRoot: root, environment }), /must be exactly _site/u);
 });
 
+test('rejects case aliases that attempt to read from the staged output', async () => {
+  const root = await makeRoot();
+  const config = baseConfig({
+    artifacts: [{ kind: 'file', source: '_SITE/stale-secret.txt', target: 'leak.txt' }]
+  });
+  await writeBaseFixture(root, config);
+  await write(root, '_site/stale-secret.txt', 'must not be restaged');
+
+  await assert.rejects(
+    stageSite({ repositoryRoot: root, environment }),
+    /cannot read from _site/u
+  );
+  await assert.rejects(
+    stageSite({ repositoryRoot: root, configPath: '_SITE/config.json', environment }),
+    /config path cannot read from _site/u
+  );
+});
+
+test('rejects declared media types that drift from the published path', async () => {
+  const root = await makeRoot();
+  const config = baseConfig({
+    artifacts: [{
+      kind: 'file',
+      source: 'index.html',
+      target: 'index.html',
+      mediaType: 'application/json; charset=utf-8'
+    }]
+  });
+  await writeBaseFixture(root, config);
+
+  await assert.rejects(
+    stageSite({ repositoryRoot: root, environment }),
+    /mediaType must match the canonical type/u
+  );
+});
+
 test('rejects abbreviated commit IDs', async () => {
   const root = await makeRoot();
   await writeBaseFixture(root);
@@ -182,5 +238,410 @@ test('rejects abbreviated commit IDs', async () => {
       checkOnly: true
     }),
     /full 40- or 64-character hexadecimal git object ID/u
+  );
+});
+
+test('rejects platform-specific aliases and URI-ambiguous manifest paths', () => {
+  const invalid = [
+    'index.html:payload',
+    'CON',
+    'NUL.txt',
+    'COM1.json',
+    'LPT9/data.json',
+    'trailing.',
+    'trailing-space ',
+    'query?.json',
+    'fragment#.json',
+    '%2e%2e/index.html',
+    'encoded%2fsegment.json'
+  ];
+  for (const candidate of invalid) {
+    assert.throws(
+      () => normalizeManifestPath(candidate, 'test path'),
+      /non-empty, trimmed|non-portable|trailing dot or space|Windows-reserved/u,
+      candidate
+    );
+  }
+  assert.equal(normalizeManifestPath('.nojekyll'), '.nojekyll');
+  assert.equal(normalizeManifestPath('topics/diffusion/index.html'), 'topics/diffusion/index.html');
+});
+
+test('records dirty git provenance and enforces clean-source deployment mode', async () => {
+  const root = await makeRoot();
+  await writeBaseFixture(root);
+  execFileSync('git', ['init', '--quiet'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['config', 'user.name', 'stage-site-test'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['config', 'user.email', 'stage-site-test@example.invalid'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['config', 'core.autocrlf', 'false'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['add', '--', '.'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['commit', '--quiet', '-m', 'fixture'], { cwd: root, windowsHide: true });
+  const head = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8', windowsHide: true }).trim();
+  await write(root, 'dirty.txt', 'uncommitted\n');
+
+  const dirty = await stageSite({
+    repositoryRoot: root,
+    environment: { ...environment, AI_TREE_COMMIT_SHA: head },
+    checkOnly: true
+  });
+  assert.equal(dirty.manifest.sourceState.kind, 'git');
+  assert.equal(dirty.manifest.sourceState.clean, false);
+  assert.equal(dirty.manifest.sourceState.commitMatchesHead, true);
+  assert.equal(dirty.manifest.sourceState.changedEntryCount, 1);
+  assert.match(dirty.manifest.sourceState.statusSha256, /^[0-9a-f]{64}$/u);
+  assert.equal(dirty.manifest.sourceState.flaggedIndexEntryCount, 0);
+  assert.match(dirty.manifest.sourceState.indexFlagsSha256, /^[0-9a-f]{64}$/u);
+  assert.equal(dirty.manifest.sourceState.inputCount, 7);
+  assert.equal(dirty.manifest.sourceState.matchedInputCount, 7);
+  assert.equal(dirty.manifest.sourceState.directorySourceCount, 1);
+  assert.equal(dirty.manifest.sourceState.matchedDirectorySourceCount, 1);
+  assert.equal(dirty.manifest.sourceState.inputsMatchCommit, true);
+  assert.match(dirty.manifest.sourceState.inputVerificationSha256, /^[0-9a-f]{64}$/u);
+
+  await assert.rejects(
+    stageSite({
+      repositoryRoot: root,
+      environment: { ...environment, AI_TREE_COMMIT_SHA: head, AI_TREE_REQUIRE_CLEAN: 'true' },
+      checkOnly: true
+    }),
+    /clean git source tree is required/u
+  );
+});
+
+test('clean-source mode rejects ignored or untracked allowlisted inputs absent from the commit', async () => {
+  const root = await makeRoot();
+  await writeBaseFixture(root);
+  await write(root, '.gitignore', 'public/data/ignored.json\n');
+  execFileSync('git', ['init', '--quiet'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['config', 'user.name', 'stage-site-test'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['config', 'user.email', 'stage-site-test@example.invalid'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['config', 'core.autocrlf', 'false'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['add', '--', '.'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['commit', '--quiet', '-m', 'fixture'], { cwd: root, windowsHide: true });
+  const head = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8', windowsHide: true }).trim();
+  await write(root, 'public/data/ignored.json', '{"secret":true}\n');
+
+  assert.equal(
+    execFileSync('git', ['status', '--porcelain=v1', '--untracked-files=all'], {
+      cwd: root,
+      encoding: 'utf8',
+      windowsHide: true
+    }).trim(),
+    ''
+  );
+  await assert.rejects(
+    stageSite({
+      repositoryRoot: root,
+      environment: { ...environment, AI_TREE_COMMIT_SHA: head, AI_TREE_REQUIRE_CLEAN: 'true' },
+      checkOnly: true
+    }),
+    /release inputs? do(?:es)? not match or cannot be published from advertised commit.*public\/data\/ignored\.json/u
+  );
+});
+
+test('input blob verification defeats Git environment and assume-unchanged bypasses', async () => {
+  const root = await makeRoot();
+  await writeBaseFixture(root);
+  await write(root, 'README.md', 'Fixture documentation\n');
+  execFileSync('git', ['init', '--quiet'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['config', 'user.name', 'stage-site-test'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['config', 'user.email', 'stage-site-test@example.invalid'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['config', 'core.autocrlf', 'false'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['add', '--', '.'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['commit', '--quiet', '-m', 'fixture'], { cwd: root, windowsHide: true });
+  const head = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8', windowsHide: true }).trim();
+  const previousGitDir = process.env.GIT_DIR;
+  const previousGitIndex = process.env.GIT_INDEX_FILE;
+  try {
+    process.env.GIT_DIR = path.join(root, 'hostile-git-dir');
+    process.env.GIT_INDEX_FILE = path.join(root, 'hostile-index');
+    const clean = await stageSite({
+      repositoryRoot: root,
+      environment: { ...environment, AI_TREE_COMMIT_SHA: head, AI_TREE_REQUIRE_CLEAN: 'true' },
+      checkOnly: true
+    });
+    assert.equal(clean.manifest.sourceState.inputsMatchCommit, true);
+  } finally {
+    if (previousGitDir === undefined) delete process.env.GIT_DIR;
+    else process.env.GIT_DIR = previousGitDir;
+    if (previousGitIndex === undefined) delete process.env.GIT_INDEX_FILE;
+    else process.env.GIT_INDEX_FILE = previousGitIndex;
+  }
+
+  execFileSync('git', ['update-index', '--assume-unchanged', '--', 'README.md'], { cwd: root, windowsHide: true });
+  await write(root, 'README.md', 'Hidden non-input mutation\n');
+  assert.equal(
+    execFileSync('git', ['status', '--porcelain=v1', '--untracked-files=all'], {
+      cwd: root,
+      encoding: 'utf8',
+      windowsHide: true
+    }).trim(),
+    ''
+  );
+  await assert.rejects(
+    stageSite({
+      repositoryRoot: root,
+      environment: { ...environment, AI_TREE_COMMIT_SHA: head, AI_TREE_REQUIRE_CLEAN: 'true' },
+      checkOnly: true
+    }),
+    /clean git source tree is required.*assume-unchanged or skip-worktree/u
+  );
+});
+
+test('strict provenance disables Git replacement objects', async () => {
+  const root = await makeRoot();
+  await writeBaseFixture(root);
+  execFileSync('git', ['init', '--quiet'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['config', 'user.name', 'stage-site-test'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['config', 'user.email', 'stage-site-test@example.invalid'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['config', 'core.autocrlf', 'false'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['add', '--', '.'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['commit', '--quiet', '-m', 'original'], { cwd: root, windowsHide: true });
+  const original = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8', windowsHide: true }).trim();
+  await write(root, 'index.html', '<!doctype html><title>Malicious replacement</title>\n');
+  execFileSync('git', ['add', '--', 'index.html'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['commit', '--quiet', '-m', 'replacement'], { cwd: root, windowsHide: true });
+  const replacement = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8', windowsHide: true }).trim();
+  execFileSync('git', ['checkout', '--quiet', '--detach', original], { cwd: root, windowsHide: true });
+  execFileSync('git', ['replace', original, replacement], { cwd: root, windowsHide: true });
+  await write(root, 'index.html', '<!doctype html><title>Malicious replacement</title>\n');
+
+  await assert.rejects(
+    stageSite({
+      repositoryRoot: root,
+      environment: { ...environment, AI_TREE_COMMIT_SHA: original, AI_TREE_REQUIRE_CLEAN: 'true' },
+      checkOnly: true
+    }),
+    /clean git source tree is required|release input does not match or cannot be published/u
+  );
+});
+
+test('requires repositoryRoot to be the canonical Git worktree top level', async () => {
+  const parent = await makeRoot();
+  const root = path.join(parent, 'nested');
+  await mkdir(root, { recursive: true });
+  await writeBaseFixture(root);
+  execFileSync('git', ['init', '--quiet'], { cwd: parent, windowsHide: true });
+  execFileSync('git', ['config', 'user.name', 'stage-site-test'], { cwd: parent, windowsHide: true });
+  execFileSync('git', ['config', 'user.email', 'stage-site-test@example.invalid'], { cwd: parent, windowsHide: true });
+  execFileSync('git', ['config', 'core.autocrlf', 'false'], { cwd: parent, windowsHide: true });
+  execFileSync('git', ['add', '--', '.'], { cwd: parent, windowsHide: true });
+  execFileSync('git', ['commit', '--quiet', '-m', 'fixture'], { cwd: parent, windowsHide: true });
+  const head = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: parent, encoding: 'utf8', windowsHide: true }).trim();
+
+  await assert.rejects(
+    stageSite({
+      repositoryRoot: root,
+      environment: { ...environment, AI_TREE_COMMIT_SHA: head, AI_TREE_REQUIRE_CLEAN: 'true' },
+      checkOnly: true
+    }),
+    /repository root must be the Git worktree top level/u
+  );
+});
+
+test('rejects committed symlink modes and Git LFS pointers as release inputs', async () => {
+  for (const mode of ['symlink', 'lfs']) {
+    const root = await makeRoot();
+    const config = baseConfig({
+      artifacts: [{
+        kind: 'file',
+        source: mode === 'symlink' ? 'link.html' : 'image.png',
+        target: mode === 'symlink' ? 'index.html' : 'social.png'
+      }]
+    });
+    await writeBaseFixture(root, config);
+    if (mode === 'symlink') await write(root, 'link.html', 'index.html');
+    else {
+      await write(root, '.gitattributes', 'image.png filter=lfs diff=lfs merge=lfs -text\n');
+      await write(root, 'image.png', [
+        'version https://git-lfs.github.com/spec/v1',
+        `oid sha256:${'a'.repeat(64)}`,
+        'size 1234',
+        ''
+      ].join('\n'));
+    }
+    execFileSync('git', ['init', '--quiet'], { cwd: root, windowsHide: true });
+    execFileSync('git', ['config', 'user.name', 'stage-site-test'], { cwd: root, windowsHide: true });
+    execFileSync('git', ['config', 'user.email', 'stage-site-test@example.invalid'], { cwd: root, windowsHide: true });
+    execFileSync('git', ['config', 'core.autocrlf', 'false'], { cwd: root, windowsHide: true });
+    execFileSync('git', ['config', 'core.symlinks', 'false'], { cwd: root, windowsHide: true });
+    execFileSync('git', ['add', '--', '.'], { cwd: root, windowsHide: true });
+    if (mode === 'symlink') {
+      const blob = execFileSync('git', ['hash-object', '-w', '--', 'link.html'], {
+        cwd: root,
+        encoding: 'utf8',
+        windowsHide: true
+      }).trim();
+      execFileSync('git', ['update-index', '--add', '--cacheinfo', `120000,${blob},link.html`], {
+        cwd: root,
+        windowsHide: true
+      });
+    }
+    execFileSync('git', ['commit', '--quiet', '-m', mode], { cwd: root, windowsHide: true });
+    const head = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8', windowsHide: true }).trim();
+
+    await assert.rejects(
+      stageSite({
+        repositoryRoot: root,
+        environment: { ...environment, AI_TREE_COMMIT_SHA: head, AI_TREE_REQUIRE_CLEAN: 'true' },
+        checkOnly: true
+      }),
+      mode === 'symlink' ? /Git mode 120000 is not a regular file/u : /Git LFS inputs are not supported/u,
+      mode
+    );
+  }
+});
+
+test('tracked staged-output files are included in the clean-tree gate', async () => {
+  const root = await makeRoot();
+  await writeBaseFixture(root);
+  await write(root, '_site/marker.txt', 'tracked output marker\n');
+  execFileSync('git', ['init', '--quiet'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['config', 'user.name', 'stage-site-test'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['config', 'user.email', 'stage-site-test@example.invalid'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['config', 'core.autocrlf', 'false'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['add', '--', '.'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['add', '--force', '--', '_site/marker.txt'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['commit', '--quiet', '-m', 'fixture'], { cwd: root, windowsHide: true });
+  const head = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8', windowsHide: true }).trim();
+  await write(root, '_site/marker.txt', 'modified output marker\n');
+
+  await assert.rejects(
+    stageSite({
+      repositoryRoot: root,
+      environment: { ...environment, AI_TREE_COMMIT_SHA: head, AI_TREE_REQUIRE_CLEAN: 'true' },
+      checkOnly: true
+    }),
+    /clean git source tree is required/u
+  );
+});
+
+test('clean-tree status overrides local submodule ignore settings', async () => {
+  const root = await makeRoot();
+  const child = await makeRoot();
+  await writeBaseFixture(root);
+  await write(child, 'tracked.txt', 'submodule original\n');
+  for (const repository of [child, root]) {
+    execFileSync('git', ['init', '--quiet'], { cwd: repository, windowsHide: true });
+    execFileSync('git', ['config', 'user.name', 'stage-site-test'], { cwd: repository, windowsHide: true });
+    execFileSync('git', ['config', 'user.email', 'stage-site-test@example.invalid'], { cwd: repository, windowsHide: true });
+    execFileSync('git', ['config', 'core.autocrlf', 'false'], { cwd: repository, windowsHide: true });
+    execFileSync('git', ['add', '--', '.'], { cwd: repository, windowsHide: true });
+    execFileSync('git', ['commit', '--quiet', '-m', 'fixture'], { cwd: repository, windowsHide: true });
+  }
+  execFileSync('git', [
+    '-c',
+    'protocol.file.allow=always',
+    'submodule',
+    'add',
+    '--quiet',
+    '--',
+    child,
+    'vendor'
+  ], { cwd: root, windowsHide: true });
+  execFileSync('git', ['commit', '--quiet', '-am', 'add submodule'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['config', 'submodule.vendor.ignore', 'all'], { cwd: root, windowsHide: true });
+  const head = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8', windowsHide: true }).trim();
+  await write(root, 'vendor/tracked.txt', 'submodule modified\n');
+  assert.equal(
+    execFileSync('git', ['status', '--porcelain=v1', '--untracked-files=all'], {
+      cwd: root,
+      encoding: 'utf8',
+      windowsHide: true
+    }).trim(),
+    ''
+  );
+
+  await assert.rejects(
+    stageSite({
+      repositoryRoot: root,
+      environment: { ...environment, AI_TREE_COMMIT_SHA: head, AI_TREE_REQUIRE_CLEAN: 'true' },
+      checkOnly: true
+    }),
+    /clean git source tree is required/u
+  );
+});
+
+test('rejects gitlinks and ignored empty directories used as directory artifacts', async () => {
+  for (const mode of ['gitlink', 'ignored-empty']) {
+    const root = await makeRoot();
+    const config = baseConfig({
+      artifacts: [{ kind: 'directory', source: 'vendor', target: 'vendor' }]
+    });
+    await writeBaseFixture(root, config);
+    await mkdir(path.join(root, 'vendor'), { recursive: true });
+    if (mode === 'ignored-empty') await write(root, '.gitignore', 'vendor/\n');
+    execFileSync('git', ['init', '--quiet'], { cwd: root, windowsHide: true });
+    execFileSync('git', ['config', 'user.name', 'stage-site-test'], { cwd: root, windowsHide: true });
+    execFileSync('git', ['config', 'user.email', 'stage-site-test@example.invalid'], { cwd: root, windowsHide: true });
+    execFileSync('git', ['config', 'core.autocrlf', 'false'], { cwd: root, windowsHide: true });
+    execFileSync('git', ['add', '--', '.'], { cwd: root, windowsHide: true });
+    execFileSync('git', ['commit', '--quiet', '-m', 'fixture'], { cwd: root, windowsHide: true });
+    if (mode === 'gitlink') {
+      const targetCommit = execFileSync('git', ['rev-parse', 'HEAD'], {
+        cwd: root,
+        encoding: 'utf8',
+        windowsHide: true
+      }).trim();
+      execFileSync('git', ['update-index', '--add', '--cacheinfo', `160000,${targetCommit},vendor`], {
+        cwd: root,
+        windowsHide: true
+      });
+      execFileSync('git', ['commit', '--quiet', '-m', 'gitlink'], { cwd: root, windowsHide: true });
+    }
+    const head = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8', windowsHide: true }).trim();
+
+    await assert.rejects(
+      stageSite({
+        repositoryRoot: root,
+        environment: { ...environment, AI_TREE_COMMIT_SHA: head, AI_TREE_REQUIRE_CLEAN: 'true' },
+        checkOnly: true
+      }),
+      mode === 'gitlink' ? /Git mode 160000 is not a committed directory/u : /Git mode missing is not a committed directory/u,
+      mode
+    );
+  }
+});
+
+test('rejects stage-site temporary directories as configuration or artifact sources', async () => {
+  const root = await makeRoot();
+  const config = baseConfig({
+    artifacts: [{ kind: 'file', source: '.stage-site-hostile/payload.html', target: 'index.html' }]
+  });
+  await writeBaseFixture(root, config);
+  await write(root, '.stage-site-hostile/payload.html', '<!doctype html>hostile\n');
+
+  await assert.rejects(stageSite({ repositoryRoot: root, environment }), /stage-site temporary directories/u);
+  await assert.rejects(
+    stageSite({ repositoryRoot: root, configPath: '.stage-site-hostile/config.json', environment }),
+    /stage-site temporary directories/u
+  );
+});
+
+test('rejects metadata, artifact, and configuration reads from generated or Git-admin paths', async () => {
+  const root = await makeRoot();
+  await writeBaseFixture(root);
+
+  for (const [label, config, expected] of [
+    ['metadata output', baseConfig({ metadata: {
+      packageFile: '_SITE/package.json',
+      packageLockFile: 'package-lock.json',
+      datasetFile: 'data.json'
+    } }), /metadata\.packageFile cannot read from _site/u],
+    ['metadata temporary', baseConfig({ metadata: {
+      packageFile: 'package.json',
+      packageLockFile: '.stage-site-hostile/package-lock.json',
+      datasetFile: 'data.json'
+    } }), /metadata\.packageLockFile cannot read from stage-site temporary directories/u],
+    ['artifact Git admin', baseConfig({ artifacts: [
+      { kind: 'file', source: '.GIT/config', target: 'leak.txt' }
+    ] }), /artifacts\[0\]\.source cannot read from Git administrative data/u]
+  ]) {
+    await write(root, 'config/pages-stage.v1.json', `${JSON.stringify(config, null, 2)}\n`);
+    await assert.rejects(stageSite({ repositoryRoot: root, environment }), expected, label);
+  }
+
+  await assert.rejects(
+    stageSite({ repositoryRoot: root, configPath: '.GIT/config', environment }),
+    /config path cannot read from Git administrative data/u
   );
 });

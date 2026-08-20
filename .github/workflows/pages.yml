@@ -1,16 +1,14 @@
-name: Deploy GitHub Pages
+name: Prepare GitHub Pages release
 
+# Publication hold: WP-011-B replaces this reusable-only entry point with the
+# approved annotated-tag promotion path. Merging WP-011-A must not deploy an
+# intermediate version/tag-null artifact from main.
 on:
-  push:
-    branches:
-      - main
-  workflow_dispatch:
+  workflow_call:
 
 permissions:
   contents: read
   actions: read
-  pages: write
-  id-token: write
 
 concurrency:
   group: pages
@@ -20,6 +18,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    env:
+      AI_TREE_REQUIRE_CLEAN: "true"
 
     steps:
       - name: Check out repository
@@ -36,21 +36,16 @@ jobs:
       - name: Install exact dependencies
         run: npm ci
 
-      - name: Build and validate the public artifact
+      - name: Build, validate, and stage the public artifact
         run: |
           npm run build
           npm test
           git diff --exit-code -- .
-
-      - name: Prepare the Pages artifact
-        shell: bash
-        run: |
-          mkdir _site
-          cp index.html ai-research-tech-tree.json ai-research-tech-tree.jsonld ai-research-tech-tree.ndjson social-card.png robots.txt sitemap.xml _site/
-          touch _site/.nojekyll
-
-      - name: Configure GitHub Pages
-        uses: actions/configure-pages@v5
+          if [ -n "$(git status --porcelain --untracked-files=all)" ]; then
+            echo "The build produced untracked files. Refusing to publish an untracked source state."
+            git status --short
+            exit 1
+          fi
 
       - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v5
@@ -58,6 +53,11 @@ jobs:
           path: _site
 
   deploy:
+    permissions:
+      actions: read
+      contents: read
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -65,6 +65,9 @@ jobs:
     needs: build
 
     steps:
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5

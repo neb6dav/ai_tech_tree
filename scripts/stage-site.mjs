@@ -17,8 +17,8 @@ import path from 'node:path';
 import process from 'node:process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
-const SCRIPT_VERSION = '1.0.0';
-const RELEASE_MANIFEST_SCHEMA_VERSION = '1.0.0';
+const SCRIPT_VERSION = '1.1.0';
+const RELEASE_MANIFEST_SCHEMA_VERSION = '1.1.0';
 const CONFIG_SCHEMA_VERSION = '1.0.0';
 const DEFAULT_CONFIG_PATH = 'config/pages-stage.v1.json';
 const REQUIRED_OUTPUT_DIRECTORY = '_site';
@@ -91,6 +91,20 @@ export function normalizeManifestPath(value, label = 'path') {
   ) {
     throw stageError(`${label} is not a canonical relative path: ${value}`);
   }
+  for (const segment of segments) {
+    if (!/^[A-Za-z0-9._~-]+$/u.test(segment)) {
+      throw stageError(
+        `${label} contains a non-portable path segment: ${segment}; ` +
+        'published paths may use only ASCII letters, digits, dot, underscore, hyphen, and tilde'
+      );
+    }
+    if (segment.endsWith('.') || segment.endsWith(' ')) {
+      throw stageError(`${label} contains a segment with a trailing dot or space: ${segment}`);
+    }
+    if (/^(?:con|prn|aux|nul|com[1-9]|lpt[1-9])(?:\.|$)/iu.test(segment)) {
+      throw stageError(`${label} contains a Windows-reserved device name: ${segment}`);
+    }
+  }
   return value;
 }
 
@@ -107,6 +121,33 @@ function caseFold(value) {
   return value.normalize('NFC').toLowerCase();
 }
 
+function isReservedOutputPath(value) {
+  const firstSegment = String(value).split('/', 1)[0];
+  return caseFold(firstSegment) === caseFold(REQUIRED_OUTPUT_DIRECTORY);
+}
+
+function isReservedTemporaryPath(value) {
+  const firstSegment = caseFold(String(value).split('/', 1)[0]);
+  return firstSegment.startsWith('.stage-site-');
+}
+
+function isGitAdministrativePath(value) {
+  const firstSegment = String(value).split('/', 1)[0];
+  return caseFold(firstSegment) === '.git';
+}
+
+function assertPermittedRepositoryInputPath(value, label) {
+  if (isReservedOutputPath(value)) {
+    throw stageError(`${label} cannot read from ${REQUIRED_OUTPUT_DIRECTORY}`);
+  }
+  if (isReservedTemporaryPath(value)) {
+    throw stageError(`${label} cannot read from stage-site temporary directories`);
+  }
+  if (isGitAdministrativePath(value)) {
+    throw stageError(`${label} cannot read from Git administrative data`);
+  }
+}
+
 function compareText(left, right) {
   return left < right ? -1 : left > right ? 1 : 0;
 }
@@ -114,11 +155,6 @@ function compareText(left, right) {
 export function mediaTypeForPath(filePath) {
   if (path.posix.basename(filePath) === '.nojekyll') return 'application/octet-stream';
   return MEDIA_TYPES.get(path.posix.extname(filePath).toLowerCase()) || 'application/octet-stream';
-}
-
-async function parseJsonFile(absolutePath, label) {
-  const { document } = await readJsonFile(absolutePath, label);
-  return document;
 }
 
 async function readJsonFile(absolutePath, label) {
@@ -161,6 +197,9 @@ export function validateStageConfig(config) {
   normalizeManifestPath(config.metadata.packageFile, 'metadata.packageFile');
   normalizeManifestPath(config.metadata.packageLockFile, 'metadata.packageLockFile');
   normalizeManifestPath(config.metadata.datasetFile, 'metadata.datasetFile');
+  assertPermittedRepositoryInputPath(config.metadata.packageFile, 'metadata.packageFile');
+  assertPermittedRepositoryInputPath(config.metadata.packageLockFile, 'metadata.packageLockFile');
+  assertPermittedRepositoryInputPath(config.metadata.datasetFile, 'metadata.datasetFile');
 
   if (!Array.isArray(config.artifacts) || config.artifacts.length === 0) {
     throw stageError('artifacts must be a non-empty array');
@@ -173,7 +212,16 @@ export function validateStageConfig(config) {
     }
     normalizeManifestPath(artifact.source, `${label}.source`);
     normalizeManifestPath(artifact.target, `${label}.target`);
-    if (artifact.mediaType !== undefined) validateMediaType(artifact.mediaType, `${label}.mediaType`);
+    assertPermittedRepositoryInputPath(artifact.source, `${label}.source`);
+    if (artifact.mediaType !== undefined) {
+      validateMediaType(artifact.mediaType, `${label}.mediaType`);
+      const expectedMediaType = mediaTypeForPath(artifact.target);
+      if (artifact.kind === 'file' && artifact.mediaType !== expectedMediaType) {
+        throw stageError(
+          `${label}.mediaType must match the canonical type for ${artifact.target}: ${expectedMediaType}`
+        );
+      }
+    }
     if (artifact.kind === 'directory' && artifact.mediaType !== undefined) {
       throw stageError(`${label}.mediaType is only valid for file artifacts`);
     }
@@ -186,6 +234,12 @@ export function validateStageConfig(config) {
     normalizeManifestPath(generated.target, `${label}.target`);
     if (typeof generated.contents !== 'string') throw stageError(`${label}.contents must be a string`);
     validateMediaType(generated.mediaType, `${label}.mediaType`);
+    const expectedMediaType = mediaTypeForPath(generated.target);
+    if (generated.mediaType !== expectedMediaType) {
+      throw stageError(
+        `${label}.mediaType must match the canonical type for ${generated.target}: ${expectedMediaType}`
+      );
+    }
   });
 
   return config;
@@ -266,11 +320,9 @@ function validatePlanTargets(plan, releaseManifestPath) {
 
 async function collectCopyPlan(repositoryRoot, config) {
   const plan = [];
+  const directoryRequirements = [];
   for (let index = 0; index < config.artifacts.length; index += 1) {
     const artifact = config.artifacts[index];
-    if (artifact.source === REQUIRED_OUTPUT_DIRECTORY || artifact.source.startsWith(`${REQUIRED_OUTPUT_DIRECTORY}/`)) {
-      throw stageError(`artifacts[${index}].source cannot read from ${REQUIRED_OUTPUT_DIRECTORY}`);
-    }
     const sourceStat = await assertPathComponentsAreSafe(repositoryRoot, artifact.source, `artifacts[${index}].source`);
     if (artifact.kind === 'file') {
       if (!sourceStat.isFile()) throw stageError(`artifacts[${index}].source must be a regular file`);
@@ -283,7 +335,12 @@ async function collectCopyPlan(repositoryRoot, config) {
       });
     } else {
       if (!sourceStat.isDirectory()) throw stageError(`artifacts[${index}].source must be a directory`);
+      const firstFileIndex = plan.length;
       await addDirectoryFiles(plan, repositoryRoot, artifact.source, artifact.target);
+      directoryRequirements.push({
+        path: artifact.source,
+        filePaths: plan.slice(firstFileIndex).map(item => item.sourceRelative).sort(compareText)
+      });
     }
   }
 
@@ -299,7 +356,8 @@ async function collectCopyPlan(repositoryRoot, config) {
 
   validatePlanTargets(plan, config.releaseManifest);
   plan.sort((left, right) => compareText(left.target, right.target));
-  return plan;
+  directoryRequirements.sort((left, right) => compareText(left.path, right.path));
+  return { plan, directoryRequirements };
 }
 
 function sha256(buffer) {
@@ -328,6 +386,7 @@ function gitOutput(repositoryRoot, args) {
   try {
     return execFileSync('git', args, {
       cwd: repositoryRoot,
+      env: gitEnvironment(),
       encoding: 'utf8',
       stdio: ['ignore', 'pipe', 'ignore'],
       windowsHide: true
@@ -335,6 +394,29 @@ function gitOutput(repositoryRoot, args) {
   } catch {
     return null;
   }
+}
+
+function gitBuffer(repositoryRoot, args) {
+  try {
+    return execFileSync('git', args, {
+      cwd: repositoryRoot,
+      env: gitEnvironment(),
+      encoding: null,
+      stdio: ['ignore', 'pipe', 'ignore'],
+      windowsHide: true,
+      maxBuffer: 64 * 1024 * 1024
+    });
+  } catch {
+    return null;
+  }
+}
+
+function gitEnvironment() {
+  const environment = Object.fromEntries(
+    Object.entries(process.env).filter(([name]) => !name.toUpperCase().startsWith('GIT_'))
+  );
+  environment.GIT_NO_REPLACE_OBJECTS = '1';
+  return environment;
 }
 
 function firstEnvironmentValue(environment, names) {
@@ -353,6 +435,251 @@ function resolveCommit(repositoryRoot, environment) {
     throw stageError(`commit must be a full 40- or 64-character hexadecimal git object ID: ${commit}`);
   }
   return commit.toLowerCase();
+}
+
+function requiredCleanSource(environment) {
+  const raw = environment.AI_TREE_REQUIRE_CLEAN;
+  if (raw == null || String(raw).trim() === '' || /^(?:0|false|no)$/iu.test(String(raw).trim())) return false;
+  if (/^(?:1|true|yes)$/iu.test(String(raw).trim())) return true;
+  throw stageError('AI_TREE_REQUIRE_CLEAN must be true/false, yes/no, or 1/0 when set');
+}
+
+function normalizeInputSnapshots(inputSnapshots) {
+  const byPath = new Map();
+  for (const snapshot of inputSnapshots) {
+    const relativePath = normalizeManifestPath(snapshot.path, 'release input path');
+    const bytes = Buffer.from(snapshot.bytes);
+    const digest = sha256(bytes);
+    const previous = byPath.get(relativePath);
+    if (previous && previous.sha256 !== digest) {
+      throw stageError(`release input changed while staging: ${relativePath}`);
+    }
+    if (!previous) byPath.set(relativePath, { path: relativePath, bytes, sha256: digest });
+  }
+  return [...byPath.values()].sort((left, right) => compareText(left.path, right.path));
+}
+
+function isGitLfsPointer(bytes) {
+  const text = Buffer.from(bytes).subarray(0, 1024).toString('utf8');
+  return /^version https:\/\/git-lfs\.github\.com\/spec\/v1\r?\n/mu.test(text) &&
+    /^oid sha256:[0-9a-f]{64}\r?$/imu.test(text) &&
+    /^size [0-9]+\r?$/mu.test(text);
+}
+
+function parseGitTreeEntries(bytes) {
+  if (bytes == null) return null;
+  return bytes.toString('utf8').split('\0').filter(Boolean).map(record => {
+    const match = /^([0-7]{6})\s+([^\s]+)\s+([0-9a-f]+)\t(.+)$/u.exec(record);
+    return match ? { mode: match[1], type: match[2], object: match[3], path: match[4] } : null;
+  }).filter(Boolean);
+}
+
+function verifyInputsAtCommit(repositoryRoot, commit, inputSnapshots, directoryRequirements) {
+  const fileResults = inputSnapshots.map(snapshot => {
+    const treeEntry = gitOutput(repositoryRoot, ['ls-tree', commit, '--', snapshot.path]);
+    const treeMode = treeEntry?.match(/^([0-7]{6})\s/u)?.[1] || null;
+    const committedBytes = gitBuffer(repositoryRoot, ['cat-file', 'blob', `${commit}:${snapshot.path}`]);
+    const committedSha256 = committedBytes == null ? null : sha256(committedBytes);
+    const filterAttribute = gitOutput(repositoryRoot, [
+      'check-attr',
+      `--source=${commit}`,
+      'filter',
+      '--',
+      snapshot.path
+    ]);
+    const usesGitLfs = /:\s*filter:\s*lfs\s*$/iu.test(filterAttribute || '') ||
+      (committedBytes != null && isGitLfsPointer(committedBytes));
+    const publishableMode = treeMode === '100644' || treeMode === '100755';
+    const contentMatches = committedSha256 === snapshot.sha256;
+    const reason = !publishableMode
+      ? `Git mode ${treeMode || 'missing'} is not a regular file`
+      : usesGitLfs
+        ? 'Git LFS inputs are not supported by deterministic staging'
+        : !contentMatches
+          ? 'working bytes differ from the committed blob'
+          : null;
+    return {
+      path: snapshot.path,
+      currentSha256: snapshot.sha256,
+      committedSha256,
+      treeMode,
+      usesGitLfs,
+      contentMatches,
+      reason,
+      matches: contentMatches && publishableMode && !usesGitLfs
+    };
+  });
+
+  const directoryResults = directoryRequirements.map(requirement => {
+    const rootEntry = gitOutput(repositoryRoot, ['ls-tree', commit, '--', requirement.path]);
+    const rootMode = rootEntry?.match(/^([0-7]{6})\s/u)?.[1] || null;
+    const committedEntries = parseGitTreeEntries(
+      gitBuffer(repositoryRoot, ['ls-tree', '-r', '-z', commit, '--', requirement.path])
+    ) || [];
+    const committedPaths = committedEntries.map(entry => entry.path).sort(compareText);
+    const unsafeEntry = committedEntries.find(entry => entry.mode !== '100644' && entry.mode !== '100755');
+    const entrySetMatches = JSON.stringify(committedPaths) === JSON.stringify(requirement.filePaths);
+    const matches = rootMode === '040000' && !unsafeEntry && entrySetMatches;
+    const reason = rootMode !== '040000'
+      ? `Git mode ${rootMode || 'missing'} is not a committed directory`
+      : unsafeEntry
+        ? `directory contains non-regular Git mode ${unsafeEntry.mode} at ${unsafeEntry.path}`
+        : !entrySetMatches
+          ? 'working directory file set differs from the committed recursive tree'
+          : null;
+    return {
+      path: requirement.path,
+      rootMode,
+      fileCount: requirement.filePaths.length,
+      committedFileCount: committedPaths.length,
+      matches,
+      reason
+    };
+  });
+  const verificationRows = [
+    ...fileResults.map(result => (
+      `file\t${result.path}\t${result.currentSha256}\t${result.committedSha256 || 'missing'}\t` +
+      `${result.treeMode || 'missing'}\t${result.usesGitLfs ? 'lfs' : 'plain'}\t${result.matches ? 'match' : 'mismatch'}`
+    )),
+    ...directoryResults.map(result => (
+      `directory\t${result.path}\t${result.rootMode || 'missing'}\t${result.fileCount}\t` +
+      `${result.committedFileCount}\t${result.matches ? 'match' : 'mismatch'}`
+    ))
+  ];
+  const mismatches = [
+    ...fileResults.filter(result => !result.matches),
+    ...directoryResults.filter(result => !result.matches)
+  ];
+  return {
+    inputCount: fileResults.length,
+    matchedInputCount: fileResults.filter(result => result.matches).length,
+    directorySourceCount: directoryResults.length,
+    matchedDirectorySourceCount: directoryResults.filter(result => result.matches).length,
+    inputsMatchCommit: mismatches.length === 0,
+    inputVerificationSha256: sha256(Buffer.from(verificationRows.join('\n'), 'utf8')),
+    mismatches
+  };
+}
+
+function resolveIndexFlags(repositoryRoot) {
+  const output = gitBuffer(repositoryRoot, ['ls-files', '-v', '-z']);
+  if (output == null) return null;
+  const records = output.toString('utf8').split('\0').filter(Boolean);
+  const flagged = records.filter(record => {
+    const tag = record[0] || '';
+    return tag === 'S' || tag === 's' || /^[a-z]$/u.test(tag);
+  });
+  return {
+    flagged,
+    flaggedEntryCount: flagged.length,
+    flagsSha256: sha256(Buffer.from(flagged.sort(compareText).join('\n'), 'utf8'))
+  };
+}
+
+function resolveSourceState(repositoryRoot, environment, commit, rawInputSnapshots, directoryRequirements) {
+  const requireClean = requiredCleanSource(environment);
+  const inputSnapshots = normalizeInputSnapshots(rawInputSnapshots);
+  const topLevel = gitOutput(repositoryRoot, ['rev-parse', '--show-toplevel']);
+  const head = gitOutput(repositoryRoot, ['rev-parse', 'HEAD']);
+  const indexFlags = resolveIndexFlags(repositoryRoot);
+  const status = gitOutput(repositoryRoot, [
+    '-c',
+    'core.fsmonitor=false',
+    '-c',
+    'core.ignoreStat=false',
+    'status',
+    '--porcelain=v1',
+    '--untracked-files=all',
+    '--ignore-submodules=none',
+    '--',
+    '.'
+  ]);
+
+  if (topLevel == null || head == null || indexFlags == null || status == null) {
+    if (requireClean) {
+      throw stageError('a clean git source tree is required, but repository state is unavailable');
+    }
+    return {
+      kind: 'unavailable',
+      clean: null,
+      requiredClean: false,
+      repositoryTopLevel: null,
+      repositoryRootMatchesTopLevel: null,
+      head: null,
+      commitMatchesHead: null,
+      changedEntryCount: null,
+      statusSha256: null,
+      flaggedIndexEntryCount: null,
+      indexFlagsSha256: null,
+      inputCount: inputSnapshots.length,
+      matchedInputCount: null,
+      directorySourceCount: directoryRequirements.length,
+      matchedDirectorySourceCount: null,
+      inputsMatchCommit: null,
+      inputVerificationSha256: null
+    };
+  }
+
+  const resolvedTopLevel = path.resolve(topLevel);
+  const rootMatchesTopLevel = process.platform === 'win32'
+    ? caseFold(resolvedTopLevel) === caseFold(repositoryRoot)
+    : resolvedTopLevel === repositoryRoot;
+  if (!rootMatchesTopLevel) {
+    throw stageError(
+      `repository root must be the Git worktree top level; received ${repositoryRoot}, Git reports ${resolvedTopLevel}`
+    );
+  }
+
+  const normalizedHead = head.toLowerCase();
+  const entries = status === '' ? [] : status.split(/\r?\n/u);
+  const clean = entries.length === 0 && indexFlags.flaggedEntryCount === 0;
+  const commitMatchesHead = normalizedHead === commit;
+  if (requireClean && !clean) {
+    throw stageError(
+      'a clean git source tree is required; found ' +
+      `${entries.length} changed entr${entries.length === 1 ? 'y' : 'ies'} and ` +
+      `${indexFlags.flaggedEntryCount} assume-unchanged or skip-worktree index entr` +
+      `${indexFlags.flaggedEntryCount === 1 ? 'y' : 'ies'}`
+    );
+  }
+  if (requireClean && !commitMatchesHead) {
+    throw stageError(`advertised commit ${commit} does not match checked-out HEAD ${normalizedHead}`);
+  }
+  const inputVerification = verifyInputsAtCommit(repositoryRoot, commit, inputSnapshots, directoryRequirements);
+  if (requireClean && !inputVerification.inputsMatchCommit) {
+    const examples = inputVerification.mismatches
+      .slice(0, 5)
+      .map(item => `${item.path} (${item.reason})`)
+      .join(', ');
+    const remainder = inputVerification.mismatches.length > 5
+      ? ` and ${inputVerification.mismatches.length - 5} more`
+      : '';
+    throw stageError(
+      `${inputVerification.mismatches.length} release input${inputVerification.mismatches.length === 1 ? '' : 's'} ` +
+      `${inputVerification.mismatches.length === 1 ? 'does' : 'do'} not match or cannot be published from ` +
+      `advertised commit ${commit}: ` +
+      `${examples}${remainder}`
+    );
+  }
+  return {
+    kind: 'git',
+    clean,
+    requiredClean: requireClean,
+    repositoryTopLevel: '.',
+    repositoryRootMatchesTopLevel: rootMatchesTopLevel,
+    head: normalizedHead,
+    commitMatchesHead,
+    changedEntryCount: entries.length,
+    statusSha256: sha256(Buffer.from(status, 'utf8')),
+    flaggedIndexEntryCount: indexFlags.flaggedEntryCount,
+    indexFlagsSha256: indexFlags.flagsSha256,
+    inputCount: inputVerification.inputCount,
+    matchedInputCount: inputVerification.matchedInputCount,
+    directorySourceCount: inputVerification.directorySourceCount,
+    matchedDirectorySourceCount: inputVerification.matchedDirectorySourceCount,
+    inputsMatchCommit: inputVerification.inputsMatchCommit,
+    inputVerificationSha256: inputVerification.inputVerificationSha256
+  };
 }
 
 function resolveTag(repositoryRoot, environment) {
@@ -375,7 +702,15 @@ function npmVersionFromEnvironment(environment) {
   return match ? match[1] : null;
 }
 
-async function buildReleaseMetadata(repositoryRoot, config, environment) {
+async function buildReleaseMetadata(
+  repositoryRoot,
+  config,
+  environment,
+  configPath,
+  configBytes,
+  hydratedPlan,
+  directoryRequirements
+) {
   const packageAbsolute = resolveInside(repositoryRoot, config.metadata.packageFile, 'package metadata path');
   const lockAbsolute = resolveInside(repositoryRoot, config.metadata.packageLockFile, 'package-lock metadata path');
   const datasetAbsolute = resolveInside(repositoryRoot, config.metadata.datasetFile, 'dataset metadata path');
@@ -383,9 +718,12 @@ async function buildReleaseMetadata(repositoryRoot, config, environment) {
   await assertPathComponentsAreSafe(repositoryRoot, config.metadata.packageLockFile, 'metadata.packageLockFile');
   await assertPathComponentsAreSafe(repositoryRoot, config.metadata.datasetFile, 'metadata.datasetFile');
 
-  const packageDocument = await parseJsonFile(packageAbsolute, 'package metadata');
-  const packageLockDocument = await parseJsonFile(lockAbsolute, 'package-lock metadata');
-  const datasetDocument = await parseJsonFile(datasetAbsolute, 'dataset metadata');
+  const packageFile = await readJsonFile(packageAbsolute, 'package metadata');
+  const packageLockFile = await readJsonFile(lockAbsolute, 'package-lock metadata');
+  const datasetFile = await readJsonFile(datasetAbsolute, 'dataset metadata');
+  const packageDocument = packageFile.document;
+  const packageLockDocument = packageLockFile.document;
+  const datasetDocument = datasetFile.document;
   const version = assertNonEmptyString(packageDocument.version, 'package version');
   const edition = assertNonEmptyString(datasetDocument.dataset?.edition, 'dataset edition');
   const generatorVersion = assertNonEmptyString(datasetDocument.generatorVersion, 'dataset generatorVersion');
@@ -394,11 +732,28 @@ async function buildReleaseMetadata(repositoryRoot, config, environment) {
     throw stageError('dataset dataDigest must be a SHA-256 hexadecimal digest when present');
   }
 
+  const commit = resolveCommit(repositoryRoot, environment);
+  const inputSnapshots = [
+    { path: configPath, bytes: configBytes },
+    { path: config.metadata.packageFile, bytes: packageFile.bytes },
+    { path: config.metadata.packageLockFile, bytes: packageLockFile.bytes },
+    { path: config.metadata.datasetFile, bytes: datasetFile.bytes },
+    ...hydratedPlan
+      .filter(item => item.sourceRelative !== null)
+      .map(item => ({ path: item.sourceRelative, bytes: item.bytes }))
+  ];
   return {
     edition,
     version,
-    commit: resolveCommit(repositoryRoot, environment),
+    commit,
     tag: resolveTag(repositoryRoot, environment),
+    sourceState: resolveSourceState(
+      repositoryRoot,
+      environment,
+      commit,
+      inputSnapshots,
+      directoryRequirements
+    ),
     generatorVersion,
     dataDigest: dataDigest?.toLowerCase() || null,
     toolchain: {
@@ -429,6 +784,7 @@ function buildReleaseManifest(config, metadata, hydratedPlan, configPath, config
     version: metadata.version,
     commit: metadata.commit,
     tag: metadata.tag,
+    sourceState: metadata.sourceState,
     generatorVersion: metadata.generatorVersion,
     dataDigest: metadata.dataDigest,
     toolchain: metadata.toolchain,
@@ -530,16 +886,22 @@ export async function stageSite({
     throw stageError(`repository root is unavailable: ${error.message}`);
   }
   normalizeManifestPath(configPath, 'config path');
-  if (configPath === REQUIRED_OUTPUT_DIRECTORY || configPath.startsWith(`${REQUIRED_OUTPUT_DIRECTORY}/`)) {
-    throw stageError(`config path cannot be inside ${REQUIRED_OUTPUT_DIRECTORY}`);
-  }
+  assertPermittedRepositoryInputPath(configPath, 'config path');
   await assertPathComponentsAreSafe(resolvedRoot, configPath, 'config path');
   const configAbsolute = resolveInside(resolvedRoot, configPath, 'config path');
   const configFile = await readJsonFile(configAbsolute, 'stage configuration');
   const config = validateStageConfig(configFile.document);
-  const plan = await collectCopyPlan(resolvedRoot, config);
+  const { plan, directoryRequirements } = await collectCopyPlan(resolvedRoot, config);
   const hydratedPlan = await hydratePlan(plan);
-  const metadata = await buildReleaseMetadata(resolvedRoot, config, environment);
+  const metadata = await buildReleaseMetadata(
+    resolvedRoot,
+    config,
+    environment,
+    configPath,
+    configFile.bytes,
+    hydratedPlan,
+    directoryRequirements
+  );
   const manifest = buildReleaseManifest(config, metadata, hydratedPlan, configPath, sha256(configFile.bytes));
 
   const outputAbsolute = checkOnly
@@ -606,6 +968,7 @@ async function main() {
     totalBytes: result.totalBytes,
     commit: result.manifest.commit,
     tag: result.manifest.tag,
+    sourceState: result.manifest.sourceState,
     dataDigest: result.manifest.dataDigest
   }, null, 2)}\n`);
 }

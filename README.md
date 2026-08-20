@@ -69,7 +69,7 @@ Generated artifacts are committed so releases can be inspected, downloaded, and 
 
 ## Build and validate
 
-Node.js 18 or newer and npm 7 or newer are required by the graph-rendering dependency. Reproduce the checked-in artifacts with:
+Node.js 24 and npm 11 are the pinned artifact-producing toolchain. The graph-rendering dependency may support older runtimes, but release artifacts and generated-file checks are accepted only from the pinned major versions. Reproduce the checked-in artifacts with:
 
 ```text
 npm ci
@@ -78,7 +78,13 @@ npm test
 git diff --exit-code
 ```
 
-The same sequence runs in GitHub Actions. A pull request is not ready to merge if a build changes generated files that the contributor did not commit.
+`npm test` runs the existing data, accessibility, layout, Network, and Opportunity gates; unit-tests the staging, contract, and deterministic artifact-budget tools; assembles `_site` from the versioned staging manifest; and verifies its publication contract under the `/ai_tech_tree/` project path. Browser-only performance metrics remain recorded but unmeasured until the `WP-012-A` browser harness.
+
+The release manifest records the exact observed Node and npm versions and every payload file's media type, byte count, and SHA-256. In clean-source mode, staging also proves that the configuration, metadata, individual artifacts, and complete directory inputs are regular committed blobs from the advertised `HEAD`; symlinks, gitlinks, Git LFS pointers, replacement objects, index concealment flags, dirty submodules, and generated or Git-administration input paths fail closed. The manifest cannot contain its own digest without a cryptographic self-reference, so it explicitly excludes itself; WP-011-B supplies the checksum of the complete release archive. Local dirty-tree staging remains available for pre-commit review but is labeled non-clean and cannot be deployed.
+
+The static contract uses a pinned browser-compatible HTML attribute decoder, rejects nested `iframe[srcdoc]` browsing contexts, validates live-document fragments without treating inert `<template>` contents as targets, and checks JSON Schema reference closure and application-state ID uniqueness. Explicit runtime-fragment declarations are labeled `runtime-declared-pending-browser`, not statically verified; their browser proof belongs to `WP-012-A`. Nested JSON Schema `$id` scopes are intentionally prohibited until the validator implements their full base-URI semantics.
+
+The same sequence runs in GitHub Actions. Pull requests receive a downloadable staged-site preview artifact. A pull request is not ready to merge if a build changes generated files or leaves untracked source files. Production publication is under an explicit hold during WP-011-A: the Pages workflow is reusable-only until WP-011-B installs approved annotated-tag promotion and post-deployment verification.
 
 ## Contributing
 

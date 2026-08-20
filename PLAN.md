@@ -5,40 +5,40 @@ active_work_package: "WP-011-A"
 issue_url: "https://github.com/neb6dav/ai_tech_tree/issues/4"
 pr_url: "https://github.com/neb6dav/ai_tech_tree/pull/5"
 base_sha: "76483d2d59f52f30202b52fe52a26a7c832a1252"
-last_completed_checkpoint: "C2"
+last_completed_checkpoint: "C4"
 last_verified_commands:
   - command: "npm run build"
     status: "PASS"
     runtime: "Node v24.14.1"
     verified_by: "root"
-    scope: "WP-011-A integrated maintained and generated source"
+    scope: "WP-011-A integrated maintained and generated source; 4,519,305-byte initial document"
   - command: "npm test"
     status: "PASS"
     runtime: "Node v24.14.1 and npm 11.11.0"
     verified_by: "root"
-    scope: "Core gates, 16 new unit tests, staging, artifact budgets, and staged-site contract"
+    scope: "Core gates, 59 focused unit tests, staging, artifact budgets, and staged-site contract"
   - command: "npm run test:site-contract"
     status: "PASS"
     runtime: "Node v24.14.1"
     verified_by: "root"
-    scope: "1737 internal references under /ai_tech_tree/"
+    scope: "1812 internal references under /ai_tech_tree/, including 75 JSON Schema references and 2 browser-deferred runtime fragments"
   - command: "Repeat stage-site and compare release-manifest SHA-256"
     status: "PASS"
     runtime: "Node v24.14.1"
     verified_by: "root"
-    scope: "dc20d0df92591c63a190256b4f9dadbb6ac1220864d93bdf64db9126752ce5fd"
+    scope: "Identical manifest SHA-256 across repeated stages from the same unchanged input state and toolchain"
   - command: "Parse workflow YAML and project JSON; node --check new scripts; git diff --check"
     status: "PASS"
     verified_by: "root"
     scope: "WP-011-A uncommitted worktree"
 next_exact_action: >-
-  Commit the reviewed C3/C4 contract crawler, enforced artifact budgets, and
-  workflow integration; then verify and adversarially review the complete
-  work package before its final checkpoint push.
+  Commit the named C3/C4 files, verify that exact committed tree in an isolated
+  worktree, push the authorized checkpoint, and confirm the draft PR checks.
 known_blockers:
+  - "Production Pages promotion is intentionally held at a reusable-only workflow until WP-011-B installs approved annotated-tag promotion."
   - "WP-011-B must synchronize version identity and replace main/manual production deployment with approved annotated-tag promotion before v0.1.1 can ship."
   - "Browser performance metrics and automated preview screenshots remain pending WP-012-A."
-release_gate_status: "wp_011_a_c2_checkpoint"
+release_gate_status: "wp_011_a_c4_local_complete_pending_commit_and_remote_ci"
 release_details:
   version: "v0.1.1"
   title: "Publication-contract repair"
@@ -56,12 +56,12 @@ release_details:
       number: 5
       url: "https://github.com/neb6dav/ai_tech_tree/pull/5"
     active_checkpoint:
-      id: "C2"
-      title: "Deterministic staged-site assembler"
-      status: "complete_in_this_commit"
+      id: "C4"
+      title: "Staged-site contract, budgets, and workflow integration"
+      status: "local_complete_pending_commit"
       next_exact_action: >-
-        Commit C3/C4 contract and budget gates plus workflow integration, then
-        run the complete work-package adversarial review.
+        Commit the named files, verify the exact committed tree in isolation,
+        then push and confirm the draft PR checks.
     scope:
       - "Repair the broken public-site publication contract before broader UI or content work."
       - "Make the deployable site an explicit, validated artifact."
@@ -110,8 +110,13 @@ architecture work starts only after this repair is released.
 `C1` records the control plane, locked decisions, toolchain pin, and budget
 policy. `C2` adds the deterministic staged-site assembler, strict allowlist,
 release manifest, focused tests, and artifact-producing npm toolchain contract.
-The remaining locally reviewed implementation is isolated to the C3/C4
-contract, budget, workflow, documentation, and adversarial-review checkpoint.
+`C3/C4` are locally complete. They add the project-subpath crawler, blocking
+artifact-budget enforcement, shared validation/Pages staging, downloadable PR
+previews, and final usage documentation. Their static contract resolves 1,812
+internal references, fails closed on browser/scanner boundary cases, and labels
+two runtime-created fragments as browser-deferred rather than statically
+verified. This checkpoint becomes durable only after the named commit, isolated
+committed-tree verification, authorized push, and remote CI confirmation.
 
 This work package is not a shippable `v0.1.1` release by itself. `WP-011-B`
 remains responsible for release identity, annotated-tag and protected-main

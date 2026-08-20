@@ -45,6 +45,17 @@ function safeInlineJson(text) {
   return JSON.stringify(value).replace(/</g, '\\u003c').replace(/\u2028/g, '\\u2028').replace(/\u2029/g, '\\u2029');
 }
 
+function declareRuntimeFragments(html, scriptId, fragmentIds) {
+  const pattern = new RegExp(`<script\\b[^>]*\\bid=["']${scriptId}["'][^>]*>`, 'gi');
+  const matches = [...html.matchAll(pattern)];
+  assert.equal(matches.length, 1, `Expected exactly one #${scriptId} script for runtime fragment declarations`);
+  const declaration = [...new Set(fragmentIds)].sort().join(' ');
+  const openingTag = matches[0][0]
+    .replace(/\sdata-runtime-fragment-ids=(?:"[^"]*"|'[^']*')/gi, '')
+    .replace(/>$/u, ` data-runtime-fragment-ids="${declaration}">`);
+  return `${html.slice(0, matches[0].index)}${openingTag}${html.slice(matches[0].index + matches[0][0].length)}`;
+}
+
 function injectNetworkAssets(html, layoutText, bundleText) {
   assert(!/<\/script/i.test(bundleText), `${BUNDLE_FILE} contains a closing script sequence and cannot be safely inlined`);
   let result = injectScriptBody(html, 'network-layout-data', safeInlineJson(layoutText), 'application/json');
@@ -56,7 +67,7 @@ function injectOpportunityAssets(html, dataText, bundleText) {
   assert(!/<\/script/i.test(bundleText), `${OPPORTUNITY_BUNDLE_FILE} contains a closing script sequence and cannot be safely inlined`);
   let result = injectScriptBody(html, 'opportunity-data', safeInlineJson(dataText), 'application/json');
   result = injectScriptBody(result, 'opportunity-view-engine', bundleText.replace(/\r\n/g, '\n').trimEnd());
-  return result;
+  return declareRuntimeFragments(result, 'opportunity-view-engine', ['opportunityArrow']);
 }
 
 function injectBuiltAssets(html, layoutText, networkBundleText, opportunityDataText, opportunityBundleText) {
@@ -140,4 +151,11 @@ function main() {
 
 if (require.main === module) main();
 
-module.exports = { injectBuiltAssets, injectNetworkAssets, injectOpportunityAssets, injectScriptBody, safeInlineJson };
+module.exports = {
+  declareRuntimeFragments,
+  injectBuiltAssets,
+  injectNetworkAssets,
+  injectOpportunityAssets,
+  injectScriptBody,
+  safeInlineJson
+};

@@ -5,7 +5,7 @@ active_work_package: "WP-011-B"
 issue_url: "https://github.com/neb6dav/ai_tech_tree/issues/6"
 pr_url: "https://github.com/neb6dav/ai_tech_tree/pull/7"
 base_sha: "85108c78fa86c86634d4c0944839696369e687cd"
-last_completed_checkpoint: "WP-011-B/C4.4-B1"
+last_completed_checkpoint: "WP-011-B/C4.4-B2.1"
 last_verified_commands:
   - command: "npm run build"
     status: "PASS"
@@ -208,11 +208,21 @@ last_verified_commands:
     status: "PASS after findings resolved"
     verified_by: "root plus independent read-only reviewer"
     scope: "Corrected overridable Buffer comparison, getter-based record byte swapping, and workflow-boundary wording; source locks policy 2858c8e9...65d2e1, implementation cf67a056...ee4e8, and tests 2f06e7fb...c582; no network, UNC input, write, subprocess, credential, mutation, output, execution, or external-adapter capability; B2.2, B2.3, and B3 remain absent"
+  - command: "npm run build; AI_TREE_REQUIRE_CLEAN=true AI_TREE_STAGE_MODE=preview AI_TREE_COMMIT_SHA=36e26d23613d7308cc65f2fd5a8ebe70cff63bf3 npm test; git diff --exit-code"
+    status: "PASS"
+    runtime: "Node v24.14.1, npm 11.11.0, and Git 2.55"
+    verified_by: "root"
+    scope: "Exact C4.4-B2.1 code commit 36e26d2; all core and publication gates including 17 lifecycle and 123 workflow-policy tests; 17/17 release inputs, 86 tracked entries, zero filters, 1,465 staged-site references, and local preview-manifest SHA-256 82b3f82eb164477c9b03573a264520bcb726c201ca09aa43bf3b069228780690"
+  - command: "Reconcile C4.4-B2.1 hosted validation and downloaded preview"
+    status: "PASS"
+    runtime: "GitHub Actions Node v24.19.0/npm 11.17.0 plus exact synthetic Node v24.14.1/npm 11.11.0"
+    verified_by: "root plus read-only reconciliation agent"
+    scope: "Workflow 32426136950; all seven jobs green; tested merge SHA 8621d5630911ed0258a30a909a0726edcb294076 with tree equal to pushed head; preview artifact 9427494998 passed 1,465 references, release identity 2/2, and performance gates; manifest SHA-256 36110a2fd02b0b0f23a586e1166ffe66308234df5f104f2cc157575a259da45a; 17/17 inputs, 86 tracked entries, zero filters; no tag, release, setting, deployment, or production request"
 next_exact_action: >-
-  Commit the bounded C4.4-B2.1 policy, implementation, tests, package wiring,
-  documentation, and this ledger; run the complete exact-clean preview gate at
-  that commit, push it, and reconcile all hosted validation jobs and the staged
-  preview before marking B2.1 remotely complete.
+  Stop at the remotely verified C4.4-B2.1 boundary. On the next continuation,
+  begin C4.4-B2.2 with fresh-control consumption and fail-closed ambiguity and
+  reconciliation decisions only; do not add rollback, live mutation, release,
+  or deployment capability.
 known_blockers:
   - "WP-011-B is stacked on verified draft PR #5 until WP-011-A is separately authorized to merge."
   - "No merge, annotated tag, GitHub Release, environment approval, or public deployment is authorized."
@@ -220,7 +230,7 @@ known_blockers:
   - "Browser performance metrics and automated preview screenshots remain pending WP-012-A."
   - "The github-pages environment has no required reviewer and permits administrator bypass; immutable GitHub Releases are disabled. These external controls require separate authorization before any C4 promotion run."
   - "No active no-bypass tag ruleset protects v0.1.1, and the verified production recovery artifact is local rather than durable and runner-accessible."
-release_gate_status: "wp_011_b_c4_4_b1_remote_verified_b2_1_locally_verified_pending_commit"
+release_gate_status: "wp_011_b_c4_4_b2_1_remote_verified_b2_2_ready"
 release_details:
   version: "v0.1.1"
   title: "Publication-contract repair"
@@ -244,14 +254,13 @@ release_details:
       artifact_id: 9392055435
       artifact_tar_sha256: "f04f46196b74982f9d725f032278f9b7ed48ae1ffd82db0dcff3fc39f739f9c4"
     active_checkpoint:
-      id: "C4.4-B2.1"
-      title: "Fixture-only lifecycle receipt primitives and linear state table"
-      status: "locally_verified_pending_commit"
+      id: "C4.4-B2.2"
+      title: "Fresh-control consumption and ambiguity/reconciliation decisions"
+      status: "ready_to_implement"
       next_exact_action: >-
-        Commit the exact reviewed B2.1 file set, run the complete clean-source
-        preview gate at that commit, push, and reconcile the seven hosted jobs
-        plus the downloaded preview; do not add a live adapter, workflow, tag,
-        release, or deploy path.
+        Resume only on the next continuation. Add deterministic, fail-closed
+        decision guards for fresh control evidence and unknown external state;
+        retain fixture-only/no-mutation boundaries and defer rollback to B2.3.
     scope:
       - "Publish stable and compatibility Opportunity endpoints."
       - "Move exported human URLs to the root application."

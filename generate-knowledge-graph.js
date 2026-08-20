@@ -9,7 +9,8 @@ const HTML_NAME = 'ai-research-tech-tree.html';
 const JSONLD_NAME = 'ai-research-tech-tree.jsonld';
 const JSON_NAME = 'ai-research-tech-tree.json';
 const NDJSON_NAME = 'ai-research-tech-tree.ndjson';
-const GENERATOR_VERSION = '1.3.0';
+const APPLICATION_HUMAN_URL = './';
+const GENERATOR_VERSION = '1.3.1';
 const DATASET_UUID = uuidV5('ai-research-tech-tree.public-artifact', '6ba7b810-9dad-11d1-80b4-00c04fd430c8');
 const DATASET_IRI = `urn:uuid:${DATASET_UUID}`;
 const VOCAB_IRI = `${DATASET_IRI}#vocab-`;
@@ -315,7 +316,7 @@ function buildExports(model) {
     return {
       id: node.id,
       iri: iri('node', node.id),
-      humanUrl: `./${HTML_NAME}#node=${encodeURIComponent(node.id)}`,
+      humanUrl: `${APPLICATION_HUMAN_URL}#node=${encodeURIComponent(node.id)}`,
       type: node.statusProfile.kind,
       title: node.title,
       description: node.description,
@@ -469,7 +470,7 @@ function buildExports(model) {
     releaseState: model.project.releaseState,
     asOf: model.project.asOf,
     temporalCoverage: '1879/2026',
-    humanUrl: `./${HTML_NAME}`,
+    humanUrl: APPLICATION_HUMAN_URL,
     canonicalUrl: model.project.canonicalUrl,
     authors: model.project.authors,
     license: model.project.license,

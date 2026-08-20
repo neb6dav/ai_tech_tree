@@ -219,10 +219,14 @@ function assertStableIdentifiers(data) {
   const base = data.namespace.datasetIri;
   assert.match(base, /^urn:uuid:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i);
   assert.equal(data.dataset.identifier, base);
+  assert.equal(data.dataset.humanUrl, './');
   assert.equal(data.namespace.vocabularyIri, `${base}#vocab-`);
   data.lanes.forEach(record => assert.equal(record.iri, stableIri(base, 'lane', record.id)));
   Object.values(data.classifications).forEach(record => assert.equal(record.iri, stableIri(base, 'classification', record.code)));
-  data.nodes.forEach(record => assert.equal(record.iri, stableIri(base, 'node', record.id)));
+  data.nodes.forEach(record => {
+    assert.equal(record.iri, stableIri(base, 'node', record.id));
+    assert.equal(record.humanUrl, `./#node=${encodeURIComponent(record.id)}`);
+  });
   data.relationships.forEach(record => assert.equal(record.iri, stableIri(base, 'relationship', record.id)));
   data.evidenceAssessments.forEach(record => assert.equal(record.iri, stableIri(base, 'assessment', record.id)));
   data.papers.forEach(record => assert.equal(record.iri, stableIri(base, 'paper-arxiv', record.id)));
@@ -325,6 +329,13 @@ function assertGraphParity(data, document) {
     ...data.nodes.map(record => record.iri)
   ];
   assert.deepEqual(definedTerms, expectedTerms);
+  assert.equal(document['schema:url']['@id'], data.dataset.canonicalUrl);
+
+  for (const node of data.nodes) {
+    const entity = byId.get(node.iri);
+    assert.equal(entity['schema:identifier'], node.id);
+    assert.equal(entity['schema:url']['@id'], node.humanUrl);
+  }
 
   for (const work of data.landmarkWorks) {
     const entity = byId.get(work.iri);
@@ -582,7 +593,7 @@ function main() {
   assert.equal(document['tree:dataDigest'], data.dataset.dataDigest);
   assert.equal(document['@id'], data.namespace.datasetIri);
   assert.equal(data.schemaVersion, 2);
-  assert.equal(data.generatorVersion, '1.3.0');
+  assert.equal(data.generatorVersion, '1.3.1');
   assert.equal(data.dataset.edition, '2026-08-13-public-beta-1');
   assert.equal(data.dataset.releaseState, 'Public beta');
   assert.equal(data.dataset.asOf, '2026-08-04');

@@ -41,10 +41,10 @@ async function makeFixture(overrides = {}) {
   <img src="./social.png" alt="">
   <a href="https://example.test/external">External reference</a>
 </main></body></html>`,
-    'ai-research-tech-tree.html': '<!doctype html><title>Atlas</title><main id="entry">Atlas</main>',
+    'ai-research-tech-tree.html': '<!doctype html><title>Legacy atlas alias</title>',
     'atlas.json': JSON.stringify({
-      dataset: { humanUrl: './ai-research-tech-tree.html' },
-      nodes: [{ id: 'one', humanUrl: './ai-research-tech-tree.html#node=one' }]
+      dataset: { humanUrl: './' },
+      nodes: [{ id: 'one', humanUrl: './#node=one' }]
     }),
     'src/data/opportunities/opportunity.alpha.json': JSON.stringify({
       $schema: './opportunity-map.schema.json',
@@ -56,7 +56,7 @@ async function makeFixture(overrides = {}) {
       $defs: { record: { type: 'object' } },
       $ref: '#/$defs/record'
     }),
-    'stream.ndjson': `${JSON.stringify({ humanUrl: './ai-research-tech-tree.html#node=one' })}\n`,
+    'stream.ndjson': `${JSON.stringify({ humanUrl: './#node=one' })}\n`,
     'social.png': 'not-a-real-png',
     'robots.txt': 'User-agent: *\nSitemap: https://neb6dav.github.io/ai_tech_tree/sitemap.xml\n',
     'sitemap.xml': '<?xml version="1.0"?><urlset><url><loc>https://neb6dav.github.io/ai_tech_tree/</loc></url></urlset>'

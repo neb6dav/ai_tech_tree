@@ -63,7 +63,7 @@ The public beta keeps a single-file application as its canonical application sou
 - `ai-research-tech-tree.jsonld`
 - `ai-research-tech-tree.ndjson`
 
-The JSON, JSON-LD, and NDJSON exports currently describe the historical atlas. The Opportunity map remains a separate, schema-linked JSON graph and is advertised from the page as an alternate machine-readable representation; this prevents capability assessments and hypotheses from being silently recast as historical lineage.
+The JSON, JSON-LD, and NDJSON exports currently describe the historical atlas. Their dataset human URL resolves to `./`, and each of the 339 atlas records resolves directly to `./#node=<stable-id>`; the former published HTML filename remains only a compatibility entry point. The Opportunity map remains a separate, schema-linked JSON graph and is advertised from the page as an alternate machine-readable representation; this prevents capability assessments and hypotheses from being silently recast as historical lineage.
 
 `ai-research-tech-tree.original.html` is an archival pre-repair baseline retained for provenance. It is not the current application source.
 

@@ -3,44 +3,44 @@ roadmap_version: 1
 active_release: "v0.1.1"
 active_work_package: "WP-011-B"
 issue_url: "https://github.com/neb6dav/ai_tech_tree/issues/6"
-pr_url: null
+pr_url: "https://github.com/neb6dav/ai_tech_tree/pull/7"
 base_sha: "85108c78fa86c86634d4c0944839696369e687cd"
-last_completed_checkpoint: "WP-011-B/C1"
+last_completed_checkpoint: "WP-011-B/C2"
 last_verified_commands:
   - command: "npm run build"
     status: "PASS"
     runtime: "Node v24.14.1"
     verified_by: "root"
-    scope: "WP-011-B/C1 integrated maintained and generated source; 4,519,301-byte initial document"
+    scope: "WP-011-B/C2 integrated source and generated artifacts; 4,510,487-byte initial document"
   - command: "npm test"
     status: "PASS"
     runtime: "Node v24.14.1 and npm 11.11.0"
     verified_by: "root"
-    scope: "Core gates, 66 focused unit tests, 13-file staging, artifact budgets, and staged-site contract"
+    scope: "Core gates, 69 focused unit tests, 13-file staging, artifact budgets, and staged-site contract"
   - command: "npm run test:site-contract"
     status: "PASS"
     runtime: "Node v24.14.1"
     verified_by: "root"
-    scope: "1462 internal references and 10 unique staged resources under /ai_tech_tree/"
-  - command: "Repeat stage-site and compare release-manifest SHA-256"
+    scope: "1462 internal references and 9 unique staged resources; 1356 node URLs application-state verified at the root app"
+  - command: "Verify clean release manifest and reconcile downloaded CI preview"
     status: "PASS"
     runtime: "Node v24.14.1"
     verified_by: "root"
-    scope: "Identical SHA-256 37928762D3716667378A040D57FDF0AEA19D2E3BB340A6DA24D91BF310223635 across repeated C1 stages"
+    scope: "Local manifest D09BE93D...; CI merge artifact 13/13 payload files byte-identical, 14/14 inputs matched commit"
   - command: "Parse workflow YAML and project JSON; node --check new scripts; git diff --check"
     status: "PASS"
     verified_by: "root"
-    scope: "WP-011-B/C1 uncommitted worktree"
+    scope: "WP-011-B/C1 exact committed tree"
 next_exact_action: >-
-  Stage only the named WP-011-B C1 files, commit the compatibility checkpoint,
-  verify that exact committed tree in isolation, then push and open its stacked
-  draft PR against codex/v0.1.1-stage-site.
+  Stage only the named WP-011-B C2 source, test, documentation, and generated
+  files; commit the root-URL checkpoint; verify that exact commit in isolation;
+  then push and reconcile the updated draft-PR preview.
 known_blockers:
   - "WP-011-B is stacked on verified draft PR #5 until WP-011-A is separately authorized to merge."
   - "No merge, annotated tag, GitHub Release, environment approval, or public deployment is authorized."
   - "Release identity remains 0.1.0 until the dedicated C3 synchronization checkpoint."
   - "Browser performance metrics and automated preview screenshots remain pending WP-012-A."
-release_gate_status: "wp_011_b_c1_local_complete_pending_commit"
+release_gate_status: "wp_011_b_c2_local_complete_pending_commit"
 release_details:
   version: "v0.1.1"
   title: "Publication-contract repair"
@@ -54,16 +54,16 @@ release_details:
       number: 6
       url: "https://github.com/neb6dav/ai_tech_tree/issues/6"
     pull_request:
-      status: "pending_first_checkpoint"
-      number: null
-      url: null
+      status: "draft"
+      number: 7
+      url: "https://github.com/neb6dav/ai_tech_tree/pull/7"
     active_checkpoint:
-      id: "C1"
-      title: "Stable Opportunity paths and compatibility alias"
+      id: "C2"
+      title: "Root application URLs in machine exports"
       status: "local_complete_pending_commit"
       next_exact_action: >-
-        Commit the named compatibility files, verify the exact clean commit in
-        isolation, then push and open the stacked draft PR.
+        Commit the reviewed C2 source and generated artifacts, verify the exact
+        clean commit in isolation, then push and reconcile remote CI.
     scope:
       - "Publish stable and compatibility Opportunity endpoints."
       - "Move exported human URLs to the root application."
@@ -126,9 +126,16 @@ artifact have all been verified for WP-011-A.
 WP-011-B now owns stable public and compatibility URLs, root export URLs,
 release identity, annotated-tag and protected-main verification, production
 approval, release assets, and post-deploy checks. Its C1 compatibility changes
-pass the complete build and test gate, repeated-stage determinism, and an
-independent hostile review. They are ready for the authorized commit and exact
-committed-tree verification.
+pass the complete build and test gate, exact clean committed-tree verification,
+an independent hostile review, remote CI run `32384084390`, and byte-for-byte
+payload reconciliation of its downloaded preview.
+
+C2 now generates dataset `humanUrl` as `./` and all 339 atlas record URLs as
+`./#node=<stable-id>` in JSON, JSON-LD, NDJSON, and embedded JSON-LD. The full
+gate and an independent hostile review verify 1,356 root record references,
+cross-format ownership, legacy-alias rejection, and misdirection mutations.
+This checkpoint is locally complete pending its authorized commit, isolated
+committed-tree verification, push, and preview reconciliation.
 
 ## Release boundary
 

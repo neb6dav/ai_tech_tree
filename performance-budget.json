@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Guard the v0.1.1 publication repair against regressions while preserving separate, nonblocking post-migration targets.",
+  "measurement": {
+    "artifactRoot": "_site",
+    "initialDocument": "index.html",
+    "browserProfile": "lighthouse-mobile",
+    "browserAggregation": "median",
+    "scoreScale": "0-100",
+    "byteUnit": "bytes",
+    "timeUnit": "milliseconds"
+  },
+  "regressionGuards": {
+    "enforcement": {
+      "artifactMetrics": "blocking",
+      "browserMetrics": "recorded_pending_WP-012-A"
+    },
+    "initialDocument": {
+      "rawBytes": {
+        "maximum": 4600000
+      },
+      "gzipBytes": {
+        "maximum": 696320,
+        "displayLimit": "680 KiB"
+      }
+    },
+    "activeDomElements": {
+      "maximum": 7000
+    },
+    "mobileLighthouse": {
+      "performanceScore": {
+        "minimum": 73
+      },
+      "firstContentfulPaintMs": {
+        "maximum": 4500
+      },
+      "largestContentfulPaintMs": {
+        "maximum": 4600
+      },
+      "totalBlockingTimeMs": {
+        "maximum": 200
+      },
+      "cumulativeLayoutShift": {
+        "maximum": 0.02
+      }
+    },
+    "socialImage": {
+      "path": "social-card.png",
+      "maximumBytes": 1825178,
+      "baseline": {
+        "bytes": 1825178,
+        "sha256": "86ea1b755744c0d066c3aa7cd86bd54d349b8f6a33a637674ba3a95bd1038b28"
+      }
+    }
+  },
+  "futureTargets": {
+    "enforcement": "nonblocking",
+    "notBefore": "v0.2.2",
+    "initialDocument": {
+      "rawBytes": {
+        "maximum": 250000
+      }
+    },
+    "compressedTransferBytes": {
+      "maximum": 307200,
+      "displayLimit": "300 KiB"
+    },
+    "activeDomElements": {
+      "maximum": 3500
+    },
+    "mobileLighthouse": {
+      "performanceScore": {
+        "minimum": 90
+      },
+      "firstContentfulPaintMs": {
+        "maximum": 2500
+      },
+      "largestContentfulPaintMs": {
+        "maximum": 2500
+      },
+      "totalBlockingTimeMs": {
+        "maximum": 150
+      },
+      "cumulativeLayoutShift": {
+        "maximum": 0.02
+      }
+    },
+    "socialImageBytes": {
+      "maximum": 500000
+    }
+  }
+}

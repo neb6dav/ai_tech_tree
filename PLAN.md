@@ -5,7 +5,7 @@ active_work_package: "WP-011-B"
 issue_url: "https://github.com/neb6dav/ai_tech_tree/issues/6"
 pr_url: "https://github.com/neb6dav/ai_tech_tree/pull/7"
 base_sha: "85108c78fa86c86634d4c0944839696369e687cd"
-last_completed_checkpoint: "WP-011-B/C3-hardening"
+last_completed_checkpoint: "WP-011-B/C4.1"
 last_verified_commands:
   - command: "npm run build"
     status: "PASS"
@@ -45,17 +45,27 @@ last_verified_commands:
     runtime: "GitHub Actions Node v24.19.0 and npm 11.17.0"
     verified_by: "root"
     scope: "Workflow 32392413143 green; preview artifact 9415355845 passed 1,465 contract references; 14/14 payloads byte-identical; identity, stage tool, source closure, input-verification digest, file inventory, and data digest matched"
+  - command: "npm run build; AI_TREE_REQUIRE_CLEAN=true AI_TREE_STAGE_MODE=preview npm test; git diff --exit-code"
+    status: "PASS"
+    runtime: "Node v24.14.1, npm 11.11.0, and Git 2.55"
+    verified_by: "root"
+    scope: "Exact C4.1 code commit 9081520; 128 focused Node tests, core gates, 14-file strict preview stage, 17/17 release inputs, 70 tracked entries, zero clean-filter attributes, artifact budgets, release identity, and 1,465-reference staged-site contract; manifest SHA-256 114f924db63f477e15ffad13e1c0bb6530f1b353bd39eba9d391c675e59fd78d"
+  - command: "Independent hostile C4.1 release-provenance reviews"
+    status: "PASS after findings resolved"
+    verified_by: "root plus three read-only reviewers"
+    scope: "Protected policy anchors, Git object and fsck integrity, committed and working-tree filter closure, annotated-tag semantics, strict CFF identity, hidden changelog markers, preview isolation, and build-only Pages hold"
 next_exact_action: >-
-  Implement C4.1 explicit preview/release modes, the planned v0.1.1 release
-  specification, annotated-tag verifier, promotion manifest metadata, and
-  fail-closed synthetic Git tests without changing the development identity.
+  Push the exact-clean C4.1 checkpoint, reconcile its downloaded CI preview,
+  then implement C4.2 deterministic release archives, standalone checksums,
+  release notes, and bounded remote smoke tooling without performing a tag,
+  GitHub Release, environment approval, or deployment.
 known_blockers:
   - "WP-011-B is stacked on verified draft PR #5 until WP-011-A is separately authorized to merge."
   - "No merge, annotated tag, GitHub Release, environment approval, or public deployment is authorized."
   - "The C3 source must remain visibly labeled as an untagged development edition until C4 prepares an authorized release artifact."
   - "Browser performance metrics and automated preview screenshots remain pending WP-012-A."
   - "The github-pages environment has no required reviewer and permits administrator bypass; immutable GitHub Releases are disabled. These external controls require separate authorization before any C4 promotion run."
-release_gate_status: "wp_011_b_c4_1_release_provenance_implementing"
+release_gate_status: "wp_011_b_c4_1_exact_clean_verified_pending_push"
 release_details:
   version: "v0.1.1"
   title: "Publication-contract repair"
@@ -81,11 +91,11 @@ release_details:
     active_checkpoint:
       id: "C4.1"
       title: "Explicit release mode and annotated-tag provenance"
-      status: "implementing"
+      status: "exact_clean_verified_pending_push"
       next_exact_action: >-
-        Add the release specification and verifier, integrate explicit stage
-        modes, prove preview isolation and synthetic annotated-tag release
-        metadata, then run focused and full gates.
+        Commit this verification ledger, rerun exact-clean staging from that
+        HEAD, push the authorized branch, and reconcile the CI preview before
+        beginning C4.2 release-asset tooling.
     scope:
       - "Publish stable and compatibility Opportunity endpoints."
       - "Move exported human URLs to the root application."
@@ -192,6 +202,21 @@ The expiring current-production Pages artifact was preserved read-only at
 Its tar and seven extracted payloads pass all eight recorded SHA-256 checks.
 This local pre-repair snapshot provides a recovery reference but does not
 authorize or automate rollback.
+
+C4.1 adds a planned, reviewable `v0.1.1` release specification; strict JSON,
+CFF, and changelog identity validation; explicit preview and release staging
+modes; and an annotated-tag verifier that binds a direct tag object to the
+exact `HEAD`, release date, and protected-main ancestry. Preview mode always
+emits null tag and promotion fields, and the Pages workflow remains build-only.
+Strict staging now rejects repository fsck overrides and committed or
+working-tree clean filters across the entire tracked tree, preventing both Git
+object suppression and concealed modifications to release tooling. Three
+hostile reviews' P1/P2 findings were corrected and reprobed. Code commit
+`9081520` passes the complete exact-clean gate with 17/17 inputs, 70 tracked
+entries, zero filter attributes, 128 focused Node tests, all core gates,
+artifact budgets, synchronized development identity, and 1,465 staged-site
+references. Its 14-file preview manifest has SHA-256
+`114f924db63f477e15ffad13e1c0bb6530f1b353bd39eba9d391c675e59fd78d`.
 
 ## Release boundary
 

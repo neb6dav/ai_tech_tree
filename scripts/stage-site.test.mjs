@@ -24,13 +24,16 @@ async function write(root, relativePath, contents) {
 
 function baseConfig(overrides = {}) {
   return {
-    schemaVersion: '1.0.0',
+    schemaVersion: '1.1.0',
     outputDirectory: '_site',
     releaseManifest: 'release-manifest.json',
     metadata: {
       packageFile: 'package.json',
       packageLockFile: 'package-lock.json',
-      datasetFile: 'data.json'
+      datasetFile: 'data.json',
+      citationFile: 'CITATION.cff',
+      changelogFile: 'CHANGELOG.md',
+      releaseFile: 'release.json'
     },
     artifacts: [
       { kind: 'file', source: 'index.html', target: 'index.html', mediaType: 'text/html; charset=utf-8' },
@@ -46,24 +49,120 @@ function baseConfig(overrides = {}) {
 const environment = {
   AI_TREE_COMMIT_SHA: 'a'.repeat(40),
   AI_TREE_RELEASE_TAG: 'v1.2.3',
+  GITHUB_REF_TYPE: 'tag',
+  GITHUB_REF_NAME: 'v9.9.9',
+  GITHUB_REF: 'refs/tags/v9.9.9',
   npm_config_user_agent: 'npm/11.11.0 node/v24.14.1 test'
 };
 
+function baseReleaseSpec(overrides = {}) {
+  return {
+    schemaVersion: '1.0.0',
+    status: 'planned',
+    tag: 'v1.2.3',
+    version: '1.2.3',
+    edition: '2026-08-20-test-edition',
+    releaseDate: null,
+    releaseState: 'Public beta',
+    defaultBranch: 'main',
+    protectedMainRef: 'refs/remotes/origin/main',
+    productionEnvironment: 'github-pages',
+    productionBaseUrl: 'https://neb6dav.github.io/ai_tech_tree/',
+    prerelease: true,
+    assetStem: 'fixture-v1.2.3',
+    ...overrides
+  };
+}
+
+function citationFixture({
+  message = 'untagged development edition',
+  version = '1.2.3-dev',
+  releaseDate = null
+} = {}) {
+  return [
+    'cff-version: 1.2.0',
+    `message: ${message}`,
+    'title: AI Research Tech Tree',
+    'type: dataset',
+    'authors:',
+    '  - name: Fixture Author',
+    `version: ${version}`,
+    ...(releaseDate === null ? [] : [`date-released: ${releaseDate}`]),
+    'repository-code: https://github.com/neb6dav/ai_tech_tree',
+    'url: https://neb6dav.github.io/ai_tech_tree/',
+    ''
+  ].join('\n');
+}
+
 async function writeBaseFixture(root, config = baseConfig()) {
-  await write(root, 'package.json', '{"version":"1.2.3"}\n');
-  await write(root, 'package-lock.json', '{"lockfileVersion":3}\n');
+  await write(root, 'package.json', '{"name":"fixture","version":"1.2.3"}\n');
+  await write(root, 'package-lock.json', JSON.stringify({
+    name: 'fixture',
+    version: '1.2.3',
+    lockfileVersion: 3,
+    packages: { '': { name: 'fixture', version: '1.2.3' } }
+  }));
   await write(root, 'data.json', JSON.stringify({
     generatorVersion: '4.5.6',
     dataset: {
-      edition: '2026-test-edition',
-      releaseState: 'Test development edition',
+      edition: '2026-08-20-test-edition',
+      releaseState: 'Development edition',
       dataDigest: 'b'.repeat(64)
     }
   }));
+  await write(root, 'CITATION.cff', citationFixture());
+  await write(root, 'CHANGELOG.md', '# Changelog\n\n## [Unreleased]\n\n**Target: v1.2.3 development edition.**\n');
+  await write(root, 'release.json', `${JSON.stringify(baseReleaseSpec(), null, 2)}\n`);
   await write(root, 'index.html', '<!doctype html><title>Fixture</title>\n');
   await write(root, 'public/data/z.json', '{"z":1}\n');
   await write(root, 'public/data/a.json', '{"a":1}\n');
   await write(root, 'config/pages-stage.v1.json', `${JSON.stringify(config, null, 2)}\n`);
+}
+
+async function writeReadyFixture(root) {
+  await write(root, 'data.json', JSON.stringify({
+    generatorVersion: '4.5.6',
+    dataset: {
+      edition: '2026-08-20-test-edition',
+      releaseState: 'Public beta',
+      dataDigest: 'b'.repeat(64)
+    }
+  }));
+  await write(root, 'release.json', `${JSON.stringify(baseReleaseSpec({
+    status: 'ready',
+    releaseDate: '2026-08-20'
+  }), null, 2)}\n`);
+  await write(root, 'CITATION.cff', citationFixture({
+    message: 'stable release',
+    version: '1.2.3',
+    releaseDate: '2026-08-20'
+  }));
+  await write(root, 'CHANGELOG.md', '# Changelog\n\n## [Unreleased]\n\n## [1.2.3] - 2026-08-20\n\n<https://example.invalid/release-notes>\n');
+}
+
+function initializeReleaseRepository(root) {
+  const git = (argumentsList, extraEnvironment = {}) => execFileSync('git', argumentsList, {
+    cwd: root,
+    encoding: 'utf8',
+    env: { ...process.env, ...extraEnvironment },
+    windowsHide: true
+  }).trim();
+  git(['init', '--quiet']);
+  git(['config', 'user.name', 'stage-site-release-test']);
+  git(['config', 'user.email', 'stage-site-release@example.invalid']);
+  git(['config', 'core.autocrlf', 'false']);
+  git(['branch', '-M', 'main']);
+  git(['add', '--', '.']);
+  git(['commit', '--quiet', '-m', 'release fixture'], {
+    GIT_AUTHOR_DATE: '2026-08-20T14:00:00+00:00',
+    GIT_COMMITTER_DATE: '2026-08-20T14:00:00+00:00'
+  });
+  const head = git(['rev-parse', 'HEAD']);
+  git(['update-ref', 'refs/remotes/origin/main', head]);
+  git(['tag', '-a', 'v1.2.3', '-m', 'Release v1.2.3'], {
+    GIT_COMMITTER_DATE: '2026-08-20T15:04:05+00:00'
+  });
+  return { head, tagObject: git(['rev-parse', 'refs/tags/v1.2.3']) };
 }
 
 test.afterEach(async () => {
@@ -91,11 +190,19 @@ test('stages a deterministic tree and sorted release manifest', async () => {
     'public/data/a.json',
     'public/data/z.json'
   ]);
-  assert.equal(manifest.edition, '2026-test-edition');
+  assert.equal(manifest.edition, '2026-08-20-test-edition');
   assert.equal(manifest.version, '1.2.3');
-  assert.equal(manifest.releaseState, 'Test development edition');
+  assert.equal(manifest.releaseState, 'Development edition');
   assert.equal(manifest.commit, 'a'.repeat(40));
-  assert.equal(manifest.tag, 'v1.2.3');
+  assert.equal(manifest.schemaVersion, '1.4.0');
+  assert.equal(manifest.publicationMode, 'preview');
+  assert.equal(manifest.tag, null);
+  assert.equal(manifest.promotion, null);
+  assert.deepEqual(manifest.releaseSpec, {
+    path: 'release.json',
+    sha256: createHash('sha256').update(await readFile(path.join(root, 'release.json'))).digest('hex'),
+    ...baseReleaseSpec()
+  });
   assert.equal(manifest.generatorVersion, '4.5.6');
   assert.equal(manifest.dataDigest, 'b'.repeat(64));
   assert.deepEqual(manifest.stageConfig, {
@@ -108,7 +215,8 @@ test('stages a deterministic tree and sorted release manifest', async () => {
     node: process.version,
     npm: '11.11.0',
     packageLockVersion: 3,
-    stageSite: '1.3.0'
+    releaseRef: '1.0.0',
+    stageSite: '1.4.0'
   });
   assert.deepEqual(manifest.sourceState, {
     kind: 'unavailable',
@@ -118,14 +226,19 @@ test('stages a deterministic tree and sorted release manifest', async () => {
     repositoryRootMatchesTopLevel: null,
     gitObjectFormat: null,
     objectDatabaseVerified: false,
+    repositoryFsckConfigurationIsolated: null,
     repositoryAttributesIsolated: null,
+    trackedTreeEntryCount: null,
+    trackedTreeFilterAttributeCount: null,
+    trackedTreeFiltersVerified: false,
+    trackedTreeFilterAuditSha256: null,
     head: null,
     commitMatchesHead: null,
     changedEntryCount: null,
     statusSha256: null,
     flaggedIndexEntryCount: null,
     indexFlagsSha256: null,
-    inputCount: 7,
+    inputCount: 10,
     matchedInputCount: null,
     directorySourceCount: 1,
     matchedDirectorySourceCount: null,
@@ -149,13 +262,169 @@ test('requires an explicit dataset release state for the staged identity', async
   await writeBaseFixture(root);
   await write(root, 'data.json', JSON.stringify({
     generatorVersion: '4.5.6',
-    dataset: { edition: '2026-test-edition', releaseState: '   ' }
+    dataset: { edition: '2026-08-20-test-edition', releaseState: '   ' }
   }));
 
   await assert.rejects(
     stageSite({ repositoryRoot: root, environment }),
     /dataset releaseState must be a non-empty, trimmed string/u
   );
+});
+
+test('preview mode ignores ambient tags and release mode fails while the specification is planned', async () => {
+  const root = await makeRoot();
+  await writeBaseFixture(root);
+  const preview = await stageSite({ repositoryRoot: root, environment, checkOnly: true });
+  assert.equal(preview.manifest.publicationMode, 'preview');
+  assert.equal(preview.manifest.tag, null);
+  assert.equal(preview.manifest.promotion, null);
+  await assert.rejects(
+    stageSite({
+      repositoryRoot: root,
+      environment: { ...environment, AI_TREE_STAGE_MODE: 'candidate' },
+      checkOnly: true
+    }),
+    /AI_TREE_STAGE_MODE must be preview or release/u
+  );
+  await assert.rejects(
+    stageSite({
+      repositoryRoot: root,
+      environment: { ...environment, AI_TREE_STAGE_MODE: 'release', AI_TREE_REQUIRE_CLEAN: 'true' },
+      checkOnly: true
+    }),
+    /release specification is planned, not ready/u
+  );
+});
+
+test('ready identity passes preview without promotion and release mode records only verified annotated-tag facts', async () => {
+  const root = await makeRoot();
+  await writeBaseFixture(root);
+  await writeReadyFixture(root);
+
+  const preview = await stageSite({ repositoryRoot: root, environment, checkOnly: true });
+  assert.equal(preview.manifest.publicationMode, 'preview');
+  assert.equal(preview.manifest.tag, null);
+  assert.equal(preview.manifest.promotion, null);
+  assert.equal(preview.manifest.releaseSpec.status, 'ready');
+  assert.equal(preview.manifest.releaseState, 'Public beta');
+
+  await write(root, 'CHANGELOG.md', '# Changelog\n\n## [Unreleased]\n\n<template>\n## [1.2.3] - 2026-08-20\n</template>\n');
+  await assert.rejects(
+    stageSite({ repositoryRoot: root, environment, checkOnly: true }),
+    /unsupported raw HTML block/u
+  );
+  await write(root, 'CHANGELOG.md', '# Changelog\n\n## [Unreleased]\n\n<span>\n## [1.2.3] - 2026-08-20\n</span>\n');
+  await assert.rejects(
+    stageSite({ repositoryRoot: root, environment, checkOnly: true }),
+    /unsupported raw HTML block/u
+  );
+  await write(root, 'CHANGELOG.md', '# Changelog\n\n## [Unreleased]\n\n## [1.2.3] - 2026-08-20\n');
+
+  const { head, tagObject } = initializeReleaseRepository(root);
+  const releaseEnvironment = {
+    ...environment,
+    AI_TREE_COMMIT_SHA: head,
+    AI_TREE_PROTECTED_MAIN_REF: 'refs/remotes/origin/main',
+    AI_TREE_RELEASE_SPEC_PATH: 'release.json',
+    AI_TREE_RELEASE_TAG: 'v1.2.3',
+    AI_TREE_REQUIRE_CLEAN: 'true',
+    AI_TREE_STAGE_MODE: 'release'
+  };
+  const release = await stageSite({ repositoryRoot: root, environment: releaseEnvironment, checkOnly: true });
+  assert.equal(release.manifest.publicationMode, 'release');
+  assert.equal(release.manifest.tag, 'v1.2.3');
+  assert.deepEqual(release.manifest.promotion, {
+    releaseDate: '2026-08-20',
+    tag: 'v1.2.3',
+    mode: 'annotated-tag',
+    tagObject,
+    tagCommit: head,
+    taggedAt: '2026-08-20T15:04:05+00:00',
+    protectedMainRef: 'refs/remotes/origin/main',
+    protectedMainCommit: head,
+    reachableFromProtectedMain: true
+  });
+  assert.equal(release.manifest.sourceState.clean, true);
+  assert.equal(release.manifest.sourceState.requiredClean, true);
+  assert.equal(release.manifest.sourceState.inputsMatchCommit, true);
+
+  for (const [label, mutation, expected] of [
+    ['clean requirement', { AI_TREE_REQUIRE_CLEAN: 'false' }, /requires AI_TREE_REQUIRE_CLEAN=true/u],
+    ['spec path', { AI_TREE_RELEASE_SPEC_PATH: 'config/releases/other.json' }, /AI_TREE_RELEASE_SPEC_PATH must be exactly/u],
+    ['release tag', { AI_TREE_RELEASE_TAG: 'v1.2.4' }, /AI_TREE_RELEASE_TAG must be exactly/u],
+    ['protected main ref', { AI_TREE_PROTECTED_MAIN_REF: 'refs/heads/main' }, /AI_TREE_PROTECTED_MAIN_REF must be exactly/u]
+  ]) {
+    await assert.rejects(
+      stageSite({ repositoryRoot: root, environment: { ...releaseEnvironment, ...mutation }, checkOnly: true }),
+      expected,
+      label
+    );
+  }
+  for (const name of [
+    'AI_TREE_COMMIT_SHA',
+    'AI_TREE_PROTECTED_MAIN_REF',
+    'AI_TREE_RELEASE_SPEC_PATH',
+    'AI_TREE_RELEASE_TAG',
+    'AI_TREE_REQUIRE_CLEAN'
+  ]) {
+    const incomplete = { ...releaseEnvironment };
+    delete incomplete[name];
+    await assert.rejects(
+      stageSite({ repositoryRoot: root, environment: incomplete, checkOnly: true }),
+      name === 'AI_TREE_REQUIRE_CLEAN'
+        ? /requires AI_TREE_REQUIRE_CLEAN=true/u
+        : new RegExp(`${name} is required in release mode`, 'u'),
+      `missing ${name}`
+    );
+  }
+});
+
+test('release identity fails closed on package, dataset, citation, changelog, and duplicate-key drift', async t => {
+  const cases = [
+    ['lock top-level version', async root => write(root, 'package-lock.json', JSON.stringify({
+      name: 'fixture', version: '1.2.2', lockfileVersion: 3,
+      packages: { '': { name: 'fixture', version: '1.2.3' } }
+    })), /package-lock top-level version/u],
+    ['lock root-package version', async root => write(root, 'package-lock.json', JSON.stringify({
+      name: 'fixture', version: '1.2.3', lockfileVersion: 3,
+      packages: { '': { name: 'fixture', version: '1.2.2' } }
+    })), /package-lock root-package version/u],
+    ['lock package name', async root => write(root, 'package-lock.json', JSON.stringify({
+      name: 'other', version: '1.2.3', lockfileVersion: 3,
+      packages: { '': { name: 'other', version: '1.2.3' } }
+    })), /package-lock top-level name/u],
+    ['stable planned dataset', async root => write(root, 'data.json', JSON.stringify({
+      generatorVersion: '4.5.6',
+      dataset: { edition: '2026-08-20-test-edition', releaseState: 'Test public beta' }
+    })), /planned release dataset releaseState must be exactly Development edition/u],
+    ['stale citation version', async root => write(root, 'CITATION.cff', citationFixture({ version: '1.2.2-dev' })), /top-level version must be exactly/u],
+    ['premature citation date', async root => write(root, 'CITATION.cff', citationFixture({ releaseDate: '2026-08-20' })), /must not contain a top-level date-released/u],
+    ['duplicate citation version', async root => write(root, 'CITATION.cff', `${citationFixture()}version: 1.2.3-dev\n`), /CITATION is not valid strict YAML/u],
+    ['quoted duplicate citation key', async root => write(root, 'CITATION.cff', `${citationFixture()}"version": 9.9.9\n`), /CITATION is not valid strict YAML/u],
+    ['alternate-spaced duplicate citation key', async root => write(root, 'CITATION.cff', `${citationFixture()}version : 9.9.9\n`), /CITATION is not valid strict YAML/u],
+    ['citation warning only in a comment', async root => write(root, 'CITATION.cff', `# untagged development edition\n${citationFixture({ message: 'stable release' })}`), /must retain its untagged development warning/u],
+    ['multiple citation documents', async root => write(root, 'CITATION.cff', `${citationFixture()}---\nmessage: second\n`), /exactly one YAML document/u],
+    ['citation BOM', async root => write(root, 'CITATION.cff', `\ufeff${citationFixture()}`), /must not contain a UTF-8 BOM/u],
+    ['missing CFF project identity', async root => write(root, 'CITATION.cff', 'message: untagged development edition\nversion: 1.2.3-dev\n'), /cff-version must be exactly/u],
+    ['empty CFF author identity', async root => write(root, 'CITATION.cff', citationFixture().replace('  - name: Fixture Author', '  - {}')), /must identify each author/u],
+    ['wrong CFF project URL', async root => write(root, 'CITATION.cff', citationFixture().replace('https://neb6dav.github.io/ai_tech_tree/', 'https://example.invalid/')), /CITATION url must be exactly/u],
+    ['changelog NUL', async root => write(root, 'CHANGELOG.md', '# Changelog\n\n## [Unreleased]\n\u0000\n**Target: v1.2.3 development edition.**\n'), /must not contain NUL/u],
+    ['development target only in a code fence', async root => write(root, 'CHANGELOG.md', '# Changelog\n\n## [Unreleased]\n\n```text\n**Target: v1.2.3 development edition.**\n```\n'), /development target/u],
+    ['invalid code-fence close', async root => write(root, 'CHANGELOG.md', '# Changelog\n\n## [Unreleased]\n\n```text\nignored\n```not-a-close\n**Target: v1.2.3 development edition.**\n'), /unterminated fenced code block/u],
+    ['development target only in an HTML comment', async root => write(root, 'CHANGELOG.md', '# Changelog\n\n## [Unreleased]\n\n<!--\n**Target: v1.2.3 development edition.**\n-->\n'), /development target/u],
+    ['development target inside raw HTML', async root => write(root, 'CHANGELOG.md', '# Changelog\n\n## [Unreleased]\n\n<template>\n**Target: v1.2.3 development edition.**\n</template>\n'), /unsupported raw HTML block/u],
+    ['development target inside a custom HTML element', async root => write(root, 'CHANGELOG.md', '# Changelog\n\n## [Unreleased]\n\n<release-note>\n**Target: v1.2.3 development edition.**\n</release-note>\n'), /unsupported raw HTML block/u],
+    ['duplicate package key', async root => write(root, 'package.json', '{"name":"fixture","version":"1.2.3","version":"9.9.9"}\n'), /duplicate key #\/version/u],
+    ['duplicate release-spec key', async root => write(root, 'release.json', '{"schemaVersion":"1.0.0","status":"planned","status":"ready"}\n'), /duplicate key #\/status/u]
+  ];
+  for (const [label, mutate, expected] of cases) {
+    await t.test(label, async () => {
+      const root = await makeRoot();
+      await writeBaseFixture(root);
+      await mutate(root);
+      await assert.rejects(stageSite({ repositoryRoot: root, environment, checkOnly: true }), expected);
+    });
+  }
 });
 
 test('check-only validates and hashes without replacing an existing output tree', async () => {
@@ -310,13 +579,17 @@ test('records dirty git provenance and enforces clean-source deployment mode', a
   assert.equal(dirty.manifest.sourceState.commitMatchesHead, true);
   assert.match(dirty.manifest.sourceState.gitObjectFormat, /^sha(?:1|256)$/u);
   assert.equal(dirty.manifest.sourceState.objectDatabaseVerified, true);
+  assert.equal(dirty.manifest.sourceState.repositoryFsckConfigurationIsolated, true);
   assert.equal(dirty.manifest.sourceState.repositoryAttributesIsolated, true);
+  assert.equal(dirty.manifest.sourceState.trackedTreeFilterAttributeCount, 0);
+  assert.equal(dirty.manifest.sourceState.trackedTreeFiltersVerified, true);
+  assert.match(dirty.manifest.sourceState.trackedTreeFilterAuditSha256, /^[0-9a-f]{64}$/u);
   assert.equal(dirty.manifest.sourceState.changedEntryCount, 1);
   assert.match(dirty.manifest.sourceState.statusSha256, /^[0-9a-f]{64}$/u);
   assert.equal(dirty.manifest.sourceState.flaggedIndexEntryCount, 0);
   assert.match(dirty.manifest.sourceState.indexFlagsSha256, /^[0-9a-f]{64}$/u);
-  assert.equal(dirty.manifest.sourceState.inputCount, 7);
-  assert.equal(dirty.manifest.sourceState.matchedInputCount, 7);
+  assert.equal(dirty.manifest.sourceState.inputCount, 10);
+  assert.equal(dirty.manifest.sourceState.matchedInputCount, 10);
   assert.equal(dirty.manifest.sourceState.directorySourceCount, 1);
   assert.equal(dirty.manifest.sourceState.matchedDirectorySourceCount, 1);
   assert.equal(dirty.manifest.sourceState.inputsMatchCommit, true);
@@ -329,6 +602,40 @@ test('records dirty git provenance and enforces clean-source deployment mode', a
       checkOnly: true
     }),
     /clean git source tree is required/u
+  );
+});
+
+test('clean-source mode rejects repository Git fsck overrides', async () => {
+  const root = await makeRoot();
+  await writeBaseFixture(root);
+  await write(root, 'fsck-skip-list.txt', '');
+  execFileSync('git', ['init', '--quiet'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['config', 'user.name', 'stage-site-test'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['config', 'user.email', 'stage-site-test@example.invalid'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['config', 'core.autocrlf', 'false'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['add', '--', '.'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['commit', '--quiet', '-m', 'fixture'], { cwd: root, windowsHide: true });
+  const head = execFileSync('git', ['rev-parse', 'HEAD'], {
+    cwd: root, encoding: 'utf8', windowsHide: true
+  }).trim();
+  execFileSync('git', ['config', 'fsck.skipList', path.join(root, 'fsck-skip-list.txt')], {
+    cwd: root, windowsHide: true
+  });
+
+  const observed = await stageSite({
+    repositoryRoot: root,
+    environment: { ...environment, AI_TREE_COMMIT_SHA: head },
+    checkOnly: true
+  });
+  assert.equal(observed.manifest.sourceState.repositoryFsckConfigurationIsolated, false);
+  assert.equal(observed.manifest.sourceState.objectDatabaseVerified, false);
+  await assert.rejects(
+    stageSite({
+      repositoryRoot: root,
+      environment: { ...environment, AI_TREE_COMMIT_SHA: head, AI_TREE_REQUIRE_CLEAN: 'true' },
+      checkOnly: true
+    }),
+    /Git fsck configuration overrides are not allowed/u
   );
 });
 
@@ -538,6 +845,106 @@ test('strict provenance rejects custom Git filters on release inputs', async () 
   );
 });
 
+test('strict provenance rejects clean filters that conceal non-input tooling changes', async () => {
+  const root = await makeRoot();
+  await writeBaseFixture(root);
+  await write(root, '.gitattributes', 'tool.js filter=conceal\n');
+  await write(root, 'conceal-filter.cjs', [
+    "'use strict';",
+    'process.stdin.resume();',
+    "process.stdin.on('end', () => process.stdout.write('CANONICAL\\n'));",
+    ''
+  ].join('\n'));
+  await write(root, 'tool.js', `${'A'.repeat(40)}\n`);
+  execFileSync('git', ['init', '--quiet'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['config', 'user.name', 'stage-site-test'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['config', 'user.email', 'stage-site-test@example.invalid'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['config', 'core.autocrlf', 'false'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['config', 'filter.conceal.clean', 'node conceal-filter.cjs'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['add', '--', '.'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['commit', '--quiet', '-m', 'filtered tool fixture'], { cwd: root, windowsHide: true });
+  const head = execFileSync('git', ['rev-parse', 'HEAD'], {
+    cwd: root, encoding: 'utf8', windowsHide: true
+  }).trim();
+  await write(root, 'tool.js', `${'B'.repeat(40)}\n`);
+
+  assert.equal(
+    execFileSync('git', ['status', '--porcelain=v1', '--untracked-files=all'], {
+      cwd: root,
+      encoding: 'utf8',
+      windowsHide: true
+    }).trim(),
+    ''
+  );
+  const observed = await stageSite({
+    repositoryRoot: root,
+    environment: { ...environment, AI_TREE_COMMIT_SHA: head },
+    checkOnly: true
+  });
+  assert.equal(observed.manifest.sourceState.clean, false);
+  assert.equal(observed.manifest.sourceState.trackedTreeFilterAttributeCount, 1);
+  assert.equal(observed.manifest.sourceState.trackedTreeFiltersVerified, true);
+  assert.equal(observed.manifest.sourceState.inputsMatchCommit, false);
+  await assert.rejects(
+    stageSite({
+      repositoryRoot: root,
+      environment: { ...environment, AI_TREE_COMMIT_SHA: head, AI_TREE_REQUIRE_CLEAN: 'true' },
+      checkOnly: true
+    }),
+    /Git filter attribute conceal is not supported.*tool\.js/u
+  );
+});
+
+test('strict provenance audits uncommitted working-tree filter attributes', async () => {
+  const root = await makeRoot();
+  await writeBaseFixture(root);
+  await write(root, '.gitattributes', 'CANONICAL\n');
+  await write(root, 'conceal-filter.cjs', [
+    "'use strict';",
+    'process.stdin.resume();',
+    "process.stdin.on('end', () => process.stdout.write('CANONICAL\\n'));",
+    ''
+  ].join('\n'));
+  await write(root, 'tool.js', 'CANONICAL\n');
+  execFileSync('git', ['init', '--quiet'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['config', 'user.name', 'stage-site-test'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['config', 'user.email', 'stage-site-test@example.invalid'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['config', 'core.autocrlf', 'false'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['config', 'filter.conceal.clean', 'node conceal-filter.cjs'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['add', '--', '.'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['commit', '--quiet', '-m', 'plain attribute fixture'], { cwd: root, windowsHide: true });
+  const head = execFileSync('git', ['rev-parse', 'HEAD'], {
+    cwd: root, encoding: 'utf8', windowsHide: true
+  }).trim();
+  await write(root, '.gitattributes', '.gitattributes filter=conceal\ntool.js filter=conceal\n');
+  await write(root, 'tool.js', 'MALICIOUS\n');
+
+  assert.match(
+    execFileSync('git', ['status', '--porcelain=v1', '--untracked-files=all'], {
+      cwd: root,
+      encoding: 'utf8',
+      windowsHide: true
+    }).trim(),
+    /\.gitattributes/u
+  );
+  const observed = await stageSite({
+    repositoryRoot: root,
+    environment: { ...environment, AI_TREE_COMMIT_SHA: head },
+    checkOnly: true
+  });
+  assert.equal(observed.manifest.sourceState.clean, false);
+  assert.equal(observed.manifest.sourceState.trackedTreeFilterAttributeCount, 2);
+  assert.equal(observed.manifest.sourceState.trackedTreeFiltersVerified, true);
+  await assert.rejects(
+    stageSite({
+      repositoryRoot: root,
+      environment: { ...environment, AI_TREE_COMMIT_SHA: head, AI_TREE_REQUIRE_CLEAN: 'true' },
+      checkOnly: true
+    }),
+    /Git filter attribute conceal is not supported/u
+  );
+});
+
 test('strict provenance rejects common attribute overrides in linked worktrees', async () => {
   const parent = await makeRoot();
   const primary = path.join(parent, 'primary');
@@ -685,7 +1092,9 @@ test('rejects committed symlink modes and Git LFS pointers as release inputs', a
         environment: { ...environment, AI_TREE_COMMIT_SHA: head, AI_TREE_REQUIRE_CLEAN: 'true' },
         checkOnly: true
       }),
-      mode === 'symlink' ? /Git mode 120000 is not a regular file/u : /Git LFS inputs are not supported/u,
+      mode === 'symlink'
+        ? /Git mode 120000 is not a regular file/u
+        : /Git filter attribute lfs is not supported|Git LFS inputs are not supported/u,
       mode
     );
   }
@@ -825,12 +1234,18 @@ test('rejects metadata, artifact, and configuration reads from generated or Git-
     ['metadata output', baseConfig({ metadata: {
       packageFile: '_SITE/package.json',
       packageLockFile: 'package-lock.json',
-      datasetFile: 'data.json'
+      datasetFile: 'data.json',
+      citationFile: 'CITATION.cff',
+      changelogFile: 'CHANGELOG.md',
+      releaseFile: 'release.json'
     } }), /metadata\.packageFile cannot read from _site/u],
     ['metadata temporary', baseConfig({ metadata: {
       packageFile: 'package.json',
       packageLockFile: '.stage-site-hostile/package-lock.json',
-      datasetFile: 'data.json'
+      datasetFile: 'data.json',
+      citationFile: 'CITATION.cff',
+      changelogFile: 'CHANGELOG.md',
+      releaseFile: 'release.json'
     } }), /metadata\.packageLockFile cannot read from stage-site temporary directories/u],
     ['artifact Git admin', baseConfig({ artifacts: [
       { kind: 'file', source: '.GIT/config', target: 'leak.txt' }

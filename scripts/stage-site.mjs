@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { execFileSync } from 'node:child_process';
+import { execFileSync, spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { lstatSync } from 'node:fs';
 import {
@@ -17,10 +17,15 @@ import {
 import path from 'node:path';
 import process from 'node:process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import { parseAllDocuments } from 'yaml';
 
-const SCRIPT_VERSION = '1.3.0';
-const RELEASE_MANIFEST_SCHEMA_VERSION = '1.3.0';
-const CONFIG_SCHEMA_VERSION = '1.0.0';
+import { releaseRefConstants, verifyReleaseRef } from './release-ref.mjs';
+import { loadReleaseSpec, releaseSpecConstants } from './release-spec.mjs';
+import { parseStrictJson } from './strict-json.mjs';
+
+const SCRIPT_VERSION = '1.4.0';
+const RELEASE_MANIFEST_SCHEMA_VERSION = '1.4.0';
+const CONFIG_SCHEMA_VERSION = '1.1.0';
 const DEFAULT_CONFIG_PATH = 'config/pages-stage.v1.json';
 const REQUIRED_OUTPUT_DIRECTORY = '_site';
 
@@ -166,11 +171,253 @@ async function readJsonFile(absolutePath, label) {
   } catch (error) {
     throw stageError(`cannot read ${label}: ${error.message}`);
   }
+  return { bytes, document: parseStrictJson(bytes, label) };
+}
+
+async function readMetadataFile(absolutePath, label) {
   try {
-    return { bytes, document: JSON.parse(bytes.toString('utf8')) };
+    return await readFile(absolutePath);
   } catch (error) {
-    throw stageError(`${label} is not valid JSON: ${error.message}`);
+    throw stageError(`cannot read ${label}: ${error.message}`);
   }
+}
+
+function escapeRegularExpression(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/gu, '\\$&');
+}
+
+function decodeMetadataText(bytes, label) {
+  const text = bytes.toString('utf8');
+  if (!Buffer.from(text, 'utf8').equals(bytes)) throw stageError(`${label} must be valid UTF-8`);
+  if (text.startsWith('\ufeff')) throw stageError(`${label} must not contain a UTF-8 BOM`);
+  if (text.includes('\u0000')) throw stageError(`${label} must not contain NUL bytes`);
+  if (/\r(?!\n)/u.test(text)) throw stageError(`${label} must not contain lone carriage returns`);
+  return text;
+}
+
+function parseCitationDocument(bytes) {
+  const text = decodeMetadataText(bytes, 'CITATION metadata');
+  let documents;
+  try {
+    documents = parseAllDocuments(text, {
+      merge: false,
+      prettyErrors: false,
+      strict: true,
+      uniqueKeys: true
+    });
+  } catch (error) {
+    throw stageError(`CITATION is not valid strict YAML: ${error.message}`);
+  }
+  if (documents.length !== 1) throw stageError('CITATION must contain exactly one YAML document');
+  const parsed = documents[0];
+  const problems = [...parsed.errors, ...parsed.warnings];
+  if (problems.length > 0) {
+    throw stageError(`CITATION is not valid strict YAML: ${problems[0].message}`);
+  }
+  let document;
+  try {
+    document = parsed.toJS({ maxAliasCount: 0 });
+  } catch (error) {
+    throw stageError(`CITATION contains unsupported YAML aliases: ${error.message}`);
+  }
+  if (!document || typeof document !== 'object' || Array.isArray(document)) {
+    throw stageError('CITATION must contain one top-level mapping');
+  }
+  return { document, text };
+}
+
+function validateCitationProjectIdentity(citation, releaseSpec) {
+  const document = citation.document;
+  if (document['cff-version'] !== '1.2.0') {
+    throw stageError('CITATION cff-version must be exactly 1.2.0');
+  }
+  if (document.title !== 'AI Research Tech Tree') {
+    throw stageError('CITATION title must be exactly AI Research Tech Tree');
+  }
+  if (document.type !== 'dataset') throw stageError('CITATION type must be exactly dataset');
+  if (
+    !Array.isArray(document.authors) ||
+    document.authors.length === 0 ||
+    document.authors.some(author => (
+      !author ||
+      typeof author !== 'object' ||
+      Array.isArray(author) ||
+      !(
+        (typeof author.name === 'string' && author.name.trim().length > 0) ||
+        (typeof author['family-names'] === 'string' && author['family-names'].trim().length > 0)
+      )
+    ))
+  ) {
+    throw stageError('CITATION authors must identify each author with a non-empty name or family-names');
+  }
+  if (document['repository-code'] !== 'https://github.com/neb6dav/ai_tech_tree') {
+    throw stageError('CITATION repository-code must identify the canonical repository');
+  }
+  if (document.url !== releaseSpec.productionBaseUrl) {
+    throw stageError(`CITATION url must be exactly ${releaseSpec.productionBaseUrl}`);
+  }
+}
+
+function occurrenceCount(text, pattern) {
+  return [...text.matchAll(pattern)].length;
+}
+
+function markdownOutsideFences(text) {
+  const visible = [];
+  let fence = null;
+  let inHtmlComment = false;
+  for (const line of text.split(/\r?\n/u)) {
+    if (fence !== null) {
+      const closingPattern = new RegExp(
+        `^[ ]{0,3}${fence.character === '`' ? '`' : '~'}{${fence.length},}[ \\t]*$`,
+        'u'
+      );
+      if (closingPattern.test(line)) {
+        fence = null;
+      }
+      continue;
+    }
+    let remainder = line;
+    let visibleLine = '';
+    while (remainder.length > 0) {
+      if (inHtmlComment) {
+        const end = remainder.indexOf('-->');
+        if (end < 0) {
+          remainder = '';
+          continue;
+        }
+        inHtmlComment = false;
+        remainder = remainder.slice(end + 3);
+        continue;
+      }
+      const start = remainder.indexOf('<!--');
+      if (start < 0) {
+        visibleLine += remainder;
+        remainder = '';
+        continue;
+      }
+      visibleLine += remainder.slice(0, start);
+      inHtmlComment = true;
+      remainder = remainder.slice(start + 4);
+    }
+    if (/<(?:\/?[A-Za-z][A-Za-z0-9-]*(?=[ \t/>]|$)|[!?])/u.test(visibleLine)) {
+      throw stageError('CHANGELOG contains an unsupported raw HTML block');
+    }
+    const opening = /^[ ]{0,3}(`{3,}|~{3,})(.*)$/u.exec(visibleLine);
+    if (opening && !(opening[1][0] === '`' && opening[2].includes('`'))) {
+      fence = { character: opening[1][0], length: opening[1].length };
+      continue;
+    }
+    visible.push(visibleLine);
+  }
+  if (fence !== null) throw stageError('CHANGELOG contains an unterminated fenced code block');
+  if (inHtmlComment) throw stageError('CHANGELOG contains an unterminated HTML comment');
+  return visible.join('\n');
+}
+
+function validateReleaseIdentity({
+  packageDocument,
+  packageLockDocument,
+  datasetDocument,
+  citationBytes,
+  changelogBytes,
+  releaseSpec
+}) {
+  const version = assertNonEmptyString(packageDocument.version, 'package version');
+  const packageName = assertNonEmptyString(packageDocument.name, 'package name');
+  if (packageLockDocument.name !== packageName) {
+    throw stageError(`package-lock top-level name must be exactly ${packageName}`);
+  }
+  if (packageLockDocument.packages?.['']?.name !== packageName) {
+    throw stageError(`package-lock root-package name must be exactly ${packageName}`);
+  }
+  if (packageLockDocument.version !== version) {
+    throw stageError(`package-lock top-level version must be exactly ${version}`);
+  }
+  if (packageLockDocument.packages?.['']?.version !== version) {
+    throw stageError(`package-lock root-package version must be exactly ${version}`);
+  }
+  if (packageLockDocument.lockfileVersion !== 3) {
+    throw stageError('package-lock lockfileVersion must be exactly 3');
+  }
+  if (releaseSpec.version !== version) {
+    throw stageError(`release specification version ${releaseSpec.version} does not match package version ${version}`);
+  }
+  if (releaseSpec.assetStem !== `${packageName}-v${version}`) {
+    throw stageError(`release specification assetStem must be exactly ${packageName}-v${version}`);
+  }
+
+  const edition = assertNonEmptyString(datasetDocument.dataset?.edition, 'dataset edition');
+  const releaseState = assertNonEmptyString(datasetDocument.dataset?.releaseState, 'dataset releaseState');
+  if (releaseSpec.edition !== edition) {
+    throw stageError(`release specification edition ${releaseSpec.edition} does not match dataset edition ${edition}`);
+  }
+
+  const changelog = decodeMetadataText(changelogBytes, 'CHANGELOG metadata');
+  const visibleChangelog = markdownOutsideFences(changelog);
+  const citation = parseCitationDocument(citationBytes);
+  validateCitationProjectIdentity(citation, releaseSpec);
+  const escapedVersion = escapeRegularExpression(version);
+  const exactReleaseHeadingPattern = new RegExp(`^[ ]{0,3}## \\[${escapedVersion}\\][ \\t]+-[ \\t]+(\\d{4}-\\d{2}-\\d{2})[ \\t]*$`, 'gmu');
+  const targetVersionHeadingPattern = new RegExp(`^[ ]{0,3}##[ \\t]+\\[${escapedVersion}\\].*$`, 'gmu');
+  const developmentTargetPattern = new RegExp(`^\\*\\*Target:[ \\t]+v${escapedVersion}[ \\t]+development edition\\.\\*\\*`, 'gimu');
+  const releaseHeadings = [...visibleChangelog.matchAll(exactReleaseHeadingPattern)];
+  const targetVersionHeadings = [...visibleChangelog.matchAll(targetVersionHeadingPattern)];
+  if (occurrenceCount(visibleChangelog, /^[ ]{0,3}## \[Unreleased\][ \t]*$/gmu) !== 1) {
+    throw stageError('CHANGELOG must contain exactly one ## [Unreleased] heading');
+  }
+
+  const expectedCitationVersion = releaseSpec.status === 'planned' ? `${version}-dev` : version;
+  if (citation.document.version !== expectedCitationVersion) {
+    throw stageError(`CITATION top-level version must be exactly ${expectedCitationVersion}`);
+  }
+  if (typeof citation.document.message !== 'string' || citation.document.message.trim().length === 0) {
+    throw stageError('CITATION top-level message must be a non-empty string');
+  }
+  if (releaseSpec.status === 'planned') {
+    if (releaseState !== 'Development edition') {
+      throw stageError('planned release dataset releaseState must be exactly Development edition');
+    }
+    if (Object.hasOwn(citation.document, 'date-released')) {
+      throw stageError('CITATION must not contain a top-level date-released before release');
+    }
+    if (!/untagged/iu.test(citation.document.message) || !/development edition/iu.test(citation.document.message)) {
+      throw stageError('planned release CITATION must retain its untagged development warning');
+    }
+    if (targetVersionHeadings.length !== 0) {
+      throw stageError(`planned release CHANGELOG must not contain a ${version} release heading`);
+    }
+    if (occurrenceCount(visibleChangelog, developmentTargetPattern) !== 1) {
+      throw stageError(`planned release CHANGELOG must contain exactly one v${version} development target`);
+    }
+  } else {
+    if (releaseState !== releaseSpec.releaseState || /development/iu.test(releaseState)) {
+      throw stageError(`ready release dataset releaseState must be exactly ${releaseSpec.releaseState}`);
+    }
+    if (edition.slice(0, 10) !== releaseSpec.releaseDate) {
+      throw stageError('ready release edition date must match releaseDate');
+    }
+    if (citation.document['date-released'] !== releaseSpec.releaseDate) {
+      throw stageError(`CITATION top-level date-released must be exactly ${releaseSpec.releaseDate}`);
+    }
+    if (/untagged|development edition/iu.test(citation.document.message)) {
+      throw stageError('ready release CITATION must not retain development-edition wording');
+    }
+    if (
+      targetVersionHeadings.length !== 1 ||
+      releaseHeadings.length !== 1 ||
+      releaseHeadings[0][1] !== releaseSpec.releaseDate
+    ) {
+      throw stageError(
+        `ready release CHANGELOG must contain exactly one ## [${version}] - ${releaseSpec.releaseDate} heading`
+      );
+    }
+    if (occurrenceCount(visibleChangelog, developmentTargetPattern) !== 0) {
+      throw stageError(`ready release CHANGELOG must not retain the v${version} development target`);
+    }
+  }
+
+  return { version, edition, releaseState };
 }
 
 function validateMediaType(value, label) {
@@ -195,13 +442,23 @@ export function validateStageConfig(config) {
     throw stageError('releaseManifest must be exactly release-manifest.json');
   }
 
-  assertOnlyKeys(config.metadata, ['packageFile', 'packageLockFile', 'datasetFile'], 'metadata');
+  assertOnlyKeys(
+    config.metadata,
+    ['packageFile', 'packageLockFile', 'datasetFile', 'citationFile', 'changelogFile', 'releaseFile'],
+    'metadata'
+  );
   normalizeManifestPath(config.metadata.packageFile, 'metadata.packageFile');
   normalizeManifestPath(config.metadata.packageLockFile, 'metadata.packageLockFile');
   normalizeManifestPath(config.metadata.datasetFile, 'metadata.datasetFile');
+  normalizeManifestPath(config.metadata.citationFile, 'metadata.citationFile');
+  normalizeManifestPath(config.metadata.changelogFile, 'metadata.changelogFile');
+  normalizeManifestPath(config.metadata.releaseFile, 'metadata.releaseFile');
   assertPermittedRepositoryInputPath(config.metadata.packageFile, 'metadata.packageFile');
   assertPermittedRepositoryInputPath(config.metadata.packageLockFile, 'metadata.packageLockFile');
   assertPermittedRepositoryInputPath(config.metadata.datasetFile, 'metadata.datasetFile');
+  assertPermittedRepositoryInputPath(config.metadata.citationFile, 'metadata.citationFile');
+  assertPermittedRepositoryInputPath(config.metadata.changelogFile, 'metadata.changelogFile');
+  assertPermittedRepositoryInputPath(config.metadata.releaseFile, 'metadata.releaseFile');
 
   if (!Array.isArray(config.artifacts) || config.artifacts.length === 0) {
     throw stageError('artifacts must be a non-empty array');
@@ -398,13 +655,14 @@ function gitOutput(repositoryRoot, args) {
   }
 }
 
-function gitBuffer(repositoryRoot, args) {
+function gitBuffer(repositoryRoot, args, input = null) {
   try {
     return execFileSync('git', args, {
       cwd: repositoryRoot,
       env: gitEnvironment(),
       encoding: null,
-      stdio: ['ignore', 'pipe', 'ignore'],
+      input: input == null ? undefined : Buffer.from(input),
+      stdio: [input == null ? 'ignore' : 'pipe', 'pipe', 'ignore'],
       windowsHide: true,
       maxBuffer: 64 * 1024 * 1024
     });
@@ -427,12 +685,37 @@ function gitSucceeds(repositoryRoot, args) {
   }
 }
 
+function repositoryFsckConfigurationIsIsolated(repositoryRoot) {
+  const result = spawnSync(
+    'git',
+    ['config', '--null', '--show-origin', '--get-regexp', '^[fF][sS][cC][kK]\\.'],
+    {
+      cwd: repositoryRoot,
+      env: gitEnvironment(),
+      encoding: null,
+      stdio: ['ignore', 'pipe', 'ignore'],
+      windowsHide: true
+    }
+  );
+  if (result.error || result.signal || (result.status !== 0 && result.status !== 1)) return null;
+  const output = Buffer.from(result.stdout || []);
+  if (result.status === 1) return output.byteLength === 0 ? true : null;
+  return output.byteLength === 0 ? null : false;
+}
+
 function gitEnvironment() {
   const environment = Object.fromEntries(
     Object.entries(process.env).filter(([name]) => !name.toUpperCase().startsWith('GIT_'))
   );
+  const nullDevice = process.platform === 'win32' ? 'NUL' : '/dev/null';
   environment.GIT_NO_REPLACE_OBJECTS = '1';
   environment.GIT_ATTR_NOSYSTEM = '1';
+  environment.GIT_CONFIG_COUNT = '0';
+  environment.GIT_CONFIG_GLOBAL = nullDevice;
+  environment.GIT_CONFIG_NOSYSTEM = '1';
+  environment.GIT_CONFIG_SYSTEM = nullDevice;
+  environment.GIT_OPTIONAL_LOCKS = '0';
+  environment.GIT_TERMINAL_PROMPT = '0';
   return environment;
 }
 
@@ -485,10 +768,13 @@ function isGitLfsPointer(bytes) {
 
 function parseGitTreeEntries(bytes) {
   if (bytes == null) return null;
-  return bytes.toString('utf8').split('\0').filter(Boolean).map(record => {
+  const text = bytes.toString('utf8');
+  if (!Buffer.from(text, 'utf8').equals(bytes)) return null;
+  const entries = text.split('\0').filter(Boolean).map(record => {
     const match = /^([0-7]{6})\s+([^\s]+)\s+([0-9a-f]+)\t(.+)$/u.exec(record);
     return match ? { mode: match[1], type: match[2], object: match[3], path: match[4] } : null;
-  }).filter(Boolean);
+  });
+  return entries.every(Boolean) ? entries : null;
 }
 
 function gitObjectId(type, bytes, objectFormat) {
@@ -500,7 +786,9 @@ function gitObjectId(type, bytes, objectFormat) {
 
 function parseGitAttributeRows(bytes) {
   if (bytes == null) return null;
-  const fields = bytes.toString('utf8').split('\0');
+  const text = bytes.toString('utf8');
+  if (!Buffer.from(text, 'utf8').equals(bytes)) return null;
+  const fields = text.split('\0');
   if (fields.at(-1) === '') fields.pop();
   if (fields.length % 3 !== 0) return null;
   const rows = [];
@@ -526,6 +814,75 @@ function repositoryAttributesAreIsolated(repositoryRoot) {
   } catch (error) {
     return error?.code === 'ENOENT' ? true : false;
   }
+}
+
+function verifyTrackedTreeFilters(repositoryRoot, commit, repositoryAttributesIsolated) {
+  const trackedEntries = parseGitTreeEntries(
+    gitBuffer(repositoryRoot, ['ls-tree', '-r', '-z', commit])
+  );
+  if (trackedEntries == null) {
+    return {
+      trackedTreeEntryCount: null,
+      trackedTreeFilterAttributeCount: null,
+      trackedTreeFiltersVerified: false,
+      trackedTreeFilterAuditSha256: null,
+      filters: []
+    };
+  }
+  const sortedEntries = [...trackedEntries].sort((left, right) => compareText(left.path, right.path));
+  const paths = sortedEntries.map(entry => entry.path);
+  const pathInput = Buffer.from(paths.length === 0 ? '' : `${paths.join('\0')}\0`, 'utf8');
+  const committedAttributeRows = parseGitAttributeRows(gitBuffer(
+    repositoryRoot,
+    ['-c', 'core.attributesFile=', 'check-attr', '-z', '--all', `--source=${commit}`, '--stdin'],
+    pathInput
+  ));
+  const workingAttributeRows = parseGitAttributeRows(gitBuffer(
+    repositoryRoot,
+    ['-c', 'core.attributesFile=', 'check-attr', '-z', '--all', '--stdin'],
+    pathInput
+  ));
+  const pathSet = new Set(paths);
+  const committedRowsAreBoundToTree = committedAttributeRows != null &&
+    committedAttributeRows.every(row => pathSet.has(row.path));
+  const workingRowsAreBoundToTree = workingAttributeRows != null &&
+    workingAttributeRows.every(row => pathSet.has(row.path));
+  const committedFilters = committedRowsAreBoundToTree
+    ? committedAttributeRows.filter(row => row.attribute === 'filter')
+    : [];
+  const workingFilters = workingRowsAreBoundToTree
+    ? workingAttributeRows.filter(row => row.attribute === 'filter')
+    : [];
+  const filtersByIdentity = new Map();
+  for (const [scope, rows] of [['commit', committedFilters], ['worktree', workingFilters]]) {
+    for (const row of rows) {
+      const key = `${row.path}\0${row.value}`;
+      const existing = filtersByIdentity.get(key);
+      if (existing) existing.scopes.push(scope);
+      else filtersByIdentity.set(key, { path: row.path, value: row.value, scopes: [scope] });
+    }
+  }
+  const filters = [...filtersByIdentity.values()].sort((left, right) => (
+    compareText(left.path, right.path) || compareText(left.value, right.value)
+  ));
+  const committedFilterByPath = new Map(committedFilters.map(row => [row.path, row.value]));
+  const workingFilterByPath = new Map(workingFilters.map(row => [row.path, row.value]));
+  const verified = repositoryAttributesIsolated === true &&
+    committedRowsAreBoundToTree && workingRowsAreBoundToTree;
+  const auditRows = sortedEntries.map(entry => (
+    `${entry.mode}\t${entry.type}\t${entry.object}\t${entry.path}\t` +
+    `commit:${committedFilterByPath.has(entry.path) ? committedFilterByPath.get(entry.path) : 'plain'}\t` +
+    `worktree:${workingFilterByPath.has(entry.path) ? workingFilterByPath.get(entry.path) : 'plain'}`
+  ));
+  return {
+    trackedTreeEntryCount: sortedEntries.length,
+    trackedTreeFilterAttributeCount: verified ? filters.length : null,
+    trackedTreeFiltersVerified: verified,
+    trackedTreeFilterAuditSha256: verified
+      ? sha256(Buffer.from(auditRows.join('\n'), 'utf8'))
+      : null,
+    filters
+  };
 }
 
 function verifyInputsAtCommit(
@@ -677,14 +1034,29 @@ function resolveSourceState(repositoryRoot, environment, commit, rawInputSnapsho
   const head = gitOutput(repositoryRoot, ['rev-parse', 'HEAD']);
   const objectFormatValue = gitOutput(repositoryRoot, ['rev-parse', '--show-object-format']);
   const gitObjectFormat = /^(?:sha1|sha256)$/u.test(objectFormatValue || '') ? objectFormatValue : null;
-  const objectDatabaseVerified = gitObjectFormat != null && gitSucceeds(repositoryRoot, [
-    'fsck',
-    '--strict',
-    '--no-dangling',
-    '--no-reflogs',
-    commit
-  ]);
+  const fsckConfigurationBefore = topLevel == null
+    ? null
+    : repositoryFsckConfigurationIsIsolated(repositoryRoot);
+  const fsckSucceeded = fsckConfigurationBefore === true && gitObjectFormat != null && gitSucceeds(repositoryRoot, [
+      'fsck',
+      '--strict',
+      '--no-dangling',
+      '--no-reflogs',
+      commit
+    ]);
+  const fsckConfigurationAfter = fsckSucceeded
+    ? repositoryFsckConfigurationIsIsolated(repositoryRoot)
+    : fsckConfigurationBefore;
+  const fsckConfigurationIsolated = fsckConfigurationBefore == null
+    ? null
+    : fsckConfigurationBefore === true && fsckConfigurationAfter === true;
+  const objectDatabaseVerified = fsckSucceeded && fsckConfigurationIsolated;
   const attributesIsolatedBeforeVerification = repositoryAttributesAreIsolated(repositoryRoot);
+  const trackedTreeFilterVerification = verifyTrackedTreeFilters(
+    repositoryRoot,
+    commit,
+    attributesIsolatedBeforeVerification
+  );
   const indexFlags = resolveIndexFlags(repositoryRoot);
   const status = gitOutput(repositoryRoot, [
     '-c',
@@ -704,11 +1076,24 @@ function resolveSourceState(repositoryRoot, environment, commit, rawInputSnapsho
   if (requireClean && gitObjectFormat == null) {
     throw stageError('Git object format is unavailable or unsupported; expected sha1 or sha256');
   }
+  if (requireClean && !fsckConfigurationIsolated) {
+    throw stageError('Git fsck configuration overrides are not allowed during clean staging');
+  }
   if (requireClean && !objectDatabaseVerified) {
     throw stageError(`Git object database failed integrity validation for advertised commit ${commit}`);
   }
   if (requireClean && attributesIsolatedBeforeVerification !== true) {
     throw stageError('repository-local Git attribute overrides are not allowed during clean staging');
+  }
+  if (requireClean && !trackedTreeFilterVerification.trackedTreeFiltersVerified) {
+    throw stageError('Git filter attributes could not be verified across the advertised tracked tree');
+  }
+  if (requireClean && trackedTreeFilterVerification.trackedTreeFilterAttributeCount !== 0) {
+    const first = trackedTreeFilterVerification.filters[0];
+    throw stageError(
+      `Git filter attribute ${first?.value || '(empty)'} is not supported by deterministic staging ` +
+      `anywhere in the tracked tree (${first?.path || 'unknown path'})`
+    );
   }
 
   if (topLevel == null || head == null || indexFlags == null || status == null) {
@@ -723,7 +1108,12 @@ function resolveSourceState(repositoryRoot, environment, commit, rawInputSnapsho
       repositoryRootMatchesTopLevel: null,
       gitObjectFormat,
       objectDatabaseVerified,
+      repositoryFsckConfigurationIsolated: fsckConfigurationIsolated,
       repositoryAttributesIsolated: attributesIsolatedBeforeVerification,
+      trackedTreeEntryCount: trackedTreeFilterVerification.trackedTreeEntryCount,
+      trackedTreeFilterAttributeCount: trackedTreeFilterVerification.trackedTreeFilterAttributeCount,
+      trackedTreeFiltersVerified: trackedTreeFilterVerification.trackedTreeFiltersVerified,
+      trackedTreeFilterAuditSha256: trackedTreeFilterVerification.trackedTreeFilterAuditSha256,
       head: null,
       commitMatchesHead: null,
       changedEntryCount: null,
@@ -757,7 +1147,10 @@ function resolveSourceState(repositoryRoot, environment, commit, rawInputSnapsho
     );
   }
   const entries = status === '' ? [] : status.split(/\r?\n/u);
-  const clean = entries.length === 0 && indexFlags.flaggedEntryCount === 0;
+  const clean = entries.length === 0 &&
+    indexFlags.flaggedEntryCount === 0 &&
+    trackedTreeFilterVerification.trackedTreeFiltersVerified &&
+    trackedTreeFilterVerification.trackedTreeFilterAttributeCount === 0;
   const commitMatchesHead = normalizedHead === commit;
   if (requireClean && !clean) {
     throw stageError(
@@ -807,7 +1200,12 @@ function resolveSourceState(repositoryRoot, environment, commit, rawInputSnapsho
     repositoryRootMatchesTopLevel: rootMatchesTopLevel,
     gitObjectFormat,
     objectDatabaseVerified,
+    repositoryFsckConfigurationIsolated: fsckConfigurationIsolated,
     repositoryAttributesIsolated,
+    trackedTreeEntryCount: trackedTreeFilterVerification.trackedTreeEntryCount,
+    trackedTreeFilterAttributeCount: trackedTreeFilterVerification.trackedTreeFilterAttributeCount,
+    trackedTreeFiltersVerified: trackedTreeFilterVerification.trackedTreeFiltersVerified,
+    trackedTreeFilterAuditSha256: trackedTreeFilterVerification.trackedTreeFilterAuditSha256,
     head: normalizedHead,
     commitMatchesHead,
     changedEntryCount: entries.length,
@@ -819,23 +1217,30 @@ function resolveSourceState(repositoryRoot, environment, commit, rawInputSnapsho
     directorySourceCount: inputVerification.directorySourceCount,
     matchedDirectorySourceCount: inputVerification.matchedDirectorySourceCount,
     inputsMatchCommit: inputVerification.inputsMatchCommit && objectDatabaseVerified &&
-      repositoryAttributesIsolated,
+      repositoryAttributesIsolated && trackedTreeFilterVerification.trackedTreeFiltersVerified &&
+      trackedTreeFilterVerification.trackedTreeFilterAttributeCount === 0,
     inputVerificationSha256: inputVerification.inputVerificationSha256
   };
 }
 
-function resolveTag(repositoryRoot, environment) {
-  const explicit = firstEnvironmentValue(environment, ['AI_TREE_RELEASE_TAG']);
-  let tag = explicit?.value || null;
-  if (!tag && environment.GITHUB_REF_TYPE === 'tag' && typeof environment.GITHUB_REF_NAME === 'string') {
-    tag = environment.GITHUB_REF_NAME.trim();
+function resolvePublicationMode(environment) {
+  const raw = environment.AI_TREE_STAGE_MODE;
+  if (raw == null || String(raw).trim() === '' || String(raw).trim() === 'preview') return 'preview';
+  if (String(raw).trim() === 'release') return 'release';
+  throw stageError('AI_TREE_STAGE_MODE must be preview or release when set');
+}
+
+function requiredReleaseEnvironmentValue(environment, name) {
+  const value = environment[name];
+  if (
+    typeof value !== 'string' ||
+    value.length === 0 ||
+    value.trim() !== value ||
+    /[\u0000-\u001f\u007f]/u.test(value)
+  ) {
+    throw stageError(`${name} is required in release mode and must be an exact trimmed value`);
   }
-  if (!tag && typeof environment.GITHUB_REF === 'string' && environment.GITHUB_REF.startsWith('refs/tags/')) {
-    tag = environment.GITHUB_REF.slice('refs/tags/'.length).trim();
-  }
-  if (!tag) tag = gitOutput(repositoryRoot, ['describe', '--tags', '--exact-match', 'HEAD']);
-  if (!tag) return null;
-  return assertNonEmptyString(tag, 'release tag');
+  return value;
 }
 
 function npmVersionFromEnvironment(environment) {
@@ -856,54 +1261,121 @@ async function buildReleaseMetadata(
   const packageAbsolute = resolveInside(repositoryRoot, config.metadata.packageFile, 'package metadata path');
   const lockAbsolute = resolveInside(repositoryRoot, config.metadata.packageLockFile, 'package-lock metadata path');
   const datasetAbsolute = resolveInside(repositoryRoot, config.metadata.datasetFile, 'dataset metadata path');
+  const citationAbsolute = resolveInside(repositoryRoot, config.metadata.citationFile, 'citation metadata path');
+  const changelogAbsolute = resolveInside(repositoryRoot, config.metadata.changelogFile, 'changelog metadata path');
   await assertPathComponentsAreSafe(repositoryRoot, config.metadata.packageFile, 'metadata.packageFile');
   await assertPathComponentsAreSafe(repositoryRoot, config.metadata.packageLockFile, 'metadata.packageLockFile');
   await assertPathComponentsAreSafe(repositoryRoot, config.metadata.datasetFile, 'metadata.datasetFile');
+  await assertPathComponentsAreSafe(repositoryRoot, config.metadata.citationFile, 'metadata.citationFile');
+  await assertPathComponentsAreSafe(repositoryRoot, config.metadata.changelogFile, 'metadata.changelogFile');
+  await assertPathComponentsAreSafe(repositoryRoot, config.metadata.releaseFile, 'metadata.releaseFile');
 
   const packageFile = await readJsonFile(packageAbsolute, 'package metadata');
   const packageLockFile = await readJsonFile(lockAbsolute, 'package-lock metadata');
   const datasetFile = await readJsonFile(datasetAbsolute, 'dataset metadata');
+  const citationBytes = await readMetadataFile(citationAbsolute, 'citation metadata');
+  const changelogBytes = await readMetadataFile(changelogAbsolute, 'changelog metadata');
+  const publicationMode = resolvePublicationMode(environment);
+  const releaseFile = await loadReleaseSpec(repositoryRoot, config.metadata.releaseFile, {
+    requireReady: publicationMode === 'release'
+  });
   const packageDocument = packageFile.document;
   const packageLockDocument = packageLockFile.document;
   const datasetDocument = datasetFile.document;
-  const version = assertNonEmptyString(packageDocument.version, 'package version');
-  const edition = assertNonEmptyString(datasetDocument.dataset?.edition, 'dataset edition');
-  const releaseState = assertNonEmptyString(datasetDocument.dataset?.releaseState, 'dataset releaseState');
+  const { version, edition, releaseState } = validateReleaseIdentity({
+    packageDocument,
+    packageLockDocument,
+    datasetDocument,
+    citationBytes,
+    changelogBytes,
+    releaseSpec: releaseFile.spec
+  });
   const generatorVersion = assertNonEmptyString(datasetDocument.generatorVersion, 'dataset generatorVersion');
   const dataDigest = datasetDocument.dataset?.dataDigest ?? null;
   if (dataDigest !== null && !/^[0-9a-f]{64}$/iu.test(dataDigest)) {
     throw stageError('dataset dataDigest must be a SHA-256 hexadecimal digest when present');
   }
-
   const commit = resolveCommit(repositoryRoot, environment);
   const inputSnapshots = [
     { path: configPath, bytes: configBytes },
     { path: config.metadata.packageFile, bytes: packageFile.bytes },
     { path: config.metadata.packageLockFile, bytes: packageLockFile.bytes },
     { path: config.metadata.datasetFile, bytes: datasetFile.bytes },
+    { path: config.metadata.citationFile, bytes: citationBytes },
+    { path: config.metadata.changelogFile, bytes: changelogBytes },
+    { path: config.metadata.releaseFile, bytes: releaseFile.bytes },
     ...hydratedPlan
       .filter(item => item.sourceRelative !== null)
       .map(item => ({ path: item.sourceRelative, bytes: item.bytes }))
   ];
+  const sourceState = resolveSourceState(
+    repositoryRoot,
+    environment,
+    commit,
+    inputSnapshots,
+    directoryRequirements
+  );
+  let tag = null;
+  let promotion = null;
+  if (publicationMode === 'release') {
+    if (!requiredCleanSource(environment)) {
+      throw stageError('release mode requires AI_TREE_REQUIRE_CLEAN=true');
+    }
+    if (releaseFile.spec.releaseState !== releaseState) {
+      throw stageError(
+        `release specification state ${releaseFile.spec.releaseState} does not match dataset state ${releaseState}`
+      );
+    }
+    const requestedCommit = requiredReleaseEnvironmentValue(environment, 'AI_TREE_COMMIT_SHA');
+    const requestedSpecPath = requiredReleaseEnvironmentValue(environment, 'AI_TREE_RELEASE_SPEC_PATH');
+    const requestedTag = requiredReleaseEnvironmentValue(environment, 'AI_TREE_RELEASE_TAG');
+    const protectedMainRef = requiredReleaseEnvironmentValue(environment, 'AI_TREE_PROTECTED_MAIN_REF');
+    if (requestedCommit !== commit) {
+      throw stageError('AI_TREE_COMMIT_SHA must equal the resolved release commit');
+    }
+    if (requestedSpecPath !== config.metadata.releaseFile) {
+      throw stageError(`AI_TREE_RELEASE_SPEC_PATH must be exactly ${config.metadata.releaseFile}`);
+    }
+    if (requestedTag !== releaseFile.spec.tag) {
+      throw stageError(`AI_TREE_RELEASE_TAG must be exactly ${releaseFile.spec.tag}`);
+    }
+    if (protectedMainRef !== releaseSpecConstants.policy.protectedMainRef) {
+      throw stageError(
+        `AI_TREE_PROTECTED_MAIN_REF must be exactly ${releaseSpecConstants.policy.protectedMainRef}`
+      );
+    }
+    const verifiedRef = await verifyReleaseRef({
+      repositoryRoot,
+      tag: requestedTag,
+      protectedMainRef,
+      expectedVersion: version,
+      expectedReleaseDate: releaseFile.spec.releaseDate,
+      expectedCommit: commit
+    });
+    promotion = Object.freeze({ releaseDate: releaseFile.spec.releaseDate, tag: requestedTag, ...verifiedRef });
+    tag = requestedTag;
+  }
   return {
     edition,
     version,
     releaseState,
     commit,
-    tag: resolveTag(repositoryRoot, environment),
-    sourceState: resolveSourceState(
-      repositoryRoot,
-      environment,
-      commit,
-      inputSnapshots,
-      directoryRequirements
-    ),
+    publicationMode,
+    releaseSpec: Object.freeze({
+      path: releaseFile.path,
+      sha256: sha256(releaseFile.bytes),
+      ...releaseFile.spec
+    }),
+    tag,
+    promotion,
+    sourceState,
     generatorVersion,
     dataDigest: dataDigest?.toLowerCase() || null,
     toolchain: {
       node: process.version,
       npm: npmVersionFromEnvironment(environment),
       packageLockVersion: packageLockDocument.lockfileVersion ?? null,
+      releaseRef: releaseRefConstants.scriptVersion,
       stageSite: SCRIPT_VERSION
     }
   };
@@ -928,7 +1400,10 @@ function buildReleaseManifest(config, metadata, hydratedPlan, configPath, config
     version: metadata.version,
     releaseState: metadata.releaseState,
     commit: metadata.commit,
+    publicationMode: metadata.publicationMode,
+    releaseSpec: metadata.releaseSpec,
     tag: metadata.tag,
+    promotion: metadata.promotion,
     sourceState: metadata.sourceState,
     generatorVersion: metadata.generatorVersion,
     dataDigest: metadata.dataDigest,
@@ -1112,7 +1587,9 @@ async function main() {
     fileCount: result.fileCount,
     totalBytes: result.totalBytes,
     commit: result.manifest.commit,
+    publicationMode: result.manifest.publicationMode,
     tag: result.manifest.tag,
+    promotion: result.manifest.promotion,
     sourceState: result.manifest.sourceState,
     dataDigest: result.manifest.dataDigest
   }, null, 2)}\n`);

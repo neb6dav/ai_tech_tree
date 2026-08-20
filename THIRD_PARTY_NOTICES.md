@@ -37,6 +37,19 @@ The development build uses esbuild version 0.25.12 under the MIT License.
 
 - Source: <https://github.com/evanw/esbuild>
 
+### entities 8.0.0
+
+The publication-contract validator uses `entities` version 8.0.0 under the BSD 2-Clause License to decode HTML attributes according to browser-compatible entity rules.
+
+- Source: <https://github.com/fb55/entities>
+
+### yaml 2.9.0
+
+The release-identity gate uses `yaml` version 2.9.0 under the ISC License to parse `CITATION.cff` with strict duplicate-key checks.
+
+- Source: <https://github.com/eemeli/yaml>
+- Documentation: <https://eemeli.org/yaml/>
+
 ### Transitive dependencies
 
 Exact direct and transitive package versions and integrity hashes are recorded in `package-lock.json`. Their license identifiers are recorded in package metadata, and retained legal comments are emitted with the generated network bundle where provided by the packages. Notable transitive families include luma.gl, math.gl, probe.gl, D3 modules, DOMPurify, gl-matrix, random, and seedrandom; each remains under its own license.

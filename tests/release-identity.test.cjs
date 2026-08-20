@@ -1,6 +1,7 @@
 'use strict';
 
 const assert = require('node:assert/strict');
+const { createHash } = require('node:crypto');
 const fs = require('node:fs');
 const path = require('node:path');
 const test = require('node:test');
@@ -35,6 +36,7 @@ function occurrenceCount(text, fragment) {
 
 function loadSnapshot() {
   const ndjson = readNdjson('ai-research-tech-tree.ndjson');
+  const stageConfig = readJson('config/pages-stage.v1.json');
   return {
     package: readJson('package.json'),
     packageLock: readJson('package-lock.json'),
@@ -47,7 +49,9 @@ function loadSnapshot() {
     changelog: read('CHANGELOG.md'),
     readme: read('README.md'),
     sitemap: read('sitemap.xml'),
-    stageConfig: readJson('config/pages-stage.v1.json'),
+    stageConfig,
+    releasePlan: readJson(stageConfig.metadata.releaseFile),
+    releasePlanBytes: fs.readFileSync(path.join(ROOT, stageConfig.metadata.releaseFile)),
     manifest: readJson('_site/release-manifest.json')
   };
 }
@@ -127,11 +131,15 @@ function assertIdentity(snapshot) {
   assert(citationArtifact, 'CITATION staging entry');
   assert.equal(citationArtifact.source, 'CITATION.cff', 'CITATION staging source');
   assert.equal(citationArtifact.mediaType, 'text/yaml; charset=utf-8', 'CITATION media type');
+  assert.equal(snapshot.stageConfig.schemaVersion, '1.1.0', 'stage configuration schema');
+  assert.equal(snapshot.stageConfig.metadata.citationFile, 'CITATION.cff', 'citation identity input');
+  assert.equal(snapshot.stageConfig.metadata.changelogFile, 'CHANGELOG.md', 'changelog identity input');
+  assert.equal(snapshot.stageConfig.metadata.releaseFile, 'config/releases/v0.1.1.json', 'release-spec identity input');
 
   assert.equal(snapshot.manifest.version, EXPECTED.version, 'staged manifest version');
   assert.equal(snapshot.manifest.edition, EXPECTED.edition, 'staged manifest edition');
   assert.equal(snapshot.manifest.releaseState, EXPECTED.releaseState, 'staged manifest release state');
-  assert.equal(snapshot.manifest.schemaVersion, '1.3.0', 'staged manifest identity schema');
+  assert.equal(snapshot.manifest.schemaVersion, '1.4.0', 'staged manifest identity schema');
   assert.match(snapshot.manifest.commit, /^[0-9a-f]{40}$/u, 'staged manifest full commit');
   const sourceState = snapshot.manifest.sourceState;
   assert.equal(sourceState.kind, 'git', 'staged manifest Git provenance kind');
@@ -139,7 +147,12 @@ function assertIdentity(snapshot) {
   assert.equal(sourceState.repositoryRootMatchesTopLevel, true, 'staged manifest repository-root closure');
   assert.match(sourceState.gitObjectFormat, /^sha(?:1|256)$/u, 'staged manifest Git object format');
   assert.equal(sourceState.objectDatabaseVerified, true, 'staged manifest Git object integrity');
+  assert.equal(sourceState.repositoryFsckConfigurationIsolated, true, 'staged manifest Git fsck isolation');
   assert.equal(sourceState.repositoryAttributesIsolated, true, 'staged manifest Git attribute isolation');
+  assert(sourceState.trackedTreeEntryCount > 0, 'staged manifest tracked-tree entry coverage');
+  assert.equal(sourceState.trackedTreeFilterAttributeCount, 0, 'staged manifest tracked-tree filter closure');
+  assert.equal(sourceState.trackedTreeFiltersVerified, true, 'staged manifest tracked-tree filter audit');
+  assert.match(sourceState.trackedTreeFilterAuditSha256, /^[0-9a-f]{64}$/u, 'staged tracked-tree filter digest');
   assert.equal(sourceState.head, snapshot.manifest.commit, 'staged manifest HEAD and advertised commit');
   assert.equal(sourceState.commitMatchesHead, true, 'staged manifest commit-to-HEAD closure');
   assert.equal(typeof sourceState.clean, 'boolean', 'staged manifest source cleanliness is measured');
@@ -153,7 +166,21 @@ function assertIdentity(snapshot) {
   );
   assert.equal(sourceState.inputsMatchCommit, true, 'staged manifest input-to-commit closure');
   assert.match(sourceState.inputVerificationSha256, /^[0-9a-f]{64}$/u, 'staged input verification digest');
+  assert.equal(snapshot.releasePlan.status, 'planned', 'release specification remains planned');
+  assert.equal(snapshot.releasePlan.releaseDate, null, 'planned release has no date');
+  assert.equal(snapshot.releasePlan.version, EXPECTED.version, 'release specification version');
+  assert.equal(snapshot.releasePlan.edition, EXPECTED.edition, 'release specification edition');
+  assert.equal(snapshot.releasePlan.tag, `v${EXPECTED.version}`, 'release specification tag');
+  assert.equal(snapshot.manifest.publicationMode, 'preview', 'development manifest publication mode');
+  assert.deepEqual(snapshot.manifest.releaseSpec, {
+    path: snapshot.stageConfig.metadata.releaseFile,
+    sha256: createHash('sha256').update(snapshot.releasePlanBytes).digest('hex'),
+    ...snapshot.releasePlan
+  }, 'staged release specification provenance');
   assert.equal(snapshot.manifest.tag, null, 'development manifest tag');
+  assert.equal(snapshot.manifest.promotion, null, 'development manifest promotion provenance');
+  assert.equal(snapshot.manifest.toolchain.releaseRef, '1.0.0', 'release-ref verifier version');
+  assert.equal(sourceState.inputCount, 17, 'all configured release inputs are covered');
   assert.equal(snapshot.manifest.fileCount, 14, 'development manifest payload count');
   const citationFile = snapshot.manifest.files.find((file) => file.path === 'CITATION.cff');
   assert(citationFile, 'staged CITATION payload');
@@ -173,9 +200,15 @@ test('identity contract fails closed on representative release-drift mutations',
     ['missing social identity', (copy) => { copy.indexHtml = copy.indexHtml.replace('AI Research Tech Tree - v0.1.1 Development Edition', 'AI Research Tech Tree'); }],
     ['misdirected badge', (copy) => { copy.canonicalHtml = copy.canonicalHtml.replace('id="editionBadge" href="./release-manifest.json"', 'id="editionBadge" href="./"'); }],
     ['premature tag', (copy) => { copy.manifest.tag = 'v0.1.1'; }],
+    ['premature release mode', (copy) => { copy.manifest.publicationMode = 'release'; }],
+    ['premature promotion provenance', (copy) => { copy.manifest.promotion = { mode: 'annotated-tag' }; }],
+    ['stale release specification provenance', (copy) => { copy.manifest.releaseSpec.edition = '2026-08-13-public-beta-1'; }],
     ['stale manifest release state', (copy) => { copy.manifest.releaseState = 'Public beta'; }],
     ['unverified Git objects', (copy) => { copy.manifest.sourceState.objectDatabaseVerified = false; }],
+    ['unisolated Git fsck configuration', (copy) => { copy.manifest.sourceState.repositoryFsckConfigurationIsolated = false; }],
     ['unisolated Git attributes', (copy) => { copy.manifest.sourceState.repositoryAttributesIsolated = false; }],
+    ['unverified tracked-tree filters', (copy) => { copy.manifest.sourceState.trackedTreeFiltersVerified = false; }],
+    ['tracked-tree filter present', (copy) => { copy.manifest.sourceState.trackedTreeFilterAttributeCount = 1; }],
     ['unmatched release inputs', (copy) => { copy.manifest.sourceState.inputsMatchCommit = false; }],
     ['missing citation payload', (copy) => { copy.manifest.files = copy.manifest.files.filter((file) => file.path !== 'CITATION.cff'); }]
   ];

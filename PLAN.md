@@ -5,7 +5,7 @@ active_work_package: "WP-011-B"
 issue_url: "https://github.com/neb6dav/ai_tech_tree/issues/6"
 pr_url: "https://github.com/neb6dav/ai_tech_tree/pull/7"
 base_sha: "85108c78fa86c86634d4c0944839696369e687cd"
-last_completed_checkpoint: "WP-011-B/C3"
+last_completed_checkpoint: "WP-011-B/C3-hardening"
 last_verified_commands:
   - command: "npm run build"
     status: "PASS"
@@ -39,18 +39,23 @@ last_verified_commands:
     status: "PASS"
     runtime: "Node v24.14.1, npm 11.11.0, and Git 2.55"
     verified_by: "root"
-    scope: "Exact committed C3-hardening tree f2dc1c6; clean=true, requiredClean=true, object database and repository attributes isolated, 15/15 release inputs matched, manifest SHA-256 2a30f6406c0df3516396604194ed9b0bb2f9e6267ea41c99d62a92473cc75bf2"
+    scope: "Exact committed C3-hardening branch head b3bc284 (code f2dc1c6); clean=true, requiredClean=true, object database and repository attributes isolated, 15/15 release inputs matched, manifest SHA-256 1419552975dfbf58215d90905f533769d5cdfae1eee0e9905ba768af2e233831"
+  - command: "Reconcile downloaded C3-hardening CI preview"
+    status: "PASS"
+    runtime: "GitHub Actions Node v24.19.0 and npm 11.17.0"
+    verified_by: "root"
+    scope: "Workflow 32392413143 green; preview artifact 9415355845 passed 1,465 contract references; 14/14 payloads byte-identical; identity, stage tool, source closure, input-verification digest, file inventory, and data digest matched"
 next_exact_action: >-
-  Push the exact-clean C3 Git-object provenance checkpoint to draft PR #7,
-  wait for the validation workflow, and reconcile its downloaded preview
-  before resuming C4.1 release-provenance controls.
+  Implement C4.1 explicit preview/release modes, the planned v0.1.1 release
+  specification, annotated-tag verifier, promotion manifest metadata, and
+  fail-closed synthetic Git tests without changing the development identity.
 known_blockers:
   - "WP-011-B is stacked on verified draft PR #5 until WP-011-A is separately authorized to merge."
   - "No merge, annotated tag, GitHub Release, environment approval, or public deployment is authorized."
   - "The C3 source must remain visibly labeled as an untagged development edition until C4 prepares an authorized release artifact."
   - "Browser performance metrics and automated preview screenshots remain pending WP-012-A."
   - "The github-pages environment has no required reviewer and permits administrator bypass; immutable GitHub Releases are disabled. These external controls require separate authorization before any C4 promotion run."
-release_gate_status: "wp_011_b_c3_remote_verified_provenance_hardening_exact_clean_pending_push"
+release_gate_status: "wp_011_b_c4_1_release_provenance_implementing"
 release_details:
   version: "v0.1.1"
   title: "Publication-contract repair"
@@ -74,12 +79,13 @@ release_details:
       artifact_id: 9392055435
       artifact_tar_sha256: "f04f46196b74982f9d725f032278f9b7ed48ae1ffd82db0dcff3fc39f739f9c4"
     active_checkpoint:
-      id: "C3-hardening"
-      title: "Git-object-bound staged provenance"
-      status: "exact_clean_verified_pending_push"
+      id: "C4.1"
+      title: "Explicit release mode and annotated-tag provenance"
+      status: "implementing"
       next_exact_action: >-
-        Push the authorized branch update, reconcile the CI preview artifact,
-        and then begin C4.1 release-provenance controls.
+        Add the release specification and verifier, integrate explicit stage
+        modes, prove preview isolation and synthetic annotated-tag release
+        metadata, then run focused and full gates.
     scope:
       - "Publish stable and compatibility Opportunity endpoints."
       - "Move exported human URLs to the root application."
@@ -175,10 +181,11 @@ worktree difference. The C3 hardening follow-up validates the reachable object
 database, recomputes every staged input blob's Git object ID, rejects custom
 filters, and records the result in manifest schema/tool `1.3.0`. Its full local
 gate passes 75 focused tests, including wrong-object-ID, linked-worktree, and
-custom-filter fixtures. The code was committed as `f2dc1c6` and its exact clean
-tree passes the complete gate with 15/15 release inputs matched. This
-follow-up remains pending its authorized push and downloaded-preview
-reconciliation before C4 resumes.
+custom-filter fixtures. The code was committed as `f2dc1c6`; verification
+ledger `b3bc284` and its exact clean tree pass the complete gate with 15/15
+release inputs matched. Workflow `32392413143` is green, downloaded preview
+artifact `9415355845` passes all 1,465 contract references, and all 14 payloads
+are byte-identical to the local stage. C3 hardening is remotely complete.
 
 The expiring current-production Pages artifact was preserved read-only at
 `C:/Projects/Work/ai-research-tech-tree-recovery/production-2026-08-20-76483d2d`.

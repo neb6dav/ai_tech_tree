@@ -21,6 +21,7 @@ jobs:
     timeout-minutes: 20
     env:
       AI_TREE_REQUIRE_CLEAN: "true"
+      AI_TREE_STAGE_MODE: "preview"
 
     steps:
       - name: Check out repository

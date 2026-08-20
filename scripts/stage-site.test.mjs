@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { mkdtemp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
+import { chmod, copyFile, mkdtemp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
@@ -108,7 +108,7 @@ test('stages a deterministic tree and sorted release manifest', async () => {
     node: process.version,
     npm: '11.11.0',
     packageLockVersion: 3,
-    stageSite: '1.2.0'
+    stageSite: '1.3.0'
   });
   assert.deepEqual(manifest.sourceState, {
     kind: 'unavailable',
@@ -116,6 +116,9 @@ test('stages a deterministic tree and sorted release manifest', async () => {
     requiredClean: false,
     repositoryTopLevel: null,
     repositoryRootMatchesTopLevel: null,
+    gitObjectFormat: null,
+    objectDatabaseVerified: false,
+    repositoryAttributesIsolated: null,
     head: null,
     commitMatchesHead: null,
     changedEntryCount: null,
@@ -305,6 +308,9 @@ test('records dirty git provenance and enforces clean-source deployment mode', a
   assert.equal(dirty.manifest.sourceState.kind, 'git');
   assert.equal(dirty.manifest.sourceState.clean, false);
   assert.equal(dirty.manifest.sourceState.commitMatchesHead, true);
+  assert.match(dirty.manifest.sourceState.gitObjectFormat, /^sha(?:1|256)$/u);
+  assert.equal(dirty.manifest.sourceState.objectDatabaseVerified, true);
+  assert.equal(dirty.manifest.sourceState.repositoryAttributesIsolated, true);
   assert.equal(dirty.manifest.sourceState.changedEntryCount, 1);
   assert.match(dirty.manifest.sourceState.statusSha256, /^[0-9a-f]{64}$/u);
   assert.equal(dirty.manifest.sourceState.flaggedIndexEntryCount, 0);
@@ -403,6 +409,181 @@ test('input blob verification defeats Git environment and assume-unchanged bypas
       checkOnly: true
     }),
     /clean git source tree is required.*assume-unchanged or skip-worktree/u
+  );
+});
+
+test('strict provenance rejects Git objects whose bytes do not match their tree object IDs', async () => {
+  const root = await makeRoot();
+  await writeBaseFixture(root);
+  execFileSync('git', ['init', '--quiet'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['config', 'user.name', 'stage-site-test'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['config', 'user.email', 'stage-site-test@example.invalid'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['config', 'core.autocrlf', 'false'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['add', '--', '.'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['commit', '--quiet', '-m', 'fixture'], { cwd: root, windowsHide: true });
+  const head = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8', windowsHide: true }).trim();
+  const expectedBlob = execFileSync('git', ['rev-parse', 'HEAD:index.html'], {
+    cwd: root,
+    encoding: 'utf8',
+    windowsHide: true
+  }).trim();
+  const replacementHtml = '<!doctype html><title>Wrong object bytes</title>\n';
+  const replacementBlob = execFileSync('git', ['hash-object', '-w', '--stdin'], {
+    cwd: root,
+    encoding: 'utf8',
+    input: replacementHtml,
+    windowsHide: true
+  }).trim();
+  const gitDirectory = execFileSync('git', ['rev-parse', '--absolute-git-dir'], {
+    cwd: root,
+    encoding: 'utf8',
+    windowsHide: true
+  }).trim();
+  const expectedObjectPath = path.join(
+    gitDirectory,
+    'objects',
+    expectedBlob.slice(0, 2),
+    expectedBlob.slice(2)
+  );
+  await chmod(expectedObjectPath, 0o666);
+  await copyFile(
+    path.join(gitDirectory, 'objects', replacementBlob.slice(0, 2), replacementBlob.slice(2)),
+    expectedObjectPath
+  );
+  await write(root, 'index.html', replacementHtml);
+
+  const observed = await stageSite({
+    repositoryRoot: root,
+    environment: { ...environment, AI_TREE_COMMIT_SHA: head },
+    checkOnly: true
+  });
+  assert.equal(observed.manifest.sourceState.objectDatabaseVerified, false);
+  assert.equal(observed.manifest.sourceState.inputsMatchCommit, false);
+  assert.equal(observed.manifest.sourceState.matchedInputCount, observed.manifest.sourceState.inputCount - 1);
+
+  await assert.rejects(
+    stageSite({
+      repositoryRoot: root,
+      environment: { ...environment, AI_TREE_COMMIT_SHA: head, AI_TREE_REQUIRE_CLEAN: 'true' },
+      checkOnly: true
+    }),
+    /Git object database failed integrity validation/u
+  );
+});
+
+test('strict provenance rejects custom Git filters on release inputs', async () => {
+  const root = await makeRoot();
+  await writeBaseFixture(root);
+  await write(root, '.gitattributes', 'index.html filter=identity\n');
+  await write(root, 'identity-filter.cjs', "'use strict';\nprocess.stdin.pipe(process.stdout);\n");
+  execFileSync('git', ['init', '--quiet'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['config', 'user.name', 'stage-site-test'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['config', 'user.email', 'stage-site-test@example.invalid'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['config', 'core.autocrlf', 'false'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['config', 'filter.identity.clean', 'node identity-filter.cjs'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['add', '--', '.'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['commit', '--quiet', '-m', 'fixture'], { cwd: root, windowsHide: true });
+  let head = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8', windowsHide: true }).trim();
+
+  await assert.rejects(
+    stageSite({
+      repositoryRoot: root,
+      environment: { ...environment, AI_TREE_COMMIT_SHA: head, AI_TREE_REQUIRE_CLEAN: 'true' },
+      checkOnly: true
+    }),
+    /Git filter attribute identity is not supported by deterministic staging/u
+  );
+
+  for (const ambiguousFilterName of ['unspecified', 'unset']) {
+    await write(root, '.gitattributes', `index.html filter=${ambiguousFilterName}\n`);
+    execFileSync('git', ['config', `filter.${ambiguousFilterName}.clean`, 'node identity-filter.cjs'], {
+      cwd: root,
+      windowsHide: true
+    });
+    execFileSync('git', ['add', '--', '.gitattributes'], { cwd: root, windowsHide: true });
+    execFileSync('git', ['commit', '--quiet', '-m', `fixture-${ambiguousFilterName}`], {
+      cwd: root,
+      windowsHide: true
+    });
+    head = execFileSync('git', ['rev-parse', 'HEAD'], {
+      cwd: root,
+      encoding: 'utf8',
+      windowsHide: true
+    }).trim();
+    await assert.rejects(
+      stageSite({
+        repositoryRoot: root,
+        environment: { ...environment, AI_TREE_COMMIT_SHA: head, AI_TREE_REQUIRE_CLEAN: 'true' },
+        checkOnly: true
+      }),
+      new RegExp(`Git filter attribute ${ambiguousFilterName} is not supported`, 'u')
+    );
+  }
+
+  await write(root, '.git/info/attributes', 'index.html !filter\n');
+  const locallyOverridden = await stageSite({
+    repositoryRoot: root,
+    environment: { ...environment, AI_TREE_COMMIT_SHA: head },
+    checkOnly: true
+  });
+  assert.equal(locallyOverridden.manifest.sourceState.repositoryAttributesIsolated, false);
+  assert.equal(locallyOverridden.manifest.sourceState.inputsMatchCommit, false);
+  await assert.rejects(
+    stageSite({
+      repositoryRoot: root,
+      environment: { ...environment, AI_TREE_COMMIT_SHA: head, AI_TREE_REQUIRE_CLEAN: 'true' },
+      checkOnly: true
+    }),
+    /repository-local Git attribute overrides are not allowed/u
+  );
+});
+
+test('strict provenance rejects common attribute overrides in linked worktrees', async () => {
+  const parent = await makeRoot();
+  const primary = path.join(parent, 'primary');
+  const linked = path.join(parent, 'linked');
+  await mkdir(primary, { recursive: true });
+  await writeBaseFixture(primary);
+  execFileSync('git', ['init', '--quiet'], { cwd: primary, windowsHide: true });
+  execFileSync('git', ['config', 'user.name', 'stage-site-test'], { cwd: primary, windowsHide: true });
+  execFileSync('git', ['config', 'user.email', 'stage-site-test@example.invalid'], {
+    cwd: primary,
+    windowsHide: true
+  });
+  execFileSync('git', ['config', 'core.autocrlf', 'false'], { cwd: primary, windowsHide: true });
+  execFileSync('git', ['add', '--', '.'], { cwd: primary, windowsHide: true });
+  execFileSync('git', ['commit', '--quiet', '-m', 'fixture'], { cwd: primary, windowsHide: true });
+  execFileSync('git', ['worktree', 'add', '--quiet', '--detach', linked, 'HEAD'], {
+    cwd: primary,
+    windowsHide: true
+  });
+  const head = execFileSync('git', ['rev-parse', 'HEAD'], {
+    cwd: linked,
+    encoding: 'utf8',
+    windowsHide: true
+  }).trim();
+  const commonAttributesPath = execFileSync(
+    'git',
+    ['rev-parse', '--path-format=absolute', '--git-path', 'info/attributes'],
+    { cwd: linked, encoding: 'utf8', windowsHide: true }
+  ).trim();
+  await mkdir(path.dirname(commonAttributesPath), { recursive: true });
+  await writeFile(commonAttributesPath, 'index.html !filter\n');
+
+  const observed = await stageSite({
+    repositoryRoot: linked,
+    environment: { ...environment, AI_TREE_COMMIT_SHA: head },
+    checkOnly: true
+  });
+  assert.equal(observed.manifest.sourceState.repositoryAttributesIsolated, false);
+  assert.equal(observed.manifest.sourceState.inputsMatchCommit, false);
+  await assert.rejects(
+    stageSite({
+      repositoryRoot: linked,
+      environment: { ...environment, AI_TREE_COMMIT_SHA: head, AI_TREE_REQUIRE_CLEAN: 'true' },
+      checkOnly: true
+    }),
+    /repository-local Git attribute overrides are not allowed/u
   );
 });
 

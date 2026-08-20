@@ -16,7 +16,7 @@ last_verified_commands:
     status: "PASS"
     runtime: "Node v24.14.1 and npm 11.11.0"
     verified_by: "root"
-    scope: "Core gates, 72 focused unit tests, 14-file staging, release identity, artifact budgets, and 1,465-reference staged-site contract"
+    scope: "C3 provenance follow-up: core gates, 75 focused unit tests, 14-file staging, Git object-database and input-blob verification, release identity, artifact budgets, and 1,465-reference staged-site contract"
   - command: "Playwright Chromium responsive and no-JavaScript probes"
     status: "PASS"
     runtime: "Chromium through @playwright/cli"
@@ -26,27 +26,32 @@ last_verified_commands:
     status: "PASS after findings resolved"
     verified_by: "root plus two read-only reviewers"
     scope: "Manifest releaseState, pre-release issue wording, recovery ledger, mobile accessible name, pointer target, and no-JS overlap corrected and reprobed"
-  - command: "Reconcile downloaded C2 CI preview"
+  - command: "Reconcile downloaded C3 CI preview"
     status: "PASS"
     runtime: "Node v24.14.1"
     verified_by: "root"
-    scope: "Workflow 32385263895 green; CI preview contract checked 1462 references; 13/13 payload files byte-identical to the local C2 stage"
+    scope: "Workflow 32389661038 green; CI preview contract checked 1,465 references; 14/14 payload files byte-identical to the local C3 stage; manifest identity and provenance fields reconciled"
+  - command: "Preserve and verify current-production Pages recovery artifact"
+    status: "PASS"
+    verified_by: "root"
+    scope: "Artifact 9392055435 from run 32328029844 and main commit 76483d2d preserved before expiry; artifact.tar plus seven extracted payloads pass 8/8 recorded SHA-256 checks"
 next_exact_action: >-
-  Commit the locally verified C3 identity checkpoint, prove the exact clean
-  committed tree, push it to draft PR #7, and reconcile the downloaded CI
-  preview before beginning C4 release-promotion controls.
+  Commit the locally verified C3 Git-object provenance hardening, prove the
+  exact clean committed tree, push it to draft PR #7, and reconcile the
+  downloaded CI preview before resuming C4 release-promotion controls.
 known_blockers:
   - "WP-011-B is stacked on verified draft PR #5 until WP-011-A is separately authorized to merge."
   - "No merge, annotated tag, GitHub Release, environment approval, or public deployment is authorized."
   - "The C3 source must remain visibly labeled as an untagged development edition until C4 prepares an authorized release artifact."
   - "Browser performance metrics and automated preview screenshots remain pending WP-012-A."
-release_gate_status: "wp_011_b_c3_locally_verified_checkpoint_pending"
+  - "The github-pages environment has no required reviewer and permits administrator bypass; immutable GitHub Releases are disabled. These external controls require separate authorization before any C4 promotion run."
+release_gate_status: "wp_011_b_c3_remote_verified_provenance_hardening_locally_verified"
 release_details:
   version: "v0.1.1"
   title: "Publication-contract repair"
   work_package:
     id: "WP-011-B"
-    status: "checkpointing"
+    status: "implementing"
     base_sha: "85108c78fa86c86634d4c0944839696369e687cd"
     branch: "codex/v0.1.1-publication-release"
     issue:
@@ -57,13 +62,20 @@ release_details:
       status: "draft"
       number: 7
       url: "https://github.com/neb6dav/ai_tech_tree/pull/7"
+    recovery_reference:
+      status: "local_verified"
+      path: "C:/Projects/Work/ai-research-tech-tree-recovery/production-2026-08-20-76483d2d"
+      production_commit: "76483d2d59f52f30202b52fe52a26a7c832a1252"
+      artifact_id: 9392055435
+      artifact_tar_sha256: "f04f46196b74982f9d725f032278f9b7ed48ae1ffd82db0dcff3fc39f739f9c4"
     active_checkpoint:
-      id: "C3"
-      title: "Synchronized development-edition identity and contribution access"
+      id: "C3-hardening"
+      title: "Git-object-bound staged provenance"
       status: "locally_verified"
       next_exact_action: >-
-        Commit C3, run exact clean committed-tree verification, push the
-        authorized branch update, and reconcile the CI preview artifact.
+        Commit the provenance hardening, run exact clean committed-tree
+        verification, push the authorized branch update, reconcile the CI
+        preview artifact, and then begin C4.1 release-provenance controls.
     scope:
       - "Publish stable and compatibility Opportunity endpoints."
       - "Move exported human URLs to the root application."
@@ -143,14 +155,30 @@ C3 synchronizes package `0.1.1`, dataset edition
 machine exports, citation metadata, staged release manifest, documentation,
 and contribution forms without claiming a tag or release. Persistent
 Repository, Contribute, citation, and exact-manifest links now appear in the
-toolbar, Guide, and no-JavaScript surface. The staged manifest schema/tool
-`1.2.0` records the validated publication state as well as version, edition,
-commit, and tag. The final local gate passes 72 focused tests, a 14-file stage,
-artifact budgets, and 1,465 contract references. Real Chromium verifies the
-responsive toolbar, modal focus/inert behavior, 32-pixel repository target,
-and nonoverlapping no-JavaScript cards. Two hostile reviews' P1/P2 findings
-were corrected and reprobed. C3 is locally complete pending its authorized
-commit, exact clean committed-tree proof, push, and preview reconciliation.
+toolbar, Guide, and no-JavaScript surface. The staged manifest records the
+validated publication state as well as version, edition, commit, and tag. The
+final C3 gate passed 72 focused tests, a 14-file stage, artifact budgets, and
+1,465 contract references. Real Chromium verified the responsive toolbar,
+modal focus/inert behavior, 32-pixel repository target, and nonoverlapping
+no-JavaScript cards. Two hostile reviews' P1/P2 findings were corrected and
+reprobed. C3 was committed as `53e3a4f`, pushed, and reconciled against green
+workflow `32389661038`; all 14 payloads were byte-identical to the local stage
+and only the expected pull-request merge commit differed in the manifest.
+
+A late hostile provenance probe showed that Git can read valid compressed
+blob bytes stored under the wrong object ID while a clean filter conceals the
+worktree difference. The C3 hardening follow-up validates the reachable object
+database, recomputes every staged input blob's Git object ID, rejects custom
+filters, and records the result in manifest schema/tool `1.3.0`. Its full local
+gate passes 75 focused tests, including wrong-object-ID, linked-worktree, and custom-filter
+fixtures. This follow-up remains pending its checkpoint commit, exact clean
+proof, push, and downloaded-preview reconciliation before C4 resumes.
+
+The expiring current-production Pages artifact was preserved read-only at
+`C:/Projects/Work/ai-research-tech-tree-recovery/production-2026-08-20-76483d2d`.
+Its tar and seven extracted payloads pass all eight recorded SHA-256 checks.
+This local pre-repair snapshot provides a recovery reference but does not
+authorize or automate rollback.
 
 ## Release boundary
 

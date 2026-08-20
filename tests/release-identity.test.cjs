@@ -131,8 +131,28 @@ function assertIdentity(snapshot) {
   assert.equal(snapshot.manifest.version, EXPECTED.version, 'staged manifest version');
   assert.equal(snapshot.manifest.edition, EXPECTED.edition, 'staged manifest edition');
   assert.equal(snapshot.manifest.releaseState, EXPECTED.releaseState, 'staged manifest release state');
-  assert.equal(snapshot.manifest.schemaVersion, '1.2.0', 'staged manifest identity schema');
+  assert.equal(snapshot.manifest.schemaVersion, '1.3.0', 'staged manifest identity schema');
   assert.match(snapshot.manifest.commit, /^[0-9a-f]{40}$/u, 'staged manifest full commit');
+  const sourceState = snapshot.manifest.sourceState;
+  assert.equal(sourceState.kind, 'git', 'staged manifest Git provenance kind');
+  assert.equal(sourceState.repositoryTopLevel, '.', 'staged manifest checkout-relative repository root');
+  assert.equal(sourceState.repositoryRootMatchesTopLevel, true, 'staged manifest repository-root closure');
+  assert.match(sourceState.gitObjectFormat, /^sha(?:1|256)$/u, 'staged manifest Git object format');
+  assert.equal(sourceState.objectDatabaseVerified, true, 'staged manifest Git object integrity');
+  assert.equal(sourceState.repositoryAttributesIsolated, true, 'staged manifest Git attribute isolation');
+  assert.equal(sourceState.head, snapshot.manifest.commit, 'staged manifest HEAD and advertised commit');
+  assert.equal(sourceState.commitMatchesHead, true, 'staged manifest commit-to-HEAD closure');
+  assert.equal(typeof sourceState.clean, 'boolean', 'staged manifest source cleanliness is measured');
+  assert.equal(typeof sourceState.requiredClean, 'boolean', 'staged manifest clean requirement is explicit');
+  if (sourceState.requiredClean) assert.equal(sourceState.clean, true, 'required-clean stage is clean');
+  assert.equal(sourceState.matchedInputCount, sourceState.inputCount, 'all staged inputs match the commit');
+  assert.equal(
+    sourceState.matchedDirectorySourceCount,
+    sourceState.directorySourceCount,
+    'all staged directory sources match the commit'
+  );
+  assert.equal(sourceState.inputsMatchCommit, true, 'staged manifest input-to-commit closure');
+  assert.match(sourceState.inputVerificationSha256, /^[0-9a-f]{64}$/u, 'staged input verification digest');
   assert.equal(snapshot.manifest.tag, null, 'development manifest tag');
   assert.equal(snapshot.manifest.fileCount, 14, 'development manifest payload count');
   const citationFile = snapshot.manifest.files.find((file) => file.path === 'CITATION.cff');
@@ -154,6 +174,9 @@ test('identity contract fails closed on representative release-drift mutations',
     ['misdirected badge', (copy) => { copy.canonicalHtml = copy.canonicalHtml.replace('id="editionBadge" href="./release-manifest.json"', 'id="editionBadge" href="./"'); }],
     ['premature tag', (copy) => { copy.manifest.tag = 'v0.1.1'; }],
     ['stale manifest release state', (copy) => { copy.manifest.releaseState = 'Public beta'; }],
+    ['unverified Git objects', (copy) => { copy.manifest.sourceState.objectDatabaseVerified = false; }],
+    ['unisolated Git attributes', (copy) => { copy.manifest.sourceState.repositoryAttributesIsolated = false; }],
+    ['unmatched release inputs', (copy) => { copy.manifest.sourceState.inputsMatchCommit = false; }],
     ['missing citation payload', (copy) => { copy.manifest.files = copy.manifest.files.filter((file) => file.path !== 'CITATION.cff'); }]
   ];
   const original = loadSnapshot();

@@ -2,6 +2,7 @@
 
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
+import { lstatSync } from 'node:fs';
 import {
   lstat,
   mkdir,
@@ -17,8 +18,8 @@ import path from 'node:path';
 import process from 'node:process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
-const SCRIPT_VERSION = '1.2.0';
-const RELEASE_MANIFEST_SCHEMA_VERSION = '1.2.0';
+const SCRIPT_VERSION = '1.3.0';
+const RELEASE_MANIFEST_SCHEMA_VERSION = '1.3.0';
 const CONFIG_SCHEMA_VERSION = '1.0.0';
 const DEFAULT_CONFIG_PATH = 'config/pages-stage.v1.json';
 const REQUIRED_OUTPUT_DIRECTORY = '_site';
@@ -412,11 +413,26 @@ function gitBuffer(repositoryRoot, args) {
   }
 }
 
+function gitSucceeds(repositoryRoot, args) {
+  try {
+    execFileSync('git', args, {
+      cwd: repositoryRoot,
+      env: gitEnvironment(),
+      stdio: ['ignore', 'ignore', 'ignore'],
+      windowsHide: true
+    });
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 function gitEnvironment() {
   const environment = Object.fromEntries(
     Object.entries(process.env).filter(([name]) => !name.toUpperCase().startsWith('GIT_'))
   );
   environment.GIT_NO_REPLACE_OBJECTS = '1';
+  environment.GIT_ATTR_NOSYSTEM = '1';
   return environment;
 }
 
@@ -475,27 +491,94 @@ function parseGitTreeEntries(bytes) {
   }).filter(Boolean);
 }
 
-function verifyInputsAtCommit(repositoryRoot, commit, inputSnapshots, directoryRequirements) {
+function gitObjectId(type, bytes, objectFormat) {
+  if (objectFormat !== 'sha1' && objectFormat !== 'sha256') return null;
+  const body = Buffer.from(bytes);
+  const header = Buffer.from(`${type} ${body.byteLength}\0`, 'utf8');
+  return createHash(objectFormat).update(header).update(body).digest('hex');
+}
+
+function parseGitAttributeRows(bytes) {
+  if (bytes == null) return null;
+  const fields = bytes.toString('utf8').split('\0');
+  if (fields.at(-1) === '') fields.pop();
+  if (fields.length % 3 !== 0) return null;
+  const rows = [];
+  for (let index = 0; index < fields.length; index += 3) {
+    const [pathName, attribute, value] = fields.slice(index, index + 3);
+    if (!pathName || !attribute) return null;
+    rows.push({ path: pathName, attribute, value });
+  }
+  return rows;
+}
+
+function repositoryAttributesAreIsolated(repositoryRoot) {
+  const attributesPath = gitOutput(repositoryRoot, [
+    'rev-parse',
+    '--path-format=absolute',
+    '--git-path',
+    'info/attributes'
+  ]);
+  if (!attributesPath) return null;
+  try {
+    const attributes = lstatSync(attributesPath);
+    return attributes.isFile() && attributes.size === 0;
+  } catch (error) {
+    return error?.code === 'ENOENT' ? true : false;
+  }
+}
+
+function verifyInputsAtCommit(
+  repositoryRoot,
+  commit,
+  inputSnapshots,
+  directoryRequirements,
+  objectFormat,
+  repositoryAttributesIsolated
+) {
   const fileResults = inputSnapshots.map(snapshot => {
-    const treeEntry = gitOutput(repositoryRoot, ['ls-tree', commit, '--', snapshot.path]);
-    const treeMode = treeEntry?.match(/^([0-7]{6})\s/u)?.[1] || null;
-    const committedBytes = gitBuffer(repositoryRoot, ['cat-file', 'blob', `${commit}:${snapshot.path}`]);
+    const treeEntries = parseGitTreeEntries(
+      gitBuffer(repositoryRoot, ['ls-tree', '-z', commit, '--', snapshot.path])
+    ) || [];
+    const treeEntry = treeEntries.find(entry => entry.path === snapshot.path) || null;
+    const treeMode = treeEntry?.mode || null;
+    const expectedObjectId = treeEntry?.object?.toLowerCase() || null;
+    const committedBytes = expectedObjectId == null
+      ? null
+      : gitBuffer(repositoryRoot, ['cat-file', 'blob', expectedObjectId]);
     const committedSha256 = committedBytes == null ? null : sha256(committedBytes);
-    const filterAttribute = gitOutput(repositoryRoot, [
+    const computedObjectId = committedBytes == null ? null : gitObjectId('blob', committedBytes, objectFormat);
+    const objectIdMatches = expectedObjectId != null && computedObjectId === expectedObjectId;
+    const attributeRows = parseGitAttributeRows(gitBuffer(repositoryRoot, [
+      '-c',
+      'core.attributesFile=',
       'check-attr',
+      '-z',
+      '--all',
       `--source=${commit}`,
-      'filter',
       '--',
       snapshot.path
-    ]);
-    const usesGitLfs = /:\s*filter:\s*lfs\s*$/iu.test(filterAttribute || '') ||
+    ]));
+    const attributesVerified = repositoryAttributesIsolated === true && attributeRows != null;
+    const filterAttribute = attributeRows?.find(row => (
+      row.path === snapshot.path && row.attribute === 'filter'
+    )) || null;
+    const filterName = filterAttribute?.value ?? null;
+    const usesGitLfs = /^lfs$/iu.test(filterName || '') ||
       (committedBytes != null && isGitLfsPointer(committedBytes));
+    const usesUnsupportedFilter = filterName != null && !usesGitLfs;
     const publishableMode = treeMode === '100644' || treeMode === '100755';
     const contentMatches = committedSha256 === snapshot.sha256;
     const reason = !publishableMode
       ? `Git mode ${treeMode || 'missing'} is not a regular file`
+      : !objectIdMatches
+        ? `Git blob object ID mismatch: expected ${expectedObjectId || 'missing'}, computed ${computedObjectId || 'unavailable'}`
+      : !attributesVerified
+        ? 'Git attributes could not be verified from the advertised commit'
       : usesGitLfs
         ? 'Git LFS inputs are not supported by deterministic staging'
+        : usesUnsupportedFilter
+          ? `Git filter attribute ${filterName || '(empty)'} is not supported by deterministic staging`
         : !contentMatches
           ? 'working bytes differ from the committed blob'
           : null;
@@ -504,10 +587,17 @@ function verifyInputsAtCommit(repositoryRoot, commit, inputSnapshots, directoryR
       currentSha256: snapshot.sha256,
       committedSha256,
       treeMode,
+      expectedObjectId,
+      computedObjectId,
+      objectIdMatches,
+      attributesVerified,
+      filterName,
       usesGitLfs,
+      usesUnsupportedFilter,
       contentMatches,
       reason,
-      matches: contentMatches && publishableMode && !usesGitLfs
+      matches: contentMatches && publishableMode && objectIdMatches && attributesVerified &&
+        !usesGitLfs && !usesUnsupportedFilter
     };
   });
 
@@ -540,7 +630,10 @@ function verifyInputsAtCommit(repositoryRoot, commit, inputSnapshots, directoryR
   const verificationRows = [
     ...fileResults.map(result => (
       `file\t${result.path}\t${result.currentSha256}\t${result.committedSha256 || 'missing'}\t` +
-      `${result.treeMode || 'missing'}\t${result.usesGitLfs ? 'lfs' : 'plain'}\t${result.matches ? 'match' : 'mismatch'}`
+      `${result.treeMode || 'missing'}\t${objectFormat || 'unknown'}\t${result.expectedObjectId || 'missing'}\t` +
+      `${result.computedObjectId || 'unavailable'}\t${result.attributesVerified ? 'attributes-verified' : 'attributes-unavailable'}\t` +
+      `${result.filterName == null ? 'plain' : `filter:${result.filterName}`}\t` +
+      `${result.matches ? 'match' : 'mismatch'}`
     )),
     ...directoryResults.map(result => (
       `directory\t${result.path}\t${result.rootMode || 'missing'}\t${result.fileCount}\t` +
@@ -582,12 +675,24 @@ function resolveSourceState(repositoryRoot, environment, commit, rawInputSnapsho
   const inputSnapshots = normalizeInputSnapshots(rawInputSnapshots);
   const topLevel = gitOutput(repositoryRoot, ['rev-parse', '--show-toplevel']);
   const head = gitOutput(repositoryRoot, ['rev-parse', 'HEAD']);
+  const objectFormatValue = gitOutput(repositoryRoot, ['rev-parse', '--show-object-format']);
+  const gitObjectFormat = /^(?:sha1|sha256)$/u.test(objectFormatValue || '') ? objectFormatValue : null;
+  const objectDatabaseVerified = gitObjectFormat != null && gitSucceeds(repositoryRoot, [
+    'fsck',
+    '--strict',
+    '--no-dangling',
+    '--no-reflogs',
+    commit
+  ]);
+  const attributesIsolatedBeforeVerification = repositoryAttributesAreIsolated(repositoryRoot);
   const indexFlags = resolveIndexFlags(repositoryRoot);
   const status = gitOutput(repositoryRoot, [
     '-c',
     'core.fsmonitor=false',
     '-c',
     'core.ignoreStat=false',
+    '-c',
+    'core.attributesFile=',
     'status',
     '--porcelain=v1',
     '--untracked-files=all',
@@ -595,6 +700,16 @@ function resolveSourceState(repositoryRoot, environment, commit, rawInputSnapsho
     '--',
     '.'
   ]);
+
+  if (requireClean && gitObjectFormat == null) {
+    throw stageError('Git object format is unavailable or unsupported; expected sha1 or sha256');
+  }
+  if (requireClean && !objectDatabaseVerified) {
+    throw stageError(`Git object database failed integrity validation for advertised commit ${commit}`);
+  }
+  if (requireClean && attributesIsolatedBeforeVerification !== true) {
+    throw stageError('repository-local Git attribute overrides are not allowed during clean staging');
+  }
 
   if (topLevel == null || head == null || indexFlags == null || status == null) {
     if (requireClean) {
@@ -606,6 +721,9 @@ function resolveSourceState(repositoryRoot, environment, commit, rawInputSnapsho
       requiredClean: false,
       repositoryTopLevel: null,
       repositoryRootMatchesTopLevel: null,
+      gitObjectFormat,
+      objectDatabaseVerified,
+      repositoryAttributesIsolated: attributesIsolatedBeforeVerification,
       head: null,
       commitMatchesHead: null,
       changedEntryCount: null,
@@ -632,6 +750,12 @@ function resolveSourceState(repositoryRoot, environment, commit, rawInputSnapsho
   }
 
   const normalizedHead = head.toLowerCase();
+  const expectedObjectIdLength = gitObjectFormat === 'sha256' ? 64 : 40;
+  if (normalizedHead.length !== expectedObjectIdLength || commit.length !== expectedObjectIdLength) {
+    throw stageError(
+      `Git ${gitObjectFormat} object IDs must contain ${expectedObjectIdLength} hexadecimal characters`
+    );
+  }
   const entries = status === '' ? [] : status.split(/\r?\n/u);
   const clean = entries.length === 0 && indexFlags.flaggedEntryCount === 0;
   const commitMatchesHead = normalizedHead === commit;
@@ -646,7 +770,20 @@ function resolveSourceState(repositoryRoot, environment, commit, rawInputSnapsho
   if (requireClean && !commitMatchesHead) {
     throw stageError(`advertised commit ${commit} does not match checked-out HEAD ${normalizedHead}`);
   }
-  const inputVerification = verifyInputsAtCommit(repositoryRoot, commit, inputSnapshots, directoryRequirements);
+  const inputVerification = verifyInputsAtCommit(
+    repositoryRoot,
+    commit,
+    inputSnapshots,
+    directoryRequirements,
+    gitObjectFormat,
+    attributesIsolatedBeforeVerification
+  );
+  const attributesIsolatedAfterVerification = repositoryAttributesAreIsolated(repositoryRoot);
+  const repositoryAttributesIsolated = attributesIsolatedBeforeVerification === true &&
+    attributesIsolatedAfterVerification === true;
+  if (requireClean && !repositoryAttributesIsolated) {
+    throw stageError('repository-local Git attribute overrides changed during clean staging');
+  }
   if (requireClean && !inputVerification.inputsMatchCommit) {
     const examples = inputVerification.mismatches
       .slice(0, 5)
@@ -668,6 +805,9 @@ function resolveSourceState(repositoryRoot, environment, commit, rawInputSnapsho
     requiredClean: requireClean,
     repositoryTopLevel: '.',
     repositoryRootMatchesTopLevel: rootMatchesTopLevel,
+    gitObjectFormat,
+    objectDatabaseVerified,
+    repositoryAttributesIsolated,
     head: normalizedHead,
     commitMatchesHead,
     changedEntryCount: entries.length,
@@ -678,7 +818,8 @@ function resolveSourceState(repositoryRoot, environment, commit, rawInputSnapsho
     matchedInputCount: inputVerification.matchedInputCount,
     directorySourceCount: inputVerification.directorySourceCount,
     matchedDirectorySourceCount: inputVerification.matchedDirectorySourceCount,
-    inputsMatchCommit: inputVerification.inputsMatchCommit,
+    inputsMatchCommit: inputVerification.inputsMatchCommit && objectDatabaseVerified &&
+      repositoryAttributesIsolated,
     inputVerificationSha256: inputVerification.inputVerificationSha256
   };
 }

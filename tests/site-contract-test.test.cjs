@@ -378,6 +378,67 @@ test('fails closed when multiple staged JSON documents claim to be the atlas ID 
   assert(report.failures.some(item => item.code === 'APPLICATION_STATE_INDEX_AMBIGUOUS'));
 });
 
+test('treats the approved byte-equivalent Opportunity paths as one logical source', async t => {
+  const opportunity = {
+    metadata: { id: 'map-one', anchorAtlasNodeId: 'one' },
+    nodes: [{ id: 'opportunity-one' }]
+  };
+  const fixture = await makeFixture({
+    'index.html': `<!doctype html>
+      <a href="./ai-research-tech-tree.html#node=one">atlas</a>
+      <a href="./ai-research-tech-tree.html#opportunity=map-one&opp=opportunity-one">opportunity</a>`,
+    'data/opportunities/diffusion-models.alpha.json': JSON.stringify(opportunity),
+    'src/data/opportunities/diffusion-models.alpha.json': JSON.stringify(opportunity)
+  });
+  t.after(() => removeFixture(fixture));
+
+  const report = await audit(fixture);
+  assert.equal(
+    report.ok,
+    true,
+    report.failures.map(item => `${item.source} ${item.code}: ${item.detail}`).join('\n')
+  );
+  assert(report.results.some(item => (
+    item.ref.endsWith('#opportunity=map-one&opp=opportunity-one') &&
+    item.fragmentStatus === 'application-state-verified'
+  )));
+});
+
+test('does not collapse arbitrary byte-equivalent atlas documents', async t => {
+  const atlas = {
+    dataset: { humanUrl: './ai-research-tech-tree.html' },
+    nodes: [{ id: 'one', humanUrl: './ai-research-tech-tree.html#node=one' }]
+  };
+  const fixture = await makeFixture({
+    'atlas.json': JSON.stringify(atlas),
+    'atlas-copy.json': JSON.stringify(atlas)
+  });
+  t.after(() => removeFixture(fixture));
+
+  const report = await audit(fixture);
+  assert(report.failures.some(item => item.code === 'APPLICATION_STATE_INDEX_AMBIGUOUS'));
+});
+
+test('fails closed when approved Opportunity compatibility paths diverge', async t => {
+  const canonical = {
+    metadata: { id: 'map-one', anchorAtlasNodeId: 'one' },
+    nodes: [{ id: 'opportunity-one' }]
+  };
+  const compatibility = {
+    ...canonical,
+    metadata: { ...canonical.metadata, summary: 'divergent compatibility payload' }
+  };
+  const fixture = await makeFixture({
+    'index.html': '<!doctype html><p>No application-state reference is required to detect divergence.</p>',
+    'data/opportunities/diffusion-models.alpha.json': JSON.stringify(canonical),
+    'src/data/opportunities/diffusion-models.alpha.json': JSON.stringify(compatibility)
+  });
+  t.after(() => removeFixture(fixture));
+
+  const report = await audit(fixture);
+  assert(report.failures.some(item => item.code === 'APPLICATION_STATE_COMPATIBILITY_MISMATCH'));
+});
+
 test('scans quoted greater-than attributes and resource-bearing HTML surfaces', async t => {
   const fixture = await makeFixture({
     'index.html': `<!doctype html>

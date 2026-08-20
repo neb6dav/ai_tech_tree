@@ -23,7 +23,7 @@ const html = read('ai-research-tech-tree.html');
 const bundle = read(BUNDLE_FILE).trimEnd();
 
 assert.equal(schema.$schema, 'https://json-schema.org/draft/2020-12/schema');
-assert.equal(schema.$id, 'https://neb6dav.github.io/ai_tech_tree/src/data/opportunities/opportunity-map.schema.json');
+assert.equal(schema.$id, 'https://neb6dav.github.io/ai_tech_tree/data/opportunities/opportunity-map.schema.json');
 assert.equal(data.$schema, './opportunity-map.schema.json');
 assert.equal(data.metadata.id, 'diffusion-models-opportunity-map');
 assert.equal(data.metadata.anchorAtlasNodeId, 'diffusion');

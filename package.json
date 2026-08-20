@@ -22,7 +22,8 @@
     "test:site-contract": "node scripts/site-contract-test.cjs",
     "test:performance-budget:unit": "node --test tests/performance-budget-test.test.cjs",
     "test:performance-budget": "node scripts/performance-budget-test.cjs",
-    "test:publication": "npm run test:stage-site && npm run test:site-contract:unit && npm run test:performance-budget:unit && npm run stage:site && npm run test:performance-budget && npm run test:site-contract",
+    "test:publication-compatibility": "node --test tests/publication-compatibility.test.cjs",
+    "test:publication": "npm run test:stage-site && npm run test:site-contract:unit && npm run test:performance-budget:unit && npm run test:publication-compatibility && npm run stage:site && npm run test:performance-budget && npm run test:site-contract",
     "test": "npm run test:core && npm run test:publication"
   },
   "dependencies": {

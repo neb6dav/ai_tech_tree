@@ -41,11 +41,13 @@ The public beta keeps a single-file application as its canonical application sou
 
 ### Maintained source
 
-- `ai-research-tech-tree.html` — canonical application and embedded atlas data for this beta
+- `ai-research-tech-tree.html` — legacy canonical application source and embedded atlas data for this beta; the staged public path of the same name is a lightweight compatibility redirect
+- `src/compatibility/ai-research-tech-tree.html` — state-preserving public compatibility redirect to the root application
 - `src/network-view.js` — 2-D WebGL network-view source
 - `src/opportunity-view.js` and `src/opportunity-layout.cjs` — accessible Opportunity View renderer and deterministic layout logic
-- `src/data/opportunities/diffusion-models.alpha.json` — maintained diffusion-models Opportunity map
-- `src/data/opportunities/opportunity-map.schema.json` and `validate-opportunity-data.js` — schema and evidence-aware validation rules
+- `src/data/opportunities/diffusion-models.alpha.json` — maintained diffusion-models Opportunity map, published canonically at `data/opportunities/diffusion-models.alpha.json`
+- `src/data/opportunities/opportunity-map.schema.json` and `validate-opportunity-data.js` — canonical schema and evidence-aware validation rules, published at `data/opportunities/opportunity-map.schema.json`
+- `src/compatibility/opportunity-map.schema.json` — delegating schema retained at the former public `src/data/...` URL
 - `generate-knowledge-graph.js` — machine-readable graph exporter
 - build, layout, and injection scripts — deterministic generation of the network layout and deployable page
 - `release-gate.js`, `ui-layout-gate.js`, `accessibility-gate.js`, `network-gate.js`, and `opportunity-gate.js` — validation gates
@@ -84,7 +86,9 @@ The release manifest records the exact observed Node and npm versions and every 
 
 The static contract uses a pinned browser-compatible HTML attribute decoder, rejects nested `iframe[srcdoc]` browsing contexts, validates live-document fragments without treating inert `<template>` contents as targets, and checks JSON Schema reference closure and application-state ID uniqueness. Explicit runtime-fragment declarations are labeled `runtime-declared-pending-browser`, not statically verified; their browser proof belongs to `WP-012-A`. Nested JSON Schema `$id` scopes are intentionally prohibited until the validator implements their full base-URI semantics.
 
-The same sequence runs in GitHub Actions. Pull requests receive a downloadable staged-site preview artifact. A pull request is not ready to merge if a build changes generated files or leaves untracked source files. Production publication is under an explicit hold during WP-011-A: the Pages workflow is reusable-only until WP-011-B installs approved annotated-tag promotion and post-deployment verification.
+The stable Opportunity endpoints are `./data/opportunities/diffusion-models.alpha.json` and `./data/opportunities/opportunity-map.schema.json`. The former `./src/data/opportunities/...` endpoints remain available for compatibility: the data is an exact second publication of the maintained JSON, while the old schema URL is a small schema with its own truthful `$id` that delegates to the stable canonical schema. The public `./ai-research-tech-tree.html` alias likewise redirects to `./` and preserves query and hash state when JavaScript is available; its no-JavaScript fallback redirects to the root application.
+
+The same sequence runs in GitHub Actions. Pull requests receive a downloadable staged-site preview artifact. A pull request is not ready to merge if a build changes generated files or leaves untracked source files. Production publication remains under an explicit hold until WP-011-B/C4 implements approved annotated-tag promotion and post-deployment verification, and a release is separately authorized.
 
 ## Contributing
 

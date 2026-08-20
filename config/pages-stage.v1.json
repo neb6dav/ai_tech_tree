@@ -16,7 +16,7 @@
     },
     {
       "kind": "file",
-      "source": "ai-research-tech-tree.html",
+      "source": "src/compatibility/ai-research-tech-tree.html",
       "target": "ai-research-tech-tree.html",
       "mediaType": "text/html; charset=utf-8"
     },
@@ -59,12 +59,24 @@
     {
       "kind": "file",
       "source": "src/data/opportunities/diffusion-models.alpha.json",
-      "target": "src/data/opportunities/diffusion-models.alpha.json",
+      "target": "data/opportunities/diffusion-models.alpha.json",
       "mediaType": "application/json; charset=utf-8"
     },
     {
       "kind": "file",
       "source": "src/data/opportunities/opportunity-map.schema.json",
+      "target": "data/opportunities/opportunity-map.schema.json",
+      "mediaType": "application/json; charset=utf-8"
+    },
+    {
+      "kind": "file",
+      "source": "src/data/opportunities/diffusion-models.alpha.json",
+      "target": "src/data/opportunities/diffusion-models.alpha.json",
+      "mediaType": "application/json; charset=utf-8"
+    },
+    {
+      "kind": "file",
+      "source": "src/compatibility/opportunity-map.schema.json",
       "target": "src/data/opportunities/opportunity-map.schema.json",
       "mediaType": "application/json; charset=utf-8"
     }

@@ -474,8 +474,17 @@ function assertHtmlIntegration(html, jsonldBytes, data, layoutBytes, bundleBytes
     assert(linkTags.some(tag => /\brel=["']alternate["']/i.test(tag) && tag.includes(`type="${type}"`) && tag.includes(`href="${href}"`)), `Missing alternate ${href}`);
   }
   const linkTags = [...html.matchAll(/<link\b[^>]*>/gi)].map(match => match[0]);
-  const opportunityHref = './src/data/opportunities/diffusion-models.alpha.json';
-  assert(linkTags.some(tag => /\brel=["']alternate["']/i.test(tag) && tag.includes('type="application/json"') && tag.includes(`href="${opportunityHref}"`)), `Missing alternate ${opportunityHref}`);
+  const opportunityHref = './data/opportunities/diffusion-models.alpha.json';
+  const opportunityAlternates = linkTags.filter(tag => (
+    /\brel=["']alternate["']/i.test(tag) &&
+    tag.includes('type="application/json"') &&
+    tag.includes(`href="${opportunityHref}"`)
+  ));
+  assert.equal(opportunityAlternates.length, 1, `Expected exactly one alternate ${opportunityHref}`);
+  assert(
+    !linkTags.some(tag => tag.includes('href="./src/data/opportunities/diffusion-models.alpha.json"')),
+    'Legacy Opportunity data URL must not be advertised as a discovery alternate.'
+  );
   const noScript = html.match(/<noscript>([\s\S]*?)<\/noscript>/i)?.[1];
   assert(noScript, 'Missing no-JavaScript fallback');
   const staticBody = noScript.match(/<tbody>([\s\S]*?)<\/tbody>/i)?.[1];

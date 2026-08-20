@@ -11,6 +11,12 @@ const { decodeHTMLAttribute, decodeXML } = require('entities');
 const DEFAULT_SITE_DIR = '_site';
 const DEFAULT_BASE_PATH = '/ai_tech_tree/';
 const DEFAULT_PUBLIC_ORIGIN = 'https://neb6dav.github.io';
+const APPLICATION_STATE_COMPATIBILITY_PAIRS = Object.freeze([
+  Object.freeze([
+    'data/opportunities/diffusion-models.alpha.json',
+    'src/data/opportunities/diffusion-models.alpha.json'
+  ])
+]);
 
 const MIME_TYPES = Object.freeze({
   '.csv': 'text/csv; charset=utf-8',
@@ -1287,10 +1293,20 @@ function classifyReference(reference, options) {
   return { internal: true, resolved };
 }
 
-async function readJsonDocument(absolute, relative, references, issues, jsonLd, jsonDocuments) {
+async function readJsonDocument(
+  absolute,
+  relative,
+  references,
+  issues,
+  jsonLd,
+  jsonDocuments,
+  jsonDocumentDigests
+) {
   let value;
+  let bytes;
   try {
-    value = JSON.parse(await fsp.readFile(absolute, 'utf8'));
+    bytes = await fsp.readFile(absolute);
+    value = JSON.parse(bytes.toString('utf8'));
   } catch (error) {
     issues.push({
       source: relative,
@@ -1303,6 +1319,7 @@ async function readJsonDocument(absolute, relative, references, issues, jsonLd, 
     return;
   }
   jsonDocuments.set(relative, value);
+  jsonDocumentDigests.set(relative, crypto.createHash('sha256').update(bytes).digest('hex'));
   collectJsonReferences(value, relative, references, issues, { jsonLd });
 }
 
@@ -1406,7 +1423,7 @@ function isApplicationStateFragment(fragment) {
   return keys.length > 0 && keys.every(key => APPLICATION_STATE_KEYS.has(key));
 }
 
-function buildApplicationStateIndex(jsonDocuments, issues) {
+function buildApplicationStateIndex(jsonDocuments, jsonDocumentDigests, issues) {
   const index = {
     atlasNodeIds: new Set(),
     atlasSourceCount: 0,
@@ -1425,8 +1442,31 @@ function buildApplicationStateIndex(jsonDocuments, issues) {
       opportunityCandidates.push({ source, document });
     }
   }
-  index.atlasSourceCount = atlasCandidates.length;
-  index.opportunitySourceCount = opportunityCandidates.length;
+  const collapseApprovedOpportunityCopies = candidates => {
+    const remaining = new Map(candidates.map(candidate => [candidate.source, candidate]));
+    for (const [canonical, compatibility] of APPLICATION_STATE_COMPATIBILITY_PAIRS) {
+      if (!remaining.has(canonical) || !remaining.has(compatibility)) continue;
+      const canonicalDigest = jsonDocumentDigests.get(canonical);
+      const compatibilityDigest = jsonDocumentDigests.get(compatibility);
+      if (canonicalDigest && canonicalDigest === compatibilityDigest) {
+        remaining.delete(compatibility);
+        continue;
+      }
+      issues.push({
+        source: compatibility,
+        kind: 'Opportunity compatibility payload',
+        ref: canonical,
+        status: null,
+        code: 'APPLICATION_STATE_COMPATIBILITY_MISMATCH',
+        detail: `Approved compatibility copy must be byte-identical to ${canonical}.`
+      });
+    }
+    return [...remaining.values()];
+  };
+  const uniqueAtlasCandidates = atlasCandidates;
+  const uniqueOpportunityCandidates = collapseApprovedOpportunityCopies(opportunityCandidates);
+  index.atlasSourceCount = uniqueAtlasCandidates.length;
+  index.opportunitySourceCount = uniqueOpportunityCandidates.length;
 
   const recordDuplicateIds = (candidate, label) => {
     const firstIndexById = new Map();
@@ -1446,11 +1486,11 @@ function buildApplicationStateIndex(jsonDocuments, issues) {
       }
     });
   };
-  atlasCandidates.forEach(candidate => recordDuplicateIds(candidate, 'atlas node'));
-  opportunityCandidates.forEach(candidate => recordDuplicateIds(candidate, 'Opportunity node'));
+  uniqueAtlasCandidates.forEach(candidate => recordDuplicateIds(candidate, 'atlas node'));
+  uniqueOpportunityCandidates.forEach(candidate => recordDuplicateIds(candidate, 'Opportunity node'));
 
   const firstOpportunityMapById = new Map();
-  opportunityCandidates.forEach(candidate => {
+  uniqueOpportunityCandidates.forEach(candidate => {
     const id = candidate.document.metadata?.id;
     if (typeof id !== 'string' || id === '') return;
     if (firstOpportunityMapById.has(id)) {
@@ -1467,13 +1507,13 @@ function buildApplicationStateIndex(jsonDocuments, issues) {
     }
   });
 
-  if (atlasCandidates.length === 1) {
-    atlasCandidates[0].document.nodes.forEach(node => {
+  if (uniqueAtlasCandidates.length === 1) {
+    uniqueAtlasCandidates[0].document.nodes.forEach(node => {
       if (typeof node?.id === 'string' && node.id !== '') index.atlasNodeIds.add(node.id);
     });
   }
-  if (opportunityCandidates.length === 1) {
-    const document = opportunityCandidates[0].document;
+  if (uniqueOpportunityCandidates.length === 1) {
+    const document = uniqueOpportunityCandidates[0].document;
     if (typeof document.metadata.id === 'string' && document.metadata.id !== '') {
       index.opportunityMapIds.add(document.metadata.id);
     }
@@ -1604,6 +1644,7 @@ async function auditSite(input = {}) {
   const htmlAnchors = new Map();
   const htmlRuntimeFragments = new Map();
   const jsonDocuments = new Map();
+  const jsonDocumentDigests = new Map();
 
   let siteStat;
   try {
@@ -1662,10 +1703,26 @@ async function auditSite(input = {}) {
       extractCssReferences(await fsp.readFile(absolute, 'utf8'), relative, references);
     } else if (extension === '.json') {
       counts.json += 1;
-      await readJsonDocument(absolute, relative, references, issues, false, jsonDocuments);
+      await readJsonDocument(
+        absolute,
+        relative,
+        references,
+        issues,
+        false,
+        jsonDocuments,
+        jsonDocumentDigests
+      );
     } else if (extension === '.jsonld') {
       counts.jsonld += 1;
-      await readJsonDocument(absolute, relative, references, issues, true, jsonDocuments);
+      await readJsonDocument(
+        absolute,
+        relative,
+        references,
+        issues,
+        true,
+        jsonDocuments,
+        jsonDocumentDigests
+      );
     } else if (extension === '.ndjson') {
       counts.ndjson += 1;
       await readNdjsonDocument(absolute, relative, references, issues);
@@ -1678,7 +1735,7 @@ async function auditSite(input = {}) {
   }
 
   references.sort(stableCompare);
-  const applicationStateIndex = buildApplicationStateIndex(jsonDocuments, issues);
+  const applicationStateIndex = buildApplicationStateIndex(jsonDocuments, jsonDocumentDigests, issues);
   issues.sort(stableCompare);
 
   const server = await startSiteServer({ siteDir: options.siteDir, basePath: options.basePath });

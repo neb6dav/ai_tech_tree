@@ -1,75 +1,79 @@
 ---
 roadmap_version: 1
 active_release: "v0.1.1"
-active_work_package: "WP-011-A"
-issue_url: "https://github.com/neb6dav/ai_tech_tree/issues/4"
-pr_url: "https://github.com/neb6dav/ai_tech_tree/pull/5"
-base_sha: "76483d2d59f52f30202b52fe52a26a7c832a1252"
-last_completed_checkpoint: "C4"
+active_work_package: "WP-011-B"
+issue_url: "https://github.com/neb6dav/ai_tech_tree/issues/6"
+pr_url: null
+base_sha: "85108c78fa86c86634d4c0944839696369e687cd"
+last_completed_checkpoint: "WP-011-B/C1"
 last_verified_commands:
   - command: "npm run build"
     status: "PASS"
     runtime: "Node v24.14.1"
     verified_by: "root"
-    scope: "WP-011-A integrated maintained and generated source; 4,519,305-byte initial document"
+    scope: "WP-011-B/C1 integrated maintained and generated source; 4,519,301-byte initial document"
   - command: "npm test"
     status: "PASS"
     runtime: "Node v24.14.1 and npm 11.11.0"
     verified_by: "root"
-    scope: "Core gates, 59 focused unit tests, staging, artifact budgets, and staged-site contract"
+    scope: "Core gates, 66 focused unit tests, 13-file staging, artifact budgets, and staged-site contract"
   - command: "npm run test:site-contract"
     status: "PASS"
     runtime: "Node v24.14.1"
     verified_by: "root"
-    scope: "1812 internal references under /ai_tech_tree/, including 75 JSON Schema references and 2 browser-deferred runtime fragments"
+    scope: "1462 internal references and 10 unique staged resources under /ai_tech_tree/"
   - command: "Repeat stage-site and compare release-manifest SHA-256"
     status: "PASS"
     runtime: "Node v24.14.1"
     verified_by: "root"
-    scope: "Identical manifest SHA-256 across repeated stages from the same unchanged input state and toolchain"
+    scope: "Identical SHA-256 37928762D3716667378A040D57FDF0AEA19D2E3BB340A6DA24D91BF310223635 across repeated C1 stages"
   - command: "Parse workflow YAML and project JSON; node --check new scripts; git diff --check"
     status: "PASS"
     verified_by: "root"
-    scope: "WP-011-A uncommitted worktree"
+    scope: "WP-011-B/C1 uncommitted worktree"
 next_exact_action: >-
-  Commit the named C3/C4 files, verify that exact committed tree in an isolated
-  worktree, push the authorized checkpoint, and confirm the draft PR checks.
+  Stage only the named WP-011-B C1 files, commit the compatibility checkpoint,
+  verify that exact committed tree in isolation, then push and open its stacked
+  draft PR against codex/v0.1.1-stage-site.
 known_blockers:
-  - "Production Pages promotion is intentionally held at a reusable-only workflow until WP-011-B installs approved annotated-tag promotion."
-  - "WP-011-B must synchronize version identity and replace main/manual production deployment with approved annotated-tag promotion before v0.1.1 can ship."
+  - "WP-011-B is stacked on verified draft PR #5 until WP-011-A is separately authorized to merge."
+  - "No merge, annotated tag, GitHub Release, environment approval, or public deployment is authorized."
+  - "Release identity remains 0.1.0 until the dedicated C3 synchronization checkpoint."
   - "Browser performance metrics and automated preview screenshots remain pending WP-012-A."
-release_gate_status: "wp_011_a_c4_local_complete_pending_commit_and_remote_ci"
+release_gate_status: "wp_011_b_c1_local_complete_pending_commit"
 release_details:
   version: "v0.1.1"
   title: "Publication-contract repair"
   work_package:
-    id: "WP-011-A"
+    id: "WP-011-B"
     status: "checkpointing"
-    base_sha: "76483d2d59f52f30202b52fe52a26a7c832a1252"
-    branch: "codex/v0.1.1-stage-site"
+    base_sha: "85108c78fa86c86634d4c0944839696369e687cd"
+    branch: "codex/v0.1.1-publication-release"
     issue:
       status: "open"
-      number: 4
-      url: "https://github.com/neb6dav/ai_tech_tree/issues/4"
+      number: 6
+      url: "https://github.com/neb6dav/ai_tech_tree/issues/6"
     pull_request:
-      status: "draft"
-      number: 5
-      url: "https://github.com/neb6dav/ai_tech_tree/pull/5"
+      status: "pending_first_checkpoint"
+      number: null
+      url: null
     active_checkpoint:
-      id: "C4"
-      title: "Staged-site contract, budgets, and workflow integration"
+      id: "C1"
+      title: "Stable Opportunity paths and compatibility alias"
       status: "local_complete_pending_commit"
       next_exact_action: >-
-        Commit the named files, verify the exact committed tree in isolation,
-        then push and confirm the draft PR checks.
+        Commit the named compatibility files, verify the exact clean commit in
+        isolation, then push and open the stacked draft PR.
     scope:
-      - "Repair the broken public-site publication contract before broader UI or content work."
-      - "Make the deployable site an explicit, validated artifact."
-      - "Preserve current public behavior and committed generated artifacts."
+      - "Publish stable and compatibility Opportunity endpoints."
+      - "Move exported human URLs to the root application."
+      - "Synchronize v0.1.1 identity and contribution access."
+      - "Implement approved annotated-tag promotion and bounded smoke checks."
     out_of_scope:
       - "Broader UI or content changes."
       - "Canonical historical-data migration."
       - "Generated-artifact policy changes."
+      - "Performing a merge, tag, release, environment approval, or deployment."
 authorization:
   issue_creation: "authorized_and_completed"
   pull_request_creation: "authorized"
@@ -82,12 +86,12 @@ authorization:
 
 ## Active objective
 
-Ship `v0.1.1` as a narrowly scoped repair of the public publication contract.
-The release must establish an explicit, reproducible staged-site boundary and
-verify every public path before promotion. Broader interface, content, and data
-architecture work starts only after this repair is released.
+Complete the remaining `v0.1.1` publication URL, identity, and promotion
+controls on top of the verified WP-011-A staged-site boundary. Broader
+interface, content, and data architecture work starts only after this narrow
+repair is released.
 
-## C1 deliverables
+## Control-plane foundation
 
 - Record the active release, work package, base revision, authorization state,
   checkpoint, and next action in the ledger above.
@@ -98,7 +102,7 @@ architecture work starts only after this repair is released.
 - Record blocking current-regression guards and nonblocking future targets in
   `performance-budget.json`.
 
-## Local WP-011-A verification
+## WP-011-A foundation and active WP-011-B work
 
 - C1 control plane, Node 24 toolchain policy, and blocking artifact budgets:
   implemented and green. Release-manifest reproducibility is scoped to its
@@ -107,20 +111,24 @@ architecture work starts only after this repair is released.
 - C3 project-subpath publication-contract crawler: implemented and green.
 - C4 deterministic payload release manifest: implemented and green.
 
-`C1` records the control plane, locked decisions, toolchain pin, and budget
+WP-011-A is complete at verified commit `85108c7` and remote CI run
+`32382526539`; its draft PR remains unmerged. Its `C1` records the control plane, locked decisions, toolchain pin, and budget
 policy. `C2` adds the deterministic staged-site assembler, strict allowlist,
 release manifest, focused tests, and artifact-producing npm toolchain contract.
-`C3/C4` are locally complete. They add the project-subpath crawler, blocking
+`C3/C4` add the project-subpath crawler, blocking
 artifact-budget enforcement, shared validation/Pages staging, downloadable PR
 previews, and final usage documentation. Their static contract resolves 1,812
 internal references, fails closed on browser/scanner boundary cases, and labels
 two runtime-created fragments as browser-deferred rather than statically
-verified. This checkpoint becomes durable only after the named commit, isolated
-committed-tree verification, authorized push, and remote CI confirmation.
+verified. The exact committed tree, push, remote CI, and downloaded preview
+artifact have all been verified for WP-011-A.
 
-This work package is not a shippable `v0.1.1` release by itself. `WP-011-B`
-remains responsible for release identity, annotated-tag and protected-main
-verification, production approval, release assets, and post-deploy checks.
+WP-011-B now owns stable public and compatibility URLs, root export URLs,
+release identity, annotated-tag and protected-main verification, production
+approval, release assets, and post-deploy checks. Its C1 compatibility changes
+pass the complete build and test gate, repeated-stage determinism, and an
+independent hostile review. They are ready for the authorized commit and exact
+committed-tree verification.
 
 ## Release boundary
 

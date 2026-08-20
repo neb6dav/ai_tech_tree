@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex">
+  <noscript><meta http-equiv="refresh" content="0; url=./"></noscript>
+  <link rel="canonical" href="./">
+  <title>AI Research Tech Tree — redirecting</title>
+</head>
+<body>
+  <p>This address has moved. <a id="atlas-link" href="./">Open the AI Research Tech Tree</a>.</p>
+  <script>
+    'use strict';
+    const destination = new URL('./', window.location.href);
+    destination.search = window.location.search;
+    destination.hash = window.location.hash;
+    document.getElementById('atlas-link').href = destination.href;
+    window.location.replace(destination.href);
+  </script>
+</body>
+</html>

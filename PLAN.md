@@ -35,17 +35,22 @@ last_verified_commands:
     status: "PASS"
     verified_by: "root"
     scope: "Artifact 9392055435 from run 32328029844 and main commit 76483d2d preserved before expiry; artifact.tar plus seven extracted payloads pass 8/8 recorded SHA-256 checks"
+  - command: "AI_TREE_REQUIRE_CLEAN=true npm test"
+    status: "PASS"
+    runtime: "Node v24.14.1, npm 11.11.0, and Git 2.55"
+    verified_by: "root"
+    scope: "Exact committed C3-hardening tree f2dc1c6; clean=true, requiredClean=true, object database and repository attributes isolated, 15/15 release inputs matched, manifest SHA-256 2a30f6406c0df3516396604194ed9b0bb2f9e6267ea41c99d62a92473cc75bf2"
 next_exact_action: >-
-  Commit the locally verified C3 Git-object provenance hardening, prove the
-  exact clean committed tree, push it to draft PR #7, and reconcile the
-  downloaded CI preview before resuming C4 release-promotion controls.
+  Push the exact-clean C3 Git-object provenance checkpoint to draft PR #7,
+  wait for the validation workflow, and reconcile its downloaded preview
+  before resuming C4.1 release-provenance controls.
 known_blockers:
   - "WP-011-B is stacked on verified draft PR #5 until WP-011-A is separately authorized to merge."
   - "No merge, annotated tag, GitHub Release, environment approval, or public deployment is authorized."
   - "The C3 source must remain visibly labeled as an untagged development edition until C4 prepares an authorized release artifact."
   - "Browser performance metrics and automated preview screenshots remain pending WP-012-A."
   - "The github-pages environment has no required reviewer and permits administrator bypass; immutable GitHub Releases are disabled. These external controls require separate authorization before any C4 promotion run."
-release_gate_status: "wp_011_b_c3_remote_verified_provenance_hardening_locally_verified"
+release_gate_status: "wp_011_b_c3_remote_verified_provenance_hardening_exact_clean_pending_push"
 release_details:
   version: "v0.1.1"
   title: "Publication-contract repair"
@@ -71,11 +76,10 @@ release_details:
     active_checkpoint:
       id: "C3-hardening"
       title: "Git-object-bound staged provenance"
-      status: "locally_verified"
+      status: "exact_clean_verified_pending_push"
       next_exact_action: >-
-        Commit the provenance hardening, run exact clean committed-tree
-        verification, push the authorized branch update, reconcile the CI
-        preview artifact, and then begin C4.1 release-provenance controls.
+        Push the authorized branch update, reconcile the CI preview artifact,
+        and then begin C4.1 release-provenance controls.
     scope:
       - "Publish stable and compatibility Opportunity endpoints."
       - "Move exported human URLs to the root application."
@@ -170,9 +174,11 @@ blob bytes stored under the wrong object ID while a clean filter conceals the
 worktree difference. The C3 hardening follow-up validates the reachable object
 database, recomputes every staged input blob's Git object ID, rejects custom
 filters, and records the result in manifest schema/tool `1.3.0`. Its full local
-gate passes 75 focused tests, including wrong-object-ID, linked-worktree, and custom-filter
-fixtures. This follow-up remains pending its checkpoint commit, exact clean
-proof, push, and downloaded-preview reconciliation before C4 resumes.
+gate passes 75 focused tests, including wrong-object-ID, linked-worktree, and
+custom-filter fixtures. The code was committed as `f2dc1c6` and its exact clean
+tree passes the complete gate with 15/15 release inputs matched. This
+follow-up remains pending its authorized push and downloaded-preview
+reconciliation before C4 resumes.
 
 The expiring current-production Pages artifact was preserved read-only at
 `C:/Projects/Work/ai-research-tech-tree-recovery/production-2026-08-20-76483d2d`.

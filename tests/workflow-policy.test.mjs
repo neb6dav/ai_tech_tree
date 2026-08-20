@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { readFile, readdir } from 'node:fs/promises';
 import path from 'node:path';
 import test from 'node:test';
 import { fileURLToPath } from 'node:url';
@@ -9,9 +9,40 @@ import { parseDocument } from 'yaml';
 import { parseStrictJson } from '../scripts/strict-json.mjs';
 
 const REPOSITORY_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const WORKFLOW_DIRECTORY = path.join(REPOSITORY_ROOT, '.github', 'workflows');
 const VALIDATE_PATH = path.join(REPOSITORY_ROOT, '.github', 'workflows', 'validate.yml');
 const PAGES_PATH = path.join(REPOSITORY_ROOT, '.github', 'workflows', 'pages.yml');
 const PACKAGE_PATH = path.join(REPOSITORY_ROOT, 'package.json');
+const EXPECTED_WORKFLOW_FILES = ['pages.yml', 'validate.yml'];
+const SAFE_POST_DEPLOY_TEST_COMMAND = 'node --test tests/post-deploy-smoke.test.mjs';
+const EXPECTED_PACKAGE_SCRIPTS = Object.freeze({
+  'build:network': 'esbuild src/network-view.js --bundle --format=iife --global-name=NetworkAtlas --platform=browser --target=es2020 --outfile=network-atlas.bundle.js --minify --legal-comments=eof',
+  'build:opportunity': 'esbuild src/opportunity-view.js --bundle --format=iife --global-name=OpportunityAtlas --platform=browser --target=es2020 --outfile=opportunity-atlas.bundle.js --minify --legal-comments=eof',
+  'build:layout': 'node generate-network-layout.js',
+  build: 'node build.js',
+  'build:release-candidate': 'node scripts/release-assets.mjs',
+  'plan:release-finalization': 'node scripts/release-finalization-plan.mjs',
+  'stage:site': 'node scripts/stage-site.mjs',
+  'test:core': 'node release-gate.js && node accessibility-gate.js && node ui-layout-gate.js && node network-gate.js && node opportunity-gate.js',
+  'test:network': 'node network-gate.js',
+  'test:opportunity': 'node opportunity-gate.js',
+  'test:stage-site': 'node --test scripts/stage-site.test.mjs',
+  'test:release-spec': 'node --test tests/release-spec.test.mjs',
+  'test:release-ref': 'node --test tests/release-ref.test.mjs',
+  'test:release-assets': 'node --test tests/release-assets.test.mjs',
+  'test:release-finalization-plan': 'node --test tests/release-finalization-plan.test.mjs',
+  'test:post-deploy-smoke': SAFE_POST_DEPLOY_TEST_COMMAND,
+  'test:workflow-policy': 'node --test tests/workflow-policy.test.mjs',
+  'test:site-contract:unit': 'node --test tests/site-contract-test.test.cjs',
+  'test:site-contract': 'node scripts/site-contract-test.cjs',
+  'test:performance-budget:unit': 'node --test tests/performance-budget-test.test.cjs',
+  'test:performance-budget': 'node scripts/performance-budget-test.cjs',
+  'test:publication-compatibility': 'node --test tests/publication-compatibility.test.cjs',
+  'test:export-human-urls': 'node --test tests/export-human-urls.test.cjs',
+  'test:release-identity': 'node --test tests/release-identity.test.cjs',
+  'test:publication': 'npm run test:release-spec && npm run test:release-ref && npm run test:release-assets && npm run test:release-finalization-plan && npm run test:post-deploy-smoke && npm run test:workflow-policy && npm run test:stage-site && npm run test:site-contract:unit && npm run test:performance-budget:unit && npm run test:publication-compatibility && npm run test:export-human-urls && npm run stage:site && npm run test:release-identity && npm run test:performance-budget && npm run test:site-contract',
+  test: 'npm run test:core && npm run test:publication'
+});
 const PULL_REQUEST_ONLY = "github.event_name == 'pull_request'";
 const EXPECTED_CANDIDATE_BUILD = [
   'npm run build:release-candidate -- --repository-root "${{ github.workspace }}" --commit "${{ github.sha }}" --output-directory "${{ runner.temp }}/release-candidate"',
@@ -102,6 +133,14 @@ function parseStrictYaml(bytes, label) {
 
 function clone(value) {
   return structuredClone(value);
+}
+
+function validateWorkflowInventory(names) {
+  assert.deepEqual(
+    [...names].sort(),
+    EXPECTED_WORKFLOW_FILES,
+    '.github/workflows must contain only the reviewed Pages hold and validation workflows'
+  );
 }
 
 function allEntries(value, currentPath = '$', entries = []) {
@@ -403,9 +442,69 @@ function npmRunDependencies(command, label) {
   return dependencies;
 }
 
+function commandWithoutAllowedPostDeployTestReferences(command) {
+  return command
+    .replaceAll('test:post-deploy-smoke', 'test:safe-local-smoke')
+    .replace(/tests[\\/]post-deploy-smoke\.test\.mjs/giu, 'tests/safe-local-smoke.test.mjs');
+}
+
+function assertNoPackagePromotionCapabilities(scripts) {
+  assert.equal(
+    scripts['test:post-deploy-smoke'],
+    SAFE_POST_DEPLOY_TEST_COMMAND,
+    'test:post-deploy-smoke must remain the exact local unit-test command'
+  );
+
+  for (const [name, command] of Object.entries(scripts)) {
+    assert.equal(typeof command, 'string', `${name} must be a string command`);
+    assert.doesNotMatch(
+      name,
+      /^(?:deploy|publish|promote|tag)(?::|$)/iu,
+      `${name} must not introduce a promotion-oriented package-script entry point`
+    );
+
+    const inspected = commandWithoutAllowedPostDeployTestReferences(command);
+    assert.doesNotMatch(
+      inspected,
+      /scripts[\\/]post-deploy-smoke\.mjs/iu,
+      `${name} must not execute the post-deployment smoke CLI`
+    );
+    assert.doesNotMatch(inspected, /--execute\b/iu, `${name} must not enable production smoke execution`);
+    assert.doesNotMatch(
+      inspected,
+      /\bAI_TREE_STAGE_MODE\s*(?:=|:)\s*["']?release\b|--mode(?:=|\s+)["']?release\b/iu,
+      `${name} must not enable release-mode staging`
+    );
+    assert.doesNotMatch(
+      inspected,
+      /\bgit(?:\.exe)?\b[^\r\n;&|]*\b(?:push|tag|update-ref)\b|refs[\\/]tags\b/iu,
+      `${name} must not create or publish Git refs`
+    );
+    assert.doesNotMatch(
+      inspected,
+      /\b(?:gh|hub)(?:\.exe)?\b|api\.github\.com|uploads\.github\.com|\/releases(?:\/|\b)/iu,
+      `${name} must not call GitHub release or mutation interfaces`
+    );
+    assert.doesNotMatch(
+      inspected,
+      /\b(?:curl|wget|Invoke-WebRequest|Invoke-RestMethod)\b/iu,
+      `${name} must not use mutation-capable network clients`
+    );
+    assert.doesNotMatch(inspected, /\bnpm\s+version\b/iu, `${name} must not create an implicit package-version tag`);
+    assert.doesNotMatch(inspected, /\bnpm\s+publish\b/iu, `${name} must not publish packages`);
+    assert.doesNotMatch(
+      inspected,
+      /\b(?:deploy(?:ment|ments|ed|ing)?|publish(?:ed|ing)?|promot(?:e|ed|ing|ion))\b/iu,
+      `${name} must not contain a deployment, publication, or promotion command`
+    );
+  }
+}
+
 function validatePackageTestClosure(packageDocument) {
   const scripts = packageDocument.scripts;
   assert.ok(scripts && typeof scripts === 'object' && !Array.isArray(scripts), 'package scripts must be an object');
+  assert.deepEqual(scripts, EXPECTED_PACKAGE_SCRIPTS, 'package scripts must remain the exact reviewed non-promoting command map');
+  assertNoPackagePromotionCapabilities(scripts);
   const reachable = new Set();
   const pending = ['test'];
   while (pending.length > 0) {
@@ -415,7 +514,7 @@ function validatePackageTestClosure(packageDocument) {
     reachable.add(name);
     for (const dependency of npmRunDependencies(scripts[name], name)) pending.push(dependency);
   }
-  for (const required of ['test:release-assets', 'test:post-deploy-smoke', 'test:workflow-policy']) {
+  for (const required of ['test:release-assets', 'test:release-finalization-plan', 'test:post-deploy-smoke', 'test:workflow-policy']) {
     assert.ok(reachable.has(required), `${required} must be reachable from npm test`);
   }
   assert.equal(scripts['test:release-assets'], 'node --test tests/release-assets.test.mjs');
@@ -438,7 +537,8 @@ function validatePackageTestClosure(packageDocument) {
   }
 }
 
-const [validateBytes, pagesBytes, packageBytes] = await Promise.all([
+const [workflowNames, validateBytes, pagesBytes, packageBytes] = await Promise.all([
+  readdir(WORKFLOW_DIRECTORY),
   readFile(VALIDATE_PATH),
   readFile(PAGES_PATH),
   readFile(PACKAGE_PATH)
@@ -446,6 +546,10 @@ const [validateBytes, pagesBytes, packageBytes] = await Promise.all([
 const validateWorkflow = parseStrictYaml(validateBytes, 'validate workflow');
 const pagesWorkflow = parseStrictYaml(pagesBytes, 'Pages hold workflow');
 const packageDocument = parseStrictJson(packageBytes, 'package.json');
+
+test('workflow directory contains only the reviewed validation and Pages hold files', () => {
+  validateWorkflowInventory(workflowNames);
+});
 
 test('validation CI is candidate-only, cross-platform, byte-compared, and read-only', () => {
   validateValidationWorkflow(validateWorkflow);
@@ -520,6 +624,12 @@ test('workflow policy rejects capability and parity regressions', async t => {
 });
 
 test('Pages and package policies reject promotion or production-smoke regressions', async t => {
+  await t.test('additional release workflow', () => {
+    assert.throws(() => validateWorkflowInventory([...workflowNames, 'release.yml']));
+  });
+  await t.test('missing Pages hold workflow', () => {
+    assert.throws(() => validateWorkflowInventory(workflowNames.filter(name => name !== 'pages.yml')));
+  });
   await t.test('Pages deployment', () => {
     const hostile = clone(pagesWorkflow);
     hostile.jobs.build.steps.push({ uses: 'actions/deploy-pages@v4' });
@@ -542,4 +652,30 @@ test('Pages and package policies reject promotion or production-smoke regression
     hostile.scripts['smoke:production'] = 'node scripts/post-deploy-smoke.mjs --execute';
     assert.throws(() => validatePackageTestClosure(hostile));
   });
+  await t.test('unreviewed generic release helper', () => {
+    const hostile = clone(packageDocument);
+    hostile.scripts['release:ship'] = 'node scripts/ship.mjs';
+    assert.throws(
+      () => validatePackageTestClosure(hostile),
+      /exact reviewed non-promoting command map/u
+    );
+  });
+  const packagePromotionScenarios = [
+    ['tag creation', 'release:tag', 'git tag v0.1.1'],
+    ['GitHub Release creation', 'release:github', 'gh release create v0.1.1'],
+    ['deployment entry point', 'deploy', 'node scripts/deploy.mjs'],
+    ['release-mode staging', 'stage:release', 'AI_TREE_STAGE_MODE=release node scripts/stage-site.mjs'],
+    ['quoted release-mode staging', 'stage:stable', 'node scripts/stage-site.mjs --mode "release"'],
+    ['implicit npm version tag', 'version:stable', 'npm version 0.1.1'],
+    ['executable post-deploy smoke', 'smoke:production', 'node scripts/post-deploy-smoke.mjs'],
+    ['release promotion helper', 'release:promote', 'node scripts/promote-release.mjs'],
+    ['direct GitHub release API call', 'release:api', 'curl https://api.github.com/repos/neb6dav/ai_tech_tree/releases']
+  ];
+  for (const [label, scriptName, command] of packagePromotionScenarios) {
+    await t.test(label, () => {
+      const hostile = clone(packageDocument);
+      hostile.scripts[scriptName] = command;
+      assert.throws(() => validatePackageTestClosure(hostile));
+    });
+  }
 });

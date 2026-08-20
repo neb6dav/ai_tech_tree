@@ -109,17 +109,31 @@ last_verified_commands:
     runtime: "GitHub Actions Node v24.19.0 and npm 11.17.0"
     verified_by: "root"
     scope: "Workflow 32405267536; full gate plus Windows, Ubuntu, and parity jobs green; artifacts 9420019751, 9420051460, and 9420059684 have identical four-file contents; 15-entry archive matches the 15-file preview and passes 1,465 references"
+  - command: "npm run build plus focused C4.3-A suites"
+    status: "PASS"
+    runtime: "Node v24.14.1 and npm 11.11.0"
+    verified_by: "root"
+    scope: "Deterministic build with no generated identity diff; 15 release-asset, 29 finalization-plan, 45 workflow-policy, 56 stage-site, and 80 post-deploy-smoke tests passed"
+  - command: "Independent hostile C4.3-A parser, preflight, integration, and full-diff reviews"
+    status: "PASS after findings resolved"
+    verified_by: "root plus four read-only reviewers"
+    scope: "Status-aware release notes, CommonMark section isolation, independent dates, state-aware read-only finalization inventory, exact package-script closure, candidate-only preview boundary, planned/development identity, and authorization wording returned SHIP"
+  - command: "Pre-commit npm test"
+    status: "EXPECTED FAIL-CLOSED at release-identity only"
+    runtime: "Node v24.14.1 and npm 11.11.0"
+    verified_by: "root"
+    scope: "All preceding core and publication gates passed; release-identity correctly rejected 16/17 commit-bound inputs because package.json is intentionally uncommitted until the checkpoint commit"
 next_exact_action: >-
-  Prepare the C4.3 stable-identity checkpoint without creating a tag, GitHub
-  Release, environment approval, deployment, settings mutation, or production
-  request; first lock the exact source fields and fail-closed transition tests.
+  Commit the reviewed C4.3-A preparation-only changes, then run the complete
+  strict preview gate against that exact clean commit before any push; keep the
+  real v0.1.1 specification planned and every public identity developmental.
 known_blockers:
   - "WP-011-B is stacked on verified draft PR #5 until WP-011-A is separately authorized to merge."
   - "No merge, annotated tag, GitHub Release, environment approval, or public deployment is authorized."
   - "The C3 source must remain visibly labeled as an untagged development edition until C4 prepares an authorized release artifact."
   - "Browser performance metrics and automated preview screenshots remain pending WP-012-A."
   - "The github-pages environment has no required reviewer and permits administrator bypass; immutable GitHub Releases are disabled. These external controls require separate authorization before any C4 promotion run."
-release_gate_status: "wp_011_b_c4_2_remotely_verified_c4_3_ready"
+release_gate_status: "wp_011_b_c4_2_remotely_verified_c4_3_a_locally_verified_pending_commit"
 release_details:
   version: "v0.1.1"
   title: "Publication-contract repair"
@@ -145,11 +159,11 @@ release_details:
     active_checkpoint:
       id: "C4.3"
       title: "Stable release identity preparation"
-      status: "ready_to_design"
+      status: "locally_verified_pending_commit"
       next_exact_action: >-
-        Define and test the exact planned-to-ready identity transition across
-        the release specification, dataset, citation, changelog, package lock,
-        UI metadata, sitemap, and release notes without external mutation.
+        Commit the reviewed C4.3-A changes and run the exact-clean full test
+        gate; do not change the real v0.1.1 specification from planned in this
+        checkpoint.
     scope:
       - "Publish stable and compatibility Opportunity endpoints."
       - "Move exported human URLs to the root application."

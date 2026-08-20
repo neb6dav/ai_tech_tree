@@ -123,13 +123,14 @@ async function writeReadyFixture(root) {
   await write(root, 'data.json', JSON.stringify({
     generatorVersion: '4.5.6',
     dataset: {
-      edition: '2026-08-20-test-edition',
+      edition: '2026-08-19-test-edition',
       releaseState: 'Public beta',
       dataDigest: 'b'.repeat(64)
     }
   }));
   await write(root, 'release.json', `${JSON.stringify(baseReleaseSpec({
     status: 'ready',
+    edition: '2026-08-19-test-edition',
     releaseDate: '2026-08-20'
   }), null, 2)}\n`);
   await write(root, 'CITATION.cff', citationFixture({
@@ -140,7 +141,7 @@ async function writeReadyFixture(root) {
   await write(root, 'CHANGELOG.md', '# Changelog\n\n## [Unreleased]\n\n## [1.2.3] - 2026-08-20\n\n<https://example.invalid/release-notes>\n');
 }
 
-function initializeReleaseRepository(root) {
+function initializeReleaseRepository(root, { taggedAt = '2026-08-20T15:04:05+00:00' } = {}) {
   const git = (argumentsList, extraEnvironment = {}) => execFileSync('git', argumentsList, {
     cwd: root,
     encoding: 'utf8',
@@ -160,7 +161,7 @@ function initializeReleaseRepository(root) {
   const head = git(['rev-parse', 'HEAD']);
   git(['update-ref', 'refs/remotes/origin/main', head]);
   git(['tag', '-a', 'v1.2.3', '-m', 'Release v1.2.3'], {
-    GIT_COMMITTER_DATE: '2026-08-20T15:04:05+00:00'
+    GIT_COMMITTER_DATE: taggedAt
   });
   return { head, tagObject: git(['rev-parse', 'refs/tags/v1.2.3']) };
 }
@@ -306,7 +307,31 @@ test('ready identity passes preview without promotion and release mode records o
   assert.equal(preview.manifest.tag, null);
   assert.equal(preview.manifest.promotion, null);
   assert.equal(preview.manifest.releaseSpec.status, 'ready');
+  assert.equal(preview.manifest.edition, '2026-08-19-test-edition');
+  assert.equal(preview.manifest.releaseSpec.releaseDate, '2026-08-20');
   assert.equal(preview.manifest.releaseState, 'Public beta');
+
+  await write(root, 'CITATION.cff', citationFixture({
+    message: 'stable release',
+    version: '1.2.3',
+    releaseDate: '2026-08-19'
+  }));
+  await assert.rejects(
+    stageSite({ repositoryRoot: root, environment, checkOnly: true }),
+    /CITATION top-level date-released must be exactly 2026-08-20/u
+  );
+  await write(root, 'CITATION.cff', citationFixture({
+    message: 'stable release',
+    version: '1.2.3',
+    releaseDate: '2026-08-20'
+  }));
+
+  await write(root, 'CHANGELOG.md', '# Changelog\n\n## [Unreleased]\n\n## [1.2.3] - 2026-08-19\n');
+  await assert.rejects(
+    stageSite({ repositoryRoot: root, environment, checkOnly: true }),
+    /CHANGELOG must contain exactly one ## \[1\.2\.3\] - 2026-08-20 heading/u
+  );
+  await write(root, 'CHANGELOG.md', '# Changelog\n\n## [Unreleased]\n\n## [1.2.3] - 2026-08-20\n');
 
   await write(root, 'CHANGELOG.md', '# Changelog\n\n## [Unreleased]\n\n<template>\n## [1.2.3] - 2026-08-20\n</template>\n');
   await assert.rejects(
@@ -379,6 +404,30 @@ test('ready identity passes preview without promotion and release mode records o
   }
 });
 
+test('release mode binds the annotated tag calendar date to releaseDate, not the edition date', async () => {
+  const root = await makeRoot();
+  await writeBaseFixture(root);
+  await writeReadyFixture(root);
+  const { head } = initializeReleaseRepository(root, { taggedAt: '2026-08-19T15:04:05+00:00' });
+
+  await assert.rejects(
+    stageSite({
+      repositoryRoot: root,
+      environment: {
+        ...environment,
+        AI_TREE_COMMIT_SHA: head,
+        AI_TREE_PROTECTED_MAIN_REF: 'refs/remotes/origin/main',
+        AI_TREE_RELEASE_SPEC_PATH: 'release.json',
+        AI_TREE_RELEASE_TAG: 'v1.2.3',
+        AI_TREE_REQUIRE_CLEAN: 'true',
+        AI_TREE_STAGE_MODE: 'release'
+      },
+      checkOnly: true
+    }),
+    /annotated tag calendar date 2026-08-19 does not match expectedReleaseDate 2026-08-20/u
+  );
+});
+
 test('release identity fails closed on package, dataset, citation, changelog, and duplicate-key drift', async t => {
   const cases = [
     ['lock top-level version', async root => write(root, 'package-lock.json', JSON.stringify({
@@ -397,6 +446,18 @@ test('release identity fails closed on package, dataset, citation, changelog, an
       generatorVersion: '4.5.6',
       dataset: { edition: '2026-08-20-test-edition', releaseState: 'Test public beta' }
     })), /planned release dataset releaseState must be exactly Development edition/u],
+    ['invalid dataset edition calendar date', async root => {
+      await write(root, 'data.json', JSON.stringify({
+        generatorVersion: '4.5.6',
+        dataset: { edition: '2026-02-30-test-edition', releaseState: 'Development edition' }
+      }));
+    }, /dataset edition date prefix is not a valid calendar date/u],
+    ['dataset edition without date delimiter', async root => {
+      await write(root, 'data.json', JSON.stringify({
+        generatorVersion: '4.5.6',
+        dataset: { edition: '2026-08-20test-edition', releaseState: 'Development edition' }
+      }));
+    }, /dataset edition must begin with YYYY-MM-DD-/u],
     ['stale citation version', async root => write(root, 'CITATION.cff', citationFixture({ version: '1.2.2-dev' })), /top-level version must be exactly/u],
     ['premature citation date', async root => write(root, 'CITATION.cff', citationFixture({ releaseDate: '2026-08-20' })), /must not contain a top-level date-released/u],
     ['duplicate citation version', async root => write(root, 'CITATION.cff', `${citationFixture()}version: 1.2.3-dev\n`), /CITATION is not valid strict YAML/u],

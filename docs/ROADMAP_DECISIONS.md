@@ -43,6 +43,18 @@ there is no public `/dev` lane. Automated preview screenshots begin with the
 `WP-012-A` browser harness; until then, the exact staged site is the review
 artifact.
 
+## RD-007 — Keep publication dates and claims independent
+
+Treat the dataset-edition date, historical review cutoff, sitemap page-
+modification date, and annotated-tag release date as separate facts. C4.3-A
+preflight keeps the real specification `planned`, the release date null, and
+all public identity surfaces developmental. A later authorized controlled
+finalization may select the intended annotated-tag tagger calendar date, but
+the subsequently created annotated tag must verify that exact date before
+release-mode assets or promotion are allowed. A `ready` source snapshot is not by
+itself evidence of a tag, GitHub Release, approval, deployment, or successful
+public verification.
+
 ## Explicit deferrals
 
 ### Through v0.2.0

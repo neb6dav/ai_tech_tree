@@ -508,54 +508,111 @@ function isolatedGitEnvironment() {
   return environment;
 }
 
-function containsUnreleasedHeading(line) {
-  return /^[ ]{0,3}#{1,6}[ \t]+\[Unreleased\](?:[ \t]+#*)?[ \t]*$/iu.test(line.trimStart());
+function escapeRegularExpression(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/gu, '\\$&');
 }
 
-function stripHtmlComments(line, state) {
+function candidateSection(releaseSpec) {
+  if (releaseSpec.status === 'planned') {
+    return Object.freeze({
+      heading: '## [Unreleased]',
+      headingLabel: 'Unreleased',
+      sectionLabel: 'changes from [Unreleased]',
+      tokenPattern: 'Unreleased'
+    });
+  }
+  if (releaseSpec.status !== 'ready') {
+    throw assetsError('release specification status must be planned or ready when selecting candidate notes');
+  }
+  if (!/^(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)$/u.test(releaseSpec.version || '')) {
+    throw assetsError('ready release specification version must be a stable three-part semantic version');
+  }
+  if (!/^\d{4}-\d{2}-\d{2}$/u.test(releaseSpec.releaseDate || '')) {
+    throw assetsError('ready release specification must supply its actual YYYY-MM-DD releaseDate');
+  }
+  const parsedDate = new Date(`${releaseSpec.releaseDate}T00:00:00.000Z`);
+  if (Number.isNaN(parsedDate.valueOf()) || parsedDate.toISOString().slice(0, 10) !== releaseSpec.releaseDate) {
+    throw assetsError('ready release specification releaseDate is not a valid calendar date');
+  }
+  return Object.freeze({
+    heading: `## [${releaseSpec.version}] - ${releaseSpec.releaseDate}`,
+    headingLabel: `[${releaseSpec.version}]`,
+    sectionLabel: `frozen v${releaseSpec.version} changes`,
+    tokenPattern: escapeRegularExpression(releaseSpec.version)
+  });
+}
+
+function containsCandidateHeading(line, section) {
+  return new RegExp(
+    `^[ ]{0,3}#{1,6}[ \\t]+\\[${section.tokenPattern}\\](?:[ \\t]+.*)?$`,
+    'iu'
+  ).test(line.trimStart());
+}
+
+function stripHtmlComments(line, state, section) {
   let remainder = line;
   let visible = '';
   while (remainder.length > 0) {
     if (state.inComment) {
       const end = remainder.indexOf('-->');
       const hidden = end < 0 ? remainder : remainder.slice(0, end);
-      if (containsUnreleasedHeading(hidden)) {
-        throw assetsError('CHANGELOG hides an Unreleased heading inside an HTML comment');
+      if (containsCandidateHeading(hidden, section)) {
+        const article = section.headingLabel === 'Unreleased' ? 'an' : 'a';
+        throw assetsError(`CHANGELOG hides ${article} ${section.headingLabel} heading inside an HTML comment`);
       }
       if (end < 0) return visible;
       state.inComment = false;
-      remainder = remainder.slice(end + 3);
+      const suffix = remainder.slice(end + 3);
+      if (suffix.trim() !== '') {
+        throw assetsError('CHANGELOG HTML comments must occupy standalone physical lines');
+      }
+      remainder = suffix;
       continue;
     }
     const start = remainder.indexOf('<!--');
     if (start < 0) return visible + remainder;
-    visible += remainder.slice(0, start);
+    const prefix = remainder.slice(0, start);
+    if (prefix.trim() !== '') {
+      throw assetsError('CHANGELOG HTML comments must occupy standalone physical lines');
+    }
+    visible += prefix;
     state.inComment = true;
     remainder = remainder.slice(start + 4);
   }
   return visible;
 }
 
-export function extractUnreleasedBody(changelogBytes) {
+function extractCandidateSectionBody(changelogBytes, releaseSpec) {
   const text = decodeUtf8(changelogBytes, 'CHANGELOG');
+  const section = candidateSection(releaseSpec);
   const state = { inComment: false, fence: null };
   const visibleLines = [];
+  const headings = [];
   for (const originalLine of text.split('\n')) {
-    const line = stripHtmlComments(originalLine, state);
     if (state.fence !== null) {
-      if (containsUnreleasedHeading(line)) {
-        throw assetsError('CHANGELOG hides an Unreleased heading inside a fenced block');
+      const line = originalLine;
+      if (containsCandidateHeading(line, section)) {
+        const article = section.headingLabel === 'Unreleased' ? 'an' : 'a';
+        throw assetsError(`CHANGELOG hides ${article} ${section.headingLabel} heading inside a fenced block`);
       }
       visibleLines.push(line);
       const close = new RegExp(`^[ ]{0,3}${state.fence.character}{${state.fence.length},}[ \\t]*$`, 'u');
       if (close.test(line)) state.fence = null;
       continue;
     }
-    if (
-      /^[ ]{0,3}(?:-+|=+)[ \t]*$/u.test(line) &&
-      /^[ ]{0,3}\[Unreleased\][ \t]*$/iu.test(visibleLines.at(-1) || '')
-    ) {
-      throw assetsError('CHANGELOG contains an ambiguous Setext Unreleased heading');
+    if (!state.inComment && /^(?: {4,}| {0,3}\t).*<!--/u.test(originalLine)) {
+      throw assetsError('CHANGELOG contains an unsupported indented-code HTML comment opener');
+    }
+    const line = stripHtmlComments(originalLine, state, section);
+    if (/^[ ]{0,3}(?:-+|=+)[ \t]*$/u.test(line) && (visibleLines.at(-1) || '').trim() !== '') {
+      const previousIsTarget = new RegExp(
+        `^[ ]{0,3}\\[${section.tokenPattern}\\]${releaseSpec.status === 'ready' ? `[ \\t]+-[ \\t]+${escapeRegularExpression(releaseSpec.releaseDate)}` : ''}[ \\t]*$`,
+        'iu'
+      ).test(visibleLines.at(-1));
+      if (previousIsTarget) {
+        throw assetsError(`CHANGELOG contains an ambiguous Setext ${section.headingLabel} heading`);
+      }
+      throw assetsError('CHANGELOG contains an unsupported Setext heading');
     }
     if (/<(?:\/?[A-Za-z][A-Za-z0-9-]*(?=[ \t/>]|$)|[!?])/u.test(line)) {
       throw assetsError('CHANGELOG contains an unsupported raw HTML block');
@@ -566,30 +623,39 @@ export function extractUnreleasedBody(changelogBytes) {
       visibleLines.push(line);
       continue;
     }
-    if (/^[ ]{0,3}#{1,6}[ \t]+\[Unreleased\]/iu.test(line) && line !== '## [Unreleased]') {
-      throw assetsError('CHANGELOG contains a malformed or ambiguous Unreleased heading');
+    if (containsCandidateHeading(line, section) && line !== section.heading) {
+      throw assetsError(`CHANGELOG contains a malformed or ambiguous ${section.headingLabel} heading`);
     }
+    if (/^[ ]{1,3}#{1,2}(?:[ \t]+|$)/u.test(line)) {
+      throw assetsError('CHANGELOG contains an unsupported indented ATX H1 or H2 heading');
+    }
+    const lineIndex = visibleLines.length;
     visibleLines.push(line);
+    if (/^#{1,2}(?:[ \t]+|$)/u.test(line)) headings.push({ index: lineIndex, line });
   }
   if (state.inComment) throw assetsError('CHANGELOG contains an unterminated HTML comment');
   if (state.fence !== null) throw assetsError('CHANGELOG contains an unterminated fenced block');
 
-  const headings = [];
-  for (const [index, line] of visibleLines.entries()) {
-    if (/^[ ]{0,3}##(?:[ \t]+|$)/u.test(line)) headings.push({ index, line });
+  const matching = headings.filter(heading => heading.line === section.heading);
+  if (matching.length !== 1) {
+    throw assetsError(`CHANGELOG must contain exactly one visible ${section.heading} heading`);
   }
-  const unreleased = headings.filter(heading => heading.line === '## [Unreleased]');
-  if (unreleased.length !== 1) {
-    throw assetsError('CHANGELOG must contain exactly one visible ## [Unreleased] heading');
-  }
-  const start = unreleased[0].index + 1;
+  const start = matching[0].index + 1;
   const nextHeading = headings.find(heading => heading.index >= start);
   const end = nextHeading?.index ?? visibleLines.length;
   const bodyLines = visibleLines.slice(start, end);
   while (bodyLines.length > 0 && bodyLines[0].trim() === '') bodyLines.shift();
   while (bodyLines.length > 0 && bodyLines.at(-1).trim() === '') bodyLines.pop();
-  if (bodyLines.length === 0) throw assetsError('CHANGELOG [Unreleased] section must not be empty');
-  return `${bodyLines.join('\n')}\n`;
+  if (bodyLines.length === 0) throw assetsError(`CHANGELOG ${section.headingLabel} section must not be empty`);
+  return Object.freeze({ body: `${bodyLines.join('\n')}\n`, section });
+}
+
+export function extractUnreleasedBody(changelogBytes) {
+  return extractCandidateSectionBody(changelogBytes, { status: 'planned' }).body;
+}
+
+export function extractCandidateChangeBody(changelogBytes, releaseSpec) {
+  return extractCandidateSectionBody(changelogBytes, releaseSpec);
 }
 
 function readCommittedBlob(repositoryRoot, commit, relativePath) {
@@ -608,7 +674,7 @@ function readCommittedBlob(repositoryRoot, commit, relativePath) {
   }
 }
 
-function candidateNotes(manifest, unreleasedBody) {
+function candidateNotes(manifest, candidateChanges) {
   const digest = manifest.dataDigest === null ? 'not recorded' : manifest.dataDigest;
   return Buffer.from([
     `# ${manifest.releaseSpec.assetStem} candidate assets`,
@@ -622,9 +688,9 @@ function candidateNotes(manifest, unreleasedBody) {
     '- Publication mode: `preview`',
     `- Release-spec status: \`${manifest.releaseSpec.status}\``,
     '',
-    '## Candidate changes from [Unreleased]',
+    `## Candidate ${candidateChanges.section.sectionLabel}`,
     '',
-    unreleasedBody.trimEnd(),
+    candidateChanges.body.trimEnd(),
     ''
   ].join('\n'), 'utf8');
 }
@@ -691,7 +757,7 @@ export async function buildCandidateReleaseAssets({
   const changelogPath = committedConfig?.metadata?.changelogFile;
   normalizeManifestPath(changelogPath, 'CHANGELOG path');
   const changelogBytes = readCommittedBlob(resolvedRoot, fullCommit, changelogPath);
-  const unreleasedBody = extractUnreleasedBody(changelogBytes);
+  const candidateChanges = extractCandidateChangeBody(changelogBytes, captured.manifest.releaseSpec);
 
   const assetStem = assertPortableAssetStem(captured.manifest.releaseSpec.assetStem);
   const candidateBase = `${assetStem}-candidate-${fullCommit}`;
@@ -701,7 +767,7 @@ export async function buildCandidateReleaseAssets({
   const notesName = `${candidateBase}.notes.md`;
   const checksumsName = `${candidateBase}.SHA256SUMS`;
   const archiveBytes = buildUstarArchive(archiveRoot, captured.paths, captured.buffers);
-  const notesBytes = candidateNotes(captured.manifest, unreleasedBody);
+  const notesBytes = candidateNotes(captured.manifest, candidateChanges);
   const distributable = new Map([
     [archiveName, archiveBytes],
     [manifestName, captured.manifestBytes],

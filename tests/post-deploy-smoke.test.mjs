@@ -69,7 +69,7 @@ function makeFixture({ mutateManifest, mutateFiles } = {}) {
       path: 'config/pages-stage.v1.json',
       sha256: '8'.repeat(64)
     },
-    edition: '2026-08-20-public-beta-2',
+    edition: '2026-08-19-public-beta-2',
     version: '0.1.1',
     releaseState: 'Public beta',
     commit: COMMIT,
@@ -81,7 +81,7 @@ function makeFixture({ mutateManifest, mutateFiles } = {}) {
       status: 'ready',
       tag: TAG,
       version: '0.1.1',
-      edition: '2026-08-20-public-beta-2',
+      edition: '2026-08-19-public-beta-2',
       releaseDate: '2026-08-20',
       releaseState: 'Public beta',
       defaultBranch: 'main',
@@ -232,7 +232,7 @@ test('plan is deterministic, sorted, complete, and makes zero requests', async (
   assert.equal(first.mode, 'plan');
   assert.equal(first.baseUrl, BASE);
   assert.equal(first.version, '0.1.1');
-  assert.equal(first.edition, '2026-08-20-public-beta-2');
+  assert.equal(first.edition, '2026-08-19-public-beta-2');
   assert.equal(first.releaseState, 'Public beta');
   assert.equal(first.dataDigest, '7'.repeat(64));
   assert.equal(first.clientStateUrls.length, 4);
@@ -278,7 +278,7 @@ test('happy-path execution verifies exact manifest bytes before and after every 
   assert.deepEqual(first, second);
   assert.equal(first.status, 'verified');
   assert.equal(first.version, '0.1.1');
-  assert.equal(first.edition, '2026-08-20-public-beta-2');
+  assert.equal(first.edition, '2026-08-19-public-beta-2');
   assert.equal(first.releaseState, 'Public beta');
   assert.equal(first.dataDigest, '7'.repeat(64));
   assert.equal(first.representativeAlias.serverArtifactVerified, true);
@@ -700,12 +700,17 @@ test('manifest validation rejects preview, planned, identity drift, incomplete c
     ['top version drift', manifest => { manifest.version = '0.1.2'; }, /manifest version must be exactly 0\.1\.1/u],
     ['spec version drift', manifest => { manifest.releaseSpec.version = '0.1.2'; }, /version must match the expected tag/u],
     ['invalid edition identity', manifest => { manifest.edition = 'alpha'; manifest.releaseSpec.edition = 'alpha'; }, /edition date prefix must be an ISO calendar date/u],
-    ['edition date and release date drift', manifest => {
-      manifest.edition = '2026-08-21-public-beta-2';
-      manifest.releaseSpec.edition = '2026-08-21-public-beta-2';
-    }, /edition date prefix must match releaseSpec.releaseDate/u],
+    ['invalid edition calendar date', manifest => {
+      manifest.edition = '2026-02-30-public-beta-2';
+      manifest.releaseSpec.edition = '2026-02-30-public-beta-2';
+    }, /edition date prefix must be a valid ISO calendar date/u],
+    ['edition without date delimiter', manifest => {
+      manifest.edition = '2026-08-19public-beta-2';
+      manifest.releaseSpec.edition = '2026-08-19public-beta-2';
+    }, /edition must begin with YYYY-MM-DD-/u],
     ['edition drift', manifest => { manifest.releaseSpec.edition = 'other'; }, /edition must match/u],
     ['invalid release date', manifest => { manifest.releaseSpec.releaseDate = '2026-02-30'; manifest.promotion.releaseDate = '2026-02-30'; }, /valid ISO calendar date/u],
+    ['promotion release date drift', manifest => { manifest.promotion.releaseDate = '2026-08-19'; }, /promotion.releaseDate must match/u],
     ['release state drift', manifest => { manifest.releaseSpec.releaseState = 'Stable'; }, /releaseState must match/u],
     ['coordinated release state drift', manifest => { manifest.releaseState = 'Stable'; manifest.releaseSpec.releaseState = 'Stable'; }, /releaseState must be exactly Public beta/u],
     ['default branch drift', manifest => { manifest.releaseSpec.defaultBranch = 'develop'; }, /defaultBranch must be exactly main/u],

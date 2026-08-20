@@ -18,6 +18,7 @@ import test from 'node:test';
 
 import {
   buildCandidateReleaseAssets,
+  extractCandidateChangeBody,
   extractUnreleasedBody,
   releaseAssetsConstants,
   validateCandidateArchiveInventory
@@ -44,14 +45,18 @@ function git(root, argumentsList, environment = {}) {
   }).trim();
 }
 
-function releaseSpec({ edition = '2026-08-20-test-edition' } = {}) {
+function releaseSpec({
+  edition = '2026-08-20-test-edition',
+  status = 'planned',
+  releaseDate = status === 'ready' ? '2026-08-23' : null
+} = {}) {
   return {
     schemaVersion: '1.0.0',
-    status: 'planned',
+    status,
     tag: 'v1.2.3',
     version: '1.2.3',
     edition,
-    releaseDate: null,
+    releaseDate,
     releaseState: 'Public beta',
     defaultBranch: 'main',
     protectedMainRef: 'refs/remotes/origin/main',
@@ -103,11 +108,34 @@ const normalChangelog = [
   ''
 ].join('\n');
 
+const readyChangelog = [
+  '# Changelog',
+  '',
+  '## [Unreleased]',
+  '',
+  '- Post-freeze follow-up that is not part of v1.2.3.',
+  '',
+  '## [1.2.3] - 2026-08-23',
+  '',
+  '### Added',
+  '',
+  '- Frozen v1.2.3 release note.',
+  '- Edition and publication dates are independent.',
+  '',
+  '## [1.2.2] - 2026-08-01',
+  '',
+  '- Prior release.',
+  ''
+].join('\n');
+
 async function makeFixture({
-  changelog = normalChangelog,
+  changelog,
   edition = '2026-08-20-test-edition',
-  indexTarget = 'index.html'
+  indexTarget = 'index.html',
+  status = 'planned',
+  releaseDate = status === 'ready' ? '2026-08-23' : null
 } = {}) {
+  const selectedChangelog = changelog ?? (status === 'ready' ? readyChangelog : normalChangelog);
   // GitHub-hosted Windows can expose os.tmpdir() through an 8.3 alias. Keep
   // fixture-created paths in the canonical spelling expected by the output
   // parent guard; production callers still have to supply a canonical path.
@@ -128,24 +156,26 @@ async function makeFixture({
     generatorVersion: '4.5.6',
     dataset: {
       edition,
-      releaseState: 'Development edition',
+      releaseState: status === 'ready' ? 'Public beta' : 'Development edition',
       dataDigest: 'b'.repeat(64)
     }
   }, null, 2)}\n`);
-  await write(root, 'CITATION.cff', [
+  const citationLines = [
     'cff-version: 1.2.0',
-    'message: untagged development edition',
+    `message: ${status === 'ready' ? 'cite the annotated release manifest' : 'untagged development edition'}`,
     'title: AI Research Tech Tree',
     'type: dataset',
     'authors:',
     '  - name: Fixture Author',
-    'version: 1.2.3-dev',
+    `version: ${status === 'ready' ? '1.2.3' : '1.2.3-dev'}`,
     'repository-code: https://github.com/neb6dav/ai_tech_tree',
     'url: https://neb6dav.github.io/ai_tech_tree/',
-    ''
-  ].join('\n'));
-  await write(root, 'CHANGELOG.md', changelog);
-  await write(root, 'config/releases/v1.2.3.json', `${JSON.stringify(releaseSpec({ edition }), null, 2)}\n`);
+  ];
+  if (status === 'ready') citationLines.push(`date-released: ${releaseDate}`);
+  citationLines.push('');
+  await write(root, 'CITATION.cff', citationLines.join('\n'));
+  await write(root, 'CHANGELOG.md', selectedChangelog);
+  await write(root, 'config/releases/v1.2.3.json', `${JSON.stringify(releaseSpec({ edition, status, releaseDate }), null, 2)}\n`);
   await write(root, 'config/pages-stage.v1.json', `${JSON.stringify(stageConfig({ indexTarget }), null, 2)}\n`);
   await write(root, 'index.html', '<!doctype html><title>Fixture</title>\n');
   await write(root, 'public/data/z.json', '{"z":1}\n');
@@ -314,6 +344,37 @@ test('builds byte-identical deterministic candidate assets with exact USTAR and 
   assert.ok(notes.includes(`Commit: \`${fixture.commit}\``));
   assert.match(notes, /Data digest: `b{64}`/u);
   assert.match(notes, /- Deterministic candidate assets\./u);
+  assert.doesNotMatch(notes, /Prior release/u);
+});
+
+test('ready previews remain candidate-only and source notes from the frozen version section', async () => {
+  const fixture = await makeFixture({ status: 'ready' });
+  const outputDirectory = path.join(fixture.base, 'ready-candidate');
+  const result = await buildCandidateReleaseAssets({
+    repositoryRoot: fixture.root,
+    commit: fixture.commit,
+    outputDirectory,
+    environment: candidateEnvironment()
+  });
+  assert.equal(result.releaseSpecStatus, 'ready');
+  assert.equal(result.publicationMode, 'preview');
+  const output = await readOutputFiles(outputDirectory);
+  assert.equal(output.size, 4);
+  assert.ok([...output.keys()].every(name => name.includes('-candidate-')));
+  const manifest = JSON.parse(
+    [...output.entries()].find(([name]) => name.endsWith('.release-manifest.json'))[1].toString('utf8')
+  );
+  assert.equal(manifest.publicationMode, 'preview');
+  assert.equal(manifest.tag, null);
+  assert.equal(manifest.promotion, null);
+  assert.equal(manifest.releaseSpec.status, 'ready');
+  assert.equal(manifest.releaseSpec.releaseDate, '2026-08-23');
+  assert.equal(manifest.edition, '2026-08-20-test-edition');
+  const notes = [...output.entries()].find(([name]) => name.endsWith('.notes.md'))[1].toString('utf8');
+  assert.match(notes, /## Candidate frozen v1\.2\.3 changes/u);
+  assert.match(notes, /Frozen v1\.2\.3 release note/u);
+  assert.match(notes, /Edition and publication dates are independent/u);
+  assert.doesNotMatch(notes, /Post-freeze follow-up/u);
   assert.doesNotMatch(notes, /Prior release/u);
 });
 
@@ -506,6 +567,168 @@ test('rejects hidden or ambiguous Unreleased headings while permitting harmless 
       environment: candidateEnvironment()
     }),
     /hides an Unreleased heading/u
+  );
+});
+
+test('ready note extraction requires one exact dated version section and rejects hidden ambiguity', () => {
+  const spec = releaseSpec({ status: 'ready', releaseDate: '2026-08-23' });
+  const extracted = extractCandidateChangeBody(Buffer.from(readyChangelog), spec);
+  assert.equal(extracted.section.heading, '## [1.2.3] - 2026-08-23');
+  assert.match(extracted.body, /Frozen v1\.2\.3 release note/u);
+  assert.doesNotMatch(extracted.body, /Post-freeze/u);
+  const h1Boundary = extractCandidateChangeBody(Buffer.from([
+    '# Changelog',
+    '',
+    '## [Unreleased]',
+    '',
+    '## [1.2.3] - 2026-08-23',
+    '',
+    '- Intended release note.',
+    '',
+    '# Appendix',
+    '',
+    '- MUST NOT BE IN VERSION NOTES.',
+    ''
+  ].join('\n')), spec);
+  assert.match(h1Boundary.body, /Intended release note/u);
+  assert.doesNotMatch(h1Boundary.body, /Appendix|MUST NOT/u);
+  const fencedHeading = extractCandidateChangeBody(Buffer.from([
+    '# Changelog',
+    '',
+    '## [Unreleased]',
+    '',
+    '## [1.2.3] - 2026-08-23',
+    '',
+    '- Before code example.',
+    '',
+    '```markdown',
+    '<!-- literal code comment, not an HTML block -->',
+    '## This is displayed as code, not a section boundary',
+    '```',
+    '',
+    '- AFTER FENCE MUST REMAIN IN VERSION NOTES.',
+    '',
+    '## [1.2.2] - 2026-08-01',
+    '',
+    '- Prior release.',
+    ''
+  ].join('\n')), spec);
+  assert.match(fencedHeading.body, /<!-- literal code comment, not an HTML block -->/u);
+  assert.match(fencedHeading.body, /This is displayed as code/u);
+  assert.match(fencedHeading.body, /AFTER FENCE MUST REMAIN/u);
+  assert.match(fencedHeading.body, /```\n\n- AFTER FENCE/u);
+  assert.doesNotMatch(fencedHeading.body, /Prior release/u);
+  assert.throws(
+    () => extractCandidateChangeBody(Buffer.from([
+      '# Changelog',
+      '',
+      '## [Unreleased]',
+      '',
+      '## [1.2.3] - 2026-08-23',
+      '',
+      '- Before adversarial fence.',
+      '',
+      '```markdown',
+      '<!-- literal code comment starts',
+      '```',
+      '',
+      '## [1.2.2] - 2026-08-01',
+      '',
+      '-->',
+      '- MUST NOT BE IN VERSION NOTES.',
+      '```',
+      ''
+    ].join('\n')), spec),
+    /unterminated fenced block/u
+  );
+  assert.throws(
+    () => extractCandidateChangeBody(Buffer.from([
+      '# Changelog',
+      '',
+      '## [Unreleased]',
+      '',
+      '## [1.2.3] - 2026-08-23',
+      '',
+      '- Intended release note.',
+      '<!-- harmless comment -->```markdown',
+      '',
+      '## [1.2.2] - 2026-08-01',
+      '',
+      '- MUST NOT BE IN VERSION NOTES.',
+      '```',
+      ''
+    ].join('\n')), spec),
+    /HTML comments must occupy standalone physical lines/u
+  );
+  assert.throws(
+    () => extractCandidateChangeBody(Buffer.from([
+      '# Changelog',
+      '',
+      '## [Unreleased]',
+      '',
+      '## [1.2.3] - 2026-08-23',
+      '',
+      '- Main release item',
+      '',
+      '  ## Nested migration detail',
+      '',
+      '  - THIS BELONGS TO VERSION NOTES.',
+      '',
+      '- FOLLOWING RELEASE NOTE MUST REMAIN.',
+      '',
+      '## [1.2.2] - 2026-08-01',
+      ''
+    ].join('\n')), spec),
+    /unsupported indented ATX H1 or H2 heading/u
+  );
+  for (const indent of ['    ', '\t', ' \t', '  \t', '   \t']) {
+    assert.throws(
+      () => extractCandidateChangeBody(Buffer.from([
+        '# Changelog',
+        '',
+        '## [Unreleased]',
+        '',
+        '## [1.2.3] - 2026-08-23',
+        '',
+        '- Intended release note.',
+        '',
+        `${indent}<!-- literal indented code starts`,
+        '## [1.2.2] - 2026-08-01',
+        `${indent}-->`,
+        '- MUST NOT BE IN VERSION NOTES.',
+        ''
+      ].join('\n')), spec),
+      /unsupported indented-code HTML comment opener/u
+    );
+  }
+  for (const changelog of [
+    readyChangelog.replace('## [1.2.3] - 2026-08-23', '### [1.2.3] - 2026-08-23'),
+    `${readyChangelog}\n## [1.2.3] - 2026-08-23\n\n- Duplicate.\n`,
+    readyChangelog.replace(
+      '## [1.2.3] - 2026-08-23',
+      '<!--\n## [1.2.3] - 2026-08-23\n-->\n\n## [1.2.3] - 2026-08-23'
+    ),
+    readyChangelog.replace(
+      '## [1.2.3] - 2026-08-23',
+      '```text\n## [1.2.3] - 2026-08-23\n```\n\n## [1.2.3] - 2026-08-23'
+    ),
+    readyChangelog.replace(
+      '## [1.2.3] - 2026-08-23',
+      '[1.2.3] - 2026-08-23\n------------------------\n\n## [1.2.3] - 2026-08-23'
+    ),
+    readyChangelog.replace(
+      '## [1.2.2] - 2026-08-01',
+      '[1.2.3] - 2026-08-22\n------------------------\n\n- MUST NOT BE IN VERSION NOTES.\n\n## [1.2.2] - 2026-08-01'
+    )
+  ]) {
+    assert.throws(
+      () => extractCandidateChangeBody(Buffer.from(changelog), spec),
+      /\[1\.2\.3\].*(?:heading|Setext)|exactly one visible|unsupported Setext/iu
+    );
+  }
+  assert.throws(
+    () => extractCandidateChangeBody(Buffer.from(readyChangelog), { ...spec, releaseDate: '2026-02-30' }),
+    /not a valid calendar date/u
   );
 });
 

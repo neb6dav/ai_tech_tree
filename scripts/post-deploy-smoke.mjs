@@ -290,10 +290,7 @@ function validateReleaseIdentity(manifest, expectedTag, expectedCommit) {
     fail('release specification version must match the expected tag and top-level manifest version');
   }
   if (spec.edition !== edition) fail('release specification edition must match the top-level manifest edition');
-  const releaseDate = assertIsoDate(spec.releaseDate, 'release manifest releaseSpec.releaseDate');
-  if (edition.slice(0, 10) !== releaseDate) {
-    fail('release manifest edition date prefix must match releaseSpec.releaseDate');
-  }
+  assertIsoDate(spec.releaseDate, 'release manifest releaseSpec.releaseDate');
   if (spec.releaseState !== releaseState) {
     fail('release specification releaseState must match the top-level manifest releaseState');
   }

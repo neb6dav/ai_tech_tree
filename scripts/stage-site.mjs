@@ -82,6 +82,17 @@ function assertNonEmptyString(value, label) {
   return value;
 }
 
+function assertIsoDate(value, label) {
+  if (!/^\d{4}-\d{2}-\d{2}$/u.test(value)) {
+    throw stageError(`${label} must use YYYY-MM-DD`);
+  }
+  const parsed = new Date(`${value}T00:00:00.000Z`);
+  if (Number.isNaN(parsed.valueOf()) || parsed.toISOString().slice(0, 10) !== value) {
+    throw stageError(`${label} is not a valid calendar date`);
+  }
+  return value;
+}
+
 export function normalizeManifestPath(value, label = 'path') {
   assertNonEmptyString(value, label);
   if (value.includes('\\')) throw stageError(`${label} must use forward slashes`);
@@ -348,6 +359,8 @@ function validateReleaseIdentity({
   }
 
   const edition = assertNonEmptyString(datasetDocument.dataset?.edition, 'dataset edition');
+  assertIsoDate(edition.slice(0, 10), 'dataset edition date prefix');
+  if (edition[10] !== '-') throw stageError('dataset edition must begin with YYYY-MM-DD-');
   const releaseState = assertNonEmptyString(datasetDocument.dataset?.releaseState, 'dataset releaseState');
   if (releaseSpec.edition !== edition) {
     throw stageError(`release specification edition ${releaseSpec.edition} does not match dataset edition ${edition}`);
@@ -393,9 +406,6 @@ function validateReleaseIdentity({
   } else {
     if (releaseState !== releaseSpec.releaseState || /development/iu.test(releaseState)) {
       throw stageError(`ready release dataset releaseState must be exactly ${releaseSpec.releaseState}`);
-    }
-    if (edition.slice(0, 10) !== releaseSpec.releaseDate) {
-      throw stageError('ready release edition date must match releaseDate');
     }
     if (citation.document['date-released'] !== releaseSpec.releaseDate) {
       throw stageError(`CITATION top-level date-released must be exactly ${releaseSpec.releaseDate}`);

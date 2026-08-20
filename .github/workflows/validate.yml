@@ -190,3 +190,128 @@ jobs:
           if-no-files-found: error
           compression-level: 0
           retention-days: 14
+
+  synthetic-stable-assets:
+    name: Synthetic test-only stable assets (${{ matrix.platform }})
+    if: github.event_name == 'pull_request'
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: ubuntu
+            os: ubuntu-latest
+          - platform: windows
+            os: windows-latest
+
+    steps:
+      - name: Check out the exact pull-request merge commit
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+          fetch-tags: false
+          persist-credentials: false
+
+      - name: Set up exact synthetic-fixture Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24.14.1
+          cache: npm
+
+      - name: Install exact dependencies
+        run: npm ci
+
+      - name: Test synthetic stable bundle verifier
+        run: npm run test:stable-bundle
+
+      - name: Build synthetic test-only stable assets
+        run: >
+          npm run build:synthetic-stable-fixture --
+          --output-directory "${{ runner.temp }}/synthetic-stable-assets"
+
+      - name: Independently verify synthetic test-only stable bundle
+        run: >
+          npm run verify:stable-bundle --
+          --bundle-directory "${{ runner.temp }}/synthetic-stable-assets"
+          --require-synthetic-test-only
+
+      - name: Verify exact checkout and unchanged tracked source
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          git diff --exit-code -- .
+          test -z "$(git status --porcelain --untracked-files=all)"
+
+      - name: Upload synthetic test-only parity handoff
+        uses: actions/upload-artifact@v4
+        with:
+          name: synthetic-test-only-stable-handoff-${{ github.sha }}-${{ matrix.platform }}
+          path: ${{ runner.temp }}/synthetic-stable-assets
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 1
+
+  synthetic-stable-assets-parity:
+    name: Verify synthetic test-only stable byte parity
+    if: github.event_name == 'pull_request'
+    needs:
+      - synthetic-stable-assets
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+
+    steps:
+      - name: Check out the exact pull-request merge commit
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+          fetch-tags: false
+          persist-credentials: false
+
+      - name: Set up exact synthetic-fixture Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24.14.1
+
+      - name: Download Ubuntu synthetic test-only bundle
+        uses: actions/download-artifact@v5
+        with:
+          name: synthetic-test-only-stable-handoff-${{ github.sha }}-ubuntu
+          path: ${{ runner.temp }}/synthetic-stable-assets/ubuntu
+
+      - name: Download Windows synthetic test-only bundle
+        uses: actions/download-artifact@v5
+        with:
+          name: synthetic-test-only-stable-handoff-${{ github.sha }}-windows
+          path: ${{ runner.temp }}/synthetic-stable-assets/windows
+
+      - name: Independently verify bundles and exact four-file byte parity
+        shell: bash
+        run: |
+          set -euo pipefail
+          root="$RUNNER_TEMP/synthetic-stable-assets"
+
+          for platform in ubuntu windows; do
+            directory="$root/$platform"
+            test "$(find "$directory" -mindepth 1 -maxdepth 1 -type f | wc -l)" -eq 4
+            test -z "$(find "$directory" -mindepth 1 -maxdepth 1 ! -type f -print -quit)"
+            npm run verify:stable-bundle -- \
+              --bundle-directory "$directory" \
+              --require-synthetic-test-only
+          done
+
+          diff --recursive --brief --no-dereference \
+            "$root/ubuntu" \
+            "$root/windows"
+
+          (
+            cd "$root/ubuntu"
+            sha256sum -- *
+          )

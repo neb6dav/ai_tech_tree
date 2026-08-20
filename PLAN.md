@@ -142,10 +142,25 @@ last_verified_commands:
     status: "PASS after findings resolved"
     verified_by: "root plus two independent read-only reviewers"
     scope: "Canonical stage configuration, Node/npm/lock identity, non-null data digest, no-lazy-fetch Git policy, executing-tool-to-commit binding, deterministic stable bundle closure, second annotated-ref verification with cleanup, real planned-identity rejection, and build-only workflow hold returned SHIP"
+  - command: "Reconcile corrected C4.4-A1 validation workflow"
+    status: "PASS"
+    runtime: "GitHub Actions on Windows and Ubuntu"
+    verified_by: "root"
+    scope: "Workflow 32414735832; the full repository gate and both candidate builders passed, the candidate parity job passed, and the preceding Windows-only fixture failure was corrected without weakening the canonical production-path guard; PR evidence https://github.com/neb6dav/ai_tech_tree/pull/7#issuecomment-5361380273"
+  - command: "Build and independently verify the C4.4-A2 synthetic stable bundle"
+    status: "PASS"
+    runtime: "Node v24.14.1, npm 11.11.0, and Git 2.55"
+    verified_by: "root"
+    scope: "Remote-less SHA-1 fixture commit a189c3f20f9f376dc54576eb4cac9aee7b542a36 and annotated tag object 0f3eed940af97bfb8374a9c3c43d8b2173dd8159; exact four-file closure; archive SHA-256 63eafbf42670e7f464de2125e07e2afc268a3ed3a87cd35077bd6c1c65b0bc13; standalone manifest 4c2186fce9cd73cad20bb72f1c4b9e365c7dfea5a9545cffa056b6d1e9aa97cc; output removed after proof"
+  - command: "C4.4-A2 focused, adjacent, and hostile verification"
+    status: "PASS"
+    verified_by: "root plus two independent read-only reviewers"
+    scope: "54 stable-bundle, 91 workflow-policy, 33 release-asset, and 29 finalization-plan tests; seven-file executed-source digest lock, source and manifest semantic closure, safe USTAR extraction, exact synthetic toolchain, read-only pull-request workflow boundary, and no ordinary npm-test stable-mode path returned SHIP"
 next_exact_action: >-
-  Implement C4.4-A2's Windows/Ubuntu synthetic stable-bundle parity and
-  standalone offline bundle verification while preserving the real planned
-  identity and the build-only workflow hold.
+  Commit and push the locally verified C4.4-A2 implementation, require the
+  Windows and Ubuntu synthetic jobs plus their independent parity job to pass,
+  download and reverify both one-day handoffs, and record exact byte parity
+  before marking the checkpoint complete.
 known_blockers:
   - "WP-011-B is stacked on verified draft PR #5 until WP-011-A is separately authorized to merge."
   - "No merge, annotated tag, GitHub Release, environment approval, or public deployment is authorized."
@@ -153,7 +168,7 @@ known_blockers:
   - "Browser performance metrics and automated preview screenshots remain pending WP-012-A."
   - "The github-pages environment has no required reviewer and permits administrator bypass; immutable GitHub Releases are disabled. These external controls require separate authorization before any C4 promotion run."
   - "No active no-bypass tag ruleset protects v0.1.1, and the verified production recovery artifact is local rather than durable and runner-accessible."
-release_gate_status: "wp_011_b_c4_4_a1_locally_verified_a2_implementing_offline_only"
+release_gate_status: "wp_011_b_c4_4_a1_remote_verified_a2_locally_verified_pending_remote_parity"
 release_details:
   version: "v0.1.1"
   title: "Publication-contract repair"
@@ -179,12 +194,12 @@ release_details:
     active_checkpoint:
       id: "C4.4-A2"
       title: "Cross-platform synthetic stable-asset parity"
-      status: "implementing"
+      status: "locally_verified_pending_remote_parity"
       next_exact_action: >-
-        Add and hostile-test read-only CI fixtures that construct the same local
-        synthetic annotated tag on Windows and Ubuntu, compare all four stable
-        bundle files byte-for-byte, and verify the bundle offline; leave the real
-        release specification planned and perform no network or external mutation.
+        Commit and push the reviewed read-only CI fixture, require the Windows
+        and Ubuntu handoffs plus parity job to pass, download and independently
+        verify both bundles, and reconcile their four exact file digests; leave
+        the real release specification planned and perform no promotion action.
     scope:
       - "Publish stable and compatibility Opportunity endpoints."
       - "Move exported human URLs to the root application."

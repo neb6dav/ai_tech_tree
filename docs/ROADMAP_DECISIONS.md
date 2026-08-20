@@ -68,9 +68,12 @@ publication and removes temporary output on drift.
 C4.4-A2 proves the same synthetic four-file bundle byte-for-byte on Windows and
 Ubuntu. C4.4-B adds only read-only promotion-control, lifecycle-receipt, and
 durable-rollback preflight. Through B, the active workflow inventory remains the
-read-only validation workflow and reusable build-only Pages hold, and neither
-workflow may enter stable or release mode, contact production, mutate GitHub,
-or deploy.
+read-only validation workflow and reusable build-only Pages hold. Neither may
+enter stable or release mode against the real checkout or release identity,
+contact production, mutate GitHub, or deploy. The sole hermetic exception is
+A2's reviewed pull-request-only, credential-free, remote-less fixture, which
+invokes stable mode only inside a disposable synthetic repository to prove
+cross-platform byte parity and has no promotion authority.
 
 Source finalization, annotated-tag creation and push, and GitHub Release/Pages
 promotion remain later, distinct actions requiring their own authorization and

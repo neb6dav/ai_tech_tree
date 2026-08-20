@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
 import { readFile, readdir } from 'node:fs/promises';
 import path from 'node:path';
 import test from 'node:test';
@@ -13,6 +14,20 @@ const WORKFLOW_DIRECTORY = path.join(REPOSITORY_ROOT, '.github', 'workflows');
 const VALIDATE_PATH = path.join(REPOSITORY_ROOT, '.github', 'workflows', 'validate.yml');
 const PAGES_PATH = path.join(REPOSITORY_ROOT, '.github', 'workflows', 'pages.yml');
 const PACKAGE_PATH = path.join(REPOSITORY_ROOT, 'package.json');
+const PACKAGE_LOCK_PATH = path.join(REPOSITORY_ROOT, 'package-lock.json');
+const NVMRC_PATH = path.join(REPOSITORY_ROOT, '.nvmrc');
+const NODE_VERSION_PATH = path.join(REPOSITORY_ROOT, '.node-version');
+const SYNTHETIC_FIXTURE_PATH = path.join(REPOSITORY_ROOT, 'scripts', 'synthetic-stable-fixture.mjs');
+const STABLE_BUNDLE_VERIFIER_PATH = path.join(REPOSITORY_ROOT, 'scripts', 'verify-stable-bundle.mjs');
+const REVIEWED_SYNTHETIC_SOURCE_SHA256 = Object.freeze({
+  'scripts/release-assets.mjs': '8841efff842e00dd93bf69a849b7701ae519bfd70b9bc5618c440ee37b90f83f',
+  'scripts/release-ref.mjs': 'c2d7f2be57441fedf046f84e4c70e911ee8ebb7f911b65742b391f274a038a4b',
+  'scripts/release-spec.mjs': 'ba57496454c0e565bd6b315e8c52aba6998774aff27d6c55eac32e141074e89f',
+  'scripts/stage-site.mjs': '66f6501b44f8377049c4a3ce5398138d669dd2103c0f6f3d18ccfbc7daa35aed',
+  'scripts/strict-json.mjs': '32319f64ee28a8e4c0329d24ef26c8ef26c94f12d77f9f20656f7e744111de7e',
+  'scripts/synthetic-stable-fixture.mjs': 'bee4923947e0ca595d23776ccb57c0b6a14592590c4a642a2495725df648342d',
+  'scripts/verify-stable-bundle.mjs': 'a91e8b8ea3e002f9cf873379408ff2bbed0227b89d1f8bbdf6ee3222c499e36c'
+});
 const EXPECTED_WORKFLOW_FILES = ['pages.yml', 'validate.yml'];
 const SAFE_POST_DEPLOY_TEST_COMMAND = 'node --test tests/post-deploy-smoke.test.mjs';
 const EXPECTED_PACKAGE_SCRIPTS = Object.freeze({
@@ -22,8 +37,10 @@ const EXPECTED_PACKAGE_SCRIPTS = Object.freeze({
   build: 'node build.js',
   'build:release-candidate': 'node scripts/release-assets.mjs',
   'build:stable-release-assets': 'node scripts/release-assets.mjs --mode stable',
+  'build:synthetic-stable-fixture': 'node scripts/synthetic-stable-fixture.mjs',
   'plan:release-finalization': 'node scripts/release-finalization-plan.mjs',
   'stage:site': 'node scripts/stage-site.mjs',
+  'verify:stable-bundle': 'node scripts/verify-stable-bundle.mjs',
   'test:core': 'node release-gate.js && node accessibility-gate.js && node ui-layout-gate.js && node network-gate.js && node opportunity-gate.js',
   'test:network': 'node network-gate.js',
   'test:opportunity': 'node opportunity-gate.js',
@@ -31,6 +48,7 @@ const EXPECTED_PACKAGE_SCRIPTS = Object.freeze({
   'test:release-spec': 'node --test tests/release-spec.test.mjs',
   'test:release-ref': 'node --test tests/release-ref.test.mjs',
   'test:release-assets': 'node --test tests/release-assets.test.mjs',
+  'test:stable-bundle': 'node --test tests/stable-bundle.test.mjs',
   'test:release-finalization-plan': 'node --test tests/release-finalization-plan.test.mjs',
   'test:post-deploy-smoke': SAFE_POST_DEPLOY_TEST_COMMAND,
   'test:workflow-policy': 'node --test tests/workflow-policy.test.mjs',
@@ -91,6 +109,37 @@ const EXPECTED_PARITY_SCRIPT = [
   '    test "${#sums[@]}" -eq 1',
   '    sha256sum --strict --check "${sums[0]}"',
   '  )',
+  'done',
+  '',
+  'diff --recursive --brief --no-dereference \\',
+  '  "$root/ubuntu" \\',
+  '  "$root/windows"',
+  '',
+  '(',
+  '  cd "$root/ubuntu"',
+  '  sha256sum -- *',
+  ')',
+  ''
+].join('\n');
+const EXPECTED_SYNTHETIC_BUILD = [
+  'npm run build:synthetic-stable-fixture -- --output-directory "${{ runner.temp }}/synthetic-stable-assets"',
+  ''
+].join('\n');
+const EXPECTED_SYNTHETIC_VERIFY = [
+  'npm run verify:stable-bundle -- --bundle-directory "${{ runner.temp }}/synthetic-stable-assets" --require-synthetic-test-only',
+  ''
+].join('\n');
+const EXPECTED_SYNTHETIC_PARITY_SCRIPT = [
+  'set -euo pipefail',
+  'root="$RUNNER_TEMP/synthetic-stable-assets"',
+  '',
+  'for platform in ubuntu windows; do',
+  '  directory="$root/$platform"',
+  '  test "$(find "$directory" -mindepth 1 -maxdepth 1 -type f | wc -l)" -eq 4',
+  '  test -z "$(find "$directory" -mindepth 1 -maxdepth 1 ! -type f -print -quit)"',
+  '  npm run verify:stable-bundle -- \\',
+  '    --bundle-directory "$directory" \\',
+  '    --require-synthetic-test-only',
   'done',
   '',
   'diff --recursive --brief --no-dereference \\',
@@ -241,12 +290,37 @@ function assertExactStepNames(job, expected, label) {
 function assertExactNodeInstall(job, label) {
   const setup = stepByName(job, 'Set up Node.js');
   assert.equal(setup.uses, 'actions/setup-node@v7');
-  assert.deepEqual(setup.with, { 'node-version': 24, cache: 'npm' }, `${label} must use the declared Node 24 toolchain`);
+  assert.deepEqual(
+    setup.with,
+    { 'node-version': 24, cache: 'npm' },
+    `${label} must use the declared Node 24 toolchain`
+  );
   assert.equal(
     stepByName(job, 'Install exact dependencies').run,
     'npm ci',
     `${label} must install the exact lockfile dependency tree`
   );
+}
+
+function assertExactSyntheticNodeInstall(job, label, { cache = true } = {}) {
+  const setup = stepByName(job, 'Set up exact synthetic-fixture Node.js');
+  assert.equal(setup.uses, 'actions/setup-node@v7');
+  assert.deepEqual(
+    setup.with,
+    cache ? { 'node-version': '24.14.1', cache: 'npm' } : { 'node-version': '24.14.1' },
+    `${label} must pin exact synthetic parity Node v24.14.1`
+  );
+}
+
+function assertExactPrCheckout(job, label) {
+  const checkout = stepByName(job, 'Check out the exact pull-request merge commit');
+  assert.equal(checkout.uses, 'actions/checkout@v7');
+  assert.deepEqual(checkout.with, {
+    ref: '${{ github.sha }}',
+    'fetch-depth': 1,
+    'fetch-tags': false,
+    'persist-credentials': false
+  }, `${label} must use the exact credential-free pull-request merge checkout without tags`);
 }
 
 function validateValidationWorkflow(workflow) {
@@ -259,7 +333,13 @@ function validateValidationWorkflow(workflow) {
   assertStepActions(workflow, VALIDATION_ACTIONS, 'validate workflow');
 
   const jobs = workflow.jobs;
-  assert.deepEqual(Object.keys(jobs).sort(), ['build-and-test', 'candidate-assets', 'candidate-assets-parity']);
+  assert.deepEqual(Object.keys(jobs).sort(), [
+    'build-and-test',
+    'candidate-assets',
+    'candidate-assets-parity',
+    'synthetic-stable-assets',
+    'synthetic-stable-assets-parity'
+  ]);
   for (const [jobName, job] of Object.entries(jobs)) {
     if (job.permissions !== undefined) assertReadOnlyPermissions(job.permissions, `${jobName} job`);
   }
@@ -405,6 +485,98 @@ function validateValidationWorkflow(workflow) {
     'compression-level': 0,
     'retention-days': 14
   });
+
+  const synthetic = jobs['synthetic-stable-assets'];
+  assert.equal(synthetic.if, PULL_REQUEST_ONLY);
+  assert.equal(synthetic['runs-on'], '${{ matrix.os }}');
+  assert.equal(synthetic['timeout-minutes'], 20);
+  assertReadOnlyPermissions(synthetic.permissions, 'synthetic-stable-assets job');
+  assert.equal(synthetic.env, undefined, 'synthetic stable fixture job must not inherit release controls');
+  assert.equal(synthetic.strategy['fail-fast'], false);
+  assert.deepEqual(synthetic.strategy.matrix, {
+    include: [
+      { platform: 'ubuntu', os: 'ubuntu-latest' },
+      { platform: 'windows', os: 'windows-latest' }
+    ]
+  });
+  assertExactStepNames(synthetic, [
+    'Check out the exact pull-request merge commit',
+    'Set up exact synthetic-fixture Node.js',
+    'Install exact dependencies',
+    'Test synthetic stable bundle verifier',
+    'Build synthetic test-only stable assets',
+    'Independently verify synthetic test-only stable bundle',
+    'Verify exact checkout and unchanged tracked source',
+    'Upload synthetic test-only parity handoff'
+  ], 'synthetic-stable-assets job');
+  for (const step of synthetic.steps) {
+    assert.equal(step.if, undefined, `synthetic-stable-assets step ${step.name} must not be conditionally skipped`);
+  }
+  assertExactPrCheckout(synthetic, 'synthetic-stable-assets job');
+  assertExactSyntheticNodeInstall(synthetic, 'synthetic-stable-assets job');
+  assert.equal(stepByName(synthetic, 'Install exact dependencies').run, 'npm ci');
+  assert.equal(stepByName(synthetic, 'Test synthetic stable bundle verifier').run, 'npm run test:stable-bundle');
+  assert.equal(
+    stepByName(synthetic, 'Build synthetic test-only stable assets').run,
+    EXPECTED_SYNTHETIC_BUILD,
+    'synthetic fixture must use the exact npm wrapper and external test-only output path'
+  );
+  assert.equal(
+    stepByName(synthetic, 'Independently verify synthetic test-only stable bundle').run,
+    EXPECTED_SYNTHETIC_VERIFY,
+    'synthetic bundle must pass the exact independent offline verifier invocation'
+  );
+  const syntheticClean = stepByName(synthetic, 'Verify exact checkout and unchanged tracked source');
+  assert.equal(syntheticClean.shell, 'bash');
+  assert.equal(syntheticClean.run, EXPECTED_CLEAN_CHECK);
+  const syntheticHandoff = stepByName(synthetic, 'Upload synthetic test-only parity handoff');
+  assert.equal(syntheticHandoff.uses, 'actions/upload-artifact@v4');
+  assert.deepEqual(syntheticHandoff.with, {
+    name: 'synthetic-test-only-stable-handoff-${{ github.sha }}-${{ matrix.platform }}',
+    path: '${{ runner.temp }}/synthetic-stable-assets',
+    'if-no-files-found': 'error',
+    'compression-level': 0,
+    'retention-days': 1
+  });
+
+  const syntheticParity = jobs['synthetic-stable-assets-parity'];
+  assert.equal(syntheticParity.if, PULL_REQUEST_ONLY);
+  assert.deepEqual(syntheticParity.needs, ['synthetic-stable-assets']);
+  assert.equal(syntheticParity['runs-on'], 'ubuntu-latest');
+  assert.equal(syntheticParity['timeout-minutes'], 10);
+  assertReadOnlyPermissions(syntheticParity.permissions, 'synthetic-stable-assets-parity job');
+  assert.equal(syntheticParity.env, undefined);
+  assertExactStepNames(syntheticParity, [
+    'Check out the exact pull-request merge commit',
+    'Set up exact synthetic-fixture Node.js',
+    'Download Ubuntu synthetic test-only bundle',
+    'Download Windows synthetic test-only bundle',
+    'Independently verify bundles and exact four-file byte parity'
+  ], 'synthetic-stable-assets-parity job');
+  for (const step of syntheticParity.steps) {
+    assert.equal(step.if, undefined, `synthetic-stable-assets-parity step ${step.name} must not be conditionally skipped`);
+  }
+  assertExactPrCheckout(syntheticParity, 'synthetic-stable-assets-parity job');
+  assertExactSyntheticNodeInstall(syntheticParity, 'synthetic-stable-assets-parity job', { cache: false });
+  assert.deepEqual(stepByName(syntheticParity, 'Download Ubuntu synthetic test-only bundle').with, {
+    name: 'synthetic-test-only-stable-handoff-${{ github.sha }}-ubuntu',
+    path: '${{ runner.temp }}/synthetic-stable-assets/ubuntu'
+  });
+  assert.deepEqual(stepByName(syntheticParity, 'Download Windows synthetic test-only bundle').with, {
+    name: 'synthetic-test-only-stable-handoff-${{ github.sha }}-windows',
+    path: '${{ runner.temp }}/synthetic-stable-assets/windows'
+  });
+  const syntheticComparison = stepByName(
+    syntheticParity,
+    'Independently verify bundles and exact four-file byte parity'
+  );
+  assert.equal(syntheticComparison.shell, 'bash');
+  assert.equal(syntheticComparison.run, EXPECTED_SYNTHETIC_PARITY_SCRIPT);
+  assert.equal(
+    syntheticParity.steps.some(step => step.uses === 'actions/upload-artifact@v4'),
+    false,
+    'synthetic parity must not upload a final release-looking bundle'
+  );
 }
 
 function validatePagesHold(workflow) {
@@ -516,8 +688,17 @@ function assertNoPackagePromotionCapabilities(scripts) {
   }
 }
 
-function validatePackageTestClosure(packageDocument) {
+function validatePackageTestClosure(
+  packageDocument,
+  lockDocument = packageLockDocument,
+  nvmrc = nvmrcBytes,
+  nodeVersion = nodeVersionBytes
+) {
   const scripts = packageDocument.scripts;
+  assert.deepEqual(packageDocument.engines, { node: '24.x', npm: '>=11 <12' });
+  assert.deepEqual(lockDocument.packages?.['']?.engines, { node: '24.x', npm: '>=11 <12' });
+  assert.equal(nvmrc.toString('utf8'), '24\n');
+  assert.equal(nodeVersion.toString('utf8'), '24\n');
   assert.ok(scripts && typeof scripts === 'object' && !Array.isArray(scripts), 'package scripts must be an object');
   assert.deepEqual(scripts, EXPECTED_PACKAGE_SCRIPTS, 'package scripts must remain the exact reviewed non-promoting command map');
   assertNoPackagePromotionCapabilities(scripts);
@@ -530,10 +711,16 @@ function validatePackageTestClosure(packageDocument) {
     reachable.add(name);
     for (const dependency of npmRunDependencies(scripts[name], name)) pending.push(dependency);
   }
-  for (const required of ['test:release-assets', 'test:release-finalization-plan', 'test:post-deploy-smoke', 'test:workflow-policy']) {
+  for (const required of [
+    'test:release-assets',
+    'test:release-finalization-plan',
+    'test:post-deploy-smoke',
+    'test:workflow-policy'
+  ]) {
     assert.ok(reachable.has(required), `${required} must be reachable from npm test`);
   }
   assert.equal(scripts['test:release-assets'], 'node --test tests/release-assets.test.mjs');
+  assert.equal(scripts['test:stable-bundle'], 'node --test tests/stable-bundle.test.mjs');
   assert.equal(scripts['test:post-deploy-smoke'], 'node --test tests/post-deploy-smoke.test.mjs');
   assert.equal(scripts['test:workflow-policy'], 'node --test tests/workflow-policy.test.mjs');
   assert.equal(
@@ -545,6 +732,21 @@ function validatePackageTestClosure(packageDocument) {
     scripts['build:stable-release-assets'],
     'node scripts/release-assets.mjs --mode stable',
     'stable assets must use the exact reviewed local-only stable mode'
+  );
+  assert.equal(
+    scripts['build:synthetic-stable-fixture'],
+    'node scripts/synthetic-stable-fixture.mjs',
+    'synthetic stable fixtures must use the reviewed network-free local builder'
+  );
+  assert.equal(
+    scripts['verify:stable-bundle'],
+    'node scripts/verify-stable-bundle.mjs',
+    'stable bundles must use the reviewed independent offline verifier'
+  );
+  assert.equal(
+    reachable.has('test:stable-bundle'),
+    false,
+    'the exact-toolchain synthetic stable suite must run only in its dedicated pull-request job'
   );
   assert.equal(
     reachable.has('build:stable-release-assets'),
@@ -563,21 +765,148 @@ function validatePackageTestClosure(packageDocument) {
   }
 }
 
-const [workflowNames, validateBytes, pagesBytes, packageBytes] = await Promise.all([
+function validateSyntheticHelperBoundary(fixtureBytes, verifierBytes, reviewedSources = reviewedSyntheticSources) {
+  const lockedSources = new Map(reviewedSources);
+  lockedSources.set('scripts/synthetic-stable-fixture.mjs', fixtureBytes);
+  lockedSources.set('scripts/verify-stable-bundle.mjs', verifierBytes);
+  assert.deepEqual(
+    [...lockedSources.keys()].sort(),
+    Object.keys(REVIEWED_SYNTHETIC_SOURCE_SHA256).sort(),
+    'synthetic execution closure must contain exactly the seven reviewed source files'
+  );
+  for (const [relativePath, expectedDigest] of Object.entries(REVIEWED_SYNTHETIC_SOURCE_SHA256)) {
+    const actualDigest = createHash('sha256').update(lockedSources.get(relativePath)).digest('hex');
+    assert.equal(actualDigest, expectedDigest, `${relativePath} must retain its exact reviewed source-byte SHA-256`);
+  }
+  const fixtureText = fixtureBytes.toString('utf8');
+  const verifierText = verifierBytes.toString('utf8');
+  const allowedImports = new Map([
+    ['synthetic fixture builder', [
+      './release-assets.mjs',
+      './release-spec.mjs',
+      'node:child_process',
+      'node:fs/promises',
+      'node:path',
+      'node:process',
+      'node:url'
+    ]],
+    ['stable bundle verifier', [
+      './strict-json.mjs',
+      'node:crypto',
+      'node:fs/promises',
+      'node:os',
+      'node:path',
+      'node:process',
+      'node:url'
+    ]]
+  ]);
+  for (const [label, source] of [
+    ['synthetic fixture builder', fixtureText],
+    ['stable bundle verifier', verifierText]
+  ]) {
+    const staticImports = [...source.matchAll(/(?:\bfrom\s+|^\s*import\s+)['"]([^'"]+)['"]/gmu)]
+      .map(match => match[1])
+      .sort();
+    assert.deepEqual(staticImports, allowedImports.get(label), `${label} must use only its exact reviewed static imports`);
+    assert.doesNotMatch(source, /node:(?:http|https|http2|net|tls|dns|dgram)\b/u, `${label} must not reference network APIs`);
+    assert.doesNotMatch(source, /\bimport\s*\(/u, `${label} must not use dynamic imports`);
+    assert.doesNotMatch(source, /\bgetBuiltinModule\b/u, `${label} must not resolve built-ins dynamically`);
+    assert.doesNotMatch(source, /\bfetch\b/iu, `${label} must not reference fetch`);
+    assert.doesNotMatch(
+      source,
+      /\b(?:WebSocket|EventSource|XMLHttpRequest)\b|navigator\.sendBeacon\b/u,
+      `${label} must not invoke browser network clients`
+    );
+    assert.doesNotMatch(source, /\b(?:curl|wget|Invoke-WebRequest|Invoke-RestMethod|gh)\b/u, `${label} must not invoke external network clients`);
+  }
+  assert.match(fixtureText, /function assertAllowedLocalGitCommand\(/u);
+  assert.match(fixtureText, /--object-format=sha1/u);
+  assert.match(fixtureText, /--initial-branch=main/u);
+  assert.match(fixtureText, /await write\(repositoryRoot, '\.gitattributes', '\* -text\\n'\)/u);
+  assert.match(fixtureText, /synthetic fixture tree must contain only regular 100644 blobs/u);
+  assert.match(fixtureText, /sourceControlSnapshot\(sourceRoot\)/u);
+  assert.match(fixtureText, /assertSameSourceControlSnapshot/u);
+  assert.match(
+    fixtureText,
+    /\}\s*finally\s*\{[\s\S]{0,400}assertSameSourceControlSnapshot\(sourceControlBefore, sourceControlSnapshot\(sourceRoot\)\)/u,
+    'source control reconciliation must execute from finally on success and failure paths'
+  );
+  assert.match(fixtureText, /synthetic fixture repository must have zero configured remotes/u);
+  assert.match(fixtureText, /REQUIRED_NODE_VERSION = 'v24\.14\.1'/u);
+  assert.match(fixtureText, /REQUIRED_NPM_VERSION = '11\.11\.0'/u);
+  assert.equal((fixtureText.match(/\bexecFileSync\b/gu) || []).length, 3, 'fixture may use execFileSync only at its exact import and two reviewed call sites');
+  assert.equal(
+    (fixtureText.match(/^import \{ execFileSync \} from 'node:child_process';$/gmu) || []).length,
+    1,
+    'fixture must retain the exact reviewed child_process binding'
+  );
+  assert.match(fixtureText, /return execFileSync\('git', \[/u);
+  assert.match(fixtureText, /observedNpm = execFileSync\(process\.execPath, \[npmExecutable, '--version'\], \{/u);
+  assert.doesNotMatch(fixtureText, /\b(?:execSync|spawn|spawnSync|fork)\b/u, 'fixture must not add another child-process primitive');
+  assert.doesNotMatch(
+    fixtureText,
+    /JSON\.stringify\(\[['"](?:fetch|pull|push|clone|tag)['"]|argumentsList\[0\]\s*===\s*['"](?:fetch|pull|push|clone|tag)['"]/u,
+    'synthetic fixture Git allowlist must not name network or tag-porcelain operations'
+  );
+  assert.doesNotMatch(
+    fixtureText,
+    /JSON\.stringify\(\[['"]remote['"]\s*,\s*['"]add['"]|argumentsList\[0\]\s*===\s*['"]remote['"][\s\S]{0,120}argumentsList\[1\]\s*===\s*['"]add['"]/u,
+    'synthetic fixture Git allowlist must not permit remote creation'
+  );
+  assert.doesNotMatch(verifierText, /node:child_process/u, 'offline verifier must not launch subprocesses');
+  for (const proof of [
+    'archive entry header checksum does not match',
+    'archive may contain only regular-file entries',
+    'archive path is outside the exact',
+    'archive entry has nonzero padding',
+    'archive must end with exactly two zero blocks',
+    'archived release manifest is not byte-identical',
+    'archive inventory does not close over the release manifest',
+    'temporary extraction verification failed',
+    'exact locked synthetic-test-only identity',
+    'exact SHA-1 commit, tag, and protected-ref proof'
+  ]) {
+    assert.ok(verifierText.includes(proof), `offline verifier must retain its ${proof} proof`);
+  }
+}
+
+const [
+  workflowNames,
+  validateBytes,
+  pagesBytes,
+  packageBytes,
+  syntheticFixtureBytes,
+  stableBundleVerifierBytes,
+  packageLockBytes,
+  nvmrcBytes,
+  nodeVersionBytes
+] = await Promise.all([
   readdir(WORKFLOW_DIRECTORY),
   readFile(VALIDATE_PATH),
   readFile(PAGES_PATH),
-  readFile(PACKAGE_PATH)
+  readFile(PACKAGE_PATH),
+  readFile(SYNTHETIC_FIXTURE_PATH),
+  readFile(STABLE_BUNDLE_VERIFIER_PATH),
+  readFile(PACKAGE_LOCK_PATH),
+  readFile(NVMRC_PATH),
+  readFile(NODE_VERSION_PATH)
 ]);
+const reviewedSyntheticSources = new Map(await Promise.all(
+  Object.keys(REVIEWED_SYNTHETIC_SOURCE_SHA256).map(async relativePath => [
+    relativePath,
+    await readFile(path.join(REPOSITORY_ROOT, ...relativePath.split('/')))
+  ])
+));
 const validateWorkflow = parseStrictYaml(validateBytes, 'validate workflow');
 const pagesWorkflow = parseStrictYaml(pagesBytes, 'Pages hold workflow');
 const packageDocument = parseStrictJson(packageBytes, 'package.json');
+const packageLockDocument = parseStrictJson(packageLockBytes, 'package-lock.json');
 
 test('workflow directory contains only the reviewed validation and Pages hold files', () => {
   validateWorkflowInventory(workflowNames);
 });
 
-test('validation CI is candidate-only, cross-platform, byte-compared, and read-only', () => {
+test('validation CI is candidate-and-synthetic-only, cross-platform, byte-compared, and read-only', () => {
   validateValidationWorkflow(validateWorkflow);
 });
 
@@ -585,8 +914,53 @@ test('Pages workflow remains a reusable preview-only build hold', () => {
   validatePagesHold(pagesWorkflow);
 });
 
-test('npm test covers C4.2 tools and cannot execute production smoke', () => {
-  validatePackageTestClosure(packageDocument);
+test('npm test covers release and bundle tools on the supported major toolchain without production smoke', () => {
+  validatePackageTestClosure(packageDocument, packageLockDocument, nvmrcBytes, nodeVersionBytes);
+});
+
+test('synthetic fixture and bundle verifier stay local-only and independently fail closed', () => {
+  validateSyntheticHelperBoundary(syntheticFixtureBytes, stableBundleVerifierBytes);
+});
+
+test('synthetic helper policy rejects future network and tag-porcelain allowlist entries', async t => {
+  const source = syntheticFixtureBytes.toString('utf8');
+  const mutations = [
+    ['fetch', source.replace("JSON.stringify(['remote']),", "JSON.stringify(['fetch']),\n    JSON.stringify(['remote']),")],
+    ['pull', source.replace("JSON.stringify(['remote']),", "JSON.stringify(['pull']),\n    JSON.stringify(['remote']),")],
+    ['push', source.replace("JSON.stringify(['remote']),", "JSON.stringify(['push']),\n    JSON.stringify(['remote']),")],
+    ['clone', source.replace("JSON.stringify(['remote']),", "JSON.stringify(['clone']),\n    JSON.stringify(['remote']),")],
+    ['tag porcelain', source.replace("JSON.stringify(['remote']),", "JSON.stringify(['tag']),\n    JSON.stringify(['remote']),")],
+    ['remote add', source.replace("JSON.stringify(['remote']),", "JSON.stringify(['remote', 'add']),\n    JSON.stringify(['remote']),")],
+    ['network import', source.replace("import { execFileSync } from 'node:child_process';", "import { execFileSync } from 'node:child_process';\nimport https from 'node:https';")],
+    ['dynamic network import', `${source}\nconst client = await import('node:https'); client.get('https://neb6dav.github.io/ai_tech_tree/');\n`],
+    ['dynamic builtin resolution', `${source}\nconst client = process.getBuiltinModule('https'); client.get('https://example.invalid/');\n`],
+    ['bracketed builtin resolution', `${source}\nconst client = process['getBuiltinModule']('https'); client.get('https://example.invalid/');\n`],
+    ['bracketed fetch', `${source}\nglobalThis['fetch']('https://example.invalid/');\n`],
+    ['reflected fetch', `${source}\nconst request = Reflect.get(globalThis, 'fetch'); await request('https://example.invalid/');\n`],
+    ['direct child process call', `${source}\nexecFileSync('git', ['push', 'https://example.invalid/repo', 'HEAD']);\n`],
+    [
+      'additional child process binding',
+      source.replace("import { execFileSync } from 'node:child_process';", "import { execFileSync, spawnSync } from 'node:child_process';")
+    ],
+    ['WebSocket client', `${source}\nconst socket = new WebSocket('wss://example.invalid/');\n`]
+  ];
+  for (const [label, hostileSource] of mutations) {
+    await t.test(label, () => {
+      assert.notEqual(hostileSource, source, `${label} mutation must alter the fixture helper`);
+      assert.throws(() => validateSyntheticHelperBoundary(Buffer.from(hostileSource), stableBundleVerifierBytes));
+    });
+  }
+  await t.test('transitive release tool drift', () => {
+    const hostileSources = new Map(reviewedSyntheticSources);
+    hostileSources.set(
+      'scripts/release-assets.mjs',
+      Buffer.concat([hostileSources.get('scripts/release-assets.mjs'), Buffer.from("\nfetch('https://example.invalid/');\n")])
+    );
+    assert.throws(
+      () => validateSyntheticHelperBoundary(syntheticFixtureBytes, stableBundleVerifierBytes, hostileSources),
+      /exact reviewed source-byte SHA-256/u
+    );
+  });
 });
 
 test('workflow policy rejects capability and parity regressions', async t => {
@@ -640,6 +1014,9 @@ test('workflow policy rejects capability and parity regressions', async t => {
     ['candidate Node drift', workflow => {
       stepByName(workflow.jobs['candidate-assets'], 'Set up Node.js').with['node-version'] = 20;
     }],
+    ['primary validation Node major drift', workflow => {
+      stepByName(workflow.jobs['build-and-test'], 'Set up Node.js').with['node-version'] = 25;
+    }],
     ['candidate install drift', workflow => {
       stepByName(workflow.jobs['candidate-assets'], 'Install exact dependencies').run = 'npm install';
     }],
@@ -649,6 +1026,57 @@ test('workflow policy rejects capability and parity regressions', async t => {
     ['unverified final upload', workflow => {
       const steps = workflow.jobs['candidate-assets-parity'].steps;
       steps.unshift(steps.pop());
+    }],
+    ['synthetic fixture runs outside pull requests', workflow => {
+      workflow.jobs['synthetic-stable-assets'].if = undefined;
+    }],
+    ['synthetic fixture toolchain floats', workflow => {
+      stepByName(workflow.jobs['synthetic-stable-assets'], 'Set up exact synthetic-fixture Node.js').with['node-version'] = 24;
+    }],
+    ['synthetic fixture bypasses npm wrapper', workflow => {
+      stepByName(workflow.jobs['synthetic-stable-assets'], 'Build synthetic test-only stable assets').run =
+        'node scripts/synthetic-stable-fixture.mjs --output-directory "${{ runner.temp }}/synthetic-stable-assets"';
+    }],
+    ['synthetic verifier mutation suite is skipped', workflow => {
+      stepByName(workflow.jobs['synthetic-stable-assets'], 'Test synthetic stable bundle verifier').if = false;
+    }],
+    ['synthetic fixture points stable builder at real checkout', workflow => {
+      stepByName(workflow.jobs['synthetic-stable-assets'], 'Build synthetic test-only stable assets').run =
+        'npm run build:stable-release-assets -- --repository-root "${{ github.workspace }}" --commit "${{ github.sha }}" --output-directory "${{ runner.temp }}/stable"';
+    }],
+    ['synthetic verification drops exact identity flag', workflow => {
+      stepByName(workflow.jobs['synthetic-stable-assets'], 'Independently verify synthetic test-only stable bundle').run =
+        EXPECTED_SYNTHETIC_VERIFY.replace(' --require-synthetic-test-only', '');
+    }],
+    ['synthetic job receives release controls', workflow => {
+      workflow.jobs['synthetic-stable-assets'].env = { AI_TREE_STAGE_MODE: 'release' };
+    }],
+    ['synthetic checkout fetches real tags', workflow => {
+      stepByName(workflow.jobs['synthetic-stable-assets'], 'Check out the exact pull-request merge commit').with['fetch-tags'] = true;
+    }],
+    ['synthetic handoff loses test-only label', workflow => {
+      stepByName(workflow.jobs['synthetic-stable-assets'], 'Upload synthetic test-only parity handoff').with.name =
+        'stable-release-${{ github.sha }}-${{ matrix.platform }}';
+    }],
+    ['synthetic handoff is retained beyond one day', workflow => {
+      stepByName(workflow.jobs['synthetic-stable-assets'], 'Upload synthetic test-only parity handoff').with['retention-days'] = 14;
+    }],
+    ['synthetic parity skips independent verification', workflow => {
+      stepByName(workflow.jobs['synthetic-stable-assets-parity'], 'Independently verify bundles and exact four-file byte parity').run =
+        'diff --recursive --brief "$RUNNER_TEMP/synthetic-stable-assets/ubuntu" "$RUNNER_TEMP/synthetic-stable-assets/windows"';
+    }],
+    ['synthetic parity uploads release-looking final bundle', workflow => {
+      workflow.jobs['synthetic-stable-assets-parity'].steps.push({
+        name: 'Upload stable release',
+        uses: 'actions/upload-artifact@v4',
+        with: { name: 'stable-release', path: '${{ runner.temp }}/synthetic-stable-assets/ubuntu' }
+      });
+    }],
+    ['synthetic fixture pushes a tag', workflow => {
+      workflow.jobs['synthetic-stable-assets'].steps.push({ run: 'git push origin v1.2.3' });
+    }],
+    ['synthetic fixture contacts production', workflow => {
+      workflow.jobs['synthetic-stable-assets'].steps.push({ run: 'curl https://neb6dav.github.io/ai_tech_tree/' });
     }]
   ];
   for (const [name, mutate] of scenarios) {
@@ -675,6 +1103,11 @@ test('Pages and package policies reject promotion or production-smoke regression
   await t.test('Pages environment', () => {
     const hostile = clone(pagesWorkflow);
     hostile.jobs.build.environment = 'github-pages';
+    assert.throws(() => validatePagesHold(hostile));
+  });
+  await t.test('Pages Node major drift', () => {
+    const hostile = clone(pagesWorkflow);
+    stepByName(hostile.jobs.build, 'Set up Node.js').with['node-version'] = 25;
     assert.throws(() => validatePagesHold(hostile));
   });
   await t.test('stable assets enter Pages build', () => {
@@ -724,6 +1157,24 @@ test('Pages and package policies reject promotion or production-smoke regression
       () => validatePackageTestClosure(hostile),
       /exact reviewed non-promoting command map/u
     );
+  });
+  await t.test('package Node engine drift', () => {
+    const hostile = clone(packageDocument);
+    hostile.engines.node = '>=24';
+    assert.throws(() => validatePackageTestClosure(hostile));
+  });
+  await t.test('package-lock npm engine drift', () => {
+    const hostileLock = clone(packageLockDocument);
+    hostileLock.packages[''].engines.npm = '11.11.0';
+    assert.throws(() => validatePackageTestClosure(packageDocument, hostileLock));
+  });
+  await t.test('local Node selector drift', () => {
+    assert.throws(() => validatePackageTestClosure(
+      packageDocument,
+      packageLockDocument,
+      Buffer.from('24.14.1\n'),
+      nodeVersionBytes
+    ));
   });
   const packagePromotionScenarios = [
     ['tag creation', 'release:tag', 'git tag v0.1.1'],

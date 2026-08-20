@@ -60,9 +60,9 @@ last_verified_commands:
     verified_by: "root"
     scope: "Workflow 32398059854 green; artifact 9417412872 passed 1,465 contract references; 14/14 payloads byte-identical; CI source closure 17/17 with 70 tracked entries and zero filters; manifests differed only by synthetic checkout commit and Node/npm patch versions"
 next_exact_action: >-
-  Implement C4.2 deterministic release archives, standalone checksums,
-  release notes, and bounded remote smoke tooling without performing a tag,
-  GitHub Release, environment approval, settings change, or deployment.
+  Implement and hostile-test C4.2-A deterministic candidate-only archive,
+  standalone manifest, release-note, and checksum assets; then verify the
+  exact committed tree before the separately authorized checkpoint push.
 known_blockers:
   - "WP-011-B is stacked on verified draft PR #5 until WP-011-A is separately authorized to merge."
   - "No merge, annotated tag, GitHub Release, environment approval, or public deployment is authorized."
@@ -93,13 +93,13 @@ release_details:
       artifact_id: 9392055435
       artifact_tar_sha256: "f04f46196b74982f9d725f032278f9b7ed48ae1ffd82db0dcff3fc39f739f9c4"
     active_checkpoint:
-      id: "C4.2"
-      title: "Deterministic release assets and bounded smoke tooling"
-      status: "ready_to_implement"
+      id: "C4.2-A"
+      title: "Deterministic candidate-only release assets"
+      status: "implementing"
       next_exact_action: >-
-        Add deterministic archive, checksum, release-note, and remote-smoke
-        tools with synthetic fixtures and no call to GitHub release, Pages,
-        environment, or deployment mutation APIs.
+        Add and hostile-test a commit-bound candidate-only POSIX-ustar archive,
+        exact standalone release manifest, draft notes, and SHA-256 checksum
+        set without tag, GitHub Release, Pages, environment, or deployment APIs.
     scope:
       - "Publish stable and compatibility Opportunity endpoints."
       - "Move exported human URLs to the root application."

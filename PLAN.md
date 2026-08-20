@@ -179,15 +179,15 @@ last_verified_commands:
     status: "PASS"
     runtime: "Node v24.14.1 and npm 11.11.0"
     verified_by: "root"
-    scope: "C4.4-B1 local checkpoint: 14 injected-transport promotion-control tests and 104 workflow/package policy tests; fixed trust anchors, exact main-ref bookends, ruleset/environment/Pages/Release controls, validation run/job binding, complete pagination, fixture-only receipt scope, and network-incapable source closure"
+    scope: "C4.4-B1 hardening checkpoint: 15 injected-transport promotion-control tests and 104 workflow/package policy tests; fixed trust anchors, exact main-ref bookends, closed API response fields/enums, complete ruleset/deployment/run/job pagination, exact ruleset/run/job identity, Pages domain/certificate consistency, fixture-only receipt scope, and network-incapable source closure"
   - command: "C4.4-B1 adjacent release-tooling and independent hostile review"
     status: "PASS"
     verified_by: "root plus independent read-only reviewer"
-    scope: "3 release-spec, 21 release-ref, 33 release-asset, 29 finalization-plan, 14 promotion-control, 80 post-deploy-smoke, 104 workflow-policy, and 56 stage-site tests passed; hostile pagination, cross-run identity, receipt eligibility, and capability probes returned SHIP; no live request or external mutation"
+    scope: "The original adjacent release-tooling matrix remained green; the follow-up hostile review reproduced and closed unknown-field, unknown-enum, hidden deployment-policy page, cross-run job, custom-domain, legacy Pages source, and malformed or expired certificate false-green paths, then returned SHIP; no live audit or external mutation"
 next_exact_action: >-
-  Commit the locally verified C4.4-B1 policy, plan-only auditor, injected
-  hostile tests, capability closure, documentation, and ledger; run the exact
-  clean-commit full repository gate, then push and reconcile hosted validation.
+  Commit the locally verified C4.4-B1 fail-closed API-response hardening and
+  updated ledger; run the exact clean-commit full repository gate, then push
+  and reconcile hosted validation before declaring B1 complete.
 known_blockers:
   - "WP-011-B is stacked on verified draft PR #5 until WP-011-A is separately authorized to merge."
   - "No merge, annotated tag, GitHub Release, environment approval, or public deployment is authorized."
@@ -195,7 +195,7 @@ known_blockers:
   - "Browser performance metrics and automated preview screenshots remain pending WP-012-A."
   - "The github-pages environment has no required reviewer and permits administrator bypass; immutable GitHub Releases are disabled. These external controls require separate authorization before any C4 promotion run."
   - "No active no-bypass tag ruleset protects v0.1.1, and the verified production recovery artifact is local rather than durable and runner-accessible."
-release_gate_status: "wp_011_b_c4_4_a2_remote_verified_b1_locally_verified_pending_commit"
+release_gate_status: "wp_011_b_c4_4_a2_remote_verified_b1_hardening_locally_verified_pending_commit"
 release_details:
   version: "v0.1.1"
   title: "Publication-contract repair"
@@ -221,11 +221,11 @@ release_details:
     active_checkpoint:
       id: "C4.4-B1"
       title: "Read-only GitHub promotion-control audit"
-      status: "locally_verified_pending_commit"
+      status: "hardening_locally_verified_pending_commit"
       next_exact_action: >-
-        Commit the bounded B1 files, run the exact clean-commit full gate,
-        push the branch, reconcile the hosted workflow and preview, then record
-        the remote evidence before starting the next preflight checkpoint.
+        Commit the three hardened control-audit files plus this ledger, run the
+        exact clean-commit full gate, push the branch, reconcile the hosted
+        workflow and preview, then record remote evidence before B2 begins.
     scope:
       - "Publish stable and compatibility Opportunity endpoints."
       - "Move exported human URLs to the root application."

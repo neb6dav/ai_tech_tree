@@ -143,6 +143,13 @@ function assertExactKeys(value, keys, label) {
   }
 }
 
+function assertOnlyKeys(value, allowedKeys, label) {
+  assertPlainObject(value, label);
+  const allowed = new Set(allowedKeys);
+  const unknown = Object.keys(value).filter(key => !allowed.has(key)).sort();
+  if (unknown.length > 0) throw auditError(`${label} contains unsupported fields: ${unknown.join(', ')}`);
+}
+
 function assertNonemptyString(value, label) {
   if (typeof value !== 'string' || value.length === 0 || value.trim() !== value || /[\u0000-\u001f\u007f]/u.test(value)) {
     throw auditError(`${label} must be a non-empty trimmed string without control characters`);
@@ -398,8 +405,12 @@ function compareJson(actual, expected, label) {
   if (!isDeepStrictEqual(actual, expected)) throw auditError(`${label} does not match the reviewed policy`);
 }
 
-function normalizeRule(rule) {
+function normalizeRule(rule, label = 'ruleset rule') {
   assertPlainObject(rule, 'ruleset rule');
+  assertOnlyKeys(rule, ['parameters', 'type'], label);
+  if (![...EXPECTED_POLICY.rulesets.main.rules, ...EXPECTED_POLICY.rulesets.tag.rules].some(expected => expected.type === rule.type)) {
+    throw auditError(`${label} contains unsupported rule type ${JSON.stringify(rule.type)}`);
+  }
   const normalized = { type: rule.type };
   if (Object.hasOwn(rule, 'parameters')) normalized.parameters = rule.parameters;
   return normalized;
@@ -407,11 +418,21 @@ function normalizeRule(rule) {
 
 function assertRulesetDetail(document, expected, expectedId, label) {
   assertPlainObject(document, label);
+  assertOnlyKeys(document, [
+    '_links', 'bypass_actors', 'conditions', 'created_at', 'enforcement', 'id', 'name', 'node_id',
+    'rules', 'source', 'source_type', 'target', 'updated_at'
+  ], label);
   if (!Object.hasOwn(document, 'bypass_actors')) throw auditError(`${label} omits bypass_actors and is not auditable`);
   compareJson(document.bypass_actors, expected.bypassActors, `${label}.bypass_actors`);
-  if (document.id !== expectedId || document.name !== expected.name || document.target !== expected.target || document.source_type !== expected.sourceType || document.enforcement !== expected.enforcement) {
+  if (
+    document.id !== expectedId || document.name !== expected.name || document.target !== expected.target ||
+    document.source !== 'neb6dav/ai_tech_tree' || document.source_type !== expected.sourceType ||
+    document.enforcement !== expected.enforcement
+  ) {
     throw auditError(`${label} identity or enforcement does not match the reviewed policy`);
   }
+  assertOnlyKeys(document.conditions, ['ref_name'], `${label}.conditions`);
+  assertOnlyKeys(document.conditions?.ref_name, ['exclude', 'include'], `${label}.conditions.ref_name`);
   const conditions = {
     refName: {
       include: document.conditions?.ref_name?.include,
@@ -420,16 +441,45 @@ function assertRulesetDetail(document, expected, expectedId, label) {
   };
   compareJson(conditions, expected.conditions, `${label}.conditions`);
   if (!Array.isArray(document.rules)) throw auditError(`${label}.rules must be an array`);
-  compareJson(document.rules.map(normalizeRule), expected.rules, `${label}.rules`);
+  compareJson(document.rules.map((rule, index) => normalizeRule(rule, `${label}.rules[${index}]`)), expected.rules, `${label}.rules`);
+}
+
+function assertRulesetIndex(rulesets) {
+  if (!Array.isArray(rulesets)) throw auditError('ruleset index must be an array');
+  for (const [index, ruleset] of rulesets.entries()) {
+    assertOnlyKeys(ruleset, ['enforcement', 'id', 'name', 'source', 'source_type', 'target'], `ruleset index[${index}]`);
+    if (!['branch', 'tag'].includes(ruleset.target)) {
+      throw auditError(`ruleset index[${index}] contains unsupported target ${JSON.stringify(ruleset.target)}`);
+    }
+    if (!['active', 'disabled', 'evaluate'].includes(ruleset.enforcement)) {
+      throw auditError(`ruleset index[${index}] contains unsupported enforcement ${JSON.stringify(ruleset.enforcement)}`);
+    }
+    if (ruleset.enforcement !== 'active' || ruleset.source_type !== 'Repository' || ruleset.source !== 'neb6dav/ai_tech_tree') {
+      throw auditError(`ruleset index[${index}] contains an unreviewed source or enforcement state`);
+    }
+  }
 }
 
 function assertEffectiveMainRules(document, expectedRules, mainRulesetId) {
   if (!Array.isArray(document)) throw auditError('effective main rules response must be an array');
+  for (const [index, rule] of document.entries()) {
+    assertOnlyKeys(rule, ['parameters', 'ruleset_id', 'ruleset_source', 'ruleset_source_type', 'type'], `effective main rules[${index}]`);
+    if (![...EXPECTED_POLICY.rulesets.main.rules, ...EXPECTED_POLICY.rulesets.tag.rules].some(expected => expected.type === rule.type)) {
+      throw auditError(`effective main rules[${index}] contains unsupported rule type ${JSON.stringify(rule.type)}`);
+    }
+  }
   const fromMainRuleset = document.filter(rule =>
     rule?.ruleset_id === mainRulesetId && rule?.ruleset_source_type === 'Repository' &&
     rule?.ruleset_source === 'neb6dav/ai_tech_tree'
   );
-  const normalized = fromMainRuleset.map(normalizeRule);
+  if (fromMainRuleset.length !== document.length || fromMainRuleset.length !== expectedRules.length) {
+    throw auditError('effective main rules contain an unreviewed ruleset source or rule count');
+  }
+  const normalized = fromMainRuleset.map((rule, index) => {
+    const compact = { type: rule.type };
+    if (Object.hasOwn(rule, 'parameters')) compact.parameters = rule.parameters;
+    return compact;
+  });
   for (const expected of expectedRules) {
     if (!normalized.some(actual => isDeepStrictEqual(actual, expected))) {
       throw auditError(`effective main rules omit ${expected.type}`);
@@ -439,6 +489,8 @@ function assertEffectiveMainRules(document, expectedRules, mainRulesetId) {
 
 function assertMainRef(document, expectedCommit, label) {
   assertPlainObject(document, label);
+  assertOnlyKeys(document, ['node_id', 'object', 'ref', 'url'], label);
+  assertOnlyKeys(document.object, ['sha', 'type', 'url'], `${label}.object`);
   if (document.ref !== 'refs/heads/main' || document.object?.type !== 'commit' || document.object?.sha !== expectedCommit) {
     throw auditError(`${label} does not identify the exact expected main commit`);
   }
@@ -446,6 +498,7 @@ function assertMainRef(document, expectedCommit, label) {
 
 function assertRepository(document, policy) {
   assertPlainObject(document, 'repository response');
+  assertOnlyKeys(document, ['archived', 'default_branch', 'disabled', 'full_name', 'visibility'], 'repository response');
   if (
     document.full_name !== policy.repository.fullName ||
     document.default_branch !== policy.repository.defaultBranch ||
@@ -458,15 +511,29 @@ function assertRepository(document, policy) {
 
 function assertEnvironment(document, policy) {
   assertPlainObject(document, 'environment response');
+  assertOnlyKeys(document, [
+    'can_admins_bypass', 'created_at', 'deployment_branch_policy', 'html_url', 'id', 'name',
+    'node_id', 'protection_rules', 'updated_at', 'url'
+  ], 'environment response');
   if (!Object.hasOwn(document, 'can_admins_bypass')) throw auditError('environment response omits can_admins_bypass');
   if (document.name !== policy.environment.name || document.can_admins_bypass !== false) {
     throw auditError('environment name or administrator-bypass state does not match policy');
   }
+  assertOnlyKeys(document.deployment_branch_policy, ['custom_branch_policies', 'protected_branches'], 'environment deployment_branch_policy');
   compareJson(document.deployment_branch_policy, {
     protected_branches: policy.environment.deploymentBranchPolicy.protectedBranches,
     custom_branch_policies: policy.environment.deploymentBranchPolicy.customBranchPolicies
   }, 'environment deployment branch policy');
   if (!Array.isArray(document.protection_rules)) throw auditError('environment protection_rules must be an array');
+  for (const [index, rule] of document.protection_rules.entries()) {
+    if (rule?.type === 'branch_policy') {
+      assertOnlyKeys(rule, ['id', 'node_id', 'type'], `environment protection_rules[${index}]`);
+    } else if (rule?.type === 'required_reviewers') {
+      assertOnlyKeys(rule, ['id', 'node_id', 'prevent_self_review', 'reviewers', 'type'], `environment protection_rules[${index}]`);
+    } else {
+      throw auditError(`environment protection_rules[${index}] has unsupported type ${JSON.stringify(rule?.type)}`);
+    }
+  }
   const types = document.protection_rules.map(rule => rule?.type).sort();
   compareJson(types, [...policy.environment.protectionRules.exactTypes].sort(), 'environment protection rule types');
   const reviewerRule = document.protection_rules.find(rule => rule?.type === 'required_reviewers');
@@ -477,26 +544,65 @@ function assertEnvironment(document, policy) {
     throw auditError('environment has too few required reviewers');
   }
   for (const entry of reviewerRule.reviewers) {
+    assertOnlyKeys(entry, ['reviewer', 'type'], 'environment reviewer entry');
     if (!policy.environment.protectionRules.requiredReviewers.allowedTypes.includes(entry?.type)) {
       throw auditError('environment contains an unsupported reviewer type');
     }
     if (!entry.reviewer || !Number.isSafeInteger(entry.reviewer.id) || entry.reviewer.id <= 0) {
       throw auditError('environment reviewer identity is incomplete');
     }
+    assertOnlyKeys(entry.reviewer, ['id', 'login', 'name', 'slug'], 'environment reviewer identity');
     if (entry.type === 'User') assertNonemptyString(entry.reviewer.login, 'environment user reviewer login');
     if (entry.type === 'Team') assertNonemptyString(entry.reviewer.slug, 'environment team reviewer slug');
   }
 }
 
-function assertDeploymentPolicies(document) {
-  assertPlainObject(document, 'deployment branch policies response');
-  if (document.total_count !== 0 || !Array.isArray(document.branch_policies) || document.branch_policies.length !== 0) {
+function assertDeploymentPolicies(branchPolicies) {
+  if (!Array.isArray(branchPolicies) || branchPolicies.length !== 0) {
     throw auditError('protected-branch environment must not contain custom deployment branch policies');
   }
 }
 
-function assertPages(document, policy) {
+function assertPages(document, policy, observedAt) {
   assertPlainObject(document, 'Pages response');
+  assertOnlyKeys(document, [
+    'build_type', 'cname', 'custom_404', 'html_url', 'https_certificate', 'https_enforced',
+    'pending_domain_unverified_at', 'protected_domain_state', 'public', 'source', 'status', 'url'
+  ], 'Pages response');
+  if (document.cname !== undefined && document.cname !== null) {
+    throw auditError('Pages must not use an unreviewed custom domain');
+  }
+  if (document.source !== undefined && document.source !== null) {
+    throw auditError('workflow-built Pages must not retain a legacy branch source');
+  }
+  if (document.pending_domain_unverified_at !== undefined && document.pending_domain_unverified_at !== null) {
+    throw auditError('Pages domain verification must not be pending');
+  }
+  if (document.https_certificate !== undefined && document.https_certificate !== null) {
+    assertExactKeys(document.https_certificate, ['description', 'domains', 'expires_at', 'state'], 'Pages HTTPS certificate');
+    if (document.https_certificate.state !== 'approved') throw auditError('Pages HTTPS certificate state is unsupported or unapproved');
+    assertNonemptyString(document.https_certificate.description, 'Pages HTTPS certificate description');
+    if (
+      !Array.isArray(document.https_certificate.domains) || document.https_certificate.domains.length === 0 ||
+      !document.https_certificate.domains.every(domain => typeof domain === 'string' && domain.trim() === domain && domain.length > 0) ||
+      !document.https_certificate.domains.includes('neb6dav.github.io')
+    ) {
+      throw auditError('Pages HTTPS certificate domains do not include the reviewed GitHub Pages host');
+    }
+    if (typeof document.https_certificate.expires_at !== 'string') {
+      throw auditError('Pages HTTPS certificate expires_at must be a canonical ISO instant');
+    }
+    const certificateExpiry = new Date(document.https_certificate.expires_at);
+    if (
+      Number.isNaN(certificateExpiry.valueOf()) || certificateExpiry.toISOString() !== document.https_certificate.expires_at ||
+      certificateExpiry.valueOf() <= new Date(observedAt).valueOf()
+    ) {
+      throw auditError('Pages HTTPS certificate expires_at must be a future canonical ISO instant');
+    }
+  }
+  if (document.protected_domain_state !== undefined && document.protected_domain_state !== null && document.protected_domain_state !== 'verified') {
+    throw auditError('Pages protected_domain_state is unsupported or unverified');
+  }
   if (
     document.status !== policy.pages.status || document.build_type !== policy.pages.buildType ||
     document.https_enforced !== policy.pages.httpsEnforced || document.public !== policy.pages.public
@@ -507,11 +613,13 @@ function assertPages(document, policy) {
 
 function assertImmutableReleases(document, policy) {
   assertPlainObject(document, 'immutable Releases response');
+  assertOnlyKeys(document, ['enabled'], 'immutable Releases response');
   if (document.enabled !== policy.immutableReleases.enabled) throw auditError('immutable Releases are not enabled');
 }
 
 function assertWorkflow(document, policy) {
   assertPlainObject(document, 'validation workflow response');
+  assertOnlyKeys(document, ['id', 'name', 'path', 'state'], 'validation workflow response');
   if (!Number.isSafeInteger(document.id) || document.id <= 0) throw auditError('validation workflow ID is invalid');
   if (
     document.name !== policy.validation.workflowName || document.path !== policy.validation.workflowPath ||
@@ -523,13 +631,20 @@ function assertWorkflow(document, policy) {
 }
 
 function selectSuccessfulRun(runs, policy, expectedCommit, workflowId) {
-  const matches = runs.filter(run =>
-    run?.workflow_id === workflowId && run?.head_sha === expectedCommit &&
-    run?.head_branch === policy.validation.requiredBranch && run?.event === policy.validation.requiredEvent &&
-    run?.status === 'completed' && run?.conclusion === 'success' &&
-    run?.path === policy.validation.workflowPath && Number.isSafeInteger(run?.id) && run.id > 0 &&
-    Number.isSafeInteger(run?.run_attempt) && run.run_attempt > 0
-  );
+  for (const [index, run] of runs.entries()) {
+    assertOnlyKeys(run, [
+      'conclusion', 'event', 'head_branch', 'head_sha', 'id', 'path', 'run_attempt', 'status', 'workflow_id'
+    ], `validation workflow runs[${index}]`);
+    if (
+      run?.workflow_id !== workflowId || run?.head_sha !== expectedCommit ||
+      run?.head_branch !== policy.validation.requiredBranch || run?.event !== policy.validation.requiredEvent ||
+      run?.status !== 'completed' || run?.conclusion !== 'success' || run?.path !== policy.validation.workflowPath ||
+      !Number.isSafeInteger(run?.id) || run.id <= 0 || !Number.isSafeInteger(run?.run_attempt) || run.run_attempt <= 0
+    ) {
+      throw auditError(`validation workflow runs[${index}] contains unsupported identity or enum state`);
+    }
+  }
+  const matches = runs;
   if (matches.length === 0) throw auditError('no exact successful validation workflow run exists for the expected commit');
   const ids = new Set(matches.map(run => run.id));
   if (ids.size !== matches.length) throw auditError('validation workflow run list contains duplicate IDs');
@@ -537,6 +652,20 @@ function selectSuccessfulRun(runs, policy, expectedCommit, workflowId) {
 }
 
 function assertSuccessfulJob(jobs, policy, run, expectedCommit) {
+  for (const [index, job] of jobs.entries()) {
+    assertOnlyKeys(job, [
+      'conclusion', 'head_sha', 'id', 'name', 'run_attempt', 'run_id', 'status', 'workflow_name'
+    ], `validation workflow jobs[${index}]`);
+    if (
+      job?.status !== 'completed' || !['skipped', 'success'].includes(job?.conclusion) ||
+      !Number.isSafeInteger(job?.id) || job.id <= 0 || job?.run_id !== run.id ||
+      job?.run_attempt !== run.run_attempt || job?.head_sha !== expectedCommit ||
+      job?.workflow_name !== policy.validation.workflowName ||
+      typeof job?.name !== 'string' || job.name.length === 0
+    ) {
+      throw auditError(`validation workflow jobs[${index}] contains unsupported identity or enum state`);
+    }
+  }
   const matches = jobs.filter(job =>
     job?.name === policy.validation.requiredJobName && job?.status === 'completed' &&
     job?.conclusion === 'success' && job?.run_id === run.id && job?.run_attempt === run.run_attempt &&
@@ -614,6 +743,7 @@ function createAuditSession({ policyRecord, expectedCommit, transport, clock, ev
 async function performAudit({ policyRecord, expectedCommit, transport, clock, evidenceSource }) {
   assertPolicyRecord(policyRecord);
   assertFullCommit(expectedCommit);
+  const observedAt = isoTime(clock(), 'clock');
   const session = createAuditSession({ policyRecord, expectedCommit, transport, clock, evidenceSource });
   const { policy } = session;
 
@@ -628,6 +758,8 @@ async function performAudit({ policyRecord, expectedCommit, transport, clock, ev
     document => document,
     'ruleset index'
   );
+  assertRulesetIndex(rulesets);
+  if (rulesets.length !== 2) throw auditError('ruleset index must contain exactly the two reviewed rulesets');
   const mainMatches = rulesets.filter(item => item.name === policy.rulesets.main.name && item.target === 'branch');
   const tagMatches = rulesets.filter(item => item.name === policy.rulesets.tag.name && item.target === 'tag');
   if (mainMatches.length !== 1 || tagMatches.length !== 1) throw auditError('ruleset index must contain exactly one reviewed main and tag ruleset');
@@ -640,30 +772,43 @@ async function performAudit({ policyRecord, expectedCommit, transport, clock, ev
   assertEffectiveMainRules(effectiveRules, policy.rulesets.main.rules, mainMatches[0].id);
   const environment = (await session.requestJson('/repos/neb6dav/ai_tech_tree/environments/github-pages')).document;
   assertEnvironment(environment, policy);
-  const branchPolicies = (await session.requestJson('/repos/neb6dav/ai_tech_tree/environments/github-pages/deployment-branch-policies', { page: 1, per_page: 100 })).document;
+  const branchPolicies = await session.requestPaginated(
+    '/repos/neb6dav/ai_tech_tree/environments/github-pages/deployment-branch-policies',
+    {},
+    document => {
+      assertOnlyKeys(document, ['branch_policies', 'total_count'], 'deployment branch policies response');
+      return { items: document.branch_policies, totalCount: document.total_count };
+    },
+    'deployment branch policies'
+  );
   assertDeploymentPolicies(branchPolicies);
-  assertPages((await session.requestJson('/repos/neb6dav/ai_tech_tree/pages')).document, policy);
+  assertPages((await session.requestJson('/repos/neb6dav/ai_tech_tree/pages')).document, policy, observedAt);
   assertImmutableReleases((await session.requestJson('/repos/neb6dav/ai_tech_tree/immutable-releases')).document, policy);
   const workflow = (await session.requestJson('/repos/neb6dav/ai_tech_tree/actions/workflows/validate.yml')).document;
   const workflowId = assertWorkflow(workflow, policy);
   const runs = await session.requestPaginated(
     `/repos/neb6dav/ai_tech_tree/actions/workflows/${workflowId}/runs`,
     { branch: 'main', event: 'push', head_sha: expectedCommit, status: 'success' },
-    document => ({ items: document?.workflow_runs, totalCount: document?.total_count }),
+    document => {
+      assertOnlyKeys(document, ['total_count', 'workflow_runs'], 'validation workflow runs response');
+      return { items: document.workflow_runs, totalCount: document.total_count };
+    },
     'validation workflow runs'
   );
   const run = selectSuccessfulRun(runs, policy, expectedCommit, workflowId);
   const jobs = await session.requestPaginated(
     `/repos/neb6dav/ai_tech_tree/actions/runs/${run.id}/jobs`,
     { filter: 'latest' },
-    document => ({ items: document?.jobs, totalCount: document?.total_count }),
+    document => {
+      assertOnlyKeys(document, ['jobs', 'total_count'], 'validation workflow jobs response');
+      return { items: document.jobs, totalCount: document.total_count };
+    },
     'validation workflow jobs'
   );
   const job = assertSuccessfulJob(jobs, policy, run, expectedCommit);
   const mainEnd = (await session.requestJson('/repos/neb6dav/ai_tech_tree/git/ref/heads/main')).document;
   assertMainRef(mainEnd, expectedCommit, 'final main ref');
 
-  const observedAt = isoTime(clock(), 'clock');
   const expiresAt = new Date(new Date(observedAt).valueOf() + policy.limits.receiptFreshnessSeconds * 1000).toISOString();
   const receipt = {
     schemaVersion: RECEIPT_SCHEMA_VERSION,
@@ -742,7 +887,7 @@ function assertReceiptEvidenceSequence(evidence, rulesetEvidence, validationEvid
   take(`/repos/neb6dav/ai_tech_tree/rulesets/${rulesetEvidence.tagId}`);
   take('/repos/neb6dav/ai_tech_tree/rules/branches/main');
   take('/repos/neb6dav/ai_tech_tree/environments/github-pages');
-  take('/repos/neb6dav/ai_tech_tree/environments/github-pages/deployment-branch-policies', { page: 1, per_page: 100 });
+  takePages('/repos/neb6dav/ai_tech_tree/environments/github-pages/deployment-branch-policies', {});
   take('/repos/neb6dav/ai_tech_tree/pages');
   take('/repos/neb6dav/ai_tech_tree/immutable-releases');
   take('/repos/neb6dav/ai_tech_tree/actions/workflows/validate.yml');

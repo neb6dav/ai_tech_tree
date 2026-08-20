@@ -37,6 +37,7 @@ function apiRuleset(expected, id) {
     id,
     name: expected.name,
     target: expected.target,
+    source: 'neb6dav/ai_tech_tree',
     source_type: expected.sourceType,
     enforcement: expected.enforcement,
     conditions: {
@@ -67,8 +68,8 @@ function buildFixture(policyRecord) {
       object: { type: 'commit', sha: EXPECTED_COMMIT }
     }],
     ['/repos/neb6dav/ai_tech_tree/rulesets?includes_parents=false&page=1&per_page=100', [
-      { id: 101, name: mainRuleset.name, target: 'branch' },
-      { id: 202, name: tagRuleset.name, target: 'tag' }
+      { id: 101, name: mainRuleset.name, target: 'branch', source: 'neb6dav/ai_tech_tree', source_type: 'Repository', enforcement: 'active' },
+      { id: 202, name: tagRuleset.name, target: 'tag', source: 'neb6dav/ai_tech_tree', source_type: 'Repository', enforcement: 'active' }
     ]],
     ['/repos/neb6dav/ai_tech_tree/rulesets/101', mainRuleset],
     ['/repos/neb6dav/ai_tech_tree/rulesets/202', tagRuleset],
@@ -336,8 +337,40 @@ test('audit rejects unobservable or bypassable rulesets', async () => {
     documents.get('/repos/neb6dav/ai_tech_tree/rulesets/202').bypass_actors.push({ actor_id: 1 });
   }, /bypass_actors/iu);
   await expectAuditFailure(documents => {
+    documents.get('/repos/neb6dav/ai_tech_tree/rulesets/101').source = 'other/repository';
+  }, /identity or enforcement/iu);
+  await expectAuditFailure(documents => {
     documents.get('/repos/neb6dav/ai_tech_tree/rules/branches/main').pop();
-  }, /effective main rules omit/iu);
+  }, /effective main rules (?:omit|contain)/iu);
+});
+
+test('audit fails closed on unknown security fields and enum values across every control surface', async () => {
+  const runsKey = `/repos/neb6dav/ai_tech_tree/actions/workflows/303/runs?branch=main&event=push&head_sha=${EXPECTED_COMMIT}&page=1&per_page=100&status=success`;
+  const jobsKey = '/repos/neb6dav/ai_tech_tree/actions/runs/404/jobs?filter=latest&page=1&per_page=100';
+  const mutations = [
+    documents => { documents.get('/repos/neb6dav/ai_tech_tree').future_security_control = true; },
+    documents => { documents.get('/repos/neb6dav/ai_tech_tree/git/ref/heads/main').object.future_target_type = 'proxy'; },
+    documents => { documents.get('/repos/neb6dav/ai_tech_tree/rulesets?includes_parents=false&page=1&per_page=100')[0].future_enforcement = 'soft'; },
+    documents => { documents.get('/repos/neb6dav/ai_tech_tree/rulesets?includes_parents=false&page=1&per_page=100')[0].target = 'repository'; },
+    documents => { documents.get('/repos/neb6dav/ai_tech_tree/rulesets/101').future_bypass_policy = []; },
+    documents => { documents.get('/repos/neb6dav/ai_tech_tree/rulesets/101').rules[0].future_rule_mode = 'advisory'; },
+    documents => { documents.get('/repos/neb6dav/ai_tech_tree/rules/branches/main')[0].future_rule_source = 'parent'; },
+    documents => { documents.get('/repos/neb6dav/ai_tech_tree/environments/github-pages').future_bypass_policy = false; },
+    documents => { documents.get('/repos/neb6dav/ai_tech_tree/environments/github-pages').deployment_branch_policy.future_ref_mode = 'tag'; },
+    documents => { documents.get('/repos/neb6dav/ai_tech_tree/environments/github-pages').protection_rules[1].future_review_mode = 'optional'; },
+    documents => { documents.get('/repos/neb6dav/ai_tech_tree/environments/github-pages/deployment-branch-policies?page=1&per_page=100').future_policy_count = 0; },
+    documents => { documents.get('/repos/neb6dav/ai_tech_tree/pages').future_visibility = 'internal'; },
+    documents => { documents.get('/repos/neb6dav/ai_tech_tree/pages').protected_domain_state = 'future-state'; },
+    documents => { documents.get('/repos/neb6dav/ai_tech_tree/immutable-releases').future_override = false; },
+    documents => { documents.get('/repos/neb6dav/ai_tech_tree/actions/workflows/validate.yml').future_state = 'trusted'; },
+    documents => { documents.get(runsKey).future_total = 1; },
+    documents => { documents.get(runsKey).workflow_runs[0].future_event = 'trusted_push'; },
+    documents => { documents.get(runsKey).workflow_runs[0].event = 'future_event'; },
+    documents => { documents.get(jobsKey).future_total = 1; },
+    documents => { documents.get(jobsKey).jobs[0].future_conclusion = 'trusted'; },
+    documents => { documents.get(jobsKey).jobs[0].status = 'future_status'; }
+  ];
+  for (const mutate of mutations) await expectAuditFailure(mutate, /unsupported|does not match|unreviewed/iu);
 });
 
 test('audit rejects weak environment, Pages, or immutable Release controls', async () => {
@@ -350,6 +383,75 @@ test('audit rejects weak environment, Pages, or immutable Release controls', asy
   await expectAuditFailure(documents => {
     documents.get('/repos/neb6dav/ai_tech_tree/pages').build_type = 'legacy';
   }, /Pages state/iu);
+  await expectAuditFailure(documents => {
+    Object.assign(documents.get('/repos/neb6dav/ai_tech_tree/pages'), {
+      cname: 'attacker.example',
+      protected_domain_state: 'unverified',
+      source: { branch: 'attacker-controlled', path: '/payload' },
+      https_certificate: null
+    });
+  }, /unreviewed custom domain/iu);
+  await expectAuditFailure(documents => {
+    Object.assign(documents.get('/repos/neb6dav/ai_tech_tree/pages'), {
+      cname: null,
+      protected_domain_state: 'verified',
+      source: null,
+      https_certificate: {
+        description: 'wrong certificate',
+        domains: ['attacker.example'],
+        expires_at: '2027-08-20T00:00:00.000Z',
+        state: 'approved'
+      }
+    });
+  }, /certificate domains/iu);
+  await expectAuditFailure(documents => {
+    Object.assign(documents.get('/repos/neb6dav/ai_tech_tree/pages'), {
+      cname: null,
+      protected_domain_state: 'verified',
+      source: null,
+      https_certificate: {
+        description: 'GitHub Pages certificate',
+        domains: ['neb6dav.github.io'],
+        expires_at: 'not-a-date',
+        state: 'approved'
+      }
+    });
+  }, /expires_at/iu);
+  for (const expiresAt of [0, '1970-01-01T00:00:00.000Z', '2027-08-20']) {
+    await expectAuditFailure(documents => {
+      Object.assign(documents.get('/repos/neb6dav/ai_tech_tree/pages'), {
+        cname: null,
+        protected_domain_state: 'verified',
+        source: null,
+        https_certificate: {
+          description: 'GitHub Pages certificate',
+          domains: ['neb6dav.github.io'],
+          expires_at: expiresAt,
+          state: 'approved'
+        }
+      });
+    }, /expires_at/iu);
+  }
+  const validCertificateRecord = await loadedPolicy();
+  const validCertificateFixture = buildFixture(validCertificateRecord);
+  Object.assign(validCertificateFixture.documents.get('/repos/neb6dav/ai_tech_tree/pages'), {
+    cname: null,
+    protected_domain_state: 'verified',
+    source: null,
+    https_certificate: {
+      description: 'GitHub Pages certificate',
+      domains: ['neb6dav.github.io'],
+      expires_at: '2027-08-20T00:00:00.000Z',
+      state: 'approved'
+    }
+  });
+  const validCertificateReceipt = await auditPromotionControls({
+    policyRecord: validCertificateRecord,
+    expectedCommit: EXPECTED_COMMIT,
+    transport: validCertificateFixture.transport,
+    clock: () => OBSERVED_AT
+  });
+  assert.equal(validCertificateReceipt.checks.pages, true);
   await expectAuditFailure(documents => {
     documents.get('/repos/neb6dav/ai_tech_tree/immutable-releases').enabled = false;
   }, /immutable Releases/iu);
@@ -366,16 +468,25 @@ test('audit binds success to exact validation workflow, commit, event, and job',
   ]) {
     await expectAuditFailure(documents => {
       documents.get(runsKey).workflow_runs[0][field] = value;
-    }, /no exact successful validation workflow run/iu);
+    }, /validation workflow runs\[0\]|no exact successful validation workflow run/iu);
   }
   await expectAuditFailure(documents => {
     documents.get(jobsKey).jobs[0].conclusion = 'failure';
-  }, /exactly one successful required job/iu);
+  }, /validation workflow jobs\[0\]|exactly one successful required job/iu);
   await expectAuditFailure(documents => {
     documents.get(jobsKey).jobs[0].run_id = 999;
     documents.get(jobsKey).jobs[0].head_sha = 'f'.repeat(40);
     documents.get(jobsKey).jobs[0].workflow_name = 'Other workflow';
-  }, /exactly one successful required job/iu);
+  }, /validation workflow jobs\[0\]|exactly one successful required job/iu);
+  await expectAuditFailure(documents => {
+    documents.get(jobsKey).total_count = 2;
+    documents.get(jobsKey).jobs.push({
+      ...clone(documents.get(jobsKey).jobs[0]),
+      id: 506,
+      name: 'Unreviewed job',
+      run_id: 999
+    });
+  }, /validation workflow jobs\[1\].*unsupported identity/iu);
   await expectAuditFailure(documents => {
     documents.get(runsKey).total_count = 999;
   }, /total_count does not match complete pagination/iu);
@@ -408,6 +519,26 @@ test('pagination rejects cross-origin next links and response budgets fail close
   await assert.rejects(
     auditPromotionControls({ policyRecord, expectedCommit: EXPECTED_COMMIT, transport: orphanTransport, clock: () => OBSERVED_AT }),
     /later last page without an exact next link/iu
+  );
+
+  const hiddenPolicyFixture = buildFixture(policyRecord);
+  const deploymentPath = '/repos/neb6dav/ai_tech_tree/environments/github-pages/deployment-branch-policies';
+  const hiddenPolicyTransport = async request => {
+    if (request.path === deploymentPath && request.query.page === 1) {
+      return response({ total_count: 1, branch_policies: [] }, {
+        link: `<https://api.github.com${deploymentPath}?page=2&per_page=100>; rel="next", <https://api.github.com${deploymentPath}?page=2&per_page=100>; rel="last"`
+      });
+    }
+    if (request.path === deploymentPath && request.query.page === 2) {
+      return response({ total_count: 1, branch_policies: [{ id: 909, name: 'hidden-tag-policy', type: 'tag' }] }, {
+        link: `<https://api.github.com${deploymentPath}?page=1&per_page=100>; rel="first", <https://api.github.com${deploymentPath}?page=1&per_page=100>; rel="prev", <https://api.github.com${deploymentPath}?page=2&per_page=100>; rel="last"`
+      });
+    }
+    return hiddenPolicyFixture.transport(request);
+  };
+  await assert.rejects(
+    auditPromotionControls({ policyRecord, expectedCommit: EXPECTED_COMMIT, transport: hiddenPolicyTransport, clock: () => OBSERVED_AT }),
+    /must not contain custom deployment branch policies/iu
   );
 
   const oversizedFixture = buildFixture(policyRecord);

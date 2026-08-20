@@ -25,8 +25,8 @@ const PROMOTION_CONTROL_POLICY_PATH = path.join(REPOSITORY_ROOT, 'config', 'gith
 const SAFE_PROMOTION_CONTROL_PLAN_COMMAND = 'node scripts/github-control-audit.mjs';
 const REVIEWED_PROMOTION_CONTROL_SOURCE_SHA256 = Object.freeze({
   'config/github-promotion-policy.v1.json': 'a1dc1ec4b814f09e668b1b1d6669853240dcb732541e0d0b580ec3f5a959215c',
-  'scripts/github-control-audit.mjs': '1b5ea0a3c46f206f8f236875719c6a40313d8a4efb37476eff1fdb11f5a01918',
-  'tests/github-control-audit.test.mjs': 'ac02dbeaddb9cd0a1f1dd235657b999e521d5f45b4703be6474d0d19ba077a82'
+  'scripts/github-control-audit.mjs': '2b5d5fd0aa23056bc00bcfa01cf11b24f345465d9c4f98a403f858a16f010995',
+  'tests/github-control-audit.test.mjs': '474d4fe90c462ac74d512a2eb082ea3f5938de7518ee660c357f4d62683836da'
 });
 const REVIEWED_SYNTHETIC_SOURCE_SHA256 = Object.freeze({
   'scripts/release-assets.mjs': '8841efff842e00dd93bf69a849b7701ae519bfd70b9bc5618c440ee37b90f83f',

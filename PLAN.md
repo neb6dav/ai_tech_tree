@@ -5,7 +5,7 @@ active_work_package: "WP-011-B"
 issue_url: "https://github.com/neb6dav/ai_tech_tree/issues/6"
 pr_url: "https://github.com/neb6dav/ai_tech_tree/pull/7"
 base_sha: "85108c78fa86c86634d4c0944839696369e687cd"
-last_completed_checkpoint: "WP-011-B/C4.2-B"
+last_completed_checkpoint: "WP-011-B/C4.2"
 last_verified_commands:
   - command: "npm run build"
     status: "PASS"
@@ -104,17 +104,22 @@ last_verified_commands:
     runtime: "Node v24.14.1, npm 11.11.0, and Git 2.55"
     verified_by: "root"
     scope: "Exact Windows-fixture fix commit 8c812db; 13 candidate-asset tests including junction rejection and no-residue closure, all C4.2-C and repository gates, 17/17 inputs, 75 tracked entries, zero filters, and 1,465 staged-site references"
+  - command: "Reconcile C4.2-C Windows/Ubuntu parity workflow and downloaded candidates"
+    status: "PASS"
+    runtime: "GitHub Actions Node v24.19.0 and npm 11.17.0"
+    verified_by: "root"
+    scope: "Workflow 32405267536; full gate plus Windows, Ubuntu, and parity jobs green; artifacts 9420019751, 9420051460, and 9420059684 have identical four-file contents; 15-entry archive matches the 15-file preview and passes 1,465 references"
 next_exact_action: >-
-  Push the verified Windows-fixture fix and updated ledger, monitor the second
-  pull-request workflow, download both one-day parity handoffs and the 14-day
-  verified candidate, and independently reconcile all four inner files.
+  Prepare the C4.3 stable-identity checkpoint without creating a tag, GitHub
+  Release, environment approval, deployment, settings mutation, or production
+  request; first lock the exact source fields and fail-closed transition tests.
 known_blockers:
   - "WP-011-B is stacked on verified draft PR #5 until WP-011-A is separately authorized to merge."
   - "No merge, annotated tag, GitHub Release, environment approval, or public deployment is authorized."
   - "The C3 source must remain visibly labeled as an untagged development edition until C4 prepares an authorized release artifact."
   - "Browser performance metrics and automated preview screenshots remain pending WP-012-A."
   - "The github-pages environment has no required reviewer and permits administrator bypass; immutable GitHub Releases are disabled. These external controls require separate authorization before any C4 promotion run."
-release_gate_status: "wp_011_b_c4_2_c_locally_verified_awaiting_remote_parity"
+release_gate_status: "wp_011_b_c4_2_remotely_verified_c4_3_ready"
 release_details:
   version: "v0.1.1"
   title: "Publication-contract repair"
@@ -138,13 +143,13 @@ release_details:
       artifact_id: 9392055435
       artifact_tar_sha256: "f04f46196b74982f9d725f032278f9b7ed48ae1ffd82db0dcff3fc39f739f9c4"
     active_checkpoint:
-      id: "C4.2-C"
-      title: "Cross-platform candidate validation workflow"
-      status: "locally_verified_awaiting_remote"
+      id: "C4.3"
+      title: "Stable release identity preparation"
+      status: "ready_to_design"
       next_exact_action: >-
-        Push fix commit 8c812db and this recovery ledger, then reconcile the
-        successful Ubuntu, Windows, and verified candidate artifacts before
-        marking C4.2 complete.
+        Define and test the exact planned-to-ready identity transition across
+        the release specification, dataset, citation, changelog, package lock,
+        UI metadata, sitemap, and release notes without external mutation.
     scope:
       - "Publish stable and compatibility Opportunity endpoints."
       - "Move exported human URLs to the root application."
@@ -312,17 +317,18 @@ an environment, deployment capability, or a production-smoke execution path;
 the Pages workflow remains build-only and unchanged. Candidate generation now
 runs through an exact npm script so the manifest records the observed npm
 version. Exact clean code commit `76ffd09` passes the complete gate with 17/17
-inputs, 75 tracked entries, zero filters, 32 workflow-policy mutation tests,
+inputs, 75 tracked entries, zero filters, 32 workflow-policy tests,
 and 1,465 references. Its local four-file candidate records Node v24.14.1 and
 npm 11.11.0; the archive SHA-256 is
 `2a280fb3be45a9086c238d1aeeb10b9d5266c490b140f5652d4818565804a1e3`
 and the standalone manifest SHA-256 is
 `27ea685d3b94a973675ac04164c5f41bac1bfec6a50ff3335b9e2675a758d077`.
 Two independent reviews returned SHIP after npm-null provenance and
-workflow-policy fail-open findings were corrected. Remote Windows/Ubuntu
-parity and downloaded-artifact reconciliation remain required before C4.2-C
-or C4.2 as a whole is complete. No tag, release, environment, deployment,
-settings mutation, production request, or Pages workflow promotion occurred.
+workflow-policy fail-open findings were corrected. Those local reviews did not
+by themselves complete C4.2-C; hosted Windows/Ubuntu parity and downloaded
+artifact reconciliation were still required. No tag, release, environment,
+deployment, settings mutation, production request, or Pages workflow
+promotion occurred.
 
 The first pushed C4.2-C attempt, workflow `32404551506`, passed the full
 repository gate and Ubuntu candidate job but failed closed in the Windows
@@ -335,6 +341,26 @@ it does not relax production path validation. Two path reviews approved the
 narrow fix, and its exact clean tree passes 13/13 candidate-asset tests plus
 the complete repository gate. A successful second hosted-Windows run remains
 required.
+
+The second attempt, workflow `32405267536` at branch commit `c199662` and
+synthetic merge commit `270c6d0`, is green across the full repository,
+Windows candidate, Ubuntu candidate, and byte-parity jobs. The downloaded
+one-day Ubuntu artifact `9420019751`, one-day Windows artifact `9420051460`,
+and 14-day verified artifact `9420059684` contain exactly the same four files.
+Their verified inner SHA-256 values are
+`f22e55c80e39be4e4ce59ece95448021d8aab3bca438557c2ecad824b144a4e0`
+for notes,
+`f5f1924af3cecf933bd513a42f0eabfabf267bdad648019a85ac75b66227da0e`
+for the standalone manifest,
+`10b9e3d9957a3adee014d19726f5f122d61625a998d4e189498247c6b05c5ef6`
+for `SHA256SUMS`, and
+`f10ca8b7d0201fa927b819821b31a98fce4139dfdee524dc28e8cda93c0af06a`
+for the USTAR archive. The candidate and staged-preview manifest bytes are
+identical and record Node v24.19.0, npm 11.17.0, preview mode, null tag and
+promotion, clean required source, 17/17 inputs, 75 tracked entries, and zero
+filters. The 15-entry archive is byte-identical to all 15 preview files and
+passes the complete 1,465-reference site contract. C4.2 is remotely complete.
+No production or control-plane mutation occurred.
 
 ## Release boundary
 

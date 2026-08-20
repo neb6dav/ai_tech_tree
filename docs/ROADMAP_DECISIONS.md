@@ -82,6 +82,29 @@ actions occurred. A stable bundle records verified local Git and source facts;
 it does not attest GitHub environment approval, tag protection, immutable
 Release settings, deployment, rollback readiness, or successful public smoke.
 
+C4.4-B1 expresses the intended GitHub control state in the versioned
+`config/github-promotion-policy.v1.json` policy and exposes only a default-no-
+network planning command. The repository test suite may assess response logic
+through an injected GET transport, but an injected or test-only receipt is
+categorically ineligible to satisfy the real policy. The active workflows must
+not invoke the audit CLI or a live transport, receive a token or secret, target
+an environment, request write permission, deploy, or promote. Any live GET-only
+audit and every resulting external mutation require separate authorization.
+
+The real policy remains planned while the `github-pages` environment lacks a
+required reviewer and permits administrator bypass, immutable GitHub Releases
+are disabled, no active no-bypass tag ruleset protects `v0.1.1`, and the
+verified production recovery artifact remains local rather than durable and
+runner-accessible. Repository-side fixtures cannot clear those external
+blockers.
+
+The future required-status context is corroborating evidence only. The audit
+must also bind the active `validate.yml` workflow, its successful `push` run at
+the independently supplied commit, and the exact required job. Environment
+eligibility is designed for a manual promotion dispatch from protected `main`;
+the annotated tag is verified independently, and no tag-triggered deployment
+is assumed.
+
 ## Explicit deferrals
 
 ### Through v0.2.0

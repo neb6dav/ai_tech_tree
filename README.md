@@ -115,6 +115,18 @@ Stable mode requires a `ready` specification, clean release-mode staging through
 
 C4.4 is locked into separate checkpoints. A1 supplies and locally tests the stable builder. A2 must prove the same synthetic stable bundle byte-for-byte on Windows and Ubuntu. B must add read-only promotion-control, lifecycle-receipt, and durable-rollback preflight while the active workflows remain build-only and unprivileged. No active workflow may enter stable or release mode against the real checkout or release identity, or perform an external promotion action. The sole hermetic exception is A2's reviewed pull-request-only fixture: it creates no remote, uses no credentials, and invokes stable mode only inside a disposable synthetic repository for parity proof. Actual source finalization, annotated-tag creation and push, and GitHub Release/Pages promotion are later, separately authorized actions; none is implied by completing A1, A2, or B.
 
+C4.4-B1 adds a versioned, reviewable description of the GitHub controls that a later `v0.1.1` promotion must satisfy. Its repository entry point is deliberately plan-only:
+
+```text
+npm run plan:promotion-controls
+```
+
+The default command reads `config/github-promotion-policy.v1.json` and reports the bounded read-only audit plan without making a network request. There is no package or workflow entry point that supplies an execution flag, token, secret, write permission, environment, deployment action, or promotion capability; the two active workflows remain byte-for-byte unchanged and cannot invoke the audit CLI or a live transport. Unit tests exercise the GET-only response logic through an injected transport, but injected or test-only receipts are never eligible evidence of real GitHub control state. No live audit has been called or authorized by this implementation.
+
+The policy describes the required future state and remains planned, not satisfied. The currently known external blockers are that the `github-pages` environment has no required reviewer and permits administrator bypass, immutable GitHub Releases are disabled, no active no-bypass tag ruleset protects `v0.1.1`, and the verified production recovery artifact is local rather than durable and runner-accessible. Those controls require separately authorized GitHub changes and a subsequent live, read-only audit before any privileged promotion workflow may be considered.
+
+The required-check context is never accepted by itself: the response verifier also binds the active `validate.yml` workflow, a successful `push` run at the independently supplied commit, and its exact required job. The protected-branch environment policy assumes a later manual dispatch from protected `main` while the release tooling independently binds the annotated tag; it does not assume or authorize a tag-triggered deployment.
+
 The post-deployment verifier is network-free by default. It accepts only a separately supplied, exact local release manifest plus its SHA-256, annotated tag, and commit; rejects preview or internally inconsistent release identity; and prints the fixed-origin GET plan without contacting the site. A later, separately authorized promotion run must add `--execute` to perform the bounded 12-minute verification:
 
 ```text

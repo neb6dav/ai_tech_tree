@@ -175,10 +175,19 @@ last_verified_commands:
     runtime: "GitHub Actions exact Node v24.14.1 and npm 11.11.0 synthetic jobs"
     verified_by: "root plus read-only reconciliation agent"
     scope: "Workflow 32418599141; all seven jobs green; downloaded artifacts 9424829117 and 9424846421 independently verified from C:/Projects/Work/ai-tree-a2-evidence-run-32418599141; all four files byte-identical; archive SHA-256 63eafbf42670e7f464de2125e07e2afc268a3ed3a87cd35077bd6c1c65b0bc13; manifest 4c2186fce9cd73cad20bb72f1c4b9e365c7dfea5a9545cffa056b6d1e9aa97cc; synthetic commit a189c3f20f9f376dc54576eb4cac9aee7b542a36 and tag object 0f3eed940af97bfb8374a9c3c43d8b2173dd8159"
+  - command: "npm run test:promotion-controls; npm run test:workflow-policy"
+    status: "PASS"
+    runtime: "Node v24.14.1 and npm 11.11.0"
+    verified_by: "root"
+    scope: "C4.4-B1 local checkpoint: 14 injected-transport promotion-control tests and 104 workflow/package policy tests; fixed trust anchors, exact main-ref bookends, ruleset/environment/Pages/Release controls, validation run/job binding, complete pagination, fixture-only receipt scope, and network-incapable source closure"
+  - command: "C4.4-B1 adjacent release-tooling and independent hostile review"
+    status: "PASS"
+    verified_by: "root plus independent read-only reviewer"
+    scope: "3 release-spec, 21 release-ref, 33 release-asset, 29 finalization-plan, 14 promotion-control, 80 post-deploy-smoke, 104 workflow-policy, and 56 stage-site tests passed; hostile pagination, cross-run identity, receipt eligibility, and capability probes returned SHIP; no live request or external mutation"
 next_exact_action: >-
-  Implement and hostile-test C4.4-B1's default-no-network, GET-only GitHub
-  promotion-control policy and injected-transport auditor without changing
-  either active workflow or executing a live control audit.
+  Commit the locally verified C4.4-B1 policy, plan-only auditor, injected
+  hostile tests, capability closure, documentation, and ledger; run the exact
+  clean-commit full repository gate, then push and reconcile hosted validation.
 known_blockers:
   - "WP-011-B is stacked on verified draft PR #5 until WP-011-A is separately authorized to merge."
   - "No merge, annotated tag, GitHub Release, environment approval, or public deployment is authorized."
@@ -186,7 +195,7 @@ known_blockers:
   - "Browser performance metrics and automated preview screenshots remain pending WP-012-A."
   - "The github-pages environment has no required reviewer and permits administrator bypass; immutable GitHub Releases are disabled. These external controls require separate authorization before any C4 promotion run."
   - "No active no-bypass tag ruleset protects v0.1.1, and the verified production recovery artifact is local rather than durable and runner-accessible."
-release_gate_status: "wp_011_b_c4_4_a2_remote_verified_b1_implementing_read_only"
+release_gate_status: "wp_011_b_c4_4_a2_remote_verified_b1_locally_verified_pending_commit"
 release_details:
   version: "v0.1.1"
   title: "Publication-contract repair"
@@ -212,11 +221,11 @@ release_details:
     active_checkpoint:
       id: "C4.4-B1"
       title: "Read-only GitHub promotion-control audit"
-      status: "implementing"
+      status: "locally_verified_pending_commit"
       next_exact_action: >-
-        Add a fixed-policy, default-plan-only control auditor with injected
-        fixture transport tests, strict receipt validation, and no live call,
-        workflow edit, secret, environment, or external mutation path.
+        Commit the bounded B1 files, run the exact clean-commit full gate,
+        push the branch, reconcile the hosted workflow and preview, then record
+        the remote evidence before starting the next preflight checkpoint.
     scope:
       - "Publish stable and compatibility Opportunity endpoints."
       - "Move exported human URLs to the root application."

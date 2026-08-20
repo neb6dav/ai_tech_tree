@@ -1,0 +1,144 @@
+{
+  "schemaVersion": "1.0.0",
+  "status": "planned",
+  "repository": {
+    "owner": "neb6dav",
+    "name": "ai_tech_tree",
+    "fullName": "neb6dav/ai_tech_tree",
+    "apiOrigin": "https://api.github.com",
+    "apiVersion": "2026-03-10",
+    "defaultBranch": "main",
+    "visibility": "public"
+  },
+  "release": {
+    "version": "0.1.1",
+    "tag": "v0.1.1",
+    "releaseSpecPath": "config/releases/v0.1.1.json",
+    "environment": "github-pages"
+  },
+  "limits": {
+    "maxPages": 4,
+    "maxResponseBytes": 1048576,
+    "maxTotalResponseBytes": 8388608,
+    "receiptFreshnessSeconds": 300,
+    "maxClockSkewSeconds": 30
+  },
+  "rulesets": {
+    "main": {
+      "name": "Curated Main",
+      "target": "branch",
+      "sourceType": "Repository",
+      "enforcement": "active",
+      "conditions": {
+        "refName": {
+          "include": [
+            "~DEFAULT_BRANCH"
+          ],
+          "exclude": []
+        }
+      },
+      "bypassActors": [],
+      "rules": [
+        {
+          "type": "deletion"
+        },
+        {
+          "type": "non_fast_forward"
+        },
+        {
+          "type": "required_linear_history"
+        },
+        {
+          "type": "pull_request",
+          "parameters": {
+            "allowed_merge_methods": [
+              "squash"
+            ],
+            "automatic_copilot_code_review_enabled": false,
+            "dismiss_stale_reviews_on_push": true,
+            "require_code_owner_review": true,
+            "require_last_push_approval": true,
+            "required_approving_review_count": 1,
+            "required_review_thread_resolution": true
+          }
+        },
+        {
+          "type": "required_status_checks",
+          "parameters": {
+            "do_not_enforce_on_create": false,
+            "required_status_checks": [
+              {
+                "context": "Build, test, and verify generated files",
+                "integration_id": null
+              }
+            ],
+            "strict_required_status_checks_policy": true
+          }
+        }
+      ]
+    },
+    "tag": {
+      "name": "Immutable v0.1.1 Tag",
+      "target": "tag",
+      "sourceType": "Repository",
+      "enforcement": "active",
+      "conditions": {
+        "refName": {
+          "include": [
+            "refs/tags/v0.1.1"
+          ],
+          "exclude": []
+        }
+      },
+      "bypassActors": [],
+      "rules": [
+        {
+          "type": "deletion"
+        },
+        {
+          "type": "non_fast_forward"
+        }
+      ]
+    }
+  },
+  "environment": {
+    "name": "github-pages",
+    "canAdminsBypass": false,
+    "deploymentBranchPolicy": {
+      "protectedBranches": true,
+      "customBranchPolicies": false
+    },
+    "protectionRules": {
+      "exactTypes": [
+        "branch_policy",
+        "required_reviewers"
+      ],
+      "requiredReviewers": {
+        "minimum": 1,
+        "allowedTypes": [
+          "User",
+          "Team"
+        ],
+        "preventSelfReview": true
+      }
+    }
+  },
+  "pages": {
+    "status": "built",
+    "buildType": "workflow",
+    "httpsEnforced": true,
+    "public": true
+  },
+  "immutableReleases": {
+    "enabled": true
+  },
+  "validation": {
+    "workflowFile": "validate.yml",
+    "workflowPath": ".github/workflows/validate.yml",
+    "workflowName": "Validate public artifact",
+    "workflowState": "active",
+    "requiredEvent": "push",
+    "requiredBranch": "main",
+    "requiredJobName": "Build, test, and verify generated files"
+  }
+}

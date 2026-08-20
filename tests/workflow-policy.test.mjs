@@ -19,6 +19,15 @@ const NVMRC_PATH = path.join(REPOSITORY_ROOT, '.nvmrc');
 const NODE_VERSION_PATH = path.join(REPOSITORY_ROOT, '.node-version');
 const SYNTHETIC_FIXTURE_PATH = path.join(REPOSITORY_ROOT, 'scripts', 'synthetic-stable-fixture.mjs');
 const STABLE_BUNDLE_VERIFIER_PATH = path.join(REPOSITORY_ROOT, 'scripts', 'verify-stable-bundle.mjs');
+const PROMOTION_CONTROL_AUDITOR_PATH = path.join(REPOSITORY_ROOT, 'scripts', 'github-control-audit.mjs');
+const PROMOTION_CONTROL_TEST_PATH = path.join(REPOSITORY_ROOT, 'tests', 'github-control-audit.test.mjs');
+const PROMOTION_CONTROL_POLICY_PATH = path.join(REPOSITORY_ROOT, 'config', 'github-promotion-policy.v1.json');
+const SAFE_PROMOTION_CONTROL_PLAN_COMMAND = 'node scripts/github-control-audit.mjs';
+const REVIEWED_PROMOTION_CONTROL_SOURCE_SHA256 = Object.freeze({
+  'config/github-promotion-policy.v1.json': 'a1dc1ec4b814f09e668b1b1d6669853240dcb732541e0d0b580ec3f5a959215c',
+  'scripts/github-control-audit.mjs': '1b5ea0a3c46f206f8f236875719c6a40313d8a4efb37476eff1fdb11f5a01918',
+  'tests/github-control-audit.test.mjs': 'ac02dbeaddb9cd0a1f1dd235657b999e521d5f45b4703be6474d0d19ba077a82'
+});
 const REVIEWED_SYNTHETIC_SOURCE_SHA256 = Object.freeze({
   'scripts/release-assets.mjs': '8841efff842e00dd93bf69a849b7701ae519bfd70b9bc5618c440ee37b90f83f',
   'scripts/release-ref.mjs': 'c2d7f2be57441fedf046f84e4c70e911ee8ebb7f911b65742b391f274a038a4b',
@@ -39,6 +48,7 @@ const EXPECTED_PACKAGE_SCRIPTS = Object.freeze({
   'build:stable-release-assets': 'node scripts/release-assets.mjs --mode stable',
   'build:synthetic-stable-fixture': 'node scripts/synthetic-stable-fixture.mjs',
   'plan:release-finalization': 'node scripts/release-finalization-plan.mjs',
+  'plan:promotion-controls': SAFE_PROMOTION_CONTROL_PLAN_COMMAND,
   'stage:site': 'node scripts/stage-site.mjs',
   'verify:stable-bundle': 'node scripts/verify-stable-bundle.mjs',
   'test:core': 'node release-gate.js && node accessibility-gate.js && node ui-layout-gate.js && node network-gate.js && node opportunity-gate.js',
@@ -50,6 +60,7 @@ const EXPECTED_PACKAGE_SCRIPTS = Object.freeze({
   'test:release-assets': 'node --test tests/release-assets.test.mjs',
   'test:stable-bundle': 'node --test tests/stable-bundle.test.mjs',
   'test:release-finalization-plan': 'node --test tests/release-finalization-plan.test.mjs',
+  'test:promotion-controls': 'node --test tests/github-control-audit.test.mjs',
   'test:post-deploy-smoke': SAFE_POST_DEPLOY_TEST_COMMAND,
   'test:workflow-policy': 'node --test tests/workflow-policy.test.mjs',
   'test:site-contract:unit': 'node --test tests/site-contract-test.test.cjs',
@@ -59,7 +70,7 @@ const EXPECTED_PACKAGE_SCRIPTS = Object.freeze({
   'test:publication-compatibility': 'node --test tests/publication-compatibility.test.cjs',
   'test:export-human-urls': 'node --test tests/export-human-urls.test.cjs',
   'test:release-identity': 'node --test tests/release-identity.test.cjs',
-  'test:publication': 'npm run test:release-spec && npm run test:release-ref && npm run test:release-assets && npm run test:release-finalization-plan && npm run test:post-deploy-smoke && npm run test:workflow-policy && npm run test:stage-site && npm run test:site-contract:unit && npm run test:performance-budget:unit && npm run test:publication-compatibility && npm run test:export-human-urls && npm run stage:site && npm run test:release-identity && npm run test:performance-budget && npm run test:site-contract',
+  'test:publication': 'npm run test:release-spec && npm run test:release-ref && npm run test:release-assets && npm run test:release-finalization-plan && npm run test:promotion-controls && npm run test:post-deploy-smoke && npm run test:workflow-policy && npm run test:stage-site && npm run test:site-contract:unit && npm run test:performance-budget:unit && npm run test:publication-compatibility && npm run test:export-human-urls && npm run stage:site && npm run test:release-identity && npm run test:performance-budget && npm run test:site-contract',
   test: 'npm run test:core && npm run test:publication'
 });
 const PULL_REQUEST_ONLY = "github.event_name == 'pull_request'";
@@ -226,15 +237,31 @@ function assertNoControlPlaneCapabilities(workflow, label, { allowPagesArtifact 
       assert.notEqual(entry.key, 'pages', `${label} must not request Pages permissions at ${entry.path}`);
       assert.notEqual(entry.key, 'deployments', `${label} must not request deployment permissions at ${entry.path}`);
       assert.notEqual(entry.key, 'continue-on-error', `${label} must not make a job or step fail open at ${entry.path}`);
+      assert.doesNotMatch(
+        entry.key,
+        /(?:^|[_-])(?:token|secret)(?:$|[_-])/iu,
+        `${label} must not declare token- or secret-bearing controls at ${entry.path}`
+      );
     }
     if (typeof entry.value !== 'string') continue;
     const value = entry.value;
     assert.doesNotMatch(value, /\$\{\{\s*secrets\./iu, `${label} must not reference repository secrets`);
+    assert.doesNotMatch(value, /\$\{\{\s*github\.token\b/iu, `${label} must not reference the ambient GitHub token`);
+    assert.doesNotMatch(
+      value,
+      /\b(?:GH_TOKEN|GITHUB_TOKEN|NODE_AUTH_TOKEN)\b/iu,
+      `${label} must not receive an ambient mutation-capable token`
+    );
     assert.doesNotMatch(value, /\b(?:curl|wget|gh|Invoke-WebRequest|Invoke-RestMethod)\b/iu, `${label} must not call mutation-capable network clients`);
     assert.doesNotMatch(value, /\bgit\s+(?:push|tag)\b/iu, `${label} must not push or create tags`);
     assert.doesNotMatch(value, /\bnpm\s+publish\b/iu, `${label} must not publish packages`);
     assert.doesNotMatch(value, /post-deploy-smoke/iu, `${label} must not invoke post-deployment smoke tooling`);
     assert.doesNotMatch(value, /--execute\b/iu, `${label} must not enable production smoke execution`);
+    assert.doesNotMatch(
+      value,
+      /scripts[\\/]github-control-audit\.mjs|\bnpm\s+run\s+plan:promotion-controls\b/iu,
+      `${label} must not execute the GitHub promotion-control audit`
+    );
     assert.doesNotMatch(
       value,
       /\bnpm\s+run\s+build:stable-release-assets\b|scripts[\\/]release-assets\.mjs[^\r\n]*--mode(?:=|\s+)["']?stable\b/iu,
@@ -630,9 +657,10 @@ function npmRunDependencies(command, label) {
   return dependencies;
 }
 
-function commandWithoutAllowedPostDeployTestReferences(command) {
+function commandWithoutAllowedLocalTestReferences(command) {
   return command
     .replaceAll('test:post-deploy-smoke', 'test:safe-local-smoke')
+    .replaceAll('test:promotion-controls', 'test:read-only-control-tests')
     .replace(/tests[\\/]post-deploy-smoke\.test\.mjs/giu, 'tests/safe-local-smoke.test.mjs');
 }
 
@@ -651,13 +679,18 @@ function assertNoPackagePromotionCapabilities(scripts) {
       `${name} must not introduce a promotion-oriented package-script entry point`
     );
 
-    const inspected = commandWithoutAllowedPostDeployTestReferences(command);
+    const inspected = commandWithoutAllowedLocalTestReferences(command);
     assert.doesNotMatch(
       inspected,
       /scripts[\\/]post-deploy-smoke\.mjs/iu,
       `${name} must not execute the post-deployment smoke CLI`
     );
     assert.doesNotMatch(inspected, /--execute\b/iu, `${name} must not enable production smoke execution`);
+    assert.doesNotMatch(
+      inspected,
+      /\b(?:GH_TOKEN|GITHUB_TOKEN|NODE_AUTH_TOKEN)\b|\$\{\{\s*(?:secrets\.|github\.token\b)/iu,
+      `${name} must not receive a token or secret`
+    );
     assert.doesNotMatch(
       inspected,
       /\bAI_TREE_STAGE_MODE\s*(?:=|:)\s*["']?release\b|--mode(?:=|\s+)["']?release\b/iu,
@@ -714,6 +747,7 @@ function validatePackageTestClosure(
   for (const required of [
     'test:release-assets',
     'test:release-finalization-plan',
+    'test:promotion-controls',
     'test:post-deploy-smoke',
     'test:workflow-policy'
   ]) {
@@ -721,6 +755,7 @@ function validatePackageTestClosure(
   }
   assert.equal(scripts['test:release-assets'], 'node --test tests/release-assets.test.mjs');
   assert.equal(scripts['test:stable-bundle'], 'node --test tests/stable-bundle.test.mjs');
+  assert.equal(scripts['test:promotion-controls'], 'node --test tests/github-control-audit.test.mjs');
   assert.equal(scripts['test:post-deploy-smoke'], 'node --test tests/post-deploy-smoke.test.mjs');
   assert.equal(scripts['test:workflow-policy'], 'node --test tests/workflow-policy.test.mjs');
   assert.equal(
@@ -742,6 +777,16 @@ function validatePackageTestClosure(
     scripts['verify:stable-bundle'],
     'node scripts/verify-stable-bundle.mjs',
     'stable bundles must use the reviewed independent offline verifier'
+  );
+  assert.equal(
+    scripts['plan:promotion-controls'],
+    SAFE_PROMOTION_CONTROL_PLAN_COMMAND,
+    'promotion-control inspection must default to the reviewed plan-only CLI with no execution flag'
+  );
+  assert.equal(
+    reachable.has('plan:promotion-controls'),
+    false,
+    'the plan-only GitHub control audit must not execute through the ordinary npm test closure'
   );
   assert.equal(
     reachable.has('test:stable-bundle'),
@@ -870,6 +915,47 @@ function validateSyntheticHelperBoundary(fixtureBytes, verifierBytes, reviewedSo
   }
 }
 
+function validatePromotionControlSourceBoundary(reviewedSources = reviewedPromotionControlSources) {
+  assert.deepEqual(
+    [...reviewedSources.keys()].sort(),
+    Object.keys(REVIEWED_PROMOTION_CONTROL_SOURCE_SHA256).sort(),
+    'promotion-control closure must contain exactly the reviewed policy, auditor, and hostile test sources'
+  );
+  for (const [relativePath, expectedDigest] of Object.entries(REVIEWED_PROMOTION_CONTROL_SOURCE_SHA256)) {
+    const bytes = reviewedSources.get(relativePath);
+    assert.ok(Buffer.isBuffer(bytes), `promotion-control closure is missing ${relativePath}`);
+    assert.equal(
+      createHash('sha256').update(bytes).digest('hex'),
+      expectedDigest,
+      `${relativePath} must match its reviewed SHA-256`
+    );
+  }
+
+  const auditor = reviewedSources.get('scripts/github-control-audit.mjs').toString('utf8');
+  const tests = reviewedSources.get('tests/github-control-audit.test.mjs').toString('utf8');
+  const importSpecifiers = [...auditor.matchAll(/^import [^\r\n]+ from '([^']+)';$/gmu)].map(match => match[1]).sort();
+  assert.deepEqual(importSpecifiers, [
+    './strict-json.mjs',
+    'node:crypto',
+    'node:fs/promises',
+    'node:path',
+    'node:url',
+    'node:util'
+  ]);
+  assert.equal((auditor.match(/^import\b/gmu) || []).length, importSpecifiers.length, 'auditor may use only reviewed static imports');
+  for (const [label, source] of [['auditor', auditor], ['hostile tests', tests]]) {
+    assert.doesNotMatch(source, /(?:^|['"])(?:node:)?(?:http|https|http2|net|tls|dgram|dns)(?:\/|['"])/mu, `${label} must not import a network primitive`);
+    assert.doesNotMatch(source, /\b(?:fetch|WebSocket|EventSource|XMLHttpRequest|getBuiltinModule)\b/u, `${label} must not reference a network client or dynamic builtin resolver`);
+    assert.doesNotMatch(source, /\b(?:eval|Function|Reflect|Proxy)\b|\bimport\s*\(/u, `${label} must not construct executable or dynamic-import code`);
+    assert.doesNotMatch(source, /node:child_process|\b(?:execFile|execFileSync|execSync|spawn|spawnSync|fork)\s*\(/u, `${label} must not launch a subprocess`);
+  }
+  assert.match(auditor, /Default behavior is plan-only and makes no network request\./u);
+  assert.match(auditor, /live execution is blocked while the promotion policy status is planned/u);
+  assert.match(auditor, /planned-policy receipts must remain injected-test-only and promotion-ineligible/u);
+  assert.doesNotMatch(auditor, /\b(?:POST|PUT|PATCH|DELETE)\b/u, 'auditor must not name a mutating HTTP method');
+  assert.match(tests, /assert\.ok\(fixture\.calls\.every\(call => call\.method === 'GET'\)\)/u);
+}
+
 const [
   workflowNames,
   validateBytes,
@@ -877,6 +963,9 @@ const [
   packageBytes,
   syntheticFixtureBytes,
   stableBundleVerifierBytes,
+  promotionControlAuditorBytes,
+  promotionControlTestBytes,
+  promotionControlPolicyBytes,
   packageLockBytes,
   nvmrcBytes,
   nodeVersionBytes
@@ -887,6 +976,9 @@ const [
   readFile(PACKAGE_PATH),
   readFile(SYNTHETIC_FIXTURE_PATH),
   readFile(STABLE_BUNDLE_VERIFIER_PATH),
+  readFile(PROMOTION_CONTROL_AUDITOR_PATH),
+  readFile(PROMOTION_CONTROL_TEST_PATH),
+  readFile(PROMOTION_CONTROL_POLICY_PATH),
   readFile(PACKAGE_LOCK_PATH),
   readFile(NVMRC_PATH),
   readFile(NODE_VERSION_PATH)
@@ -897,6 +989,11 @@ const reviewedSyntheticSources = new Map(await Promise.all(
     await readFile(path.join(REPOSITORY_ROOT, ...relativePath.split('/')))
   ])
 ));
+const reviewedPromotionControlSources = new Map([
+  ['scripts/github-control-audit.mjs', promotionControlAuditorBytes],
+  ['tests/github-control-audit.test.mjs', promotionControlTestBytes],
+  ['config/github-promotion-policy.v1.json', promotionControlPolicyBytes]
+]);
 const validateWorkflow = parseStrictYaml(validateBytes, 'validate workflow');
 const pagesWorkflow = parseStrictYaml(pagesBytes, 'Pages hold workflow');
 const packageDocument = parseStrictJson(packageBytes, 'package.json');
@@ -920,6 +1017,35 @@ test('npm test covers release and bundle tools on the supported major toolchain 
 
 test('synthetic fixture and bundle verifier stay local-only and independently fail closed', () => {
   validateSyntheticHelperBoundary(syntheticFixtureBytes, stableBundleVerifierBytes);
+});
+
+test('promotion-control plan and tests remain network-incapable and source-locked', () => {
+  validatePromotionControlSourceBoundary();
+});
+
+test('promotion-control source policy rejects network, subprocess, and trust-anchor drift', async t => {
+  const auditor = promotionControlAuditorBytes.toString('utf8');
+  const tests = promotionControlTestBytes.toString('utf8');
+  const policy = promotionControlPolicyBytes.toString('utf8');
+  const mutations = [
+    ['network import', `${auditor}\nimport https from 'node:https';\n`, tests, policy],
+    ['direct fetch', `${auditor}\nawait fetch('https://api.github.com/');\n`, tests, policy],
+    ['bracketed fetch', `${auditor}\nglobalThis['fetch']('https://api.github.com/');\n`, tests, policy],
+    ['dynamic builtin', `${auditor}\nprocess.getBuiltinModule('https').get('https://api.github.com/');\n`, tests, policy],
+    ['child process', `${auditor}\nspawnSync('curl', ['https://api.github.com/']);\n`, tests, policy],
+    ['networked hostile test', auditor, `${tests}\nawait fetch('https://api.github.com/');\n`, policy],
+    ['policy trust anchor', auditor, tests, policy.replace('https://api.github.com', 'https://example.invalid')]
+  ];
+  for (const [name, hostileAuditor, hostileTests, hostilePolicy] of mutations) {
+    await t.test(name, () => {
+      const sources = new Map([
+        ['scripts/github-control-audit.mjs', Buffer.from(hostileAuditor)],
+        ['tests/github-control-audit.test.mjs', Buffer.from(hostileTests)],
+        ['config/github-promotion-policy.v1.json', Buffer.from(hostilePolicy)]
+      ]);
+      assert.throws(() => validatePromotionControlSourceBoundary(sources));
+    });
+  }
 });
 
 test('synthetic helper policy rejects future network and tag-porcelain allowlist entries', async t => {
@@ -979,6 +1105,8 @@ test('workflow policy rejects capability and parity regressions', async t => {
     ['skipped validation job', workflow => { workflow.jobs['build-and-test'].if = false; }],
     ['deployment action', workflow => { workflow.jobs['candidate-assets-parity'].steps.push({ uses: 'actions/deploy-pages@v4' }); }],
     ['production smoke command', workflow => { workflow.jobs['build-and-test'].steps.push({ run: 'node scripts/post-deploy-smoke.mjs --execute' }); }],
+    ['promotion-control audit command', workflow => { workflow.jobs['build-and-test'].steps.push({ run: 'npm run plan:promotion-controls' }); }],
+    ['ambient GitHub token', workflow => { workflow.jobs['build-and-test'].env = { GITHUB_TOKEN: '${{ github.token }}' }; }],
     ['stable asset command', workflow => {
       stepByName(workflow.jobs['candidate-assets'], 'Build exact candidate assets').run =
         'npm run build:stable-release-assets -- --repository-root "${{ github.workspace }}" --commit "${{ github.sha }}" --output-directory "${{ runner.temp }}/stable" --tag v0.1.1 --release-spec-path config/releases/v0.1.1.json --protected-main-ref refs/remotes/origin/main';
@@ -1122,10 +1250,21 @@ test('Pages and package policies reject promotion or production-smoke regression
       'AI_TREE_STAGE_MODE=release npm run stage:site';
     assert.throws(() => validatePagesHold(hostile));
   });
+  await t.test('promotion-control audit enters Pages build', () => {
+    const hostile = clone(pagesWorkflow);
+    stepByName(hostile.jobs.build, 'Build, validate, and stage the public artifact').run =
+      `${EXPECTED_PAGES_BUILD}npm run plan:promotion-controls\n`;
+    assert.throws(() => validatePagesHold(hostile));
+  });
   await t.test('production smoke enters npm test closure', () => {
     const hostile = clone(packageDocument);
     hostile.scripts.test += ' && npm run smoke:production';
     hostile.scripts['smoke:production'] = 'node scripts/post-deploy-smoke.mjs --execute';
+    assert.throws(() => validatePackageTestClosure(hostile));
+  });
+  await t.test('promotion-control plan becomes executable', () => {
+    const hostile = clone(packageDocument);
+    hostile.scripts['plan:promotion-controls'] += ' --execute';
     assert.throws(() => validatePackageTestClosure(hostile));
   });
   await t.test('semicolon cannot conceal an npm production-smoke dependency', () => {

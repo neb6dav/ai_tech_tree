@@ -7,7 +7,9 @@ import {
   mkdtemp,
   readFile,
   readdir,
+  realpath,
   rm,
+  symlink,
   writeFile
 } from 'node:fs/promises';
 import os from 'node:os';
@@ -106,7 +108,11 @@ async function makeFixture({
   edition = '2026-08-20-test-edition',
   indexTarget = 'index.html'
 } = {}) {
-  const base = await mkdtemp(path.join(os.tmpdir(), 'ai-tree-release-assets-test-'));
+  // GitHub-hosted Windows can expose os.tmpdir() through an 8.3 alias. Keep
+  // fixture-created paths in the canonical spelling expected by the output
+  // parent guard; production callers still have to supply a canonical path.
+  const temporaryParent = await realpath(os.tmpdir());
+  const base = await mkdtemp(path.join(temporaryParent, 'ai-tree-release-assets-test-'));
   temporaryRoots.add(base);
   const root = path.join(base, 'repository');
   await mkdir(root);
@@ -395,6 +401,24 @@ test('requires a new external absolute output directory and never overwrites it'
     }),
     /explicit absolute path/u
   );
+});
+
+test('rejects an output directory reached through a symbolic-link or junction parent', async () => {
+  const fixture = await makeFixture();
+  const realParent = path.join(fixture.base, 'real-output-parent');
+  const linkedParent = path.join(fixture.base, 'linked-output-parent');
+  await mkdir(realParent);
+  await symlink(realParent, linkedParent, process.platform === 'win32' ? 'junction' : 'dir');
+  await assert.rejects(
+    buildCandidateReleaseAssets({
+      repositoryRoot: fixture.root,
+      commit: fixture.commit,
+      outputDirectory: path.join(linkedParent, 'candidate'),
+      environment: candidateEnvironment()
+    }),
+    /cannot traverse a symbolic-link or junction parent/u
+  );
+  assert.deepEqual(await readdir(realParent), [], 'rejected linked output leaves no candidate or temp residue');
 });
 
 test('rejects abbreviated commits, dirty source, and a commit other than exact HEAD', async () => {

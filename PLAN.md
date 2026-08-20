@@ -54,18 +54,22 @@ last_verified_commands:
     status: "PASS after findings resolved"
     verified_by: "root plus three read-only reviewers"
     scope: "Protected policy anchors, Git object and fsck integrity, committed and working-tree filter closure, annotated-tag semantics, strict CFF identity, hidden changelog markers, preview isolation, and build-only Pages hold"
+  - command: "Reconcile downloaded C4.1 CI preview"
+    status: "PASS"
+    runtime: "GitHub Actions Node v24.19.0 and npm 11.17.0"
+    verified_by: "root"
+    scope: "Workflow 32398059854 green; artifact 9417412872 passed 1,465 contract references; 14/14 payloads byte-identical; CI source closure 17/17 with 70 tracked entries and zero filters; manifests differed only by synthetic checkout commit and Node/npm patch versions"
 next_exact_action: >-
-  Push the exact-clean C4.1 checkpoint, reconcile its downloaded CI preview,
-  then implement C4.2 deterministic release archives, standalone checksums,
+  Implement C4.2 deterministic release archives, standalone checksums,
   release notes, and bounded remote smoke tooling without performing a tag,
-  GitHub Release, environment approval, or deployment.
+  GitHub Release, environment approval, settings change, or deployment.
 known_blockers:
   - "WP-011-B is stacked on verified draft PR #5 until WP-011-A is separately authorized to merge."
   - "No merge, annotated tag, GitHub Release, environment approval, or public deployment is authorized."
   - "The C3 source must remain visibly labeled as an untagged development edition until C4 prepares an authorized release artifact."
   - "Browser performance metrics and automated preview screenshots remain pending WP-012-A."
   - "The github-pages environment has no required reviewer and permits administrator bypass; immutable GitHub Releases are disabled. These external controls require separate authorization before any C4 promotion run."
-release_gate_status: "wp_011_b_c4_1_exact_clean_verified_pending_push"
+release_gate_status: "wp_011_b_c4_1_remote_verified_c4_2_ready"
 release_details:
   version: "v0.1.1"
   title: "Publication-contract repair"
@@ -89,13 +93,13 @@ release_details:
       artifact_id: 9392055435
       artifact_tar_sha256: "f04f46196b74982f9d725f032278f9b7ed48ae1ffd82db0dcff3fc39f739f9c4"
     active_checkpoint:
-      id: "C4.1"
-      title: "Explicit release mode and annotated-tag provenance"
-      status: "exact_clean_verified_pending_push"
+      id: "C4.2"
+      title: "Deterministic release assets and bounded smoke tooling"
+      status: "ready_to_implement"
       next_exact_action: >-
-        Commit this verification ledger, rerun exact-clean staging from that
-        HEAD, push the authorized branch, and reconcile the CI preview before
-        beginning C4.2 release-asset tooling.
+        Add deterministic archive, checksum, release-note, and remote-smoke
+        tools with synthetic fixtures and no call to GitHub release, Pages,
+        environment, or deployment mutation APIs.
     scope:
       - "Publish stable and compatibility Opportunity endpoints."
       - "Move exported human URLs to the root application."
@@ -217,6 +221,14 @@ entries, zero filter attributes, 128 focused Node tests, all core gates,
 artifact budgets, synchronized development identity, and 1,465 staged-site
 references. Its 14-file preview manifest has SHA-256
 `114f924db63f477e15ffad13e1c0bb6530f1b353bd39eba9d391c675e59fd78d`.
+Verification ledger `321215f` passes strict restaging with the same 17/17 and
+zero-filter closure; its local manifest has SHA-256
+`e17066c1c3aaf915b2c4527e1963f10a67a52c6df501f7ae549eee4a300dd747`.
+Workflow `32398059854` is green, downloaded artifact `9417412872` passes all
+1,465 contract references, and all 14 payload files are byte-identical to the
+local strict stage. After normalizing the expected synthetic checkout commit
+and Node/npm patch versions, the local and CI manifests are identical. C4.1 is
+remotely complete; C4.2 is the next implementation boundary.
 
 ## Release boundary
 

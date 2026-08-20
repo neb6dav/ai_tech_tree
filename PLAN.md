@@ -123,17 +123,22 @@ last_verified_commands:
     runtime: "Node v24.14.1 and npm 11.11.0"
     verified_by: "root"
     scope: "All preceding core and publication gates passed; release-identity correctly rejected 16/17 commit-bound inputs because package.json is intentionally uncommitted until the checkpoint commit"
+  - command: "npm run build; AI_TREE_REQUIRE_CLEAN=true AI_TREE_STAGE_MODE=preview AI_TREE_COMMIT_SHA=ac00753b6724c0ccb85ee01ccdadfbcea3aed64e npm test"
+    status: "PASS"
+    runtime: "Node v24.14.1, npm 11.11.0, and Git 2.55"
+    verified_by: "root"
+    scope: "Exact C4.3-A code commit ac00753; core gates and 300 Node tests; planned/development identity; candidate-only ready fixture; 17/17 release inputs; 77 tracked entries; zero filters; manifest SHA-256 48c8e91a88b2087ed3e43b57020aaaa3e30b989106cc34fa8d2f2f919c61fad4; artifact budgets and 1,465 staged-site references"
 next_exact_action: >-
-  Commit the reviewed C4.3-A preparation-only changes, then run the complete
-  strict preview gate against that exact clean commit before any push; keep the
-  real v0.1.1 specification planned and every public identity developmental.
+  Commit this verification-only PLAN ledger update, verify the final branch
+  head remains exact-clean, then push the authorized branch and reconcile the
+  hosted Windows/Ubuntu candidate artifacts; perform no release or deployment.
 known_blockers:
   - "WP-011-B is stacked on verified draft PR #5 until WP-011-A is separately authorized to merge."
   - "No merge, annotated tag, GitHub Release, environment approval, or public deployment is authorized."
   - "The C3 source must remain visibly labeled as an untagged development edition until C4 prepares an authorized release artifact."
   - "Browser performance metrics and automated preview screenshots remain pending WP-012-A."
   - "The github-pages environment has no required reviewer and permits administrator bypass; immutable GitHub Releases are disabled. These external controls require separate authorization before any C4 promotion run."
-release_gate_status: "wp_011_b_c4_2_remotely_verified_c4_3_a_locally_verified_pending_commit"
+release_gate_status: "wp_011_b_c4_2_remotely_verified_c4_3_a_exact_clean_pending_push"
 release_details:
   version: "v0.1.1"
   title: "Publication-contract repair"
@@ -159,11 +164,11 @@ release_details:
     active_checkpoint:
       id: "C4.3"
       title: "Stable release identity preparation"
-      status: "locally_verified_pending_commit"
+      status: "exact_clean_verified_pending_push"
       next_exact_action: >-
-        Commit the reviewed C4.3-A changes and run the exact-clean full test
-        gate; do not change the real v0.1.1 specification from planned in this
-        checkpoint.
+        Commit the verification-only ledger, verify the final clean branch
+        head, push it, and reconcile hosted validation; do not change the real
+        v0.1.1 specification from planned in this checkpoint.
     scope:
       - "Publish stable and compatibility Opportunity endpoints."
       - "Move exported human URLs to the root application."

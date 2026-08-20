@@ -95,10 +95,19 @@ last_verified_commands:
     status: "PASS after findings resolved"
     verified_by: "root plus two independent read-only reviewers"
     scope: "npm provenance, shallow checkout, Windows Git Bash, artifact layout, fail-closed parity, exact PR SHA, validation self-enforcement, condition allowlist, read-only permissions, and Pages deployment hold returned SHIP"
+  - command: "Inspect failed Windows candidate job from workflow 32404551506"
+    status: "FAIL-CLOSED; root cause corrected"
+    verified_by: "root plus two independent path reviewers"
+    scope: "Full repository and Ubuntu candidate jobs passed; Windows fixtures rejected hosted os.tmpdir 8.3 alias before asset output; parity and final upload were skipped; production path guard remained unchanged"
+  - command: "npm run build; AI_TREE_REQUIRE_CLEAN=true AI_TREE_STAGE_MODE=preview AI_TREE_COMMIT_SHA=8c812dbe57a7bdb359bddb057b5b68c4ec184135 npm test"
+    status: "PASS"
+    runtime: "Node v24.14.1, npm 11.11.0, and Git 2.55"
+    verified_by: "root"
+    scope: "Exact Windows-fixture fix commit 8c812db; 13 candidate-asset tests including junction rejection and no-residue closure, all C4.2-C and repository gates, 17/17 inputs, 75 tracked entries, zero filters, and 1,465 staged-site references"
 next_exact_action: >-
-  Push the verified C4.2-C code and ledger commits, monitor the pull-request
-  workflow, download both one-day parity handoffs and the 14-day verified
-  candidate, and independently reconcile their four inner files byte for byte.
+  Push the verified Windows-fixture fix and updated ledger, monitor the second
+  pull-request workflow, download both one-day parity handoffs and the 14-day
+  verified candidate, and independently reconcile all four inner files.
 known_blockers:
   - "WP-011-B is stacked on verified draft PR #5 until WP-011-A is separately authorized to merge."
   - "No merge, annotated tag, GitHub Release, environment approval, or public deployment is authorized."
@@ -133,7 +142,7 @@ release_details:
       title: "Cross-platform candidate validation workflow"
       status: "locally_verified_awaiting_remote"
       next_exact_action: >-
-        Push code commit 76ffd09 and this recovery ledger, then reconcile the
+        Push fix commit 8c812db and this recovery ledger, then reconcile the
         successful Ubuntu, Windows, and verified candidate artifacts before
         marking C4.2 complete.
     scope:
@@ -314,6 +323,18 @@ workflow-policy fail-open findings were corrected. Remote Windows/Ubuntu
 parity and downloaded-artifact reconciliation remain required before C4.2-C
 or C4.2 as a whole is complete. No tag, release, environment, deployment,
 settings mutation, production request, or Pages workflow promotion occurred.
+
+The first pushed C4.2-C attempt, workflow `32404551506`, passed the full
+repository gate and Ubuntu candidate job but failed closed in the Windows
+candidate fixture suite before producing its handoff; the parity job and final
+upload were therefore skipped. GitHub-hosted Windows exposed `os.tmpdir()`
+through an 8.3 alias, which the production canonical-output-parent guard
+correctly rejected. Follow-up `8c812db` canonicalizes only the disposable test
+fixture parent and adds a real junction rejection with no-residue assertion;
+it does not relax production path validation. Two path reviews approved the
+narrow fix, and its exact clean tree passes 13/13 candidate-asset tests plus
+the complete repository gate. A successful second hosted-Windows run remains
+required.
 
 ## Release boundary
 

@@ -134,16 +134,17 @@ last_verified_commands:
     verified_by: "root"
     scope: "Workflow 32410116422; all four jobs green; artifacts 9421789032, 9421820079, and 9421828420 contain byte-identical four-file candidates; archive SHA-256 5f9c0ad74c2e9462db27082c3218613019d6bd0b9cb1f2938bc22a41e86d6301; standalone manifest e13c0a8bb324bfd744e3632ef92cea6d9bde2fe2d5089cd71583311fc0c907d6; 15/15 archive-to-preview and 14/14 local-to-CI payload parity; downloaded preview passes 1,465 references; PR evidence https://github.com/neb6dav/ai_tech_tree/pull/7#issuecomment-5360868990"
 next_exact_action: >-
-  Design C4.4 release-mode asset and manual promotion tooling behind the
-  existing planned-state and authorization gates; do not apply C4.3-B ready
-  identity, create a tag or Release, change settings, deploy, or call production.
+  Implement C4.4-A1's network-free stable-asset builder and synthetic
+  annotated-tag acceptance matrix while preserving the real planned identity
+  and the build-only workflow hold.
 known_blockers:
   - "WP-011-B is stacked on verified draft PR #5 until WP-011-A is separately authorized to merge."
   - "No merge, annotated tag, GitHub Release, environment approval, or public deployment is authorized."
   - "The C3 source must remain visibly labeled as an untagged development edition until C4 prepares an authorized release artifact."
   - "Browser performance metrics and automated preview screenshots remain pending WP-012-A."
   - "The github-pages environment has no required reviewer and permits administrator bypass; immutable GitHub Releases are disabled. These external controls require separate authorization before any C4 promotion run."
-release_gate_status: "wp_011_b_c4_3_a_remotely_verified_c4_4_ready_to_design"
+  - "No active no-bypass tag ruleset protects v0.1.1, and the verified production recovery artifact is local rather than durable and runner-accessible."
+release_gate_status: "wp_011_b_c4_4_a1_implementing_offline_only"
 release_details:
   version: "v0.1.1"
   title: "Publication-contract repair"
@@ -167,18 +168,20 @@ release_details:
       artifact_id: 9392055435
       artifact_tar_sha256: "f04f46196b74982f9d725f032278f9b7ed48ae1ffd82db0dcff3fc39f739f9c4"
     active_checkpoint:
-      id: "C4.4"
-      title: "Release-mode assets and manual promotion tooling"
-      status: "ready_to_design"
+      id: "C4.4-A1"
+      title: "Network-free stable release assets"
+      status: "implementing"
       next_exact_action: >-
-        Define the fail-closed stable-asset, GitHub Release, Pages promotion,
-        rollback, and post-deployment verification boundaries without changing
-        the real planned identity or exercising any external mutation.
+        Add and hostile-test a local stable-asset mode that consumes only a
+        ready synthetic fixture with a verified annotated tag; leave the real
+        release specification planned and perform no network or external mutation.
     scope:
       - "Publish stable and compatibility Opportunity endpoints."
       - "Move exported human URLs to the root application."
       - "Synchronize v0.1.1 identity and contribution access."
       - "Implement approved annotated-tag promotion and bounded smoke checks."
+      - "Build deterministic stable assets locally only after exact annotated-tag verification."
+      - "Verify release controls and rollback readiness before any privileged workflow is activated."
     out_of_scope:
       - "Broader UI or content changes."
       - "Canonical historical-data migration."
@@ -395,3 +398,49 @@ or a change to the committed-generated-output policy.
 An issue, pull request, commit, push, tag, and public-root promotion remain
 separate authorized actions. Their status must be updated in the ledger when
 authorization is granted and the corresponding action actually occurs.
+
+## C4.4 locked checkpoint sequence
+
+C4.4 is intentionally non-atomic because release-mode staging can begin only
+after an annotated tag directly targets the finalized commit and that commit is
+reachable from the freshly fetched protected-main ref. The implementation is
+therefore divided into independently reviewable and pushable checkpoints:
+
+1. **C4.4-A1 — network-free stable assets.** Extend the deterministic asset
+   builder with a stable mode that requires a ready specification and exact
+   local annotated-tag proof. Exercise it only with synthetic fixtures while
+   the real v0.1.1 identity remains planned and developmental. Preserve the
+   existing candidate contract byte for byte, perform a second ref verification
+   immediately before atomic output publication, and add no network or GitHub
+   mutation capability.
+2. **C4.4-A2 — portable stable-bundle proof.** Build the same synthetic stable
+   fixture on Windows and Ubuntu, compare the four inner files byte for byte,
+   extract the archive, and verify complete staged-site and checksum closure.
+   Ordinary validation remains read-only and must not receive release secrets,
+   an environment, or a production execution path.
+3. **C4.4-B — read-only promotion and rollback preflight.** Add fail-closed
+   control-state and lifecycle receipt validation plus a durable rollback-bundle
+   contract. Keep the active workflow inventory limited to the current build-
+   only Pages workflow and validation workflow. Tests use injected or loopback
+   clients only; no production call is part of the repository test suite.
+4. **C4.3-B — separately authorized source finalization.** Select the intended
+   annotated-tag calendar date, apply the exact ready-state transition, review
+   and merge the finalized commit, then freshly prove that authoritative main
+   contains it. This step does not create a tag or deploy.
+5. **C4.4-C — separately tag-authorized verification.** Create and push the
+   annotated tag without allowing a GitHub Release command to synthesize it;
+   re-fetch it in a fresh checkout and verify its object, direct target, date,
+   and protected-main reachability before producing actual stable assets.
+6. **C4.4-D — separately release/deploy-authorized promotion.** Only after the
+   GitHub environment, tag protection, immutable-Release, validation, and
+   durable rollback controls independently pass may an environment-gated manual
+   workflow create a draft prerelease, verify uploaded assets, deploy exact
+   stable bytes, run bounded production smoke, and publish the prerelease.
+
+The public lifecycle is monotonic: finalized commit, annotated tag, draft
+Release, deployed site, verified smoke, and published immutable Release are
+distinct facts. A failed pre-publication deployment restores the pinned prior
+site but never deletes, recreates, or moves the v0.1.1 tag. An ambiguous or
+published Release is never automatically deleted. These rules are design and
+test constraints only until the corresponding external actions receive
+separate authorization.

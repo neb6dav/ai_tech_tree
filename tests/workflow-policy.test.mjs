@@ -21,6 +21,7 @@ const EXPECTED_PACKAGE_SCRIPTS = Object.freeze({
   'build:layout': 'node generate-network-layout.js',
   build: 'node build.js',
   'build:release-candidate': 'node scripts/release-assets.mjs',
+  'build:stable-release-assets': 'node scripts/release-assets.mjs --mode stable',
   'plan:release-finalization': 'node scripts/release-finalization-plan.mjs',
   'stage:site': 'node scripts/stage-site.mjs',
   'test:core': 'node release-gate.js && node accessibility-gate.js && node ui-layout-gate.js && node network-gate.js && node opportunity-gate.js',
@@ -185,7 +186,22 @@ function assertNoControlPlaneCapabilities(workflow, label, { allowPagesArtifact 
     assert.doesNotMatch(value, /\bnpm\s+publish\b/iu, `${label} must not publish packages`);
     assert.doesNotMatch(value, /post-deploy-smoke/iu, `${label} must not invoke post-deployment smoke tooling`);
     assert.doesNotMatch(value, /--execute\b/iu, `${label} must not enable production smoke execution`);
+    assert.doesNotMatch(
+      value,
+      /\bnpm\s+run\s+build:stable-release-assets\b|scripts[\\/]release-assets\.mjs[^\r\n]*--mode(?:=|\s+)["']?stable\b/iu,
+      `${label} must not build stable release assets`
+    );
+    assert.doesNotMatch(
+      value,
+      /\bAI_TREE_STAGE_MODE\s*(?:=|:)\s*["']?release\b|scripts[\\/]stage-site\.mjs[^\r\n]*--mode(?:=|\s+)["']?release\b/iu,
+      `${label} must not enable release-mode staging`
+    );
     assert.doesNotMatch(value, /api\.github\.com/iu, `${label} must not call the GitHub API`);
+    assert.doesNotMatch(
+      value,
+      /\/(?:actions\/permissions|environments|pages|releases|rulesets|settings)(?:\/|\b)/iu,
+      `${label} must not address GitHub release, settings, environment, or deployment control planes`
+    );
     assert.doesNotMatch(value, /neb6dav\.github\.io/iu, `${label} must not contact production`);
     assert.doesNotMatch(value, /deploy-pages/iu, `${label} must not deploy Pages`);
     if (!allowPagesArtifact) {
@@ -525,6 +541,16 @@ function validatePackageTestClosure(packageDocument) {
     'node scripts/release-assets.mjs',
     'candidate assets must run through npm so the manifest records the observed npm version'
   );
+  assert.equal(
+    scripts['build:stable-release-assets'],
+    'node scripts/release-assets.mjs --mode stable',
+    'stable assets must use the exact reviewed local-only stable mode'
+  );
+  assert.equal(
+    reachable.has('build:stable-release-assets'),
+    false,
+    'the local stable-asset builder must not be executable through the ordinary npm test closure'
+  );
   for (const name of reachable) {
     const command = scripts[name];
     assert.doesNotMatch(command, /post-deploy-smoke\.mjs/iu, `${name} must not execute the production smoke CLI`);
@@ -579,6 +605,17 @@ test('workflow policy rejects capability and parity regressions', async t => {
     ['skipped validation job', workflow => { workflow.jobs['build-and-test'].if = false; }],
     ['deployment action', workflow => { workflow.jobs['candidate-assets-parity'].steps.push({ uses: 'actions/deploy-pages@v4' }); }],
     ['production smoke command', workflow => { workflow.jobs['build-and-test'].steps.push({ run: 'node scripts/post-deploy-smoke.mjs --execute' }); }],
+    ['stable asset command', workflow => {
+      stepByName(workflow.jobs['candidate-assets'], 'Build exact candidate assets').run =
+        'npm run build:stable-release-assets -- --repository-root "${{ github.workspace }}" --commit "${{ github.sha }}" --output-directory "${{ runner.temp }}/stable" --tag v0.1.1 --release-spec-path config/releases/v0.1.1.json --protected-main-ref refs/remotes/origin/main';
+    }],
+    ['release-mode staging command', workflow => {
+      stepByName(workflow.jobs['build-and-test'], 'Build generated artifacts').run =
+        'AI_TREE_STAGE_MODE=release npm run stage:site';
+    }],
+    ['annotated tag creation', workflow => { workflow.jobs['build-and-test'].steps.push({ run: 'git tag -a v0.1.1 -m release' }); }],
+    ['GitHub Release creation', workflow => { workflow.jobs['build-and-test'].steps.push({ run: 'gh release create v0.1.1' }); }],
+    ['GitHub environment mutation', workflow => { workflow.jobs['build-and-test'].steps.push({ run: 'gh api --method PUT repos/example/project/environments/github-pages' }); }],
     ['hidden GitHub command', workflow => { workflow.jobs['build-and-test'].steps.push({ name: 'Hidden mutation', run: 'echo ready; gh api repos/example/settings' }); }],
     ['direct candidate node invocation', workflow => {
       stepByName(workflow.jobs['candidate-assets'], 'Build exact candidate assets').run =
@@ -640,6 +677,18 @@ test('Pages and package policies reject promotion or production-smoke regression
     hostile.jobs.build.environment = 'github-pages';
     assert.throws(() => validatePagesHold(hostile));
   });
+  await t.test('stable assets enter Pages build', () => {
+    const hostile = clone(pagesWorkflow);
+    stepByName(hostile.jobs.build, 'Build, validate, and stage the public artifact').run =
+      'npm run build:stable-release-assets -- --repository-root "$GITHUB_WORKSPACE" --commit "$GITHUB_SHA" --output-directory "$RUNNER_TEMP/stable" --tag v0.1.1 --release-spec-path config/releases/v0.1.1.json --protected-main-ref refs/remotes/origin/main';
+    assert.throws(() => validatePagesHold(hostile));
+  });
+  await t.test('release mode enters Pages build', () => {
+    const hostile = clone(pagesWorkflow);
+    stepByName(hostile.jobs.build, 'Build, validate, and stage the public artifact').run =
+      'AI_TREE_STAGE_MODE=release npm run stage:site';
+    assert.throws(() => validatePagesHold(hostile));
+  });
   await t.test('production smoke enters npm test closure', () => {
     const hostile = clone(packageDocument);
     hostile.scripts.test += ' && npm run smoke:production';
@@ -655,6 +704,22 @@ test('Pages and package policies reject promotion or production-smoke regression
   await t.test('unreviewed generic release helper', () => {
     const hostile = clone(packageDocument);
     hostile.scripts['release:ship'] = 'node scripts/ship.mjs';
+    assert.throws(
+      () => validatePackageTestClosure(hostile),
+      /exact reviewed non-promoting command map/u
+    );
+  });
+  await t.test('arbitrary innocuous-named promotion helper', () => {
+    const hostile = clone(packageDocument);
+    hostile.scripts['ops:handoff'] = 'node scripts/ship.mjs';
+    assert.throws(
+      () => validatePackageTestClosure(hostile),
+      /exact reviewed non-promoting command map/u
+    );
+  });
+  await t.test('stable builder allowlist cannot be redirected to promotion', () => {
+    const hostile = clone(packageDocument);
+    hostile.scripts['build:stable-release-assets'] = 'node scripts/promote-release.mjs';
     assert.throws(
       () => validatePackageTestClosure(hostile),
       /exact reviewed non-promoting command map/u

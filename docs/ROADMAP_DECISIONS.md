@@ -55,6 +55,30 @@ release-mode assets or promotion are allowed. A `ready` source snapshot is not b
 itself evidence of a tag, GitHub Release, approval, deployment, or successful
 public verification.
 
+## RD-008 — Keep stable artifacts and promotion as separate capabilities
+
+C4.4 is a locked sequence rather than one privileged change. C4.4-A1 adds only
+a local, network-free stable-asset builder that requires a ready source snapshot
+and a pre-existing, exactly verified annotated tag; the real `v0.1.1`
+specification remains `planned` while A1 is tested with synthetic fixtures.
+The stable builder pins the canonical stage configuration, supported recorded
+toolchain, non-null dataset digest, executing release-tool bytes, and local Git
+no-lazy-fetch policy, then repeats ref verification immediately before atomic
+publication and removes temporary output on drift.
+C4.4-A2 proves the same synthetic four-file bundle byte-for-byte on Windows and
+Ubuntu. C4.4-B adds only read-only promotion-control, lifecycle-receipt, and
+durable-rollback preflight. Through B, the active workflow inventory remains the
+read-only validation workflow and reusable build-only Pages hold, and neither
+workflow may enter stable or release mode, contact production, mutate GitHub,
+or deploy.
+
+Source finalization, annotated-tag creation and push, and GitHub Release/Pages
+promotion remain later, distinct actions requiring their own authorization and
+fresh preconditions. Completing A1, A2, or B is not evidence that any of those
+actions occurred. A stable bundle records verified local Git and source facts;
+it does not attest GitHub environment approval, tag protection, immutable
+Release settings, deployment, rollback readiness, or successful public smoke.
+
 ## Explicit deferrals
 
 ### Through v0.2.0

@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
-import { execFileSync, spawnSync } from 'node:child_process';
+import { execFileSync, spawn, spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
+import { once } from 'node:events';
 import {
   access,
   mkdir,
@@ -15,9 +16,11 @@ import {
 import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
+import { setTimeout as delay } from 'node:timers/promises';
 
 import {
   buildCandidateReleaseAssets,
+  buildStableReleaseAssets,
   extractCandidateChangeBody,
   extractUnreleasedBody,
   releaseAssetsConstants,
@@ -25,6 +28,13 @@ import {
 } from '../scripts/release-assets.mjs';
 
 const temporaryRoots = new Set();
+const EXECUTED_RELEASE_TOOL_PATHS = Object.freeze([
+  'scripts/release-assets.mjs',
+  'scripts/release-ref.mjs',
+  'scripts/release-spec.mjs',
+  'scripts/stage-site.mjs',
+  'scripts/strict-json.mjs'
+]);
 
 function hash(bytes) {
   return createHash('sha256').update(bytes).digest('hex');
@@ -130,8 +140,11 @@ const readyChangelog = [
 
 async function makeFixture({
   changelog,
+  dataDigest = 'b'.repeat(64),
   edition = '2026-08-20-test-edition',
   indexTarget = 'index.html',
+  largePayloadBytes = 0,
+  largePayloadCount = 0,
   status = 'planned',
   releaseDate = status === 'ready' ? '2026-08-23' : null
 } = {}) {
@@ -157,7 +170,7 @@ async function makeFixture({
     dataset: {
       edition,
       releaseState: status === 'ready' ? 'Public beta' : 'Development edition',
-      dataDigest: 'b'.repeat(64)
+      dataDigest
     }
   }, null, 2)}\n`);
   const citationLines = [
@@ -180,6 +193,12 @@ async function makeFixture({
   await write(root, 'index.html', '<!doctype html><title>Fixture</title>\n');
   await write(root, 'public/data/z.json', '{"z":1}\n');
   await write(root, 'public/data/a.json', '{"a":1}\n');
+  for (const toolPath of EXECUTED_RELEASE_TOOL_PATHS) {
+    await write(root, toolPath, await readFile(path.resolve(toolPath)));
+  }
+  for (let index = 0; index < largePayloadCount; index += 1) {
+    await write(root, `public/data/large-${index}.bin`, Buffer.alloc(largePayloadBytes, index + 1));
+  }
   git(root, ['init', '--quiet']);
   git(root, ['config', 'user.name', 'release-assets-test']);
   git(root, ['config', 'user.email', 'release-assets@example.invalid']);
@@ -199,6 +218,44 @@ function candidateEnvironment(overrides = {}) {
     npm_config_user_agent: 'npm/11.11.0 node/v24.14.1 test',
     ...overrides
   };
+}
+
+function stableBuildOptions(fixture, overrides = {}) {
+  return {
+    repositoryRoot: fixture.root,
+    commit: fixture.commit,
+    tag: 'v1.2.3',
+    releaseSpecPath: 'config/releases/v1.2.3.json',
+    protectedMainRef: 'refs/remotes/origin/main',
+    environment: candidateEnvironment(),
+    ...overrides
+  };
+}
+
+function createStableRefs(fixture, {
+  tagTarget = fixture.commit,
+  protectedMainCommit = fixture.commit,
+  taggedAt = '2026-08-23T15:04:05+00:00',
+  lightweight = false
+} = {}) {
+  git(fixture.root, ['update-ref', 'refs/remotes/origin/main', protectedMainCommit]);
+  if (lightweight) {
+    git(fixture.root, ['tag', 'v1.2.3', tagTarget]);
+  } else {
+    git(fixture.root, ['tag', '-a', 'v1.2.3', '-m', 'fixture stable release', tagTarget], {
+      GIT_COMMITTER_DATE: taggedAt
+    });
+  }
+  return git(fixture.root, ['rev-parse', 'refs/tags/v1.2.3']);
+}
+
+function addEmptyCommit(fixture) {
+  git(fixture.root, ['commit', '--quiet', '--allow-empty', '-m', 'stable target'], {
+    GIT_AUTHOR_DATE: '2026-08-22T12:00:00+00:00',
+    GIT_COMMITTER_DATE: '2026-08-22T12:00:00+00:00'
+  });
+  fixture.commit = git(fixture.root, ['rev-parse', 'HEAD']);
+  return fixture.commit;
 }
 
 function readNullTerminated(buffer, start, length) {
@@ -376,6 +433,444 @@ test('ready previews remain candidate-only and source notes from the frozen vers
   assert.match(notes, /Edition and publication dates are independent/u);
   assert.doesNotMatch(notes, /Post-freeze follow-up/u);
   assert.doesNotMatch(notes, /Prior release/u);
+});
+
+test('builds byte-identical deterministic stable assets with exact local release proof and closure', async () => {
+  const fixture = await makeFixture({ status: 'ready' });
+  const tagObject = createStableRefs(fixture);
+  const firstDirectory = path.join(fixture.base, 'stable-one');
+  const secondDirectory = path.join(fixture.base, 'stable-two');
+  const first = await buildStableReleaseAssets(stableBuildOptions(fixture, {
+    outputDirectory: firstDirectory
+  }));
+  const second = await buildStableReleaseAssets(stableBuildOptions(fixture, {
+    outputDirectory: secondDirectory
+  }));
+
+  assert.equal(first.status, 'BUILT');
+  assert.equal(first.candidate, false);
+  assert.equal(first.stable, true);
+  assert.equal(first.stableStem, 'fixture-v1.2.3');
+  assert.equal(first.externalOutputCreated, true);
+  assert.equal(first.publicationMode, 'release');
+  assert.equal(first.releaseSpecStatus, 'ready');
+  assert.equal(first.releaseDate, '2026-08-23');
+  assert.equal(first.tag, 'v1.2.3');
+  assert.equal(first.tagObject, tagObject);
+  assert.equal(first.protectedMainCommit, fixture.commit);
+  assert.equal(first.prerelease, true);
+  assert.deepEqual(first.files, second.files);
+
+  const firstFiles = await readOutputFiles(firstDirectory);
+  const secondFiles = await readOutputFiles(secondDirectory);
+  assert.deepEqual([...firstFiles.keys()], [
+    'fixture-v1.2.3.SHA256SUMS',
+    'fixture-v1.2.3.notes.md',
+    'fixture-v1.2.3.release-manifest.json',
+    'fixture-v1.2.3.tar'
+  ]);
+  assert.deepEqual([...firstFiles.keys()], [...secondFiles.keys()]);
+  for (const [name, bytes] of firstFiles) {
+    assert.ok(bytes.equals(secondFiles.get(name)), name);
+    assert.doesNotMatch(name, /candidate/iu);
+  }
+
+  const archiveEntries = parseUstar(firstFiles.get('fixture-v1.2.3.tar'));
+  assert.ok(archiveEntries.length > 0);
+  assert.ok(archiveEntries.every(entry => entry.path.startsWith('fixture-v1.2.3/')));
+  assert.ok(archiveEntries.every(entry => !/candidate/iu.test(entry.path)));
+  const archivedManifest = archiveEntries.find(entry => entry.path.endsWith('/release-manifest.json')).data;
+  assert.ok(archivedManifest.equals(firstFiles.get('fixture-v1.2.3.release-manifest.json')));
+
+  const manifest = JSON.parse(firstFiles.get('fixture-v1.2.3.release-manifest.json').toString('utf8'));
+  assert.equal(manifest.publicationMode, 'release');
+  assert.equal(manifest.releaseState, 'Public beta');
+  assert.equal(manifest.releaseSpec.status, 'ready');
+  assert.equal(manifest.releaseSpec.path, 'config/releases/v1.2.3.json');
+  assert.equal(manifest.tag, 'v1.2.3');
+  assert.deepEqual(manifest.promotion, {
+    releaseDate: '2026-08-23',
+    tag: 'v1.2.3',
+    mode: 'annotated-tag',
+    tagObject,
+    tagCommit: fixture.commit,
+    taggedAt: '2026-08-23T15:04:05+00:00',
+    protectedMainRef: 'refs/remotes/origin/main',
+    protectedMainCommit: fixture.commit,
+    reachableFromProtectedMain: true
+  });
+  assert.equal(manifest.sourceState.clean, true);
+  assert.equal(manifest.sourceState.requiredClean, true);
+  assert.equal(manifest.sourceState.inputsMatchCommit, true);
+
+  const checksums = firstFiles.get('fixture-v1.2.3.SHA256SUMS').toString('utf8').trimEnd().split('\n');
+  assert.deepEqual(checksums.map(line => line.slice(66)), [
+    'fixture-v1.2.3.notes.md',
+    'fixture-v1.2.3.release-manifest.json',
+    'fixture-v1.2.3.tar'
+  ]);
+  for (const line of checksums) {
+    const match = /^([0-9a-f]{64})  (.+)$/u.exec(line);
+    assert.ok(match);
+    assert.equal(match[1], hash(firstFiles.get(match[2])));
+  }
+
+  const notes = firstFiles.get('fixture-v1.2.3.notes.md').toString('utf8');
+  assert.match(notes, /^# fixture-v1\.2\.3 stable release assets$/mu);
+  assert.match(notes, /do not attest a GitHub Release, an environment approval, a deployment, or public post-deployment verification/u);
+  assert.ok(notes.includes(`Tag object: \`${tagObject}\``));
+  assert.match(notes, /Tagged at: `2026-08-23T15:04:05\+00:00`/u);
+  assert.ok(notes.includes(`Commit: \`${fixture.commit}\``));
+  assert.ok(notes.includes(`Protected-main commit: \`${fixture.commit}\``));
+  assert.match(notes, /Prerelease: `true`/u);
+  assert.match(notes, /^## \[1\.2\.3\] - 2026-08-23$/mu);
+  assert.match(notes, /Frozen v1\.2\.3 release note/u);
+  assert.doesNotMatch(notes, /Post-freeze follow-up|Prior release/u);
+});
+
+test('stable --check completes both local ref verifications without publishing an output directory', async () => {
+  const fixture = await makeFixture({ status: 'ready' });
+  createStableRefs(fixture);
+  const outputDirectory = path.join(fixture.base, 'stable-check');
+  const result = await buildStableReleaseAssets(stableBuildOptions(fixture, {
+    outputDirectory,
+    checkOnly: true
+  }));
+  assert.equal(result.status, 'VALID');
+  assert.equal(result.stable, true);
+  assert.equal(result.externalOutputCreated, false);
+  assert.equal(result.files.length, 4);
+  await assert.rejects(access(outputDirectory), error => error.code === 'ENOENT');
+  await access(path.join(fixture.root, '_site', 'release-manifest.json'));
+});
+
+test('stable publish rechecks ref proof after temporary files exist and removes residue on drift', async () => {
+  const fixture = await makeFixture({
+    status: 'ready',
+    largePayloadBytes: 15 * 1024 * 1024,
+    largePayloadCount: 3
+  });
+  const originalTagObject = createStableRefs(fixture);
+  const outputDirectory = path.join(fixture.base, 'stable-ref-drift');
+  const script = path.resolve('scripts/release-assets.mjs');
+  const environment = { ...process.env };
+  for (const name of Object.keys(environment)) {
+    if (name.startsWith('AI_TREE_') || name === 'GITHUB_SHA' || name === 'CI_COMMIT_SHA') delete environment[name];
+  }
+  environment.npm_config_user_agent = 'npm/11.11.0 node/v24.14.1 test';
+  const child = spawn(process.execPath, [
+    script,
+    '--mode', 'stable',
+    '--repository-root', fixture.root,
+    '--commit', fixture.commit,
+    '--output-directory', outputDirectory,
+    '--tag', 'v1.2.3',
+    '--release-spec-path', 'config/releases/v1.2.3.json',
+    '--protected-main-ref', 'refs/remotes/origin/main'
+  ], {
+    cwd: path.resolve('.'),
+    env: environment,
+    stdio: ['ignore', 'pipe', 'pipe'],
+    windowsHide: true
+  });
+  let stderr = '';
+  child.stderr.setEncoding('utf8');
+  child.stderr.on('data', chunk => { stderr += chunk; });
+  const closed = once(child, 'close');
+  const temporaryPrefix = '.stable-ref-drift.tmp-';
+  let observedTemporary = false;
+  const deadline = Date.now() + 120_000;
+  while (Date.now() < deadline && child.exitCode === null) {
+    const names = await readdir(fixture.base);
+    if (names.some(name => name.startsWith(temporaryPrefix))) {
+      observedTemporary = true;
+      break;
+    }
+    await delay(2);
+  }
+  if (!observedTemporary && child.exitCode === null) child.kill();
+  assert.equal(observedTemporary, true, 'test must observe the atomic temporary directory before final ref verification');
+
+  git(fixture.root, ['tag', '--delete', 'v1.2.3']);
+  git(fixture.root, ['tag', '-a', 'v1.2.3', '-m', 'changed after staging', fixture.commit], {
+    GIT_COMMITTER_DATE: '2026-08-23T15:04:05+00:00'
+  });
+  const changedTagObject = git(fixture.root, ['rev-parse', 'refs/tags/v1.2.3']);
+  assert.notEqual(changedTagObject, originalTagObject);
+
+  const [exitCode] = await closed;
+  assert.notEqual(exitCode, 0);
+  assert.match(stderr, /final stable ref proof changed after staging: tagObject/u);
+  await assert.rejects(access(outputDirectory), error => error.code === 'ENOENT');
+  assert.equal(
+    (await readdir(fixture.base)).some(name => name.startsWith(temporaryPrefix)),
+    false,
+    'failed final verification must remove its temporary output directory'
+  );
+});
+
+test('stable mode rejects planned, absent, lightweight, wrong-target, wrong-date, wrong-ref, and unreachable tag state', async t => {
+  await t.test('planned release specification', async () => {
+    const fixture = await makeFixture({ status: 'planned' });
+    createStableRefs(fixture);
+    const outputDirectory = path.join(fixture.base, 'planned-stable');
+    await assert.rejects(
+      buildStableReleaseAssets(stableBuildOptions(fixture, { outputDirectory })),
+      /release specification is planned, not ready/u
+    );
+    await assert.rejects(access(outputDirectory), error => error.code === 'ENOENT');
+  });
+
+  await t.test('missing tag', async () => {
+    const fixture = await makeFixture({ status: 'ready' });
+    git(fixture.root, ['update-ref', 'refs/remotes/origin/main', fixture.commit]);
+    await assert.rejects(
+      buildStableReleaseAssets(stableBuildOptions(fixture, {
+        outputDirectory: path.join(fixture.base, 'missing-tag')
+      })),
+      /release tag.*does not resolve|cannot resolve release tag/iu
+    );
+  });
+
+  await t.test('lightweight tag', async () => {
+    const fixture = await makeFixture({ status: 'ready' });
+    createStableRefs(fixture, { lightweight: true });
+    await assert.rejects(
+      buildStableReleaseAssets(stableBuildOptions(fixture, {
+        outputDirectory: path.join(fixture.base, 'lightweight-tag')
+      })),
+      /annotated tag object/u
+    );
+  });
+
+  await t.test('tag targets a commit other than HEAD', async () => {
+    const fixture = await makeFixture({ status: 'ready' });
+    const prior = fixture.commit;
+    addEmptyCommit(fixture);
+    createStableRefs(fixture, { tagTarget: prior });
+    await assert.rejects(
+      buildStableReleaseAssets(stableBuildOptions(fixture, {
+        outputDirectory: path.join(fixture.base, 'wrong-target')
+      })),
+      /annotated tag must directly target HEAD/u
+    );
+  });
+
+  await t.test('tagger calendar date differs from release date', async () => {
+    const fixture = await makeFixture({ status: 'ready' });
+    createStableRefs(fixture, { taggedAt: '2026-08-22T15:04:05+00:00' });
+    await assert.rejects(
+      buildStableReleaseAssets(stableBuildOptions(fixture, {
+        outputDirectory: path.join(fixture.base, 'wrong-date')
+      })),
+      /annotated tag calendar date .* does not match/u
+    );
+  });
+
+  await t.test('explicit protected ref differs from policy', async () => {
+    const fixture = await makeFixture({ status: 'ready' });
+    createStableRefs(fixture);
+    await assert.rejects(
+      buildStableReleaseAssets(stableBuildOptions(fixture, {
+        outputDirectory: path.join(fixture.base, 'wrong-ref'),
+        protectedMainRef: 'refs/heads/main'
+      })),
+      /AI_TREE_PROTECTED_MAIN_REF must be exactly refs\/remotes\/origin\/main/u
+    );
+  });
+
+  await t.test('tag commit is not reachable from protected main', async () => {
+    const fixture = await makeFixture({ status: 'ready' });
+    const prior = fixture.commit;
+    addEmptyCommit(fixture);
+    createStableRefs(fixture, { protectedMainCommit: prior });
+    await assert.rejects(
+      buildStableReleaseAssets(stableBuildOptions(fixture, {
+        outputDirectory: path.join(fixture.base, 'unreachable')
+      })),
+      /not reachable from protectedMainRef/u
+    );
+  });
+});
+
+test('stable mode rejects config mismatch, relative or linked roots, all ambient AI_TREE controls, and mismatched CI commits', async () => {
+  const fixture = await makeFixture({ status: 'ready' });
+  createStableRefs(fixture);
+
+  await assert.rejects(
+    buildStableReleaseAssets(stableBuildOptions(fixture, {
+      outputDirectory: path.join(fixture.base, 'config-mismatch'),
+      releaseSpecPath: 'config/releases/not-the-configured-release.json'
+    })),
+    /AI_TREE_RELEASE_SPEC_PATH must be exactly/u
+  );
+  await assert.rejects(
+    buildStableReleaseAssets(stableBuildOptions(fixture, {
+      configPath: 'config/alternate-pages-stage.json',
+      outputDirectory: path.join(fixture.base, 'alternate-stage-config')
+    })),
+    /stable mode requires --config to be exactly config\/pages-stage\.v1\.json/u
+  );
+  await assert.rejects(
+    buildStableReleaseAssets(stableBuildOptions(fixture, {
+      repositoryRoot: undefined,
+      outputDirectory: path.join(fixture.base, 'missing-root')
+    })),
+    /explicit absolute canonical path/u
+  );
+  await assert.rejects(
+    buildStableReleaseAssets(stableBuildOptions(fixture, {
+      repositoryRoot: path.relative(path.resolve('.'), fixture.root),
+      outputDirectory: path.join(fixture.base, 'relative-root')
+    })),
+    /explicit absolute canonical path/u
+  );
+  await assert.rejects(
+    buildStableReleaseAssets(stableBuildOptions(fixture, {
+      repositoryRoot: `${fixture.root}${path.sep}.${path.sep}`,
+      outputDirectory: path.join(fixture.base, 'dot-segment-root')
+    })),
+    /normalized canonical spelling/u
+  );
+
+  const linkedRoot = path.join(fixture.base, 'linked-repository');
+  await symlink(fixture.root, linkedRoot, process.platform === 'win32' ? 'junction' : 'dir');
+  await assert.rejects(
+    buildStableReleaseAssets(stableBuildOptions(fixture, {
+      repositoryRoot: linkedRoot,
+      outputDirectory: path.join(fixture.base, 'linked-root-assets')
+    })),
+    /canonical worktree path/u
+  );
+
+  for (const name of ['AI_TREE_RELEASE_FUTURE_CONTROL', 'AI_TREE_STAGE_MODE', 'AI_TREE_UNRECOGNIZED']) {
+    const outputDirectory = path.join(fixture.base, `ambient-${name.toLowerCase()}`);
+    await assert.rejects(
+      buildStableReleaseAssets(stableBuildOptions(fixture, {
+        outputDirectory,
+        environment: candidateEnvironment({ [name]: 'poisoned' })
+      })),
+      /stable builds reject ambient release controls/u,
+      name
+    );
+    await assert.rejects(access(outputDirectory), error => error.code === 'ENOENT');
+  }
+  for (const name of ['GITHUB_SHA', 'CI_COMMIT_SHA']) {
+    await assert.rejects(
+      buildStableReleaseAssets(stableBuildOptions(fixture, {
+        outputDirectory: path.join(fixture.base, `mismatch-${name.toLowerCase()}`),
+        environment: candidateEnvironment({ [name]: 'f'.repeat(40) })
+      })),
+      new RegExp(`${name} does not match`, 'u')
+    );
+  }
+});
+
+test('stable mode binds every executing release tool to the advertised commit', async () => {
+  const fixture = await makeFixture({ status: 'ready' });
+  await write(fixture.root, 'scripts/release-assets.mjs', '// substituted release tool\n');
+  git(fixture.root, ['add', '--', 'scripts/release-assets.mjs']);
+  git(fixture.root, ['commit', '--quiet', '-m', 'substitute release tool'], {
+    GIT_AUTHOR_DATE: '2026-08-21T12:00:00+00:00',
+    GIT_COMMITTER_DATE: '2026-08-21T12:00:00+00:00'
+  });
+  fixture.commit = git(fixture.root, ['rev-parse', 'HEAD']);
+  createStableRefs(fixture);
+  const outputDirectory = path.join(fixture.base, 'substituted-release-tool');
+  await assert.rejects(
+    buildStableReleaseAssets(stableBuildOptions(fixture, { outputDirectory })),
+    /executing release tool does not match the advertised commit: scripts\/release-assets\.mjs/u
+  );
+  await assert.rejects(access(outputDirectory), error => error.code === 'ENOENT');
+});
+
+test('release Git subprocess policies prohibit lazy network fetches', async () => {
+  for (const sourcePath of ['scripts/release-assets.mjs', 'scripts/stage-site.mjs']) {
+    const source = await readFile(path.resolve(sourcePath), 'utf8');
+    assert.match(
+      source,
+      /environment\.GIT_NO_LAZY_FETCH = '1';/u,
+      `${sourcePath} must disable promisor-object lazy fetches`
+    );
+    assert.match(
+      source,
+      /environment\.GIT_DISCOVERY_ACROSS_FILESYSTEM = '0';/u,
+      `${sourcePath} must not discover a different repository across filesystem boundaries`
+    );
+  }
+});
+
+test('stable mode requires an observed supported Node, npm, and package-lock toolchain', async () => {
+  const fixture = await makeFixture({ status: 'ready' });
+  createStableRefs(fixture);
+
+  for (const [label, userAgent] of [
+    ['missing-npm', undefined],
+    ['wrong-npm-major', 'npm/10.9.0 node/v24.14.1 test']
+  ]) {
+    const environment = {};
+    if (userAgent !== undefined) environment.npm_config_user_agent = userAgent;
+    await assert.rejects(
+      buildStableReleaseAssets(stableBuildOptions(fixture, {
+        outputDirectory: path.join(fixture.base, `unsupported-toolchain-${label}`),
+        environment
+      })),
+      /stable assets require observed Node 24, npm 11, and package-lock v3 toolchain identity/u,
+      label
+    );
+  }
+});
+
+test('stable mode requires a recorded data digest accepted by downstream verification', async () => {
+  const fixture = await makeFixture({ status: 'ready', dataDigest: null });
+  createStableRefs(fixture);
+  const outputDirectory = path.join(fixture.base, 'missing-data-digest');
+  await assert.rejects(
+    buildStableReleaseAssets(stableBuildOptions(fixture, { outputDirectory })),
+    /stable assets require a recorded lowercase SHA-256 data digest/u
+  );
+  await assert.rejects(access(outputDirectory), error => error.code === 'ENOENT');
+});
+
+test('candidate API rejects stable-only options and explicit candidate mode preserves artifact bytes', async () => {
+  const fixture = await makeFixture();
+  const defaultDirectory = path.join(fixture.base, 'candidate-default-mode');
+  const explicitDirectory = path.join(fixture.base, 'candidate-explicit-mode');
+  await buildCandidateReleaseAssets({
+    repositoryRoot: fixture.root,
+    commit: fixture.commit,
+    outputDirectory: defaultDirectory,
+    environment: candidateEnvironment()
+  });
+  await buildCandidateReleaseAssets({
+    repositoryRoot: fixture.root,
+    commit: fixture.commit,
+    outputDirectory: explicitDirectory,
+    environment: candidateEnvironment(),
+    mode: 'candidate'
+  });
+  const defaults = await readOutputFiles(defaultDirectory);
+  const explicit = await readOutputFiles(explicitDirectory);
+  assert.deepEqual([...defaults.keys()], [...explicit.keys()]);
+  for (const [name, bytes] of defaults) assert.ok(bytes.equals(explicit.get(name)), name);
+
+  for (const option of [
+    { mode: 'stable' },
+    { tag: 'v1.2.3' },
+    { releaseSpecPath: 'config/releases/v1.2.3.json' },
+    { protectedMainRef: 'refs/remotes/origin/main' }
+  ]) {
+    await assert.rejects(
+      buildCandidateReleaseAssets({
+        repositoryRoot: fixture.root,
+        commit: fixture.commit,
+        outputDirectory: path.join(fixture.base, `rejected-${Object.keys(option)[0]}`),
+        environment: candidateEnvironment(),
+        ...option
+      }),
+      /candidate builds reject stable-only options/u
+    );
+  }
 });
 
 test('uses the USTAR prefix field for long representable paths', async () => {
@@ -777,6 +1272,119 @@ test('CLI exposes candidate check mode without producing the asset directory', a
   await assert.rejects(access(outputDirectory), error => error.code === 'ENOENT');
 });
 
+test('CLI stable mode requires explicit release identity and performs a local check without publishing', async () => {
+  const fixture = await makeFixture({ status: 'ready' });
+  createStableRefs(fixture);
+  const outputDirectory = path.join(fixture.base, 'cli-stable-check');
+  const script = path.resolve('scripts/release-assets.mjs');
+  const environment = { ...process.env };
+  for (const name of Object.keys(environment)) {
+    if (name.startsWith('AI_TREE_') || name === 'GITHUB_SHA' || name === 'CI_COMMIT_SHA') {
+      delete environment[name];
+    }
+  }
+  environment.npm_config_user_agent = 'npm/11.11.0 node/v24.14.1 test';
+  const stable = spawnSync(process.execPath, [
+    script,
+    '--mode', 'stable',
+    '--repository-root', fixture.root,
+    '--commit', fixture.commit,
+    '--output-directory', outputDirectory,
+    '--tag', 'v1.2.3',
+    '--release-spec-path', 'config/releases/v1.2.3.json',
+    '--protected-main-ref', 'refs/remotes/origin/main',
+    '--check'
+  ], {
+    cwd: path.resolve('.'),
+    encoding: 'utf8',
+    env: environment,
+    windowsHide: true
+  });
+  assert.equal(stable.status, 0, stable.stderr);
+  const report = JSON.parse(stable.stdout);
+  assert.equal(report.status, 'VALID');
+  assert.equal(report.candidate, false);
+  assert.equal(report.stable, true);
+  assert.equal(report.publicationMode, 'release');
+  await assert.rejects(access(outputDirectory), error => error.code === 'ENOENT');
+
+  const environmentWithoutNpmIdentity = { ...environment };
+  delete environmentWithoutNpmIdentity.npm_config_user_agent;
+  const missingNpmIdentity = spawnSync(process.execPath, [
+    script,
+    '--mode', 'stable',
+    '--repository-root', fixture.root,
+    '--commit', fixture.commit,
+    '--output-directory', path.join(fixture.base, 'cli-stable-missing-npm'),
+    '--tag', 'v1.2.3',
+    '--release-spec-path', 'config/releases/v1.2.3.json',
+    '--protected-main-ref', 'refs/remotes/origin/main',
+    '--check'
+  ], {
+    cwd: path.resolve('.'),
+    encoding: 'utf8',
+    env: environmentWithoutNpmIdentity,
+    windowsHide: true
+  });
+  assert.notEqual(missingNpmIdentity.status, 0);
+  assert.match(
+    missingNpmIdentity.stderr,
+    /stable assets require observed Node 24, npm 11, and package-lock v3 toolchain identity/u
+  );
+
+  const alternateStageConfig = spawnSync(process.execPath, [
+    script,
+    '--mode', 'stable',
+    '--repository-root', fixture.root,
+    '--commit', fixture.commit,
+    '--output-directory', path.join(fixture.base, 'cli-stable-alternate-config'),
+    '--config', 'config/alternate-pages-stage.json',
+    '--tag', 'v1.2.3',
+    '--release-spec-path', 'config/releases/v1.2.3.json',
+    '--protected-main-ref', 'refs/remotes/origin/main',
+    '--check'
+  ], { cwd: path.resolve('.'), encoding: 'utf8', env: environment, windowsHide: true });
+  assert.notEqual(alternateStageConfig.status, 0);
+  assert.match(
+    alternateStageConfig.stderr,
+    /stable mode requires --config to be exactly config\/pages-stage\.v1\.json/u
+  );
+
+  const missing = spawnSync(process.execPath, [
+    script,
+    '--mode', 'stable',
+    '--repository-root', fixture.root,
+    '--commit', fixture.commit,
+    '--output-directory', path.join(fixture.base, 'missing-stable-args'),
+    '--check'
+  ], { cwd: path.resolve('.'), encoding: 'utf8', env: environment, windowsHide: true });
+  assert.notEqual(missing.status, 0);
+  assert.match(missing.stderr, /--tag is required in stable mode/u);
+
+  const candidateWithTag = spawnSync(process.execPath, [
+    script,
+    '--mode', 'candidate',
+    '--repository-root', fixture.root,
+    '--commit', fixture.commit,
+    '--output-directory', path.join(fixture.base, 'candidate-with-tag'),
+    '--tag', 'v1.2.3',
+    '--check'
+  ], { cwd: path.resolve('.'), encoding: 'utf8', env: environment, windowsHide: true });
+  assert.notEqual(candidateWithTag.status, 0);
+  assert.match(candidateWithTag.stderr, /candidate mode rejects stable-only arguments: --tag/u);
+
+  const help = spawnSync(process.execPath, [script, '--help'], {
+    cwd: path.resolve('.'),
+    encoding: 'utf8',
+    env: environment,
+    windowsHide: true
+  });
+  assert.equal(help.status, 0, help.stderr);
+  assert.match(help.stdout, /--mode candidate\|stable/u);
+  assert.match(help.stdout, /Stable mode verifies an existing annotated tag/u);
+  assert.match(help.stdout, /Neither mode creates a tag, GitHub Release, approval, deployment, or public verification/u);
+});
+
 test('exports the fixed deterministic archive policy', () => {
   assert.deepEqual(releaseAssetsConstants, {
     archiveBlockSize: 512,
@@ -787,7 +1395,7 @@ test('exports the fixed deterministic archive policy', () => {
     maxArchiveFileBytes: 16 * 1024 * 1024,
     maxArchiveFileCount: 4096,
     maxArchiveTotalBytes: 64 * 1024 * 1024,
-    scriptVersion: '1.0.0'
+    scriptVersion: '1.1.0'
   });
 });
 

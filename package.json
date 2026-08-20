@@ -14,6 +14,7 @@
     "build:layout": "node generate-network-layout.js",
     "build": "node build.js",
     "build:release-candidate": "node scripts/release-assets.mjs",
+    "build:stable-release-assets": "node scripts/release-assets.mjs --mode stable",
     "plan:release-finalization": "node scripts/release-finalization-plan.mjs",
     "stage:site": "node scripts/stage-site.mjs",
     "test:core": "node release-gate.js && node accessibility-gate.js && node ui-layout-gate.js && node network-gate.js && node opportunity-gate.js",

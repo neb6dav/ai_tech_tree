@@ -19,9 +19,10 @@ import process from 'node:process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 import { normalizeManifestPath, stageSite, stageSiteConstants } from './stage-site.mjs';
+import { verifyReleaseRef } from './release-ref.mjs';
 import { parseStrictJson } from './strict-json.mjs';
 
-const SCRIPT_VERSION = '1.0.0';
+const SCRIPT_VERSION = '1.1.0';
 const ARCHIVE_FORMAT = 'ustar';
 const ARCHIVE_BLOCK_SIZE = 512;
 const ARCHIVE_END_BLOCK_COUNT = 2;
@@ -32,9 +33,20 @@ const MAX_ARCHIVE_TOTAL_BYTES = 64 * 1024 * 1024;
 const DEFAULT_CONFIG_PATH = stageSiteConstants.defaultConfigPath;
 const SCRIPT_DIRECTORY = path.dirname(fileURLToPath(import.meta.url));
 const DEFAULT_REPOSITORY_ROOT = path.resolve(SCRIPT_DIRECTORY, '..');
+const EXECUTED_RELEASE_TOOL_PATHS = Object.freeze([
+  'scripts/release-assets.mjs',
+  'scripts/release-ref.mjs',
+  'scripts/release-spec.mjs',
+  'scripts/stage-site.mjs',
+  'scripts/strict-json.mjs'
+]);
 const AMBIENT_RELEASE_PREFIX = 'AI_TREE_RELEASE_';
 const ADDITIONAL_RELEASE_ENVIRONMENT_KEYS = Object.freeze([
   'AI_TREE_PROTECTED_MAIN_REF'
+]);
+const CI_COMMIT_ENVIRONMENT_KEYS = Object.freeze([
+  'CI_COMMIT_SHA',
+  'GITHUB_SHA'
 ]);
 
 function assetsError(message) {
@@ -106,6 +118,46 @@ function candidateStageEnvironment(environment, commit) {
   };
 }
 
+function assertExactTrimmedValue(value, option) {
+  if (
+    typeof value !== 'string' ||
+    value.length === 0 ||
+    value.trim() !== value ||
+    /[\u0000-\u001f\u007f]/u.test(value)
+  ) {
+    throw assetsError(`${option} must be an explicit exact trimmed value`);
+  }
+  return value;
+}
+
+function stableStageEnvironment(environment, {
+  commit,
+  tag,
+  releaseSpecPath,
+  protectedMainRef
+}) {
+  const ambientControls = Object.keys(environment)
+    .filter(name => name.startsWith('AI_TREE_') && environment[name] !== undefined)
+    .sort(compareBytes);
+  if (ambientControls.length > 0) {
+    throw assetsError(`stable builds reject ambient release controls: ${ambientControls.join(', ')}`);
+  }
+  for (const name of CI_COMMIT_ENVIRONMENT_KEYS) {
+    if (environment[name] !== undefined && environment[name] !== commit) {
+      throw assetsError(`${name} does not match the explicit stable commit`);
+    }
+  }
+  return {
+    ...environment,
+    AI_TREE_COMMIT_SHA: commit,
+    AI_TREE_PROTECTED_MAIN_REF: protectedMainRef,
+    AI_TREE_RELEASE_SPEC_PATH: releaseSpecPath,
+    AI_TREE_RELEASE_TAG: tag,
+    AI_TREE_REQUIRE_CLEAN: 'true',
+    AI_TREE_STAGE_MODE: 'release'
+  };
+}
+
 async function pathDoesNotExist(absolutePath, label) {
   try {
     await lstat(absolutePath);
@@ -156,15 +208,9 @@ function assertPortableAssetStem(value) {
   return value;
 }
 
-function assertCandidateManifest(manifest, commit) {
+function assertStrictCleanSourceClosure(manifest, commit) {
   if (!manifest || typeof manifest !== 'object' || Array.isArray(manifest)) {
     throw assetsError('staged release manifest must be an object');
-  }
-  if (manifest.publicationMode !== 'preview') {
-    throw assetsError('candidate assets require a preview publication manifest');
-  }
-  if (manifest.tag !== null || manifest.promotion !== null) {
-    throw assetsError('candidate assets cannot carry a tag or promotion record');
   }
   if (manifest.commit !== commit) {
     throw assetsError(`staged manifest commit ${manifest.commit || '(missing)'} does not match ${commit}`);
@@ -191,13 +237,13 @@ function assertCandidateManifest(manifest, commit) {
   ) {
     throw assetsError('staged manifest does not prove an exact clean committed source closure');
   }
+}
+
+function assertManifestIdentity(manifest) {
   if (!manifest.releaseSpec || typeof manifest.releaseSpec !== 'object') {
     throw assetsError('staged manifest is missing its release specification');
   }
   assertPortableAssetStem(manifest.releaseSpec.assetStem);
-  if (manifest.releaseSpec.status !== 'planned' && manifest.releaseSpec.status !== 'ready') {
-    throw assetsError('candidate release specification status must be planned or ready');
-  }
   if (typeof manifest.version !== 'string' || manifest.version.length === 0) {
     throw assetsError('staged manifest is missing version identity');
   }
@@ -209,6 +255,111 @@ function assertCandidateManifest(manifest, commit) {
   }
   if (manifest.dataDigest !== null && !/^[0-9a-f]{64}$/u.test(manifest.dataDigest)) {
     throw assetsError('staged manifest dataDigest must be a lowercase SHA-256 digest or null');
+  }
+}
+
+function assertCandidateManifest(manifest, commit) {
+  assertStrictCleanSourceClosure(manifest, commit);
+  if (manifest.publicationMode !== 'preview') {
+    throw assetsError('candidate assets require a preview publication manifest');
+  }
+  if (manifest.tag !== null || manifest.promotion !== null) {
+    throw assetsError('candidate assets cannot carry a tag or promotion record');
+  }
+  assertManifestIdentity(manifest);
+  if (manifest.releaseSpec.status !== 'planned' && manifest.releaseSpec.status !== 'ready') {
+    throw assetsError('candidate release specification status must be planned or ready');
+  }
+}
+
+const STABLE_PROMOTION_KEYS = Object.freeze([
+  'mode',
+  'protectedMainCommit',
+  'protectedMainRef',
+  'reachableFromProtectedMain',
+  'releaseDate',
+  'tag',
+  'tagCommit',
+  'tagObject',
+  'taggedAt'
+]);
+
+function assertExactObjectKeys(value, expectedKeys, label) {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) {
+    throw assetsError(`${label} must be an object`);
+  }
+  const actual = Object.keys(value).sort(compareBytes);
+  const expected = [...expectedKeys].sort(compareBytes);
+  if (JSON.stringify(actual) !== JSON.stringify(expected)) {
+    throw assetsError(`${label} has missing or extra fields`);
+  }
+}
+
+function assertStableManifest(manifest, {
+  commit,
+  tag,
+  releaseSpecPath,
+  protectedMainRef
+}) {
+  assertStrictCleanSourceClosure(manifest, commit);
+  if (manifest.publicationMode !== 'release') {
+    throw assetsError('stable assets require a release publication manifest');
+  }
+  if (manifest.stageConfig?.path !== DEFAULT_CONFIG_PATH) {
+    throw assetsError(`stable assets require the canonical stage configuration ${DEFAULT_CONFIG_PATH}`);
+  }
+  assertManifestIdentity(manifest);
+  if (manifest.releaseSpec.status !== 'ready') {
+    throw assetsError('stable assets require a ready release specification');
+  }
+  if (manifest.releaseSpec.path !== releaseSpecPath) {
+    throw assetsError('staged release specification path does not match the explicit stable path');
+  }
+  if (manifest.releaseSpec.tag !== tag || manifest.tag !== tag) {
+    throw assetsError('staged release tag does not match the explicit stable tag');
+  }
+  if (manifest.releaseSpec.protectedMainRef !== protectedMainRef) {
+    throw assetsError('staged release specification protected-main ref does not match the explicit stable ref');
+  }
+  if (
+    typeof manifest.releaseState !== 'string' ||
+    manifest.releaseState.length === 0 ||
+    /development/iu.test(manifest.releaseState) ||
+    manifest.releaseState !== manifest.releaseSpec.releaseState
+  ) {
+    throw assetsError('stable release state must be non-developmental and match the release specification');
+  }
+  if (!/^[0-9a-f]{64}$/u.test(manifest.dataDigest || '')) {
+    throw assetsError('stable assets require a recorded lowercase SHA-256 data digest');
+  }
+  if (typeof manifest.releaseSpec.prerelease !== 'boolean') {
+    throw assetsError('stable release specification prerelease must be boolean');
+  }
+  if (
+    !manifest.toolchain ||
+    typeof manifest.toolchain !== 'object' ||
+    Array.isArray(manifest.toolchain) ||
+    !/^v24\.\d+\.\d+$/u.test(manifest.toolchain.node || '') ||
+    !/^11\.\d+\.\d+$/u.test(manifest.toolchain.npm || '') ||
+    manifest.toolchain.packageLockVersion !== 3
+  ) {
+    throw assetsError('stable assets require observed Node 24, npm 11, and package-lock v3 toolchain identity');
+  }
+  assertExactObjectKeys(manifest.promotion, STABLE_PROMOTION_KEYS, 'staged stable promotion');
+  const promotion = manifest.promotion;
+  if (
+    promotion.mode !== 'annotated-tag' ||
+    promotion.tag !== tag ||
+    promotion.releaseDate !== manifest.releaseSpec.releaseDate ||
+    promotion.tagCommit !== commit ||
+    promotion.protectedMainRef !== protectedMainRef ||
+    promotion.reachableFromProtectedMain !== true ||
+    !/^(?:[0-9a-f]{40}|[0-9a-f]{64})$/u.test(promotion.tagObject || '') ||
+    !/^(?:[0-9a-f]{40}|[0-9a-f]{64})$/u.test(promotion.protectedMainCommit || '') ||
+    typeof promotion.taggedAt !== 'string' ||
+    promotion.taggedAt.length === 0
+  ) {
+    throw assetsError('staged stable promotion is not a complete exact annotated-tag proof');
   }
 }
 
@@ -320,7 +471,7 @@ async function captureRegularFile(root, relativePath) {
   return bytes;
 }
 
-async function captureStagedSite(stageResult, commit) {
+async function captureStagedSite(stageResult, commit, assertManifest = assertCandidateManifest) {
   const outputStat = await lstat(stageResult.outputDirectory);
   if (!outputStat.isDirectory() || outputStat.isSymbolicLink()) {
     throw assetsError('stage-site output is not a regular directory');
@@ -329,7 +480,7 @@ async function captureStagedSite(stageResult, commit) {
   normalizeManifestPath(manifestPath, 'release manifest path');
   const manifestBytes = await captureRegularFile(stageResult.outputDirectory, manifestPath);
   const manifest = parseStrictJson(manifestBytes, 'staged release manifest');
-  assertCandidateManifest(manifest, commit);
+  assertManifest(manifest, commit);
   const expectedManifestBytes = Buffer.from(`${JSON.stringify(stageResult.manifest, null, 2)}\n`, 'utf8');
   if (!manifestBytes.equals(expectedManifestBytes)) {
     throw assetsError('staged release manifest bytes differ from the in-memory stage result');
@@ -464,9 +615,18 @@ function ustarHeader(archivePath, size) {
   return header;
 }
 
-function buildUstarArchive(rootName, paths, buffers) {
-  if (!/^[A-Za-z0-9][A-Za-z0-9._-]*-candidate$/u.test(rootName)) {
-    throw assetsError('archive root must be a portable candidate name');
+function buildUstarArchive(rootName, paths, buffers, mode = 'candidate') {
+  if (mode === 'candidate') {
+    if (!/^[A-Za-z0-9][A-Za-z0-9._-]*-candidate$/u.test(rootName)) {
+      throw assetsError('archive root must be a portable candidate name');
+    }
+  } else if (mode === 'stable') {
+    assertPortableAssetStem(rootName);
+    if (/candidate/iu.test(rootName)) {
+      throw assetsError('stable archive root must not contain candidate identity');
+    }
+  } else {
+    throw assetsError(`unsupported archive mode: ${mode}`);
   }
   const sortedPaths = [...paths].sort(compareBytes);
   const chunks = [];
@@ -503,6 +663,8 @@ function isolatedGitEnvironment() {
   environment.GIT_CONFIG_GLOBAL = nullDevice;
   environment.GIT_CONFIG_NOSYSTEM = '1';
   environment.GIT_CONFIG_SYSTEM = nullDevice;
+  environment.GIT_DISCOVERY_ACROSS_FILESYSTEM = '0';
+  environment.GIT_NO_LAZY_FETCH = '1';
   environment.GIT_OPTIONAL_LOCKS = '0';
   environment.GIT_TERMINAL_PROMPT = '0';
   return environment;
@@ -674,6 +836,22 @@ function readCommittedBlob(repositoryRoot, commit, relativePath) {
   }
 }
 
+async function assertExecutingReleaseToolsMatchCommit(repositoryRoot, commit) {
+  for (const relativePath of EXECUTED_RELEASE_TOOL_PATHS) {
+    const localPath = path.resolve(DEFAULT_REPOSITORY_ROOT, ...relativePath.split('/'));
+    const canonicalLocalPath = await realpath(localPath);
+    const localStat = await lstat(localPath);
+    if (!samePath(localPath, canonicalLocalPath) || !localStat.isFile() || localStat.isSymbolicLink()) {
+      throw assetsError(`executing release tool must be a canonical regular file: ${relativePath}`);
+    }
+    const runningBytes = await readFile(localPath);
+    const committedBytes = readCommittedBlob(repositoryRoot, commit, relativePath);
+    if (!runningBytes.equals(committedBytes)) {
+      throw assetsError(`executing release tool does not match the advertised commit: ${relativePath}`);
+    }
+  }
+}
+
 function candidateNotes(manifest, candidateChanges) {
   const digest = manifest.dataDigest === null ? 'not recorded' : manifest.dataDigest;
   return Buffer.from([
@@ -695,12 +873,68 @@ function candidateNotes(manifest, candidateChanges) {
   ].join('\n'), 'utf8');
 }
 
+function stableNotes(manifest, stableChanges) {
+  const digest = manifest.dataDigest === null ? 'not recorded' : manifest.dataDigest;
+  const promotion = manifest.promotion;
+  return Buffer.from([
+    `# ${manifest.releaseSpec.assetStem} stable release assets`,
+    '',
+    '> Locally verified artifact package. These files do not attest a GitHub Release, an environment approval, a deployment, or public post-deployment verification.',
+    '',
+    `- Version: \`${manifest.version}\``,
+    `- Edition: \`${manifest.edition}\``,
+    `- Release date: \`${manifest.releaseSpec.releaseDate}\``,
+    `- Tag: \`${manifest.tag}\``,
+    `- Tag object: \`${promotion.tagObject}\``,
+    `- Tagged at: \`${promotion.taggedAt}\``,
+    `- Commit: \`${manifest.commit}\``,
+    `- Data digest: \`${digest}\``,
+    `- Protected-main ref: \`${promotion.protectedMainRef}\``,
+    `- Protected-main commit: \`${promotion.protectedMainCommit}\``,
+    `- Prerelease: \`${manifest.releaseSpec.prerelease}\``,
+    '- Publication mode: `release`',
+    '',
+    stableChanges.section.heading,
+    '',
+    stableChanges.body.trimEnd(),
+    ''
+  ].join('\n'), 'utf8');
+}
+
+const STABLE_REF_PROOF_KEYS = Object.freeze([
+  'mode',
+  'protectedMainCommit',
+  'protectedMainRef',
+  'reachableFromProtectedMain',
+  'tagCommit',
+  'tagObject',
+  'taggedAt'
+]);
+
+function assertStableFinalProof(manifest, proof) {
+  assertExactObjectKeys(proof, STABLE_REF_PROOF_KEYS, 'final stable ref proof');
+  const expected = {
+    releaseDate: manifest.releaseSpec.releaseDate,
+    tag: manifest.tag,
+    ...proof
+  };
+  assertExactObjectKeys(expected, STABLE_PROMOTION_KEYS, 'final stable promotion proof');
+  for (const key of STABLE_PROMOTION_KEYS) {
+    if (expected[key] !== manifest.promotion[key]) {
+      throw assetsError(`final stable ref proof changed after staging: ${key}`);
+    }
+  }
+}
+
 function checksumFile(namedBuffers) {
   const names = [...namedBuffers.keys()].sort(compareBytes);
   return Buffer.from(names.map(name => `${sha256(namedBuffers.get(name))}  ${name}\n`).join(''), 'utf8');
 }
 
-async function writeAtomically(output, namedBuffers) {
+async function writeAtomically(output, namedBuffers, {
+  beforePublish = null,
+  artifactLabel = 'candidate'
+} = {}) {
   await pathDoesNotExist(output.absolute, 'output directory');
   const temporary = await mkdtemp(path.join(output.parent, `.${output.basename}.tmp-`));
   let published = false;
@@ -712,11 +946,13 @@ async function writeAtomically(output, namedBuffers) {
       });
     }
     await pathDoesNotExist(output.absolute, 'output directory');
+    if (beforePublish !== null) await beforePublish();
+    await pathDoesNotExist(output.absolute, 'output directory');
     await rename(temporary, output.absolute);
     published = true;
   } catch (error) {
     if (error.message?.startsWith('release-assets:')) throw error;
-    throw assetsError(`cannot publish candidate assets atomically: ${error.message}`);
+    throw assetsError(`cannot publish ${artifactLabel} assets atomically: ${error.message}`);
   } finally {
     if (!published) await rm(temporary, { recursive: true, force: true });
   }
@@ -728,8 +964,21 @@ export async function buildCandidateReleaseAssets({
   commit,
   outputDirectory,
   checkOnly = false,
-  environment = process.env
+  environment = process.env,
+  mode,
+  tag,
+  releaseSpecPath,
+  protectedMainRef
 } = {}) {
+  const stableOnlyOptions = [
+    ['mode', mode !== undefined && mode !== 'candidate'],
+    ['tag', tag !== undefined],
+    ['releaseSpecPath', releaseSpecPath !== undefined],
+    ['protectedMainRef', protectedMainRef !== undefined]
+  ].filter(([, supplied]) => supplied).map(([name]) => name);
+  if (stableOnlyOptions.length > 0) {
+    throw assetsError(`candidate builds reject stable-only options: ${stableOnlyOptions.join(', ')}`);
+  }
   const fullCommit = assertFullCommit(commit);
   const requestedRoot = path.resolve(repositoryRoot);
   let resolvedRoot;
@@ -801,18 +1050,164 @@ export async function buildCandidateReleaseAssets({
   });
 }
 
+export async function buildStableReleaseAssets({
+  repositoryRoot,
+  configPath = DEFAULT_CONFIG_PATH,
+  commit,
+  outputDirectory,
+  tag,
+  releaseSpecPath,
+  protectedMainRef,
+  checkOnly = false,
+  environment = process.env
+} = {}) {
+  const fullCommit = assertFullCommit(commit);
+  if (configPath !== DEFAULT_CONFIG_PATH) {
+    throw assetsError(`stable mode requires --config to be exactly ${DEFAULT_CONFIG_PATH}`);
+  }
+  const exactTag = assertExactTrimmedValue(tag, '--tag');
+  const exactReleaseSpecPath = assertExactTrimmedValue(releaseSpecPath, '--release-spec-path');
+  const exactProtectedMainRef = assertExactTrimmedValue(protectedMainRef, '--protected-main-ref');
+  normalizeManifestPath(configPath, 'config path');
+  normalizeManifestPath(exactReleaseSpecPath, 'release specification path');
+
+  if (typeof repositoryRoot !== 'string' || repositoryRoot.length === 0 || !path.isAbsolute(repositoryRoot)) {
+    throw assetsError('--repository-root must be an explicit absolute canonical path in stable mode');
+  }
+  if (path.normalize(repositoryRoot) !== repositoryRoot) {
+    throw assetsError('--repository-root must use its normalized canonical spelling in stable mode');
+  }
+  const requestedRoot = path.resolve(repositoryRoot);
+  let resolvedRoot;
+  try {
+    resolvedRoot = await realpath(requestedRoot);
+  } catch (error) {
+    throw assetsError(`repository root is unavailable: ${error.message}`);
+  }
+  if (!samePath(requestedRoot, resolvedRoot)) {
+    throw assetsError('--repository-root must be the canonical worktree path, not a symbolic link or junction');
+  }
+  await assertExecutingReleaseToolsMatchCommit(resolvedRoot, fullCommit);
+  const output = await resolveOutputLocation(resolvedRoot, outputDirectory);
+  const stageEnvironment = stableStageEnvironment(environment, {
+    commit: fullCommit,
+    tag: exactTag,
+    releaseSpecPath: exactReleaseSpecPath,
+    protectedMainRef: exactProtectedMainRef
+  });
+  const stageResult = await stageSite({
+    repositoryRoot: resolvedRoot,
+    configPath,
+    environment: stageEnvironment,
+    checkOnly: false
+  });
+  const captured = await captureStagedSite(
+    stageResult,
+    fullCommit,
+    manifest => assertStableManifest(manifest, {
+      commit: fullCommit,
+      tag: exactTag,
+      releaseSpecPath: exactReleaseSpecPath,
+      protectedMainRef: exactProtectedMainRef
+    })
+  );
+
+  const committedConfigBytes = readCommittedBlob(resolvedRoot, fullCommit, configPath);
+  if (sha256(committedConfigBytes) !== captured.manifest.stageConfig.sha256) {
+    throw assetsError('committed stage configuration does not match the staged manifest');
+  }
+  const committedConfig = parseStrictJson(committedConfigBytes, 'committed stage configuration');
+  if (committedConfig?.metadata?.releaseFile !== exactReleaseSpecPath) {
+    throw assetsError('explicit stable release-spec path does not match the committed stage configuration');
+  }
+  const changelogPath = committedConfig?.metadata?.changelogFile;
+  normalizeManifestPath(changelogPath, 'CHANGELOG path');
+  const changelogBytes = readCommittedBlob(resolvedRoot, fullCommit, changelogPath);
+  const stableChanges = extractCandidateChangeBody(changelogBytes, captured.manifest.releaseSpec);
+
+  const assetStem = assertPortableAssetStem(captured.manifest.releaseSpec.assetStem);
+  if (/candidate/iu.test(assetStem)) {
+    throw assetsError('stable assetStem must not contain candidate identity');
+  }
+  const archiveName = `${assetStem}.tar`;
+  const manifestName = `${assetStem}.release-manifest.json`;
+  const notesName = `${assetStem}.notes.md`;
+  const checksumsName = `${assetStem}.SHA256SUMS`;
+  const archiveBytes = buildUstarArchive(assetStem, captured.paths, captured.buffers, 'stable');
+  const notesBytes = stableNotes(captured.manifest, stableChanges);
+  const distributable = new Map([
+    [archiveName, archiveBytes],
+    [manifestName, captured.manifestBytes],
+    [notesName, notesBytes]
+  ]);
+  const checksumsBytes = checksumFile(distributable);
+  const outputBuffers = new Map([...distributable, [checksumsName, checksumsBytes]]);
+
+  const verifyFinalRef = async () => {
+    const proof = await verifyReleaseRef({
+      repositoryRoot: resolvedRoot,
+      tag: exactTag,
+      protectedMainRef: exactProtectedMainRef,
+      expectedVersion: captured.manifest.version,
+      expectedReleaseDate: captured.manifest.releaseSpec.releaseDate,
+      expectedCommit: fullCommit
+    });
+    assertStableFinalProof(captured.manifest, proof);
+  };
+  if (checkOnly) {
+    await verifyFinalRef();
+  } else {
+    await writeAtomically(output, outputBuffers, {
+      beforePublish: verifyFinalRef,
+      artifactLabel: 'stable release'
+    });
+  }
+
+  const files = [...outputBuffers.entries()]
+    .sort(([left], [right]) => compareBytes(left, right))
+    .map(([name, bytes]) => Object.freeze({ name, bytes: bytes.byteLength, sha256: sha256(bytes) }));
+  return Object.freeze({
+    status: checkOnly ? 'VALID' : 'BUILT',
+    candidate: false,
+    stable: true,
+    stableStem: assetStem,
+    externalOutputCreated: !checkOnly,
+    stagedSiteRefreshed: true,
+    repositoryRoot: resolvedRoot,
+    outputDirectory: output.absolute,
+    config: configPath,
+    commit: fullCommit,
+    version: captured.manifest.version,
+    edition: captured.manifest.edition,
+    releaseDate: captured.manifest.releaseSpec.releaseDate,
+    dataDigest: captured.manifest.dataDigest,
+    publicationMode: captured.manifest.publicationMode,
+    releaseSpecStatus: captured.manifest.releaseSpec.status,
+    tag: captured.manifest.tag,
+    tagObject: captured.manifest.promotion.tagObject,
+    protectedMainRef: captured.manifest.promotion.protectedMainRef,
+    protectedMainCommit: captured.manifest.promotion.protectedMainCommit,
+    prerelease: captured.manifest.releaseSpec.prerelease,
+    assetStem,
+    archiveRoot: assetStem,
+    files: Object.freeze(files)
+  });
+}
+
 function usage() {
   return [
-    'Usage: node scripts/release-assets.mjs --repository-root <absolute-path> --commit <full-object-id> --output-directory <absolute-new-path> [--config <repo-relative-path>] [--check]',
+    'Usage: node scripts/release-assets.mjs [--mode candidate|stable] --repository-root <absolute-path> --commit <full-object-id> --output-directory <absolute-new-path> [--config <repo-relative-path>] [--check]',
+    '       stable mode additionally requires --tag <tag> --release-spec-path <repo-relative-path> --protected-main-ref <full-ref>',
     '',
-    'Builds candidate-only assets from an exact clean commit.',
-    'This command does not create or attest a tag, GitHub Release, or deployment.',
-    '--check refreshes repository-local ignored _site for byte validation but creates no external candidate asset directory.'
+    'Candidate mode is the default and preserves the candidate-only artifact contract.',
+    'Stable mode verifies an existing annotated tag and protected-main reachability entirely from local Git state.',
+    'Neither mode creates a tag, GitHub Release, approval, deployment, or public verification.',
+    '--check refreshes repository-local ignored _site for byte validation but creates no external asset directory.'
   ].join('\n');
 }
 
 function parseArguments(argumentsList) {
-  const options = { configPath: DEFAULT_CONFIG_PATH, checkOnly: false };
+  const options = { mode: 'candidate', configPath: DEFAULT_CONFIG_PATH, checkOnly: false };
   const seen = new Set();
   for (let index = 0; index < argumentsList.length; index += 1) {
     const argument = argumentsList[index];
@@ -827,7 +1222,11 @@ function parseArguments(argumentsList) {
       ['--repository-root', 'repositoryRoot'],
       ['--commit', 'commit'],
       ['--output-directory', 'outputDirectory'],
-      ['--config', 'configPath']
+      ['--config', 'configPath'],
+      ['--mode', 'mode'],
+      ['--tag', 'tag'],
+      ['--release-spec-path', 'releaseSpecPath'],
+      ['--protected-main-ref', 'protectedMainRef']
     ]);
     const key = mappings.get(argument);
     if (key === undefined) throw assetsError(`unknown argument: ${argument}`);
@@ -846,6 +1245,24 @@ function parseArguments(argumentsList) {
   ]) {
     if (options[key] === undefined) throw assetsError(`${argument} is required`);
   }
+  if (options.mode !== 'candidate' && options.mode !== 'stable') {
+    throw assetsError('--mode must be exactly candidate or stable');
+  }
+  const stableArguments = [
+    ['--tag', 'tag'],
+    ['--release-spec-path', 'releaseSpecPath'],
+    ['--protected-main-ref', 'protectedMainRef']
+  ];
+  if (options.mode === 'candidate') {
+    const supplied = stableArguments.filter(([, key]) => options[key] !== undefined).map(([argument]) => argument);
+    if (supplied.length > 0) {
+      throw assetsError(`candidate mode rejects stable-only arguments: ${supplied.join(', ')}`);
+    }
+  } else {
+    for (const [argument, key] of stableArguments) {
+      if (options[key] === undefined) throw assetsError(`${argument} is required in stable mode`);
+    }
+  }
   return { help: false, ...options };
 }
 
@@ -855,7 +1272,10 @@ async function main() {
     process.stdout.write(`${usage()}\n`);
     return;
   }
-  const result = await buildCandidateReleaseAssets(options);
+  const { mode, ...buildOptions } = options;
+  const result = mode === 'stable'
+    ? await buildStableReleaseAssets(buildOptions)
+    : await buildCandidateReleaseAssets({ ...buildOptions, mode });
   process.stdout.write(`${JSON.stringify(result, null, 2)}\n`);
 }
 

@@ -724,6 +724,8 @@ function gitEnvironment() {
   environment.GIT_CONFIG_GLOBAL = nullDevice;
   environment.GIT_CONFIG_NOSYSTEM = '1';
   environment.GIT_CONFIG_SYSTEM = nullDevice;
+  environment.GIT_DISCOVERY_ACROSS_FILESYSTEM = '0';
+  environment.GIT_NO_LAZY_FETCH = '1';
   environment.GIT_OPTIONAL_LOCKS = '0';
   environment.GIT_TERMINAL_PROMPT = '0';
   return environment;

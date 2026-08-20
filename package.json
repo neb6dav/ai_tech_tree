@@ -3,14 +3,23 @@
   "version": "0.1.0",
   "private": true,
   "description": "Build tooling for the AI Research Tech Tree static atlas.",
+  "engines": {
+    "node": "24.x",
+    "npm": ">=11 <12"
+  },
+  "packageManager": "npm@11.11.0",
   "scripts": {
     "build:network": "esbuild src/network-view.js --bundle --format=iife --global-name=NetworkAtlas --platform=browser --target=es2020 --outfile=network-atlas.bundle.js --minify --legal-comments=eof",
     "build:opportunity": "esbuild src/opportunity-view.js --bundle --format=iife --global-name=OpportunityAtlas --platform=browser --target=es2020 --outfile=opportunity-atlas.bundle.js --minify --legal-comments=eof",
     "build:layout": "node generate-network-layout.js",
     "build": "node build.js",
+    "stage:site": "node scripts/stage-site.mjs",
+    "test:core": "node release-gate.js && node accessibility-gate.js && node ui-layout-gate.js && node network-gate.js && node opportunity-gate.js",
     "test:network": "node network-gate.js",
     "test:opportunity": "node opportunity-gate.js",
-    "test": "node release-gate.js && node accessibility-gate.js && node ui-layout-gate.js && node network-gate.js && node opportunity-gate.js"
+    "test:stage-site": "node --test scripts/stage-site.test.mjs",
+    "test:publication": "npm run test:stage-site && npm run stage:site",
+    "test": "npm run test:core && npm run test:publication"
   },
   "dependencies": {
     "@cosmos.gl/graph": "3.4.0"

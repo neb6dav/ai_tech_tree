@@ -3,9 +3,9 @@ roadmap_version: 1
 active_release: "v0.1.1"
 active_work_package: "WP-011-A"
 issue_url: "https://github.com/neb6dav/ai_tech_tree/issues/4"
-pr_url: null
+pr_url: "https://github.com/neb6dav/ai_tech_tree/pull/5"
 base_sha: "76483d2d59f52f30202b52fe52a26a7c832a1252"
-last_completed_checkpoint: "C1"
+last_completed_checkpoint: "C2"
 last_verified_commands:
   - command: "npm run build"
     status: "PASS"
@@ -32,13 +32,13 @@ last_verified_commands:
     verified_by: "root"
     scope: "WP-011-A uncommitted worktree"
 next_exact_action: >-
-  Commit the reviewed C2 staged-site assembler and its focused tests, then
-  verify that checkpoint from its committed tree before pushing.
+  Commit the reviewed C3/C4 contract crawler, enforced artifact budgets, and
+  workflow integration; then verify and adversarially review the complete
+  work package before its final checkpoint push.
 known_blockers:
-  - "The authorized draft pull request will be created after the first pushed checkpoint."
   - "WP-011-B must synchronize version identity and replace main/manual production deployment with approved annotated-tag promotion before v0.1.1 can ship."
   - "Browser performance metrics and automated preview screenshots remain pending WP-012-A."
-release_gate_status: "wp_011_a_c1_checkpoint"
+release_gate_status: "wp_011_a_c2_checkpoint"
 release_details:
   version: "v0.1.1"
   title: "Publication-contract repair"
@@ -52,16 +52,16 @@ release_details:
       number: 4
       url: "https://github.com/neb6dav/ai_tech_tree/issues/4"
     pull_request:
-      status: "authorized_pending_creation"
-      number: null
-      url: null
+      status: "draft"
+      number: 5
+      url: "https://github.com/neb6dav/ai_tech_tree/pull/5"
     active_checkpoint:
-      id: "C1"
-      title: "Control plane and release toolchain"
+      id: "C2"
+      title: "Deterministic staged-site assembler"
       status: "complete_in_this_commit"
       next_exact_action: >-
-        Commit the reviewed C2 staged-site assembler and focused tests, then
-        verify the committed snapshot before the next push.
+        Commit C3/C4 contract and budget gates plus workflow integration, then
+        run the complete work-package adversarial review.
     scope:
       - "Repair the broken public-site publication contract before broader UI or content work."
       - "Make the deployable site an explicit, validated artifact."
@@ -107,10 +107,11 @@ architecture work starts only after this repair is released.
 - C3 project-subpath publication-contract crawler: implemented and green.
 - C4 deterministic payload release manifest: implemented and green.
 
-`C1` is the first durable checkpoint: the control plane, locked decisions,
-toolchain pin, and current-regression budget policy are committed together.
-The remaining locally reviewed implementation is divided into C2 and C3/C4
-checkpoint commits so each conceptual boundary remains auditable.
+`C1` records the control plane, locked decisions, toolchain pin, and budget
+policy. `C2` adds the deterministic staged-site assembler, strict allowlist,
+release manifest, focused tests, and artifact-producing npm toolchain contract.
+The remaining locally reviewed implementation is isolated to the C3/C4
+contract, budget, workflow, documentation, and adversarial-review checkpoint.
 
 This work package is not a shippable `v0.1.1` release by itself. `WP-011-B`
 remains responsible for release identity, annotated-tag and protected-main

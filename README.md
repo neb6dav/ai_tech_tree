@@ -92,7 +92,7 @@ In clean-source mode, staging validates the supported Git object format and reac
 Candidate assets are built only from an exact clean commit and remain visibly candidate-only. The output directory must be a new absolute directory outside the repository worktree:
 
 ```text
-node scripts/release-assets.mjs --repository-root <absolute-repository-root> --commit <full-HEAD-object-id> --output-directory <new-absolute-directory>
+npm run build:release-candidate -- --repository-root <absolute-repository-root> --commit <full-HEAD-object-id> --output-directory <new-absolute-directory>
 ```
 
 The command refreshes and revalidates `_site`, captures its complete byte inventory, and writes a deterministic uncompressed POSIX-USTAR archive, an exact standalone copy of `release-manifest.json`, draft notes derived from the committed `[Unreleased]` changelog section, and a SHA-256 checksum file covering those three assets. Every filename includes `candidate` and the full commit. The command performs no tag, GitHub Release, environment approval, settings change, deployment, or network request, and its output does not attest that any of those external actions have or have not occurred.

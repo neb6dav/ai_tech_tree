@@ -63,3 +63,130 @@ jobs:
           include-hidden-files: true
           if-no-files-found: error
           retention-days: 14
+
+  candidate-assets:
+    name: Candidate assets (${{ matrix.platform }})
+    if: github.event_name == 'pull_request'
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: ubuntu
+            os: ubuntu-latest
+          - platform: windows
+            os: windows-latest
+    env:
+      AI_TREE_REQUIRE_CLEAN: "true"
+      AI_TREE_STAGE_MODE: "preview"
+
+    steps:
+      - name: Check out the exact pull-request merge commit
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+          fetch-tags: false
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install exact dependencies
+        run: npm ci
+
+      - name: Build generated artifacts
+        run: npm run build
+
+      - name: Test candidate release assets
+        run: npm run test:release-assets
+
+      - name: Build exact candidate assets
+        run: >
+          npm run build:release-candidate --
+          --repository-root "${{ github.workspace }}"
+          --commit "${{ github.sha }}"
+          --output-directory "${{ runner.temp }}/release-candidate"
+
+      - name: Verify exact checkout and unchanged tracked source
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          git diff --exit-code -- .
+          test -z "$(git status --porcelain --untracked-files=all)"
+
+      - name: Upload cross-platform parity handoff
+        uses: actions/upload-artifact@v4
+        with:
+          name: candidate-handoff-${{ github.sha }}-${{ matrix.platform }}
+          path: ${{ runner.temp }}/release-candidate
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 1
+
+  candidate-assets-parity:
+    name: Verify candidate asset byte parity
+    if: github.event_name == 'pull_request'
+    needs:
+      - candidate-assets
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+
+    steps:
+      - name: Download Ubuntu candidate
+        uses: actions/download-artifact@v5
+        with:
+          name: candidate-handoff-${{ github.sha }}-ubuntu
+          path: ${{ runner.temp }}/candidates/ubuntu
+
+      - name: Download Windows candidate
+        uses: actions/download-artifact@v5
+        with:
+          name: candidate-handoff-${{ github.sha }}-windows
+          path: ${{ runner.temp }}/candidates/windows
+
+      - name: Verify checksums and exact inner bytes
+        shell: bash
+        run: |
+          set -euo pipefail
+          root="$RUNNER_TEMP/candidates"
+
+          for platform in ubuntu windows; do
+            directory="$root/$platform"
+            test "$(find "$directory" -mindepth 1 -maxdepth 1 -type f | wc -l)" -eq 4
+            test -z "$(find "$directory" -mindepth 1 -maxdepth 1 ! -type f -print -quit)"
+            (
+              cd "$directory"
+              shopt -s nullglob
+              sums=( *.SHA256SUMS )
+              test "${#sums[@]}" -eq 1
+              sha256sum --strict --check "${sums[0]}"
+            )
+          done
+
+          diff --recursive --brief --no-dereference \
+            "$root/ubuntu" \
+            "$root/windows"
+
+          (
+            cd "$root/ubuntu"
+            sha256sum -- *
+          )
+
+      - name: Upload verified candidate
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-candidate-${{ github.sha }}
+          path: ${{ runner.temp }}/candidates/ubuntu
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 14

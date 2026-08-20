@@ -156,11 +156,20 @@ last_verified_commands:
     status: "PASS"
     verified_by: "root plus two independent read-only reviewers"
     scope: "54 stable-bundle, 91 workflow-policy, 33 release-asset, and 29 finalization-plan tests; seven-file executed-source digest lock, source and manifest semantic closure, safe USTAR extraction, exact synthetic toolchain, read-only pull-request workflow boundary, and no ordinary npm-test stable-mode path returned SHIP"
+  - command: "Inspect first C4.4-A2 hosted parity run"
+    status: "FAIL-CLOSED; Windows default-temp alias correction pending push"
+    verified_by: "root plus read-only reconciliation agent"
+    scope: "Workflow 32417790101; full gate, both candidate builders, candidate parity, and Ubuntu synthetic stable bundle passed; Windows synthetic tests passed 53/54 but the verifier CLI rejected hosted os.tmpdir's noncanonical alias before output, so synthetic parity was correctly skipped and no Windows handoff existed"
+  - command: "Focused Windows verifier-default correction"
+    status: "PASS"
+    runtime: "Node v24.14.1 and npm 11.11.0"
+    verified_by: "root"
+    scope: "55 stable-bundle and 91 workflow-policy tests; the verifier canonicalizes only its internal os.tmpdir default while an explicit caller-supplied symlink or junction alias remains rejected and leaves no extraction residue"
 next_exact_action: >-
-  Commit and push the locally verified C4.4-A2 implementation, require the
-  Windows and Ubuntu synthetic jobs plus their independent parity job to pass,
-  download and reverify both one-day handoffs, and record exact byte parity
-  before marking the checkpoint complete.
+  Commit and push the narrow Windows internal-temp-default correction, require
+  the Windows and Ubuntu synthetic jobs plus their independent parity job to
+  pass, download and reverify both one-day handoffs, and record exact byte
+  parity before marking the checkpoint complete.
 known_blockers:
   - "WP-011-B is stacked on verified draft PR #5 until WP-011-A is separately authorized to merge."
   - "No merge, annotated tag, GitHub Release, environment approval, or public deployment is authorized."
@@ -196,10 +205,11 @@ release_details:
       title: "Cross-platform synthetic stable-asset parity"
       status: "locally_verified_pending_remote_parity"
       next_exact_action: >-
-        Commit and push the reviewed read-only CI fixture, require the Windows
-        and Ubuntu handoffs plus parity job to pass, download and independently
-        verify both bundles, and reconcile their four exact file digests; leave
-        the real release specification planned and perform no promotion action.
+        Commit and push the narrow Windows internal-temp-default correction,
+        require the Windows and Ubuntu handoffs plus parity job to pass, download
+        and independently verify both bundles, and reconcile their four exact
+        file digests; leave the real release specification planned and perform
+        no promotion action.
     scope:
       - "Publish stable and compatibility Opportunity endpoints."
       - "Move exported human URLs to the root application."

@@ -11,6 +11,7 @@ import {
   readdir,
   realpath,
   rm,
+  symlink,
   writeFile
 } from 'node:fs/promises';
 import os from 'node:os';
@@ -208,6 +209,27 @@ test('verifier CLI reports the synthetic bundle without network or extraction re
   const report = JSON.parse(result.stdout);
   assert.equal(report.status, 'VALID');
   assert.equal(report.extraction, 'verified-in-removed-temporary-directory');
+});
+
+test('verifier canonicalizes only its internal temporary default and rejects caller aliases', async () => {
+  const canonicalParent = path.join(temporaryRoot, 'canonical-extraction-parent');
+  const aliasedParent = path.join(temporaryRoot, 'aliased-extraction-parent');
+  await mkdir(canonicalParent);
+  await symlink(canonicalParent, aliasedParent, process.platform === 'win32' ? 'junction' : 'dir');
+  const temporaryEnvironment = process.platform === 'win32'
+    ? { ...process.env, TEMP: aliasedParent, TMP: aliasedParent }
+    : { ...process.env, TMPDIR: aliasedParent };
+  const internalDefault = spawnSync(process.execPath, [
+    VERIFIER_SCRIPT,
+    '--bundle-directory', bundleOne,
+    '--require-synthetic-test-only'
+  ], { encoding: 'utf8', env: temporaryEnvironment, windowsHide: true });
+  assert.equal(internalDefault.status, 0, internalDefault.stderr);
+  await assert.rejects(
+    verifyTestBundle(bundleOne, { temporaryParent: aliasedParent }),
+    /temporary extraction parent must use its canonical filesystem spelling/u
+  );
+  assert.deepEqual(await readdir(canonicalParent), [], 'rejected caller aliases must leave no extraction residue');
 });
 
 test('builder rejects a falsified npm wrapper identity before creating output', async () => {

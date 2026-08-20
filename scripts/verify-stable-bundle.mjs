@@ -766,8 +766,11 @@ async function safelyExtractAndVerify(entries, temporaryParent) {
 export async function verifyStableBundle({
   bundleDirectory,
   requireSyntheticTestOnly = false,
-  temporaryParent = os.tmpdir()
+  temporaryParent
 } = {}) {
+  const extractionParent = temporaryParent === undefined
+    ? await realpath(os.tmpdir())
+    : temporaryParent;
   const captured = await captureBundle(bundleDirectory);
   verifyChecksums(captured);
   const manifestName = `${captured.assetStem}.release-manifest.json`;
@@ -783,7 +786,7 @@ export async function verifyStableBundle({
   verifyNotes(captured.buffers.get(`${captured.assetStem}.notes.md`), manifest, captured.assetStem, {
     requireSyntheticTestOnly
   });
-  await safelyExtractAndVerify(entries, temporaryParent);
+  await safelyExtractAndVerify(entries, extractionParent);
   return Object.freeze({
     status: 'VALID',
     verifierVersion: SCRIPT_VERSION,

@@ -26,7 +26,7 @@ const REVIEWED_SYNTHETIC_SOURCE_SHA256 = Object.freeze({
   'scripts/stage-site.mjs': '66f6501b44f8377049c4a3ce5398138d669dd2103c0f6f3d18ccfbc7daa35aed',
   'scripts/strict-json.mjs': '32319f64ee28a8e4c0329d24ef26c8ef26c94f12d77f9f20656f7e744111de7e',
   'scripts/synthetic-stable-fixture.mjs': 'bee4923947e0ca595d23776ccb57c0b6a14592590c4a642a2495725df648342d',
-  'scripts/verify-stable-bundle.mjs': 'a91e8b8ea3e002f9cf873379408ff2bbed0227b89d1f8bbdf6ee3222c499e36c'
+  'scripts/verify-stable-bundle.mjs': '6e536de00ca8def993a7628f500fc4712c23b14255cbe5231ffed48852f6828f'
 });
 const EXPECTED_WORKFLOW_FILES = ['pages.yml', 'validate.yml'];
 const SAFE_POST_DEPLOY_TEST_COMMAND = 'node --test tests/post-deploy-smoke.test.mjs';

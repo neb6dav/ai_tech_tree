@@ -5,7 +5,7 @@ active_work_package: "WP-011-B"
 issue_url: "https://github.com/neb6dav/ai_tech_tree/issues/6"
 pr_url: "https://github.com/neb6dav/ai_tech_tree/pull/7"
 base_sha: "85108c78fa86c86634d4c0944839696369e687cd"
-last_completed_checkpoint: "WP-011-B/C4.1"
+last_completed_checkpoint: "WP-011-B/C4.2-A"
 last_verified_commands:
   - command: "npm run build"
     status: "PASS"
@@ -59,17 +59,26 @@ last_verified_commands:
     runtime: "GitHub Actions Node v24.19.0 and npm 11.17.0"
     verified_by: "root"
     scope: "Workflow 32398059854 green; artifact 9417412872 passed 1,465 contract references; 14/14 payloads byte-identical; CI source closure 17/17 with 70 tracked entries and zero filters; manifests differed only by synthetic checkout commit and Node/npm patch versions"
+  - command: "npm run build; AI_TREE_REQUIRE_CLEAN=true AI_TREE_STAGE_MODE=preview AI_TREE_COMMIT_SHA=6566b3a35dce4f32d25a8fb4099b9032a8de20c1 npm test"
+    status: "PASS"
+    runtime: "Node v24.14.1, npm 11.11.0, and Git 2.55"
+    verified_by: "root"
+    scope: "Exact detached C4.2-A code commit 6566b3a; 12 candidate-asset tests, 21 release-ref tests, 53 stage-site tests, all core and publication gates, 17/17 inputs, 72 tracked entries, zero filters, and 1,465 staged-site references"
+  - command: "Build and independently inspect exact C4.2-A candidate assets"
+    status: "PASS"
+    verified_by: "root plus independent hostile reviewer"
+    scope: "Four commit-named candidate files; 15-entry USTAR; extracted site passes 1,465 references; archive SHA-256 faf694cd7509d53ba60384cca88e7f0b06691a948a70884c2254f56aecf268b4; standalone manifest 75b600a044bb8a25d2543a48216d3b6a284fa7ee7a48ce3db01fadebd6957fc0; no tag, release, deployment, environment, settings, or network mutation performed"
 next_exact_action: >-
-  Implement and hostile-test C4.2-A deterministic candidate-only archive,
-  standalone manifest, release-note, and checksum assets; then verify the
-  exact committed tree before the separately authorized checkpoint push.
+  Finish the C4.2-B hostile corrections for full release-identity closure,
+  absolute deadline enforcement, drained retries, and artifact-bound state
+  labeling; then run the focused and full gates before its separate push.
 known_blockers:
   - "WP-011-B is stacked on verified draft PR #5 until WP-011-A is separately authorized to merge."
   - "No merge, annotated tag, GitHub Release, environment approval, or public deployment is authorized."
   - "The C3 source must remain visibly labeled as an untagged development edition until C4 prepares an authorized release artifact."
   - "Browser performance metrics and automated preview screenshots remain pending WP-012-A."
   - "The github-pages environment has no required reviewer and permits administrator bypass; immutable GitHub Releases are disabled. These external controls require separate authorization before any C4 promotion run."
-release_gate_status: "wp_011_b_c4_1_remote_verified_c4_2_ready"
+release_gate_status: "wp_011_b_c4_2_a_locally_verified_c4_2_b_implementing"
 release_details:
   version: "v0.1.1"
   title: "Publication-contract repair"
@@ -93,13 +102,13 @@ release_details:
       artifact_id: 9392055435
       artifact_tar_sha256: "f04f46196b74982f9d725f032278f9b7ed48ae1ffd82db0dcff3fc39f739f9c4"
     active_checkpoint:
-      id: "C4.2-A"
-      title: "Deterministic candidate-only release assets"
+      id: "C4.2-B"
+      title: "Bounded post-deployment smoke tooling"
       status: "implementing"
       next_exact_action: >-
-        Add and hostile-test a commit-bound candidate-only POSIX-ustar archive,
-        exact standalone release manifest, draft notes, and SHA-256 checksum
-        set without tag, GitHub Release, Pages, environment, or deployment APIs.
+        Correct the hostile-review findings, prove plan mode makes zero network
+        requests, and verify bounded execution only against injected and
+        loopback fixtures; do not contact the public site.
     scope:
       - "Publish stable and compatibility Opportunity endpoints."
       - "Move exported human URLs to the root application."
@@ -229,6 +238,20 @@ Workflow `32398059854` is green, downloaded artifact `9417412872` passes all
 local strict stage. After normalizing the expected synthetic checkout commit
 and Node/npm patch versions, the local and CI manifests are identical. C4.1 is
 remotely complete; C4.2 is the next implementation boundary.
+
+C4.2-A adds a candidate-only asset builder with no stable-release mode or
+network client. Exact clean commit `6566b3a` passes the complete gate with
+17/17 inputs, 72 tracked entries, zero filters, 12 focused asset tests, and
+1,465 staged-site references. Its deterministic four-file candidate set has a
+15-entry USTAR archive (SHA-256 `faf694cd7509d53ba60384cca88e7f0b06691a948a70884c2254f56aecf268b4`),
+an exact standalone manifest (`75b600a044bb8a25d2543a48216d3b6a284fa7ee7a48ce3db01fadebd6957fc0`),
+draft notes (`c37a40bfb20d17206be9e9b675275806da1e0238fe8460a609ad109ab4829338`),
+and checksum file (`38e2452aa9b049af6d0f9e251b7edbc40f09d1731566b0c839bd6827c556f85a`).
+The extracted archive independently passes all 1,465 contract references.
+Hostile findings on Setext headings, Markdown injection, and unverifiable
+external-state wording were corrected before the reviewer returned SHIP.
+C4.2-A performs and attests no tag, GitHub Release, deployment, environment
+approval, settings change, or network request. C4.2-B is the active boundary.
 
 ## Release boundary
 

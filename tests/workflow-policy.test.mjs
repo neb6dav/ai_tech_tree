@@ -87,20 +87,20 @@ const REVIEWED_SYNTHETIC_SOURCE_SHA256 = Object.freeze({
   'scripts/verify-stable-bundle.mjs': '6e536de00ca8def993a7628f500fc4712c23b14255cbe5231ffed48852f6828f'
 });
 const REVIEWED_ROLLBACK_SOURCE_SHA256 = Object.freeze({
-  '.gitattributes': 'a6983c560b512a454d1246825d4c5ad74d1a1de3126d64e62a8db520110c7567',
+  '.gitattributes': 'ada9de7bf1b8c91e900156458b2b831e69349400fa60a23b5635558a3022b3e4',
   'config/rollback/production-2026-08-20-76483d2d.v1.json': 'd67958ed48719bc364a4a8a79202d2360ccce507d051ccfa6f5681ad999ab8f8',
   'rollback/production-2026-08-20-76483d2d/artifact.tar': 'f04f46196b74982f9d725f032278f9b7ed48ae1ffd82db0dcff3fc39f739f9c4',
   'scripts/strict-json.mjs': '32319f64ee28a8e4c0329d24ef26c8ef26c94f12d77f9f20656f7e744111de7e',
   'scripts/verify-rollback-bundle.mjs': 'eb8eba21bf8d0276fb7782fe6b7ef3f079235d4f29331f5fe63883c1a5079675',
-  'tests/rollback-bundle.test.mjs': '7b92d133f00315113319ed0604b975d190155edd5b1735c795db312b0bf4520b'
+  'tests/rollback-bundle.test.mjs': '3e986105ec55a283aabb9f761aa41a19b68ed4baaa4f2c6deb97ba85307a75fa'
 });
 const REVIEWED_ROLLBACK_SOURCE_BYTES = Object.freeze({
-  '.gitattributes': 71,
+  '.gitattributes': 63,
   'config/rollback/production-2026-08-20-76483d2d.v1.json': 9730,
   'rollback/production-2026-08-20-76483d2d/artifact.tar': 14059520,
   'scripts/strict-json.mjs': 4492,
   'scripts/verify-rollback-bundle.mjs': 33997,
-  'tests/rollback-bundle.test.mjs': 22376
+  'tests/rollback-bundle.test.mjs': 22368
 });
 const REVIEWED_ROLLBACK_ARCHIVE_BYTES = 14059520;
 const REVIEWED_ROLLBACK_ARCHIVE_GIT_BLOB = '651fab34624fd6b943054c8cb3e30c76a88e4024';
@@ -1105,7 +1105,7 @@ function validateRollbackBundleBoundary(reviewedSources = reviewedRollbackSource
 
   assert.equal(
     attributes,
-    '* text=auto eol=lf\n\n*.png binary\nrollback/**/*.tar binary -filter -eol\n',
+    '* text=auto eol=lf\n\n*.png binary\nrollback/**/*.tar binary -eol\n',
     'attributes must classify only the fixed rollback archive pattern as an added binary path'
   );
   assert.doesNotMatch(attributes, /\b(?:filter|diff|merge)=lfs\b|\.gitattributes\s+export-ignore/iu, 'rollback storage must not use LFS or hide attributes');
@@ -1764,7 +1764,7 @@ test('rollback source policy rejects capability, authority, attribute, and byte-
   const verifier = rollbackVerifierBytes.toString('utf8');
   const hostileTests = rollbackTestBytes.toString('utf8');
   const mutations = [
-    ['binary attribute weakening', '.gitattributes', Buffer.from(attributes.replace(' binary -filter -eol', ' binary'))],
+    ['binary attribute weakening', '.gitattributes', Buffer.from(attributes.replace(' binary -eol', ' text'))],
     ['descriptor authority escalation', 'config/rollback/production-2026-08-20-76483d2d.v1.json', Buffer.from(descriptor.replace('"rollbackAuthorized": false', '"rollbackAuthorized": true'))],
     ['network import', 'scripts/verify-rollback-bundle.mjs', Buffer.from(`${verifier}\nimport https from 'node:https';\n`)],
     ['ambient operational environment', 'scripts/verify-rollback-bundle.mjs', Buffer.from(`${verifier}\nconst configured = process.env.ROLLBACK_ROOT;\n`)],

@@ -152,7 +152,7 @@ test('repository holds the exact fixed descriptor and binary rollback archive wi
   assert.equal(sha256(archiveBytes), 'f04f46196b74982f9d725f032278f9b7ed48ae1ffd82db0dcff3fc39f739f9c4');
   assert.equal(gitBlobSha1(archiveBytes), '651fab34624fd6b943054c8cb3e30c76a88e4024');
   const attributes = await readFile(path.join(REPOSITORY_ROOT, '.gitattributes'), 'utf8');
-  assert.match(attributes, /^rollback\/\*\*\/\*\.tar binary -filter -eol$/mu);
+  assert.match(attributes, /^rollback\/\*\*\/\*\.tar binary -eol$/mu);
   assert.doesNotMatch(attributes, /\bfilter=lfs\b|\bdiff=lfs\b|\bmerge=lfs\b/u);
 });
 

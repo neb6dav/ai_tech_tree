@@ -1,4 +1,4 @@
 * text=auto eol=lf
 
 *.png binary
-rollback/**/*.tar binary -filter -eol
+rollback/**/*.tar binary -eol

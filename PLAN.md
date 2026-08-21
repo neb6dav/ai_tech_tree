@@ -289,7 +289,7 @@ last_verified_commands:
     status: "PASS; historical evidence only"
     runtime: "Git 2.55 read-only object and attribute inspection"
     verified_by: "root, integration agent, and independent hostile reviewer"
-    scope: "Historical commit 76483d2d59f52f30202b52fe52a26a7c832a1252 has tree 97bbd11d6d82b09eba5f3627dfb617d1e18b4e65; all seven regular payload blob IDs exactly match the descriptor. Effective archive attributes report binary set and text, diff, merge, filter, and eol unset; path-aware and raw hash-object both equal 651fab34624fd6b943054c8cb3e30c76a88e4024. This binds repository bytes to the historical source tree but does not authenticate the expired artifact wrapper or attest that the capture was actually serving."
+    scope: "Historical commit 76483d2d59f52f30202b52fe52a26a7c832a1252 has tree 97bbd11d6d82b09eba5f3627dfb617d1e18b4e65; all seven regular payload blob IDs exactly match the descriptor. Effective archive attributes report binary set; text, diff, merge, and eol unset; and no filter configured. Path-aware and raw hash-object both equal 651fab34624fd6b943054c8cb3e30c76a88e4024. This binds repository bytes to the historical source tree but does not authenticate the expired artifact wrapper or attest that the capture was actually serving."
 next_exact_action: >-
   Complete independent adversarial review of the byte-stable C4.4-B3
   repository-preserved historical baseline, correct any findings, then run the

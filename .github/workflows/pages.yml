@@ -1,8 +1,8 @@
 name: Prepare GitHub Pages release
 
-# Publication hold: WP-011-B replaces this reusable-only entry point with the
-# approved annotated-tag promotion path. Merging WP-011-A must not deploy an
-# intermediate version/tag-null artifact from main.
+# Publication hold: under RD-006 and RD-007, this reusable-only entry point
+# must not deploy an intermediate or tag-null artifact from main. Annotated-tag
+# promotion and public deployment require separate explicit authorization.
 on:
   workflow_call:
 

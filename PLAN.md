@@ -1,17 +1,19 @@
 ---
-roadmap_version: 3
-active_release: "v0.2.2"
+roadmap_version: 4
+active_release: "v1.0.0"
 release_mode: "source_checkpoints_until_v1.0.0"
-active_work_package: "v0.2.2-hosted-runner-confirmation"
+active_work_package: "v1.0.0-hosted-confirmation-and-final-authorization"
 base_sha: "85108c78fa86c86634d4c0944839696369e687cd"
 product_boundary_sha: "53e3a4f9c0624096aede63e0345390a3c021bac0"
 working_branch: "codex/v0.1.1-minimal-to-v1"
 expanded_archive_branch: "archive/v0.1.1-expanded-release-safety-0870d47"
 last_completed_checkpoint: "v0.2.0"
+last_completed_local_checkpoint: "v1.0.0-stable-pre-tag-source-candidate"
 next_exact_action: >-
-  Run the blocking three-run Lighthouse gate on the configured ubuntu-24.04
-  hosted runner and record canonical confirmation; keep v0.2.2 in progress
-  until that environment passes the Windows-derived regression limits.
+  Push the locally committed and verified v1.0.0 stable pre-tag source
+  candidate only after explicit authorization, require the exact candidate to
+  pass the ubuntu-24.04 hosted gate, then request separate authorization for
+  annotated tagging and public deployment.
 last_verified_commands:
   - command: "node scripts/lighthouse-budget.mjs --calibrate"
     status: "PASS"
@@ -21,6 +23,14 @@ last_verified_commands:
     status: "PASS"
     runtime: "win32 x64; Node v24.14.1; Lighthouse 13.4.1; Playwright 1.62.1; Chromium 151.0.7922.34 rev1234"
     scope: "Three-run blocking medians: score 52, FCP 22730.706 ms, LCP 22898.841 ms, TBT 204 ms, CLS 0.00082719"
+  - command: "npm run build; npm test"
+    status: "PASS"
+    runtime: "win32 x64; Node v24.14.1"
+    scope: "Complete deterministic, publication, canonical-data, identity, browser, and Lighthouse closure for the v1.0.0 stable pre-tag source candidate"
+  - command: "node --test --test-isolation=none tests/release-identity.test.cjs tests/publication-compatibility.test.cjs tests/canonical-atlas.test.cjs"
+    status: "PASS"
+    runtime: "win32 x64; Node v24.14.1"
+    scope: "20/20 exact current-byte identity, public-contract, exported-ID, and canonical-authority checks"
 source_checkpoints:
   - version: "v0.1.1"
     status: "complete"
@@ -33,7 +43,12 @@ source_checkpoints:
     verification_state: "local_complete_hosted_unconfirmed"
     purpose: "Calibrated local-origin performance regression gate and committed-generated-output policy confirmation"
   - version: "v1.0.0"
-    status: "planned"
+    status: "local_complete_hosted_unconfirmed"
+    product_version: "1.0.0"
+    release_state: "Stable"
+    edition: "2026-08-21-stable-1"
+    date: "2026-08-21"
+    tag_and_deployment: "requires_final_confirmation"
     purpose: "Stable public contract and release candidate"
 authorization:
   source_checkpoint_implementation: "authorized"
@@ -149,11 +164,28 @@ Acceptance gate:
 
 ## v1.0.0 — stable release candidate
 
+Status: local source-candidate implementation and review are complete. The full
+build and test closure passes, and hostile review reports no open P1/P2. Hosted
+`ubuntu-24.04` confirmation on the exact committed candidate remains
+outstanding. The stable source identity is version `1.0.0`, release state
+`Stable`, edition `2026-08-21-stable-1`, dated 2026-08-21. `Stable` is artifact
+and data identity for the final pre-tag source bytes; it does not attest an
+annotated tag, deployment, or public promotion. Those remain separately
+authorized final actions.
+
 Deliverables:
 
 - Stabilize the four existing views; do not add a fifth view.
-- Freeze and document public URLs, stable IDs, export schemas, and the
-  canonical authoring layout.
+- Freeze and document the root application, compatibility alias, historical
+  exports, Opportunity stable and compatibility endpoints, citation, manifest,
+  social-card, robots, and sitemap paths.
+- Freeze every existing exported record ID with ordered historical and
+  Opportunity inventory digest locks. Any later identity correction or
+  inventory addition requires an explicit compatibility review and deliberate
+  baseline update.
+- Freeze the historical export schema and dataset namespace, Opportunity
+  schema IDs, deterministic Network layout identity, and schema-`1.0.0`
+  15-lane canonical authoring layout.
 - Pass static and browser accessibility checks across representative desktop
   and mobile viewports, keyboard navigation, modal behavior, and no-JavaScript
   fallbacks.
@@ -162,15 +194,27 @@ Deliverables:
   source and release candidate.
 - Publish clear contribution, citation, data-status, evidence-limit, and
   versioning documentation.
-- Remove development-only wording and produce a reviewed `v1.0.0` release
-  candidate. Tagging and public deployment remain a final explicit action.
+- Remove current development and beta wording without rewriting historical
+  checkpoint or changelog records.
+- Keep the historical review cutoff at `2026-08-04` and the diffusion
+  Opportunity map explicitly `alpha`, dated `2026-08-19`, and
+  `imported_unreviewed`; stable application status does not upgrade evidence.
+- Produce a reviewed `v1.0.0` source candidate. Tagging and public deployment
+  remain final explicit actions.
 
 Acceptance gate:
 
 - Full deterministic build and test suite passes from a clean checkout.
 - Browser verification passes for Timeline, Network, Opportunity, and List
   views at representative mobile and desktop sizes with no console errors.
-- Public URL/schema/ID compatibility tests pass.
+- Public URL/schema/layout/canonical-authoring compatibility tests pass, and
+  the ordered historical and Opportunity identity digests match the frozen v1
+  baseline.
+- Version `1.0.0`, edition `2026-08-21-stable-1`, date 2026-08-21, citation,
+  application shell, generated exports, and staged manifest agree while the
+  pre-tag manifest truthfully records that no release tag has been authorized.
+- The v0.2.2 gate receives the still-required `ubuntu-24.04` hosted-runner
+  confirmation before the v1 candidate is declared complete.
 - The final diff contains only product, data, documentation, and proportionate
   test changes required by this roadmap.
 

@@ -80,6 +80,37 @@ runner image. Until that gate passes, `v0.2.2` is locally complete but hosted
 unconfirmed and must not be described as fully reproducible. The measurements
 are not live GitHub Pages delivery or real-user field performance.
 
+## RD-009 — Freeze the v1 stable source-candidate contract
+
+The stable source candidate carries product version `1.0.0`, release state
+`Stable`, dataset edition `2026-08-21-stable-1`, and date 2026-08-21. `Stable`
+is artifact and data identity for the final pre-tag source bytes; it does not
+attest or authorize an annotated tag, deployment, or public promotion. Those
+remain separate explicit actions under RD-006 and RD-007.
+
+The v1 contract freezes the existing root application and compatibility alias,
+historical JSON/JSON-LD/NDJSON exports, stable and compatibility Opportunity
+data/schema paths, citation, exact-build manifest, social card, robots, and
+sitemap paths. It also freezes historical export schema `2`, generator identity
+`1.3.1`, dataset and vocabulary IRIs, Opportunity schema `1.0.0` and canonical
+schema `$id`, Network layout `network-v1`, and the schema-`1.0.0` 15-lane
+canonical authoring layout.
+
+Every existing exported record ID is frozen. The publication-compatibility gate
+locks the complete ordered historical identity inventory at
+`f5cff253d7a70641cf1f9a9058561f6d69bbae2d365166a7883694b3ef90241a`
+and the ordered Opportunity record inventory at
+`65afb35bc56b6d771312cc59a2ab3d4a7b48828b54a2262b7efb18d845702b33`,
+with the Opportunity map and visual-band IDs asserted explicitly. A future
+addition or exceptional identity correction requires compatibility review and
+a deliberate baseline update; IDs must not be silently reused or renamed.
+
+Release identity does not change evidence status. The historical review cutoff
+remains `2026-08-04`. The diffusion Opportunity map remains an `alpha` dataset
+dated `2026-08-19` with import state `imported_unreviewed`. Promoting that state
+requires source-by-source human review rather than a version or documentation
+change.
+
 ## Explicit deferrals
 
 ### Through v0.2.0

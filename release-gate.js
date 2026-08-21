@@ -600,8 +600,8 @@ function main() {
   assert.equal(document['@id'], data.namespace.datasetIri);
   assert.equal(data.schemaVersion, 2);
   assert.equal(data.generatorVersion, '1.3.1');
-  assert.equal(data.dataset.edition, '2026-08-20-public-beta-2');
-  assert.equal(data.dataset.releaseState, 'Development edition');
+  assert.equal(data.dataset.edition, '2026-08-21-stable-1');
+  assert.equal(data.dataset.releaseState, 'Stable');
   assert.equal(data.dataset.asOf, '2026-08-04');
   assert.equal(data.dataset.canonicalUrl, 'https://neb6dav.github.io/ai_tech_tree/');
   assert.deepEqual(data.dataset.authors, ['@neb6dav']);

@@ -10,7 +10,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        The atlas is selective rather than exhaustive. Explain the understanding gap this record fills, not only that the work exists or is popular. Do not submit unreviewed bulk AI output.
+        The atlas is selective rather than exhaustive. Explain the understanding gap this record fills, not only that the work exists or is popular. Existing v1 exported IDs are frozen: propose an addition rather than repurposing an existing identity. Do not submit unreviewed bulk AI output.
 
   - type: dropdown
     id: record_type

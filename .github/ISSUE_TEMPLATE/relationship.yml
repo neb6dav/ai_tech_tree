@@ -46,7 +46,7 @@ body:
     id: edition
     attributes:
       label: Edition, version, exact commit, or shared URL
-      placeholder: v0.1.1-dev, an exact commit, or https://…?view=network&node=…
+      placeholder: v1.0.0 / 2026-08-21-stable-1, an exact commit, or https://…?view=network&node=…
     validations:
       required: true
 

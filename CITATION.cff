@@ -1,23 +1,23 @@
 cff-version: 1.2.0
 message: >-
-  This is an untagged v0.1.1 development edition. For a stable citation, cite
-  a tagged release. The exact development-build commit and checksums are in
-  release-manifest.json.
+  These are the final v1.0.0 stable source bytes dated 2026-08-21. Cite the
+  tagged release once available. The exact staged-source commit and checksums
+  are recorded in release-manifest.json; a null manifest tag means the source
+  has not yet been tagged or published.
 title: "AI Research Tech Tree"
 type: dataset
 authors:
   - name: "@neb6dav"
     website: "https://github.com/neb6dav"
-version: 0.1.1-dev
+version: 1.0.0
 repository-code: "https://github.com/neb6dav/ai_tech_tree"
 url: "https://neb6dav.github.io/ai_tech_tree/"
 license: CC-BY-SA-4.0
 abstract: >-
-  An untagged development edition of a public-beta, evidence-linked research
-  atlas of artificial-intelligence developments, open research directions,
-  landmark works, and explicitly typed relationships, presented through
-  Timeline, Network, Opportunity, and List views with machine-readable
-  knowledge-graph exports.
+  A stable, evidence-linked research atlas of artificial-intelligence
+  developments, open research directions, landmark works, and explicitly
+  typed relationships, presented through Timeline, Network, Opportunity, and
+  List views with machine-readable knowledge-graph exports.
 keywords:
   - artificial intelligence
   - history of artificial intelligence

@@ -16,12 +16,14 @@ const layoutText = read('network-layout-v1.json');
 const layout = JSON.parse(layoutText);
 const html = read('ai-research-tech-tree.html');
 const bundle = read('network-atlas.bundle.js');
+const source = read('src/network-view.js');
 const packageJson = JSON.parse(read('package.json'));
 const packageLock = JSON.parse(read('package-lock.json'));
 
 assert.equal(packageJson.dependencies['@cosmos.gl/graph'], '3.4.0', 'Cosmos graph dependency must be exactly pinned');
 assert.equal(packageLock.packages['node_modules/@cosmos.gl/graph'].version, '3.4.0', 'Lockfile Cosmos graph version drifted');
 assert.equal(packageLock.packages['node_modules/esbuild'].version, packageJson.devDependencies.esbuild, 'Lockfile esbuild version drifted');
+assert.match(source, /export const VERSION = '1\.0\.0'/u, 'Network source version must match v1.0.0');
 
 assert.equal(layout.schemaVersion, '1.0.0');
 assert.equal(layout.layoutVersion, 'network-v1');
@@ -81,6 +83,8 @@ assert.equal(embeddedEngines[0].body, bundle.trimEnd(), 'Embedded network engine
 assert.match(bundle, /COSMOS_GRAPH_VERSION/);
 assert.match(bundle, /3\.4\.0/);
 assert.match(bundle, /NetworkAtlas/);
+assert.match(bundle, /1\.0\.0/u, 'Network bundle version must match v1.0.0');
+assert(!bundle.includes('0.1.1'), 'Network bundle contains the superseded pre-v1 version');
 assert(!/(?:eval\s*\(|new\s+Function\b)/.test(bundle), 'Network bundle requires unsafe evaluation');
 new vm.Script(bundle, { filename: 'network-atlas.bundle.js' });
 

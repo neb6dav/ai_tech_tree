@@ -189,6 +189,8 @@ function validateReleaseShell(html, canonical) {
   const releaseState = htmlText(project.releaseState);
   const releaseTitle = htmlText(project.releaseState.replace(/\b[a-z]/g, letter => letter.toUpperCase()));
   const releaseLower = htmlText(project.releaseState.toLowerCase());
+  const releaseDescriptor = project.releaseState === 'Stable' ? 'stable edition' : releaseLower;
+  const releaseShort = project.releaseState === 'Stable' ? 'Stable' : 'Dev';
   const author = htmlAttribute(project.authors.join(', '));
   const canonicalUrl = htmlAttribute(project.canonicalUrl);
   const repositoryUrl = htmlAttribute(project.repositoryUrl);
@@ -201,7 +203,7 @@ function validateReleaseShell(html, canonical) {
 
   const fragments = [
     [`<title>AI Research Tech Tree - v${version} ${releaseTitle}</title>`, 'document title'],
-    [`<meta name="description" content="The v${version} ${releaseLower} of a curated public-beta atlas of ${developments} AI research developments, ${directions} open directions, evidence-coded relationships and selected papers through ${rangeEnd}.">`, 'description metadata'],
+    [`<meta name="description" content="The v${version} ${releaseDescriptor} of a curated research atlas of ${developments} AI research developments, ${directions} open directions, evidence-coded relationships and selected papers through ${rangeEnd}.">`, 'description metadata'],
     [`<meta name="author" content="${author}">`, 'author metadata'],
     [`<meta name="ai-tree-version" content="${htmlAttribute(project.version)}">`, 'version metadata'],
     [`<meta name="ai-tree-edition" content="${htmlAttribute(project.edition)}">`, 'edition metadata'],
@@ -209,17 +211,17 @@ function validateReleaseShell(html, canonical) {
     [`<link rel="canonical" href="${canonicalUrl}">`, 'canonical URL'],
     [`<link rel="license" href="${license}">`, 'license URL'],
     [`<meta property="og:title" content="AI Research Tech Tree - v${version} ${releaseTitle}">`, 'Open Graph title'],
-    [`<meta property="og:description" content="Explore the v${version} ${releaseLower} of a curated public-beta map of AI history, evidence-coded relationships, related research papers and open questions.">`, 'Open Graph description'],
+    [`<meta property="og:description" content="Explore the v${version} ${releaseDescriptor} of a curated map of AI history, evidence-coded relationships, related research papers and open questions.">`, 'Open Graph description'],
     [`<meta property="og:url" content="${canonicalUrl}">`, 'Open Graph canonical URL'],
     [`<meta property="og:image" content="${socialCardUrl}">`, 'Open Graph image URL'],
     [`<meta name="twitter:title" content="AI Research Tech Tree - v${version} ${releaseTitle}">`, 'Twitter title'],
-    [`<meta name="twitter:description" content="The v${version} ${releaseLower} of a curated public-beta AI research atlas with explicit evidence limits and research-direction cards.">`, 'Twitter description'],
+    [`<meta name="twitter:description" content="The v${version} ${releaseDescriptor} of a curated AI research atlas with explicit evidence limits and research-direction cards.">`, 'Twitter description'],
     [`<meta name="twitter:image" content="${socialCardUrl}">`, 'Twitter image URL'],
     [`<noscript><section id="noscriptIdentity" aria-label="Publication status and contribution links"><div><strong>${releaseState} &middot; v${version}</strong><span>Dataset edition ${edition}; historical review cutoff ${htmlText(project.asOf)}.</span></div><nav aria-label="Repository and publication links"><a id="nsRepositoryLink" href="${repositoryUrl}">Repository</a><a id="nsContributeLink" href="${correctionsUrl}">Contribute</a><a id="nsCitationLink" href="${citationUrl}">Citation</a><a id="nsManifestLink" href="${manifestUrl}">Exact build manifest</a></nav></section></noscript>`, 'no-script publication identity'],
     [`This no-JavaScript view contains all ${developments} mapped developments and ${directions} open directions.`, 'no-script inventory counts'],
     [`<caption>All ${canonical.nodes.length} atlas entries, ${range}</caption>`, 'no-script inventory caption'],
     [`<a id="repositoryLink" href="${repositoryUrl}" target="_blank" rel="noopener noreferrer" aria-label="AI Research Tech Tree repository"><span id="title"><span class="dot" aria-hidden="true"></span><span class="titleLong">AI Research Tech Tree</span><span class="titleShort" aria-hidden="true">AI Tree</span><small>${range}</small></span></a>`, 'toolbar repository identity'],
-    [`<a id="editionBadge" href="${manifestUrl}" aria-label="${releaseState} v${version}. View exact build commit and checksums" title="Dataset edition ${edition}; open the exact build manifest"><span class="editionLong">${releaseState} &middot; v${version}</span><span class="editionShort" aria-hidden="true">Dev</span></a>`, 'toolbar edition identity'],
+    [`<a id="editionBadge" href="${manifestUrl}" aria-label="${releaseState} v${version}. View exact build commit and checksums" title="Dataset edition ${edition}; open the exact build manifest"><span class="editionLong">${releaseState} &middot; v${version}</span><span class="editionShort" aria-hidden="true">${releaseShort}</span></a>`, 'toolbar edition identity'],
     [`<a class="btn" id="contributeLink" href="${correctionsUrl}" target="_blank" rel="noopener noreferrer" aria-label="Contribute or suggest a correction">Contribute</a>`, 'toolbar correction URL']
   ];
   fragments.forEach(([fragment, label]) => assertExactHtmlFragment(html, fragment, label));

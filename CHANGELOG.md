@@ -4,7 +4,7 @@ All notable public changes to the AI Research Tech Tree will be documented here.
 
 ## [Unreleased]
 
-**Target: v0.1.1 development edition.** This section describes an untagged release candidate. It does not claim that `v0.1.1` has been tagged, released, or deployed.
+**Target: v1.0.0 Stable — 2026-08-21.** This section describes the final pre-tag source bytes for dataset edition `2026-08-21-stable-1`. It records neither an authorized tag nor a promotion or deployment.
 
 ### Added
 
@@ -13,13 +13,13 @@ All notable public changes to the AI Research Tech Tree will be documented here.
 - Persistent interpretation guidance stating that paths have uniform, non-quantitative width and that hypothetical or incomplete evidence uses distinct styling.
 - A versioned staged-site manifest with exact source provenance, payload media types, byte lengths, and SHA-256 checksums.
 - Stable Opportunity data and schema URLs plus compatibility endpoints for previously advertised paths.
-- A visible development-edition label linked to the exact staged build manifest, with persistent repository and contribution destinations.
+- A visible Stable v1.0.0 label linked to the exact staged build manifest, with persistent repository and contribution destinations.
 
 ### Changed
 
 - Extended the deterministic build, Content Security Policy hashes, release checks, accessibility checks, and contribution guidance to cover the Opportunity View.
 - Moved exported atlas record URLs to the root application while retaining the former HTML filename as a state-preserving compatibility entry point.
-- Synchronized the v0.1.1 development identity across the package, application, datasets, citation metadata, changelog, sitemap, and staged manifest.
+- Synchronized the v1.0.0 Stable identity across the package, application, datasets, citation metadata, changelog, sitemap, and staged manifest while retaining a null staged tag until authorization.
 
 ### Known limitations
 
@@ -29,7 +29,7 @@ All notable public changes to the AI Research Tech Tree will be documented here.
 ### Planned
 
 - Continue node-level and relationship-level evidence review.
-- Move atlas records from the beta's embedded application source into smaller, diff-friendly canonical data files.
+- Continue maintaining atlas records in the smaller, diff-friendly canonical data files introduced before v1.0.0.
 - Archive a tagged research release and add its DOI to `CITATION.cff` when available.
 
 ## [0.1.0] - 2026-08-13

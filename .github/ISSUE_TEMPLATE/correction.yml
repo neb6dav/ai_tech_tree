@@ -40,8 +40,8 @@ body:
     id: edition
     attributes:
       label: Edition, version, exact commit, or page URL
-      description: Include v0.1.1-dev, an exact commit, or a shared URL with its node parameter when available.
-      placeholder: v0.1.1-dev, an exact commit, or https://…?view=timeline&node=…
+      description: Include v1.0.0, edition 2026-08-21-stable-1, an exact commit, or a shared URL with its node parameter when available.
+      placeholder: v1.0.0 / 2026-08-21-stable-1, an exact commit, or https://…?view=timeline&node=…
     validations:
       required: true
 

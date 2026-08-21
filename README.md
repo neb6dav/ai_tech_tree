@@ -274,9 +274,9 @@ the residue watcher observe the exact extraction parent while exercising the
 zero-argument CLI, rejection of one forbidden argument, and import isolation.
 Those test-only probes cannot select another program, repository input path,
 token, network target, output, or operation and add no subprocess capability to
-the verifier. The hardened attributes explicitly disable text, filter, and EOL
-transforms for the archive; the full source gate separately verifies effective
-attributes and zero-filter closure without adding a subprocess to this harness.
+the verifier. The hardened attributes explicitly disable text and EOL
+transforms for the archive; the full source gate separately proves that no
+filter is configured without adding a subprocess to this harness.
 Nothing in B2.2, B2.3-A, B2.3-B, or B3 supplies a tag, Release, upload,
 deployment, rollback, settings change, production request, or authority to
 perform one.

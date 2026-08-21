@@ -230,9 +230,8 @@ isolation, and exact-parent residue cleanup. They cannot choose an external
 program, repository input path, network target, credential, output, or
 operation; the verifier itself remains subprocess-free and has no tool-specific
 or operational environment input. The hardened attributes explicitly disable
-text, filter, and EOL transforms for the archive; the full source gate
-separately verifies effective attributes and zero-filter closure without adding
-a subprocess to this harness.
+text and EOL transforms for the archive; the full source gate separately proves
+that no filter is configured without adding a subprocess to this harness.
 
 ## Explicit deferrals
 

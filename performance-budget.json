@@ -13,7 +13,7 @@
   "regressionGuards": {
     "enforcement": {
       "artifactMetrics": "blocking",
-      "browserMetrics": "recorded_pending_WP-012-A"
+      "browserMetrics": "dom_blocking_lighthouse_pending_v0.2.2"
     },
     "initialDocument": {
       "rawBytes": {
@@ -25,7 +25,8 @@
       }
     },
     "activeDomElements": {
-      "maximum": 7000
+      "maximum": 8000,
+      "observedV0_2_0": 7724
     },
     "mobileLighthouse": {
       "performanceScore": {

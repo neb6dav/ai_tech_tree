@@ -37,6 +37,9 @@ jobs:
       - name: Install exact dependencies
         run: npm ci
 
+      - name: Install Chromium for the browser gate
+        run: npx playwright install --with-deps chromium
+
       - name: Build generated artifacts
         run: npm run build
 

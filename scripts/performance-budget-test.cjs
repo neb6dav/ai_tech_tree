@@ -127,8 +127,8 @@ function evaluatePerformanceBudget({
   if (enforcement.artifactMetrics !== 'blocking') {
     throw budgetError('regressionGuards.enforcement.artifactMetrics must be blocking');
   }
-  if (enforcement.browserMetrics !== 'recorded_pending_WP-012-A') {
-    throw budgetError('regressionGuards.enforcement.browserMetrics must identify WP-012-A');
+  if (enforcement.browserMetrics !== 'dom_blocking_lighthouse_pending_v0.2.2') {
+    throw budgetError('regressionGuards.enforcement.browserMetrics must block DOM and defer Lighthouse to v0.2.2');
   }
 
   const artifactRoot = assertSafePathComponents(root, measurement.artifactRoot, 'measurement.artifactRoot', 'directory');
@@ -161,7 +161,10 @@ function evaluatePerformanceBudget({
   }
   const initialGuard = assertObject(guards.initialDocument, 'regressionGuards.initialDocument');
   const baseline = assertObject(socialGuard.baseline, 'regressionGuards.socialImage.baseline');
-  requiredNumber(assertObject(guards.activeDomElements, 'regressionGuards.activeDomElements').maximum, 'regressionGuards.activeDomElements.maximum');
+  const domGuard = assertObject(guards.activeDomElements, 'regressionGuards.activeDomElements');
+  const domMaximum = requiredNumber(domGuard.maximum, 'regressionGuards.activeDomElements.maximum');
+  const observedDom = requiredNumber(domGuard.observedV0_2_0, 'regressionGuards.activeDomElements.observedV0_2_0');
+  if (observedDom > domMaximum) throw budgetError('observed v0.2.0 DOM baseline exceeds its blocking maximum');
   const mobile = assertObject(guards.mobileLighthouse, 'regressionGuards.mobileLighthouse');
   const performanceMinimum = requiredNumber(
     assertObject(mobile.performanceScore, 'regressionGuards.mobileLighthouse.performanceScore').minimum,
@@ -251,10 +254,11 @@ function evaluatePerformanceBudget({
     budgetFile,
     artifactRoot: measurement.artifactRoot,
     checks,
-    deferredBrowserMetrics: {
-      status: 'NOT_MEASURED',
-      plannedWorkPackage: 'WP-012-A',
-      metrics: ['activeDomElements', 'mobileLighthouse']
+    browserMetrics: {
+      status: 'DOM_BLOCKING_LIGHTHOUSE_PENDING',
+      activeDomElements: { observed: observedDom, maximum: domMaximum },
+      pendingCheckpoint: 'v0.2.2',
+      pendingMetrics: ['mobileLighthouse']
     },
     failures
   };

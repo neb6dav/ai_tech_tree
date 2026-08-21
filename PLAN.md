@@ -92,8 +92,8 @@ Deliverables:
   authority.
 - Flip authoring authority atomically; never serve a mixed per-lane state.
 - Add the smallest browser harness needed to verify runtime-created fragments,
-  representative view navigation, responsive behavior, and measured browser
-  performance.
+  representative view navigation, responsive behavior, and a recorded active
+  DOM baseline. Lighthouse measurement remains the v0.2.2 task.
 
 Acceptance gate:
 

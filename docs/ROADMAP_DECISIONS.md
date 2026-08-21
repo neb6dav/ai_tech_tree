@@ -39,9 +39,10 @@ it opportunistically during the publication repair or canonical-data migration.
 
 Promote the public root only from approved annotated tags reachable from
 protected `main`. Pull requests receive downloadable preview artifacts and
-there is no public `/dev` lane. Automated preview screenshots begin with the
-`WP-012-A` browser harness; until then, the exact staged site is the review
-artifact.
+there is no public `/dev` lane. The v0.2.0 Chromium smoke gate verifies
+representative desktop, mobile, deep-link, focus, and no-JavaScript behavior.
+Screenshots remain optional review artifacts rather than brittle golden-image
+assertions.
 
 ## RD-007 — Use source checkpoints until v1.0.0
 

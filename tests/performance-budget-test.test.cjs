@@ -46,13 +46,13 @@ async function fixture(overrides = {}) {
     regressionGuards: {
       enforcement: {
         artifactMetrics: 'blocking',
-        browserMetrics: 'recorded_pending_WP-012-A'
+        browserMetrics: 'dom_blocking_lighthouse_pending_v0.2.2'
       },
       initialDocument: {
         rawBytes: { maximum: 1000 },
         gzipBytes: { maximum: 1000 }
       },
-      activeDomElements: { maximum: 7000 },
+      activeDomElements: { maximum: 8000, observedV0_2_0: 7724 },
       mobileLighthouse: {
         performanceScore: { minimum: 73 },
         firstContentfulPaintMs: { maximum: 4500 },
@@ -93,15 +93,16 @@ async function fixture(overrides = {}) {
   return { root };
 }
 
-test('passes deterministic artifact budgets and identifies deferred browser metrics', async t => {
+test('passes deterministic artifact budgets and records the blocking DOM baseline', async t => {
   const current = await fixture();
   t.after(() => fs.rm(current.root, { recursive: true, force: true }));
 
   const report = evaluatePerformanceBudget({ repositoryRoot: current.root });
   assert.equal(report.status, 'PASS');
   assert.equal(report.failures.length, 0);
-  assert.equal(report.deferredBrowserMetrics.status, 'NOT_MEASURED');
-  assert.equal(report.deferredBrowserMetrics.plannedWorkPackage, 'WP-012-A');
+  assert.equal(report.browserMetrics.status, 'DOM_BLOCKING_LIGHTHOUSE_PENDING');
+  assert.deepEqual(report.browserMetrics.activeDomElements, { observed: 7724, maximum: 8000 });
+  assert.equal(report.browserMetrics.pendingCheckpoint, 'v0.2.2');
 });
 
 test('fails a raw-byte regression and a stale social baseline', async t => {

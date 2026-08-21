@@ -93,10 +93,9 @@ audit and every resulting external mutation require separate authorization.
 
 The real policy remains planned while the `github-pages` environment lacks a
 required reviewer and permits administrator bypass, immutable GitHub Releases
-are disabled, no active no-bypass tag ruleset protects `v0.1.1`, and the
-verified production recovery artifact remains local rather than durable and
-runner-accessible. Repository-side fixtures cannot clear those external
-blockers.
+are disabled, and no active no-bypass tag ruleset protects `v0.1.1`.
+Repository-side fixtures and the B3 historical recovery baseline cannot clear
+those external blockers.
 
 The future required-status context is corroborating evidence only. The audit
 must also bind the active `validate.yml` workflow, its successful `push` run at
@@ -195,12 +194,45 @@ locked hostile test uses a fixed local Node process only to prove that crafted
 ambient `argv` cannot turn that dependency into an entry point; it has no
 network, credential, writer, or mutation capability.
 
-C4.4-B3 owns the rollback descriptor and still must prove a durable, runner-
-accessible rollback bundle, storage access, and rehearsal. That checkpoint
-requires its own review and
-authorization. Nothing in B2.1, B2.2, B2.3-A, or B2.3-B authorizes a tag,
-Release, asset upload, deployment, publication, rollback, settings change, or
-production request.
+C4.4-B3 resolves only the repository-preservation and bounded-rehearsal part of
+the rollback preflight. It commits the exact previously captured production
+archive as a regular Git blob, binds its bytes and fixed seven-file inventory
+through a strict versioned descriptor, and exercises that same committed blob
+through ordinary validation plus the unchanged Windows and Ubuntu synthetic
+jobs. Its zero-argument verifier reads only the fixed repository paths, uses
+only tool-owned temporary extraction writes, rereads and hashes extracted
+bytes, runs the historical-baseline smoke profile, and always cleans up. It
+accepts no network, token, subprocess, execute, output, destination, deploy,
+rollback, or tool-specific/operational environment input. Platform temporary-
+directory selection is the sole ambient: its canonical parent and randomized
+tool-owned child are checked fail-closed, and no caller can select an extraction
+root.
+
+The historical archive has no `release-manifest.json`, compatibility
+endpoints, or `.nojekyll`. B3 therefore does not claim current publication
+conformance, and the committed capture is not an attestation that those bytes
+were actually serving at the claimed prior time. Its sole positive result is
+`rollback-bundle-rehearsed`, which leads only to
+`continue-to-final-read-only-preflight`. `productionEligible`,
+`operationAuthorized`, `externalMutationAuthorized`, `retryAuthorized`,
+`rollbackAuthorized`, `operationalReuseAuthorized`,
+`authenticatedAuthority`, `releaseAuthorized`, and `deploymentAuthorized`
+all remain false. B3 performs and authorizes no rollback. Nothing in B2.1,
+B2.2, B2.3-A, B2.3-B, or B3
+authorizes a tag, Release, asset upload, deployment, publication, rollback,
+settings change, or production request.
+
+The source-locked hostile test has one bounded harness exception: exactly three
+fixed local Node `spawnSync` probes run with a scrubbed child environment that
+contains only the test-owned canonical temporary parent and no inherited
+values. They prove the zero-argument CLI, forbidden-argument rejection, import
+isolation, and exact-parent residue cleanup. They cannot choose an external
+program, repository input path, network target, credential, output, or
+operation; the verifier itself remains subprocess-free and has no tool-specific
+or operational environment input. The hardened attributes explicitly disable
+text, filter, and EOL transforms for the archive; the full source gate
+separately verifies effective attributes and zero-filter closure without adding
+a subprocess to this harness.
 
 ## Explicit deferrals
 

@@ -19,6 +19,11 @@ const NVMRC_PATH = path.join(REPOSITORY_ROOT, '.nvmrc');
 const NODE_VERSION_PATH = path.join(REPOSITORY_ROOT, '.node-version');
 const SYNTHETIC_FIXTURE_PATH = path.join(REPOSITORY_ROOT, 'scripts', 'synthetic-stable-fixture.mjs');
 const STABLE_BUNDLE_VERIFIER_PATH = path.join(REPOSITORY_ROOT, 'scripts', 'verify-stable-bundle.mjs');
+const GIT_ATTRIBUTES_PATH = path.join(REPOSITORY_ROOT, '.gitattributes');
+const ROLLBACK_DESCRIPTOR_PATH = path.join(REPOSITORY_ROOT, 'config', 'rollback', 'production-2026-08-20-76483d2d.v1.json');
+const ROLLBACK_ARCHIVE_PATH = path.join(REPOSITORY_ROOT, 'rollback', 'production-2026-08-20-76483d2d', 'artifact.tar');
+const ROLLBACK_VERIFIER_PATH = path.join(REPOSITORY_ROOT, 'scripts', 'verify-rollback-bundle.mjs');
+const ROLLBACK_TEST_PATH = path.join(REPOSITORY_ROOT, 'tests', 'rollback-bundle.test.mjs');
 const PROMOTION_CONTROL_AUDITOR_PATH = path.join(REPOSITORY_ROOT, 'scripts', 'github-control-audit.mjs');
 const PROMOTION_CONTROL_TEST_PATH = path.join(REPOSITORY_ROOT, 'tests', 'github-control-audit.test.mjs');
 const PROMOTION_CONTROL_POLICY_PATH = path.join(REPOSITORY_ROOT, 'config', 'github-promotion-policy.v1.json');
@@ -31,6 +36,9 @@ const PROMOTION_PREFLIGHT_SCRIPT_PATH = path.join(REPOSITORY_ROOT, 'scripts', 'p
 const PROMOTION_PREFLIGHT_TEST_PATH = path.join(REPOSITORY_ROOT, 'tests', 'promotion-preflight.test.mjs');
 const PROMOTION_PREFLIGHT_POLICY_PATH = path.join(REPOSITORY_ROOT, 'config', 'promotion-preflight-policy.v1.json');
 const SAFE_PROMOTION_PREFLIGHT_TEST_COMMAND = 'node --test tests/promotion-preflight.test.mjs';
+const SAFE_ROLLBACK_VERIFY_COMMAND = 'node scripts/verify-rollback-bundle.mjs';
+const SAFE_ROLLBACK_TEST_COMMAND = 'node --test tests/rollback-bundle.test.mjs';
+const SAFE_STABLE_AND_ROLLBACK_TEST_COMMAND = 'node --test tests/stable-bundle.test.mjs tests/rollback-bundle.test.mjs';
 const REVIEWED_PROMOTION_CONTROL_SOURCE_SHA256 = Object.freeze({
   'config/github-promotion-policy.v1.json': 'a1dc1ec4b814f09e668b1b1d6669853240dcb732541e0d0b580ec3f5a959215c',
   'scripts/github-control-audit.mjs': '2b5d5fd0aa23056bc00bcfa01cf11b24f345465d9c4f98a403f858a16f010995',
@@ -78,6 +86,24 @@ const REVIEWED_SYNTHETIC_SOURCE_SHA256 = Object.freeze({
   'scripts/synthetic-stable-fixture.mjs': 'bee4923947e0ca595d23776ccb57c0b6a14592590c4a642a2495725df648342d',
   'scripts/verify-stable-bundle.mjs': '6e536de00ca8def993a7628f500fc4712c23b14255cbe5231ffed48852f6828f'
 });
+const REVIEWED_ROLLBACK_SOURCE_SHA256 = Object.freeze({
+  '.gitattributes': 'a6983c560b512a454d1246825d4c5ad74d1a1de3126d64e62a8db520110c7567',
+  'config/rollback/production-2026-08-20-76483d2d.v1.json': 'd67958ed48719bc364a4a8a79202d2360ccce507d051ccfa6f5681ad999ab8f8',
+  'rollback/production-2026-08-20-76483d2d/artifact.tar': 'f04f46196b74982f9d725f032278f9b7ed48ae1ffd82db0dcff3fc39f739f9c4',
+  'scripts/strict-json.mjs': '32319f64ee28a8e4c0329d24ef26c8ef26c94f12d77f9f20656f7e744111de7e',
+  'scripts/verify-rollback-bundle.mjs': 'eb8eba21bf8d0276fb7782fe6b7ef3f079235d4f29331f5fe63883c1a5079675',
+  'tests/rollback-bundle.test.mjs': '7b92d133f00315113319ed0604b975d190155edd5b1735c795db312b0bf4520b'
+});
+const REVIEWED_ROLLBACK_SOURCE_BYTES = Object.freeze({
+  '.gitattributes': 71,
+  'config/rollback/production-2026-08-20-76483d2d.v1.json': 9730,
+  'rollback/production-2026-08-20-76483d2d/artifact.tar': 14059520,
+  'scripts/strict-json.mjs': 4492,
+  'scripts/verify-rollback-bundle.mjs': 33997,
+  'tests/rollback-bundle.test.mjs': 22376
+});
+const REVIEWED_ROLLBACK_ARCHIVE_BYTES = 14059520;
+const REVIEWED_ROLLBACK_ARCHIVE_GIT_BLOB = '651fab34624fd6b943054c8cb3e30c76a88e4024';
 const EXPECTED_WORKFLOW_FILES = ['pages.yml', 'validate.yml'];
 const SAFE_POST_DEPLOY_TEST_COMMAND = 'node --test tests/post-deploy-smoke.test.mjs';
 const EXPECTED_PACKAGE_SCRIPTS = Object.freeze({
@@ -93,6 +119,7 @@ const EXPECTED_PACKAGE_SCRIPTS = Object.freeze({
   'plan:promotion-lifecycle': SAFE_PROMOTION_LIFECYCLE_PLAN_COMMAND,
   'stage:site': 'node scripts/stage-site.mjs',
   'verify:stable-bundle': 'node scripts/verify-stable-bundle.mjs',
+  'verify:rollback-bundle': SAFE_ROLLBACK_VERIFY_COMMAND,
   'test:core': 'node release-gate.js && node accessibility-gate.js && node ui-layout-gate.js && node network-gate.js && node opportunity-gate.js',
   'test:network': 'node network-gate.js',
   'test:opportunity': 'node opportunity-gate.js',
@@ -100,7 +127,8 @@ const EXPECTED_PACKAGE_SCRIPTS = Object.freeze({
   'test:release-spec': 'node --test tests/release-spec.test.mjs',
   'test:release-ref': 'node --test tests/release-ref.test.mjs',
   'test:release-assets': 'node --test tests/release-assets.test.mjs',
-  'test:stable-bundle': 'node --test tests/stable-bundle.test.mjs',
+  'test:stable-bundle': SAFE_STABLE_AND_ROLLBACK_TEST_COMMAND,
+  'test:rollback-bundle': SAFE_ROLLBACK_TEST_COMMAND,
   'test:release-finalization-plan': 'node --test tests/release-finalization-plan.test.mjs',
   'test:promotion-controls': 'node --test tests/github-control-audit.test.mjs',
   'test:promotion-lifecycle': 'node --test tests/promotion-lifecycle.test.mjs',
@@ -114,7 +142,7 @@ const EXPECTED_PACKAGE_SCRIPTS = Object.freeze({
   'test:publication-compatibility': 'node --test tests/publication-compatibility.test.cjs',
   'test:export-human-urls': 'node --test tests/export-human-urls.test.cjs',
   'test:release-identity': 'node --test tests/release-identity.test.cjs',
-  'test:publication': 'npm run test:release-spec && npm run test:release-ref && npm run test:release-assets && npm run test:release-finalization-plan && npm run test:promotion-controls && npm run test:promotion-lifecycle && npm run test:promotion-preflight && npm run test:post-deploy-smoke && npm run test:workflow-policy && npm run test:stage-site && npm run test:site-contract:unit && npm run test:performance-budget:unit && npm run test:publication-compatibility && npm run test:export-human-urls && npm run stage:site && npm run test:release-identity && npm run test:performance-budget && npm run test:site-contract',
+  'test:publication': 'npm run test:release-spec && npm run test:release-ref && npm run test:release-assets && npm run test:release-finalization-plan && npm run test:promotion-controls && npm run test:promotion-lifecycle && npm run test:promotion-preflight && npm run test:rollback-bundle && npm run test:post-deploy-smoke && npm run test:workflow-policy && npm run test:stage-site && npm run test:site-contract:unit && npm run test:performance-budget:unit && npm run test:publication-compatibility && npm run test:export-human-urls && npm run stage:site && npm run test:release-identity && npm run test:performance-budget && npm run test:site-contract',
   test: 'npm run test:core && npm run test:publication'
 });
 const PULL_REQUEST_ONLY = "github.event_name == 'pull_request'";
@@ -332,6 +360,11 @@ function assertNoControlPlaneCapabilities(workflow, label, { allowPagesArtifact 
       value,
       /scripts[\\/]promotion-preflight\.mjs|tests[\\/]promotion-preflight\.test\.mjs|\bnpm\s+run\s+test:promotion-preflight\b/iu,
       `${label} must not directly invoke promotion-preflight code or its fixture tests`
+    );
+    assert.doesNotMatch(
+      value,
+      /scripts[\\/]verify-rollback-bundle\.mjs|\bnpm\s+run\s+verify:rollback-bundle\b/iu,
+      `${label} must not directly invoke the fixed rollback rehearsal CLI`
     );
     assert.doesNotMatch(
       value,
@@ -734,10 +767,14 @@ function commandWithoutAllowedLocalTestReferences(command) {
     .replaceAll('test:promotion-controls', 'test:read-only-control-tests')
     .replaceAll('test:promotion-lifecycle', 'test:fixture-lifecycle-tests')
     .replaceAll('test:promotion-preflight', 'test:fixture-reference-tests')
+    .replaceAll('verify:rollback-bundle', 'verify:historical-baseline')
+    .replaceAll('test:rollback-bundle', 'test:historical-baseline')
     .replace(/tests[\\/]post-deploy-smoke\.test\.mjs/giu, 'tests/safe-local-smoke.test.mjs')
     .replace(/scripts[\\/]promotion-lifecycle\.mjs/giu, 'scripts/fixture-event-plan.mjs')
     .replace(/tests[\\/]promotion-lifecycle\.test\.mjs/giu, 'tests/fixture-event-plan.test.mjs')
-    .replace(/tests[\\/]promotion-preflight\.test\.mjs/giu, 'tests/fixture-reference-closure.test.mjs');
+    .replace(/tests[\\/]promotion-preflight\.test\.mjs/giu, 'tests/fixture-reference-closure.test.mjs')
+    .replace(/scripts[\\/]verify-rollback-bundle\.mjs/giu, 'scripts/verify-historical-baseline.mjs')
+    .replace(/tests[\\/]rollback-bundle\.test\.mjs/giu, 'tests/historical-baseline.test.mjs');
 }
 
 function assertNoPackagePromotionCapabilities(scripts) {
@@ -791,8 +828,8 @@ function assertNoPackagePromotionCapabilities(scripts) {
     assert.doesNotMatch(inspected, /\bnpm\s+publish\b/iu, `${name} must not publish packages`);
     assert.doesNotMatch(
       inspected,
-      /\b(?:deploy(?:ment|ments|ed|ing)?|publish(?:ed|ing)?|promot(?:e|ed|ing|ion))\b/iu,
-      `${name} must not contain a deployment, publication, or promotion command`
+      /\b(?:deploy(?:ment|ments|ed|ing)?|publish(?:ed|ing)?|promot(?:e|ed|ing|ion)|rollback)\b/iu,
+      `${name} must not contain a deployment, publication, promotion, or rollback command outside the exact reviewed verifier and tests`
     );
   }
 }
@@ -826,13 +863,15 @@ function validatePackageTestClosure(
     'test:promotion-controls',
     'test:promotion-lifecycle',
     'test:promotion-preflight',
+    'test:rollback-bundle',
     'test:post-deploy-smoke',
     'test:workflow-policy'
   ]) {
     assert.ok(reachable.has(required), `${required} must be reachable from npm test`);
   }
   assert.equal(scripts['test:release-assets'], 'node --test tests/release-assets.test.mjs');
-  assert.equal(scripts['test:stable-bundle'], 'node --test tests/stable-bundle.test.mjs');
+  assert.equal(scripts['test:stable-bundle'], SAFE_STABLE_AND_ROLLBACK_TEST_COMMAND);
+  assert.equal(scripts['test:rollback-bundle'], SAFE_ROLLBACK_TEST_COMMAND);
   assert.equal(scripts['test:promotion-controls'], 'node --test tests/github-control-audit.test.mjs');
   assert.equal(scripts['test:promotion-lifecycle'], 'node --test tests/promotion-lifecycle.test.mjs');
   assert.equal(scripts['test:promotion-preflight'], SAFE_PROMOTION_PREFLIGHT_TEST_COMMAND);
@@ -857,6 +896,11 @@ function validatePackageTestClosure(
     scripts['verify:stable-bundle'],
     'node scripts/verify-stable-bundle.mjs',
     'stable bundles must use the reviewed independent offline verifier'
+  );
+  assert.equal(
+    scripts['verify:rollback-bundle'],
+    SAFE_ROLLBACK_VERIFY_COMMAND,
+    'rollback rehearsal must use only the reviewed fixed-path zero-argument offline verifier'
   );
   assert.equal(
     scripts['plan:promotion-controls'],
@@ -897,6 +941,16 @@ function validatePackageTestClosure(
     reachable.has('test:stable-bundle'),
     false,
     'the exact-toolchain synthetic stable suite must run only in its dedicated pull-request job'
+  );
+  assert.equal(
+    reachable.has('test:rollback-bundle'),
+    true,
+    'ordinary validation must verify the committed historical rollback archive'
+  );
+  assert.equal(
+    reachable.has('verify:rollback-bundle'),
+    false,
+    'ordinary validation must not invoke the rollback rehearsal CLI directly'
   );
   assert.equal(
     reachable.has('build:stable-release-assets'),
@@ -1018,6 +1072,209 @@ function validateSyntheticHelperBoundary(fixtureBytes, verifierBytes, reviewedSo
   ]) {
     assert.ok(verifierText.includes(proof), `offline verifier must retain its ${proof} proof`);
   }
+}
+
+function validateRollbackBundleBoundary(reviewedSources = reviewedRollbackSources) {
+  assert.deepEqual(
+    [...reviewedSources.keys()].sort(),
+    Object.keys(REVIEWED_ROLLBACK_SOURCE_SHA256).sort(),
+    'rollback closure must contain exactly the reviewed attributes, descriptor, archive, parser, verifier, and hostile tests'
+  );
+  assert.deepEqual(
+    Object.keys(REVIEWED_ROLLBACK_SOURCE_BYTES).sort(),
+    Object.keys(REVIEWED_ROLLBACK_SOURCE_SHA256).sort(),
+    'rollback byte-size and SHA-256 lock inventories must remain identical'
+  );
+  for (const [relativePath, expectedDigest] of Object.entries(REVIEWED_ROLLBACK_SOURCE_SHA256)) {
+    const bytes = reviewedSources.get(relativePath);
+    assert.ok(Buffer.isBuffer(bytes), `rollback closure is missing ${relativePath}`);
+    assert.equal(bytes.byteLength, REVIEWED_ROLLBACK_SOURCE_BYTES[relativePath], `${relativePath} must retain its exact reviewed byte size`);
+    assert.equal(
+      createHash('sha256').update(bytes).digest('hex'),
+      expectedDigest,
+      `${relativePath} must retain its exact reviewed rollback SHA-256`
+    );
+  }
+
+  const attributes = reviewedSources.get('.gitattributes').toString('utf8');
+  const descriptorBytes = reviewedSources.get('config/rollback/production-2026-08-20-76483d2d.v1.json');
+  const archiveBytes = reviewedSources.get('rollback/production-2026-08-20-76483d2d/artifact.tar');
+  const verifier = reviewedSources.get('scripts/verify-rollback-bundle.mjs').toString('utf8');
+  const tests = reviewedSources.get('tests/rollback-bundle.test.mjs').toString('utf8');
+  const descriptor = parseStrictJson(descriptorBytes, 'rollback descriptor');
+
+  assert.equal(
+    attributes,
+    '* text=auto eol=lf\n\n*.png binary\nrollback/**/*.tar binary -filter -eol\n',
+    'attributes must classify only the fixed rollback archive pattern as an added binary path'
+  );
+  assert.doesNotMatch(attributes, /\b(?:filter|diff|merge)=lfs\b|\.gitattributes\s+export-ignore/iu, 'rollback storage must not use LFS or hide attributes');
+  assert.equal(descriptor.schemaVersion, '1.0.0');
+  assert.equal(descriptor.kind, 'read-only-production-rollback-baseline');
+  assert.equal(descriptor.status, 'historical-pre-repair-snapshot');
+  assert.deepEqual(descriptor.repository, {
+    slug: 'neb6dav/ai_tech_tree',
+    defaultBranch: 'main',
+    productionBaseUrl: 'https://neb6dav.github.io/ai_tech_tree/'
+  });
+  assert.equal(descriptor.sourceArtifact?.headCommit, '76483d2d59f52f30202b52fe52a26a7c832a1252');
+  assert.equal(descriptor.sourceArtifact?.artifactId, 9392055435);
+  assert.equal(descriptor.sourceArtifact?.wrapperDigestAuthenticated, false, 'historical wrapper must remain explicitly unauthenticated');
+  assert.equal(descriptor.archive?.path, 'rollback/production-2026-08-20-76483d2d/artifact.tar');
+  assert.equal(descriptor.archive?.bytes, REVIEWED_ROLLBACK_ARCHIVE_BYTES);
+  assert.equal(descriptor.archive?.sha256, REVIEWED_ROLLBACK_SOURCE_SHA256['rollback/production-2026-08-20-76483d2d/artifact.tar']);
+  assert.equal(descriptor.archive?.gitBlob, REVIEWED_ROLLBACK_ARCHIVE_GIT_BLOB);
+  assert.equal(descriptor.archive?.entryCount, 8);
+  assert.equal(descriptor.archive?.payloadBytes, 14052260);
+  assert.equal(descriptor.archive?.terminalZeroBytes, 1536);
+  assert.deepEqual(descriptor.smokePlan?.requiredFiles, [
+    'ai-research-tech-tree.json',
+    'ai-research-tech-tree.jsonld',
+    'ai-research-tech-tree.ndjson',
+    'index.html',
+    'robots.txt',
+    'sitemap.xml',
+    'social-card.png'
+  ]);
+  assert.equal(descriptor.smokePlan?.mode, 'plan-only-offline-historical-smoke');
+  assert.equal(descriptor.smokePlan?.networkRequests, 0);
+  for (const currentContractFile of [
+    '.nojekyll',
+    'ai-research-tech-tree.html',
+    'data/opportunities/diffusion-models.alpha.json',
+    'data/opportunities/opportunity-map.schema.json',
+    'release-manifest.json'
+  ]) {
+    assert.equal(
+      descriptor.smokePlan.requiredFiles.includes(currentContractFile),
+      false,
+      `${currentContractFile} must remain explicitly outside the historical seven-file smoke profile`
+    );
+  }
+  assert.deepEqual(descriptor.authority, {
+    authenticatedAuthority: false,
+    productionEligible: false,
+    operationAuthorized: false,
+    externalMutationAuthorized: false,
+    retryAuthorized: false,
+    rollbackAuthorized: false,
+    operationalReuseAuthorized: false,
+    releaseAuthorized: false,
+    deploymentAuthorized: false
+  }, 'rollback descriptor must keep every exact authority flag false');
+  assert.match(descriptor.limitations.join(' '), /not evidence that the current release conforms/u);
+  assert.match(descriptor.limitations.join(' '), /do not attest .* public production state/u);
+  assert.match(descriptor.limitations.join(' '), /does not authorize a rollback/u);
+
+  assert.equal(archiveBytes.byteLength, REVIEWED_ROLLBACK_ARCHIVE_BYTES);
+  assert.equal(
+    createHash('sha256').update(archiveBytes).digest('hex'),
+    REVIEWED_ROLLBACK_SOURCE_SHA256['rollback/production-2026-08-20-76483d2d/artifact.tar']
+  );
+  assert.equal(
+    createHash('sha1')
+      .update(Buffer.from(`blob ${archiveBytes.byteLength}\0`, 'utf8'))
+      .update(archiveBytes)
+      .digest('hex'),
+    REVIEWED_ROLLBACK_ARCHIVE_GIT_BLOB,
+    'committed rollback bytes must retain the independently recomputed Git blob identity'
+  );
+
+  const staticImports = (source, label) => {
+    const specifiers = [...source.matchAll(/^import(?:\s+[\s\S]*?\s+from\s+|\s*)['"]([^'"]+)['"];/gmu)]
+      .map(match => match[1])
+      .sort();
+    assert.equal((source.match(/^import\b/gmu) || []).length, specifiers.length, `${label} may use only reviewed static imports`);
+    return specifiers;
+  };
+  assert.deepEqual(staticImports(verifier, 'rollback verifier'), [
+    './strict-json.mjs',
+    'node:crypto',
+    'node:fs/promises',
+    'node:os',
+    'node:path',
+    'node:process',
+    'node:url'
+  ], 'rollback verifier must retain only its exact offline fixed-path imports');
+  assert.deepEqual(staticImports(tests, 'rollback hostile tests'), [
+    '../scripts/verify-rollback-bundle.mjs',
+    'node:assert/strict',
+    'node:child_process',
+    'node:crypto',
+    'node:fs/promises',
+    'node:os',
+    'node:path',
+    'node:test',
+    'node:url'
+  ], 'rollback tests may retain only the exact local verifier, fixture, and bounded harness imports');
+
+  for (const [label, source] of [['rollback verifier', verifier], ['rollback hostile tests', tests]]) {
+    assert.doesNotMatch(source, /(?:^|['"])(?:node:)?(?:http|https|http2|net|tls|dgram|dns)(?:\/|['"])/mu, `${label} must not import a network primitive`);
+    assert.doesNotMatch(source, /\b(?:fetch|WebSocket|EventSource|XMLHttpRequest|getBuiltinModule|sendBeacon)\s*\(/u, `${label} must not invoke a network client or dynamic builtin resolver`);
+    assert.doesNotMatch(source, /\bprocess\.env\b/u, `${label} must not inspect ambient environment values`);
+    assert.doesNotMatch(
+      source,
+      /\b(?:GH_TOKEN|GITHUB_TOKEN|ACTIONS_RUNTIME_TOKEN|NODE_AUTH_TOKEN)\b|\$\{\{\s*(?:secrets\.|github\.token\b)|\bAuthorization\s*:/u,
+      `${label} must not receive or construct a credential`
+    );
+    assert.doesNotMatch(
+      source,
+      /\b(?:curl|wget|Invoke-WebRequest|Invoke-RestMethod|gh)\b|\bgit\s+(?:push|tag|update-ref)\b|deploy-pages|upload-release-asset/iu,
+      `${label} must not expose an external mutation client`
+    );
+  }
+
+  assert.doesNotMatch(verifier, /node:child_process|\b(?:execFile|execFileSync|execSync|spawn|spawnSync|fork)\s*\(/u, 'rollback verifier must not launch a subprocess');
+  assert.doesNotMatch(verifier, /\bimport\s*\(/u, 'rollback verifier must not use dynamic imports');
+  assert.doesNotMatch(verifier, /\bparseArgs\s*\(|--(?:execute|output|destination|adapter|deploy|rollback)\b/u, 'rollback verifier must expose no caller-selected operation or destination option');
+  assert.doesNotMatch(
+    verifier,
+    /\b(?:appendFile|mkdir|rmdir|unlink|rename|copyFile|cp|symlink|link|chmod|chown|truncate|createWriteStream)\s*\(/u,
+    'rollback verifier may use only its reviewed exclusive tool-owned temporary extraction writers'
+  );
+  assert.equal((verifier.match(/\bmkdtemp\s*\(/gu) || []).length, 1, 'rollback verifier may create exactly one randomized temporary root');
+  assert.equal((verifier.match(/\bwriteFile\s*\(/gu) || []).length, 1, 'rollback verifier may use exactly one exclusive extraction write loop');
+  assert.equal((verifier.match(/\brm\s*\(/gu) || []).length, 1, 'rollback verifier may remove only its immutable lexical temporary root');
+  assert.match(verifier, /const temporaryParent = await realpath\(os\.tmpdir\(\)\)/u, 'platform temp selection must be canonicalized before extraction');
+  assert.match(verifier, /const cleanupRoot = await mkdtemp\(path\.join\(temporaryParent, TEMPORARY_PREFIX\)\)/u);
+  assert.match(verifier, /await writeFile\(destination, entry\.data, \{ flag: 'wx', mode: 0o600 \}\)/u);
+  assert.match(verifier, /await rm\(cleanupRoot, \{ recursive: true, force: true \}\)/u);
+  assert.doesNotMatch(verifier, /await rm\(canonicalRoot/u, 'cleanup must never recursively delete a resolved alias target');
+  assert.deepEqual(
+    [...verifier.matchAll(/^export (?:function|const) ([A-Za-z_$][\w$]*)/gmu)].map(match => match[1]).sort(),
+    ['rollbackBundleConstants', 'verifyRollbackBundle'],
+    'rollback verifier must export only the synchronous pure byte verifier and inert constants'
+  );
+  assert.match(verifier, /async function main\(argv\)/u);
+  assert.match(verifier, /if \(argv\.length !== 0\)/u, 'rollback CLI must reject every caller argument');
+  assert.match(verifier, /if \(import\.meta\.main\) \{/u, 'rollback CLI must remain direct-entry-only');
+  assert.match(verifier, /main\(process\.argv\.slice\(2\)\)/u);
+  assert.doesNotMatch(verifier, /process\.argv\[1\][\s\S]{0,200}(?:import\.meta\.url|fileURLToPath)/u, 'crafted argv must not activate an imported verifier');
+  assert.match(verifier, /outcome: 'rollback-bundle-rehearsed'/u);
+  assert.match(verifier, /nextStep: 'continue-to-final-read-only-preflight'/u);
+  for (const authorityKey of Object.keys(descriptor.authority)) {
+    assert.match(verifier, new RegExp(`${authorityKey}: false`, 'u'), `${authorityKey} must remain false in verifier source`);
+  }
+
+  assert.equal((tests.match(/^import \{ spawnSync \} from 'node:child_process';$/gmu) || []).length, 1, 'rollback tests may bind only spawnSync');
+  assert.equal((tests.match(/\bspawnSync\s*\(/gu) || []).length, 3, 'rollback tests may launch exactly three reviewed local Node probes');
+  assert.equal((tests.match(/\benv:\s*scrubbedChildEnvironment/gu) || []).length, 3, 'every local Node probe must receive only the reviewed scrubbed child environment');
+  assert.match(
+    tests,
+    /function exactScrubbedTemporaryEnvironment\(temporaryParent\) \{\r?\n\s+return Object\.freeze\(process\.platform === 'win32'\r?\n\s+\? \{ TEMP: temporaryParent, TMP: temporaryParent \}\r?\n\s+: \{ TMPDIR: temporaryParent \}\);\r?\n\}/u,
+    'test-only child environment may contain only exact platform temp selectors bound to the test-owned canonical parent'
+  );
+  assert.match(tests, /Object\.keys\(scrubbedChildEnvironment\)\.sort\(\)/u);
+  assert.match(tests, /Object\.values\(scrubbedChildEnvironment\)\.every\(value => value === childTemporaryParent\)/u);
+  assert.doesNotMatch(tests, /\b(?:execFile|execFileSync|execSync|spawn|fork)\s*\(/u, 'rollback tests must not gain another subprocess primitive');
+  assert.match(tests, /spawnSync\(process\.execPath, \[VERIFIER_PATH\], \{/u, 'the only positive subprocess probe must invoke the fixed zero-argument verifier');
+  assert.match(tests, /spawnSync\(process\.execPath, \[VERIFIER_PATH, '--output-directory', temporaryRoot\], \{/u, 'the sole argument-bearing probe must prove rejection of caller-selected output');
+  assert.match(tests, /spawnSync\(process\.execPath, \['--input-type=module', '--eval', program\], \{/u, 'the third probe must be the fixed local import-isolation check');
+  assert.equal((tests.match(/\bimport\s*\(/gu) || []).length, 1, 'rollback tests may contain only the reviewed local dynamic-import probe');
+  assert.match(tests, /process\.argv\[1\] = .*await import/u, 'import-isolation probe must retain crafted-argv coverage');
+  assert.match(tests, /repository holds the exact fixed descriptor and binary rollback archive without LFS/u);
+  assert.match(tests, /CLI must preserve checkout bytes, Git index\/HEAD, and root status inventory/u);
+  assert.match(tests, /lexical cleanup removes an alias without recursively deleting its resolved victim/u);
 }
 
 function validatePromotionControlSourceBoundary(reviewedSources = reviewedPromotionControlSources) {
@@ -1403,6 +1660,11 @@ const [
   promotionPreflightScriptBytes,
   promotionPreflightTestBytes,
   promotionPreflightPolicyBytes,
+  gitAttributesBytes,
+  rollbackDescriptorBytes,
+  rollbackArchiveBytes,
+  rollbackVerifierBytes,
+  rollbackTestBytes,
   packageLockBytes,
   nvmrcBytes,
   nodeVersionBytes
@@ -1422,6 +1684,11 @@ const [
   readFile(PROMOTION_PREFLIGHT_SCRIPT_PATH),
   readFile(PROMOTION_PREFLIGHT_TEST_PATH),
   readFile(PROMOTION_PREFLIGHT_POLICY_PATH),
+  readFile(GIT_ATTRIBUTES_PATH),
+  readFile(ROLLBACK_DESCRIPTOR_PATH),
+  readFile(ROLLBACK_ARCHIVE_PATH),
+  readFile(ROLLBACK_VERIFIER_PATH),
+  readFile(ROLLBACK_TEST_PATH),
   readFile(PACKAGE_LOCK_PATH),
   readFile(NVMRC_PATH),
   readFile(NODE_VERSION_PATH)
@@ -1449,6 +1716,14 @@ const reviewedPromotionPreflightSources = new Map(await Promise.all(
     await readFile(path.join(REPOSITORY_ROOT, ...relativePath.split('/')))
   ])
 ));
+const reviewedRollbackSources = new Map([
+  ['.gitattributes', gitAttributesBytes],
+  ['config/rollback/production-2026-08-20-76483d2d.v1.json', rollbackDescriptorBytes],
+  ['rollback/production-2026-08-20-76483d2d/artifact.tar', rollbackArchiveBytes],
+  ['scripts/strict-json.mjs', await readFile(path.join(REPOSITORY_ROOT, 'scripts', 'strict-json.mjs'))],
+  ['scripts/verify-rollback-bundle.mjs', rollbackVerifierBytes],
+  ['tests/rollback-bundle.test.mjs', rollbackTestBytes]
+]);
 const reviewedWorkflowSources = new Map([
   ['pages.yml', pagesBytes],
   ['validate.yml', validateBytes]
@@ -1477,6 +1752,54 @@ test('npm test covers release and bundle tools on the supported major toolchain 
 
 test('synthetic fixture and bundle verifier stay local-only and independently fail closed', () => {
   validateSyntheticHelperBoundary(syntheticFixtureBytes, stableBundleVerifierBytes);
+});
+
+test('rollback baseline stays fixed-path, offline, historical-only, source-locked, and authority-free', () => {
+  validateRollbackBundleBoundary();
+});
+
+test('rollback source policy rejects capability, authority, attribute, and byte-closure drift', async t => {
+  const attributes = gitAttributesBytes.toString('utf8');
+  const descriptor = rollbackDescriptorBytes.toString('utf8');
+  const verifier = rollbackVerifierBytes.toString('utf8');
+  const hostileTests = rollbackTestBytes.toString('utf8');
+  const mutations = [
+    ['binary attribute weakening', '.gitattributes', Buffer.from(attributes.replace(' binary -filter -eol', ' binary'))],
+    ['descriptor authority escalation', 'config/rollback/production-2026-08-20-76483d2d.v1.json', Buffer.from(descriptor.replace('"rollbackAuthorized": false', '"rollbackAuthorized": true'))],
+    ['network import', 'scripts/verify-rollback-bundle.mjs', Buffer.from(`${verifier}\nimport https from 'node:https';\n`)],
+    ['ambient operational environment', 'scripts/verify-rollback-bundle.mjs', Buffer.from(`${verifier}\nconst configured = process.env.ROLLBACK_ROOT;\n`)],
+    ['subprocess capability', 'scripts/verify-rollback-bundle.mjs', Buffer.from(`${verifier}\nspawnSync('git', ['status']);\n`)],
+    ['caller output option', 'scripts/verify-rollback-bundle.mjs', Buffer.from(`${verifier}\nconst flag = '--output';\n`)],
+    ['second writer', 'scripts/verify-rollback-bundle.mjs', Buffer.from(`${verifier}\nawait writeFile('outside', 'x');\n`)],
+    ['unreviewed hostile-test subprocess', 'tests/rollback-bundle.test.mjs', Buffer.from(`${hostileTests}\nspawnSync('curl', ['https://example.invalid/']);\n`)],
+    ['transitive strict parser drift', 'scripts/strict-json.mjs', Buffer.concat([reviewedRollbackSources.get('scripts/strict-json.mjs'), Buffer.from('\n')])]
+  ];
+  for (const [label, relativePath, hostileBytes] of mutations) {
+    await t.test(label, () => {
+      assert.notDeepEqual(hostileBytes, reviewedRollbackSources.get(relativePath), `${label} must change its target bytes`);
+      const sources = new Map(reviewedRollbackSources);
+      sources.set(relativePath, hostileBytes);
+      assert.throws(() => validateRollbackBundleBoundary(sources));
+    });
+  }
+
+  await t.test('same-size archive replacement', () => {
+    const hostileArchive = Buffer.from(rollbackArchiveBytes);
+    hostileArchive[hostileArchive.byteLength - 1] ^= 1;
+    const sources = new Map(reviewedRollbackSources);
+    sources.set('rollback/production-2026-08-20-76483d2d/artifact.tar', hostileArchive);
+    assert.throws(() => validateRollbackBundleBoundary(sources), /exact reviewed rollback SHA-256/u);
+  });
+  await t.test('archive omission', () => {
+    const sources = new Map(reviewedRollbackSources);
+    sources.delete('rollback/production-2026-08-20-76483d2d/artifact.tar');
+    assert.throws(() => validateRollbackBundleBoundary(sources), /rollback closure must contain exactly/u);
+  });
+  await t.test('unreviewed adjacent recovery metadata', () => {
+    const sources = new Map(reviewedRollbackSources);
+    sources.set('rollback/production-2026-08-20-76483d2d/RECOVERY-METADATA.md', Buffer.from('unreviewed\n'));
+    assert.throws(() => validateRollbackBundleBoundary(sources), /rollback closure must contain exactly/u);
+  });
 });
 
 test('promotion-control plan and tests remain network-incapable and source-locked', () => {
@@ -1682,6 +2005,7 @@ test('workflow policy rejects capability and parity regressions', async t => {
     ['promotion-lifecycle plan command', workflow => { workflow.jobs['build-and-test'].steps.push({ run: 'npm run plan:promotion-lifecycle' }); }],
     ['direct promotion-preflight test command', workflow => { workflow.jobs['build-and-test'].steps.push({ run: 'npm run test:promotion-preflight' }); }],
     ['direct promotion-preflight module invocation', workflow => { workflow.jobs['build-and-test'].steps.push({ run: 'node scripts/promotion-preflight.mjs' }); }],
+    ['direct rollback rehearsal command', workflow => { workflow.jobs['build-and-test'].steps.push({ run: 'npm run verify:rollback-bundle' }); }],
     ['ambient GitHub token', workflow => { workflow.jobs['build-and-test'].env = { GITHUB_TOKEN: '${{ github.token }}' }; }],
     ['stable asset command', workflow => {
       stepByName(workflow.jobs['candidate-assets'], 'Build exact candidate assets').run =
@@ -1844,6 +2168,12 @@ test('Pages and package policies reject promotion or production-smoke regression
       `${EXPECTED_PAGES_BUILD}npm run test:promotion-preflight\n`;
     assert.throws(() => validatePagesHold(hostile));
   });
+  await t.test('rollback rehearsal enters Pages build directly', () => {
+    const hostile = clone(pagesWorkflow);
+    stepByName(hostile.jobs.build, 'Build, validate, and stage the public artifact').run =
+      `${EXPECTED_PAGES_BUILD}npm run verify:rollback-bundle\n`;
+    assert.throws(() => validatePagesHold(hostile));
+  });
   await t.test('production smoke enters npm test closure', () => {
     const hostile = clone(packageDocument);
     hostile.scripts.test += ' && npm run smoke:production';
@@ -1865,6 +2195,28 @@ test('Pages and package policies reject promotion or production-smoke regression
   await t.test('promotion-preflight cannot gain a plan or operational entry point', () => {
     const hostile = clone(packageDocument);
     hostile.scripts['plan:promotion-preflight'] = 'node scripts/promotion-preflight.mjs';
+    assert.throws(() => validatePackageTestClosure(hostile));
+  });
+  for (const forbiddenArgument of ['--execute', '--output receipt.json', '--destination C:\\outside', '--rollback']) {
+    await t.test(`rollback verifier rejects package argument ${forbiddenArgument.split(' ')[0]}`, () => {
+      const hostile = clone(packageDocument);
+      hostile.scripts['verify:rollback-bundle'] += ` ${forbiddenArgument}`;
+      assert.throws(() => validatePackageTestClosure(hostile));
+    });
+  }
+  await t.test('ordinary rollback tests cannot redirect to the rehearsal CLI', () => {
+    const hostile = clone(packageDocument);
+    hostile.scripts['test:rollback-bundle'] = SAFE_ROLLBACK_VERIFY_COMMAND;
+    assert.throws(() => validatePackageTestClosure(hostile));
+  });
+  await t.test('synthetic cross-platform suite cannot drop the committed rollback archive tests', () => {
+    const hostile = clone(packageDocument);
+    hostile.scripts['test:stable-bundle'] = 'node --test tests/stable-bundle.test.mjs';
+    assert.throws(() => validatePackageTestClosure(hostile));
+  });
+  await t.test('ordinary publication cannot drop the rollback archive tests', () => {
+    const hostile = clone(packageDocument);
+    hostile.scripts['test:publication'] = hostile.scripts['test:publication'].replace(' && npm run test:rollback-bundle', '');
     assert.throws(() => validatePackageTestClosure(hostile));
   });
   await t.test('semicolon cannot conceal an npm production-smoke dependency', () => {

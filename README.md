@@ -123,7 +123,7 @@ npm run plan:promotion-controls
 
 The default command reads `config/github-promotion-policy.v1.json` and reports the bounded read-only audit plan without making a network request. There is no package or workflow entry point that supplies an execution flag, token, secret, write permission, environment, deployment action, or promotion capability; the two active workflows remain byte-for-byte unchanged and cannot invoke the audit CLI or a live transport. Unit tests exercise the GET-only response logic through an injected transport, but injected or test-only receipts are never eligible evidence of real GitHub control state. No live audit has been called or authorized by this implementation.
 
-The policy describes the required future state and remains planned, not satisfied. The currently known external blockers are that the `github-pages` environment has no required reviewer and permits administrator bypass, immutable GitHub Releases are disabled, no active no-bypass tag ruleset protects `v0.1.1`, and the verified production recovery artifact is local rather than durable and runner-accessible. Those controls require separately authorized GitHub changes and a subsequent live, read-only audit before any privileged promotion workflow may be considered.
+The policy describes the required future state and remains planned, not satisfied. The currently known external blockers are that the `github-pages` environment has no required reviewer and permits administrator bypass, immutable GitHub Releases are disabled, and no active no-bypass tag ruleset protects `v0.1.1`. Those controls require separately authorized GitHub changes and a subsequent live, read-only audit before any privileged promotion workflow may be considered. C4.4-B3 separately preserves and rehearses a historical recovery baseline in the repository; it does not satisfy any of these external GitHub controls.
 
 The required-check context is never accepted by itself: the response verifier also binds the active `validate.yml` workflow, a successful `push` run at the independently supplied commit, and its exact required job. The protected-branch environment policy assumes a later manual dispatch from protected `main` while the release tooling independently binds the annotated tag; it does not assume or authorize a tag-triggered deployment.
 
@@ -232,11 +232,54 @@ source-locked hostile test launches a fixed local Node process solely to prove
 that crafted ambient `argv` cannot turn the imported planner into an entry
 point; it supplies no network, credential, writer, or mutation capability.
 
-C4.4-B3 owns the rollback descriptor and still must prove a durable, runner-
-accessible rollback bundle, storage access, and rehearsal. Nothing in B2.2,
-B2.3-A, or B2.3-B supplies a tag,
-Release, upload, deployment, rollback, settings change, production request, or
-authority to perform one.
+C4.4-B3 preserves the previously captured production baseline as the fixed
+regular-file archive
+`rollback/production-2026-08-20-76483d2d/artifact.tar`, bound by the strict
+descriptor `config/rollback/production-2026-08-20-76483d2d.v1.json`. An exact
+repository checkout, including the unchanged Windows and Ubuntu validation
+jobs, can therefore verify the committed blob rather than depend on the
+short-lived original Actions artifact. The only command entry point is the
+fixed, zero-argument, offline verifier:
+
+```text
+npm run verify:rollback-bundle
+```
+
+The verifier rechecks the descriptor and archive bytes, safely extracts into
+its own temporary directory, rereads and hashes the extracted files, runs the
+bounded historical-baseline smoke profile, and removes its temporary files.
+It accepts no caller path, output, destination, execution, adapter, token,
+network, subprocess, deploy, rollback, or tool-specific/operational environment
+option. Its sole platform ambient is the operating system's temporary-directory
+selection; the verifier canonicalizes that parent, creates a randomized
+tool-owned child, and fails closed if the boundary changes. Its positive
+outcome is only `rollback-bundle-rehearsed` with next step
+`continue-to-final-read-only-preflight`; `productionEligible`,
+`operationAuthorized`, `externalMutationAuthorized`, `retryAuthorized`,
+`rollbackAuthorized`, `operationalReuseAuthorized`,
+`authenticatedAuthority`, `releaseAuthorized`, and `deploymentAuthorized`
+all remain false.
+
+This is a repository-preserved historical baseline, not an attestation that
+the archive was actually serving at the claimed prior time and not proof that
+it conforms to the current publication contract. In particular, the baseline
+predates `release-manifest.json`, the compatibility endpoints, and `.nojekyll`,
+so its deliberately narrower historical smoke profile must not be substituted
+for current-site conformance or post-deployment verification. The archive,
+descriptor, verifier, and tests neither perform nor authorize a rollback.
+The source-locked hostile suite has one narrow harness exception: it starts
+only three fixed local Node probes with a scrubbed child environment containing
+the test-owned canonical temporary parent and no inherited values. This lets
+the residue watcher observe the exact extraction parent while exercising the
+zero-argument CLI, rejection of one forbidden argument, and import isolation.
+Those test-only probes cannot select another program, repository input path,
+token, network target, output, or operation and add no subprocess capability to
+the verifier. The hardened attributes explicitly disable text, filter, and EOL
+transforms for the archive; the full source gate separately verifies effective
+attributes and zero-filter closure without adding a subprocess to this harness.
+Nothing in B2.2, B2.3-A, B2.3-B, or B3 supplies a tag, Release, upload,
+deployment, rollback, settings change, production request, or authority to
+perform one.
 
 The post-deployment verifier is network-free by default. It accepts only a separately supplied, exact local release manifest plus its SHA-256, annotated tag, and commit; rejects preview or internally inconsistent release identity; and prints the fixed-origin GET plan without contacting the site. A later, separately authorized promotion run must add `--execute` to perform the bounded 12-minute verification:
 

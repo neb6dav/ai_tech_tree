@@ -1,0 +1,290 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "read-only-production-rollback-baseline",
+  "status": "historical-pre-repair-snapshot",
+  "repository": {
+    "slug": "neb6dav/ai_tech_tree",
+    "defaultBranch": "main",
+    "productionBaseUrl": "https://neb6dav.github.io/ai_tech_tree/"
+  },
+  "sourceArtifact": {
+    "headCommit": "76483d2d59f52f30202b52fe52a26a7c832a1252",
+    "headTree": "97bbd11d6d82b09eba5f3627dfb617d1e18b4e65",
+    "workflowRunId": 32328029844,
+    "artifactId": 9392055435,
+    "artifactName": "github-pages",
+    "createdAt": "2026-08-20T03:23:40Z",
+    "expiresAt": "2026-08-21T03:23:39Z",
+    "wrapperSha256": "6a7c9bea76948a8c5f82431dd762aef82adba982286a5d317688061c4c447f0a",
+    "wrapperDigestAuthenticated": false
+  },
+  "archive": {
+    "path": "rollback/production-2026-08-20-76483d2d/artifact.tar",
+    "format": "legacy-gnu-tar",
+    "bytes": 14059520,
+    "sha256": "f04f46196b74982f9d725f032278f9b7ed48ae1ffd82db0dcff3fc39f739f9c4",
+    "gitBlob": "651fab34624fd6b943054c8cb3e30c76a88e4024",
+    "payloadBytes": 14052260,
+    "entryCount": 8,
+    "terminalZeroBytes": 1536,
+    "headerProfile": {
+      "magicAscii": "ustar ",
+      "versionHex": "2000",
+      "deviceFields": "all-zero",
+      "reservedBytes": "all-zero"
+    },
+    "entries": [
+      {
+        "path": "./",
+        "type": "directory",
+        "headerOffset": 0,
+        "headerSha256": "0a3adbd54f2dd353841bdfeb9cbe0e24ea6eafd60b87385c887b35076930a2d1",
+        "headerChecksum": 4505,
+        "mode": "0755",
+        "uid": 1001,
+        "gid": 1001,
+        "uname": "runner",
+        "gname": "runner",
+        "mtime": "2026-08-20T03:23:39Z",
+        "bytes": 0
+      },
+      {
+        "path": "./index.html",
+        "type": "regular",
+        "headerOffset": 512,
+        "headerSha256": "052abac139b3a5af31ce844c0a3b79ee5948f2e6f4283989b6b970d93b50ce6a",
+        "headerChecksum": 5541,
+        "mode": "0644",
+        "uid": 1001,
+        "gid": 1001,
+        "uname": "runner",
+        "gname": "runner",
+        "mtime": "2026-08-20T03:23:39Z",
+        "bytes": 4519260,
+        "sha256": "c6639e972e5e9b342b7778f4556bb3624fdea5699387a8266120404a11befc12",
+        "gitBlob": "c5b0c6006017541e77258607911eb59107d440f7"
+      },
+      {
+        "path": "./ai-research-tech-tree.ndjson",
+        "type": "regular",
+        "headerOffset": 4520448,
+        "headerSha256": "7537c6e0ab9c27d88d094e5b755490d7a5bd63ec3ccae7e1223edd588d1f7d35",
+        "headerChecksum": 7251,
+        "mode": "0644",
+        "uid": 1001,
+        "gid": 1001,
+        "uname": "runner",
+        "gname": "runner",
+        "mtime": "2026-08-20T03:23:39Z",
+        "bytes": 2353156,
+        "sha256": "24324a67f1746f76d91a27002d8fe247a4c32ec4ab3f1f1fa8d6ce06ca0e6dfc",
+        "gitBlob": "95dcd7c00fcf8762ed44702221cf32990f5d40e9"
+      },
+      {
+        "path": "./robots.txt",
+        "type": "regular",
+        "headerOffset": 6874624,
+        "headerSha256": "e7420d68b6928f66e51d415f3c2c9b1d5d0882b75d7571b3b50e435cf74d38e3",
+        "headerChecksum": 5567,
+        "mode": "0644",
+        "uid": 1001,
+        "gid": 1001,
+        "uname": "runner",
+        "gname": "runner",
+        "mtime": "2026-08-20T03:23:39Z",
+        "bytes": 84,
+        "sha256": "30d89a7372e12e4390961fe8499355a815119e516adffacd9f15a977b15fe225",
+        "gitBlob": "91f3f060fed3d8cd1efaa7247ee8cbf93e390680"
+      },
+      {
+        "path": "./ai-research-tech-tree.jsonld",
+        "type": "regular",
+        "headerOffset": 6875648,
+        "headerSha256": "563c66b51960f66130db09227e0008f1bba88a7592e43013d803a2f70a695601",
+        "headerChecksum": 7257,
+        "mode": "0644",
+        "uid": 1001,
+        "gid": 1001,
+        "uname": "runner",
+        "gname": "runner",
+        "mtime": "2026-08-20T03:23:39Z",
+        "bytes": 2601853,
+        "sha256": "fa464591dd25a158ce9addd419a18c01e89cce352e92039ece29c2d37ca7b8d8",
+        "gitBlob": "cfcfa62c3011ce802c49e29bf04379bb3a662686"
+      },
+      {
+        "path": "./sitemap.xml",
+        "type": "regular",
+        "headerOffset": 9478144,
+        "headerSha256": "ee7eb2fa28ede82e4d61b56e2fc64d225823333f0f039902a0f2dc42d52cc81f",
+        "headerChecksum": 5644,
+        "mode": "0644",
+        "uid": 1001,
+        "gid": 1001,
+        "uname": "runner",
+        "gname": "runner",
+        "mtime": "2026-08-20T03:23:39Z",
+        "bytes": 282,
+        "sha256": "629671d9a95aa0ae83f39db4dc0c7d3c6bf8676817a52a4b296c8fb41480cd6d",
+        "gitBlob": "7776ea0b89cb07e46be18455c09715e7c0841762"
+      },
+      {
+        "path": "./social-card.png",
+        "type": "regular",
+        "headerOffset": 9479168,
+        "headerSha256": "5c7e4d2f67dfb622f04d17dc95aec4b8ab3dfbfead2d63392fee69a6f3ecaf6a",
+        "headerChecksum": 5991,
+        "mode": "0644",
+        "uid": 1001,
+        "gid": 1001,
+        "uname": "runner",
+        "gname": "runner",
+        "mtime": "2026-08-20T03:23:39Z",
+        "bytes": 1825178,
+        "sha256": "86ea1b755744c0d066c3aa7cd86bd54d349b8f6a33a637674ba3a95bd1038b28",
+        "gitBlob": "0f4adc32fef485f488128b6373f942e22a613133"
+      },
+      {
+        "path": "./ai-research-tech-tree.json",
+        "type": "regular",
+        "headerOffset": 11304960,
+        "headerSha256": "48e0cabd222e10ea2b0e3a0617e14722b207f60f06c147643dc904ef3a58dbd2",
+        "headerChecksum": 7059,
+        "mode": "0644",
+        "uid": 1001,
+        "gid": 1001,
+        "uname": "runner",
+        "gname": "runner",
+        "mtime": "2026-08-20T03:23:39Z",
+        "bytes": 2752447,
+        "sha256": "8f42aabb871559dfb5f4bfbfeb0755987783f38987a3225ce8da10623d6f8c8f",
+        "gitBlob": "63d411ea1a8390494f7f32d120595f243be0bf8b"
+      }
+    ]
+  },
+  "smokePlan": {
+    "mode": "plan-only-offline-historical-smoke",
+    "productionBaseUrl": "https://neb6dav.github.io/ai_tech_tree/",
+    "networkRequests": 0,
+    "requiredFiles": [
+      "ai-research-tech-tree.json",
+      "ai-research-tech-tree.jsonld",
+      "ai-research-tech-tree.ndjson",
+      "index.html",
+      "robots.txt",
+      "sitemap.xml",
+      "social-card.png"
+    ],
+    "expectations": {
+      "htmlTitle": "AI Research Tech Tree - Curated 1879-2026 Atlas",
+      "datasetIdentifier": "urn:uuid:7d0547f2-6239-5a56-82a3-1c846701c866",
+      "edition": "2026-08-13-public-beta-1",
+      "releaseState": "Public beta",
+      "generatorVersion": "1.3.0",
+      "dataDigest": "f2d78f9cb04820bb9ed6ebaeb9a6a75f7faf64edbb52314eefc3114650a7455b",
+      "counts": {
+        "atlasEntries": 339,
+        "developments": 324,
+        "openDirections": 15,
+        "relationships": 711,
+        "edgeKinds": {
+          "dep": 656,
+          "gap": 44,
+          "sup": 11
+        },
+        "relationshipTypes": {
+          "application": 1,
+          "component": 3,
+          "editorial_association": 647,
+          "enables": 1,
+          "extends": 2,
+          "influences": 2,
+          "legacy_supersession_claim": 11,
+          "proposed_combination": 44
+        },
+        "evidenceGrades": {
+          "contextual": 288,
+          "direct": 6,
+          "editorial": 214,
+          "hypothesis": 44,
+          "partial": 3,
+          "unassessed": 156
+        },
+        "uniquePapers": 176,
+        "paperAssociations": 186,
+        "paperRoles": {
+          "adjacent_work": 16,
+          "benchmark": 15,
+          "critique": 6,
+          "origin": 72,
+          "supporting_result": 74,
+          "survey": 3
+        },
+        "landmarkWorks": 76,
+        "landmarkWorkAssociations": 76,
+        "landmarkRoles": {
+          "context": 2,
+          "critique": 2,
+          "origin": 56,
+          "supporting_result": 6,
+          "survey": 10
+        },
+        "landmarkKinds": {
+          "book": 18,
+          "literary_work": 1,
+          "paper": 49,
+          "proposal": 1,
+          "report": 6,
+          "thesis": 1
+        },
+        "landmarkAccess": {
+          "author_open": 24,
+          "free_to_read": 10,
+          "open_access": 10,
+          "public_domain": 4,
+          "publisher_record": 28
+        },
+        "publicDomainWorks": 4,
+        "wikipediaRevisionSources": 267,
+        "wikipediaSourceReferences": 766,
+        "evidenceAssessments": 1389,
+        "directionCards": 15,
+        "editorialClassifications": 7
+      },
+      "ndjsonRecordTypes": {
+        "dataset": 1,
+        "lane": 15,
+        "editorialClassification": 7,
+        "atlasEntry": 339,
+        "relationship": 711,
+        "evidenceAssessment": 1389,
+        "paper": 176,
+        "paperAssociation": 186,
+        "landmarkWork": 76,
+        "landmarkWorkAssociation": 76,
+        "wikipediaRevision": 267
+      },
+      "ndjsonRecords": 3243,
+      "jsonLdGraphEntries": 3242,
+      "socialCardWidth": 1731,
+      "socialCardHeight": 909
+    }
+  },
+  "authority": {
+    "authenticatedAuthority": false,
+    "productionEligible": false,
+    "operationAuthorized": false,
+    "externalMutationAuthorized": false,
+    "retryAuthorized": false,
+    "rollbackAuthorized": false,
+    "operationalReuseAuthorized": false,
+    "releaseAuthorized": false,
+    "deploymentAuthorized": false
+  },
+  "limitations": [
+    "This repository-held snapshot is a historical pre-repair rollback baseline, not evidence that the current release conforms to the current publication contract.",
+    "Verification and rehearsal are local and read-only; they do not attest the GitHub artifact wrapper, protected branch, release, environment approval, deployment, or public production state.",
+    "The snapshot does not authorize a rollback, deployment, release, tag, retry, or any external mutation.",
+    "The plan-only historical smoke checks the seven archived payloads and makes no network request."
+  ]
+}

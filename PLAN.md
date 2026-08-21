@@ -5,7 +5,7 @@ active_work_package: "WP-011-B"
 issue_url: "https://github.com/neb6dav/ai_tech_tree/issues/6"
 pr_url: "https://github.com/neb6dav/ai_tech_tree/pull/7"
 base_sha: "85108c78fa86c86634d4c0944839696369e687cd"
-last_completed_checkpoint: "WP-011-B/C4.4-B2.3-A"
+last_completed_checkpoint: "WP-011-B/C4.4-B2.3-B"
 last_verified_commands:
   - command: "npm run build"
     status: "PASS"
@@ -275,19 +275,34 @@ last_verified_commands:
     status: "PASS after findings resolved"
     verified_by: "root plus independent hostile reviewer"
     scope: "Corrected pre-copy composite graph bounds, crafted-argv transitive lifecycle CLI execution, inherited fresh-process environment, and reconcile-versus-block documentation precision; independent 338-test matrix had 337 passes, zero failures, and one local sandbox EPERM skip, while the exact fresh-shell import probe separately passed silent; final verdict SHIP with no open P1/P2"
+  - command: "Reconcile C4.4-B2.3-B hosted validation and downloaded preview"
+    status: "PASS"
+    runtime: "GitHub Actions Node v24.19.0/npm 11.17.0 plus exact synthetic Node v24.14.1/npm 11.11.0"
+    verified_by: "root plus read-only reconciliation agent"
+    scope: "Workflow 32439053185 at pushed head 53cca615834d257e02682ec1237ff55d8a3d54f2; all seven jobs green; tested merge SHA 0026c45f54a529feb8cc78fadda275b724ff59a7 shares tree 8f6a7823e2920627d16d8581168c90d0b5898a45 with the pushed head; preview artifact 9431762829 had GitHub digest d96287c4fd822750cdb4e33efe0428366167422112b49211d6e9404d6921ea0f and passed 1,465 references, release identity 2/2, and all seven performance checks; manifest SHA-256 427f85a6e5b89cc3fc609bacbdb2d26f8e0a1e42e844abd4ec58a420306d7f6b; canonical 15-file closure SHA-256 226f3af3eb558a6167f769ff0d9305a27532a3e39b6febe0be23b5d92411c23b; hosted/local 14-payload closure SHA-256 ada69997dbc499b25bdf8961e7336b75b7c4121f33ae4cafa7556e034d5fc08f; 17/17 inputs, 89 tracked entries, zero filters, input verification cfcb37abbe56e3ca67b4b8fd5d167aee9a6fe46e5ccc0b0ae12af1548d7d02d8, and filter audit b1f1202c0a49851e1866937d415e63473e53c648cb63df7318a70620baa76013; no live audit, tag, release, setting, deployment, or production request"
+  - command: "npm run verify:rollback-bundle; npm run test:rollback-bundle; npm run test:stable-bundle; npm run test:workflow-policy; git diff --check"
+    status: "PASS"
+    runtime: "Node v24.14.1, npm 11.11.0, and Git 2.55"
+    verified_by: "core implementation and integration agents"
+    scope: "C4.4-B3 local integration: zero-argument verifier returned rollback-bundle-rehearsed and continue-to-final-read-only-preflight; 62 rollback tests, 117 combined stable-plus-rollback tests, and 192 workflow/package-policy tests passed. Exact locks: attributes a6983c56...c7567, descriptor d67958ed...ab8f8 (9,730 bytes), verifier eb8eba21...9675 (33,997 bytes), hostile tests 7b92d133...520b (22,376 bytes), archive f04f4619...f9c4 (14,059,520 bytes; Git blob 651fab34...024), package b9c9506d...be76, and workflow policy e7ea7064...1b27e. Three source-locked local Node probes use only the scrubbed test-owned temp selector; the verifier has no network, credential, subprocess, caller path/output/destination, execution, deploy, rollback, or operational-environment option. Active workflow inventory and bytes remain unchanged; package semantics add only the exact verifier and test surfaces, with rollback tests in ordinary publication and the existing cross-platform stable suite."
+  - command: "Independent historical source and effective-attribute reconciliation"
+    status: "PASS; historical evidence only"
+    runtime: "Git 2.55 read-only object and attribute inspection"
+    verified_by: "root, integration agent, and independent hostile reviewer"
+    scope: "Historical commit 76483d2d59f52f30202b52fe52a26a7c832a1252 has tree 97bbd11d6d82b09eba5f3627dfb617d1e18b4e65; all seven regular payload blob IDs exactly match the descriptor. Effective archive attributes report binary set and text, diff, merge, filter, and eol unset; path-aware and raw hash-object both equal 651fab34624fd6b943054c8cb3e30c76a88e4024. This binds repository bytes to the historical source tree but does not authenticate the expired artifact wrapper or attest that the capture was actually serving."
 next_exact_action: >-
-  Commit the hostile-reviewed exact eight-file C4.4-B2.3-B snapshot, run the
-  exact-clean full repository gate at that commit, push it, and reconcile the
-  hosted seven-job validation and downloaded preview before recording B2.3-B
-  complete and beginning B3.
+  Complete independent adversarial review of the byte-stable C4.4-B3
+  repository-preserved historical baseline, correct any findings, then run the
+  exact-clean full repository gate at the checkpoint commit without changing
+  either active workflow before push and hosted reconciliation.
 known_blockers:
   - "WP-011-B is stacked on verified draft PR #5 until WP-011-A is separately authorized to merge."
   - "No merge, annotated tag, GitHub Release, environment approval, or public deployment is authorized."
   - "The C3 source must remain visibly labeled as an untagged development edition until C4 prepares an authorized release artifact."
   - "Browser performance metrics and automated preview screenshots remain pending WP-012-A."
   - "The github-pages environment has no required reviewer and permits administrator bypass; immutable GitHub Releases are disabled. These external controls require separate authorization before any C4 promotion run."
-  - "No active no-bypass tag ruleset protects v0.1.1, and the verified production recovery artifact is local rather than durable and runner-accessible."
-release_gate_status: "wp_011_b_c4_4_b2_3_b_local_hostile_verified_pending_commit"
+  - "No active no-bypass tag ruleset protects v0.1.1."
+release_gate_status: "wp_011_b_c4_4_b3_local_integration_verified_pending_hostile_review"
 release_details:
   version: "v0.1.1"
   title: "Publication-contract repair"
@@ -305,20 +320,28 @@ release_details:
       number: 7
       url: "https://github.com/neb6dav/ai_tech_tree/pull/7"
     recovery_reference:
-      status: "local_verified"
-      path: "C:/Projects/Work/ai-research-tech-tree-recovery/production-2026-08-20-76483d2d"
+      status: "repository_preservation_local_verified_pending_commit"
+      original_local_path: "C:/Projects/Work/ai-research-tech-tree-recovery/production-2026-08-20-76483d2d"
+      repository_archive_path: "rollback/production-2026-08-20-76483d2d/artifact.tar"
+      descriptor_path: "config/rollback/production-2026-08-20-76483d2d.v1.json"
       production_commit: "76483d2d59f52f30202b52fe52a26a7c832a1252"
       artifact_id: 9392055435
       artifact_tar_sha256: "f04f46196b74982f9d725f032278f9b7ed48ae1ffd82db0dcff3fc39f739f9c4"
+      artifact_tar_git_blob: "651fab34624fd6b943054c8cb3e30c76a88e4024"
+      descriptor_sha256: "d67958ed48719bc364a4a8a79202d2360ccce507d051ccfa6f5681ad999ab8f8"
+      verifier_sha256: "eb8eba21bf8d0276fb7782fe6b7ef3f079235d4f29331f5fe63883c1a5079675"
+      source_tree: "97bbd11d6d82b09eba5f3627dfb617d1e18b4e65"
+      wrapper_digest_authenticated: false
     active_checkpoint:
-      id: "C4.4-B2.3-B"
-      title: "Fresh composite read-only promotion preflight"
-      status: "local_hostile_verified_pending_checkpoint_commit"
+      id: "C4.4-B3"
+      title: "Repository-preserved historical rollback preflight"
+      status: "local_integration_verified_pending_hostile_review"
       next_exact_action: >-
-        Commit this exact eight-file snapshot, run the exact-clean full gate,
-        push, and reconcile hosted validation plus the downloaded preview.
-        Retain the pure B3-only handoff and every production, operation,
-        mutation, retry, rollback, reuse, and authority flag false.
+        Complete independent hostile review, correct any findings, and run the
+        full exact-clean gate at the committed B3 checkpoint. Retain the
+        historical-only conformance boundary and exact
+        operationalReuseAuthorized authority key with every production,
+        operation, mutation, retry, rollback, reuse, and authority flag false.
     scope:
       - "Publish stable and compatibility Opportunity endpoints."
       - "Move exported human URLs to the root application."
@@ -611,9 +634,32 @@ capability, and the two active workflow files remain byte-identical. Importing
 B2.2 cannot trigger the existing direct-entry-only `plan:promotion-lifecycle`
 CLI. One source-locked hostile test uses a fixed local Node process only to
 prove this ambient-`argv` isolation; it has no network, credential, writer, or
-mutation capability. C4.4-B3 owns the rollback
-descriptor, durable runner-accessible bundle, storage proof, and rollback
-rehearsal.
+mutation capability.
+
+C4.4-B3 preserves the fixed historical production capture as
+`rollback/production-2026-08-20-76483d2d/artifact.tar` and binds it through
+`config/rollback/production-2026-08-20-76483d2d.v1.json`. Its zero-argument,
+fixed-path verifier may write only to its own temporary extraction directory,
+performs no network request or subprocess, accepts no tool-specific or
+operational environment input, and returns only a historical rehearsal receipt
+whose next step is the final read-only preflight. Its sole platform ambient is
+canonical operating-system temporary-directory selection; the extraction root
+is a randomized tool-owned child and cannot be caller-selected. The archive
+lacks `release-manifest.json`, the compatibility endpoints, and `.nojekyll`;
+the bounded seven-file historical smoke is therefore neither current-contract
+conformance nor an attestation that the capture was previously serving.
+`productionEligible`, `operationAuthorized`, `externalMutationAuthorized`,
+`retryAuthorized`, `rollbackAuthorized`, `operationalReuseAuthorized`,
+`authenticatedAuthority`, `releaseAuthorized`, and `deploymentAuthorized`
+all remain false. Repository preservation and rehearsal do not perform or
+authorize rollback. The source-locked hostile suite may use exactly three fixed
+local Node probes with a scrubbed child environment containing only the test-
+owned canonical temporary parent. This bounded CLI-success, forbidden-argument,
+import-isolation, and residue-observation harness does not give the verifier an
+operational environment input or subprocess capability. Hardened attributes
+explicitly disable text, filter, and EOL transforms for the archive; effective
+attributes and zero-filter closure remain part of the full source gate rather
+than another subprocess in this harness.
 
 The public lifecycle is monotonic: finalized commit, annotated tag, draft
 Release, deployed site, verified smoke, and published immutable Release are

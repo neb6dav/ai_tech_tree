@@ -27,6 +27,10 @@ const PROMOTION_LIFECYCLE_SCRIPT_PATH = path.join(REPOSITORY_ROOT, 'scripts', 'p
 const PROMOTION_LIFECYCLE_TEST_PATH = path.join(REPOSITORY_ROOT, 'tests', 'promotion-lifecycle.test.mjs');
 const PROMOTION_LIFECYCLE_POLICY_PATH = path.join(REPOSITORY_ROOT, 'config', 'promotion-lifecycle-policy.v1.json');
 const SAFE_PROMOTION_LIFECYCLE_PLAN_COMMAND = 'node scripts/promotion-lifecycle.mjs';
+const PROMOTION_PREFLIGHT_SCRIPT_PATH = path.join(REPOSITORY_ROOT, 'scripts', 'promotion-preflight.mjs');
+const PROMOTION_PREFLIGHT_TEST_PATH = path.join(REPOSITORY_ROOT, 'tests', 'promotion-preflight.test.mjs');
+const PROMOTION_PREFLIGHT_POLICY_PATH = path.join(REPOSITORY_ROOT, 'config', 'promotion-preflight-policy.v1.json');
+const SAFE_PROMOTION_PREFLIGHT_TEST_COMMAND = 'node --test tests/promotion-preflight.test.mjs';
 const REVIEWED_PROMOTION_CONTROL_SOURCE_SHA256 = Object.freeze({
   'config/github-promotion-policy.v1.json': 'a1dc1ec4b814f09e668b1b1d6669853240dcb732541e0d0b580ec3f5a959215c',
   'scripts/github-control-audit.mjs': '2b5d5fd0aa23056bc00bcfa01cf11b24f345465d9c4f98a403f858a16f010995',
@@ -40,6 +44,26 @@ const REVIEWED_PROMOTION_LIFECYCLE_SOURCE_SHA256 = Object.freeze({
   'scripts/release-spec.mjs': 'ba57496454c0e565bd6b315e8c52aba6998774aff27d6c55eac32e141074e89f',
   'scripts/strict-json.mjs': '32319f64ee28a8e4c0329d24ef26c8ef26c94f12d77f9f20656f7e744111de7e',
   'tests/promotion-lifecycle.test.mjs': 'ae7cf29a1baa68169b437e215a158df8801bbb4dd2e61eea6b237d1da3cd33bf'
+});
+const REVIEWED_PROMOTION_PREFLIGHT_SOURCE_SHA256 = Object.freeze({
+  'CHANGELOG.md': '940bbd4a51f953de6af228248244819ec2ebf93645e9f55f1feab5c9d3b37e3e',
+  '.github/workflows/pages.yml': 'f694db57bce2edcbb916ee1c845f7d33b9245546f063421dadace235073fddfa',
+  '.github/workflows/validate.yml': '8182b87623070f8260433fa9eb58909e75676705fee2511cd5efe8c874e9c31e',
+  'config/github-promotion-policy.v1.json': 'a1dc1ec4b814f09e668b1b1d6669853240dcb732541e0d0b580ec3f5a959215c',
+  'config/pages-stage.v1.json': '22da77567b94f1bfa83d345d4613b11535e374b9c39de16245dcbc7820939bd6',
+  'config/promotion-lifecycle-policy.v1.json': '61f2a9c91fe24ec232af591385f3d3995c3c4412015e816fc27b9b0142777246',
+  'config/promotion-preflight-policy.v1.json': '34d6a6e59657a0e92c745c6323891774dfbc1097d37f4b383facec52f8bbd231',
+  'config/releases/v0.1.1.json': '0636d635b07664b11715705a4e11f87ba92b53a0b6f93416da0f597463a29d49',
+  'scripts/github-control-audit.mjs': '2b5d5fd0aa23056bc00bcfa01cf11b24f345465d9c4f98a403f858a16f010995',
+  'scripts/promotion-lifecycle.mjs': '7d775ee0d5f3c8ac4a081cede2434fffb3509f6ae8e5fa5c3056ca8310fca34c',
+  'scripts/promotion-preflight.mjs': '976b90f196bfc05232f7f1fb1b5731af28ddd5bd88737b91724b63c84de530db',
+  'scripts/release-assets.mjs': '8841efff842e00dd93bf69a849b7701ae519bfd70b9bc5618c440ee37b90f83f',
+  'scripts/release-ref.mjs': 'c2d7f2be57441fedf046f84e4c70e911ee8ebb7f911b65742b391f274a038a4b',
+  'scripts/release-spec.mjs': 'ba57496454c0e565bd6b315e8c52aba6998774aff27d6c55eac32e141074e89f',
+  'scripts/stage-site.mjs': '66f6501b44f8377049c4a3ce5398138d669dd2103c0f6f3d18ccfbc7daa35aed',
+  'scripts/strict-json.mjs': '32319f64ee28a8e4c0329d24ef26c8ef26c94f12d77f9f20656f7e744111de7e',
+  'scripts/verify-stable-bundle.mjs': '6e536de00ca8def993a7628f500fc4712c23b14255cbe5231ffed48852f6828f',
+  'tests/promotion-preflight.test.mjs': '162cacc124923ce555c4324667ee63affb9b8622d269ce2d43d69e793703f9b9'
 });
 const REVIEWED_WORKFLOW_SOURCE_SHA256 = Object.freeze({
   'pages.yml': 'f694db57bce2edcbb916ee1c845f7d33b9245546f063421dadace235073fddfa',
@@ -80,6 +104,7 @@ const EXPECTED_PACKAGE_SCRIPTS = Object.freeze({
   'test:release-finalization-plan': 'node --test tests/release-finalization-plan.test.mjs',
   'test:promotion-controls': 'node --test tests/github-control-audit.test.mjs',
   'test:promotion-lifecycle': 'node --test tests/promotion-lifecycle.test.mjs',
+  'test:promotion-preflight': SAFE_PROMOTION_PREFLIGHT_TEST_COMMAND,
   'test:post-deploy-smoke': SAFE_POST_DEPLOY_TEST_COMMAND,
   'test:workflow-policy': 'node --test tests/workflow-policy.test.mjs',
   'test:site-contract:unit': 'node --test tests/site-contract-test.test.cjs',
@@ -89,7 +114,7 @@ const EXPECTED_PACKAGE_SCRIPTS = Object.freeze({
   'test:publication-compatibility': 'node --test tests/publication-compatibility.test.cjs',
   'test:export-human-urls': 'node --test tests/export-human-urls.test.cjs',
   'test:release-identity': 'node --test tests/release-identity.test.cjs',
-  'test:publication': 'npm run test:release-spec && npm run test:release-ref && npm run test:release-assets && npm run test:release-finalization-plan && npm run test:promotion-controls && npm run test:promotion-lifecycle && npm run test:post-deploy-smoke && npm run test:workflow-policy && npm run test:stage-site && npm run test:site-contract:unit && npm run test:performance-budget:unit && npm run test:publication-compatibility && npm run test:export-human-urls && npm run stage:site && npm run test:release-identity && npm run test:performance-budget && npm run test:site-contract',
+  'test:publication': 'npm run test:release-spec && npm run test:release-ref && npm run test:release-assets && npm run test:release-finalization-plan && npm run test:promotion-controls && npm run test:promotion-lifecycle && npm run test:promotion-preflight && npm run test:post-deploy-smoke && npm run test:workflow-policy && npm run test:stage-site && npm run test:site-contract:unit && npm run test:performance-budget:unit && npm run test:publication-compatibility && npm run test:export-human-urls && npm run stage:site && npm run test:release-identity && npm run test:performance-budget && npm run test:site-contract',
   test: 'npm run test:core && npm run test:publication'
 });
 const PULL_REQUEST_ONLY = "github.event_name == 'pull_request'";
@@ -302,6 +327,11 @@ function assertNoControlPlaneCapabilities(workflow, label, { allowPagesArtifact 
       value,
       /scripts[\\/]promotion-lifecycle\.mjs|\bnpm\s+run\s+plan:promotion-lifecycle\b/iu,
       `${label} must not execute the operational promotion-lifecycle plan entry point`
+    );
+    assert.doesNotMatch(
+      value,
+      /scripts[\\/]promotion-preflight\.mjs|tests[\\/]promotion-preflight\.test\.mjs|\bnpm\s+run\s+test:promotion-preflight\b/iu,
+      `${label} must not directly invoke promotion-preflight code or its fixture tests`
     );
     assert.doesNotMatch(
       value,
@@ -703,9 +733,11 @@ function commandWithoutAllowedLocalTestReferences(command) {
     .replaceAll('test:post-deploy-smoke', 'test:safe-local-smoke')
     .replaceAll('test:promotion-controls', 'test:read-only-control-tests')
     .replaceAll('test:promotion-lifecycle', 'test:fixture-lifecycle-tests')
+    .replaceAll('test:promotion-preflight', 'test:fixture-reference-tests')
     .replace(/tests[\\/]post-deploy-smoke\.test\.mjs/giu, 'tests/safe-local-smoke.test.mjs')
     .replace(/scripts[\\/]promotion-lifecycle\.mjs/giu, 'scripts/fixture-event-plan.mjs')
-    .replace(/tests[\\/]promotion-lifecycle\.test\.mjs/giu, 'tests/fixture-event-plan.test.mjs');
+    .replace(/tests[\\/]promotion-lifecycle\.test\.mjs/giu, 'tests/fixture-event-plan.test.mjs')
+    .replace(/tests[\\/]promotion-preflight\.test\.mjs/giu, 'tests/fixture-reference-closure.test.mjs');
 }
 
 function assertNoPackagePromotionCapabilities(scripts) {
@@ -793,6 +825,7 @@ function validatePackageTestClosure(
     'test:release-finalization-plan',
     'test:promotion-controls',
     'test:promotion-lifecycle',
+    'test:promotion-preflight',
     'test:post-deploy-smoke',
     'test:workflow-policy'
   ]) {
@@ -802,6 +835,7 @@ function validatePackageTestClosure(
   assert.equal(scripts['test:stable-bundle'], 'node --test tests/stable-bundle.test.mjs');
   assert.equal(scripts['test:promotion-controls'], 'node --test tests/github-control-audit.test.mjs');
   assert.equal(scripts['test:promotion-lifecycle'], 'node --test tests/promotion-lifecycle.test.mjs');
+  assert.equal(scripts['test:promotion-preflight'], SAFE_PROMOTION_PREFLIGHT_TEST_COMMAND);
   assert.equal(scripts['test:post-deploy-smoke'], 'node --test tests/post-deploy-smoke.test.mjs');
   assert.equal(scripts['test:workflow-policy'], 'node --test tests/workflow-policy.test.mjs');
   assert.equal(
@@ -848,6 +882,16 @@ function validatePackageTestClosure(
     reachable.has('test:promotion-lifecycle'),
     true,
     'ordinary validation must retain the reviewed in-memory fixture lifecycle tests'
+  );
+  assert.equal(
+    reachable.has('test:promotion-preflight'),
+    true,
+    'ordinary validation must retain the reviewed pure in-memory fixture-reference tests'
+  );
+  assert.equal(
+    Object.hasOwn(scripts, 'plan:promotion-preflight'),
+    false,
+    'promotion-preflight must not expose a plan or operational CLI entry point'
   );
   assert.equal(
     reachable.has('test:stable-bundle'),
@@ -1146,6 +1190,134 @@ function validatePromotionLifecycleSourceBoundary(reviewedSources = reviewedProm
   }
 }
 
+function validatePromotionPreflightSourceBoundary(reviewedSources = reviewedPromotionPreflightSources) {
+  assert.deepEqual(
+    [...reviewedSources.keys()].sort(),
+    Object.keys(REVIEWED_PROMOTION_PREFLIGHT_SOURCE_SHA256).sort(),
+    'promotion-preflight closure must contain exactly the reviewed resolver, fixture test, and transitive trust-anchor sources'
+  );
+  for (const [relativePath, bytes] of reviewedSources) {
+    assert.ok(Buffer.isBuffer(bytes), `promotion-preflight closure is missing ${relativePath}`);
+  }
+
+  const resolver = reviewedSources.get('scripts/promotion-preflight.mjs').toString('utf8');
+  const tests = reviewedSources.get('tests/promotion-preflight.test.mjs').toString('utf8');
+  const policyBytes = reviewedSources.get('config/promotion-preflight-policy.v1.json');
+  const policy = parseStrictJson(policyBytes, 'promotion preflight policy');
+  const staticImports = (source, label) => {
+    const specifiers = [...source.matchAll(/^import(?:\s+[\s\S]*?\s+from\s+|\s*)['"]([^'"]+)['"];/gmu)]
+      .map(match => match[1])
+      .sort();
+    assert.equal(
+      (source.match(/^import\b/gmu) || []).length,
+      specifiers.length,
+      `${label} may use only explicit reviewed static imports`
+    );
+    return specifiers;
+  };
+
+  assert.deepEqual(staticImports(resolver, 'promotion-preflight resolver'), [
+    './strict-json.mjs',
+    'node:crypto',
+    'node:util'
+  ], 'promotion-preflight resolver must remain filesystem-, path-, process-, network-, and transport-free');
+  assert.deepEqual(staticImports(tests, 'promotion-preflight hostile tests'), [
+    '../scripts/promotion-preflight.mjs',
+    'node:assert/strict',
+    'node:crypto',
+    'node:fs/promises',
+    'node:path',
+    'node:test',
+    'node:url'
+  ], 'promotion-preflight tests may use only the exact read-only fixture loader and in-memory resolver imports');
+  assert.equal(
+    (tests.match(/^import \{ readFile \} from 'node:fs\/promises';$/gmu) || []).length,
+    1,
+    'promotion-preflight tests may import only readFile from the filesystem API'
+  );
+
+  for (const [label, source] of [
+    ['promotion-preflight resolver', resolver],
+    ['promotion-preflight hostile tests', tests]
+  ]) {
+    assert.doesNotMatch(source, /(?:^|['"])(?:node:)?(?:http|https|http2|net|tls|dgram|dns)(?:\/|['"])/mu, `${label} must not import a network primitive`);
+    assert.doesNotMatch(source, /\b(?:fetch|WebSocket|EventSource|XMLHttpRequest|getBuiltinModule|sendBeacon)\s*\(/u, `${label} must not invoke a network client or dynamic builtin resolver`);
+    assert.doesNotMatch(source, /\bimport\s*\(/u, `${label} must not use a dynamic import`);
+    assert.doesNotMatch(source, /node:child_process|\b(?:execFile|execFileSync|execSync|spawn|spawnSync|fork)\s*\(/u, `${label} must not launch a subprocess`);
+    assert.doesNotMatch(source, /\bprocess\.env\b/u, `${label} must not inspect ambient environment controls or credentials`);
+    assert.doesNotMatch(
+      source,
+      /\b(?:GH_TOKEN|GITHUB_TOKEN|ACTIONS_RUNTIME_TOKEN|NODE_AUTH_TOKEN)\b|\$\{\{\s*(?:secrets\.|github\.token\b)|\bAuthorization\s*:/u,
+      `${label} must not receive or construct a token or credential`
+    );
+    assert.doesNotMatch(
+      source,
+      /\b(?:writeFile|appendFile|mkdir|mkdtemp|rm|rmdir|unlink|rename|copyFile|cp|symlink|link|chmod|chown|truncate|createWriteStream)\s*\(/u,
+      `${label} must not expose a filesystem writer`
+    );
+    assert.doesNotMatch(source, /--(?:execute|adapter|output)\b/u, `${label} must not expose execution, adapter, or output CLI flags`);
+    assert.doesNotMatch(source, /\bprocess\.argv\b|\bparseArgs\s*\(/u, `${label} must not expose a CLI entry point`);
+    assert.doesNotMatch(
+      source,
+      /\b(?:curl|wget|Invoke-WebRequest|Invoke-RestMethod|gh)\b|\bgit\s+(?:push|tag|update-ref)\b|deploy-pages|upload-release-asset/iu,
+      `${label} must not expose an external mutation client`
+    );
+  }
+
+  assert.deepEqual(
+    [...resolver.matchAll(/^export (?:function|const) ([A-Za-z_$][\w$]*)/gmu)].map(match => match[1]).sort(),
+    ['promotionPreflightConstants', 'resolveLifecycleReferenceClosure'],
+    'promotion-preflight must export only its pure resolver and inert constants'
+  );
+  assert.match(resolver, /export function resolveLifecycleReferenceClosure\(input\)/u);
+  assert.match(resolver, /decision:\s*'resolved-fixture-reference-closure'/u);
+  assert.match(resolver, /nextAction:\s*'continue-to-b2\.3-b-read-only-preflight'/u);
+  assert.match(resolver, /productionEligible:\s*false/u);
+  assert.match(resolver, /externalMutationAuthorized:\s*false/u);
+  assert.match(resolver, /authenticatedAuthority:\s*false/u);
+  assert.match(resolver, /fixture-does-not-attest-verifier-execution/u);
+  assert.match(resolver, /fixture-does-not-prove-staged-payload-derivation-from-source-commit/u);
+  assert.match(tests, /current planned release specification cannot substantiate source-finalized/u);
+
+  assert.equal(policy.status, 'planned', 'promotion-preflight policy must remain planned');
+  assert.equal(policy.mode, 'fixture-only', 'promotion-preflight policy must remain fixture-only');
+  assert.equal(policy.subject?.repositoryFullName, 'neb6dav/ai_tech_tree', 'promotion-preflight policy must retain the fixed repository');
+  assert.equal(policy.subject?.tag, 'v0.1.1', 'promotion-preflight policy must retain the fixed release tag');
+  assert.equal(policy.lifecyclePolicyPath, 'config/promotion-lifecycle-policy.v1.json');
+  assert.deepEqual(policy.lifecycleReferenceRoles, [
+    'source-finalization-record',
+    'source-finalization-authorization',
+    'annotated-tag-verification-record',
+    'annotated-tag-authorization',
+    'stable-bundle-verification-record',
+    'stable-bundle-build-authorization'
+  ]);
+  assert.deepEqual(policy.outcomes, ['reconcile', 'resolved-fixture-reference-closure']);
+  assert.deepEqual(
+    policy.requiredCommittedPaths.map(item => item.path),
+    Object.keys(REVIEWED_PROMOTION_PREFLIGHT_SOURCE_SHA256).filter(relativePath => relativePath !== 'tests/promotion-preflight.test.mjs'),
+    'promotion-preflight policy must prove the complete reviewed committed-source inventory'
+  );
+  assert.deepEqual(policy.reviewedWorkflowBytes, {
+    path: '.github/workflows/pages.yml',
+    role: 'reviewed-workflow-pages',
+    sha256: REVIEWED_WORKFLOW_SOURCE_SHA256['pages.yml']
+  });
+  assert.equal(
+    policy.reviewedValidationWorkflowSha256,
+    REVIEWED_WORKFLOW_SOURCE_SHA256['validate.yml'],
+    'promotion-preflight policy must retain the reviewed validation workflow byte lock'
+  );
+
+  for (const [relativePath, expectedDigest] of Object.entries(REVIEWED_PROMOTION_PREFLIGHT_SOURCE_SHA256)) {
+    assert.equal(
+      createHash('sha256').update(reviewedSources.get(relativePath)).digest('hex'),
+      expectedDigest,
+      `${relativePath} must match its reviewed promotion-preflight source-byte SHA-256`
+    );
+  }
+}
+
 const [
   workflowNames,
   validateBytes,
@@ -1159,6 +1331,9 @@ const [
   promotionLifecycleScriptBytes,
   promotionLifecycleTestBytes,
   promotionLifecyclePolicyBytes,
+  promotionPreflightScriptBytes,
+  promotionPreflightTestBytes,
+  promotionPreflightPolicyBytes,
   packageLockBytes,
   nvmrcBytes,
   nodeVersionBytes
@@ -1175,6 +1350,9 @@ const [
   readFile(PROMOTION_LIFECYCLE_SCRIPT_PATH),
   readFile(PROMOTION_LIFECYCLE_TEST_PATH),
   readFile(PROMOTION_LIFECYCLE_POLICY_PATH),
+  readFile(PROMOTION_PREFLIGHT_SCRIPT_PATH),
+  readFile(PROMOTION_PREFLIGHT_TEST_PATH),
+  readFile(PROMOTION_PREFLIGHT_POLICY_PATH),
   readFile(PACKAGE_LOCK_PATH),
   readFile(NVMRC_PATH),
   readFile(NODE_VERSION_PATH)
@@ -1192,6 +1370,12 @@ const reviewedPromotionControlSources = new Map([
 ]);
 const reviewedPromotionLifecycleSources = new Map(await Promise.all(
   Object.keys(REVIEWED_PROMOTION_LIFECYCLE_SOURCE_SHA256).map(async relativePath => [
+    relativePath,
+    await readFile(path.join(REPOSITORY_ROOT, ...relativePath.split('/')))
+  ])
+));
+const reviewedPromotionPreflightSources = new Map(await Promise.all(
+  Object.keys(REVIEWED_PROMOTION_PREFLIGHT_SOURCE_SHA256).map(async relativePath => [
     relativePath,
     await readFile(path.join(REPOSITORY_ROOT, ...relativePath.split('/')))
   ])
@@ -1232,6 +1416,10 @@ test('promotion-control plan and tests remain network-incapable and source-locke
 
 test('promotion-lifecycle plan and fixture tests remain capability-free and source-locked', () => {
   validatePromotionLifecycleSourceBoundary();
+});
+
+test('promotion-preflight resolver and hostile fixtures remain pure, fixture-only, and source-locked', () => {
+  validatePromotionPreflightSourceBoundary();
 });
 
 test('promotion-control source policy rejects network, subprocess, and trust-anchor drift', async t => {
@@ -1302,6 +1490,68 @@ test('promotion-lifecycle source policy rejects capability and trust-anchor drif
   }
 });
 
+test('promotion-preflight source policy rejects capability, CLI, and transitive trust-anchor drift', async t => {
+  const resolver = promotionPreflightScriptBytes.toString('utf8');
+  const tests = promotionPreflightTestBytes.toString('utf8');
+  const policy = promotionPreflightPolicyBytes.toString('utf8');
+  const mutations = [
+    ['filesystem import', 'scripts/promotion-preflight.mjs', `${resolver}\nimport { readFile } from 'node:fs/promises';\n`],
+    ['path import', 'scripts/promotion-preflight.mjs', `${resolver}\nimport path from 'node:path';\n`],
+    ['HTTP import', 'scripts/promotion-preflight.mjs', `${resolver}\nimport http from 'node:http';\n`],
+    ['direct network client', 'scripts/promotion-preflight.mjs', `${resolver}\nawait fetch('https://example.invalid/');\n`],
+    ['dynamic import', 'scripts/promotion-preflight.mjs', `${resolver}\nawait import('node:fs');\n`],
+    ['child process', 'scripts/promotion-preflight.mjs', `${resolver}\nspawnSync('git', ['status']);\n`],
+    ['ambient environment', 'scripts/promotion-preflight.mjs', `${resolver}\nconst ambient = process.env;\n`],
+    ['token', 'scripts/promotion-preflight.mjs', `${resolver}\nconst GITHUB_TOKEN = 'fixture';\n`],
+    ['filesystem writer', 'scripts/promotion-preflight.mjs', `${resolver}\nawait writeFile('closure.json', '{}');\n`],
+    ['adapter CLI', 'scripts/promotion-preflight.mjs', `${resolver}\nconst flag = '--adapter';\n`],
+    ['output CLI', 'scripts/promotion-preflight.mjs', `${resolver}\nconst flag = '--output';\n`],
+    ['execution CLI', 'scripts/promotion-preflight.mjs', `${resolver}\nconst flag = '--execute';\n`],
+    ['argv CLI', 'scripts/promotion-preflight.mjs', `${resolver}\nconst argv = process.argv;\n`],
+    [
+      'test filesystem writer binding',
+      'tests/promotion-preflight.test.mjs',
+      tests.replace("import { readFile } from 'node:fs/promises';", "import { readFile, writeFile } from 'node:fs/promises';")
+    ],
+    ['networked hostile test', 'tests/promotion-preflight.test.mjs', `${tests}\nawait fetch('https://example.invalid/');\n`],
+    ['subprocess hostile test', 'tests/promotion-preflight.test.mjs', `${tests}\nspawnSync('git', ['status']);\n`],
+    ['environment-reading hostile test', 'tests/promotion-preflight.test.mjs', `${tests}\nconst ambient = process.env;\n`],
+    ['operational hostile test flag', 'tests/promotion-preflight.test.mjs', `${tests}\nconst flag = '--execute';\n`],
+    [
+      'policy trust anchor',
+      'config/promotion-preflight-policy.v1.json',
+      policy.replace('"repositoryFullName": "neb6dav/ai_tech_tree"', '"repositoryFullName": "fork/ai_tech_tree"')
+    ]
+  ];
+  for (const [name, relativePath, hostileSource] of mutations) {
+    await t.test(name, () => {
+      assert.notEqual(
+        hostileSource,
+        reviewedPromotionPreflightSources.get(relativePath).toString('utf8'),
+        `${name} mutation must change its target source`
+      );
+      const sources = new Map(reviewedPromotionPreflightSources);
+      sources.set(relativePath, Buffer.from(hostileSource));
+      assert.throws(() => validatePromotionPreflightSourceBoundary(sources));
+    });
+  }
+
+  for (const relativePath of Object.keys(REVIEWED_PROMOTION_PREFLIGHT_SOURCE_SHA256).filter(pathname => ![
+    'config/promotion-preflight-policy.v1.json',
+    'scripts/promotion-preflight.mjs',
+    'tests/promotion-preflight.test.mjs'
+  ].includes(pathname))) {
+    await t.test(`${relativePath} transitive drift`, () => {
+      const sources = new Map(reviewedPromotionPreflightSources);
+      sources.set(relativePath, Buffer.concat([sources.get(relativePath), Buffer.from('\n')]));
+      assert.throws(
+        () => validatePromotionPreflightSourceBoundary(sources),
+        /reviewed promotion-preflight source-byte SHA-256/u
+      );
+    });
+  }
+});
+
 test('synthetic helper policy rejects future network and tag-porcelain allowlist entries', async t => {
   const source = syntheticFixtureBytes.toString('utf8');
   const mutations = [
@@ -1361,6 +1611,8 @@ test('workflow policy rejects capability and parity regressions', async t => {
     ['production smoke command', workflow => { workflow.jobs['build-and-test'].steps.push({ run: 'node scripts/post-deploy-smoke.mjs --execute' }); }],
     ['promotion-control audit command', workflow => { workflow.jobs['build-and-test'].steps.push({ run: 'npm run plan:promotion-controls' }); }],
     ['promotion-lifecycle plan command', workflow => { workflow.jobs['build-and-test'].steps.push({ run: 'npm run plan:promotion-lifecycle' }); }],
+    ['direct promotion-preflight test command', workflow => { workflow.jobs['build-and-test'].steps.push({ run: 'npm run test:promotion-preflight' }); }],
+    ['direct promotion-preflight module invocation', workflow => { workflow.jobs['build-and-test'].steps.push({ run: 'node scripts/promotion-preflight.mjs' }); }],
     ['ambient GitHub token', workflow => { workflow.jobs['build-and-test'].env = { GITHUB_TOKEN: '${{ github.token }}' }; }],
     ['stable asset command', workflow => {
       stepByName(workflow.jobs['candidate-assets'], 'Build exact candidate assets').run =
@@ -1517,6 +1769,12 @@ test('Pages and package policies reject promotion or production-smoke regression
       `${EXPECTED_PAGES_BUILD}npm run plan:promotion-lifecycle\n`;
     assert.throws(() => validatePagesHold(hostile));
   });
+  await t.test('promotion-preflight enters Pages build directly', () => {
+    const hostile = clone(pagesWorkflow);
+    stepByName(hostile.jobs.build, 'Build, validate, and stage the public artifact').run =
+      `${EXPECTED_PAGES_BUILD}npm run test:promotion-preflight\n`;
+    assert.throws(() => validatePagesHold(hostile));
+  });
   await t.test('production smoke enters npm test closure', () => {
     const hostile = clone(packageDocument);
     hostile.scripts.test += ' && npm run smoke:production';
@@ -1535,6 +1793,11 @@ test('Pages and package policies reject promotion or production-smoke regression
       assert.throws(() => validatePackageTestClosure(hostile));
     });
   }
+  await t.test('promotion-preflight cannot gain a plan or operational entry point', () => {
+    const hostile = clone(packageDocument);
+    hostile.scripts['plan:promotion-preflight'] = 'node scripts/promotion-preflight.mjs';
+    assert.throws(() => validatePackageTestClosure(hostile));
+  });
   await t.test('semicolon cannot conceal an npm production-smoke dependency', () => {
     const hostile = clone(packageDocument);
     hostile.scripts.test += '; npm run smoke:production';

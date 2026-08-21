@@ -1,0 +1,159 @@
+{
+  "schemaVersion": "1.0.0",
+  "status": "planned",
+  "mode": "fixture-only",
+  "lifecyclePolicyPath": "config/promotion-lifecycle-policy.v1.json",
+  "subject": {
+    "repositoryOwner": "neb6dav",
+    "repositoryName": "ai_tech_tree",
+    "repositoryFullName": "neb6dav/ai_tech_tree",
+    "gitObjectFormat": "sha1",
+    "version": "0.1.1",
+    "tag": "v0.1.1",
+    "releaseSpecPath": "config/releases/v0.1.1.json",
+    "defaultBranch": "main",
+    "protectedMainRef": "refs/remotes/origin/main"
+  },
+  "limits": {
+    "maxPolicyBytes": 16384,
+    "maxLifecycleReceiptBytes": 8192,
+    "maxReferenceCandidates": 40,
+    "maxReferenceBytes": 83886080,
+    "maxReferenceJsonBytes": 4194304,
+    "maxAggregateReferenceBytes": 100663296,
+    "maxGitTreeEntries": 4096,
+    "maxStableManifestFiles": 4096
+  },
+  "lifecycleReferenceRoles": [
+    "source-finalization-record",
+    "source-finalization-authorization",
+    "annotated-tag-verification-record",
+    "annotated-tag-authorization",
+    "stable-bundle-verification-record",
+    "stable-bundle-build-authorization"
+  ],
+  "requiredCommittedPaths": [
+    {
+      "path": "CHANGELOG.md",
+      "role": "committed-changelog"
+    },
+    {
+      "path": ".github/workflows/pages.yml",
+      "role": "reviewed-workflow-pages"
+    },
+    {
+      "path": ".github/workflows/validate.yml",
+      "role": "committed-workflow-validate"
+    },
+    {
+      "path": "config/github-promotion-policy.v1.json",
+      "role": "committed-policy-github-promotion"
+    },
+    {
+      "path": "config/pages-stage.v1.json",
+      "role": "committed-policy-pages-stage"
+    },
+    {
+      "path": "config/promotion-lifecycle-policy.v1.json",
+      "role": "committed-policy-promotion-lifecycle"
+    },
+    {
+      "path": "config/promotion-preflight-policy.v1.json",
+      "role": "committed-policy-promotion-preflight"
+    },
+    {
+      "path": "config/releases/v0.1.1.json",
+      "role": "committed-release-spec"
+    },
+    {
+      "path": "scripts/github-control-audit.mjs",
+      "role": "committed-tool-github-control-audit"
+    },
+    {
+      "path": "scripts/promotion-lifecycle.mjs",
+      "role": "committed-tool-promotion-lifecycle"
+    },
+    {
+      "path": "scripts/promotion-preflight.mjs",
+      "role": "committed-tool-promotion-preflight"
+    },
+    {
+      "path": "scripts/release-assets.mjs",
+      "role": "committed-tool-release-assets"
+    },
+    {
+      "path": "scripts/release-ref.mjs",
+      "role": "committed-tool-release-ref"
+    },
+    {
+      "path": "scripts/release-spec.mjs",
+      "role": "committed-tool-release-spec"
+    },
+    {
+      "path": "scripts/stage-site.mjs",
+      "role": "committed-tool-stage-site"
+    },
+    {
+      "path": "scripts/strict-json.mjs",
+      "role": "committed-tool-strict-json"
+    },
+    {
+      "path": "scripts/verify-stable-bundle.mjs",
+      "role": "committed-tool-stable-bundle-verifier"
+    }
+  ],
+  "requiredGitTrees": [
+    {
+      "directory": "",
+      "role": "source-tree-root"
+    },
+    {
+      "directory": ".github",
+      "role": "source-tree-dot-github"
+    },
+    {
+      "directory": ".github/workflows",
+      "role": "source-tree-dot-github-workflows"
+    },
+    {
+      "directory": "config",
+      "role": "source-tree-config"
+    },
+    {
+      "directory": "config/releases",
+      "role": "source-tree-config-releases"
+    },
+    {
+      "directory": "scripts",
+      "role": "source-tree-scripts"
+    }
+  ],
+  "reviewedWorkflowBytes": {
+    "path": ".github/workflows/pages.yml",
+    "role": "reviewed-workflow-pages",
+    "sha256": "f694db57bce2edcbb916ee1c845f7d33b9245546f063421dadace235073fddfa"
+  },
+  "reviewedValidationWorkflowSha256": "8182b87623070f8260433fa9eb58909e75676705fee2511cd5efe8c874e9c31e",
+  "stableAssetRoles": [
+    {
+      "suffix": ".SHA256SUMS",
+      "role": "stable-asset-checksums"
+    },
+    {
+      "suffix": ".notes.md",
+      "role": "stable-asset-notes"
+    },
+    {
+      "suffix": ".release-manifest.json",
+      "role": "stable-asset-release-manifest"
+    },
+    {
+      "suffix": ".tar",
+      "role": "stable-asset-tar"
+    }
+  ],
+  "outcomes": [
+    "reconcile",
+    "resolved-fixture-reference-closure"
+  ]
+}

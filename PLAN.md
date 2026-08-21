@@ -237,12 +237,25 @@ last_verified_commands:
     runtime: "GitHub Actions Node v24.19.0/npm 11.17.0 plus exact synthetic Node v24.14.1/npm 11.11.0"
     verified_by: "root plus read-only reconciliation agent"
     scope: "Workflow 32430202387; all seven jobs green; tested merge SHA 7142559cfcb850769c1f9a12d57687d74ef5bbb7 has the same tree as pushed head 9e4e8dc; preview artifact 9428820596 passed 1,465 references, release identity 2/2, and all seven performance checks; manifest SHA-256 bb5078b1329b80aa4db59af72dcee22e1cb25f2c72f62c10d1c9b8f4c2108be1; exact 15-file inventory, 17/17 inputs, 86 tracked entries, and zero filters; no live control claim, tag, release, setting, deployment, or production request"
+  - command: "Reconcile C4.4-B2.2 verification-ledger hosted run"
+    status: "PASS"
+    runtime: "GitHub Actions on Windows and Ubuntu"
+    verified_by: "root plus integration agent"
+    scope: "Workflow 32430854164 at ledger head 09d231c; all seven jobs green; no artifact download, live audit, tag, release, setting, deployment, or production request"
+  - command: "npm run test:promotion-preflight; npm run test:workflow-policy; node --check; git diff --check"
+    status: "PASS"
+    runtime: "Node v24.14.1 and npm 11.11.0"
+    verified_by: "root plus core implementation and integration agents"
+    scope: "C4.4-B2.3-A byte-stable local integration: 69 pure fixture-reference tests and 169 workflow/package-policy tests; exact 17-file committed trust inventory plus hostile-test source lock; policy 34d6a6e5...bd231, resolver 976b90f1...530db, and tests 162cacc1...3f9b9; workflow inventory and bytes unchanged; no preflight plan CLI, writer, transport, subprocess, token, execution mode, output path, or external mutation capability; verifier execution and staged-payload derivation remain explicitly unattested"
+  - command: "Independent C4.4-B2.3-A reference-closure correctness review"
+    status: "PASS after findings resolved"
+    verified_by: "root plus two independent read-only reviewers"
+    scope: "Corrected out-of-tree Pages proof, unreachable candidate cap, prototype and shared-intrinsic execution, noncanonical tar padding, extra workflow admission, __proto__ key loss, and unbound stable-notes semantics; replacement final review passed 238/238 focused checks and returned SHIP with no remaining P1/P2; output explicitly disclaims verifier execution and staged-payload derivation"
 next_exact_action: >-
-  Implement C4.4-B2.3-A as a pure exact-reference and provenance-closure
-  checkpoint: resolve the six lifecycle byte references, cross-bind repository,
-  release-spec, committed-tool, workflow, annotated-tag, and stable-bundle
-  fixture evidence, keep every authority and production flag false, and add no
-  CLI, network, writer, rollback, release, or deployment capability.
+  Commit the hostile-reviewed C4.4-B2.3-A eight-file snapshot, run the exact-
+  clean full repository gate at that commit, push it, and reconcile the hosted
+  seven-job validation and downloaded preview before recording A complete and
+  beginning B2.3-B.
 known_blockers:
   - "WP-011-B is stacked on verified draft PR #5 until WP-011-A is separately authorized to merge."
   - "No merge, annotated tag, GitHub Release, environment approval, or public deployment is authorized."
@@ -250,7 +263,7 @@ known_blockers:
   - "Browser performance metrics and automated preview screenshots remain pending WP-012-A."
   - "The github-pages environment has no required reviewer and permits administrator bypass; immutable GitHub Releases are disabled. These external controls require separate authorization before any C4 promotion run."
   - "No active no-bypass tag ruleset protects v0.1.1, and the verified production recovery artifact is local rather than durable and runner-accessible."
-release_gate_status: "wp_011_b_c4_4_b2_2_remote_verified_b2_3_a_ready"
+release_gate_status: "wp_011_b_c4_4_b2_3_a_local_hostile_verified_pending_commit"
 release_details:
   version: "v0.1.1"
   title: "Publication-contract repair"
@@ -276,13 +289,13 @@ release_details:
     active_checkpoint:
       id: "C4.4-B2.3-A"
       title: "Exact lifecycle-reference and provenance closure"
-      status: "ready_to_implement"
+      status: "local_hostile_verified_pending_checkpoint_commit"
       next_exact_action: >-
-        Add the pure promotion-preflight policy, resolver, hostile fixtures,
-        package/test closure, and documentation; require exact bounded bytes for
-        all six lifecycle references and retain fixture-only,
-        production-ineligible, no-mutation boundaries. Keep both workflows
-        byte-identical and defer fresh composite state guards and rollback to
+        Commit this exact eight-file snapshot, run the exact-clean full gate,
+        push, and reconcile hosted validation plus the downloaded preview.
+        Retain fixture-only reference closure, false production, mutation, and
+        authority flags, and explicit non-attestation of verifier execution and
+        staged-payload derivation; fresh composite state plus rollback remain
         B2.3-B and B3.
     scope:
       - "Publish stable and compatibility Opportunity endpoints."
@@ -545,6 +558,20 @@ therefore divided into independently reviewable and pushable checkpoints:
    durable rollback controls independently pass may an environment-gated manual
    workflow create a draft prerelease, verify uploaded assets, deploy exact
    stable bytes, run bounded production smoke, and publish the prerelease.
+
+C4.4-B2.3-A is limited to resolving exact, bounded, independently anchored
+fixture bytes for the six lifecycle evidence and authority roles and closing
+their repository, release-specification, Git-object, workflow, tag-object, and
+stable-bundle provenance. `resolved-fixture-reference-closure` is not an
+operational or promotion outcome: production eligibility, external mutation,
+and every authority flag remain false. Current planned release and lifecycle
+evidence cannot pass. B2.3-A validates self-consistent fixture bytes and raw
+Git-object relationships only: it does not attest that
+`verify-stable-bundle.mjs` executed and does not prove that the staged payload
+was derived by executing committed tools against the claimed source commit.
+Fresh composite control/operation-state guards remain C4.4-B2.3-B work; the
+durable runner-accessible bundle, storage proof, and rollback rehearsal remain
+C4.4-B3 work.
 
 The public lifecycle is monotonic: finalized commit, annotated tag, draft
 Release, deployed site, verified smoke, and published immutable Release are

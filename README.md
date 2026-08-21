@@ -174,12 +174,41 @@ cannot supply operational receipts, persist a decision, authorize an action, or
 turn a test outcome into evidence. The active workflow inventory remains
 exactly `pages.yml` and `validate.yml`, byte-for-byte unchanged.
 
-B2.2 is a decision vocabulary, not an operational state machine. B2.3 must
-still resolve the lifecycle evidence and authority references to exact bytes,
-bind live tool, workflow, release-specification, and annotated-tag facts,
-recheck freshness at use time, and handle operational ambiguity and rollback
-eligibility. B3 must still prove a durable, runner-accessible recovery bundle
-and its storage. No B2.2 result supplies a tag, Release, upload, deployment,
+C4.4-B2.3-A adds only a pure, in-memory fixture resolver for the six lifecycle
+evidence and authority references. It requires one complete, independently
+anchored, bounded byte candidate per role and closes those fixture bytes over
+the expected repository and release identity, raw committed Git objects,
+reviewed workflow and tool bytes, a ready release specification, an annotated
+tag object, and the exact four-file stable-bundle inventory. Its only outcomes
+are `reconcile` and `resolved-fixture-reference-closure`. The latter means only
+that the supplied fixture reference graph is internally closed; it is not a
+production-readiness, promotion, or authorization result. Every result remains
+fixture-only, production-ineligible, and external-mutation-unauthorized.
+
+B2.3-A validates self-consistent fixture bytes and raw Git-object relationships
+only. A fixture reference naming `scripts/verify-stable-bundle.mjs` does not
+attest that the verifier executed. Likewise, committed tool-byte membership and
+a self-consistent archive/manifest relationship do not prove that the staged
+payload was produced by executing those committed tools against the claimed
+source commit. Those execution and derivation facts remain unproven by this
+checkpoint.
+
+The sole package entry point added by B2.3-A is
+`test:promotion-preflight`, which runs pure in-memory hostile fixtures through
+ordinary `npm test`. There is no preflight plan or operational CLI, filesystem
+or network adapter, ambient token or environment input, subprocess, writer,
+output path, execution mode, or direct workflow invocation. The active
+`pages.yml` and `validate.yml` inventory and bytes remain unchanged. Current
+planned repository evidence cannot produce a resolved closure: the real
+release specification is not ready, current lifecycle/control evidence is
+fixture-only and promotion-ineligible, and no live audit has run.
+
+B2.3-A is reference closure, not an operational state machine. C4.4-B2.3-B
+must still bind fresh composite control and operation-state observations at use
+time, handle incomplete or ambiguous operations and retry safety, and retain
+all production and mutation authority as false. C4.4-B3 must still prove a
+durable, runner-accessible rollback bundle, storage access, and rehearsal.
+Nothing in B2.2 or B2.3-A supplies a tag, Release, upload, deployment,
 rollback, settings change, production request, or authority to perform one.
 
 The post-deployment verifier is network-free by default. It accepts only a separately supplied, exact local release manifest plus its SHA-256, annotated tag, and commit; rejects preview or internally inconsistent release identity; and prints the fixed-origin GET plan without contacting the site. A later, separately authorized promotion run must add `--execute` to perform the bounded 12-minute verification:

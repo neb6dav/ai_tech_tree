@@ -32,6 +32,7 @@
     "test:release-finalization-plan": "node --test tests/release-finalization-plan.test.mjs",
     "test:promotion-controls": "node --test tests/github-control-audit.test.mjs",
     "test:promotion-lifecycle": "node --test tests/promotion-lifecycle.test.mjs",
+    "test:promotion-preflight": "node --test tests/promotion-preflight.test.mjs",
     "test:post-deploy-smoke": "node --test tests/post-deploy-smoke.test.mjs",
     "test:workflow-policy": "node --test tests/workflow-policy.test.mjs",
     "test:site-contract:unit": "node --test tests/site-contract-test.test.cjs",
@@ -41,7 +42,7 @@
     "test:publication-compatibility": "node --test tests/publication-compatibility.test.cjs",
     "test:export-human-urls": "node --test tests/export-human-urls.test.cjs",
     "test:release-identity": "node --test tests/release-identity.test.cjs",
-    "test:publication": "npm run test:release-spec && npm run test:release-ref && npm run test:release-assets && npm run test:release-finalization-plan && npm run test:promotion-controls && npm run test:promotion-lifecycle && npm run test:post-deploy-smoke && npm run test:workflow-policy && npm run test:stage-site && npm run test:site-contract:unit && npm run test:performance-budget:unit && npm run test:publication-compatibility && npm run test:export-human-urls && npm run stage:site && npm run test:release-identity && npm run test:performance-budget && npm run test:site-contract",
+    "test:publication": "npm run test:release-spec && npm run test:release-ref && npm run test:release-assets && npm run test:release-finalization-plan && npm run test:promotion-controls && npm run test:promotion-lifecycle && npm run test:promotion-preflight && npm run test:post-deploy-smoke && npm run test:workflow-policy && npm run test:stage-site && npm run test:site-contract:unit && npm run test:performance-budget:unit && npm run test:publication-compatibility && npm run test:export-human-urls && npm run stage:site && npm run test:release-identity && npm run test:performance-budget && npm run test:site-contract",
     "test": "npm run test:core && npm run test:publication"
   },
   "dependencies": {

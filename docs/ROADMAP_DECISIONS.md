@@ -142,14 +142,38 @@ receipts, persist a decision, authorize an action, or elevate a test result to
 evidence. The active workflow inventory remains exactly `pages.yml` and
 `validate.yml`, byte-for-byte unchanged.
 
-B2.2 does not resolve the lifecycle evidence and authority references to exact
-bytes, bind the live tool, workflow, release specification, and annotated tag,
-recheck freshness at use time, or decide operational ambiguity and rollback
-eligibility; those remain B2.3 work. The durable, runner-accessible rollback
-package and its storage proof remain B3 work. Those checkpoints require their
-own review and authorization. Nothing in B2.1 or B2.2 authorizes a tag, Release,
-asset upload, deployment, publication, rollback, settings change, or production
-request.
+C4.4-B2.3-A resolves only fixture reference closure. It requires exact,
+independently anchored, bounded bytes for all six lifecycle evidence and
+authority roles, then closes those bytes over raw committed Git-object proof,
+the reviewed workflows and tools, a ready release specification, an annotated
+tag object, and the exact stable-bundle inventory. Its complete outcome
+vocabulary is `reconcile` and `resolved-fixture-reference-closure`; the latter
+describes internal fixture integrity only. Every result remains fixture-only,
+production-ineligible, and external-mutation-unauthorized.
+
+B2.3-A validates self-consistent fixture bytes and raw Git-object relationships
+only. A fixture reference to `scripts/verify-stable-bundle.mjs` is not evidence
+that the verifier executed, and committed tool-byte membership plus internally
+consistent archive/manifest bytes do not prove that the staged payload was
+derived by executing those committed tools against the claimed source commit.
+This checkpoint leaves both execution and derivation unproven.
+
+B2.3-A adds only the pure in-memory `test:promotion-preflight` suite to ordinary
+`npm test`. It adds no plan or operational CLI, transport, filesystem adapter,
+ambient environment or token, subprocess, writer, output, execution mode, or
+direct workflow invocation. The active workflow inventory remains exactly
+`pages.yml` and `validate.yml`, byte-for-byte unchanged. Current planned
+repository evidence cannot produce the resolved outcome: the real release
+specification is not ready, the current lifecycle/control evidence remains
+fixture-only and promotion-ineligible, and no live audit has run.
+
+C4.4-B2.3-B still must revalidate fresh composite control and operation state
+at use time, fail closed on ambiguity or unsafe retry state, and keep all
+production and mutation authority false. C4.4-B3 still must prove a durable,
+runner-accessible rollback bundle, storage access, and rehearsal. Those
+checkpoints require their own review and authorization. Nothing in B2.1,
+B2.2, or B2.3-A authorizes a tag, Release, asset upload, deployment,
+publication, rollback, settings change, or production request.
 
 ## Explicit deferrals
 

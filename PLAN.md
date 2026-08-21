@@ -2,17 +2,17 @@
 roadmap_version: 4
 active_release: "v1.0.0"
 release_mode: "source_checkpoints_until_v1.0.0"
-active_work_package: "v1.0.0-hosted-confirmation-and-final-authorization"
+active_work_package: "v1.0.0-final-authorization-hold"
 base_sha: "85108c78fa86c86634d4c0944839696369e687cd"
 product_boundary_sha: "53e3a4f9c0624096aede63e0345390a3c021bac0"
 working_branch: "codex/v0.1.1-minimal-to-v1"
 expanded_archive_branch: "archive/v0.1.1-expanded-release-safety-0870d47"
-last_completed_checkpoint: "v0.2.0"
+last_completed_checkpoint: "v1.0.0-stable-pre-tag-source-candidate"
 last_completed_local_checkpoint: "v1.0.0-stable-pre-tag-source-candidate"
 next_exact_action: >-
-  Require the exact v1.0.0 stable pre-tag source candidate with reviewed
-  cross-platform Lighthouse limits to pass the ubuntu-24.04 hosted gate, then
-  request separate authorization for annotated tagging and public deployment.
+  Await separate explicit authorization before creating an annotated v1.0.0
+  tag or performing any public deployment. Do not tag, deploy, or promote the
+  hosted-verified source candidate without that authorization.
 last_verified_commands:
   - command: "node scripts/lighthouse-budget.mjs --calibrate"
     status: "PASS"
@@ -26,6 +26,10 @@ last_verified_commands:
     status: "EXPECTED_LIMIT_REVISION"
     runtime: "ubuntu-24.04 image 20260816.277; Node v24.19.0; Lighthouse 13.4.1; Playwright 1.62.1; Chromium 151.0.7922.34 rev1234"
     scope: "Exact head b6f7200; profile e1e49f07; HTML 98a82501; six canonical samples established score range 44-48 and TBT range 325-440.5 ms; DOM 7728 and all non-Lighthouse gates passed"
+  - command: "GitHub Actions run 32489666292"
+    status: "PASS"
+    runtime: "ubuntu-24.04 image 20260816.277; Node v24.19.0; Lighthouse 13.4.1; Playwright 1.62.1; Chromium 151.0.7922.34 rev1234"
+    scope: "Exact head 04f702a/tree a75aebf; full gate, DOM 7728, Lighthouse medians 45/22729.34215/22920.53185/423.5/0, generated diff, and preview upload passed; no deployment"
   - command: "npm run build; npm test"
     status: "PASS"
     runtime: "win32 x64; Node v24.14.1"
@@ -42,11 +46,11 @@ source_checkpoints:
     status: "complete"
     purpose: "Canonical 15-lane data shadow, parity proof, atomic authoring cutover, and browser verification"
   - version: "v0.2.2"
-    status: "in_progress"
-    verification_state: "local_complete_hosted_unconfirmed"
+    status: "complete"
+    verification_state: "hosted_verified"
     purpose: "Calibrated local-origin performance regression gate and committed-generated-output policy confirmation"
   - version: "v1.0.0"
-    status: "local_complete_hosted_unconfirmed"
+    status: "hosted_verified_pre_tag"
     product_version: "1.0.0"
     release_state: "Stable"
     edition: "2026-08-21-stable-1"
@@ -130,9 +134,8 @@ Acceptance gate:
 
 ## v0.2.2 — performance calibration and repository-policy confirmation
 
-Status: local implementation and Windows calibration are complete; hosted
-confirmation is outstanding. This checkpoint remains in progress and is not
-yet established as reproducible on the configured `ubuntu-24.04` runner.
+Status: source checkpoint complete. Actions run `32489666292` passed the normal
+configured `ubuntu-24.04` gate with the reviewed cross-platform limits.
 
 Deliverables:
 
@@ -159,9 +162,9 @@ Acceptance gate:
   hosted maximum; and the paint and CLS limits are unchanged.
 - A reviewed exact-clean local gate passes with medians of score 50, FCP
   22,734.979 ms, LCP 22,893.525 ms, TBT 248 ms, and CLS 0.00082719.
-- The same blocking gate must pass on the configured `ubuntu-24.04` hosted
-  runner before this checkpoint is complete. The runner label and Node/npm
-  major-family declarations do not freeze an image or patch release.
+- Actions run `32489666292` passed the same blocking gate on the configured
+  `ubuntu-24.04` hosted runner. The runner label and Node/npm major-family
+  declarations do not freeze an image or patch release.
 - Documentation and test output describe the measurement only as a controlled
   regression signal and do not present it as live Pages or field performance.
 - The committed-generated-output decision is explicit and does not change the
@@ -169,10 +172,10 @@ Acceptance gate:
 
 ## v1.0.0 — stable release candidate
 
-Status: local source-candidate implementation and review are complete. The full
-build and test closure passes, and hostile review reports no open P1/P2. Hosted
-`ubuntu-24.04` confirmation on the exact committed candidate remains
-outstanding. The stable source identity is version `1.0.0`, release state
+Status: source-candidate implementation, review, and hosted verification are
+complete. The full local and `ubuntu-24.04` build/test closures pass, and
+hostile review reports no open P1/P2. The stable source identity is version
+`1.0.0`, release state
 `Stable`, edition `2026-08-21-stable-1`, dated 2026-08-21. `Stable` is artifact
 and data identity for the final pre-tag source bytes; it does not attest an
 annotated tag, deployment, or public promotion. Those remain separately
@@ -218,8 +221,8 @@ Acceptance gate:
 - Version `1.0.0`, edition `2026-08-21-stable-1`, date 2026-08-21, citation,
   application shell, generated exports, and staged manifest agree while the
   pre-tag manifest truthfully records that no release tag has been authorized.
-- The v0.2.2 gate receives the still-required `ubuntu-24.04` hosted-runner
-  confirmation before the v1 candidate is declared complete.
+- The v0.2.2 gate received `ubuntu-24.04` hosted-runner confirmation in Actions
+  run `32489666292` before the v1 source candidate was declared complete.
 - The final diff contains only product, data, documentation, and proportionate
   test changes required by this roadmap.
 

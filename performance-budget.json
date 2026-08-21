@@ -46,7 +46,7 @@
         "requiredRuns": 5,
         "requiredPlatform": "ubuntu-24.04",
         "sourcePlatform": "win32",
-        "canonicalConfirmation": "required",
+        "canonicalConfirmation": "confirmed",
         "profileSha256": "e1e49f07f8a53fa3adff45cb88d23d5c2cedbb4f1fc73bbda1fca067b4852f3a",
         "toolchain": {
           "lighthouseVersion": "13.4.1",

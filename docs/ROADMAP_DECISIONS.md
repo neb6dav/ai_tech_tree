@@ -75,12 +75,11 @@ at most 550 ms, and CLS of at most 0.02. The score floor remains five points
 below the hosted median, and the TBT ceiling rounds to roughly 25% above the
 hosted maximum. Paint and CLS limits are unchanged.
 
-These are controlled local-origin regression bounds, not live-user goals. A
-normal run on the configured `ubuntu-24.04` hosted runner remains required
-before the checkpoint is complete; the workflow label does not freeze the
-evolving runner image. Until that gate passes, `v0.2.2` is locally complete but
-hosted unconfirmed and must not be described as fully reproducible. The
-measurements are not live GitHub Pages delivery or real-user field performance.
+These are controlled local-origin regression bounds, not live-user goals. The
+normal configured `ubuntu-24.04` gate passed all five revised limits in Actions
+run `32489666292`, completing the `v0.2.2` source checkpoint. The workflow label
+does not freeze the evolving runner image, and the measurements are not live
+GitHub Pages delivery or real-user field performance.
 
 ## RD-009 — Freeze the v1 stable source-candidate contract
 
@@ -130,8 +129,8 @@ re-authorized:
 
 Generated publication artifacts remain committed through `v1.0.0`. The
 Windows source calibration plus the two reviewed Ubuntu observations establish
-the cross-platform limits recorded in RD-008. Canonical confirmation on a
-normal configured `ubuntu-24.04` hosted gate remains outstanding.
+the cross-platform limits recorded in RD-008. Actions run `32489666292`
+provided the normal configured `ubuntu-24.04` confirmation.
 
 ### Through 1.0
 

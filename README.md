@@ -4,6 +4,10 @@ The AI Research Tech Tree is a public, evidence-linked atlas of artificial-intel
 
 **Release channel: public beta.** This branch targets an untagged `v0.1.1` development edition; source builds and pull-request previews are not citable releases. The latest tagged release remains `v0.1.0`, and each staged preview records its exact commit and checksums in `release-manifest.json`. The atlas is a curated research aid, not a complete literature review, a peer-reviewed historical account, or a claim that every displayed relationship is causal. Records expose their available sources and review state so that gaps can be inspected and improved in public.
 
+The repository is advancing through source checkpoints at `v0.1.1`, `v0.2.0`,
+and `v0.2.2`; only `v1.0.0` is the next public release target. See
+[`PLAN.md`](PLAN.md) for the bounded product milestones and acceptance gates.
+
 - Public site: <https://neb6dav.github.io/ai_tech_tree/>
 - Repository: <https://github.com/neb6dav/ai_tech_tree>
 - Maintainer: [@neb6dav](https://github.com/neb6dav)

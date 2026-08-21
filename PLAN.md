@@ -1,163 +1,159 @@
 ---
-roadmap_version: 1
+roadmap_version: 2
 active_release: "v0.1.1"
+release_mode: "source_checkpoints_until_v1.0.0"
 active_work_package: "WP-011-B"
-issue_url: "https://github.com/neb6dav/ai_tech_tree/issues/6"
-pr_url: "https://github.com/neb6dav/ai_tech_tree/pull/7"
 base_sha: "85108c78fa86c86634d4c0944839696369e687cd"
-last_completed_checkpoint: "WP-011-B/C3"
+product_boundary_sha: "53e3a4f9c0624096aede63e0345390a3c021bac0"
+working_branch: "codex/v0.1.1-minimal-to-v1"
+expanded_archive_branch: "archive/v0.1.1-expanded-release-safety-0870d47"
+last_completed_checkpoint: "v0.1.1-product"
+next_exact_action: >-
+  Commit and push the verified v0.1.1 source checkpoint, then begin the
+  v0.2.0 canonical-data shadow migration without changing public behavior.
 last_verified_commands:
   - command: "npm run build"
     status: "PASS"
     runtime: "Node v24.14.1"
-    verified_by: "root"
-    scope: "WP-011-B/C3 deterministic regeneration; 4,516,265-byte initial document and synchronized development identity"
+    scope: "Deterministic v0.1.1 product regeneration; clean generated diff"
   - command: "npm test"
     status: "PASS"
     runtime: "Node v24.14.1 and npm 11.11.0"
-    verified_by: "root"
-    scope: "Core gates, 72 focused unit tests, 14-file staging, release identity, artifact budgets, and 1,465-reference staged-site contract"
-  - command: "Playwright Chromium responsive and no-JavaScript probes"
-    status: "PASS"
-    runtime: "Chromium through @playwright/cli"
-    verified_by: "root"
-    scope: "Toolbar geometry at 320/375/740/1366/2300px; named mobile Menu; modal focus and inert recovery; 32x32 repository target; nonoverlapping no-JS cards at 320-740px; zero console errors"
-  - command: "Independent hostile C3 identity and runtime reviews"
-    status: "PASS after findings resolved"
-    verified_by: "root plus two read-only reviewers"
-    scope: "Manifest releaseState, pre-release issue wording, recovery ledger, mobile accessible name, pointer target, and no-JS overlap corrected and reprobed"
-  - command: "Reconcile downloaded C2 CI preview"
-    status: "PASS"
-    runtime: "Node v24.14.1"
-    verified_by: "root"
-    scope: "Workflow 32385263895 green; CI preview contract checked 1462 references; 13/13 payload files byte-identical to the local C2 stage"
-next_exact_action: >-
-  Commit the locally verified C3 identity checkpoint, prove the exact clean
-  committed tree, push it to draft PR #7, and reconcile the downloaded CI
-  preview before beginning C4 release-promotion controls.
-known_blockers:
-  - "WP-011-B is stacked on verified draft PR #5 until WP-011-A is separately authorized to merge."
-  - "No merge, annotated tag, GitHub Release, environment approval, or public deployment is authorized."
-  - "The C3 source must remain visibly labeled as an untagged development edition until C4 prepares an authorized release artifact."
-  - "Browser performance metrics and automated preview screenshots remain pending WP-012-A."
-release_gate_status: "wp_011_b_c3_locally_verified_checkpoint_pending"
-release_details:
-  version: "v0.1.1"
-  title: "Publication-contract repair"
-  work_package:
-    id: "WP-011-B"
-    status: "checkpointing"
-    base_sha: "85108c78fa86c86634d4c0944839696369e687cd"
-    branch: "codex/v0.1.1-publication-release"
-    issue:
-      status: "open"
-      number: 6
-      url: "https://github.com/neb6dav/ai_tech_tree/issues/6"
-    pull_request:
-      status: "draft"
-      number: 7
-      url: "https://github.com/neb6dav/ai_tech_tree/pull/7"
-    active_checkpoint:
-      id: "C3"
-      title: "Synchronized development-edition identity and contribution access"
-      status: "locally_verified"
-      next_exact_action: >-
-        Commit C3, run exact clean committed-tree verification, push the
-        authorized branch update, and reconcile the CI preview artifact.
-    scope:
-      - "Publish stable and compatibility Opportunity endpoints."
-      - "Move exported human URLs to the root application."
-      - "Synchronize v0.1.1 identity and contribution access."
-      - "Implement approved annotated-tag promotion and bounded smoke checks."
-    out_of_scope:
-      - "Broader UI or content changes."
-      - "Canonical historical-data migration."
-      - "Generated-artifact policy changes."
-      - "Performing a merge, tag, release, environment approval, or deployment."
+    scope: "Core gates, 72 focused tests, 14-file stage, release identity, artifact budgets, and 1,465-reference site contract"
+source_checkpoints:
+  - version: "v0.1.1"
+    status: "complete"
+    purpose: "Publication URL and identity repair"
+  - version: "v0.2.0"
+    status: "planned"
+    purpose: "Canonical 15-lane data shadow, parity proof, atomic authoring cutover, and browser verification"
+  - version: "v0.2.2"
+    status: "planned"
+    purpose: "Performance enforcement and committed-generated-output policy decision"
+  - version: "v1.0.0"
+    status: "planned"
+    purpose: "Stable public contract and release candidate"
 authorization:
-  issue_creation: "authorized_and_completed"
-  pull_request_creation: "authorized"
-  staging: "authorized"
-  commit: "authorized"
-  push: "authorized"
+  source_checkpoint_implementation: "authorized"
+  source_checkpoint_commits: "authorized"
+  source_checkpoint_pushes: "authorized"
+  intermediate_public_tags: "not_planned"
+  intermediate_public_deployments: "not_planned"
+  v1_public_tag_and_deployment: "requires_final_confirmation"
 ---
 
-# Release plan
+# Product roadmap to v1.0.0
 
-## Active objective
+## Operating rule
 
-Complete the remaining `v0.1.1` publication URL, identity, and promotion
-controls on top of the verified WP-011-A staged-site boundary. Broader
-interface, content, and data architecture work starts only after this narrow
-repair is released.
+`v0.1.1`, `v0.2.0`, and `v0.2.2` are source checkpoints, not public
+releases. Only `v1.0.0` is the public release target. Each checkpoint must be a
+bounded product change with its own build, focused tests, generated-file check,
+and short review. Do not add a new promotion, receipt, rollback, provenance, or
+policy subsystem.
 
-## Control-plane foundation
+The expanded release-safety experiment remains preserved separately at
+`0870d4773249db9f81a491f0305c29a75fcb53a1`. It is not part of this branch.
 
-- Record the active release, work package, base revision, authorization state,
-  checkpoint, and next action in the ledger above.
-- Lock the architectural and release decisions in
-  `docs/ROADMAP_DECISIONS.md`.
-- Pin local Node selection to the Node 24 CI major with `.nvmrc` and
-  `.node-version`.
-- Record blocking current-regression guards and nonblocking future targets in
-  `performance-budget.json`.
+## v0.1.1 — publication repair
 
-## WP-011-A foundation and active WP-011-B work
+Status: product work complete and locally verified at `53e3a4f`.
 
-- C1 control plane, Node 24 toolchain policy, and blocking artifact budgets:
-  implemented and green. Release-manifest reproducibility is scoped to its
-  recorded exact Node/npm toolchain.
-- C2 versioned staged-site assembler: implemented and green.
-- C3 project-subpath publication-contract crawler: implemented and green.
-- C4 deterministic payload release manifest: implemented and green.
+Deliverables:
 
-WP-011-A is complete at verified commit `85108c7` and remote CI run
-`32382526539`; its draft PR remains unmerged. Its `C1` records the control plane, locked decisions, toolchain pin, and budget
-policy. `C2` adds the deterministic staged-site assembler, strict allowlist,
-release manifest, focused tests, and artifact-producing npm toolchain contract.
-`C3/C4` add the project-subpath crawler, blocking
-artifact-budget enforcement, shared validation/Pages staging, downloadable PR
-previews, and final usage documentation. Their static contract resolves 1,812
-internal references, fails closed on browser/scanner boundary cases, and labels
-two runtime-created fragments as browser-deferred rather than statically
-verified. The exact committed tree, push, remote CI, and downloaded preview
-artifact have all been verified for WP-011-A.
+- Publish stable Opportunity JSON and schema URLs while retaining the prior
+  paths as compatibility copies.
+- Keep `ai-research-tech-tree.html` as a lightweight alias that preserves query
+  and hash state.
+- Point the dataset and all 339 record `humanUrl` values at the root app.
+- Synchronize package `0.1.1`, dataset edition
+  `2026-08-20-public-beta-2`, development identity, citation metadata,
+  sitemap, exports, and contribution forms.
+- Keep Repository, Contribute, Citation, and exact-build-manifest links
+  accessible in the primary and no-JavaScript surfaces.
 
-WP-011-B now owns stable public and compatibility URLs, root export URLs,
-release identity, annotated-tag and protected-main verification, production
-approval, release assets, and post-deploy checks. Its C1 compatibility changes
-pass the complete build and test gate, exact clean committed-tree verification,
-an independent hostile review, remote CI run `32384084390`, and byte-for-byte
-payload reconciliation of its downloaded preview.
+Acceptance gate:
 
-C2 generates dataset `humanUrl` as `./` and all 339 atlas record URLs as
-`./#node=<stable-id>` in JSON, JSON-LD, NDJSON, and embedded JSON-LD. The full
-gate, independent hostile review, pushed checkpoint `36b4daa`, remote workflow
-`32385263895`, and downloaded preview verify 1,356 root record references,
-cross-format ownership, legacy-alias rejection, and misdirection mutations.
-All 13 C2 payload files were byte-identical between the local and CI stages;
-their manifests differed only by the expected pull-request merge commit.
+- `npm run build` leaves no generated diff.
+- `npm test` passes the retained core and publication suites.
+- The staged site contains the root app, compatibility aliases, stable and
+  compatibility Opportunity endpoints, exports, citation file, and manifest.
+- Source remains explicitly untagged and developmental.
 
-C3 synchronizes package `0.1.1`, dataset edition
-`2026-08-20-public-beta-2`, and `Development edition` across the application,
-machine exports, citation metadata, staged release manifest, documentation,
-and contribution forms without claiming a tag or release. Persistent
-Repository, Contribute, citation, and exact-manifest links now appear in the
-toolbar, Guide, and no-JavaScript surface. The staged manifest schema/tool
-`1.2.0` records the validated publication state as well as version, edition,
-commit, and tag. The final local gate passes 72 focused tests, a 14-file stage,
-artifact budgets, and 1,465 contract references. Real Chromium verifies the
-responsive toolbar, modal focus/inert behavior, 32-pixel repository target,
-and nonoverlapping no-JavaScript cards. Two hostile reviews' P1/P2 findings
-were corrected and reprobed. C3 is locally complete pending its authorized
-commit, exact clean committed-tree proof, push, and preview reconciliation.
+## v0.2.0 — canonical data and browser proof
 
-## Release boundary
+Deliverables:
 
-`v0.1.1` repairs publication only. It does not authorize a new view, broad
-content expansion, a canonical-data cutover, a framework or backend migration,
-or a change to the committed-generated-output policy.
+- Introduce the approved 15-lane-sharded canonical historical data as shadow
+  source files.
+- Keep relationship semantic type, evidence grade, review state,
+  lifecycle/origin, and direction/display scope independent.
+- Prove complete legacy-versus-canonical parity before changing authoring
+  authority.
+- Flip authoring authority atomically; never serve a mixed per-lane state.
+- Add the smallest browser harness needed to verify runtime-created fragments,
+  representative view navigation, responsive behavior, and measured browser
+  performance.
 
-An issue, pull request, commit, push, tag, and public-root promotion remain
-separate authorized actions. Their status must be updated in the ledger when
-authorization is granted and the corresponding action actually occurs.
+Acceptance gate:
+
+- Shadow and legacy inputs generate byte-equivalent public dataset content.
+- Node and relationship inventories, ordering, stable IDs, and cross-format
+  exports match exactly before cutover.
+- After the atomic cutover, the legacy source is no longer authoritative and
+  the complete build/test/browser gate remains green.
+- Generated publication artifacts remain committed through this checkpoint.
+
+## v0.2.2 — performance and repository-policy decision
+
+Deliverables:
+
+- Measure active DOM size, mobile Lighthouse performance, FCP, LCP, TBT, and
+  CLS using the v0.2.0 browser harness.
+- Convert realistic measured targets into blocking budgets without masking
+  regressions or engineering solely to a synthetic score.
+- Decide whether generated publication artifacts remain committed. If the
+  evidence does not justify a change, keep the existing policy.
+
+Acceptance gate:
+
+- Browser measurements are reproducible on the pinned local/CI runtime.
+- Any blocking threshold is tied to an observed baseline and a documented
+  user-facing reason.
+- The generated-output decision is explicit, small, and does not change the
+  public data contract.
+
+## v1.0.0 — stable release candidate
+
+Deliverables:
+
+- Stabilize the four existing views; do not add a fifth view.
+- Freeze and document public URLs, stable IDs, export schemas, and the
+  canonical authoring layout.
+- Pass static and browser accessibility checks across representative desktop
+  and mobile viewports, keyboard navigation, modal behavior, and no-JavaScript
+  fallbacks.
+- Meet the v0.2.2 performance budgets.
+- Publish clear contribution, citation, data-status, evidence-limit, and
+  versioning documentation.
+- Remove development-only wording and produce a reviewed `v1.0.0` release
+  candidate. Tagging and public deployment remain a final explicit action.
+
+Acceptance gate:
+
+- Full deterministic build and test suite passes from a clean checkout.
+- Browser verification passes for Timeline, Network, Opportunity, and List
+  views at representative mobile and desktop sizes with no console errors.
+- Public URL/schema/ID compatibility tests pass.
+- The final diff contains only product, data, documentation, and proportionate
+  test changes required by this roadmap.
+
+## Explicit non-goals through v1.0.0
+
+- A fifth view.
+- Major corpus expansion.
+- Framework or backend migration.
+- Accounts, comments, or analytics.
+- Unreviewed bulk AI imports.
+- SHACL.
+- A new release-governance framework.

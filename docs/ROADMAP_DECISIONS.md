@@ -43,6 +43,18 @@ there is no public `/dev` lane. Automated preview screenshots begin with the
 `WP-012-A` browser harness; until then, the exact staged site is the review
 artifact.
 
+## RD-007 — Use source checkpoints until v1.0.0
+
+Treat `v0.1.1`, `v0.2.0`, and `v0.2.2` as internal source checkpoints. They
+do not require public tags or deployments. `v1.0.0` is the sole public release
+target in this sequence, and its tag and deployment remain a final explicit
+action after the complete product gate passes.
+
+The sequence is intentionally narrow: publication repair, canonical-data
+parity and browser proof, performance and generated-output decisions, then
+stabilization. Do not introduce new release-governance machinery or unrelated
+features while working through these checkpoints.
+
 ## Explicit deferrals
 
 ### Through v0.2.0

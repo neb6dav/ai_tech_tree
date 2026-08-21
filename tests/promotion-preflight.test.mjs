@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
@@ -6,12 +7,15 @@ import test from 'node:test';
 import { fileURLToPath } from 'node:url';
 
 import {
+  decideCompositePromotionPreflight,
   resolveLifecycleReferenceClosure
 } from '../scripts/promotion-preflight.mjs';
+import { decideFreshControlConsumption } from '../scripts/promotion-lifecycle.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const POLICY_PATH = path.join(ROOT, 'config', 'promotion-preflight-policy.v1.json');
 const LIFECYCLE_POLICY_PATH = path.join(ROOT, 'config', 'promotion-lifecycle-policy.v1.json');
+const CONTROL_POLICY_PATH = path.join(ROOT, 'config', 'github-promotion-policy.v1.json');
 const CHAIN_DOMAIN = 'ai-research-tech-tree:promotion-lifecycle-chain:v1\0';
 const RECEIPT_DOMAIN = 'ai-research-tech-tree:promotion-lifecycle-receipt:v1\0';
 const REFERENCE_SET_DOMAIN = 'ai-research-tech-tree:preflight-reference-set:v1\0';
@@ -32,6 +36,18 @@ function gitId(type, bytes) {
 
 function canonical(value, pretty = false) {
   return Buffer.from(`${JSON.stringify(value, null, pretty ? 2 : 0)}\n`);
+}
+
+function sortedJsonData(value) {
+  if (Array.isArray(value)) return value.map(sortedJsonData);
+  if (value && typeof value === 'object') {
+    return Object.fromEntries(Object.keys(value).sort().map(key => [key, sortedJsonData(value[key])]));
+  }
+  return value;
+}
+
+function canonicalControl(value) {
+  return canonical(sortedJsonData(value));
 }
 
 function hashCanonical(domain, value) {
@@ -500,6 +516,194 @@ async function buildFixture(options = {}) {
   return { input, policy, candidates, receipt1, receipt2, receipt3 };
 }
 
+function controlEvidence(expectedCommit) {
+  const phases = [
+    ['/repos/neb6dav/ai_tech_tree', {}],
+    ['/repos/neb6dav/ai_tech_tree/git/ref/heads/main', {}],
+    ['/repos/neb6dav/ai_tech_tree/rulesets', { includes_parents: 'false', page: 1, per_page: 100 }],
+    ['/repos/neb6dav/ai_tech_tree/rulesets/101', {}],
+    ['/repos/neb6dav/ai_tech_tree/rulesets/202', {}],
+    ['/repos/neb6dav/ai_tech_tree/rules/branches/main', {}],
+    ['/repos/neb6dav/ai_tech_tree/environments/github-pages', {}],
+    ['/repos/neb6dav/ai_tech_tree/environments/github-pages/deployment-branch-policies', { page: 1, per_page: 100 }],
+    ['/repos/neb6dav/ai_tech_tree/pages', {}],
+    ['/repos/neb6dav/ai_tech_tree/immutable-releases', {}],
+    ['/repos/neb6dav/ai_tech_tree/actions/workflows/validate.yml', {}],
+    ['/repos/neb6dav/ai_tech_tree/actions/workflows/303/runs', {
+      branch: 'main', event: 'push', head_sha: expectedCommit, status: 'success', page: 1, per_page: 100
+    }],
+    ['/repos/neb6dav/ai_tech_tree/actions/runs/404/jobs', { filter: 'latest', page: 1, per_page: 100 }],
+    ['/repos/neb6dav/ai_tech_tree/git/ref/heads/main', {}]
+  ];
+  return phases.map(([requestPath, query], index) => ({
+    sequence: index + 1,
+    method: 'GET',
+    path: requestPath,
+    query,
+    status: 200,
+    bytes: 16 + index,
+    sha256: sha256(Buffer.from(`control response ${index + 1}`, 'utf8'))
+  }));
+}
+
+function fixtureControlReceipt(controlPolicyRecord, subject) {
+  const observedAt = '2026-08-20T12:03:00.000Z';
+  const evidence = controlEvidence(subject.sourceCommit);
+  return {
+    schemaVersion: '1.0.0',
+    toolVersion: '1.0.0',
+    scope: 'injected-control-response-shape-test',
+    evidenceSource: 'injected-test-only',
+    promotionEligible: false,
+    policy: {
+      path: controlPolicyRecord.path,
+      sha256: controlPolicyRecord.sha256,
+      schemaVersion: controlPolicyRecord.policy.schemaVersion,
+      status: controlPolicyRecord.policy.status
+    },
+    repository: controlPolicyRecord.policy.repository.fullName,
+    release: {
+      version: controlPolicyRecord.policy.release.version,
+      tag: controlPolicyRecord.policy.release.tag,
+      environment: controlPolicyRecord.policy.release.environment
+    },
+    expectedCommit: subject.sourceCommit,
+    observedAt,
+    expiresAt: '2026-08-20T12:08:00.000Z',
+    requestCount: evidence.length,
+    responseBytes: evidence.reduce((total, item) => total + item.bytes, 0),
+    attestations: {
+      githubControlsObservedLive: false,
+      releaseSpecVerified: false,
+      tagTargetVerified: false,
+      toolSourceVerifiedAtExpectedCommit: false,
+      workflowBlobVerifiedAtExpectedCommit: false
+    },
+    checks: {
+      repositoryIdentity: true,
+      mainRefBookended: true,
+      mainRuleset: true,
+      tagRuleset: true,
+      effectiveMainRules: true,
+      protectedEnvironment: true,
+      pages: true,
+      immutableReleases: true,
+      exactValidationRun: true,
+      exactValidationJob: true
+    },
+    rulesetEvidence: { mainId: 101, tagId: 202 },
+    validationEvidence: { workflowId: 303, runId: 404, jobId: 505, event: 'push', conclusion: 'success' },
+    evidence,
+    summary: {
+      status: 'fixture-controls-match-policy',
+      auditorRequestedOnlyGets: true,
+      transportSideEffectsAttested: false,
+      externalMutationAuthorized: false
+    }
+  };
+}
+
+function cloneComposite(value) {
+  if (Buffer.isBuffer(value)) return Buffer.from(value);
+  if (Array.isArray(value)) return value.map(cloneComposite);
+  if (value && typeof value === 'object') {
+    const result = {};
+    for (const key of Object.keys(value)) Object.defineProperty(result, key, {
+      value: cloneComposite(value[key]), enumerable: true, writable: true, configurable: true
+    });
+    return result;
+  }
+  return value;
+}
+
+function replaceOperationReceipt(input, receipt, bytes = canonical(receipt)) {
+  const digest = sha256(bytes);
+  input.operationObservation = {
+    completeness: 'complete',
+    selectedSha256: digest,
+    candidates: [{ receiptSha256: digest, receiptBytes: Buffer.from(bytes) }]
+  };
+  input.expectedOperationReceiptSha256 = digest;
+}
+
+async function buildCompositeFixture() {
+  const closureFixture = await buildFixture();
+  const controlPolicyBytes = await readFile(CONTROL_POLICY_PATH);
+  const controlPolicyRecord = {
+    path: 'config/github-promotion-policy.v1.json',
+    sha256: sha256(controlPolicyBytes),
+    bytes: Buffer.from(controlPolicyBytes),
+    policy: JSON.parse(controlPolicyBytes)
+  };
+  const controlReceiptBytes = canonicalControl(fixtureControlReceipt(controlPolicyRecord, closureFixture.input.expectedSubject));
+  const controlReceiptSha256 = sha256(controlReceiptBytes);
+  const controlObservation = {
+    completeness: 'complete',
+    selectedSha256: controlReceiptSha256,
+    candidates: [{ receiptSha256: controlReceiptSha256, receiptBytes: Buffer.from(controlReceiptBytes) }]
+  };
+  const evaluatedAt = '2026-08-20T12:05:00.000Z';
+  const closure = resolveLifecycleReferenceClosure(closureFixture.input);
+  const controlDecision = decideFreshControlConsumption({
+    policyRecord: closureFixture.input.lifecyclePolicyRecord,
+    receiptBytesList: closureFixture.input.receiptBytesList,
+    expectedHeadSha256: closureFixture.input.expectedHeadSha256,
+    expectedSubject: closureFixture.input.expectedSubject,
+    controlPolicyRecord,
+    controlObservation,
+    expectedControlReceiptSha256: controlReceiptSha256,
+    evaluatedAt
+  });
+  assert.equal(closure.decision, 'resolved-fixture-reference-closure');
+  assert.equal(controlDecision.decision.outcome, 'block');
+  assert.equal(controlDecision.decision.inputs.consumedControlReceiptSha256, controlReceiptSha256);
+  const operationReceipt = {
+    schemaVersion: '1.0.0',
+    kind: 'fixture-operation-state',
+    scope: 'fixture-only',
+    productionEligible: false,
+    externalMutationAuthorized: false,
+    retryAuthorized: false,
+    rollbackAuthorized: false,
+    operationalReuseAuthorized: false,
+    authenticatedAuthority: false,
+    observedAt: '2026-08-20T12:04:00.000Z',
+    expiresAt: '2026-08-20T12:09:00.000Z',
+    subject: cloneJson(closureFixture.input.expectedSubject),
+    lifecycle: {
+      chainId: closure.receipt.lifecycleChainId,
+      headSha256: closure.receipt.lifecycleHeadSha256
+    },
+    bindings: {
+      referenceClosureSha256: closure.sha256,
+      controlDecisionSha256: controlDecision.sha256,
+      controlReceiptSha256
+    },
+    priorAttempt: 'none-observed',
+    release: 'absent',
+    assets: 'absent',
+    deployment: 'absent',
+    publicTarget: 'prior-observed'
+  };
+  const operationReceiptBytes = canonical(operationReceipt);
+  const operationReceiptSha256 = sha256(operationReceiptBytes);
+  const input = {
+    ...cloneComposite(closureFixture.input),
+    controlPolicyRecord: cloneComposite(controlPolicyRecord),
+    controlObservation: cloneComposite(controlObservation),
+    expectedControlReceiptSha256: controlReceiptSha256,
+    operationObservation: {
+      completeness: 'complete',
+      selectedSha256: operationReceiptSha256,
+      candidates: [{ receiptSha256: operationReceiptSha256, receiptBytes: Buffer.from(operationReceiptBytes) }]
+    },
+    expectedReferenceClosureSha256: closure.sha256,
+    expectedOperationReceiptSha256: operationReceiptSha256,
+    evaluatedAt
+  };
+  return { input, operationReceipt, closure, controlDecision };
+}
+
 test('resolves one exact fixture-only reference closure deterministically', async () => {
   const fixture = await buildFixture();
   assert.equal(fixture.input.referenceObservation.candidates.length, 36);
@@ -524,6 +728,441 @@ test('resolves one exact fixture-only reference closure deterministically', asyn
   assert.deepEqual(second, first);
   assert.equal(sha256(first.bytes), first.sha256);
   assert.equal(first.bytes.length, first.byteLength);
+});
+
+test('composite preflight recomputes both children and blocks current planned injected evidence', async () => {
+  const fixture = await buildCompositeFixture();
+  const first = decideCompositePromotionPreflight(fixture.input);
+  const second = decideCompositePromotionPreflight(fixture.input);
+  assert.equal(first.decision, 'block');
+  assert.deepEqual(first.receipt.reasonCodes, ['control-prerequisite-blocked']);
+  assert.equal(first.receipt.nextAction, 'resolve-blockers-before-b3');
+  for (const flag of [
+    'productionEligible', 'operationAuthorized', 'externalMutationAuthorized',
+    'retryAuthorized', 'rollbackAuthorized', 'operationalReuseAuthorized',
+    'authenticatedAuthority'
+  ]) assert.equal(first.receipt[flag], false, flag);
+  assert.equal(first.receipt.inputs.referenceClosureSha256, fixture.closure.sha256);
+  assert.equal(first.receipt.inputs.controlDecisionSha256, fixture.controlDecision.sha256);
+  assert.equal(first.receipt.inputs.controlReceiptSha256, fixture.input.expectedControlReceiptSha256);
+  assert.equal(first.receipt.inputs.operationReceiptSha256, fixture.input.expectedOperationReceiptSha256);
+  assert.deepEqual(second, first);
+  assert.equal(first.bytes.length, first.byteLength);
+  assert.equal(sha256(first.bytes), first.sha256);
+  assert.ok(first.byteLength < 4096);
+  assert.doesNotMatch(first.bytes.toString('utf8'), /"[^"\n]*Authorized":true/iu);
+});
+
+test('composite preflight rejects replayed child outputs and independently anchors both child decisions', async t => {
+  const fixture = await buildCompositeFixture();
+  await t.test('raw child output replay field', () => {
+    const hostile = cloneComposite(fixture.input);
+    hostile.referenceClosureResult = fixture.closure;
+    const result = decideCompositePromotionPreflight(hostile);
+    assert.equal(result.decision, 'reconcile');
+    assert.deepEqual(result.receipt.reasonCodes, ['composite-input-invalid']);
+  });
+  await t.test('out-of-band reference closure anchor', () => {
+    const hostile = cloneComposite(fixture.input);
+    hostile.expectedReferenceClosureSha256 = 'a'.repeat(64);
+    const result = decideCompositePromotionPreflight(hostile);
+    assert.equal(result.decision, 'reconcile');
+    assert.ok(result.receipt.reasonCodes.includes('reference-closure-anchor-invalid'));
+  });
+  await t.test('operation reference closure binding', () => {
+    const hostile = cloneComposite(fixture.input);
+    const receipt = cloneJson(fixture.operationReceipt);
+    receipt.bindings.referenceClosureSha256 = 'b'.repeat(64);
+    replaceOperationReceipt(hostile, receipt);
+    const result = decideCompositePromotionPreflight(hostile);
+    assert.equal(result.decision, 'reconcile');
+    assert.ok(result.receipt.reasonCodes.includes('operation-binding-conflict'));
+  });
+  await t.test('operation control decision binding', () => {
+    const hostile = cloneComposite(fixture.input);
+    const receipt = cloneJson(fixture.operationReceipt);
+    receipt.bindings.controlDecisionSha256 = 'c'.repeat(64);
+    replaceOperationReceipt(hostile, receipt);
+    const result = decideCompositePromotionPreflight(hostile);
+    assert.equal(result.decision, 'reconcile');
+    assert.ok(result.receipt.reasonCodes.includes('operation-binding-conflict'));
+  });
+  await t.test('operation selected control receipt binding', () => {
+    const hostile = cloneComposite(fixture.input);
+    const receipt = cloneJson(fixture.operationReceipt);
+    receipt.bindings.controlReceiptSha256 = 'd'.repeat(64);
+    replaceOperationReceipt(hostile, receipt);
+    const result = decideCompositePromotionPreflight(hostile);
+    assert.equal(result.decision, 'reconcile');
+    assert.ok(result.receipt.reasonCodes.includes('operation-binding-conflict'));
+  });
+});
+
+test('operation observation fails closed on incomplete, missing, duplicate, multiple, and hash-mismatched evidence', async t => {
+  const fixture = await buildCompositeFixture();
+  await t.test('incomplete observation', () => {
+    const hostile = cloneComposite(fixture.input);
+    hostile.operationObservation.completeness = 'unknown';
+    const result = decideCompositePromotionPreflight(hostile);
+    assert.equal(result.decision, 'reconcile');
+    assert.ok(result.receipt.reasonCodes.includes('operation-observation-incomplete'));
+  });
+  await t.test('missing candidate', () => {
+    const hostile = cloneComposite(fixture.input);
+    hostile.operationObservation.candidates = [];
+    const result = decideCompositePromotionPreflight(hostile);
+    assert.equal(result.decision, 'reconcile');
+    assert.ok(result.receipt.reasonCodes.includes('operation-selection-not-found'));
+  });
+  await t.test('missing selection', () => {
+    const hostile = cloneComposite(fixture.input);
+    hostile.operationObservation.selectedSha256 = null;
+    const result = decideCompositePromotionPreflight(hostile);
+    assert.equal(result.decision, 'reconcile');
+    assert.ok(result.receipt.reasonCodes.includes('operation-selection-missing'));
+  });
+  await t.test('duplicate candidates are not deduplicated', () => {
+    const hostile = cloneComposite(fixture.input);
+    const candidate = hostile.operationObservation.candidates[0];
+    hostile.operationObservation.candidates.push({
+      receiptSha256: candidate.receiptSha256,
+      receiptBytes: Buffer.from(candidate.receiptBytes)
+    });
+    const result = decideCompositePromotionPreflight(hostile);
+    assert.equal(result.decision, 'reconcile');
+    assert.ok(result.receipt.reasonCodes.includes('operation-observation-duplicate'));
+  });
+  await t.test('multiple distinct candidates are ambiguous', () => {
+    const hostile = cloneComposite(fixture.input);
+    const bytes = Buffer.from('{}\n');
+    hostile.operationObservation.candidates.push({ receiptSha256: sha256(bytes), receiptBytes: bytes });
+    const result = decideCompositePromotionPreflight(hostile);
+    assert.equal(result.decision, 'reconcile');
+    assert.ok(result.receipt.reasonCodes.includes('operation-observation-ambiguous'));
+  });
+  await t.test('receipt bytes do not match selected hash', () => {
+    const hostile = cloneComposite(fixture.input);
+    hostile.operationObservation.candidates[0].receiptBytes[0] ^= 1;
+    const result = decideCompositePromotionPreflight(hostile);
+    assert.equal(result.decision, 'reconcile');
+    assert.ok(result.receipt.reasonCodes.includes('operation-receipt-sha-mismatch'));
+  });
+  await t.test('selected hash does not match independent anchor', () => {
+    const hostile = cloneComposite(fixture.input);
+    hostile.expectedOperationReceiptSha256 = 'e'.repeat(64);
+    const result = decideCompositePromotionPreflight(hostile);
+    assert.equal(result.decision, 'reconcile');
+    assert.ok(result.receipt.reasonCodes.includes('operation-receipt-anchor-invalid'));
+  });
+});
+
+test('operation states reconcile unknown and impossible combinations and block every known target', async t => {
+  const fixture = await buildCompositeFixture();
+  for (const field of ['priorAttempt', 'release', 'assets', 'deployment', 'publicTarget']) {
+    await t.test(`${field} unknown`, () => {
+      const hostile = cloneComposite(fixture.input);
+      const receipt = cloneJson(fixture.operationReceipt);
+      receipt[field] = 'unknown';
+      replaceOperationReceipt(hostile, receipt);
+      const result = decideCompositePromotionPreflight(hostile);
+      assert.equal(result.decision, 'reconcile');
+      assert.ok(result.receipt.reasonCodes.includes('operation-observation-incomplete'));
+    });
+  }
+  for (const [field, value, reason] of [
+    ['priorAttempt', 'known', 'prior-attempt-known'],
+    ['release', 'known', 'release-known'],
+    ['assets', 'known', 'assets-known'],
+    ['deployment', 'known', 'deployment-known'],
+    ['publicTarget', 'target-observed', 'public-target-not-prior']
+  ]) {
+    await t.test(`${field} known`, () => {
+      const hostile = cloneComposite(fixture.input);
+      const receipt = cloneJson(fixture.operationReceipt);
+      receipt[field] = value;
+      if (field === 'assets') receipt.release = 'known';
+      if (field === 'deployment') {
+        receipt.release = 'known';
+        receipt.assets = 'known';
+      }
+      if (field === 'publicTarget') {
+        receipt.release = 'known';
+        receipt.assets = 'known';
+        receipt.deployment = 'known';
+      }
+      replaceOperationReceipt(hostile, receipt);
+      const result = decideCompositePromotionPreflight(hostile);
+      assert.equal(result.decision, 'block');
+      assert.ok(result.receipt.reasonCodes.includes(reason));
+    });
+  }
+  await t.test('assets cannot be known while release is absent', () => {
+    const hostile = cloneComposite(fixture.input);
+    const receipt = cloneJson(fixture.operationReceipt);
+    receipt.assets = 'known';
+    replaceOperationReceipt(hostile, receipt);
+    const result = decideCompositePromotionPreflight(hostile);
+    assert.equal(result.decision, 'reconcile');
+    assert.ok(result.receipt.reasonCodes.includes('operation-state-impossible'));
+    assert.ok(result.receipt.reasonCodes.includes('assets-known'));
+  });
+  await t.test('target public state cannot be known while deployment is absent', () => {
+    const hostile = cloneComposite(fixture.input);
+    const receipt = cloneJson(fixture.operationReceipt);
+    receipt.publicTarget = 'target-observed';
+    replaceOperationReceipt(hostile, receipt);
+    const result = decideCompositePromotionPreflight(hostile);
+    assert.equal(result.decision, 'reconcile');
+    assert.ok(result.receipt.reasonCodes.includes('operation-state-impossible'));
+  });
+});
+
+test('operation receipt time is evaluated once against control observation and its exact freshness window', async t => {
+  const fixture = await buildCompositeFixture();
+  await t.test('must be observed after selected control receipt', () => {
+    const hostile = cloneComposite(fixture.input);
+    const receipt = cloneJson(fixture.operationReceipt);
+    receipt.observedAt = '2026-08-20T12:03:00.000Z';
+    receipt.expiresAt = '2026-08-20T12:08:00.000Z';
+    replaceOperationReceipt(hostile, receipt);
+    const result = decideCompositePromotionPreflight(hostile);
+    assert.equal(result.decision, 'reconcile');
+    assert.ok(result.receipt.reasonCodes.includes('operation-receipt-time-invalid'));
+  });
+  await t.test('evaluatedAt before observation', () => {
+    const hostile = cloneComposite(fixture.input);
+    hostile.evaluatedAt = '2026-08-20T12:03:30.000Z';
+    const result = decideCompositePromotionPreflight(hostile);
+    assert.equal(result.decision, 'reconcile');
+    assert.ok(result.receipt.reasonCodes.includes('operation-receipt-time-invalid'));
+  });
+  await t.test('non-exact freshness window', () => {
+    const hostile = cloneComposite(fixture.input);
+    const receipt = cloneJson(fixture.operationReceipt);
+    receipt.expiresAt = '2026-08-20T12:09:00.001Z';
+    replaceOperationReceipt(hostile, receipt);
+    const result = decideCompositePromotionPreflight(hostile);
+    assert.equal(result.decision, 'reconcile');
+    assert.ok(result.receipt.reasonCodes.includes('operation-receipt-time-invalid'));
+  });
+  await t.test('noncanonical timestamp', () => {
+    const hostile = cloneComposite(fixture.input);
+    const receipt = cloneJson(fixture.operationReceipt);
+    receipt.observedAt = '2026-08-20T12:04:00Z';
+    replaceOperationReceipt(hostile, receipt);
+    const result = decideCompositePromotionPreflight(hostile);
+    assert.equal(result.decision, 'reconcile');
+    assert.ok(result.receipt.reasonCodes.includes('operation-receipt-time-invalid'));
+  });
+});
+
+test('operation receipt requires exact keys and exact canonical JSON bytes', async t => {
+  const fixture = await buildCompositeFixture();
+  const serializations = [
+    ['BOM', bytes => Buffer.concat([Buffer.from([0xef, 0xbb, 0xbf]), bytes])],
+    ['CRLF', bytes => Buffer.from(bytes.toString('utf8').replaceAll('\n', '\r\n'))],
+    ['trailing data', bytes => Buffer.concat([bytes, Buffer.from(' ')])],
+    ['duplicate key', bytes => replaceFirst(bytes, '{"schemaVersion":', '{"schemaVersion":"9.9.9","schemaVersion":')]
+  ];
+  for (const [label, mutate] of serializations) {
+    await t.test(label, () => {
+      const hostile = cloneComposite(fixture.input);
+      const bytes = mutate(canonical(fixture.operationReceipt));
+      replaceOperationReceipt(hostile, fixture.operationReceipt, bytes);
+      const result = decideCompositePromotionPreflight(hostile);
+      assert.equal(result.decision, 'reconcile');
+      assert.ok(result.receipt.reasonCodes.some(code =>
+        code === 'operation-receipt-invalid' || code === 'operation-receipt-noncanonical'
+      ));
+    });
+  }
+  await t.test('extra top-level receipt key', () => {
+    const hostile = cloneComposite(fixture.input);
+    const receipt = cloneJson(fixture.operationReceipt);
+    receipt.forceProceed = true;
+    replaceOperationReceipt(hostile, receipt);
+    const result = decideCompositePromotionPreflight(hostile);
+    assert.equal(result.decision, 'reconcile');
+    assert.ok(result.receipt.reasonCodes.includes('operation-receipt-invalid'));
+  });
+  await t.test('wrong nested key order', () => {
+    const hostile = cloneComposite(fixture.input);
+    const receipt = cloneJson(fixture.operationReceipt);
+    receipt.lifecycle = {
+      headSha256: receipt.lifecycle.headSha256,
+      chainId: receipt.lifecycle.chainId
+    };
+    replaceOperationReceipt(hostile, receipt);
+    const result = decideCompositePromotionPreflight(hostile);
+    assert.equal(result.decision, 'reconcile');
+    assert.ok(result.receipt.reasonCodes.includes('operation-binding-conflict'));
+  });
+  await t.test('true authority flag', () => {
+    const hostile = cloneComposite(fixture.input);
+    const receipt = cloneJson(fixture.operationReceipt);
+    receipt.retryAuthorized = true;
+    replaceOperationReceipt(hostile, receipt);
+    const result = decideCompositePromotionPreflight(hostile);
+    assert.equal(result.decision, 'reconcile');
+    assert.ok(result.receipt.reasonCodes.includes('operation-receipt-invalid'));
+  });
+});
+
+test('composite snapshot rejects proxies, accessors, exotics, shared memory, aliases, overlaps, and oversize before use', async t => {
+  const fixture = await buildCompositeFixture();
+  await t.test('top-level Proxy trap-free', () => {
+    let invoked = 0;
+    const hostile = new Proxy(cloneComposite(fixture.input), {
+      ownKeys() { invoked += 1; return []; }
+    });
+    const result = decideCompositePromotionPreflight(hostile);
+    assert.equal(result.decision, 'reconcile');
+    assert.deepEqual(result.receipt.reasonCodes, ['composite-input-invalid']);
+    assert.equal(invoked, 0);
+  });
+  await t.test('operation observation accessor trap-free', () => {
+    const hostile = cloneComposite(fixture.input);
+    let invoked = 0;
+    Object.defineProperty(hostile.operationObservation, 'candidates', {
+      enumerable: true,
+      get() { invoked += 1; return []; }
+    });
+    const result = decideCompositePromotionPreflight(hostile);
+    assert.equal(result.decision, 'reconcile');
+    assert.deepEqual(result.receipt.reasonCodes, ['composite-input-invalid']);
+    assert.equal(invoked, 0);
+  });
+  await t.test('operation candidate Proxy trap-free', () => {
+    const hostile = cloneComposite(fixture.input);
+    let invoked = 0;
+    hostile.operationObservation.candidates[0] = new Proxy(
+      hostile.operationObservation.candidates[0],
+      { ownKeys() { invoked += 1; return []; } }
+    );
+    const result = decideCompositePromotionPreflight(hostile);
+    assert.equal(result.decision, 'reconcile');
+    assert.deepEqual(result.receipt.reasonCodes, ['composite-input-invalid']);
+    assert.equal(invoked, 0);
+  });
+  await t.test('Buffer subclass prototype', () => {
+    const hostile = cloneComposite(fixture.input);
+    Object.setPrototypeOf(hostile.operationObservation.candidates[0].receiptBytes, Object.create(Buffer.prototype));
+    const result = decideCompositePromotionPreflight(hostile);
+    assert.equal(result.decision, 'reconcile');
+    assert.deepEqual(result.receipt.reasonCodes, ['composite-input-invalid']);
+  });
+  await t.test('SharedArrayBuffer backing', () => {
+    const hostile = cloneComposite(fixture.input);
+    const original = hostile.operationObservation.candidates[0].receiptBytes;
+    const shared = Buffer.from(new SharedArrayBuffer(original.length));
+    original.copy(shared);
+    hostile.operationObservation.candidates[0].receiptBytes = shared;
+    const result = decideCompositePromotionPreflight(hostile);
+    assert.equal(result.decision, 'reconcile');
+    assert.deepEqual(result.receipt.reasonCodes, ['composite-input-invalid']);
+  });
+  await t.test('same Buffer aliased across evidence classes', () => {
+    const hostile = cloneComposite(fixture.input);
+    hostile.operationObservation.candidates[0].receiptBytes =
+      hostile.controlObservation.candidates[0].receiptBytes;
+    const result = decideCompositePromotionPreflight(hostile);
+    assert.equal(result.decision, 'reconcile');
+    assert.deepEqual(result.receipt.reasonCodes, ['composite-input-invalid']);
+  });
+  await t.test('overlapping Buffer ranges across evidence classes', () => {
+    const hostile = cloneComposite(fixture.input);
+    const control = hostile.controlObservation.candidates[0].receiptBytes;
+    const operation = hostile.operationObservation.candidates[0].receiptBytes;
+    const offset = Math.max(0, control.length - 1);
+    const backing = Buffer.alloc(offset + operation.length);
+    control.copy(backing, 0);
+    operation.copy(backing, offset);
+    hostile.controlObservation.candidates[0].receiptBytes = backing.subarray(0, control.length);
+    hostile.operationObservation.candidates[0].receiptBytes = backing.subarray(offset, offset + operation.length);
+    const result = decideCompositePromotionPreflight(hostile);
+    assert.equal(result.decision, 'reconcile');
+    assert.deepEqual(result.receipt.reasonCodes, ['composite-input-invalid']);
+  });
+  await t.test('aliased object graph', () => {
+    const hostile = cloneComposite(fixture.input);
+    hostile.operationObservation = hostile.controlObservation;
+    const result = decideCompositePromotionPreflight(hostile);
+    assert.equal(result.decision, 'reconcile');
+    assert.deepEqual(result.receipt.reasonCodes, ['composite-input-invalid']);
+  });
+  await t.test('oversized operation receipt Buffer', () => {
+    const hostile = cloneComposite(fixture.input);
+    hostile.operationObservation.candidates[0].receiptBytes = Buffer.alloc(32_769);
+    const result = decideCompositePromotionPreflight(hostile);
+    assert.equal(result.decision, 'reconcile');
+    assert.deepEqual(result.receipt.reasonCodes, ['composite-input-invalid']);
+  });
+  await t.test('unexpected nested Buffer is rejected before its bytes can use a fallback limit', () => {
+    const hostile = cloneComposite(fixture.input);
+    hostile.operationObservation.candidates[0].junk = Buffer.alloc(32_769);
+    const result = decideCompositePromotionPreflight(hostile);
+    assert.equal(result.decision, 'reconcile');
+    assert.deepEqual(result.receipt.reasonCodes, ['composite-input-invalid']);
+  });
+  await t.test('candidate cap before traversal', () => {
+    const hostile = cloneComposite(fixture.input);
+    while (hostile.operationObservation.candidates.length <= 4) {
+      hostile.operationObservation.candidates.push({
+        receiptSha256: sha256(Buffer.from(String(hostile.operationObservation.candidates.length))),
+        receiptBytes: Buffer.from(String(hostile.operationObservation.candidates.length))
+      });
+    }
+    const result = decideCompositePromotionPreflight(hostile);
+    assert.equal(result.decision, 'reconcile');
+    assert.deepEqual(result.receipt.reasonCodes, ['composite-input-invalid']);
+  });
+});
+
+test('composite output has a fixed bounded contract and only the three reviewed decisions', async () => {
+  const fixture = await buildCompositeFixture();
+  const result = decideCompositePromotionPreflight(fixture.input);
+  assert.deepEqual(Object.keys(result), ['decision', 'receipt', 'bytes', 'sha256', 'byteLength']);
+  assert.deepEqual(Object.keys(result.receipt), [
+    'schemaVersion', 'kind', 'scope', 'decision', 'productionEligible',
+    'operationAuthorized', 'externalMutationAuthorized', 'retryAuthorized',
+    'rollbackAuthorized', 'operationalReuseAuthorized', 'authenticatedAuthority',
+    'decisionId', 'evaluatedAt', 'policySha256', 'lifecyclePolicySha256',
+    'reasonCodes', 'nextAction', 'inputs'
+  ]);
+  assert.deepEqual(Object.keys(result.receipt.inputs), [
+    'expectedReferenceClosureSha256', 'referenceClosureSha256',
+    'controlDecisionSha256', 'controlReceiptSha256',
+    'expectedOperationReceiptSha256', 'operationReceiptSha256'
+  ]);
+  assert.ok(['reconcile', 'block', 'proceed-to-b3-read-only-preflight'].includes(result.decision));
+  assert.equal(Object.isFrozen(result.receipt), true);
+  assert.equal(Object.isFrozen(result.receipt.inputs), true);
+  assert.ok(result.byteLength < 4096);
+  const decisionIdMaterial = {
+    schemaVersion: result.receipt.schemaVersion,
+    kind: result.receipt.kind,
+    scope: result.receipt.scope,
+    decision: result.receipt.decision,
+    productionEligible: result.receipt.productionEligible,
+    operationAuthorized: result.receipt.operationAuthorized,
+    externalMutationAuthorized: result.receipt.externalMutationAuthorized,
+    retryAuthorized: result.receipt.retryAuthorized,
+    rollbackAuthorized: result.receipt.rollbackAuthorized,
+    operationalReuseAuthorized: result.receipt.operationalReuseAuthorized,
+    authenticatedAuthority: result.receipt.authenticatedAuthority,
+    evaluatedAt: result.receipt.evaluatedAt,
+    policySha256: result.receipt.policySha256,
+    lifecyclePolicySha256: result.receipt.lifecyclePolicySha256,
+    reasonCodes: result.receipt.reasonCodes,
+    nextAction: result.receipt.nextAction,
+    inputs: result.receipt.inputs
+  };
+  assert.equal(
+    result.receipt.decisionId,
+    hashCanonical('ai-research-tech-tree:composite-promotion-preflight-decision:v1\0', decisionIdMaterial)
+  );
+  assert.equal(result.sha256, sha256(result.bytes));
+  assert.equal(result.byteLength, result.bytes.length);
 });
 
 function copyInput(input) {
@@ -1026,8 +1665,32 @@ test('exotic, accessor, proxy, shared, overlapping, and poisoned Buffer evidence
 test('source contains no operational capability or CLI surface', async () => {
   const source = await readFile(path.join(ROOT, 'scripts', 'promotion-preflight.mjs'), 'utf8');
   const imports = [...source.matchAll(/^import .* from '([^']+)'/gmu)].map(match => match[1]);
-  assert.deepEqual(imports, ['node:crypto', 'node:util', './strict-json.mjs']);
+  assert.deepEqual(imports, ['node:crypto', 'node:util', './strict-json.mjs', './promotion-lifecycle.mjs']);
   assert.doesNotMatch(source, /node:(?:fs|path|child_process|http|https|net|tls|dns|dgram|process)\b/u);
   assert.doesNotMatch(source, /\b(?:fetch|WebSocket|XMLHttpRequest|execFile|spawn|writeFile|readFile|process\.env|process\.argv)\b/u);
   assert.equal(source.includes('import' + '('), false);
+});
+
+test('import stays silent when ambient argv is forged to name the lifecycle dependency', t => {
+  const probe = [
+    "import { fileURLToPath } from 'node:url';",
+    "process.argv[1]=fileURLToPath(new URL('./scripts/promotion-lifecycle.mjs', import.meta.url));",
+    "await import('./scripts/promotion-preflight.mjs?hostile-pure-import=1');"
+  ].join(' ');
+  const result = spawnSync(process.execPath, ['--input-type=module', '-e', probe], {
+    cwd: ROOT,
+    encoding: 'utf8',
+    env: {},
+    windowsHide: true,
+    timeout: 10_000
+  });
+  if (result.error?.code === 'EPERM') {
+    t.skip('the local sandbox prohibits nested processes; hosted CI runs this fresh-process probe');
+    return;
+  }
+  assert.equal(result.error, undefined);
+  assert.equal(result.status, 0, result.stderr);
+  assert.equal(result.signal, null);
+  assert.equal(result.stdout, '');
+  assert.equal(result.stderr, '');
 });

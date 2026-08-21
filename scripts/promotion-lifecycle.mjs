@@ -1445,6 +1445,6 @@ export const promotionLifecycleConstants = Object.freeze({
   expectedPolicy: EXPECTED_POLICY
 });
 
-if (process.argv[1] && path.resolve(process.argv[1]) === MODULE_PATH) {
+if (import.meta.main) {
   process.exitCode = await runCli();
 }

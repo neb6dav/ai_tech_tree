@@ -2,6 +2,7 @@ import { createHash } from 'node:crypto';
 import { types as utilTypes } from 'node:util';
 
 import { parseStrictJson } from './strict-json.mjs';
+import { decideFreshControlConsumption } from './promotion-lifecycle.mjs';
 
 const POLICY_PATH = 'config/promotion-preflight-policy.v1.json';
 const LIFECYCLE_POLICY_PATH = 'config/promotion-lifecycle-policy.v1.json';
@@ -10,6 +11,7 @@ const GITHUB_POLICY_SHA256 = 'a1dc1ec4b814f09e668b1b1d6669853240dcb732541e0d0b58
 const REFERENCE_SET_DOMAIN = 'ai-research-tech-tree:preflight-reference-set:v1\0';
 const CLOSURE_DOMAIN = 'ai-research-tech-tree:preflight-reference-closure:v1\0';
 const RESOLVED_INVENTORY_DOMAIN = 'ai-research-tech-tree:preflight-resolved-inventory:v1\0';
+const COMPOSITE_DECISION_DOMAIN = 'ai-research-tech-tree:composite-promotion-preflight-decision:v1\0';
 const CHAIN_ID_DOMAIN = 'ai-research-tech-tree:promotion-lifecycle-chain:v1\0';
 const RECEIPT_ID_DOMAIN = 'ai-research-tech-tree:promotion-lifecycle-receipt:v1\0';
 const DOCUMENT_KIND = 'preflight-reference-document';
@@ -108,7 +110,10 @@ const EXPECTED_POLICY_TEXT = `{
     "maxReferenceJsonBytes": 4194304,
     "maxAggregateReferenceBytes": 100663296,
     "maxGitTreeEntries": 4096,
-    "maxStableManifestFiles": 4096
+    "maxStableManifestFiles": 4096,
+    "maxOperationReceiptBytes": 32768,
+    "maxOperationReceiptCandidates": 4,
+    "operationReceiptFreshnessSeconds": 300
   },
   "lifecycleReferenceRoles": [
     "source-finalization-record",
@@ -238,6 +243,56 @@ const EXPECTED_POLICY_TEXT = `{
       "role": "stable-asset-tar"
     }
   ],
+  "compositeDecision": {
+    "scope": "fixture-only",
+    "operationReceiptKind": "fixture-operation-state",
+    "priorAttemptStates": [
+      "none-observed",
+      "known",
+      "unknown"
+    ],
+    "targetStates": [
+      "absent",
+      "known",
+      "unknown"
+    ],
+    "publicTargetStates": [
+      "prior-observed",
+      "target-observed",
+      "unknown"
+    ],
+    "outcomes": [
+      "reconcile",
+      "block",
+      "proceed-to-b3-read-only-preflight"
+    ],
+    "reasonCodes": [
+      "composite-input-invalid",
+      "reference-closure-anchor-invalid",
+      "reference-closure-reconcile",
+      "control-decision-reconcile",
+      "operation-observation-invalid",
+      "operation-observation-incomplete",
+      "operation-observation-duplicate",
+      "operation-observation-ambiguous",
+      "operation-selection-missing",
+      "operation-selection-not-found",
+      "operation-receipt-anchor-invalid",
+      "operation-receipt-oversized",
+      "operation-receipt-sha-mismatch",
+      "operation-receipt-invalid",
+      "operation-receipt-noncanonical",
+      "operation-receipt-time-invalid",
+      "operation-binding-conflict",
+      "operation-state-impossible",
+      "control-prerequisite-blocked",
+      "prior-attempt-known",
+      "release-known",
+      "assets-known",
+      "deployment-known",
+      "public-target-not-prior"
+    ]
+  },
   "outcomes": [
     "reconcile",
     "resolved-fixture-reference-closure"
@@ -256,6 +311,22 @@ const INPUT_KEYS = Object.freeze([
   'expectedSubject',
   'referenceObservation',
   'expectedReferenceSetSha256'
+]);
+const COMPOSITE_INPUT_KEYS = Object.freeze([
+  'policyRecord',
+  'lifecyclePolicyRecord',
+  'receiptBytesList',
+  'expectedHeadSha256',
+  'expectedSubject',
+  'referenceObservation',
+  'expectedReferenceSetSha256',
+  'controlPolicyRecord',
+  'controlObservation',
+  'expectedControlReceiptSha256',
+  'operationObservation',
+  'expectedReferenceClosureSha256',
+  'expectedOperationReceiptSha256',
+  'evaluatedAt'
 ]);
 const POLICY_RECORD_KEYS = Object.freeze(['path', 'bytes', 'sha256', 'policy']);
 const OBSERVATION_KEYS = Object.freeze(['completeness', 'candidates']);
@@ -289,6 +360,38 @@ const AUTHORITY_BOUNDARY_KEYS = Object.freeze([
   'sourceMutationAuthorized', 'tagMutationAuthorized', 'releaseMutationAuthorized',
   'deploymentMutationAuthorized', 'environmentMutationAuthorized', 'refMutationAuthorized'
 ]);
+const OPERATION_OBSERVATION_KEYS = Object.freeze(['completeness', 'selectedSha256', 'candidates']);
+const OPERATION_CANDIDATE_KEYS = Object.freeze(['receiptSha256', 'receiptBytes']);
+const OPERATION_RECEIPT_KEYS = Object.freeze([
+  'schemaVersion', 'kind', 'scope', 'productionEligible', 'externalMutationAuthorized',
+  'retryAuthorized', 'rollbackAuthorized', 'operationalReuseAuthorized',
+  'authenticatedAuthority', 'observedAt', 'expiresAt', 'subject', 'lifecycle',
+  'bindings', 'priorAttempt', 'release', 'assets', 'deployment', 'publicTarget'
+]);
+const OPERATION_LIFECYCLE_KEYS = Object.freeze(['chainId', 'headSha256']);
+const OPERATION_BINDING_KEYS = Object.freeze([
+  'referenceClosureSha256', 'controlDecisionSha256', 'controlReceiptSha256'
+]);
+const COMPOSITE_RECONCILE_REASONS = Object.freeze(new Set([
+  'composite-input-invalid',
+  'reference-closure-anchor-invalid',
+  'reference-closure-reconcile',
+  'control-decision-reconcile',
+  'operation-observation-invalid',
+  'operation-observation-incomplete',
+  'operation-observation-duplicate',
+  'operation-observation-ambiguous',
+  'operation-selection-missing',
+  'operation-selection-not-found',
+  'operation-receipt-anchor-invalid',
+  'operation-receipt-oversized',
+  'operation-receipt-sha-mismatch',
+  'operation-receipt-invalid',
+  'operation-receipt-noncanonical',
+  'operation-receipt-time-invalid',
+  'operation-binding-conflict',
+  'operation-state-impossible'
+]));
 const TRANSITIONS = Object.freeze([
   Object.freeze({ sequence: 1, eventType: 'source-finalized', fromState: 'unstarted', toState: 'source-finalized', evidenceRole: 'source-finalization-record', authorityRole: 'source-finalization-authorization' }),
   Object.freeze({ sequence: 2, eventType: 'tag-verified', fromState: 'source-finalized', toState: 'tag-verified', evidenceRole: 'annotated-tag-verification-record', authorityRole: 'annotated-tag-authorization' }),
@@ -556,6 +659,117 @@ function snapshotJson(value, label, ancestors = new Set(), state = { nodes: 0 },
   } finally {
     ancestors.delete(value);
   }
+}
+
+function compositeBufferLimit(label, policy) {
+  if (/^composite input\.operationObservation\.candidates\[\d+\]\.receiptBytes$/u.test(label)) {
+    return policy.limits.maxOperationReceiptBytes;
+  }
+  if (/^composite input\.controlObservation\.candidates\[\d+\]\.receiptBytes$/u.test(label)) {
+    return 262_144;
+  }
+  if (/^composite input\.referenceObservation\.candidates\[\d+\]\.bytes$/u.test(label)) {
+    return policy.limits.maxReferenceBytes;
+  }
+  if (/^composite input\.receiptBytesList\[\d+\]$/u.test(label)) {
+    return policy.limits.maxLifecycleReceiptBytes;
+  }
+  if ([
+    'composite input.policyRecord.bytes',
+    'composite input.lifecyclePolicyRecord.bytes',
+    'composite input.controlPolicyRecord.bytes'
+  ].includes(label)) {
+    return policy.limits.maxPolicyBytes;
+  }
+  return null;
+}
+
+function compositeArrayLimit(label, policy) {
+  if (label === 'composite input.operationObservation.candidates') {
+    return policy.limits.maxOperationReceiptCandidates;
+  }
+  if (label === 'composite input.controlObservation.candidates') return 4;
+  if (label === 'composite input.referenceObservation.candidates') {
+    return policy.limits.maxReferenceCandidates;
+  }
+  if (label === 'composite input.receiptBytesList') return 3;
+  return 20_000;
+}
+
+function snapshotCompositeValue(value, label, policy, state, depth = 0) {
+  state.nodes += 1;
+  if (state.nodes > 20_000 || depth > 64) throw preflightError(`${label} exceeds the composite graph bound`);
+  if (value === null || typeof value === 'boolean') return value;
+  if (typeof value === 'string') {
+    state.stringUnits += value.length;
+    if (state.stringUnits > 2_000_000) throw preflightError('composite input string data exceeds its reviewed bound');
+    return value;
+  }
+  if (typeof value === 'number') {
+    if (!Number.isFinite(value)) throw preflightError(`${label} must contain finite JSON numbers`);
+    return value;
+  }
+  if (!value || typeof value !== 'object') throw preflightError(`${label} must contain only data and ordinary Buffers`);
+  assertNotProxy(value, label);
+  if (state.seen.has(value)) throw preflightError(`${label} must not alias another composite input value`);
+  state.seen.add(value);
+  if (BUFFER_IS_BUFFER(value)) {
+    const maximum = compositeBufferLimit(label, policy);
+    if (maximum === null) throw preflightError(`${label} is not an allowed composite input Buffer position`);
+    const inspected = inspectOrdinaryBuffer(value, label);
+    if (inspected.length > maximum) {
+      throw preflightError(`${label} exceeds its reviewed byte bound`);
+    }
+    for (let index = 0; index < state.buffers.length; index += 1) {
+      if (rangesOverlap(inspected, state.buffers[index])) {
+        throw preflightError(`${label} must not overlap another composite input Buffer`);
+      }
+    }
+    state.bufferBytes += inspected.length;
+    if (state.bufferBytes > policy.limits.maxAggregateReferenceBytes + 1_048_576) {
+      throw preflightError('composite input Buffer data exceeds its aggregate bound');
+    }
+    state.buffers.push(inspected);
+    return copyInspectedBuffer(inspected);
+  }
+  if (Array.isArray(value)) {
+    const items = snapshotDenseArray(value, label, compositeArrayLimit(label, policy));
+    const result = [];
+    for (let index = 0; index < items.length; index += 1) {
+      result[index] = snapshotCompositeValue(items[index], `${label}[${index}]`, policy, state, depth + 1);
+    }
+    return result;
+  }
+  if (Object.getPrototypeOf(value) !== Object.prototype) throw preflightError(`${label} must contain only plain objects`);
+  const descriptors = Object.getOwnPropertyDescriptors(value);
+  if (Object.getOwnPropertySymbols(descriptors).length !== 0) throw preflightError(`${label} must not contain symbol properties`);
+  const result = {};
+  const names = Object.getOwnPropertyNames(descriptors);
+  for (let index = 0; index < names.length; index += 1) {
+    const name = names[index];
+    const descriptor = descriptors[name];
+    if (!descriptor.enumerable || !Object.prototype.hasOwnProperty.call(descriptor, 'value')) {
+      throw preflightError(`${label}.${name} must be an enumerable data property`);
+    }
+    Object.defineProperty(result, name, {
+      value: snapshotCompositeValue(descriptor.value, `${label}.${name}`, policy, state, depth + 1),
+      enumerable: true,
+      writable: true,
+      configurable: true
+    });
+  }
+  return result;
+}
+
+function snapshotCompositeInput(input) {
+  const supplied = snapshotExactRecord(input, COMPOSITE_INPUT_KEYS, 'composite input');
+  const state = { seen: new Set([input]), buffers: [], bufferBytes: 0, stringUnits: 0, nodes: 0 };
+  const result = {};
+  for (let index = 0; index < COMPOSITE_INPUT_KEYS.length; index += 1) {
+    const key = COMPOSITE_INPUT_KEYS[index];
+    result[key] = snapshotCompositeValue(supplied[key], `composite input.${key}`, EXPECTED_POLICY, state);
+  }
+  return result;
 }
 
 function assertJsonEqual(actual, expected, label) {
@@ -1692,6 +1906,313 @@ function resolvedResult(policyRecord, lifecyclePolicyRecord, receipts, subject, 
   });
 }
 
+function initialCompositeInputs() {
+  return {
+    expectedReferenceClosureSha256: null,
+    referenceClosureSha256: null,
+    controlDecisionSha256: null,
+    controlReceiptSha256: null,
+    expectedOperationReceiptSha256: null,
+    operationReceiptSha256: null
+  };
+}
+
+function compositeDecisionIdMaterial(receipt) {
+  return {
+    schemaVersion: receipt.schemaVersion,
+    kind: receipt.kind,
+    scope: receipt.scope,
+    decision: receipt.decision,
+    productionEligible: receipt.productionEligible,
+    operationAuthorized: receipt.operationAuthorized,
+    externalMutationAuthorized: receipt.externalMutationAuthorized,
+    retryAuthorized: receipt.retryAuthorized,
+    rollbackAuthorized: receipt.rollbackAuthorized,
+    operationalReuseAuthorized: receipt.operationalReuseAuthorized,
+    authenticatedAuthority: receipt.authenticatedAuthority,
+    evaluatedAt: receipt.evaluatedAt,
+    policySha256: receipt.policySha256,
+    lifecyclePolicySha256: receipt.lifecyclePolicySha256,
+    reasonCodes: receipt.reasonCodes,
+    nextAction: receipt.nextAction,
+    inputs: receipt.inputs
+  };
+}
+
+function compositeResult({ evaluatedAt = null, reasons, inputs = initialCompositeInputs() }) {
+  const policy = EXPECTED_POLICY.compositeDecision;
+  const orderedReasons = policy.reasonCodes.filter(code => reasons.has(code));
+  const decision = orderedReasons.some(code => COMPOSITE_RECONCILE_REASONS.has(code))
+    ? 'reconcile'
+    : orderedReasons.length > 0
+      ? 'block'
+      : 'proceed-to-b3-read-only-preflight';
+  const nextAction = {
+    reconcile: 'reconcile-fixture-evidence',
+    block: 'resolve-blockers-before-b3',
+    'proceed-to-b3-read-only-preflight': 'continue-to-b3-read-only-preflight'
+  }[decision];
+  const receipt = {
+    schemaVersion: '1.0.0',
+    kind: 'composite-promotion-preflight-decision',
+    scope: policy.scope,
+    decision,
+    productionEligible: false,
+    operationAuthorized: false,
+    externalMutationAuthorized: false,
+    retryAuthorized: false,
+    rollbackAuthorized: false,
+    operationalReuseAuthorized: false,
+    authenticatedAuthority: false,
+    decisionId: '',
+    evaluatedAt,
+    policySha256: EXPECTED_POLICY_SHA256,
+    lifecyclePolicySha256: LIFECYCLE_POLICY_SHA256,
+    reasonCodes: orderedReasons,
+    nextAction,
+    inputs
+  };
+  receipt.decisionId = hashCanonical(COMPOSITE_DECISION_DOMAIN, compositeDecisionIdMaterial(receipt));
+  return resultFromReceipt(receipt);
+}
+
+function jsonValuesEqual(left, right) {
+  return JSON.stringify(left) === JSON.stringify(right);
+}
+
+function operationReceiptError(reasonCode, message) {
+  const error = preflightError(message);
+  Object.defineProperty(error, 'reasonCode', {
+    value: reasonCode,
+    enumerable: false,
+    writable: false,
+    configurable: false
+  });
+  return error;
+}
+
+function validateOperationReceipt(receipt, {
+  evaluatedAt,
+  expectedSubject,
+  closure,
+  controlDecision,
+  controlReceiptSha256
+}) {
+  assertExactKeys(receipt, OPERATION_RECEIPT_KEYS, 'operation receipt');
+  const policy = EXPECTED_POLICY.compositeDecision;
+  if (receipt.schemaVersion !== '1.0.0' || receipt.kind !== policy.operationReceiptKind || receipt.scope !== policy.scope) {
+    throw operationReceiptError('operation-receipt-invalid', 'operation receipt envelope is unsupported');
+  }
+  for (const flag of [
+    'productionEligible', 'externalMutationAuthorized', 'retryAuthorized',
+    'rollbackAuthorized', 'operationalReuseAuthorized', 'authenticatedAuthority'
+  ]) {
+    if (receipt[flag] !== false) throw operationReceiptError('operation-receipt-invalid', `operation receipt.${flag} must be false`);
+  }
+  let observedAt;
+  let expiresAt;
+  try {
+    observedAt = assertCanonicalTimestamp(receipt.observedAt, 'operation receipt.observedAt');
+    expiresAt = assertCanonicalTimestamp(receipt.expiresAt, 'operation receipt.expiresAt');
+  } catch {
+    throw operationReceiptError('operation-receipt-time-invalid', 'operation receipt timestamps are invalid');
+  }
+  const observed = new Date(observedAt).valueOf();
+  const expires = new Date(expiresAt).valueOf();
+  const evaluated = new Date(evaluatedAt).valueOf();
+  if (expires - observed !== EXPECTED_POLICY.limits.operationReceiptFreshnessSeconds * 1000) {
+    throw operationReceiptError('operation-receipt-time-invalid', 'operation receipt freshness window is not exact');
+  }
+  if (evaluated < observed || evaluated > expires) {
+    throw operationReceiptError('operation-receipt-time-invalid', 'operation receipt is not fresh at evaluatedAt');
+  }
+  const selectedControl = controlDecision.decision.context.selectedReceipt;
+  if (!selectedControl || observedAt <= selectedControl.observedAt) {
+    throw operationReceiptError('operation-receipt-time-invalid', 'operation receipt must be observed after the selected control receipt');
+  }
+  let subject;
+  try {
+    subject = normalizeSubject(receipt.subject, EXPECTED_POLICY);
+  } catch {
+    throw operationReceiptError('operation-binding-conflict', 'operation receipt subject is invalid');
+  }
+  if (!jsonValuesEqual(subject, expectedSubject) ||
+      !jsonValuesEqual(subject, closure.receipt.subject) ||
+      !jsonValuesEqual(subject, controlDecision.decision.context.subject)) {
+    throw operationReceiptError('operation-binding-conflict', 'operation receipt subject does not cross-bind both child decisions');
+  }
+  let lifecycle;
+  try {
+    lifecycle = snapshotExactRecord(receipt.lifecycle, OPERATION_LIFECYCLE_KEYS, 'operation receipt.lifecycle');
+    assertDigest(lifecycle.chainId, 'operation receipt.lifecycle.chainId');
+    assertDigest(lifecycle.headSha256, 'operation receipt.lifecycle.headSha256');
+  } catch {
+    throw operationReceiptError('operation-binding-conflict', 'operation receipt lifecycle binding is invalid');
+  }
+  if (lifecycle.chainId !== closure.receipt.lifecycleChainId ||
+      lifecycle.chainId !== controlDecision.decision.inputs.lifecycleChainId ||
+      lifecycle.headSha256 !== closure.receipt.lifecycleHeadSha256 ||
+      lifecycle.headSha256 !== controlDecision.decision.inputs.lifecycleHeadSha256) {
+    throw operationReceiptError('operation-binding-conflict', 'operation receipt lifecycle does not cross-bind both child decisions');
+  }
+  let bindings;
+  try {
+    bindings = snapshotExactRecord(receipt.bindings, OPERATION_BINDING_KEYS, 'operation receipt.bindings');
+    for (const key of OPERATION_BINDING_KEYS) assertDigest(bindings[key], `operation receipt.bindings.${key}`);
+  } catch {
+    throw operationReceiptError('operation-binding-conflict', 'operation receipt child bindings are invalid');
+  }
+  if (bindings.referenceClosureSha256 !== closure.sha256 ||
+      bindings.controlDecisionSha256 !== controlDecision.sha256 ||
+      bindings.controlReceiptSha256 !== controlReceiptSha256) {
+    throw operationReceiptError('operation-binding-conflict', 'operation receipt bindings do not match the recomputed child evidence');
+  }
+  if (!policy.priorAttemptStates.includes(receipt.priorAttempt) ||
+      !policy.targetStates.includes(receipt.release) ||
+      !policy.targetStates.includes(receipt.assets) ||
+      !policy.targetStates.includes(receipt.deployment) ||
+      !policy.publicTargetStates.includes(receipt.publicTarget)) {
+    throw operationReceiptError('operation-receipt-invalid', 'operation receipt contains an unsupported operation state');
+  }
+  return {
+    priorAttempt: receipt.priorAttempt,
+    release: receipt.release,
+    assets: receipt.assets,
+    deployment: receipt.deployment,
+    publicTarget: receipt.publicTarget
+  };
+}
+
+function consumeOperationObservation(observationValue, {
+  expectedOperationReceiptSha256,
+  evaluatedAt,
+  expectedSubject,
+  closure,
+  controlDecision,
+  controlReceiptSha256,
+  reasons,
+  inputs
+}) {
+  let observation;
+  try {
+    observation = snapshotExactRecord(observationValue, OPERATION_OBSERVATION_KEYS, 'operation observation');
+  } catch {
+    reasons.add('operation-observation-invalid');
+    return null;
+  }
+  if (observation.completeness !== 'complete') {
+    reasons.add('operation-observation-incomplete');
+  }
+  let selectedSha256 = null;
+  try {
+    selectedSha256 = assertDigest(observation.selectedSha256, 'operation observation.selectedSha256');
+  } catch {
+    reasons.add('operation-selection-missing');
+  }
+  let candidates;
+  try {
+    candidates = snapshotDenseArray(
+      observation.candidates,
+      'operation observation.candidates',
+      EXPECTED_POLICY.limits.maxOperationReceiptCandidates
+    );
+  } catch {
+    reasons.add('operation-observation-invalid');
+    return null;
+  }
+  const normalized = [];
+  for (let index = 0; index < candidates.length; index += 1) {
+    try {
+      const candidate = snapshotExactRecord(candidates[index], OPERATION_CANDIDATE_KEYS, `operation observation.candidates[${index}]`);
+      const receiptSha256 = assertDigest(candidate.receiptSha256, `operation observation.candidates[${index}].receiptSha256`);
+      const inspected = inspectOrdinaryBuffer(candidate.receiptBytes, `operation observation.candidates[${index}].receiptBytes`);
+      normalized.push({ receiptSha256, inspected });
+    } catch {
+      reasons.add('operation-observation-invalid');
+      return null;
+    }
+  }
+  if (normalized.length === 0) {
+    reasons.add('operation-selection-not-found');
+    return null;
+  }
+  if (normalized.length > 1) {
+    let duplicate = false;
+    for (let index = 0; index < normalized.length; index += 1) {
+      for (let prior = 0; prior < index; prior += 1) {
+        if (normalized[index].receiptSha256 === normalized[prior].receiptSha256) duplicate = true;
+      }
+    }
+    reasons.add(duplicate ? 'operation-observation-duplicate' : 'operation-observation-ambiguous');
+    return null;
+  }
+  const selected = normalized[0];
+  if (selectedSha256 === null || selected.receiptSha256 !== selectedSha256) {
+    reasons.add('operation-selection-not-found');
+    return null;
+  }
+  if (selectedSha256 !== expectedOperationReceiptSha256) {
+    reasons.add('operation-receipt-anchor-invalid');
+    return null;
+  }
+  if (selected.inspected.length > EXPECTED_POLICY.limits.maxOperationReceiptBytes) {
+    reasons.add('operation-receipt-oversized');
+    return null;
+  }
+  const bytes = copyInspectedBuffer(selected.inspected);
+  const digest = sha256(bytes);
+  if (digest !== selected.receiptSha256) {
+    reasons.add('operation-receipt-sha-mismatch');
+    return null;
+  }
+  inputs.operationReceiptSha256 = digest;
+  let receipt;
+  try {
+    receipt = parseStrictJson(bytes, 'operation receipt');
+  } catch {
+    reasons.add('operation-receipt-invalid');
+    return null;
+  }
+  if (!bufferEquals(bytes, canonicalBytes(receipt))) {
+    reasons.add('operation-receipt-noncanonical');
+    return null;
+  }
+  try {
+    return validateOperationReceipt(receipt, {
+      evaluatedAt,
+      expectedSubject,
+      closure,
+      controlDecision,
+      controlReceiptSha256
+    });
+  } catch (error) {
+    reasons.add(typeof error?.reasonCode === 'string' ? error.reasonCode : 'operation-receipt-invalid');
+    return null;
+  }
+}
+
+function addOperationStateReasons(operationState, reasons) {
+  if (!operationState) return;
+  if (operationState.priorAttempt === 'unknown' ||
+      operationState.release === 'unknown' ||
+      operationState.assets === 'unknown' ||
+      operationState.deployment === 'unknown' ||
+      operationState.publicTarget === 'unknown') {
+    reasons.add('operation-observation-incomplete');
+  }
+  if ((operationState.release === 'absent' && operationState.assets === 'known') ||
+      (operationState.release === 'absent' && operationState.deployment === 'known') ||
+      (operationState.assets === 'absent' && operationState.deployment === 'known') ||
+      (operationState.deployment === 'absent' && operationState.publicTarget === 'target-observed')) {
+    reasons.add('operation-state-impossible');
+  }
+  if (operationState.priorAttempt === 'known') reasons.add('prior-attempt-known');
+  if (operationState.release === 'known') reasons.add('release-known');
+  if (operationState.assets === 'known') reasons.add('assets-known');
+  if (operationState.deployment === 'known') reasons.add('deployment-known');
+  if (operationState.publicTarget === 'target-observed') reasons.add('public-target-not-prior');
+}
+
 export function resolveLifecycleReferenceClosure(input) {
   assertRuntimeIntrinsics();
   const snapshot = snapshotExactRecord(input, INPUT_KEYS, 'input');
@@ -1727,6 +2248,105 @@ export function resolveLifecycleReferenceClosure(input) {
   }
 }
 
+export function decideCompositePromotionPreflight(input) {
+  assertRuntimeIntrinsics();
+  const reasons = new Set();
+  const inputs = initialCompositeInputs();
+  let snapshot;
+  try {
+    snapshot = snapshotCompositeInput(input);
+  } catch {
+    reasons.add('composite-input-invalid');
+    return compositeResult({ reasons, inputs });
+  }
+
+  let evaluatedAt = null;
+  try {
+    evaluatedAt = assertCanonicalTimestamp(snapshot.evaluatedAt, 'composite evaluatedAt');
+  } catch {
+    reasons.add('composite-input-invalid');
+  }
+
+  try {
+    inputs.expectedReferenceClosureSha256 = assertDigest(
+      snapshot.expectedReferenceClosureSha256,
+      'expectedReferenceClosureSha256'
+    );
+  } catch {
+    reasons.add('reference-closure-anchor-invalid');
+  }
+  try {
+    inputs.expectedOperationReceiptSha256 = assertDigest(
+      snapshot.expectedOperationReceiptSha256,
+      'expectedOperationReceiptSha256'
+    );
+  } catch {
+    reasons.add('operation-receipt-anchor-invalid');
+  }
+
+  const closure = resolveLifecycleReferenceClosure({
+    policyRecord: snapshot.policyRecord,
+    lifecyclePolicyRecord: snapshot.lifecyclePolicyRecord,
+    receiptBytesList: snapshot.receiptBytesList,
+    expectedHeadSha256: snapshot.expectedHeadSha256,
+    expectedSubject: snapshot.expectedSubject,
+    referenceObservation: snapshot.referenceObservation,
+    expectedReferenceSetSha256: snapshot.expectedReferenceSetSha256
+  });
+  inputs.referenceClosureSha256 = closure.sha256;
+  if (closure.decision !== 'resolved-fixture-reference-closure') reasons.add('reference-closure-reconcile');
+  if (inputs.expectedReferenceClosureSha256 !== closure.sha256) reasons.add('reference-closure-anchor-invalid');
+
+  const controlDecision = decideFreshControlConsumption({
+    policyRecord: snapshot.lifecyclePolicyRecord,
+    receiptBytesList: snapshot.receiptBytesList,
+    expectedHeadSha256: snapshot.expectedHeadSha256,
+    expectedSubject: snapshot.expectedSubject,
+    controlPolicyRecord: snapshot.controlPolicyRecord,
+    controlObservation: snapshot.controlObservation,
+    expectedControlReceiptSha256: snapshot.expectedControlReceiptSha256,
+    evaluatedAt: snapshot.evaluatedAt
+  });
+  inputs.controlDecisionSha256 = controlDecision.sha256;
+  inputs.controlReceiptSha256 = controlDecision.decision.inputs.consumedControlReceiptSha256;
+  if (controlDecision.decision.outcome === 'reconcile') reasons.add('control-decision-reconcile');
+  else if (controlDecision.decision.outcome === 'block') reasons.add('control-prerequisite-blocked');
+
+  let expectedSubject = null;
+  try {
+    expectedSubject = normalizeSubject(snapshot.expectedSubject, EXPECTED_POLICY);
+  } catch {
+    reasons.add('composite-input-invalid');
+  }
+  if (closure.decision === 'resolved-fixture-reference-closure' &&
+      controlDecision.decision.outcome !== 'reconcile' &&
+      evaluatedAt !== null &&
+      expectedSubject !== null &&
+      inputs.expectedOperationReceiptSha256 !== null &&
+      inputs.controlReceiptSha256 !== null) {
+    const operationState = consumeOperationObservation(snapshot.operationObservation, {
+      expectedOperationReceiptSha256: inputs.expectedOperationReceiptSha256,
+      evaluatedAt,
+      expectedSubject,
+      closure,
+      controlDecision,
+      controlReceiptSha256: inputs.controlReceiptSha256,
+      reasons,
+      inputs
+    });
+    addOperationStateReasons(operationState, reasons);
+  } else {
+    try {
+      const observation = snapshotExactRecord(snapshot.operationObservation, OPERATION_OBSERVATION_KEYS, 'operation observation');
+      if (observation.completeness !== 'complete') reasons.add('operation-observation-incomplete');
+    } catch {
+      reasons.add('operation-observation-invalid');
+    }
+  }
+
+  return compositeResult({ evaluatedAt, reasons, inputs });
+}
+
 export const promotionPreflightConstants = Object.freeze({
   policyPath: POLICY_PATH,
   policySha256: EXPECTED_POLICY_SHA256,
@@ -1734,5 +2354,6 @@ export const promotionPreflightConstants = Object.freeze({
   lifecyclePolicySha256: LIFECYCLE_POLICY_SHA256,
   referenceKind: REFERENCE_KIND,
   referenceSetDomain: REFERENCE_SET_DOMAIN,
-  closureDomain: CLOSURE_DOMAIN
+  closureDomain: CLOSURE_DOMAIN,
+  compositeDecisionDomain: COMPOSITE_DECISION_DOMAIN
 });

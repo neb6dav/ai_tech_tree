@@ -261,11 +261,25 @@ last_verified_commands:
     runtime: "GitHub Actions Node v24.19.0/npm 11.17.0 plus exact synthetic Node v24.14.1/npm 11.11.0"
     verified_by: "root plus read-only reconciliation agent"
     scope: "Workflow 32435789512; all seven jobs green; tested merge SHA 149a1bef0bbbd2a53e54506fa342fd870e1d142a has the same tree as pushed head 5ee974e; preview artifact 9430718136 passed 1,465 references, release identity 2/2, and performance gates; manifest SHA-256 7ea2833a4ab2fd067da9d7d52390d78e88321f11d1e5cf06ba8ce0ebb6288ca2; canonical 15-file closure SHA-256 83e638b247994817f26d56272803d38ef4f01e5a9a9cb28b7cd6efb548ecbff1; 17/17 inputs, 89 tracked entries, and zero filters; no tag, release, setting, deployment, or production request"
+  - command: "Reconcile C4.4-B2.3-A verification-ledger hosted run"
+    status: "PASS"
+    runtime: "GitHub Actions on Windows and Ubuntu"
+    verified_by: "root plus integration agent"
+    scope: "Workflow 32436461035 at ledger head 36dd511; all seven jobs green; tested merge SHA eb1306d9c7d053d7cd76fd8e25c3a16b29554244 and pushed head 36dd511bbdc7674419631f2dda72977d4acfdeb1 share tree 62bcbd6a25c407f9ca1f996cc99f62d18f49d4c6; no artifact download, live audit, tag, release, setting, deployment, or production request"
+  - command: "npm run test:promotion-lifecycle; npm run test:promotion-preflight; npm run test:workflow-policy; npm run plan:promotion-lifecycle; node --check; git diff --check"
+    status: "PASS"
+    runtime: "Node v24.14.1 and npm 11.11.0"
+    verified_by: "core implementation and integration agents"
+    scope: "C4.4-B2.3-B byte-stable local integration: 45 lifecycle, 124 promotion-preflight, and 169 workflow/package-policy tests; exact raw B2.3-A and B2.2 recomputation at one fixture use time; bounded operation receipt; only reconcile, block, or proceed-to-b3-read-only-preflight; every production, operation, mutation, retry, rollback, reuse, and authority flag false; direct lifecycle CLI still plan-only; fixed empty-environment fresh-process import probe silent; workflows and package scripts unchanged; lifecycle da762a62...d76a, policy 7754499a...2204, resolver 27f5b5d8...5406, preflight tests 6c02aaa5...7f57, and workflow policy eadee916...e36"
+  - command: "Independent C4.4-B2.3-B composite preflight correctness review"
+    status: "PASS after findings resolved"
+    verified_by: "root plus independent hostile reviewer"
+    scope: "Corrected pre-copy composite graph bounds, crafted-argv transitive lifecycle CLI execution, inherited fresh-process environment, and reconcile-versus-block documentation precision; independent 338-test matrix had 337 passes, zero failures, and one local sandbox EPERM skip, while the exact fresh-shell import probe separately passed silent; final verdict SHIP with no open P1/P2"
 next_exact_action: >-
-  Implement the bounded C4.4-B2.3-B pure composite preflight, recomputing the
-  exact B2.3-A closure and B2.2 freshness decision from raw anchored inputs at
-  an explicit use time, while retaining false production, mutation, retry,
-  rollback, and operational-reuse authority and leaving B3 as the next gate.
+  Commit the hostile-reviewed exact eight-file C4.4-B2.3-B snapshot, run the
+  exact-clean full repository gate at that commit, push it, and reconcile the
+  hosted seven-job validation and downloaded preview before recording B2.3-B
+  complete and beginning B3.
 known_blockers:
   - "WP-011-B is stacked on verified draft PR #5 until WP-011-A is separately authorized to merge."
   - "No merge, annotated tag, GitHub Release, environment approval, or public deployment is authorized."
@@ -273,7 +287,7 @@ known_blockers:
   - "Browser performance metrics and automated preview screenshots remain pending WP-012-A."
   - "The github-pages environment has no required reviewer and permits administrator bypass; immutable GitHub Releases are disabled. These external controls require separate authorization before any C4 promotion run."
   - "No active no-bypass tag ruleset protects v0.1.1, and the verified production recovery artifact is local rather than durable and runner-accessible."
-release_gate_status: "wp_011_b_c4_4_b2_3_a_remote_verified_b2_3_b_ready"
+release_gate_status: "wp_011_b_c4_4_b2_3_b_local_hostile_verified_pending_commit"
 release_details:
   version: "v0.1.1"
   title: "Publication-contract repair"
@@ -299,13 +313,12 @@ release_details:
     active_checkpoint:
       id: "C4.4-B2.3-B"
       title: "Fresh composite read-only promotion preflight"
-      status: "ready_to_implement"
+      status: "local_hostile_verified_pending_checkpoint_commit"
       next_exact_action: >-
-        Recompute the exact fixture reference closure and control-consumption
-        decision from their raw anchored inputs at an explicit use time, bind a
-        complete bounded operation-state observation, and emit only reconcile,
-        block, or proceed-to-B3-read-only-preflight with every production,
-        mutation, retry, rollback, and reusable-operation flag false.
+        Commit this exact eight-file snapshot, run the exact-clean full gate,
+        push, and reconcile hosted validation plus the downloaded preview.
+        Retain the pure B3-only handoff and every production, operation,
+        mutation, retry, rollback, reuse, and authority flag false.
     scope:
       - "Publish stable and compatibility Opportunity endpoints."
       - "Move exported human URLs to the root application."
@@ -573,14 +586,34 @@ fixture bytes for the six lifecycle evidence and authority roles and closing
 their repository, release-specification, Git-object, workflow, tag-object, and
 stable-bundle provenance. `resolved-fixture-reference-closure` is not an
 operational or promotion outcome: production eligibility, external mutation,
-and every authority flag remain false. Current planned release and lifecycle
-evidence cannot pass. B2.3-A validates self-consistent fixture bytes and raw
-Git-object relationships only: it does not attest that
+and every authority flag remain false. B2.3-A validates self-consistent fixture
+bytes and raw Git-object relationships only: it does not attest that
 `verify-stable-bundle.mjs` executed and does not prove that the staged payload
 was derived by executing committed tools against the claimed source commit.
-Fresh composite control/operation-state guards remain C4.4-B2.3-B work; the
-durable runner-accessible bundle, storage proof, and rollback rehearsal remain
-C4.4-B3 work.
+
+C4.4-B2.3-B recomputes that B2.3-A closure and the B2.2 freshness decision from
+raw, independently anchored inputs at one explicit fixture use time rather than
+trusting either prior result. It also binds a complete bounded operation-state
+receipt covering prior-attempt, Release, asset, deployment, and public-target
+state. Within that operation observation and receipt, malformed, incomplete,
+duplicate, ambiguous, unknown, stale, hash-mismatched, cross-bound, or
+impossible evidence reconciles. Any known prior attempt, Release, asset,
+deployment, or non-prior public target blocks.
+`proceed-to-b3-read-only-preflight` means only a
+handoff to B3: production eligibility, operation authority, external mutation,
+retry authority, rollback authority, operational reuse, and authenticated
+authority all remain false; no observed state grants retry. Planned, injected-
+test-only, or stale B2.2 control evidence blocks whenever the reference closure
+is otherwise resolved; current real evidence can only reconcile or block.
+The resolver adds no package script, plan or operational CLI, transport,
+credential, writer, subprocess, output, workflow entry point, or mutation
+capability, and the two active workflow files remain byte-identical. Importing
+B2.2 cannot trigger the existing direct-entry-only `plan:promotion-lifecycle`
+CLI. One source-locked hostile test uses a fixed local Node process only to
+prove this ambient-`argv` isolation; it has no network, credential, writer, or
+mutation capability. C4.4-B3 owns the rollback
+descriptor, durable runner-accessible bundle, storage proof, and rollback
+rehearsal.
 
 The public lifecycle is monotonic: finalized commit, annotated tag, draft
 Release, deployed site, verified smoke, and published immutable Release are

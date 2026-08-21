@@ -167,13 +167,40 @@ repository evidence cannot produce the resolved outcome: the real release
 specification is not ready, the current lifecycle/control evidence remains
 fixture-only and promotion-ineligible, and no live audit has run.
 
-C4.4-B2.3-B still must revalidate fresh composite control and operation state
-at use time, fail closed on ambiguity or unsafe retry state, and keep all
-production and mutation authority false. C4.4-B3 still must prove a durable,
-runner-accessible rollback bundle, storage access, and rehearsal. Those
-checkpoints require their own review and authorization. Nothing in B2.1,
-B2.2, or B2.3-A authorizes a tag, Release, asset upload, deployment,
-publication, rollback, settings change, or production request.
+C4.4-B2.3-B is another pure, deterministic fixture decision under the existing
+`test:promotion-preflight` entry point. At one explicit fixture use time it
+recomputes the B2.3-A reference closure and B2.2 freshness decision from their
+raw, independently anchored inputs instead of trusting serialized results. It
+also binds a complete bounded operation-state receipt covering prior-attempt,
+Release, asset, deployment, and public-target state. Within that operation
+observation and receipt, malformed, incomplete, duplicate, ambiguous, unknown,
+stale, hash-mismatched, cross-bound, or impossible evidence reconciles. Any
+known prior attempt, Release, asset, deployment, or non-prior public target
+blocks. The
+only positive vocabulary is `proceed-to-b3-read-only-preflight`, which hands
+the fixture to the next read-only checkpoint and authorizes no operation.
+
+All B2.3-B results keep production eligibility, operation authority, external-
+mutation authority, retry authority, rollback authority, operational reuse,
+and authenticated authority false; no observed state grants retry. Planned,
+injected-test-only, or stale B2.2 control evidence blocks whenever the reference
+closure is otherwise resolved; current real evidence can only reconcile or
+block. The
+resolver adds no package script, plan or operational CLI, transport,
+credential, writer, subprocess, output, workflow entry point, or mutation
+capability, and `pages.yml` plus `validate.yml` remain byte-identical.
+Importing the B2.2 decision cannot trigger the existing
+`plan:promotion-lifecycle` CLI, which remains direct-entry-only. One source-
+locked hostile test uses a fixed local Node process only to prove that crafted
+ambient `argv` cannot turn that dependency into an entry point; it has no
+network, credential, writer, or mutation capability.
+
+C4.4-B3 owns the rollback descriptor and still must prove a durable, runner-
+accessible rollback bundle, storage access, and rehearsal. That checkpoint
+requires its own review and
+authorization. Nothing in B2.1, B2.2, B2.3-A, or B2.3-B authorizes a tag,
+Release, asset upload, deployment, publication, rollback, settings change, or
+production request.
 
 ## Explicit deferrals
 

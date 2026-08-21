@@ -22,7 +22,10 @@
     "maxReferenceJsonBytes": 4194304,
     "maxAggregateReferenceBytes": 100663296,
     "maxGitTreeEntries": 4096,
-    "maxStableManifestFiles": 4096
+    "maxStableManifestFiles": 4096,
+    "maxOperationReceiptBytes": 32768,
+    "maxOperationReceiptCandidates": 4,
+    "operationReceiptFreshnessSeconds": 300
   },
   "lifecycleReferenceRoles": [
     "source-finalization-record",
@@ -152,6 +155,56 @@
       "role": "stable-asset-tar"
     }
   ],
+  "compositeDecision": {
+    "scope": "fixture-only",
+    "operationReceiptKind": "fixture-operation-state",
+    "priorAttemptStates": [
+      "none-observed",
+      "known",
+      "unknown"
+    ],
+    "targetStates": [
+      "absent",
+      "known",
+      "unknown"
+    ],
+    "publicTargetStates": [
+      "prior-observed",
+      "target-observed",
+      "unknown"
+    ],
+    "outcomes": [
+      "reconcile",
+      "block",
+      "proceed-to-b3-read-only-preflight"
+    ],
+    "reasonCodes": [
+      "composite-input-invalid",
+      "reference-closure-anchor-invalid",
+      "reference-closure-reconcile",
+      "control-decision-reconcile",
+      "operation-observation-invalid",
+      "operation-observation-incomplete",
+      "operation-observation-duplicate",
+      "operation-observation-ambiguous",
+      "operation-selection-missing",
+      "operation-selection-not-found",
+      "operation-receipt-anchor-invalid",
+      "operation-receipt-oversized",
+      "operation-receipt-sha-mismatch",
+      "operation-receipt-invalid",
+      "operation-receipt-noncanonical",
+      "operation-receipt-time-invalid",
+      "operation-binding-conflict",
+      "operation-state-impossible",
+      "control-prerequisite-blocked",
+      "prior-attempt-known",
+      "release-known",
+      "assets-known",
+      "deployment-known",
+      "public-target-not-prior"
+    ]
+  },
   "outcomes": [
     "reconcile",
     "resolved-fixture-reference-closure"

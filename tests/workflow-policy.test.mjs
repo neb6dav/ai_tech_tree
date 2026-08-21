@@ -40,7 +40,7 @@ const REVIEWED_PROMOTION_LIFECYCLE_SOURCE_SHA256 = Object.freeze({
   'config/github-promotion-policy.v1.json': 'a1dc1ec4b814f09e668b1b1d6669853240dcb732541e0d0b580ec3f5a959215c',
   'config/promotion-lifecycle-policy.v1.json': '61f2a9c91fe24ec232af591385f3d3995c3c4412015e816fc27b9b0142777246',
   'scripts/github-control-audit.mjs': '2b5d5fd0aa23056bc00bcfa01cf11b24f345465d9c4f98a403f858a16f010995',
-  'scripts/promotion-lifecycle.mjs': '7d775ee0d5f3c8ac4a081cede2434fffb3509f6ae8e5fa5c3056ca8310fca34c',
+  'scripts/promotion-lifecycle.mjs': 'da762a62626646444ac2f174bbc784615ae41d31914bb94839fae8353b11d76a',
   'scripts/release-spec.mjs': 'ba57496454c0e565bd6b315e8c52aba6998774aff27d6c55eac32e141074e89f',
   'scripts/strict-json.mjs': '32319f64ee28a8e4c0329d24ef26c8ef26c94f12d77f9f20656f7e744111de7e',
   'tests/promotion-lifecycle.test.mjs': 'ae7cf29a1baa68169b437e215a158df8801bbb4dd2e61eea6b237d1da3cd33bf'
@@ -52,18 +52,18 @@ const REVIEWED_PROMOTION_PREFLIGHT_SOURCE_SHA256 = Object.freeze({
   'config/github-promotion-policy.v1.json': 'a1dc1ec4b814f09e668b1b1d6669853240dcb732541e0d0b580ec3f5a959215c',
   'config/pages-stage.v1.json': '22da77567b94f1bfa83d345d4613b11535e374b9c39de16245dcbc7820939bd6',
   'config/promotion-lifecycle-policy.v1.json': '61f2a9c91fe24ec232af591385f3d3995c3c4412015e816fc27b9b0142777246',
-  'config/promotion-preflight-policy.v1.json': '34d6a6e59657a0e92c745c6323891774dfbc1097d37f4b383facec52f8bbd231',
+  'config/promotion-preflight-policy.v1.json': '7754499a66c1b67d061d6378f7d545a3c9e64204fbd94d09d5715816d1f72204',
   'config/releases/v0.1.1.json': '0636d635b07664b11715705a4e11f87ba92b53a0b6f93416da0f597463a29d49',
   'scripts/github-control-audit.mjs': '2b5d5fd0aa23056bc00bcfa01cf11b24f345465d9c4f98a403f858a16f010995',
-  'scripts/promotion-lifecycle.mjs': '7d775ee0d5f3c8ac4a081cede2434fffb3509f6ae8e5fa5c3056ca8310fca34c',
-  'scripts/promotion-preflight.mjs': '976b90f196bfc05232f7f1fb1b5731af28ddd5bd88737b91724b63c84de530db',
+  'scripts/promotion-lifecycle.mjs': 'da762a62626646444ac2f174bbc784615ae41d31914bb94839fae8353b11d76a',
+  'scripts/promotion-preflight.mjs': '27f5b5d8e11cf22fdd687d41da940df2bd3a451531054527274c7b6b64f35406',
   'scripts/release-assets.mjs': '8841efff842e00dd93bf69a849b7701ae519bfd70b9bc5618c440ee37b90f83f',
   'scripts/release-ref.mjs': 'c2d7f2be57441fedf046f84e4c70e911ee8ebb7f911b65742b391f274a038a4b',
   'scripts/release-spec.mjs': 'ba57496454c0e565bd6b315e8c52aba6998774aff27d6c55eac32e141074e89f',
   'scripts/stage-site.mjs': '66f6501b44f8377049c4a3ce5398138d669dd2103c0f6f3d18ccfbc7daa35aed',
   'scripts/strict-json.mjs': '32319f64ee28a8e4c0329d24ef26c8ef26c94f12d77f9f20656f7e744111de7e',
   'scripts/verify-stable-bundle.mjs': '6e536de00ca8def993a7628f500fc4712c23b14255cbe5231ffed48852f6828f',
-  'tests/promotion-preflight.test.mjs': '162cacc124923ce555c4324667ee63affb9b8622d269ce2d43d69e793703f9b9'
+  'tests/promotion-preflight.test.mjs': '6c02aaa53f49eacb72818d9d31b3a599b3be728bedf261a43afedc0fa7a07f57'
 });
 const REVIEWED_WORKFLOW_SOURCE_SHA256 = Object.freeze({
   'pages.yml': 'f694db57bce2edcbb916ee1c845f7d33b9245546f063421dadace235073fddfa',
@@ -1180,6 +1180,8 @@ function validatePromotionLifecycleSourceBoundary(reviewedSources = reviewedProm
   assert.match(planner, /export async function loadPromotionLifecyclePolicy\(\.\.\.argumentsList\)/u);
   assert.match(planner, /argumentsList\.length !== 0/u, 'policy loader must reject every caller-controlled path argument');
   assert.match(planner, /if \(!Array\.isArray\(argv\) \|\| argv\.length !== 0\)/u, 'plan CLI must reject every operand');
+  assert.match(planner, /if \(import\.meta\.main\) \{/u, 'plan CLI must use the runtime entry-module signal rather than caller-controlled argv path equality');
+  assert.doesNotMatch(planner, /process\.argv\[1\][\s\S]{0,200}===\s*MODULE_PATH/u, 'an imported lifecycle module must not become main through a crafted argv path');
 
   for (const [relativePath, expectedDigest] of Object.entries(REVIEWED_PROMOTION_LIFECYCLE_SOURCE_SHA256)) {
     assert.equal(
@@ -1217,33 +1219,52 @@ function validatePromotionPreflightSourceBoundary(reviewedSources = reviewedProm
   };
 
   assert.deepEqual(staticImports(resolver, 'promotion-preflight resolver'), [
+    './promotion-lifecycle.mjs',
     './strict-json.mjs',
     'node:crypto',
     'node:util'
   ], 'promotion-preflight resolver must remain filesystem-, path-, process-, network-, and transport-free');
   assert.deepEqual(staticImports(tests, 'promotion-preflight hostile tests'), [
+    '../scripts/promotion-lifecycle.mjs',
     '../scripts/promotion-preflight.mjs',
     'node:assert/strict',
+    'node:child_process',
     'node:crypto',
     'node:fs/promises',
     'node:path',
     'node:test',
     'node:url'
-  ], 'promotion-preflight tests may use only the exact read-only fixture loader and in-memory resolver imports');
+  ], 'promotion-preflight tests may use only the exact read-only fixture loader, in-memory resolver imports, and fixed local fresh-process probe');
   assert.equal(
     (tests.match(/^import \{ readFile \} from 'node:fs\/promises';$/gmu) || []).length,
     1,
     'promotion-preflight tests may import only readFile from the filesystem API'
   );
 
-  for (const [label, source] of [
-    ['promotion-preflight resolver', resolver],
-    ['promotion-preflight hostile tests', tests]
+  for (const [label, source, isHostileTest] of [
+    ['promotion-preflight resolver', resolver, false],
+    ['promotion-preflight hostile tests', tests, true]
   ]) {
     assert.doesNotMatch(source, /(?:^|['"])(?:node:)?(?:http|https|http2|net|tls|dgram|dns)(?:\/|['"])/mu, `${label} must not import a network primitive`);
     assert.doesNotMatch(source, /\b(?:fetch|WebSocket|EventSource|XMLHttpRequest|getBuiltinModule|sendBeacon)\s*\(/u, `${label} must not invoke a network client or dynamic builtin resolver`);
-    assert.doesNotMatch(source, /\bimport\s*\(/u, `${label} must not use a dynamic import`);
-    assert.doesNotMatch(source, /node:child_process|\b(?:execFile|execFileSync|execSync|spawn|spawnSync|fork)\s*\(/u, `${label} must not launch a subprocess`);
+    if (isHostileTest) {
+      assert.equal((source.match(/^import \{ spawnSync \} from 'node:child_process';$/gmu) || []).length, 1, 'hostile tests may bind only spawnSync for the exact fresh-process import regression');
+      assert.equal((source.match(/\bspawnSync\s*\(/gu) || []).length, 1, 'hostile tests may launch exactly one fresh-process probe');
+      assert.equal((source.match(/\bimport\s*\(/gu) || []).length, 1, 'hostile tests may contain only the reviewed local dynamic-import probe');
+      assert.equal((source.match(/\bprocess\.argv\b/gu) || []).length, 1, 'hostile tests may forge argv only inside the reviewed import-isolation probe');
+      assert.doesNotMatch(source, /\b(?:execFile|execFileSync|execSync|spawn|fork)\s*\(/u, 'hostile tests may not gain a second subprocess primitive');
+      assert.match(source, /"process\.argv\[1\]=fileURLToPath\(new URL\('\.\/scripts\/promotion-lifecycle\.mjs', import\.meta\.url\)\);"/u);
+      assert.match(source, /"await import\('\.\/scripts\/promotion-preflight\.mjs\?hostile-pure-import=1'\);"/u);
+      assert.match(
+        source,
+        /spawnSync\(process\.execPath, \['--input-type=module', '-e', probe\], \{\r?\n\s+cwd: ROOT,\r?\n\s+encoding: 'utf8',\r?\n\s+env: \{\},\r?\n\s+windowsHide: true,\r?\n\s+timeout: 10_000\r?\n\s+\}\);/u,
+        'fresh-process probe must use only the fixed local module import with an empty environment and finite timeout'
+      );
+    } else {
+      assert.doesNotMatch(source, /\bimport\s*\(/u, `${label} must not use a dynamic import`);
+      assert.doesNotMatch(source, /node:child_process|\b(?:execFile|execFileSync|execSync|spawn|spawnSync|fork)\s*\(/u, `${label} must not launch a subprocess`);
+      assert.doesNotMatch(source, /\bprocess\.argv\b|\bparseArgs\s*\(/u, `${label} must not expose a CLI entry point`);
+    }
     assert.doesNotMatch(source, /\bprocess\.env\b/u, `${label} must not inspect ambient environment controls or credentials`);
     assert.doesNotMatch(
       source,
@@ -1256,7 +1277,7 @@ function validatePromotionPreflightSourceBoundary(reviewedSources = reviewedProm
       `${label} must not expose a filesystem writer`
     );
     assert.doesNotMatch(source, /--(?:execute|adapter|output)\b/u, `${label} must not expose execution, adapter, or output CLI flags`);
-    assert.doesNotMatch(source, /\bprocess\.argv\b|\bparseArgs\s*\(/u, `${label} must not expose a CLI entry point`);
+    if (isHostileTest) assert.doesNotMatch(source, /\bparseArgs\s*\(/u, `${label} must not expose a CLI entry point`);
     assert.doesNotMatch(
       source,
       /\b(?:curl|wget|Invoke-WebRequest|Invoke-RestMethod|gh)\b|\bgit\s+(?:push|tag|update-ref)\b|deploy-pages|upload-release-asset/iu,
@@ -1266,18 +1287,29 @@ function validatePromotionPreflightSourceBoundary(reviewedSources = reviewedProm
 
   assert.deepEqual(
     [...resolver.matchAll(/^export (?:function|const) ([A-Za-z_$][\w$]*)/gmu)].map(match => match[1]).sort(),
-    ['promotionPreflightConstants', 'resolveLifecycleReferenceClosure'],
-    'promotion-preflight must export only its pure resolver and inert constants'
+    ['decideCompositePromotionPreflight', 'promotionPreflightConstants', 'resolveLifecycleReferenceClosure'],
+    'promotion-preflight must export only its two pure resolvers and inert constants'
   );
   assert.match(resolver, /export function resolveLifecycleReferenceClosure\(input\)/u);
+  assert.match(resolver, /export function decideCompositePromotionPreflight\(input\)/u);
+  assert.match(resolver, /const closure = resolveLifecycleReferenceClosure\(\{/u, 'composite preflight must recompute B2.3-A from raw inputs');
+  assert.match(resolver, /const controlDecision = decideFreshControlConsumption\(\{/u, 'composite preflight must recompute B2.2 from raw inputs');
   assert.match(resolver, /decision:\s*'resolved-fixture-reference-closure'/u);
   assert.match(resolver, /nextAction:\s*'continue-to-b2\.3-b-read-only-preflight'/u);
+  assert.match(resolver, /'proceed-to-b3-read-only-preflight':\s*'continue-to-b3-read-only-preflight'/u);
   assert.match(resolver, /productionEligible:\s*false/u);
+  assert.match(resolver, /operationAuthorized:\s*false/u);
   assert.match(resolver, /externalMutationAuthorized:\s*false/u);
+  assert.match(resolver, /retryAuthorized:\s*false/u);
+  assert.match(resolver, /rollbackAuthorized:\s*false/u);
+  assert.match(resolver, /operationalReuseAuthorized:\s*false/u);
   assert.match(resolver, /authenticatedAuthority:\s*false/u);
   assert.match(resolver, /fixture-does-not-attest-verifier-execution/u);
   assert.match(resolver, /fixture-does-not-prove-staged-payload-derivation-from-source-commit/u);
   assert.match(tests, /current planned release specification cannot substantiate source-finalized/u);
+  assert.match(tests, /composite preflight recomputes both children and blocks current planned injected evidence/u);
+  assert.match(tests, /operation observation fails closed on incomplete, missing, duplicate, multiple, and hash-mismatched evidence/u);
+  assert.match(tests, /composite output has a fixed bounded contract and only the three reviewed decisions/u);
 
   assert.equal(policy.status, 'planned', 'promotion-preflight policy must remain planned');
   assert.equal(policy.mode, 'fixture-only', 'promotion-preflight policy must remain fixture-only');
@@ -1293,6 +1325,43 @@ function validatePromotionPreflightSourceBoundary(reviewedSources = reviewedProm
     'stable-bundle-build-authorization'
   ]);
   assert.deepEqual(policy.outcomes, ['reconcile', 'resolved-fixture-reference-closure']);
+  assert.deepEqual(policy.compositeDecision, {
+    scope: 'fixture-only',
+    operationReceiptKind: 'fixture-operation-state',
+    priorAttemptStates: ['none-observed', 'known', 'unknown'],
+    targetStates: ['absent', 'known', 'unknown'],
+    publicTargetStates: ['prior-observed', 'target-observed', 'unknown'],
+    outcomes: ['reconcile', 'block', 'proceed-to-b3-read-only-preflight'],
+    reasonCodes: [
+      'composite-input-invalid',
+      'reference-closure-anchor-invalid',
+      'reference-closure-reconcile',
+      'control-decision-reconcile',
+      'operation-observation-invalid',
+      'operation-observation-incomplete',
+      'operation-observation-duplicate',
+      'operation-observation-ambiguous',
+      'operation-selection-missing',
+      'operation-selection-not-found',
+      'operation-receipt-anchor-invalid',
+      'operation-receipt-oversized',
+      'operation-receipt-sha-mismatch',
+      'operation-receipt-invalid',
+      'operation-receipt-noncanonical',
+      'operation-receipt-time-invalid',
+      'operation-binding-conflict',
+      'operation-state-impossible',
+      'control-prerequisite-blocked',
+      'prior-attempt-known',
+      'release-known',
+      'assets-known',
+      'deployment-known',
+      'public-target-not-prior'
+    ]
+  }, 'composite preflight must retain its exact fixture-only B3 handoff vocabulary');
+  assert.equal(policy.limits.maxOperationReceiptBytes, 32768);
+  assert.equal(policy.limits.maxOperationReceiptCandidates, 4);
+  assert.equal(policy.limits.operationReceiptFreshnessSeconds, 300);
   assert.deepEqual(
     policy.requiredCommittedPaths.map(item => item.path),
     Object.keys(REVIEWED_PROMOTION_PREFLIGHT_SOURCE_SHA256).filter(relativePath => relativePath !== 'tests/promotion-preflight.test.mjs'),
@@ -1418,7 +1487,7 @@ test('promotion-lifecycle plan and fixture tests remain capability-free and sour
   validatePromotionLifecycleSourceBoundary();
 });
 
-test('promotion-preflight resolver and hostile fixtures remain pure, fixture-only, and source-locked', () => {
+test('promotion-preflight resolver remains pure and hostile fixtures remain local-only, fixture-only, and source-locked', () => {
   validatePromotionPreflightSourceBoundary();
 });
 

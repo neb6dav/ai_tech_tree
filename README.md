@@ -149,13 +149,13 @@ At the `v0.2.2` checkpoint, Lighthouse is a blocking regression signal against t
 
 | Metric | Five-run Windows median | Blocking limit | Local three-run gate |
 | --- | ---: | ---: | ---: |
-| Performance score | 53 | at least 48 | 52 |
-| First Contentful Paint | 22,728.84345 ms | at most 27,500 ms | 22,730.706 ms |
-| Largest Contentful Paint | 22,900.34345 ms | at most 27,500 ms | 22,898.841 ms |
-| Total Blocking Time | 166 ms | at most 250 ms | 204 ms |
+| Performance score | 53 | at least 42 | 50 |
+| First Contentful Paint | 22,728.84345 ms | at most 27,500 ms | 22,734.979 ms |
+| Largest Contentful Paint | 22,900.34345 ms | at most 27,500 ms | 22,893.525 ms |
+| Total Blocking Time | 166 ms | at most 550 ms | 248 ms |
 | Cumulative Layout Shift | 0.00082719 | at most 0.02 | 0.00082719 |
 
-The score floor leaves five points below the calibration median; the paint ceilings round upward to provide local-run headroom; the TBT ceiling covers the calibration's 0.5&ndash;206.5 ms spread; and the CLS ceiling guards against a material layout regression above the near-zero baseline. The local three-run gate passed all five limits. These are provisional Windows-derived regression bounds: confirmation on the configured `ubuntu-24.04` hosted runner is still required before `v0.2.2` is complete, so cross-environment reproducibility is not yet established. The measurements do not represent live GitHub Pages delivery or real-user field performance.
+The original Windows-only score and TBT limits proved too narrow on the configured Ubuntu runner. Two independent hosted attempts against the exact same application bytes both produced score medians of `47`, with TBT medians of `362.5` and `362` ms; the six raw samples ranged from score `44` to `48` and TBT `325` to `440.5` ms, with no audit warnings. The cross-platform score floor is therefore five points below the hosted median, while the TBT ceiling rounds to about 25% above the hosted maximum. The paint ceilings and CLS ceiling are unchanged. A normal hosted run must still pass all five revised limits before `v0.2.2` is complete. These measurements do not represent live GitHub Pages delivery or real-user field performance.
 
 The release manifest records the target package version, dataset edition, publication state, exact full commit, observed Node and npm versions, and every payload file's media type, byte count, and SHA-256. In clean-source mode, staging also proves that the configuration, metadata, individual artifacts, and complete directory inputs are regular committed blobs from the advertised `HEAD`; symlinks, gitlinks, Git LFS pointers, replacement objects, index concealment flags, dirty submodules, and generated or Git-administration input paths fail closed. The manifest cannot contain its own digest without a cryptographic self-reference, so it explicitly excludes itself. Local dirty-tree staging remains available for pre-commit review but is labeled non-clean and cannot be deployed.
 

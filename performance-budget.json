@@ -124,7 +124,7 @@
       },
       "limits": {
         "performanceScore": {
-          "minimum": 48
+          "minimum": 42
         },
         "firstContentfulPaintMs": {
           "maximum": 27500
@@ -133,7 +133,7 @@
           "maximum": 27500
         },
         "totalBlockingTimeMs": {
-          "maximum": 250
+          "maximum": 550
         },
         "cumulativeLayoutShift": {
           "maximum": 0.02

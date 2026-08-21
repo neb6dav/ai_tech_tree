@@ -65,20 +65,22 @@ Playwright Chromium 151.0.7922.34 revision 1234. The independent medians were a
 performance score of 53, FCP of 22,728.84345 ms, LCP of 22,900.34345 ms, TBT of
 166 ms, and CLS of 0.00082719.
 
-The resulting blocking limits are a score of at least 48, FCP and LCP of at
-most 27,500 ms, TBT of at most 250 ms, and CLS of at most 0.02. The score floor
-is five points below the calibration median; the paint limits are rounded up to
-allow local-run headroom; the TBT limit covers the calibration's 0.5&ndash;206.5 ms
-spread; and the CLS limit detects a material regression above the near-zero
-baseline. A subsequent three-run local gate passed with medians of 52,
-22,730.706 ms FCP, 22,898.841 ms LCP, 204 ms TBT, and 0.00082719 CLS.
+The Windows-only score floor of 48 and TBT ceiling of 250 ms proved too narrow
+on the configured Ubuntu runner. Two independent hosted three-run attempts
+against the exact same application bytes both produced score medians of 47 and TBT
+medians of 362.5 and 362 ms; the six raw samples ranged from score 44 to 48 and
+TBT 325 to 440.5 ms, with no audit warnings. The reviewed cross-platform limits
+are therefore a score of at least 42, FCP and LCP of at most 27,500 ms, TBT of
+at most 550 ms, and CLS of at most 0.02. The score floor remains five points
+below the hosted median, and the TBT ceiling rounds to roughly 25% above the
+hosted maximum. Paint and CLS limits are unchanged.
 
-These are Windows-derived local regression bounds, not live-user goals. The
-configured `ubuntu-24.04` hosted-runner confirmation remains required before
-the checkpoint is complete; the workflow label does not freeze the evolving
-runner image. Until that gate passes, `v0.2.2` is locally complete but hosted
-unconfirmed and must not be described as fully reproducible. The measurements
-are not live GitHub Pages delivery or real-user field performance.
+These are controlled local-origin regression bounds, not live-user goals. A
+normal run on the configured `ubuntu-24.04` hosted runner remains required
+before the checkpoint is complete; the workflow label does not freeze the
+evolving runner image. Until that gate passes, `v0.2.2` is locally complete but
+hosted unconfirmed and must not be described as fully reproducible. The
+measurements are not live GitHub Pages delivery or real-user field performance.
 
 ## RD-009 — Freeze the v1 stable source-candidate contract
 
@@ -127,9 +129,9 @@ re-authorized:
 ### v0.2.2 decisions
 
 Generated publication artifacts remain committed through `v1.0.0`. The
-Windows source calibration establishes the blocking limits recorded in RD-008,
-and the local three-run gate passes them. Canonical confirmation on the
-configured `ubuntu-24.04` hosted runner remains outstanding.
+Windows source calibration plus the two reviewed Ubuntu observations establish
+the cross-platform limits recorded in RD-008. Canonical confirmation on a
+normal configured `ubuntu-24.04` hosted gate remains outstanding.
 
 ### Through 1.0
 

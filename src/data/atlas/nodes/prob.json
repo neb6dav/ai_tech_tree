@@ -1,0 +1,1605 @@
+{
+  "schemaVersion": "1.0.0",
+  "laneId": "prob",
+  "nodes": [
+    {
+      "ordinal": 202,
+      "id": "stats25",
+      "title": "Statistical inference (Fisher; Bayes)",
+      "year": 1925,
+      "laneId": "prob",
+      "classificationCode": "f",
+      "description": "Maximum likelihood, hypothesis testing, the Bayes–Laplace tradition. The bedrock mathematics machine learning repeatedly rediscovers.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Direct article for the foundational statistical-inference development; the node combines Fisherian and Bayesian strands.",
+          "sources": [
+            {
+              "title": "Statistical inference",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Statistical_inference",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Statistical%20inference&oldid=1364302166",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "bayes-essay-1763",
+            "title": "An Essay Towards Solving a Problem in the Doctrine of Chances",
+            "url": "https://doi.org/10.1098/rstl.1763.0053",
+            "year": 1763,
+            "kind": "paper",
+            "access": "public_domain",
+            "role": "context",
+            "authors": [
+              "Thomas Bayes",
+              "Richard Price"
+            ],
+            "note": "Historical Bayesian background, not a 1925 development."
+          },
+          {
+            "id": "fisher-statistical-methods-1925",
+            "title": "Statistical Methods for Research Workers",
+            "url": "https://books.google.com/books?id=I0NBAAAAIAAJ",
+            "year": 1925,
+            "kind": "book",
+            "access": "free_to_read",
+            "role": "origin",
+            "authors": [
+              "R. A. Fisher"
+            ],
+            "note": "Full-view scan; reuse rights can vary by jurisdiction."
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "8d26299d"
+    },
+    {
+      "ordinal": 203,
+      "id": "kalman",
+      "title": "Kalman filter",
+      "year": 1960,
+      "laneId": "prob",
+      "classificationCode": "f",
+      "description": "Kalman filtering formalized optimal linear-Gaussian state estimation and became widely used in navigation, tracking and control, often alongside particle filters, factor graphs and learned estimators.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact development article.",
+          "sources": [
+            {
+              "title": "Kalman filter",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Kalman_filter",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Kalman%20filter&oldid=1363408430",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "kalman-filter-1960",
+            "title": "A New Approach to Linear Filtering and Prediction Problems",
+            "url": "https://cds.cern.ch/record/434680",
+            "year": 1960,
+            "kind": "paper",
+            "access": "author_open",
+            "role": "origin",
+            "authors": [
+              "Rudolf E. Kalman"
+            ],
+            "note": ""
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "6a8e5b20"
+    },
+    {
+      "ordinal": 204,
+      "id": "patternrec",
+      "title": "Statistical pattern recognition",
+      "year": 1973,
+      "laneId": "prob",
+      "classificationCode": "f",
+      "description": "Duda & Hart: classification as statistics. Machine learning before the name existed.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Direct umbrella article for statistical pattern recognition.",
+          "sources": [
+            {
+              "title": "Pattern recognition",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Pattern_recognition",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Pattern%20recognition&oldid=1332694740",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "bishop-prml-2006",
+            "title": "Pattern Recognition and Machine Learning",
+            "url": "https://www.microsoft.com/en-us/research/publication/pattern-recognition-machine-learning/",
+            "year": 2006,
+            "kind": "book",
+            "access": "author_open",
+            "role": "survey",
+            "authors": [
+              "Christopher M. Bishop"
+            ],
+            "note": "Microsoft Research hosts the author PDF."
+          },
+          {
+            "id": "hastie-tibshirani-friedman-esl-2009",
+            "title": "The Elements of Statistical Learning, Second Edition",
+            "url": "https://hastie.su.domains/ElemStatLearn/",
+            "year": 2009,
+            "kind": "book",
+            "access": "author_open",
+            "role": "survey",
+            "authors": [
+              "Trevor Hastie",
+              "Robert Tibshirani",
+              "Jerome Friedman"
+            ],
+            "note": ""
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "067b2fcf"
+    },
+    {
+      "ordinal": 205,
+      "id": "em",
+      "title": "EM algorithm",
+      "year": 1977,
+      "laneId": "prob",
+      "classificationCode": "f",
+      "description": "Fit models with hidden variables by alternating expectation and maximization. The engine under HMMs, mixtures and topic models.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact algorithm article; replaces the search result for a narrower EM/GMM page.",
+          "sources": [
+            {
+              "title": "Expectation–maximization algorithm",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Expectation%E2%80%93maximization_algorithm",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Expectation%E2%80%93maximization%20algorithm&oldid=1360656967",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "dempster-laird-rubin-em-1977",
+            "title": "Maximum Likelihood from Incomplete Data via the EM Algorithm",
+            "url": "https://academic.oup.com/jrsssb/article/39/1/1/7027539",
+            "year": 1977,
+            "kind": "paper",
+            "access": "publisher_record",
+            "role": "origin",
+            "authors": [
+              "Arthur P. Dempster",
+              "Nan M. Laird",
+              "Donald B. Rubin"
+            ],
+            "note": ""
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "aa5e7a0f"
+    },
+    {
+      "ordinal": 206,
+      "id": "pac",
+      "title": "PAC learning & COLT",
+      "year": 1984,
+      "laneId": "prob",
+      "classificationCode": "f",
+      "description": "Valiant: what is learnable, from how many examples? Learning theory born — rigor that both guided and lagged practice.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact PAC-learning article; COLT is contextual rather than a separate mapped development.",
+          "sources": [
+            {
+              "title": "Probably approximately correct learning",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Probably_approximately_correct_learning",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Probably%20approximately%20correct%20learning&oldid=1358092895",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "valiant-learnable-1984",
+            "title": "A Theory of the Learnable",
+            "url": "https://doi.org/10.1145/1968.1972",
+            "year": 1984,
+            "kind": "paper",
+            "access": "publisher_record",
+            "role": "origin",
+            "authors": [
+              "Leslie G. Valiant"
+            ],
+            "note": ""
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "ebcf3ed6"
+    },
+    {
+      "ordinal": 207,
+      "id": "dtrees",
+      "title": "Decision trees (ID3/CART)",
+      "year": 1986,
+      "laneId": "prob",
+      "classificationCode": "f",
+      "description": "Interpretable recursive splits. Still royalty on tabular data through their ensemble descendants.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Direct learning-method article covering ID3/CART rather than the generic decision-tree article.",
+          "sources": [
+            {
+              "title": "Decision tree learning",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Decision_tree_learning",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Decision%20tree%20learning&oldid=1366321507",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "245ca5a7"
+    },
+    {
+      "ordinal": 208,
+      "id": "bayesnets",
+      "title": "Bayesian networks (Pearl)",
+      "year": 1988,
+      "laneId": "prob",
+      "classificationCode": "f",
+      "description": "Modular probabilistic reasoning; rescued uncertainty from logic's grip, won Pearl a Turing Award, and seeded the causal turn.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact development article.",
+          "sources": [
+            {
+              "title": "Bayesian network",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Bayesian_network",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Bayesian%20network&oldid=1361608168",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "pearl-probabilistic-reasoning-1988",
+            "title": "Probabilistic Reasoning in Intelligent Systems",
+            "url": "https://www.sciencedirect.com/book/9780080514895/probabilistic-reasoning-in-intelligent-systems",
+            "year": 1988,
+            "kind": "book",
+            "access": "publisher_record",
+            "role": "survey",
+            "authors": [
+              "Judea Pearl"
+            ],
+            "note": ""
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "49be6715"
+    },
+    {
+      "ordinal": 209,
+      "id": "mcmc",
+      "title": "MCMC & variational inference",
+      "year": 1990,
+      "laneId": "prob",
+      "classificationCode": "f",
+      "description": "Sample or bound intractable posteriors. The machinery under Bayesian ML — and, via the ELBO, under VAEs and diffusion.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Representative article for the MCMC half of a composite node that also names variational inference.",
+          "sources": [
+            {
+              "title": "Markov chain Monte Carlo",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Markov%20chain%20Monte%20Carlo&oldid=1365852169",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "metropolis-equation-state-1953",
+            "title": "Equation of State Calculations by Fast Computing Machines",
+            "url": "https://doi.org/10.1063/1.1699114",
+            "year": 1953,
+            "kind": "paper",
+            "access": "publisher_record",
+            "role": "origin",
+            "authors": [
+              "Nicholas Metropolis",
+              "Arianna W. Rosenbluth",
+              "Marshall N. Rosenbluth",
+              "Augusta H. Teller",
+              "Edward Teller"
+            ],
+            "note": ""
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "3595b8f9"
+    },
+    {
+      "ordinal": 210,
+      "id": "svm",
+      "title": "SVMs & kernel methods",
+      "year": 1995,
+      "laneId": "prob",
+      "classificationCode": "d",
+      "description": "Max-margin plus the kernel trick: ML's monarch 1995–2010, with actual theory. Dethroned by deep nets; retired to small-data niches.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "dormant",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Direct for SVMs and contextual for the broader kernel-method family combined in the node.",
+          "sources": [
+            {
+              "title": "Support vector machine",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Support_vector_machine",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Support%20vector%20machine&oldid=1363282528",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Dormant” is an editorial assessment; no encyclopedic fate finding is inferred from article or link presence.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "cortes-vapnik-svm-1995",
+            "title": "Support-Vector Networks",
+            "url": "https://link.springer.com/article/10.1007/BF00994018",
+            "year": 1995,
+            "kind": "paper",
+            "access": "publisher_record",
+            "role": "origin",
+            "authors": [
+              "Corinna Cortes",
+              "Vladimir Vapnik"
+            ],
+            "note": ""
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "c0f7fb19"
+    },
+    {
+      "ordinal": 211,
+      "id": "gp",
+      "title": "Gaussian processes",
+      "year": 1996,
+      "laneId": "prob",
+      "classificationCode": "d",
+      "description": "Priors over functions with honest uncertainty. Elegant, O(n³)-cursed — survives inside Bayesian optimization.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "dormant",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact development article.",
+          "sources": [
+            {
+              "title": "Gaussian process",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Gaussian_process",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Gaussian%20process&oldid=1360820401",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Dormant” is an editorial assessment; no encyclopedic fate finding is inferred from article or link presence.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "rasmussen-williams-gpml-2006",
+            "title": "Gaussian Processes for Machine Learning",
+            "url": "https://gaussianprocess.org/gpml/",
+            "year": 2006,
+            "kind": "book",
+            "access": "author_open",
+            "role": "survey",
+            "authors": [
+              "Carl Edward Rasmussen",
+              "Christopher K. I. Williams"
+            ],
+            "note": ""
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "09e243da"
+    },
+    {
+      "ordinal": 212,
+      "id": "adaboost",
+      "title": "Boosting & random forests",
+      "year": 1996,
+      "laneId": "prob",
+      "classificationCode": "a",
+      "description": "Committees of weak learners (AdaBoost→XGBoost). Thirty years on, still the champion of messy tabular business data.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Representative article for boosting; the node also combines random forests, which have their own article.",
+          "sources": [
+            {
+              "title": "Boosting (machine learning)",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Boosting_(machine_learning)",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Boosting%20%28machine%20learning%29&oldid=1302812191",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Active” is an editorial assessment of current activity, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "freund-schapire-adaboost-1997",
+            "title": "A Decision-Theoretic Generalization of On-Line Learning and an Application to Boosting",
+            "url": "https://doi.org/10.1006/jcss.1997.1504",
+            "year": 1997,
+            "kind": "paper",
+            "access": "publisher_record",
+            "role": "origin",
+            "authors": [
+              "Yoav Freund",
+              "Robert E. Schapire"
+            ],
+            "note": ""
+          },
+          {
+            "id": "breiman-random-forests-2001",
+            "title": "Random Forests",
+            "url": "https://doi.org/10.1023/A:1010933404324",
+            "year": 2001,
+            "kind": "paper",
+            "access": "publisher_record",
+            "role": "supporting_result",
+            "authors": [
+              "Leo Breiman"
+            ],
+            "note": ""
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "69c87645"
+    },
+    {
+      "ordinal": 213,
+      "id": "graphicalmodels",
+      "title": "Structured prediction (CRFs)",
+      "year": 2001,
+      "laneId": "prob",
+      "classificationCode": "d",
+      "description": "Conditional random fields were central to structured prediction in 2000s NLP and vision. Neural models displaced them from the frontier, but CRFs remain useful where structured labels and explicit dependencies matter.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "dormant",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Direct article for the CRF development named in the node; replaces an unrelated search result.",
+          "sources": [
+            {
+              "title": "Conditional random field",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Conditional_random_field",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Conditional%20random%20field&oldid=1313934239",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Dormant” is an editorial assessment; no encyclopedic fate finding is inferred from article or link presence.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "d2887b51"
+    },
+    {
+      "ordinal": 214,
+      "id": "topicmodels",
+      "title": "Topic models (LDA)",
+      "year": 2003,
+      "laneId": "prob",
+      "classificationCode": "d",
+      "description": "Latent Dirichlet allocation modeled corpora as mixtures of themes. Embeddings and LLMs displaced it from the frontier, while interpretable corpus exploration and digital-humanities uses persist.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "dormant",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Direct article covering topic models and LDA.",
+          "sources": [
+            {
+              "title": "Topic model",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Topic_model",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Topic%20model&oldid=1365160081",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Dormant” is an editorial assessment; no encyclopedic fate finding is inferred from article or link presence.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "blei-ng-jordan-lda-2003",
+            "title": "Latent Dirichlet Allocation",
+            "url": "https://www.jmlr.org/papers/v3/blei03a.html",
+            "year": 2003,
+            "kind": "paper",
+            "access": "open_access",
+            "role": "origin",
+            "authors": [
+              "David M. Blei",
+              "Andrew Y. Ng",
+              "Michael I. Jordan"
+            ],
+            "note": ""
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "04c43856"
+    },
+    {
+      "ordinal": 215,
+      "id": "recsys",
+      "title": "Recommender systems",
+      "year": 2007,
+      "laneId": "prob",
+      "classificationCode": "a",
+      "description": "Netflix Prize matrix factorization → trillion-parameter ad models. The profitable dark matter of ML — huge, deployed, rarely glamorous.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact development article.",
+          "sources": [
+            {
+              "title": "Recommender system",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Recommender_system",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Recommender%20system&oldid=1364974256",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Active” is an editorial assessment of current activity, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "0c5c63e2"
+    },
+    {
+      "ordinal": 216,
+      "id": "causal",
+      "title": "Causal inference",
+      "year": 2000,
+      "laneId": "prob",
+      "classificationCode": "a",
+      "description": "do-calculus and counterfactuals: reasoning about interventions, not correlations. Deep learning's acknowledged blind spot; integration keeps being attempted.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact development article.",
+          "sources": [
+            {
+              "title": "Causal inference",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Causal_inference",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Causal%20inference&oldid=1360950377",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Active” is an editorial assessment of current activity, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "pearl-causality-2009",
+            "title": "Causality: Models, Reasoning, and Inference, Second Edition",
+            "url": "https://www.cambridge.org/core/books/causality/B0046844FAE10CBF274D4ACBDAEB5F5B",
+            "year": 2009,
+            "kind": "book",
+            "access": "publisher_record",
+            "role": "survey",
+            "authors": [
+              "Judea Pearl"
+            ],
+            "note": ""
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "f19137f5"
+    },
+    {
+      "ordinal": 217,
+      "id": "bayesopt",
+      "title": "Bayesian optimization, NAS & AutoML",
+      "year": 2012,
+      "laneId": "prob",
+      "classificationCode": "a",
+      "description": "Bayesian optimization tunes expensive black boxes sample-efficiently; neural architecture search and population-based training broadened AutoML into architecture and schedule search. Useful everywhere, fully automatic science nowhere.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Direct for Bayesian optimization and contextual for AutoML, which the node combines with it.",
+          "sources": [
+            {
+              "title": "Bayesian optimization",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Bayesian_optimization",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Bayesian%20optimization&oldid=1362793526",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Active” is an editorial assessment of current activity, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": "integrated",
+        "tags": [
+          "AutoML",
+          "optimization",
+          "search"
+        ],
+        "questions": [
+          "When is automatic search more sample-efficient and reproducible than expert-designed architectures and schedules?"
+        ],
+        "sources": [
+          {
+            "title": "Neural Architecture Search with Reinforcement Learning",
+            "url": "https://arxiv.org/abs/1611.01578",
+            "year": 2016,
+            "role": "supporting_result",
+            "roleExplicit": true
+          },
+          {
+            "title": "Population Based Training of Neural Networks",
+            "url": "https://arxiv.org/abs/1711.09846",
+            "year": 2017,
+            "role": "supporting_result",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "When is automatic search more sample-efficient and reproducible than expert-designed architectures and schedules?"
+      ],
+      "direction": null,
+      "claimFingerprint": "473abe18"
+    },
+    {
+      "ordinal": 218,
+      "id": "probprog",
+      "title": "Probabilistic programming",
+      "year": 2012,
+      "laneId": "prob",
+      "classificationCode": "a",
+      "description": "Models expressed as programs with automated inference, including Stan and language-based systems descended from Church. A specialist but active ecosystem used in science, statistics, and uncertainty-aware modeling.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact development article.",
+          "sources": [
+            {
+              "title": "Probabilistic programming",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Probabilistic_programming",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Probabilistic%20programming&oldid=1359630593",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Active” is an editorial assessment of current activity, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "89a0bc1d"
+    },
+    {
+      "ordinal": 219,
+      "id": "conformal",
+      "title": "Calibration, ensembles & conformal UQ",
+      "year": 2016,
+      "laneId": "prob",
+      "classificationCode": "a",
+      "description": "Deep ensembles and calibration estimate uncertainty empirically; conformal methods add distribution-free coverage guarantees under stated assumptions. A broader reliability toolkit than any one method — still underused in LLM deployment.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "The article confirms conformal prediction; deep ensembles and neural-network calibration are supported by the attached primary papers.",
+          "sources": [
+            {
+              "title": "Conformal prediction",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Conformal_prediction",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Conformal%20prediction&oldid=1360635634",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Active” is an editorial assessment of current activity, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": "integrated",
+        "tags": [
+          "uncertainty",
+          "reliability",
+          "statistics"
+        ],
+        "questions": [
+          "How should calibration, epistemic uncertainty and coverage guarantees be combined under non-exchangeable deployment data?"
+        ],
+        "sources": [
+          {
+            "title": "Simple and Scalable Predictive Uncertainty Estimation using Deep Ensembles",
+            "url": "https://arxiv.org/abs/1612.01474",
+            "year": 2016,
+            "role": "adjacent_work",
+            "roleExplicit": true
+          },
+          {
+            "title": "On Calibration of Modern Neural Networks",
+            "url": "https://arxiv.org/abs/1706.04599",
+            "year": 2017,
+            "role": "adjacent_work",
+            "roleExplicit": true
+          },
+          {
+            "title": "A Gentle Introduction to Conformal Prediction and Distribution-Free Uncertainty Quantification",
+            "url": "https://arxiv.org/abs/2107.07511",
+            "year": 2021,
+            "role": "survey",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "How should calibration, epistemic uncertainty and coverage guarantees be combined under non-exchangeable deployment data?"
+      ],
+      "direction": null,
+      "claimFingerprint": "74334407"
+    },
+    {
+      "ordinal": 220,
+      "id": "gap_causal",
+      "title": "Causal world models",
+      "year": 2026,
+      "laneId": "prob",
+      "classificationCode": "g",
+      "description": "Research direction: test whether explicit causal intervention and counterfactual structure improves learned-world-model planning under distribution shift. Partial causal-world systems exist; reliable gains at useful scale and under hidden confounding remain unresolved.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "open_direction",
+        "significance": "not_assessed",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "hypothesis",
+          "confidence": null,
+          "note": "This is a map hypothesis; Wikipedia absence does not establish that the proposed gap is novel.",
+          "sources": []
+        },
+        "mapStatus": {
+          "state": "hypothesis",
+          "confidence": null,
+          "note": "This is explicitly a proposed gap; Wikipedia absence is not evidence that the proposal is novel.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "title": "Causal World Models by Unsupervised Deconfounding of Physical Dynamics",
+            "url": "https://arxiv.org/abs/2012.14228",
+            "year": 2020,
+            "role": "supporting_result",
+            "roleExplicit": true
+          },
+          {
+            "title": "CausalVerse: Benchmarking Causal Representation Learning with Configurable High-Fidelity Simulations",
+            "url": "https://arxiv.org/abs/2510.14049",
+            "year": 2025,
+            "role": "benchmark",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "When do explicit intervention and counterfactual structures improve learned-world planning under distribution shift relative to equally capable noncausal world models?"
+      ],
+      "direction": {
+        "question": "When do explicit intervention and counterfactual structures improve learned-world planning under distribution shift relative to equally capable noncausal world models?",
+        "closureCriteria": "On held-out interventions and mechanism changes, a causal world model improves planning success, calibration, and sample efficiency over matched latent-dynamics and invariant-learning baselines, with gains surviving misspecified graphs and latent confounding.",
+        "partialResults": [
+          "Causal World Models use unsupervised deconfounding and report improvements in reinforcement-learning sample complexity and counterfactual physical reasoning.",
+          "CausalVerse provides high-fidelity configurable simulations with known causal structure and intervention histories.",
+          "Existing causal-control systems remain mainly simulated or sensitive to structural assumptions."
+        ],
+        "starters": [
+          "Individual: Reproduce a causal-world-model result in CausalWorld and add hidden-confounder, mechanism-shift, and graph-misspecification stress tests.",
+          "Small lab: Compare explicit causal, invariant, and standard latent world models on matched CausalVerse training data and unseen intervention families.",
+          "Well-funded lab: Collect controlled real-robot interventions and test whether simulation-learned causal structure improves adaptation to altered objects, actuators, and dynamics."
+        ],
+        "claimState": "editorial_hypothesis",
+        "asOf": "2026-08-04",
+        "confidence": "medium",
+        "noveltyReview": {
+          "status": "targeted_search",
+          "checkedAt": "2026-08-04",
+          "scope": "arXiv and official repositories for causal world models, causal representation learning, interventions, counterfactual physical reasoning, and causal reinforcement learning.",
+          "note": "Partial fusion already exists, so the open question concerns robust benefit and scaling rather than whether any causal world-model system exists."
+        },
+        "counterexamples": [
+          "Causal World Models explicitly combine learned dynamics, latent deconfounding, counterfactual prediction, and reinforcement learning.",
+          "Explainable reinforcement learning via causal world models combines causal structure with control and explanation.",
+          "Interventional causal-representation methods learn structure from intervention families in controlled settings."
+        ],
+        "literature": [
+          {
+            "t": "Causal World Models by Unsupervised Deconfounding of Physical Dynamics",
+            "u": "https://arxiv.org/abs/2012.14228",
+            "y": 2020,
+            "role": "supporting_result"
+          },
+          {
+            "t": "CausalVerse: Benchmarking Causal Representation Learning with Configurable High-Fidelity Simulations",
+            "u": "https://arxiv.org/abs/2510.14049",
+            "y": 2025,
+            "role": "benchmark"
+          }
+        ],
+        "resources": {
+          "benchmarks": [
+            "CausalWorld",
+            "CausalVerse",
+            "Causal Triplet",
+            "CALVIN or ManiSkill as downstream external tests"
+          ],
+          "code": [
+            "https://github.com/rr-learning/CausalWorld",
+            "https://github.com/CausalVerse/CausalVerseBenchmark",
+            "https://github.com/libo-huang/Awesome-Causal-Reinforcement-Learning"
+          ],
+          "datasets": [
+            "https://huggingface.co/CausalVerse/datasets",
+            "CausalWorld intervention trajectories",
+            "Causal Triplet"
+          ],
+          "estimated": {
+            "individual": "1 x 24 GB GPU for CausalWorld over 2-5 days",
+            "smallLab": "4-8 x 80 GB GPUs for CausalVerse or video experiments over 2-3 weeks",
+            "wellFundedLab": "32-64 GPUs plus intervention-capable robots for 1-3 months"
+          }
+        },
+        "crowdedness": "Medium across causal representation learning, world models, and causal reinforcement learning.",
+        "tractability": "Medium in configurable simulation and low under real-world latent confounding."
+      },
+      "claimFingerprint": "30f38bab"
+    },
+    {
+      "ordinal": 221,
+      "id": "gap_tabular",
+      "title": "Deep learning vs tabular data",
+      "year": 2026,
+      "laneId": "prob",
+      "classificationCode": "g",
+      "description": "Research direction: predict and test the data regimes, shifts, modalities and tuning budgets under which deep tabular models outperform strong boosted-tree ensembles. Deep models already win in some large, multimodal or representation-rich settings; a reliable regime-selection rule remains unresolved.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "open_direction",
+        "significance": "not_assessed",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "hypothesis",
+          "confidence": null,
+          "note": "This is a map hypothesis; Wikipedia absence does not establish that the proposed gap is novel.",
+          "sources": []
+        },
+        "mapStatus": {
+          "state": "hypothesis",
+          "confidence": null,
+          "note": "This is explicitly a proposed gap; Wikipedia absence is not evidence that the proposal is novel.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "title": "Why do tree-based models still outperform deep learning on tabular data?",
+            "url": "https://arxiv.org/abs/2207.08815",
+            "year": 2022,
+            "role": "benchmark",
+            "roleExplicit": true
+          },
+          {
+            "title": "Beyond IID: How General Are Tabular Foundation Models, Really?",
+            "url": "https://arxiv.org/abs/2606.30410",
+            "year": 2026,
+            "role": "critique",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "Under equal tuning and total-cost budgets, which data regimes and distribution shifts reliably favor neural or tabular-foundation models over boosted trees, and which still favor trees?"
+      ],
+      "direction": {
+        "question": "Under equal tuning and total-cost budgets, which data regimes and distribution shifts reliably favor neural or tabular-foundation models over boosted trees, and which still favor trees?",
+        "closureCriteria": "Produce a leak-checked, preregistered regime map covering IID, temporal, grouped, large, high-dimensional, missing, and high-cardinality data, with equal tuning time and total compute plus latency, calibration, and energy reporting.",
+        "partialResults": [
+          "The earlier 45-dataset benchmark found tree-based models strongest on roughly 10,000-sample datasets.",
+          "TabArena finds deep methods catch up with larger time budgets and ensembles while foundation models excel on smaller datasets.",
+          "BeyondArena finds tabular foundation models strongest on tiny-to-medium IID data while trees and conventional deep models dominate several non-IID, large, and high-dimensional regimes."
+        ],
+        "starters": [
+          "Individual: Compare CatBoost, XGBoost, TabPFN, and TabM on 8-12 datasets using both random and temporal splits under an identical one-hour tuning budget.",
+          "Small lab: Build a preregistered 100-plus-dataset regime map including latency, energy, calibration, missingness, high-cardinality features, and temporal or group shift.",
+          "Well-funded lab: Train a tabular foundation model on disjoint source corpora and evaluate frozen cross-domain and non-IID transfer against the best trees and AutoGluon under total-cost parity."
+        ],
+        "claimState": "editorial_hypothesis",
+        "asOf": "2026-08-04",
+        "confidence": "high",
+        "noveltyReview": {
+          "status": "targeted_search",
+          "checkedAt": "2026-08-04",
+          "scope": "arXiv, living benchmarks, and official repositories for tabular deep learning, foundation models, gradient-boosted trees, temporal and group shift, and equal-budget comparisons.",
+          "note": "The old blanket claim that trees beat deep learning is no longer supportable; confidence is high only for the revised regime-selection and non-IID robustness question."
+        },
+        "counterexamples": [
+          "TabR beats gradient-boosted decision trees on a benchmark designed to be favorable to them.",
+          "TabPFN and later versions lead on several small-to-medium IID suites.",
+          "TabArena shows deep ensembles catch up under larger time budgets.",
+          "BeyondArena shows that no one family dominates across IID and non-IID regimes."
+        ],
+        "literature": [
+          {
+            "t": "Why do tree-based models still outperform deep learning on tabular data?",
+            "u": "https://arxiv.org/abs/2207.08815",
+            "y": 2022,
+            "role": "benchmark"
+          },
+          {
+            "t": "Beyond IID: How General Are Tabular Foundation Models, Really?",
+            "u": "https://arxiv.org/abs/2606.30410",
+            "y": 2026,
+            "role": "critique"
+          }
+        ],
+        "resources": {
+          "benchmarks": [
+            "TabArena",
+            "BeyondArena",
+            "TabReD",
+            "OpenML-CC18",
+            "Grinsztajn-45"
+          ],
+          "code": [
+            "https://github.com/autogluon/tabarena",
+            "https://github.com/PriorLabs/TabPFN",
+            "https://github.com/yandex-research/tabred",
+            "https://github.com/yandex-research/tabular-dl-tabr",
+            "https://docs.openml.org/benchmark/"
+          ],
+          "datasets": [
+            "TabArena curated datasets",
+            "BeyondArena 142-dataset collection",
+            "TabReD temporal industry datasets",
+            "OpenML-CC18"
+          ],
+          "estimated": {
+            "individual": "CPU plus 1 x 24 GB GPU for a subset over 2-7 days",
+            "smallLab": "4-8 GPUs and 32-64 CPU cores for full hyperparameter optimization over 1-3 weeks",
+            "wellFundedLab": "32 or more GPUs plus a large CPU fleet for a living benchmark or foundation-model training"
+          }
+        },
+        "crowdedness": "Very high across boosted trees, deep tabular models, foundation models, and AutoML.",
+        "tractability": "High for rigorous replication and regime mapping; medium for new architectures."
+      },
+      "claimFingerprint": "1adb3d06"
+    },
+    {
+      "ordinal": 335,
+      "id": "optimaltransport",
+      "title": "Computational optimal transport",
+      "year": 2013,
+      "laneId": "prob",
+      "classificationCode": "a",
+      "description": "Entropic regularization made transport distances computationally practical; Wasserstein objectives then influenced generative modeling, domain adaptation and representation learning.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        },
+        "mapStatus": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": false,
+        "mapStatus": false
+      },
+      "research": {
+        "tier": "specialist",
+        "tags": [
+          "probability",
+          "geometry",
+          "generative models"
+        ],
+        "questions": [
+          "Can transport objectives scale without sacrificing geometry, sample quality or numerical stability?"
+        ],
+        "sources": [
+          {
+            "title": "Sinkhorn Distances",
+            "url": "https://arxiv.org/abs/1306.0895",
+            "year": 2013,
+            "role": "origin",
+            "roleExplicit": true
+          },
+          {
+            "title": "Wasserstein GAN",
+            "url": "https://arxiv.org/abs/1701.07875",
+            "year": 2017,
+            "role": "adjacent_work",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "Can transport objectives scale without sacrificing geometry, sample quality or numerical stability?"
+      ],
+      "direction": null,
+      "claimFingerprint": "bbf45c89"
+    }
+  ]
+}

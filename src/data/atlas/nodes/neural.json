@@ -1,0 +1,1919 @@
+{
+  "schemaVersion": "1.0.0",
+  "laneId": "neural",
+  "nodes": [
+    {
+      "ordinal": 91,
+      "id": "perceptron",
+      "title": "Perceptron (Rosenblatt)",
+      "year": 1958,
+      "laneId": "neural",
+      "classificationCode": "f",
+      "description": "Hardware neuron that learned from examples; the Navy promised it would 'walk, talk, see, write.' The hype and the machine that started it all.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "Perceptron",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Perceptron",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Perceptron&oldid=1360590893",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "rosenblatt-perceptron-1958",
+            "title": "The Perceptron: A Probabilistic Model for Information Storage and Organization in the Brain",
+            "url": "https://doi.org/10.1037/h0042519",
+            "year": 1958,
+            "kind": "paper",
+            "access": "publisher_record",
+            "role": "origin",
+            "authors": [
+              "Frank Rosenblatt"
+            ],
+            "note": ""
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "2469142c"
+    },
+    {
+      "ordinal": 92,
+      "id": "adaline",
+      "title": "ADALINE & delta rule",
+      "year": 1960,
+      "laneId": "neural",
+      "classificationCode": "f",
+      "description": "Widrow–Hoff gradient learning in analog hardware. LMS still runs in every modem — neural nets' first quiet deployment.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "ADALINE",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/ADALINE",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=ADALINE&oldid=1315790227",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "bfaa53e1"
+    },
+    {
+      "ordinal": 93,
+      "id": "perceptronsbook",
+      "title": "'Perceptrons' kills the field",
+      "year": 1969,
+      "laneId": "neural",
+      "classificationCode": "x",
+      "description": "Minsky & Papert proved single-layer limits (XOR); funding evaporated for 15 years. The canonical premature burial — multilayer nets weren't disproven, just undone.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "not_assessed",
+        "trajectory": "ambiguous_ended_or_superseded",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact book article.",
+          "sources": [
+            {
+              "title": "Perceptrons (book)",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Perceptrons_(book)",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Perceptrons%20%28book%29&oldid=1364005856",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "The Perceptrons book page says the book is often thought to have caused a decline in neural-network research, while also noting continued work and a later revival; the stronger kills-the-field framing remains disputed.",
+          "sources": [
+            {
+              "title": "Perceptrons (book)",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Perceptrons_(book)",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Perceptrons%20%28book%29&oldid=1364005856",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "minsky-papert-perceptrons-1969",
+            "title": "Perceptrons",
+            "url": "https://mitpress.mit.edu/9780262534772/perceptrons/",
+            "year": 1969,
+            "kind": "book",
+            "access": "publisher_record",
+            "role": "critique",
+            "authors": [
+              "Marvin Minsky",
+              "Seymour Papert"
+            ],
+            "note": ""
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "486aed10"
+    },
+    {
+      "ordinal": 94,
+      "id": "neocognitron",
+      "title": "Neocognitron",
+      "year": 1980,
+      "laneId": "neural",
+      "classificationCode": "f",
+      "description": "Fukushima stacked Hubel–Wiesel receptive fields into a deep hierarchy. CNNs before backprop — an idea waiting 30 years for compute.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "Neocognitron",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Neocognitron",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Neocognitron&oldid=1358915485",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "27ce6159"
+    },
+    {
+      "ordinal": 95,
+      "id": "hopfield",
+      "title": "Hopfield networks",
+      "year": 1982,
+      "laneId": "neural",
+      "classificationCode": "r",
+      "description": "Energy-based associative memory that re-legitimized neural research. Faded for decades — then 'modern Hopfield' math turned out to equal attention. 2024 Nobel.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "revived",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "Hopfield network",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Hopfield_network",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Hopfield%20network&oldid=1344832605",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Revived” is an editorial judgment; no encyclopedic fate finding is inferred from article or link presence.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "hopfield-networks-1982",
+            "title": "Neural Networks and Physical Systems with Emergent Collective Computational Abilities",
+            "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC346238/",
+            "year": 1982,
+            "kind": "paper",
+            "access": "open_access",
+            "role": "origin",
+            "authors": [
+              "John J. Hopfield"
+            ],
+            "note": ""
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "4177f08a"
+    },
+    {
+      "ordinal": 96,
+      "id": "boltzmann",
+      "title": "Boltzmann machines",
+      "year": 1985,
+      "laneId": "neural",
+      "classificationCode": "d",
+      "description": "Stochastic energy models with hidden units. Training pain sidelined them, but their DNA lives in RBMs, energy-based models and diffusion.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "dormant",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "Boltzmann machine",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Boltzmann_machine",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Boltzmann%20machine&oldid=1363781435",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Dormant” is an editorial assessment; no encyclopedic fate finding is inferred from article or link presence.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "8b04b578"
+    },
+    {
+      "ordinal": 97,
+      "id": "rbm",
+      "title": "Restricted Boltzmann machines",
+      "year": 1986,
+      "laneId": "neural",
+      "classificationCode": "f",
+      "description": "Smolensky's bipartite Harmonium made Boltzmann machines easier to train; contrastive divergence revived it in the mid-2000s. Stacking RBMs supplied the pretraining recipe for deep belief networks.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Direct article for the named model and its deep-belief-network lineage.",
+          "sources": [
+            {
+              "title": "Restricted Boltzmann machine",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Restricted_Boltzmann_machine",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Restricted%20Boltzmann%20machine&oldid=1365856341",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "eb915045"
+    },
+    {
+      "ordinal": 98,
+      "id": "backprop",
+      "title": "Backpropagation",
+      "year": 1986,
+      "laneId": "neural",
+      "classificationCode": "f",
+      "description": "Rumelhart–Hinton–Williams popularized credit assignment through layers (roots: Linnainmaa '70, Werbos '74). THE algorithm of the modern era.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "Backpropagation",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Backpropagation",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Backpropagation&oldid=1362127161",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "rumelhart-hinton-williams-1986",
+            "title": "Learning Representations by Back-Propagating Errors",
+            "url": "https://www.nature.com/articles/323533a0",
+            "year": 1986,
+            "kind": "paper",
+            "access": "publisher_record",
+            "role": "supporting_result",
+            "authors": [
+              "David E. Rumelhart",
+              "Geoffrey E. Hinton",
+              "Ronald J. Williams"
+            ],
+            "note": "Field-shaping demonstration and popularization, not a claim of sole invention."
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "a52555fe"
+    },
+    {
+      "ordinal": 99,
+      "id": "pdp86",
+      "title": "PDP & connectionism revival",
+      "year": 1986,
+      "laneId": "neural",
+      "classificationCode": "f",
+      "description": "The two-volume manifesto that brought neural nets back into cognitive science and AI. Winter number one, officially over.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "The second-wave section directly covers the PDP volumes and revival; no dedicated book page.",
+          "sources": [
+            {
+              "title": "Connectionism",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Connectionism",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Connectionism&oldid=1364296292",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "pdp-volume-one-1986",
+            "title": "Parallel Distributed Processing, Volume 1",
+            "url": "https://mitpress.mit.edu/9780262680530/parallel-distributed-processing-volume-1/",
+            "year": 1986,
+            "kind": "book",
+            "access": "publisher_record",
+            "role": "survey",
+            "authors": [
+              "David E. Rumelhart",
+              "James L. McClelland",
+              "PDP Research Group"
+            ],
+            "note": ""
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "c641fc16"
+    },
+    {
+      "ordinal": 100,
+      "id": "universalapprox",
+      "title": "Universal approximation",
+      "year": 1989,
+      "laneId": "neural",
+      "classificationCode": "f",
+      "description": "MLPs can represent any function — existence, not learnability. Comfort, and false comfort, for a generation of theorists.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "Universal approximation theorem",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Universal_approximation_theorem",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Universal%20approximation%20theorem&oldid=1361097573",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "663da766"
+    },
+    {
+      "ordinal": 101,
+      "id": "cnn89",
+      "title": "LeNet CNNs",
+      "year": 1989,
+      "laneId": "neural",
+      "classificationCode": "f",
+      "description": "LeCun fused neocognitron structure with backprop; read ~10% of US checks by the late 90s. Then waited 15 years for its GPU moment.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "LeNet",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/LeNet",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=LeNet&oldid=1365013191",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "lecun-zipcodes-1989",
+            "title": "Backpropagation Applied to Handwritten Zip Code Recognition",
+            "url": "https://yann.lecun.com/exdb/publis/pdf/lecun-89e.pdf",
+            "year": 1989,
+            "kind": "paper",
+            "access": "author_open",
+            "role": "origin",
+            "authors": [
+              "Yann LeCun",
+              "Bernhard Boser",
+              "John S. Denker",
+              "Donnie Henderson",
+              "Richard E. Howard",
+              "Wayne Hubbard",
+              "Lawrence D. Jackel"
+            ],
+            "note": ""
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "b82a0078"
+    },
+    {
+      "ordinal": 102,
+      "id": "rnn",
+      "title": "Recurrent networks",
+      "year": 1990,
+      "laneId": "neural",
+      "classificationCode": "f",
+      "description": "Elman nets and backprop-through-time: sequence processing with memory. NLP's neural substrate until 2017.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "Recurrent neural network",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Recurrent_neural_network",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Recurrent%20neural%20network&oldid=1363820365",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "ca1772e4"
+    },
+    {
+      "ordinal": 103,
+      "id": "vanishing",
+      "title": "Vanishing-gradient diagnosis",
+      "year": 1991,
+      "laneId": "neural",
+      "classificationCode": "f",
+      "description": "Hochreiter's analysis of why depth wouldn't train. The diagnosis behind LSTM, pretraining detours, and eventually residual connections.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "Vanishing gradient problem",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Vanishing_gradient_problem",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Vanishing%20gradient%20problem&oldid=1356326467",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "3731d2fa"
+    },
+    {
+      "ordinal": 104,
+      "id": "lstm",
+      "title": "LSTM",
+      "year": 1997,
+      "laneId": "neural",
+      "classificationCode": "f",
+      "description": "Gated memory defeats vanishing gradients. Carried speech and translation until 2017 — then dethroned by the transformer.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article; avoids the LSTM disambiguation page.",
+          "sources": [
+            {
+              "title": "Long short-term memory",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Long_short-term_memory",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Long%20short-term%20memory&oldid=1363766388",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "hochreiter-schmidhuber-lstm-1997",
+            "title": "Long Short-Term Memory",
+            "url": "https://direct.mit.edu/neco/article/9/8/1735/6109/Long-Short-Term-Memory",
+            "year": 1997,
+            "kind": "paper",
+            "access": "publisher_record",
+            "role": "origin",
+            "authors": [
+              "Sepp Hochreiter",
+              "Jürgen Schmidhuber"
+            ],
+            "note": ""
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "ecdd632c"
+    },
+    {
+      "ordinal": 105,
+      "id": "dbn",
+      "title": "Deep belief nets & pretraining",
+      "year": 2006,
+      "laneId": "neural",
+      "classificationCode": "x",
+      "description": "Layer-wise stacks of restricted Boltzmann machines re-ignited deep learning, then were superseded once ReLU networks and GPUs trained effectively end to end. A historically important transitional method.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "not_assessed",
+        "trajectory": "ambiguous_ended_or_superseded",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "Deep belief network",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Deep_belief_network",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Deep%20belief%20network&oldid=1342493920",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "The Deep belief network page describes the architecture and training method but does not explicitly document its ending, failure, or supersession.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "hinton-deep-belief-2006",
+            "title": "A Fast Learning Algorithm for Deep Belief Nets",
+            "url": "https://www.cs.toronto.edu/~hinton/absps/fastnc.pdf",
+            "year": 2006,
+            "kind": "paper",
+            "access": "author_open",
+            "role": "origin",
+            "authors": [
+              "Geoffrey E. Hinton",
+              "Simon Osindero",
+              "Yee-Whye Teh"
+            ],
+            "note": ""
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "e4c88d44"
+    },
+    {
+      "ordinal": 106,
+      "id": "autoencoders",
+      "title": "Autoencoders",
+      "year": 2006,
+      "laneId": "neural",
+      "classificationCode": "f",
+      "description": "Compression as self-supervision. Ancestor of VAEs, masked pretraining, and the representation-learning worldview.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "Autoencoder",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Autoencoder",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Autoencoder&oldid=1366805492",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "33614655"
+    },
+    {
+      "ordinal": 107,
+      "id": "attention",
+      "title": "Attention mechanism",
+      "year": 2014,
+      "laneId": "neural",
+      "classificationCode": "f",
+      "description": "Bahdanau's soft alignment for translation: look where it matters. The seed the transformer grew from.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "Attention (machine learning)",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Attention_(machine_learning)",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Attention%20%28machine%20learning%29&oldid=1366682475",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": "integrated",
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "title": "Neural Machine Translation by Jointly Learning to Align and Translate",
+            "url": "https://arxiv.org/abs/1409.0473",
+            "year": 2014,
+            "role": "origin",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "3296c402"
+    },
+    {
+      "ordinal": 108,
+      "id": "ntm",
+      "title": "Neural Turing Machines / DNC",
+      "year": 2014,
+      "laneId": "neural",
+      "classificationCode": "x",
+      "description": "Differentiable external memory. Beautiful, barely trainable, abandoned — yet it foreshadowed tool use, RAG and memory-augmented agents.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "not_assessed",
+        "trajectory": "ambiguous_ended_or_superseded",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article and it identifies DNC as an outgrowth.",
+          "sources": [
+            {
+              "title": "Neural Turing machine",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Neural_Turing_machine",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Neural%20Turing%20machine&oldid=1360712674",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "The page defines Neural Turing Machines but does not explicitly characterize the approach as abandoned, ended, or superseded.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "fe9d6f9c"
+    },
+    {
+      "ordinal": 109,
+      "id": "resnet",
+      "title": "ResNet — residual connections",
+      "year": 2015,
+      "laneId": "neural",
+      "classificationCode": "f",
+      "description": "Skip connections let 100+ layers train. In literally everything since, transformers included. Depth's final unlock.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article; avoids the ResNet disambiguation page.",
+          "sources": [
+            {
+              "title": "Residual neural network",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Residual_neural_network",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Residual%20neural%20network&oldid=1360775117",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": "integrated",
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "title": "Deep Residual Learning for Image Recognition",
+            "url": "https://arxiv.org/abs/1512.03385",
+            "year": 2015,
+            "role": "origin",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "1f7b7c60"
+    },
+    {
+      "ordinal": 110,
+      "id": "hypernet",
+      "title": "Hypernetworks & fast weights",
+      "year": 2016,
+      "laneId": "neural",
+      "classificationCode": "d",
+      "description": "Networks generating other networks' weights. Never mainstream, but conceptually adjacent to LoRA, in-context learning and test-time adaptation.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "dormant",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "not_found",
+          "confidence": "low",
+          "note": "No dedicated machine-learning hypernetwork article; current search hits are sections in other topics or collisions. No direct article was recorded; this absence is not evidence against the development.",
+          "sources": []
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Dormant” is an editorial assessment; no encyclopedic fate finding is inferred from article or link presence.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "89ee13bc"
+    },
+    {
+      "ordinal": 111,
+      "id": "transformer",
+      "title": "Transformer",
+      "year": 2017,
+      "laneId": "neural",
+      "classificationCode": "f",
+      "description": "'Attention Is All You Need': ditch recurrence, keep attention, parallelize everything. The architecture of the modern era — still unseated in 2026.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article; avoids unrelated Transformer pages.",
+          "sources": [
+            {
+              "title": "Transformer (deep learning)",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Transformer_(deep_learning)",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Transformer%20%28deep%20learning%29&oldid=1362319941",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": "integrated",
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "title": "Attention Is All You Need",
+            "url": "https://arxiv.org/abs/1706.03762",
+            "year": 2017,
+            "role": "origin",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "21d961d3"
+    },
+    {
+      "ordinal": 112,
+      "id": "gnn",
+      "title": "Graph neural networks",
+      "year": 2017,
+      "laneId": "neural",
+      "classificationCode": "a",
+      "description": "Message passing on graphs. The 2018–21 hype cooled; quietly indispensable in chemistry, chip design and weather.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "Graph neural network",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Graph_neural_network",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Graph%20neural%20network&oldid=1360576321",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Active” is an editorial assessment of current activity, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "6b7e0dee"
+    },
+    {
+      "ordinal": 113,
+      "id": "capsules",
+      "title": "Capsule networks",
+      "year": 2017,
+      "laneId": "neural",
+      "classificationCode": "x",
+      "description": "Part–whole representations with learned routing offered an alternative to conventional CNNs. They did not become a mainstream replacement, but remain a specialist research line rather than a proven impossibility.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "not_assessed",
+        "trajectory": "ambiguous_ended_or_superseded",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article; avoids the Capsule disambiguation page.",
+          "sources": [
+            {
+              "title": "Capsule neural network",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Capsule_neural_network",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Capsule%20neural%20network&oldid=1337597696",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "The Capsule neural network page describes an ongoing architecture and research variants without an explicit ending, failure, or supersession statement.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "cf470a4d"
+    },
+    {
+      "ordinal": 114,
+      "id": "neuralode",
+      "title": "Neural ODEs",
+      "year": 2018,
+      "laneId": "neural",
+      "classificationCode": "a",
+      "description": "Neural networks parameterize continuous-time dynamics solved by differential-equation methods. Adoption is specialized but active in time series, control, scientific machine learning, and continuous normalizing flows.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article covering neural ODEs.",
+          "sources": [
+            {
+              "title": "Neural differential equation",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Neural_differential_equation",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Neural%20differential%20equation&oldid=1360712677",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Active” is an editorial assessment of current activity, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "4a820d4c"
+    },
+    {
+      "ordinal": 115,
+      "id": "moe",
+      "title": "Mixture-of-Experts",
+      "year": 2017,
+      "laneId": "neural",
+      "classificationCode": "a",
+      "description": "Conditional compute: route each token through a sliver of a huge model. A 1991 idea that became the standard frontier architecture (Mixtral, DeepSeek-V3).",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "Mixture of experts",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Mixture_of_experts",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Mixture%20of%20experts&oldid=1354462705",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Active” is an editorial assessment of current activity, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "84ccdbbb"
+    },
+    {
+      "ordinal": 116,
+      "id": "linattn",
+      "title": "Linear-attention wave",
+      "year": 2020,
+      "laneId": "neural",
+      "classificationCode": "d",
+      "description": "Performer, RWKV, and related methods sought subquadratic alternatives to exact attention. Better kernels narrowed the case, but recurrent and linear-attention variants remain an active efficiency niche and influenced state-space models.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "dormant",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Its transformer history directly discusses linear attention and fast-weight equivalence; no dedicated current page.",
+          "sources": [
+            {
+              "title": "Neural network (machine learning)",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Neural_network_(machine_learning)",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Neural%20network%20%28machine%20learning%29&oldid=1367633569",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Dormant” is an editorial assessment; no encyclopedic fate finding is inferred from article or link presence.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "97920d02"
+    },
+    {
+      "ordinal": 117,
+      "id": "ssm",
+      "title": "State-space models (S4→Mamba)",
+      "year": 2021,
+      "laneId": "neural",
+      "classificationCode": "a",
+      "description": "Linear-time sequence modeling rooted in control theory. S4 and Mamba revived state-space models as competitive sequence architectures; hybrid attention-SSM designs are active and relative performance remains task- and scale-dependent.",
+      "dateOverride": {
+        "start": 2021,
+        "end": 2023,
+        "label": "2021-2023",
+        "milestones": [
+          "S4 2021",
+          "Mamba 2023"
+        ]
+      },
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Directly covers Mamba and its S4 ancestry; the node bundles the broader S4-to-Mamba lineage.",
+          "sources": [
+            {
+              "title": "Mamba (deep learning architecture)",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Mamba_(deep_learning_architecture)",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Mamba%20%28deep%20learning%20architecture%29&oldid=1334999369",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Active” is an editorial assessment of current activity, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "bc2b8b44"
+    },
+    {
+      "ordinal": 118,
+      "id": "titans",
+      "title": "Test-time memory (Titans)",
+      "year": 2025,
+      "laneId": "neural",
+      "classificationCode": "h",
+      "description": "Architectures whose weights update while running — nested learning against frozen-model amnesia. The architectural frontier of 2025–26.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "high_activity",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "not_found",
+          "confidence": "low",
+          "note": "No current English Wikipedia article directly or clearly contextually covers Titans test-time memory. No direct article was recorded; this absence is not evidence against the development.",
+          "sources": []
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Hot frontier” is a time-sensitive editorial assessment, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "f1186e3a"
+    },
+    {
+      "ordinal": 119,
+      "id": "gap_energyllm",
+      "title": "Energy-based LMs at scale",
+      "year": 2026,
+      "laneId": "neural",
+      "classificationCode": "g",
+      "description": "Research direction: compare energy-based, diffusion-language-model and JEPA-style non-autoregressive systems with strong autoregressive baselines at equal data, parameter, inference-compute and latency budgets. Capable 8B-14B non-autoregressive systems already exist; robust parity across broad language tasks, efficiency and controllability remains unresolved.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "open_direction",
+        "significance": "not_assessed",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "hypothesis",
+          "confidence": null,
+          "note": "This is a map hypothesis; Wikipedia absence does not establish that the proposed gap is novel.",
+          "sources": []
+        },
+        "mapStatus": {
+          "state": "hypothesis",
+          "confidence": null,
+          "note": "This is explicitly a proposed gap; Wikipedia absence is not evidence that the proposal is novel.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "title": "Energy-Based Transformers are Scalable Learners and Thinkers",
+            "url": "https://arxiv.org/abs/2507.02092",
+            "year": 2025,
+            "role": "supporting_result",
+            "roleExplicit": true
+          },
+          {
+            "title": "Improved Large Language Diffusion Models",
+            "url": "https://arxiv.org/abs/2606.25331",
+            "year": 2026,
+            "role": "adjacent_work",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "Can a genuinely energy-based or non-autoregressive language objective match the strongest autoregressive models under equal data, parameters, training compute, and serving budgets across capability, efficiency, and controllability?"
+      ],
+      "direction": {
+        "question": "Can a genuinely energy-based or non-autoregressive language objective match the strongest autoregressive models under equal data, parameters, training compute, and serving budgets across capability, efficiency, and controllability?",
+        "closureCriteria": "Run a preregistered scaling study with shared data, tokenizer, parameter and FLOP budgets, followed by matched-quality serving comparisons across capability, latency, throughput, controllability, and calibration.",
+        "partialResults": [
+          "Energy-Based Transformers learn compatibility energies and perform inference through energy minimization.",
+          "iLLaDA is an 8B masked-diffusion language model trained on 12 trillion tokens and is competitive with Qwen2.5-7B on several benchmarks.",
+          "LLaDA, SEDD, and Nemotron-Labs-Diffusion demonstrate scalable non-autoregressive or hybrid alternatives."
+        ],
+        "starters": [
+          "Individual: Benchmark released autoregressive, diffusion, and energy-based checkpoints under matched answer quality, reporting latency, function evaluations, memory, and controllable infilling.",
+          "Small lab: Train matched 300M-1B autoregressive, masked-diffusion, and energy-based models on one frozen corpus and publish complete learning and serving curves.",
+          "Well-funded lab: Run a preregistered 7B-14B matched-data scaling trial including instruction tuning, code, reasoning, long-form generation, and production-serving cost."
+        ],
+        "claimState": "editorial_hypothesis",
+        "asOf": "2026-08-04",
+        "confidence": "medium",
+        "noveltyReview": {
+          "status": "targeted_search",
+          "checkedAt": "2026-08-04",
+          "scope": "arXiv and official repositories for energy-based transformers, discrete diffusion, masked language diffusion, joint-embedding prediction, and large non-autoregressive language models.",
+          "note": "Large partial systems exist, so the defensible gap is exact equal-budget broad parity rather than absence of scale; diffusion models are adjacent and should not all be labeled energy-based."
+        },
+        "counterexamples": [
+          "Energy-Based Transformers directly instantiate an energy-based language architecture.",
+          "LLaDA and iLLaDA show that masked diffusion can scale to 8B parameters and trillions of tokens.",
+          "Nemotron-Labs-Diffusion releases 3B, 8B, and 14B hybrid autoregressive-diffusion models.",
+          "SEDD reports competitive discrete-diffusion language modeling at smaller scale."
+        ],
+        "literature": [
+          {
+            "t": "Energy-Based Transformers are Scalable Learners and Thinkers",
+            "u": "https://arxiv.org/abs/2507.02092",
+            "y": 2025,
+            "role": "supporting_result"
+          },
+          {
+            "t": "Improved Large Language Diffusion Models",
+            "u": "https://arxiv.org/abs/2606.25331",
+            "y": 2026,
+            "role": "adjacent_work"
+          }
+        ],
+        "resources": {
+          "benchmarks": [
+            "WikiText-103 perplexity",
+            "MMLU",
+            "ARC-Challenge",
+            "HellaSwag",
+            "BBH",
+            "GSM8K",
+            "MATH",
+            "HumanEval",
+            "MBPP",
+            "IFEval"
+          ],
+          "code": [
+            "https://github.com/alexiglad/EBT",
+            "https://github.com/ML-GSAI/LLaDA",
+            "https://github.com/louaaron/Score-Entropy-Discrete-Diffusion",
+            "https://github.com/NVlabs/Nemotron-Labs-Diffusion"
+          ],
+          "datasets": [
+            "WikiText-103",
+            "OpenWebText",
+            "Controlled FineWeb or FineWeb-Edu subsets",
+            "LM1B"
+          ],
+          "estimated": {
+            "individual": "Released 3B-8B model evaluation on 1 x 48-80 GB GPU for several days",
+            "smallLab": "300M-1B matched training on 8 x 80 GB GPUs for 1-3 weeks",
+            "wellFundedLab": "7B-14B matched training on 64-256 accelerators for multiple weeks"
+          }
+        },
+        "crowdedness": "High and increasing across diffusion, energy-based, and hybrid language modeling.",
+        "tractability": "Medium for controlled small-scale studies and low for genuine frontier parity."
+      },
+      "claimFingerprint": "b8e32acc"
+    },
+    {
+      "ordinal": 317,
+      "id": "equivariance",
+      "title": "Equivariant & geometric deep learning",
+      "year": 2018,
+      "laneId": "neural",
+      "classificationCode": "a",
+      "description": "Architectures that respect rotation, translation and other symmetries became foundational for molecular, physical and 3D learning. Built-in geometry improves data efficiency and physical plausibility.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        },
+        "mapStatus": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": false,
+        "mapStatus": false
+      },
+      "research": {
+        "tier": "core",
+        "tags": [
+          "science",
+          "architecture",
+          "geometry"
+        ],
+        "questions": [
+          "Which symmetries should be encoded exactly, approximated, or learned from data in complex physical systems?"
+        ],
+        "sources": [
+          {
+            "title": "SchNet: A continuous-filter convolutional neural network for modeling quantum interactions",
+            "url": "https://arxiv.org/abs/1706.08566",
+            "year": 2017,
+            "role": "supporting_result",
+            "roleExplicit": true
+          },
+          {
+            "title": "Tensor Field Networks",
+            "url": "https://arxiv.org/abs/1802.08219",
+            "year": 2018,
+            "role": "supporting_result",
+            "roleExplicit": true
+          },
+          {
+            "title": "SE(3)-Transformers",
+            "url": "https://arxiv.org/abs/2006.10503",
+            "year": 2020,
+            "role": "supporting_result",
+            "roleExplicit": true
+          },
+          {
+            "title": "E(n) Equivariant Graph Neural Networks",
+            "url": "https://arxiv.org/abs/2102.09844",
+            "year": 2021,
+            "role": "supporting_result",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "Which symmetries should be encoded exactly, approximated, or learned from data in complex physical systems?"
+      ],
+      "direction": null,
+      "claimFingerprint": "452b9c9d"
+    }
+  ]
+}

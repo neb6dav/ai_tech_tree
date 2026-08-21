@@ -1,0 +1,1019 @@
+{
+  "schemaVersion": "1.0.0",
+  "data": {
+    "gap_activeinf": {
+      "question": "Can active-inference objectives produce compute-matched agents that equal strong model-based reinforcement-learning baselines on planning, adaptation, robustness, and efficiency?",
+      "closureCriteria": "Under identical observations, model capacity, environment steps, and tuning budgets, an active-inference agent matches or exceeds strong model-based baselines across several environment families, with objective ablations identifying where expected-free-energy terms add value.",
+      "partialResults": [
+        "Deep active inference with Monte Carlo tree search plans in dSprites and Animal-AI environments.",
+        "Discrete active-inference agents and the maintained pymdp library establish reproducible small-scale feasibility."
+      ],
+      "starters": [
+        "Individual: Implement a pymdp or neural active-inference agent on MiniGrid and compare it with PPO and a model-based baseline under fixed environment-step and tuning budgets.",
+        "Small lab: Run preregistered objective ablations across MiniGrid, Procgen, and selected DeepMind Control Suite tasks, measuring adaptation after dynamics and reward shifts.",
+        "Well-funded lab: Build a distributed active-inference agent and conduct a compute-matched simulation-to-robot evaluation with robustness, calibration, and wall-clock efficiency measurements."
+      ],
+      "claimState": "editorial_hypothesis",
+      "asOf": "2026-08-04",
+      "confidence": "high",
+      "noveltyReview": {
+        "status": "targeted_search",
+        "checkedAt": "2026-08-04",
+        "scope": "arXiv titles and abstracts for active inference, expected free energy, robotics, planning, and reinforcement learning, plus modern control benchmarks and official implementations.",
+        "note": "Existing demonstrations are mainly small, simulated, or robotics-specific; the search did not establish priority or exhaust every venue."
+      },
+      "counterexamples": [
+        "Fountas et al. demonstrate a deep active-inference MCTS agent in continuous-state simulations.",
+        "Sajid et al. compare active inference with reinforcement learning in discrete Gym-style settings.",
+        "pymdp provides a maintained implementation for discrete Markov decision processes."
+      ],
+      "literature": [
+        {
+          "t": "Deep active inference agents using Monte-Carlo methods",
+          "u": "https://arxiv.org/abs/2006.04176",
+          "y": 2020,
+          "role": "supporting_result"
+        },
+        {
+          "t": "Active Inference in Robotics and Artificial Agents: Survey and Challenges",
+          "u": "https://arxiv.org/abs/2112.01871",
+          "y": 2021,
+          "role": "survey"
+        }
+      ],
+      "resources": {
+        "benchmarks": [
+          "MiniGrid",
+          "Procgen",
+          "DeepMind Control Suite",
+          "Animal-AI"
+        ],
+        "code": [
+          "https://github.com/infer-actively/pymdp",
+          "https://github.com/zfountas/deep-active-inference-mc"
+        ],
+        "datasets": [
+          "https://github.com/google-deepmind/dsprites-dataset",
+          "Procedurally generated interaction traces from MiniGrid, Procgen, and Animal-AI"
+        ],
+        "estimated": {
+          "individual": "1 x 24-48 GB GPU for several days",
+          "smallLab": "4-8 x 80 GB GPUs for 1-2 weeks",
+          "wellFundedLab": "32-64 accelerators for a multi-suite sweep and robotics follow-up"
+        }
+      },
+      "crowdedness": "Low to medium; active communities exist, but large compute-matched benchmark studies are uncommon.",
+      "tractability": "High for controlled comparisons and medium for broad generalization or robotics."
+    },
+    "gap_neurosym": {
+      "question": "Can a system retain broad language-model coverage while making its consequential inferences machine-checkable?",
+      "closureCriteria": "On a predeclared suite spanning mathematics, repository-scale software verification, and structured domain rules, report proof coverage, proof-check success, residual unverified claims, abstentions, and capability loss relative to an otherwise matched unconstrained model.",
+      "partialResults": [
+        "DeepSeek-Prover-V2 demonstrates strong formal mathematics performance in Lean 4.",
+        "LeanDojo and ReProver make retrieval-augmented theorem proving reproducible at laboratory scale.",
+        "VeriSoftBench shows that mathematics-specialized provers transfer poorly to dependency-rich software repositories."
+      ],
+      "starters": [
+        "Individual: Build a proof-coverage auditor for a 7B prover on LeanDojo and VeriSoftBench that separates verified conclusions, unsupported premises, failed proofs, and timeouts.",
+        "Small lab: Train and evaluate one prover across mathematics and repository-scale software, explicitly measuring transfer loss and dependency-retrieval failures.",
+        "Well-funded lab: Develop a proof-carrying general assistant whose high-consequence outputs compile into multiple formal backends, with calibrated abstention when formalization is incomplete."
+      ],
+      "claimState": "editorial_hypothesis",
+      "asOf": "2026-08-04",
+      "confidence": "high",
+      "noveltyReview": {
+        "status": "targeted_search",
+        "checkedAt": "2026-08-04",
+        "scope": "arXiv and official repositories for neural theorem proving, Lean, proof-carrying generation, repository-scale software verification, and neuro-symbolic reasoning.",
+        "note": "Formal mathematics is a strong and crowded subfield, but broad cross-domain machine-checkable inference remains incomplete; no priority claim is made."
+      },
+      "counterexamples": [
+        "DeepSeek-Prover-V2-671B reports 88.9 percent on MiniF2F and solves 49 of 658 PutnamBench problems.",
+        "LeanDojo and ReProver provide open data, tooling, retrieval, and a 98,734-theorem benchmark.",
+        "FormalMATH, Leanabell-Prover-V2, and Lean Copilot provide additional narrow formal-reasoning systems."
+      ],
+      "literature": [
+        {
+          "t": "DeepSeek-Prover-V2: Advancing Formal Mathematical Reasoning via Reinforcement Learning for Subgoal Decomposition",
+          "u": "https://arxiv.org/abs/2504.21801",
+          "y": 2025,
+          "role": "supporting_result"
+        },
+        {
+          "t": "VeriSoftBench: Repository-Scale Formal Verification Benchmarks for Lean",
+          "u": "https://arxiv.org/abs/2602.18307",
+          "y": 2026,
+          "role": "benchmark"
+        }
+      ],
+      "resources": {
+        "benchmarks": [
+          "MiniF2F",
+          "PutnamBench",
+          "ProverBench",
+          "FormalMATH",
+          "ProofNet",
+          "TheoremBench",
+          "LeanDojo benchmark",
+          "VeriSoftBench"
+        ],
+        "code": [
+          "https://github.com/deepseek-ai/DeepSeek-Prover-V2",
+          "https://github.com/lean-dojo/LeanDojo",
+          "https://github.com/lean-dojo/ReProver",
+          "https://github.com/utopia-group/VeriSoftBench",
+          "https://github.com/leanprover-community/mathlib4"
+        ],
+        "datasets": [
+          "LeanDojo theorem and premise annotations",
+          "VeriSoftBench repository-context obligations",
+          "FormalMATH and mathlib4"
+        ],
+        "estimated": {
+          "individual": "1 x 24-48 GB GPU plus Lean for inference and auditing",
+          "smallLab": "8 x 80 GB GPUs for verifier training over several weeks",
+          "wellFundedLab": "64-256 accelerators for large proof search and cross-domain training"
+        }
+      },
+      "crowdedness": "High in formal mathematics and medium in cross-domain verification.",
+      "tractability": "High for benchmark and tooling work; low for broad end-to-end verification."
+    },
+    "gap_energyllm": {
+      "question": "Can a genuinely energy-based or non-autoregressive language objective match the strongest autoregressive models under equal data, parameters, training compute, and serving budgets across capability, efficiency, and controllability?",
+      "closureCriteria": "Run a preregistered scaling study with shared data, tokenizer, parameter and FLOP budgets, followed by matched-quality serving comparisons across capability, latency, throughput, controllability, and calibration.",
+      "partialResults": [
+        "Energy-Based Transformers learn compatibility energies and perform inference through energy minimization.",
+        "iLLaDA is an 8B masked-diffusion language model trained on 12 trillion tokens and is competitive with Qwen2.5-7B on several benchmarks.",
+        "LLaDA, SEDD, and Nemotron-Labs-Diffusion demonstrate scalable non-autoregressive or hybrid alternatives."
+      ],
+      "starters": [
+        "Individual: Benchmark released autoregressive, diffusion, and energy-based checkpoints under matched answer quality, reporting latency, function evaluations, memory, and controllable infilling.",
+        "Small lab: Train matched 300M-1B autoregressive, masked-diffusion, and energy-based models on one frozen corpus and publish complete learning and serving curves.",
+        "Well-funded lab: Run a preregistered 7B-14B matched-data scaling trial including instruction tuning, code, reasoning, long-form generation, and production-serving cost."
+      ],
+      "claimState": "editorial_hypothesis",
+      "asOf": "2026-08-04",
+      "confidence": "medium",
+      "noveltyReview": {
+        "status": "targeted_search",
+        "checkedAt": "2026-08-04",
+        "scope": "arXiv and official repositories for energy-based transformers, discrete diffusion, masked language diffusion, joint-embedding prediction, and large non-autoregressive language models.",
+        "note": "Large partial systems exist, so the defensible gap is exact equal-budget broad parity rather than absence of scale; diffusion models are adjacent and should not all be labeled energy-based."
+      },
+      "counterexamples": [
+        "Energy-Based Transformers directly instantiate an energy-based language architecture.",
+        "LLaDA and iLLaDA show that masked diffusion can scale to 8B parameters and trillions of tokens.",
+        "Nemotron-Labs-Diffusion releases 3B, 8B, and 14B hybrid autoregressive-diffusion models.",
+        "SEDD reports competitive discrete-diffusion language modeling at smaller scale."
+      ],
+      "literature": [
+        {
+          "t": "Energy-Based Transformers are Scalable Learners and Thinkers",
+          "u": "https://arxiv.org/abs/2507.02092",
+          "y": 2025,
+          "role": "supporting_result"
+        },
+        {
+          "t": "Improved Large Language Diffusion Models",
+          "u": "https://arxiv.org/abs/2606.25331",
+          "y": 2026,
+          "role": "adjacent_work"
+        }
+      ],
+      "resources": {
+        "benchmarks": [
+          "WikiText-103 perplexity",
+          "MMLU",
+          "ARC-Challenge",
+          "HellaSwag",
+          "BBH",
+          "GSM8K",
+          "MATH",
+          "HumanEval",
+          "MBPP",
+          "IFEval"
+        ],
+        "code": [
+          "https://github.com/alexiglad/EBT",
+          "https://github.com/ML-GSAI/LLaDA",
+          "https://github.com/louaaron/Score-Entropy-Discrete-Diffusion",
+          "https://github.com/NVlabs/Nemotron-Labs-Diffusion"
+        ],
+        "datasets": [
+          "WikiText-103",
+          "OpenWebText",
+          "Controlled FineWeb or FineWeb-Edu subsets",
+          "LM1B"
+        ],
+        "estimated": {
+          "individual": "Released 3B-8B model evaluation on 1 x 48-80 GB GPU for several days",
+          "smallLab": "300M-1B matched training on 8 x 80 GB GPUs for 1-3 weeks",
+          "wellFundedLab": "7B-14B matched training on 64-256 accelerators for multiple weeks"
+        }
+      },
+      "crowdedness": "High and increasing across diffusion, energy-based, and hybrid language modeling.",
+      "tractability": "Medium for controlled small-scale studies and low for genuine frontier parity."
+    },
+    "gap_memory": {
+      "question": "Can episodic experience be consolidated into durable parametric behavior while bounding forgetting and outperforming long-context, retrieval, and rehearsal controls?",
+      "closureCriteria": "Across a long ordered experience stream, demonstrate retained prior-task performance, positive transfer, and stable general capability while beating matched replay-buffer, rehearsal, retrieval, long-context, and parameter-expansion controls at equal storage and compute.",
+      "partialResults": [
+        "TRACE exposes severe capability and instruction-following degradation during sequential LLM adaptation.",
+        "Delayed sleep-inspired replay can partially restore multiple sequentially learned tasks.",
+        "Replay, regularization, adapters, and dynamic expansion mitigate forgetting but do not establish general durable consolidation."
+      ],
+      "starters": [
+        "Individual: Compare delayed generative replay, immediate rehearsal, and LoRA isolation on a small TRACE stream with explicit storage and compute accounting.",
+        "Small lab: Consolidate episodic traces into a 7B model and compare parametric retention against retrieval, long context, and equal-size raw replay buffers.",
+        "Well-funded lab: Run a months-long multimodal experience stream with periodic consolidation, measuring forgetting, transfer, behavior drift, and retained safety properties."
+      ],
+      "claimState": "editorial_hypothesis",
+      "asOf": "2026-08-04",
+      "confidence": "high",
+      "noveltyReview": {
+        "status": "targeted_search",
+        "checkedAt": "2026-08-04",
+        "scope": "arXiv and official repositories for continual learning, catastrophic forgetting, generative replay, sleep-inspired consolidation, neural memory, and LLM adaptation.",
+        "note": "The field is crowded, but the targeted search did not find a frontier-scale system satisfying durable consolidation and matched external-memory controls."
+      },
+      "counterexamples": [
+        "Reasoning-augmented continual learning reduces some forgetting on TRACE.",
+        "Sleep-inspired replay partially restores prior tasks after multiple sequential updates.",
+        "Titans provides test-time neural memory but is not equivalent to offline parametric consolidation.",
+        "Long context and retrieval can preserve access to episodes without consolidating them into durable behavior."
+      ],
+      "literature": [
+        {
+          "t": "TRACE: A Comprehensive Benchmark for Continual Learning in Large Language Models",
+          "u": "https://arxiv.org/abs/2310.06762",
+          "y": 2023,
+          "role": "benchmark"
+        },
+        {
+          "t": "Not Just After One: Sleep-Inspired Replay Prevents Catastrophic Forgetting After Sequential Tasks",
+          "u": "https://arxiv.org/abs/2606.08447",
+          "y": 2026,
+          "role": "supporting_result"
+        }
+      ],
+      "resources": {
+        "benchmarks": [
+          "TRACE",
+          "CLINC150",
+          "Split-CIFAR100",
+          "DomainNet",
+          "CLEAR",
+          "RULER or LongBench as external-memory controls"
+        ],
+        "code": [
+          "https://github.com/ContinualAI/avalanche",
+          "https://github.com/aimagelab/mammoth",
+          "https://github.com/Wang-ML-Lab/llm-continual-learning-survey"
+        ],
+        "datasets": [
+          "TRACE eight-task stream",
+          "CLINC150",
+          "Versioned domain corpora with frozen held-out evaluations"
+        ],
+        "estimated": {
+          "individual": "1 x 24-48 GB GPU with a 0.5B-3B model for 3-7 days",
+          "smallLab": "8 x 80 GB GPUs for 7B sequential runs over 2-4 weeks",
+          "wellFundedLab": "64-128 accelerators for 13B-70B long-horizon studies over 4-8 weeks or longer"
+        }
+      },
+      "crowdedness": "High in continual learning; lower in biologically inspired offline consolidation at LLM scale.",
+      "tractability": "Medium for 1B-7B studies and low for frontier-scale long-horizon consolidation."
+    },
+    "gap_causal": {
+      "question": "When do explicit intervention and counterfactual structures improve learned-world planning under distribution shift relative to equally capable noncausal world models?",
+      "closureCriteria": "On held-out interventions and mechanism changes, a causal world model improves planning success, calibration, and sample efficiency over matched latent-dynamics and invariant-learning baselines, with gains surviving misspecified graphs and latent confounding.",
+      "partialResults": [
+        "Causal World Models use unsupervised deconfounding and report improvements in reinforcement-learning sample complexity and counterfactual physical reasoning.",
+        "CausalVerse provides high-fidelity configurable simulations with known causal structure and intervention histories.",
+        "Existing causal-control systems remain mainly simulated or sensitive to structural assumptions."
+      ],
+      "starters": [
+        "Individual: Reproduce a causal-world-model result in CausalWorld and add hidden-confounder, mechanism-shift, and graph-misspecification stress tests.",
+        "Small lab: Compare explicit causal, invariant, and standard latent world models on matched CausalVerse training data and unseen intervention families.",
+        "Well-funded lab: Collect controlled real-robot interventions and test whether simulation-learned causal structure improves adaptation to altered objects, actuators, and dynamics."
+      ],
+      "claimState": "editorial_hypothesis",
+      "asOf": "2026-08-04",
+      "confidence": "medium",
+      "noveltyReview": {
+        "status": "targeted_search",
+        "checkedAt": "2026-08-04",
+        "scope": "arXiv and official repositories for causal world models, causal representation learning, interventions, counterfactual physical reasoning, and causal reinforcement learning.",
+        "note": "Partial fusion already exists, so the open question concerns robust benefit and scaling rather than whether any causal world-model system exists."
+      },
+      "counterexamples": [
+        "Causal World Models explicitly combine learned dynamics, latent deconfounding, counterfactual prediction, and reinforcement learning.",
+        "Explainable reinforcement learning via causal world models combines causal structure with control and explanation.",
+        "Interventional causal-representation methods learn structure from intervention families in controlled settings."
+      ],
+      "literature": [
+        {
+          "t": "Causal World Models by Unsupervised Deconfounding of Physical Dynamics",
+          "u": "https://arxiv.org/abs/2012.14228",
+          "y": 2020,
+          "role": "supporting_result"
+        },
+        {
+          "t": "CausalVerse: Benchmarking Causal Representation Learning with Configurable High-Fidelity Simulations",
+          "u": "https://arxiv.org/abs/2510.14049",
+          "y": 2025,
+          "role": "benchmark"
+        }
+      ],
+      "resources": {
+        "benchmarks": [
+          "CausalWorld",
+          "CausalVerse",
+          "Causal Triplet",
+          "CALVIN or ManiSkill as downstream external tests"
+        ],
+        "code": [
+          "https://github.com/rr-learning/CausalWorld",
+          "https://github.com/CausalVerse/CausalVerseBenchmark",
+          "https://github.com/libo-huang/Awesome-Causal-Reinforcement-Learning"
+        ],
+        "datasets": [
+          "https://huggingface.co/CausalVerse/datasets",
+          "CausalWorld intervention trajectories",
+          "Causal Triplet"
+        ],
+        "estimated": {
+          "individual": "1 x 24 GB GPU for CausalWorld over 2-5 days",
+          "smallLab": "4-8 x 80 GB GPUs for CausalVerse or video experiments over 2-3 weeks",
+          "wellFundedLab": "32-64 GPUs plus intervention-capable robots for 1-3 months"
+        }
+      },
+      "crowdedness": "Medium across causal representation learning, world models, and causal reinforcement learning.",
+      "tractability": "Medium in configurable simulation and low under real-world latent confounding."
+    },
+    "gap_tabular": {
+      "question": "Under equal tuning and total-cost budgets, which data regimes and distribution shifts reliably favor neural or tabular-foundation models over boosted trees, and which still favor trees?",
+      "closureCriteria": "Produce a leak-checked, preregistered regime map covering IID, temporal, grouped, large, high-dimensional, missing, and high-cardinality data, with equal tuning time and total compute plus latency, calibration, and energy reporting.",
+      "partialResults": [
+        "The earlier 45-dataset benchmark found tree-based models strongest on roughly 10,000-sample datasets.",
+        "TabArena finds deep methods catch up with larger time budgets and ensembles while foundation models excel on smaller datasets.",
+        "BeyondArena finds tabular foundation models strongest on tiny-to-medium IID data while trees and conventional deep models dominate several non-IID, large, and high-dimensional regimes."
+      ],
+      "starters": [
+        "Individual: Compare CatBoost, XGBoost, TabPFN, and TabM on 8-12 datasets using both random and temporal splits under an identical one-hour tuning budget.",
+        "Small lab: Build a preregistered 100-plus-dataset regime map including latency, energy, calibration, missingness, high-cardinality features, and temporal or group shift.",
+        "Well-funded lab: Train a tabular foundation model on disjoint source corpora and evaluate frozen cross-domain and non-IID transfer against the best trees and AutoGluon under total-cost parity."
+      ],
+      "claimState": "editorial_hypothesis",
+      "asOf": "2026-08-04",
+      "confidence": "high",
+      "noveltyReview": {
+        "status": "targeted_search",
+        "checkedAt": "2026-08-04",
+        "scope": "arXiv, living benchmarks, and official repositories for tabular deep learning, foundation models, gradient-boosted trees, temporal and group shift, and equal-budget comparisons.",
+        "note": "The old blanket claim that trees beat deep learning is no longer supportable; confidence is high only for the revised regime-selection and non-IID robustness question."
+      },
+      "counterexamples": [
+        "TabR beats gradient-boosted decision trees on a benchmark designed to be favorable to them.",
+        "TabPFN and later versions lead on several small-to-medium IID suites.",
+        "TabArena shows deep ensembles catch up under larger time budgets.",
+        "BeyondArena shows that no one family dominates across IID and non-IID regimes."
+      ],
+      "literature": [
+        {
+          "t": "Why do tree-based models still outperform deep learning on tabular data?",
+          "u": "https://arxiv.org/abs/2207.08815",
+          "y": 2022,
+          "role": "benchmark"
+        },
+        {
+          "t": "Beyond IID: How General Are Tabular Foundation Models, Really?",
+          "u": "https://arxiv.org/abs/2606.30410",
+          "y": 2026,
+          "role": "critique"
+        }
+      ],
+      "resources": {
+        "benchmarks": [
+          "TabArena",
+          "BeyondArena",
+          "TabReD",
+          "OpenML-CC18",
+          "Grinsztajn-45"
+        ],
+        "code": [
+          "https://github.com/autogluon/tabarena",
+          "https://github.com/PriorLabs/TabPFN",
+          "https://github.com/yandex-research/tabred",
+          "https://github.com/yandex-research/tabular-dl-tabr",
+          "https://docs.openml.org/benchmark/"
+        ],
+        "datasets": [
+          "TabArena curated datasets",
+          "BeyondArena 142-dataset collection",
+          "TabReD temporal industry datasets",
+          "OpenML-CC18"
+        ],
+        "estimated": {
+          "individual": "CPU plus 1 x 24 GB GPU for a subset over 2-7 days",
+          "smallLab": "4-8 GPUs and 32-64 CPU cores for full hyperparameter optimization over 1-3 weeks",
+          "wellFundedLab": "32 or more GPUs plus a large CPU fleet for a living benchmark or foundation-model training"
+        }
+      },
+      "crowdedness": "Very high across boosted trees, deep tabular models, foundation models, and AutoML.",
+      "tractability": "High for rigorous replication and regime mapping; medium for new architectures."
+    },
+    "gap_biolearn": {
+      "question": "Can local learning approach backpropagation at useful scale while delivering a measured hardware, memory, communication, or energy advantage?",
+      "closureCriteria": "On a useful-scale task and matched architecture, a local rule closes most of the accuracy and robustness gap to backpropagation while demonstrating reproducible end-to-end energy, memory, communication, or latency gains that include host and data-movement overhead.",
+      "partialResults": [
+        "Forward-Forward replaces forward and backward passes with positive and negative forward passes but was introduced on small problems.",
+        "CLAPP-like local self-supervised learning matches comparable global objectives on CIFAR-10, STL-10, and Tiny ImageNet.",
+        "Predictive coding can approximate backpropagation on arbitrary computation graphs in theory and small implementations."
+      ],
+      "starters": [
+        "Individual: Compare backpropagation, CLAPP, predictive coding, and Forward-Forward on identical Tiny ImageNet networks while measuring stored activations, communication, memory, and accuracy.",
+        "Small lab: Scale the strongest local self-supervised rule to ImageNet-100 or ImageNet-1k with matched ResNet or ViT baselines and NeuroBench-style operation metrics.",
+        "Well-funded lab: Implement the same local rule on neuromorphic or analog hardware and publish wall-plug energy, latency, robustness, and host-overhead comparisons against a conventional backpropagation system."
+      ],
+      "claimState": "editorial_hypothesis",
+      "asOf": "2026-08-04",
+      "confidence": "high",
+      "noveltyReview": {
+        "status": "targeted_search",
+        "checkedAt": "2026-08-04",
+        "scope": "arXiv and official repositories for Forward-Forward, predictive coding, local self-supervised learning, neuromorphic learning, and hardware-energy measurement.",
+        "note": "Partial algorithmic and hardware results exist, but the search did not find a useful-scale system showing both backpropagation-level performance and end-to-end systems advantage."
+      },
+      "counterexamples": [
+        "Local CLAPP variants match comparable global self-supervised objectives on several small vision datasets.",
+        "Predictive-coding updates can approximate automatic differentiation on arbitrary computation graphs.",
+        "Neuromorphic systems show task-specific energy advantages, although often without matched learning rules and end-to-end accounting."
+      ],
+      "literature": [
+        {
+          "t": "The Forward-Forward Algorithm: Some Preliminary Investigations",
+          "u": "https://arxiv.org/abs/2212.13345",
+          "y": 2022,
+          "role": "supporting_result"
+        },
+        {
+          "t": "Can Local Learning Match Self-Supervised Backpropagation?",
+          "u": "https://arxiv.org/abs/2601.21683",
+          "y": 2026,
+          "role": "supporting_result"
+        }
+      ],
+      "resources": {
+        "benchmarks": [
+          "CIFAR-10",
+          "STL-10",
+          "Tiny ImageNet",
+          "ImageNet-1k",
+          "NeuroBench",
+          "DVS Gesture",
+          "SHD or SSC",
+          "Google Speech Commands"
+        ],
+        "code": [
+          "https://github.com/NeuroBench/neurobench",
+          "https://github.com/liukidar/pcx",
+          "https://github.com/mpezeshki/pytorch_forward_forward",
+          "https://github.com/jeshraghian/snntorch",
+          "https://github.com/lava-nc/lava"
+        ],
+        "datasets": [
+          "CIFAR-10, STL-10, Tiny ImageNet, and ImageNet-1k",
+          "DVS Gesture",
+          "Spiking Heidelberg Digits and Spiking Speech Commands",
+          "Google Speech Commands"
+        ],
+        "estimated": {
+          "individual": "1 x 24 GB GPU for 2-5 days",
+          "smallLab": "4-8 GPUs plus neuromorphic or FPGA access for 2-4 weeks",
+          "wellFundedLab": "32-64 GPUs plus production neuromorphic or analog hardware and calibrated measurement over several months"
+        }
+      },
+      "crowdedness": "Medium across local learning, predictive coding, and neuromorphic computing.",
+      "tractability": "High for small-scale algorithmic work and low for credible useful-scale systems claims."
+    },
+    "gap_openended": {
+      "question": "Can an AI system sustain repeated capability improvement across genuinely held-out domains without optimizing a fixed benchmark, depending on a hidden stronger teacher, or accumulating unacceptable safety regressions?",
+      "closureCriteria": "Pre-register several improvement cycles and sealed domain families; show statistically reliable gains on newly unsealed tasks after every cycle; compare against static-agent, ordinary fine-tuning, search-only, and human-engineered baselines; publish compute, interventions, failures, contamination checks, and a safety-regression budget; and obtain an independent rerun.",
+      "partialResults": [
+        "The Darwin Gödel Machine evolves coding-agent implementations and improved bounded software-engineering benchmarks, while SEAL learns its own update directives and training data for bounded adaptation tasks. AlphaEvolve and related verifier-guided systems offer further evidence that self-generated search can improve artifacts. None yet demonstrates safe, durable, domain-general improvement under repeatedly refreshed evaluation."
+      ],
+      "starters": [
+        "Individual: Reproduce one DGM- or SEAL-style update loop on two disjoint small domains, freeze both evaluators before training, and publish every candidate, rollback, cost, and regression.",
+        "Small lab: Run a 10-cycle, multi-domain archive experiment with sealed future tasks and compare a static agent, self-editing agent, and diversity-preserving open-ended archive under the same inference and training budget.",
+        "Well-funded lab: Conduct a multi-model, long-horizon improvement trial with immutable external evaluations, independent red teaming, automatic rollback, full lineage, and a third-party audit of contamination and safety regressions."
+      ],
+      "claimState": "editorial_hypothesis",
+      "asOf": "2026-08-04",
+      "confidence": "high",
+      "noveltyReview": {
+        "status": "targeted_search",
+        "checkedAt": "2026-08-04",
+        "scope": "Targeted arXiv title-and-abstract searches for open-ended self-improvement, self-editing agents, self-adapting language models, automated coding-agent evolution, verifier-guided evolution, and 2025-2026 follow-on work; primary-paper reference chaining around DGM and SEAL.",
+        "note": "High confidence that the narrowed gap remains open. The evidence is strong for bounded self-improvement, but the search found no system satisfying repeated held-out cross-domain improvement, independence from a hidden stronger teacher, and bounded safety regressions together. This is a targeted review, not an exhaustive priority search or a priority claim."
+      },
+      "counterexamples": [
+        "Darwin Gödel Machine is a concrete self-editing, archive-based coding agent; its gains are on bounded coding benchmarks and one reported run cost about USD 22,000 in API use over roughly two weeks.",
+        "SEAL generates its own update directives and fine-tuning data, but evaluates bounded knowledge-incorporation and few-shot tasks rather than indefinite cross-domain improvement.",
+        "Search over self-edit strategies and verifier-guided evolutionary systems show useful improvement, while also exposing homogenization, evaluator gaming, and dependence on externally supplied objectives."
+      ],
+      "literature": [
+        {
+          "t": "Darwin Gödel Machine: Open-Ended Evolution of Self-Improving Agents",
+          "u": "https://arxiv.org/abs/2505.22954",
+          "y": 2025,
+          "role": "supporting_result"
+        },
+        {
+          "t": "Self-Adapting Language Models",
+          "u": "https://arxiv.org/abs/2506.10943",
+          "y": 2025,
+          "role": "supporting_result"
+        }
+      ],
+      "resources": {
+        "benchmarks": [
+          "SWE-bench Verified plus a sealed post-cutoff issue set",
+          "Aider Polyglot with language families held out by cycle",
+          "RE-Bench with new, externally authored environments"
+        ],
+        "code": [
+          "https://github.com/jennyzzt/dgm",
+          "https://github.com/Continual-Intelligence/SEAL",
+          "https://github.com/princeton-nlp/SWE-bench",
+          "https://github.com/METR/RE-Bench"
+        ],
+        "datasets": [
+          "Frozen SWE-bench repositories and issue snapshots",
+          "Aider Polyglot task set",
+          "Versioned RE-Bench environments and complete candidate-lineage logs"
+        ],
+        "estimated": {
+          "individual": "One to four modern GPUs for local 7B-14B models, or a tightly capped API budget; five to ten update cycles.",
+          "smallLab": "Eight to thirty-two GPUs, sandboxed execution, sealed multi-domain evaluations, and an independent evaluator.",
+          "wellFundedLab": "Several repeated DGM-scale runs across model families; the DGM paper reports about two weeks and USD 22,000 API cost for one run, before external evaluation and red-team costs."
+        }
+      },
+      "crowdedness": "High for self-improving agents and automated coding; lower for preregistered, repeatedly refreshed, cross-domain and safety-bounded trials.",
+      "tractability": "Medium for bounded coding experiments; low for a convincing general and safe long-horizon closure result."
+    },
+    "gap_dreamtrain": {
+      "question": "Can policies learned mainly inside learned generative world models transfer reliably to multiple physical settings and embodiments, and outperform classical simulation under the same real-world data and compute budget?",
+      "closureCriteria": "Pre-register at least three tasks, two physical settings, and two embodiments; hold real-world interaction budgets equal; compare learned-world, classical simulator, mixed, imitation-only, and direct-real-training baselines; report intervention and failure rates; and reproduce the result at an independent site.",
+      "partialResults": [
+        "PhysWorld reconstructs task-specific physical worlds from generated videos and trains residual policies that transfer to real manipulation; 2026 world-action-model work transfers synthetic priors to a Franka arm without real demonstrations on four tasks. DayDreamer, Cosmos Policy, DreamGen, and Gen2Act establish adjacent learned-world or generative-policy loops. These are important counterexamples to the old claim that the loop does not exist, but they do not yet establish robust multi-setting, multi-embodiment superiority over strong classical simulation."
+      ],
+      "starters": [
+        "Individual: In LIBERO or RoboCasa, train a policy from a learned video/world model and a classical physics simulator using identical synthetic trajectories, then evaluate both on the same held-out visual and dynamics shifts.",
+        "Small lab: Use one physical arm for three manipulation tasks and two scene shifts; cap real interactions and compare learned-world, domain-randomized simulator, mixed, and imitation baselines with blinded success scoring.",
+        "Well-funded lab: Run a preregistered multi-embodiment, multi-site transfer study with equal real-data budgets, safety cages, independent replication, and a full accounting of generation, reconstruction, simulation, and policy-training compute."
+      ],
+      "claimState": "editorial_hypothesis",
+      "asOf": "2026-08-04",
+      "confidence": "medium",
+      "noveltyReview": {
+        "status": "targeted_search",
+        "checkedAt": "2026-08-04",
+        "scope": "Targeted arXiv searches for physical world models, generative simulation, world-action models, synthetic-prior sim-to-real, robot policies from generated video, Dreamer/DayDreamer, Cosmos Policy, and 2025-2026 embodied transfer papers; primary-paper reference chaining.",
+        "note": "Medium confidence that the narrowed robust-transfer gap remains open. Existing learned-world-to-real loops narrow the question to multi-setting, multi-embodiment performance under equal budgets. This was a targeted, not exhaustive, priority search."
+      },
+      "counterexamples": [
+        "PhysWorld reports an average 82 percent success versus a 67 percent zero-shot baseline across its open-world manipulation evaluation, using generated task video and physical reconstruction; scope and simulator fidelity remain limiting factors.",
+        "Efficient Sim-to-Real Transfer of World-Action Models from Synthetic Priors reports about 800 synthetic demonstrations per task and 35 percent average Franka success over four tasks with no real demonstrations, but does not prove that the world-action model is necessary or better than a matched classical simulator.",
+        "DayDreamer learns online on physical robots, and Cosmos Policy performs strongly on standard manipulation suites, but neither is a clean demonstration of multi-embodiment policies trained mainly in dreamed worlds."
+      ],
+      "literature": [
+        {
+          "t": "Robot Learning from a Physical World Model",
+          "u": "https://arxiv.org/abs/2511.07416",
+          "y": 2025,
+          "role": "supporting_result"
+        },
+        {
+          "t": "Efficient Sim-to-Real Transfer of World-Action Models from Synthetic Priors",
+          "u": "https://arxiv.org/abs/2606.31101",
+          "y": 2026,
+          "role": "supporting_result"
+        }
+      ],
+      "resources": {
+        "benchmarks": [
+          "LIBERO",
+          "RoboCasa",
+          "CALVIN or SIMPLER with predefined real-to-sim correspondence"
+        ],
+        "code": [
+          "https://github.com/NVIDIA/cosmos",
+          "https://github.com/danijar/daydreamer",
+          "https://github.com/Lifelong-Robot-Learning/LIBERO"
+        ],
+        "datasets": [
+          "Open X-Embodiment",
+          "DROID",
+          "BridgeData V2"
+        ],
+        "estimated": {
+          "individual": "One to four high-memory GPUs and simulation-only evaluation.",
+          "smallLab": "Eight to thirty-two GPUs, one instrumented robot arm, replacement parts, and several weeks of supervised physical trials.",
+          "wellFundedLab": "Sixty-four or more GPUs, multiple robot embodiments and sites, motion capture and safety infrastructure, plus an independent replication team."
+        }
+      },
+      "crowdedness": "High for robot world models and generative policies; medium for controlled learned-world versus classical-simulator comparisons across physical settings.",
+      "tractability": "Medium in simulation, medium-low for one physical arm, and low for independent multi-embodiment closure."
+    },
+    "gap_quant": {
+      "question": "Can an end-to-end learning workload show a reproducible quantum advantage over the strongest classical alternative after state preparation, data acquisition, error mitigation, wall-clock time, and energy are all counted?",
+      "closureCriteria": "Pre-register the access model, task distribution, hardware, classical comparison budget, and success threshold; include state-preparation, shots, calibration, error mitigation, queue and wall-clock costs; red-team the classical baseline; demonstrate scaling beyond feasible classical replication; and reproduce on independent hardware.",
+      "partialResults": [
+        "Provable and experimental learning advantages already exist for carefully specified quantum-data access models, including learning from experiments. Broad empirical benchmarking still finds that ordinary classical models usually outperform tested quantum models on classical-data tasks. The defensible open question is practical end-to-end advantage under full resource accounting, not whether any quantum learning advantage has ever been proved."
+      ],
+      "starters": [
+        "Individual: Reproduce selected qml-benchmarks with stronger classical hyperparameter search, identical data splits, and full training and inference timing; publish null results and sensitivity analyses.",
+        "Small lab: Implement one learning-from-experiments task on cloud quantum hardware, pre-register the best classical red team, and account for shots, calibration, state preparation, mitigation, transfer, queue, and wall-clock costs.",
+        "Well-funded lab: Run the same 30-50-qubit coherent-data learning experiment on two independent hardware stacks, with a separate classical-HPC team and audited time, energy, acquisition, and uncertainty accounting."
+      ],
+      "claimState": "editorial_hypothesis",
+      "asOf": "2026-08-04",
+      "confidence": "high",
+      "noveltyReview": {
+        "status": "targeted_search",
+        "checkedAt": "2026-08-04",
+        "scope": "Targeted arXiv searches for provable quantum learning advantage, learning from experiments, practical QML advantage, QML benchmarking, noisy-qubit separations, data-loading and state-preparation costs, plus reference chaining from the two representative papers.",
+        "note": "High confidence that the practical, fully accounted and independently replicated gap remains open. Existing theory proves advantages under specified access models, so this card makes no blanket no-advantage claim. The review makes no general quantum-supremacy or priority claim."
+      },
+      "counterexamples": [
+        "Quantum Advantage in Learning from Experiments proves exponential sample advantages under specified quantum-data access and demonstrates experiments up to 40 superconducting qubits and roughly 1,300 gates; those assumptions do not automatically establish a practical advantage for ordinary classical data.",
+        "The qml-benchmarks study evaluates 12 quantum models across 160 datasets grouped into 10 benchmarks and generally finds tuned classical models stronger; simulations were limited to modest qubit counts.",
+        "Recent analyses report plausible noisy-qubit separations at tens of qubits, but they are not yet an independently replicated end-to-end hardware advantage with full acquisition and runtime accounting."
+      ],
+      "literature": [
+        {
+          "t": "Quantum advantage in learning from experiments",
+          "u": "https://arxiv.org/abs/2112.00778",
+          "y": 2021,
+          "role": "supporting_result"
+        },
+        {
+          "t": "Better than classical? The subtle art of benchmarking quantum machine learning models",
+          "u": "https://arxiv.org/abs/2403.07059",
+          "y": 2024,
+          "role": "benchmark"
+        }
+      ],
+      "resources": {
+        "benchmarks": [
+          "Xanadu qml-benchmarks",
+          "ReCirq learning-from-experiments tasks",
+          "A preregistered application benchmark with an independently tuned classical red team"
+        ],
+        "code": [
+          "https://github.com/XanaduAI/qml-benchmarks",
+          "https://github.com/quantumlib/ReCirq/tree/master/recirq/qml_lfe",
+          "https://github.com/PennyLaneAI/pennylane",
+          "https://github.com/qiskit-community/qiskit-machine-learning"
+        ],
+        "datasets": [
+          "PennyLane QML benchmark datasets",
+          "Versioned ReCirq state and dynamics experiment records",
+          "Raw shots, calibration snapshots, mitigation settings, and matched classical feature data"
+        ],
+        "estimated": {
+          "individual": "CPU/GPU simulation up to roughly 18-24 qubits, depending on circuit and memory, plus classical tuning compute.",
+          "smallLab": "Cloud-QPU allocation, HPC simulation, and a separate classical-baseline team.",
+          "wellFundedLab": "Reliable access to two 30-50-qubit hardware platforms, low-level experimental support, substantial HPC, and independent replication."
+        }
+      },
+      "crowdedness": "Medium-high; QML is crowded, while transparent end-to-end cost accounting and adversarial classical baselines remain less common.",
+      "tractability": "High for rigorous small-scale benchmarking and valuable negative results; very low for a scalable practical-advantage closure result."
+    },
+    "gap_swarm": {
+      "question": "Can foundation models improve embodied swarms while preserving decentralized execution, scaling to many inexpensive agents, and degrading gracefully under communication, member, sensor, and model failures?",
+      "closureCriteria": "Show increasing team utility across at least three swarm sizes; keep execution decentralized with explicit per-agent compute and bandwidth caps; compare against strong modular decentralized baselines; test packet loss, partitions, Byzantine or faulty members, sensor corruption, and model failure; and transfer to a physical swarm.",
+      "partialResults": [
+        "CRAFT uses language and vision-language foundation models to coach reinforcement learning for multi-robot coordination, and DeepFleet trains multi-agent foundation models on warehouse fleet movement data. RoCo and SMART-LLM coordinate smaller robot teams with language models. These invalidate a claim that the combination is nearly untouched, while leaving scalable online decentralized swarm intelligence and fault tolerance unresolved."
+      ],
+      "starters": [
+        "Individual: In ARGoS or Crazyswarm2 simulation, compare a local foundation-model coach with a modular decentralized controller across swarm sizes and a fixed packet-loss, sensor-noise, and member-dropout matrix.",
+        "Small lab: Test six to twelve inexpensive robots under packet loss, partitions, robot dropout, and stale or adversarial guidance; include centralization and communication-budget ablations.",
+        "Well-funded lab: Run a 50-plus heterogeneous-robot, multi-site study of online shared learning with decentralized execution, predefined graceful-degradation curves, safety supervision, and independent robustness auditing."
+      ],
+      "claimState": "editorial_hypothesis",
+      "asOf": "2026-08-04",
+      "confidence": "medium",
+      "noveltyReview": {
+        "status": "targeted_search",
+        "checkedAt": "2026-08-04",
+        "scope": "Targeted arXiv searches for foundation models in multi-robot coordination, fleet foundation models, LLM robot collaboration, decentralized swarm learning, embodied swarms, communication failures, and 2025-2026 follow-on papers; reference chaining from CRAFT, DeepFleet, RoCo, and SMART-LLM.",
+        "note": "Medium confidence that scalable, online, decentralized and fault-tolerant foundation-model swarms remain open. CRAFT and DeepFleet already demonstrate large-model coordination in smaller robot teams, narrowing the unresolved target. No priority claim is made."
+      },
+      "counterexamples": [
+        "CRAFT trains coordinated multi-quadruped navigation and bimanual manipulation policies with foundation-model coaching and reports physical-policy transfer, but it is not a large, cheap, online-adaptive swarm under broad failures.",
+        "DeepFleet models warehouse fleets using data from hundreds of thousands of operational robots and robot-centric local graphs, but focuses on prediction and fleet design using proprietary operational data rather than general online swarm control.",
+        "RoCoBench and SMART-LLM show language-model planning for small multi-robot teams; scale, decentralization, latency, and graceful degradation remain limited."
+      ],
+      "literature": [
+        {
+          "t": "CRAFT: Coaching Reinforcement Learning Autonomously using Foundation Models for Multi-Robot Coordination Tasks",
+          "u": "https://arxiv.org/abs/2509.14380",
+          "y": 2025,
+          "role": "supporting_result"
+        },
+        {
+          "t": "DeepFleet: Multi-Agent Foundation Models for Mobile Robots",
+          "u": "https://arxiv.org/abs/2508.08574",
+          "y": 2025,
+          "role": "supporting_result"
+        }
+      ],
+      "resources": {
+        "benchmarks": [
+          "RoCoBench",
+          "Multi-Agent Quadruped Environment tasks",
+          "Crazyswarm2 or ARGoS with a standardized communication-and-fault suite"
+        ],
+        "code": [
+          "https://github.com/MandiZhao/robot-collab",
+          "https://github.com/SMARTlab-Purdue/SMART-LLM",
+          "https://github.com/IMRCLab/crazyswarm2",
+          "https://github.com/ilpincy/argos3"
+        ],
+        "datasets": [
+          "RoCoBench language, plan, and trajectory tasks",
+          "SMART-LLM task data",
+          "A new open, fault-annotated multi-robot trajectory corpus; no canonical open foundation-model swarm corpus was identified"
+        ],
+        "estimated": {
+          "individual": "One modern GPU plus 16-64 CPU cores for simulation.",
+          "smallLab": "Four to twelve low-cost ground robots or three to six drones, four to eight GPUs, localization, spares, and safety supervision.",
+          "wellFundedLab": "Thirty-two to one hundred robots, mixed embodiments, motion capture or UWB localization, wireless instrumentation, safety operators, and substantial model-training compute."
+        }
+      },
+      "crowdedness": "Medium for language-model multi-robot planning; low-medium for decentralized foundation-model swarms with systematic fault tolerance.",
+      "tractability": "High in simulation, medium for a small physical fleet, and low for large heterogeneous swarms with convincing safety and robustness."
+    },
+    "gap_interp": {
+      "question": "Can interpretability methods support ex ante predictions of durable model-control interventions, including composition, persistence, and bounded side effects across models and tasks?",
+      "closureCriteria": "Before applying each intervention, predict its target effect, collateral effects, interactions with other interventions, and persistence after additional training or context shifts; beat non-mechanistic baselines across multiple model families and seeds; and reproduce the prediction-to-control mapping independently.",
+      "partialResults": [
+        "Activation steering, representation engineering, sparse autoencoders, causal tracing, and model editing can alter behavior. AxBench finds simple prompting and fine-tuning baselines often beat sparse-autoencoder steering, while localization-versus-editing studies show that causal localization does not reliably identify the best place to edit. Early 2026 work predicts some steering side effects, but results remain method-, dictionary-, and model-dependent."
+      ],
+      "starters": [
+        "Individual: On two open small models, use AxBench and CounterFact to predict target and collateral changes before each intervention, then publish calibration curves and all failed predictions.",
+        "Small lab: Build a cross-model, cross-seed challenge spanning prompting, fine-tuning, steering, sparse autoencoders, and editing, with tests of intervention composition and persistence after additional training.",
+        "Well-funded lab: Run a blinded, preregistered intervention tournament across model families in which one team predicts effects, another executes interventions, and an independent group evaluates hidden targets and side effects."
+      ],
+      "claimState": "editorial_hypothesis",
+      "asOf": "2026-08-04",
+      "confidence": "high",
+      "noveltyReview": {
+        "status": "targeted_search",
+        "checkedAt": "2026-08-04",
+        "scope": "Targeted arXiv searches for mechanistic interpretability interventions, activation and representation steering, sparse-autoencoder steering, knowledge editing, causal localization, intervention side-effect prediction, SAEBench, AxBench, and 2025-2026 benchmark audits; reference chaining from the representative studies.",
+        "note": "High confidence that predictable, durable, composable control with bounded side effects remains open. There are meaningful local successes, so the claim is deliberately about calibrated ex ante prediction across methods and models, not whether interventions ever work. No priority claim is made."
+      },
+      "counterexamples": [
+        "AxBench provides a broad steering benchmark and finds prompting strongest overall, supervised fine-tuning next, and sparse autoencoders often uncompetitive; it is evidence both of controllability and of weak mechanistic advantage.",
+        "Causal localization can identify behaviorally relevant components, yet the localization-versus-editing study finds it does not consistently predict the most effective edit layer.",
+        "Recent work predicts some sparse-autoencoder steering side effects before intervention, but generalization varies across models, dictionaries, and target concepts."
+      ],
+      "literature": [
+        {
+          "t": "AxBench: Steering LLMs? Even Simple Baselines Outperform Sparse Autoencoders",
+          "u": "https://arxiv.org/abs/2501.17148",
+          "y": 2025,
+          "role": "benchmark"
+        },
+        {
+          "t": "Does Localization Inform Editing? Surprising Differences in Causality-Based Localization vs. Knowledge Editing in Language Models",
+          "u": "https://arxiv.org/abs/2301.04213",
+          "y": 2023,
+          "role": "critique"
+        }
+      ],
+      "resources": {
+        "benchmarks": [
+          "AxBench",
+          "SAEBench",
+          "CounterFact plus neighborhood tests and MQuAKE-style multi-hop edits"
+        ],
+        "code": [
+          "https://github.com/stanfordnlp/axbench",
+          "https://github.com/stanfordnlp/pyvene",
+          "https://github.com/kmeng01/rome",
+          "https://github.com/jbloomAus/SAELens"
+        ],
+        "datasets": [
+          "AxBench concept datasets and feature dictionaries",
+          "CounterFact and ZsRE",
+          "MQuAKE or an equivalent compositional-edit set"
+        ],
+        "estimated": {
+          "individual": "One 24-80 GB GPU for 0.5B-8B open models, depending on intervention and activation storage.",
+          "smallLab": "Four to sixteen GPUs across several 7B-70B models, methods, and random seeds.",
+          "wellFundedLab": "Thirty-two or more GPUs, multiple independently developed model families, blinded evaluation, and an external replication team."
+        }
+      },
+      "crowdedness": "High; mechanistic interpretability and steering are crowded, but preregistered prediction-to-control and independent replication are less common.",
+      "tractability": "High for bounded falsification studies, medium for cross-model predictive rules, and low for durable general guarantees."
+    },
+    "gap_agents": {
+      "question": "Can enforceable least-privilege and containment policies for adaptive tool-using agents survive realistic prompt injection, delegation, persistence, privilege escalation, and sandbox-escape attacks?",
+      "closureCriteria": "Specify the policy and threat model formally; enforce it below the model layer; test benign utility and adaptive attacks across real tool classes, delegation, memory, restart, identity, network, and code execution; show bounded failure probability under repeated trials; and obtain an independent penetration test.",
+      "partialResults": [
+        "AI Control shows that monitoring and protocol design can improve safety even when an untrusted model intentionally subverts a coding task. AgentDojo and Agent Security Bench provide realistic tool-agent prompt-injection and security suites, while SandboxEscapeBench tests container-escape capability. These are substantial defenses and measurements, but none establishes general containment under an adaptive real-tool threat model."
+      ],
+      "starters": [
+        "Individual: Add a deny-by-default, provenance-aware least-privilege wrapper to AgentDojo and compare it with prompt-only defenses on both benign utility and adaptive indirect prompt injection.",
+        "Small lab: Combine AgentDojo, Agent Security Bench, and sandbox-escape tasks in gVisor or Firecracker; red-team delegation, memory, restart, exfiltration, and privilege transitions across four model families.",
+        "Well-funded lab: Build an isolated replica of a real enterprise tool environment with formal identity, network, filesystem, and approval policies; commission independent model red teaming and a conventional penetration test."
+      ],
+      "claimState": "editorial_hypothesis",
+      "asOf": "2026-08-04",
+      "confidence": "high",
+      "noveltyReview": {
+        "status": "targeted_search",
+        "checkedAt": "2026-08-04",
+        "scope": "Targeted arXiv searches for AI control, agent containment, agent security benchmarks, prompt injection, capability control, least privilege, tool authorization, container escape, adaptive red teaming, and 2024-2026 follow-on work; reference chaining from AI Control, AgentDojo, ASB, and SandboxEscapeBench.",
+        "note": "High confidence that enforceable containment surviving adaptive attacks in realistic tool environments remains open. Empirical defenses and control protocols are active and valuable, so the claim is not that no defenses exist. No universal impossibility or priority claim is made."
+      },
+      "counterexamples": [
+        "AI Control demonstrates that trusted monitoring, auditing, and protocol design improve outcomes against an intentionally subversive untrusted coding model, within a bounded backdoor-insertion setting.",
+        "AgentDojo contains 97 benign tasks and 629 security test cases across four tool domains; tested agents and defenses still trade off utility and security.",
+        "Agent Security Bench spans ten scenarios, more than 400 tools, and roughly 90,000 tests, while SandboxEscapeBench adds realistic container-escape tasks; neither alone proves containment."
+      ],
+      "literature": [
+        {
+          "t": "AI Control: Improving Safety Despite Intentional Subversion",
+          "u": "https://arxiv.org/abs/2312.06942",
+          "y": 2023,
+          "role": "supporting_result"
+        },
+        {
+          "t": "AgentDojo: A Dynamic Environment to Evaluate Prompt Injection Attacks and Defenses for LLM Agents",
+          "u": "https://arxiv.org/abs/2406.13352",
+          "y": 2024,
+          "role": "benchmark"
+        }
+      ],
+      "resources": {
+        "benchmarks": [
+          "AgentDojo",
+          "Agent Security Bench",
+          "SandboxEscapeBench or ControlArena"
+        ],
+        "code": [
+          "https://github.com/ethz-spylab/agentdojo",
+          "https://github.com/agiresearch/ASB",
+          "https://github.com/google/gvisor",
+          "https://github.com/firecracker-microvm/firecracker"
+        ],
+        "datasets": [
+          "AgentDojo's 629 security cases and 97 utility tasks",
+          "Agent Security Bench's approximately 90,000 tests",
+          "Versioned sandbox-escape scenarios and complete tool, policy, and authorization traces"
+        ],
+        "estimated": {
+          "individual": "One workstation, containerized tools, and one or two local or API models; no live secrets or production accounts.",
+          "smallLab": "Four to eight model families, hardened microVM infrastructure, security engineering, and an adaptive red team.",
+          "wellFundedLab": "Isolated replicas of real tools and identity systems, kernel and network specialists, formal-policy expertise, independent penetration testing, and incident-response capacity."
+        }
+      },
+      "crowdedness": "High for empirical agent security and prompt injection; lower for formal, below-model enforcement tested against adaptive end-to-end attacks.",
+      "tractability": "High for benchmark and least-privilege improvements, medium for robust production patterns, and very low for broad formal containment guarantees."
+    },
+    "gap_data": {
+      "question": "Can repeated generations of synthetic or self-generated experience preserve or improve held-out capability and diversity without fresh human data, contamination, or a hidden stronger teacher?",
+      "closureCriteria": "Run multiple recursive generations with immutable held-out human evaluations and provenance; measure average quality, tail coverage, diversity, calibration, memorization, and contamination each round; forbid fresh human data and undisclosed stronger-teacher labels after initialization; compare replacement, accumulation, curation, multi-teacher, and self-training regimes; and reproduce independently.",
+      "partialResults": [
+        "Recursive replacement with generated data can erase distribution tails and cause model collapse. Accumulating synthetic data with the original real distribution can avoid collapse in several modalities, and diverse or pluralistic curation can stabilize bounded regimes. These are genuine counterexamples to inevitability, but they retain real-data anchors, external rewards, multiple teachers, or bounded tasks and do not yet show a sustained synthetic-only capability ratchet."
+      ],
+      "starters": [
+        "Individual: Train a 100M-1B model for 10-20 recursive rounds under replacement, accumulation, and diversity-curation conditions using one cryptographically frozen human holdout and complete data lineage.",
+        "Small lab: Run a 1B-8B text or multimodal study for 10-30 rounds, auditing contamination, rare-skill retention, diversity, calibration, and teacher dependence with external evaluators fixed before training.",
+        "Well-funded lab: Run a 70B-scale, 30-generation multi-teacher experiment with no fresh human data after initialization, immutable external evaluation, explicit teacher-capability accounting, and an independent provenance and contamination audit."
+      ],
+      "claimState": "editorial_hypothesis",
+      "asOf": "2026-08-04",
+      "confidence": "medium",
+      "noveltyReview": {
+        "status": "targeted_search",
+        "checkedAt": "2026-08-04",
+        "scope": "Targeted arXiv searches for model collapse, recursive synthetic-data training, synthetic-data accumulation, curated synthetic data, pluralistic rewards, multi-teacher self-training, contamination, experience generation, and 2025-2026 recursive-loop studies; reference chaining from the two representative papers.",
+        "note": "Medium confidence that the synthetic-only, repeated capability-improvement gap remains open. Real-data accumulation or externally preserved diversity can prevent collapse in bounded settings; the unresolved target therefore excludes fresh anchors and hidden stronger teachers. No priority claim is made."
+      },
+      "counterexamples": [
+        "The Curse of Recursion demonstrates progressive loss of distribution tails when generated data replace real data across language and generative-model settings.",
+        "Is Model Collapse Inevitable? shows that accumulating synthetic data alongside the original real data avoids collapse in language, molecular, and image experiments; this does not satisfy a no-fresh-anchor synthetic-only loop.",
+        "Recent curated, diverse-teacher, and pluralistic-reward systems can delay or prevent collapse in bounded settings, but depend on external selection signals, anchored data, or stronger and diverse teachers."
+      ],
+      "literature": [
+        {
+          "t": "The Curse of Recursion: Training on Generated Data Makes Models Forget",
+          "u": "https://arxiv.org/abs/2305.17493",
+          "y": 2023,
+          "role": "critique"
+        },
+        {
+          "t": "Is Model Collapse Inevitable? Breaking the Curse of Recursion by Accumulating Real and Synthetic Data",
+          "u": "https://arxiv.org/abs/2404.01413",
+          "y": 2024,
+          "role": "supporting_result"
+        }
+      ],
+      "resources": {
+        "benchmarks": [
+          "DataComp-LM or DCLM controlled-data protocol",
+          "HELM or lm-evaluation-harness with immutable post-cutoff tasks",
+          "A shared recursive train-generate benchmark reporting tail coverage, diversity, calibration, and contamination by generation"
+        ],
+        "code": [
+          "https://github.com/mlfoundations/dclm",
+          "https://github.com/EleutherAI/lm-evaluation-harness",
+          "https://github.com/allenai/open-instruct"
+        ],
+        "datasets": [
+          "DCLM baseline or FineWeb-Edu with full manifests",
+          "Dolma",
+          "A cryptographically frozen held-out human corpus and provenance ledger not exposed to the generation loop"
+        ],
+        "estimated": {
+          "individual": "One to four GPUs for 100M-1B models over 5-20 rounds.",
+          "smallLab": "Sixteen to sixty-four GPUs for 1B-8B models, 10-30 rounds, and continuous provenance and contamination analysis.",
+          "wellFundedLab": "Frontier-scale training allocation for 70B or multimodal recursive loops, long-term dataset storage, and an independent data-audit team."
+        }
+      },
+      "crowdedness": "High; synthetic data, self-training, and model collapse are active topics, but deeply controlled multi-generation studies remain expensive and less common.",
+      "tractability": "High for causal small-model studies, medium for 1B-8B replication, and low for frontier-scale conclusions."
+    },
+    "gap_scilab": {
+      "question": "Can one autonomous scientific system transfer across instruments and scientific domains while keeping experiments safe, uncertainty calibrated, provenance complete, and results independently reproducible?",
+      "closureCriteria": "Pre-register transfer from at least one training domain or instrument to two materially different targets; require calibrated abstention and human safety gates; preserve machine-readable lineage from hypothesis through raw data and analysis; compare against domain-specific automation and human teams; and have an independent lab reproduce a claimed result from the released record.",
+      "partialResults": [
+        "A 2026 autonomous laboratory agent operates scanning probe microscopy through a domain-specific model and deterministic modular interface. AI Scientist-v2 automates computational machine-learning research across several subdomains, and earlier Coscientist work demonstrated bounded chemistry workflows. These systems establish real partial autonomy, but none closes cross-instrument, cross-domain transfer with independent physical reproduction and calibrated uncertainty."
+      ],
+      "starters": [
+        "Individual: Build a provenance-first agent for DiscoveryBench and ScienceAgentBench that must produce an executable rerun bundle, calibrated confidence, and an explicit abstention whenever evidence or permissions are missing.",
+        "Small lab: Connect the same policy layer to two instruments, or one instrument plus a high-fidelity simulator, preregister transfer tasks, retain human safety approval, and have a second operator independently repeat the result.",
+        "Well-funded lab: Run a two-domain, two-site autonomous-science challenge with different instruments, robotic sample handling, blind replication, machine-readable lineage, uncertainty calibration, and independent safety and research-integrity oversight."
+      ],
+      "claimState": "editorial_hypothesis",
+      "asOf": "2026-08-04",
+      "confidence": "high",
+      "noveltyReview": {
+        "status": "targeted_search",
+        "checkedAt": "2026-08-04",
+        "scope": "Targeted arXiv searches for autonomous laboratories, self-driving labs, AI scientists, laboratory agents, cross-domain scientific agents, instrument control, reproducibility, provenance, Coscientist, AI Scientist v2, and 2025-2026 systems and benchmarks; reference chaining from representative systems and benchmark papers.",
+        "note": "High confidence that transferable cross-instrument, cross-domain autonomy with independent physical replication remains open. Domain-specific and computational systems are already substantial, so the gap must not be described as absence of autonomous science. No priority claim is made."
+      },
+      "counterexamples": [
+        "Autonomous Laboratory Agent controls real-time atomic-resolution scanning probe microscopy using a customized domain model, deterministic validation, and modular orchestration; it remains a single instrument family and domain.",
+        "AI Scientist-v2 performs template-free computational ML research and produced workshop-level manuscripts, including one accepted at a workshop with a high acceptance rate; it does not demonstrate transfer across physical instruments or independent experimental reproduction.",
+        "Coscientist and other self-driving-lab systems demonstrate chemistry and materials workflows, while DiscoveryBench and ScienceAgentBench show that broad data-science agents still solve only a minority of realistic tasks."
+      ],
+      "literature": [
+        {
+          "t": "Autonomous Laboratory Agent via Customized Domain-Specific Language Model and Modular AI Interface",
+          "u": "https://arxiv.org/abs/2602.20669",
+          "y": 2026,
+          "role": "supporting_result"
+        },
+        {
+          "t": "The AI Scientist-v2: Workshop-Level Automated Scientific Discovery via Agentic Tree Search",
+          "u": "https://arxiv.org/abs/2504.08066",
+          "y": 2025,
+          "role": "supporting_result"
+        }
+      ],
+      "resources": {
+        "benchmarks": [
+          "ScienceAgentBench",
+          "DiscoveryBench",
+          "A preregistered cross-instrument protocol with an independent physical reproduction endpoint"
+        ],
+        "code": [
+          "https://github.com/DIAOZHUO/LLM-directed-SPM",
+          "https://github.com/SakanaAI/AI-Scientist-v2",
+          "https://github.com/allenai/discoverybench",
+          "https://github.com/snap-stanford/MLAgentBench"
+        ],
+        "datasets": [
+          "DiscoveryBench",
+          "ScienceAgentBench and LAB-Bench",
+          "Open Reaction Database and Materials Project for cross-domain data work, plus raw instrument traces and complete experiment lineage"
+        ],
+        "estimated": {
+          "individual": "One to four GPUs and data-only or simulated laboratories; no unsupervised wet-lab or physical actuation.",
+          "smallLab": "Four to sixteen GPUs, two API-controlled instruments or one instrument plus simulator, technician time, metrology, and safety review.",
+          "wellFundedLab": "Thirty-two or more GPUs, two domains and multiple workcells, robotic sample handling, instrument engineers, metrology, research-integrity controls, and an independent replication site."
+        }
+      },
+      "crowdedness": "High for computational science agents, medium for domain-specific self-driving labs, and low for the same system transferring across physical domains and sites.",
+      "tractability": "High for data-only provenance studies, medium for a single-instrument system, and low for cross-domain transfer with independent physical reproduction."
+    }
+  }
+}

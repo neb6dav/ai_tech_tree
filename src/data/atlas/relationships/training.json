@@ -1,0 +1,1445 @@
+{
+  "schemaVersion": "1.0.0",
+  "laneId": "training",
+  "relationships": [
+    {
+      "ordinal": 209,
+      "key": "stats25>sgd:dep",
+      "sourceNodeId": "stats25",
+      "targetNodeId": "sgd",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "No cross-link was found between the reviewed endpoint pages; link absence does not disprove this map relationship.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "69a1d288",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 210,
+      "key": "pdp86>catforget:dep",
+      "sourceNodeId": "pdp86",
+      "targetNodeId": "catforget",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed endpoint articles cross-link; this is contextual evidence, not causal confirmation.",
+        "sources": [
+          {
+            "title": "Connectionism",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Connectionism",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Connectionism&oldid=1364296292",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          },
+          {
+            "title": "Catastrophic interference",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Catastrophic_interference",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Catastrophic%20interference&oldid=1360648660",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "607a027f",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 211,
+      "key": "dbn>relu:dep",
+      "sourceNodeId": "dbn",
+      "targetNodeId": "relu",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "No cross-link was found between the reviewed endpoint pages; link absence does not disprove this map relationship.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "2a7f7fd6",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 212,
+      "key": "gpgpu>relu:dep",
+      "sourceNodeId": "gpgpu",
+      "targetNodeId": "relu",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "No cross-link was found between the reviewed endpoint pages; link absence does not disprove this map relationship.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "a454660b",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 213,
+      "key": "sgd>adam:dep",
+      "sourceNodeId": "sgd",
+      "targetNodeId": "adam",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "Both developments map to one article, so no distinct article cross-link supports this relationship; this is not disproof.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "2b1bb729",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 214,
+      "key": "relu>batchnorm:dep",
+      "sourceNodeId": "relu",
+      "targetNodeId": "batchnorm",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed “Rectified linear unit” article links to “Batch normalization”; this is contextual, not causal, evidence.",
+        "sources": [
+          {
+            "title": "Rectified linear unit",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Rectified_linear_unit",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Rectified%20linear%20unit&oldid=1364669012",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "161a6d04",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 215,
+      "key": "batchnorm>layernorm:dep",
+      "sourceNodeId": "batchnorm",
+      "targetNodeId": "layernorm",
+      "legacyKind": "dep",
+      "relationshipType": "influences",
+      "rationale": "Layer normalization addresses related normalization goals with a different axis of normalization.",
+      "reviewed": true,
+      "evidenceGrade": "partial",
+      "audit": {
+        "state": "partial",
+        "confidence": "medium",
+        "note": "Wikipedia describes LayerNorm as a popular alternative to BatchNorm; that supports the historical comparison, not a strict technical dependency.",
+        "sources": [
+          {
+            "title": "Normalization (machine learning)",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Normalization_(machine_learning)",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Normalization%20%28machine%20learning%29&oldid=1340395252",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "4234f9a4",
+      "reviewState": "reviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 216,
+      "key": "alexnet>distillation:dep",
+      "sourceNodeId": "alexnet",
+      "targetNodeId": "distillation",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "No cross-link was found between the reviewed endpoint pages; link absence does not disprove this map relationship.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "a01ba4c9",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 217,
+      "key": "alexnet>transfer:dep",
+      "sourceNodeId": "alexnet",
+      "targetNodeId": "transfer",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed “Transfer learning” article links to “AlexNet”; this is contextual, not causal, evidence.",
+        "sources": [
+          {
+            "title": "Transfer learning",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Transfer_learning",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Transfer%20learning&oldid=1360633829",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "a5c22a3e",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 218,
+      "key": "bert>transfer:dep",
+      "sourceNodeId": "bert",
+      "targetNodeId": "transfer",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed “BERT (language model)” article links to “Transfer learning”; this is contextual, not causal, evidence.",
+        "sources": [
+          {
+            "title": "BERT (language model)",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/BERT_(language_model)",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=BERT%20%28language%20model%29&oldid=1364345417",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "67d152a2",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 219,
+      "key": "maml>transfer:dep",
+      "sourceNodeId": "maml",
+      "targetNodeId": "transfer",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "unassessed",
+      "audit": {
+        "state": "not_assessed",
+        "confidence": null,
+        "note": "",
+        "sources": []
+      },
+      "auditRecordPresent": false,
+      "claimFingerprint": "9f9c8126",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "research_extension",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 220,
+      "key": "autoencoders>selfsup:dep",
+      "sourceNodeId": "autoencoders",
+      "targetNodeId": "selfsup",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed endpoint articles cross-link; this is contextual evidence, not causal confirmation.",
+        "sources": [
+          {
+            "title": "Autoencoder",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Autoencoder",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Autoencoder&oldid=1366805492",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          },
+          {
+            "title": "Self-supervised learning",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Self-supervised_learning",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Self-supervised%20learning&oldid=1361866105",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "e71c26d8",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 221,
+      "key": "word2vec>selfsup:dep",
+      "sourceNodeId": "word2vec",
+      "targetNodeId": "selfsup",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed “Word2vec” article links to “Self-supervised learning”; this is contextual, not causal, evidence.",
+        "sources": [
+          {
+            "title": "Word2vec",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Word2vec",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Word2vec&oldid=1365468370",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "23da4a1e",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 222,
+      "key": "deepblue>bitterlesson:dep",
+      "sourceNodeId": "deepblue",
+      "targetNodeId": "bitterlesson",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed “Bitter lesson” article links to “Deep Blue (chess computer)”; this is contextual, not causal, evidence.",
+        "sources": [
+          {
+            "title": "Bitter lesson",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Bitter_lesson",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Bitter%20lesson&oldid=1343753531",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "bd85d6c8",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 223,
+      "key": "alexnet>bitterlesson:dep",
+      "sourceNodeId": "alexnet",
+      "targetNodeId": "bitterlesson",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "No cross-link was found between the reviewed endpoint pages; link absence does not disprove this map relationship.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "507073ab",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 224,
+      "key": "gpt2>scalinglaws:dep",
+      "sourceNodeId": "gpt2",
+      "targetNodeId": "scalinglaws",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "No cross-link was found between the reviewed endpoint pages; link absence does not disprove this map relationship.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "f6d0bb7d",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 225,
+      "key": "transformer>scalinglaws:dep",
+      "sourceNodeId": "transformer",
+      "targetNodeId": "scalinglaws",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed “Transformer (deep learning)” article links to “Neural scaling law”; this is contextual, not causal, evidence.",
+        "sources": [
+          {
+            "title": "Transformer (deep learning)",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Transformer_(deep_learning)",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Transformer%20%28deep%20learning%29&oldid=1362319941",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "983da227",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 226,
+      "key": "mixedprecision>scalinglaws:dep",
+      "sourceNodeId": "mixedprecision",
+      "targetNodeId": "scalinglaws",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "unassessed",
+      "audit": {
+        "state": "not_assessed",
+        "confidence": null,
+        "note": "",
+        "sources": []
+      },
+      "auditRecordPresent": false,
+      "claimFingerprint": "3ec3a6fd",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "research_extension",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 227,
+      "key": "transfer>lora:dep",
+      "sourceNodeId": "transfer",
+      "targetNodeId": "lora",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "No cross-link was found between the reviewed endpoint pages; link absence does not disprove this map relationship.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "f5826cad",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 228,
+      "key": "gpt3>lora:dep",
+      "sourceNodeId": "gpt3",
+      "targetNodeId": "lora",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed “LoRA (machine learning)” article links to “GPT-3”; this is contextual, not causal, evidence.",
+        "sources": [
+          {
+            "title": "LoRA (machine learning)",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/LoRA_(machine_learning)",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=LoRA%20%28machine%20learning%29&oldid=1363896193",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "6c0ac19e",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 229,
+      "key": "distillation>quant:dep",
+      "sourceNodeId": "distillation",
+      "targetNodeId": "quant",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed endpoint articles cross-link; this is contextual evidence, not causal confirmation.",
+        "sources": [
+          {
+            "title": "Knowledge distillation",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Knowledge_distillation",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Knowledge%20distillation&oldid=1362290372",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          },
+          {
+            "title": "Model compression",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Model_compression",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Model%20compression&oldid=1352523580",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "d8012eeb",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 230,
+      "key": "gpgpu>quant:dep",
+      "sourceNodeId": "gpgpu",
+      "targetNodeId": "quant",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "No cross-link was found between the reviewed endpoint pages; link absence does not disprove this map relationship.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "56c85b38",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 231,
+      "key": "transformer>flash:dep",
+      "sourceNodeId": "transformer",
+      "targetNodeId": "flash",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "Both developments map to one article, so no distinct article cross-link supports this relationship; this is not disproof.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "419dc3cd",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 232,
+      "key": "gpgpu>flash:dep",
+      "sourceNodeId": "gpgpu",
+      "targetNodeId": "flash",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "No cross-link was found between the reviewed endpoint pages; link absence does not disprove this map relationship.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "ca4df131",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 233,
+      "key": "mixedprecision>flash:dep",
+      "sourceNodeId": "mixedprecision",
+      "targetNodeId": "flash",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "unassessed",
+      "audit": {
+        "state": "not_assessed",
+        "confidence": null,
+        "note": "",
+        "sources": []
+      },
+      "auditRecordPresent": false,
+      "claimFingerprint": "fbb6da03",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "research_extension",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 234,
+      "key": "mlcompiler>flash:dep",
+      "sourceNodeId": "mlcompiler",
+      "targetNodeId": "flash",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "unassessed",
+      "audit": {
+        "state": "not_assessed",
+        "confidence": null,
+        "note": "",
+        "sources": []
+      },
+      "auditRecordPresent": false,
+      "claimFingerprint": "68239e7e",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "research_extension",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 235,
+      "key": "linattn>flash:sup",
+      "sourceNodeId": "linattn",
+      "targetNodeId": "flash",
+      "legacyKind": "sup",
+      "relationshipType": "legacy_supersession_claim",
+      "rationale": "Legacy supersession claim retained for review; it is not treated as established supersession.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed endpoint articles cross-link; this is contextual evidence, not causal confirmation.",
+        "sources": [
+          {
+            "title": "Neural network (machine learning)",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Neural_network_(machine_learning)",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Neural%20network%20%28machine%20learning%29&oldid=1367633569",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          },
+          {
+            "title": "Transformer (deep learning)",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Transformer_(deep_learning)",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Transformer%20%28deep%20learning%29&oldid=1362319941",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "971250c4",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 236,
+      "key": "scalinglaws>datacentric:dep",
+      "sourceNodeId": "scalinglaws",
+      "targetNodeId": "datacentric",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "No cross-link was found between the reviewed endpoint pages; link absence does not disprove this map relationship.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "e749bd00",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 237,
+      "key": "gpt4>datacentric:dep",
+      "sourceNodeId": "gpt4",
+      "targetNodeId": "datacentric",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "No cross-link was found between the reviewed endpoint pages; link absence does not disprove this map relationship.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "855474a3",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 238,
+      "key": "cot>testtime:dep",
+      "sourceNodeId": "cot",
+      "targetNodeId": "testtime",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed endpoint articles cross-link; this is contextual evidence, not causal confirmation.",
+        "sources": [
+          {
+            "title": "Prompt engineering",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Prompt_engineering",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Prompt%20engineering&oldid=1367606830",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          },
+          {
+            "title": "Neural scaling law",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Neural_scaling_law",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Neural%20scaling%20law&oldid=1358720850",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "6ca53e07",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 239,
+      "key": "scalinglaws>testtime:dep",
+      "sourceNodeId": "scalinglaws",
+      "targetNodeId": "testtime",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "Both developments map to one article, so no distinct article cross-link supports this relationship; this is not disproof.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "cd556395",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 240,
+      "key": "mcts>testtime:dep",
+      "sourceNodeId": "mcts",
+      "targetNodeId": "testtime",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed “Neural scaling law” article links to “Monte Carlo tree search”; this is contextual, not causal, evidence.",
+        "sources": [
+          {
+            "title": "Neural scaling law",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Neural_scaling_law",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Neural%20scaling%20law&oldid=1358720850",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "f0d355a2",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 241,
+      "key": "rlvr>grpo:dep",
+      "sourceNodeId": "rlvr",
+      "targetNodeId": "grpo",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "Both developments map to one article, so no distinct article cross-link supports this relationship; this is not disproof.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "faa772e2",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 242,
+      "key": "moe>grpo:dep",
+      "sourceNodeId": "moe",
+      "targetNodeId": "grpo",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed endpoint articles cross-link; this is contextual evidence, not causal confirmation.",
+        "sources": [
+          {
+            "title": "Mixture of experts",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Mixture_of_experts",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Mixture%20of%20experts&oldid=1354462705",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          },
+          {
+            "title": "DeepSeek",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/DeepSeek",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=DeepSeek&oldid=1367645740",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "d58c03d1",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 243,
+      "key": "catforget>continual:dep",
+      "sourceNodeId": "catforget",
+      "targetNodeId": "continual",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "No cross-link was found between the reviewed endpoint pages; link absence does not disprove this map relationship.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "101fa566",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 244,
+      "key": "titans>continual:dep",
+      "sourceNodeId": "titans",
+      "targetNodeId": "continual",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "A complete pair of reviewed endpoint pages was unavailable; this does not disprove the map relationship.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "01ea302c",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 245,
+      "key": "lora>continual:dep",
+      "sourceNodeId": "lora",
+      "targetNodeId": "continual",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "No cross-link was found between the reviewed endpoint pages; link absence does not disprove this map relationship.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "58e3b85b",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 246,
+      "key": "sgd>dp:dep",
+      "sourceNodeId": "sgd",
+      "targetNodeId": "dp",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "No cross-link was found between the reviewed endpoint pages; link absence does not disprove this map relationship.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "1e3b3766",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 247,
+      "key": "dp>federated:dep",
+      "sourceNodeId": "dp",
+      "targetNodeId": "federated",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed “Federated learning” article links to “Differential privacy”; this is contextual, not causal, evidence.",
+        "sources": [
+          {
+            "title": "Federated learning",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Federated_learning",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Federated%20learning&oldid=1366715970",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "4d803474",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 248,
+      "key": "universalapprox>dltheory:dep",
+      "sourceNodeId": "universalapprox",
+      "targetNodeId": "dltheory",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "No cross-link was found between the reviewed endpoint pages; link absence does not disprove this map relationship.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "05363322",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 249,
+      "key": "backprop>dltheory:dep",
+      "sourceNodeId": "backprop",
+      "targetNodeId": "dltheory",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "No cross-link was found between the reviewed endpoint pages; link absence does not disprove this map relationship.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "3960ed6b",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 250,
+      "key": "continual>gap_memory:gap",
+      "sourceNodeId": "continual",
+      "targetNodeId": "gap_memory",
+      "legacyKind": "gap",
+      "relationshipType": "proposed_combination",
+      "rationale": "Editorially proposed research combination; not a claim that the work already exists.",
+      "reviewed": true,
+      "evidenceGrade": "hypothesis",
+      "audit": {
+        "state": "hypothesis",
+        "confidence": null,
+        "note": "This proposed combination is a map hypothesis; Wikipedia absence does not establish novelty.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "f1c9754a",
+      "reviewState": "reviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 251,
+      "key": "titans>gap_memory:gap",
+      "sourceNodeId": "titans",
+      "targetNodeId": "gap_memory",
+      "legacyKind": "gap",
+      "relationshipType": "proposed_combination",
+      "rationale": "Editorially proposed research combination; not a claim that the work already exists.",
+      "reviewed": true,
+      "evidenceGrade": "hypothesis",
+      "audit": {
+        "state": "hypothesis",
+        "confidence": null,
+        "note": "This proposed combination is a map hypothesis; Wikipedia absence does not establish novelty.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "465e0f02",
+      "reviewState": "reviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 644,
+      "key": "gpgpu>mixedprecision:dep",
+      "sourceNodeId": "gpgpu",
+      "targetNodeId": "mixedprecision",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "unassessed",
+      "audit": {
+        "state": "not_assessed",
+        "confidence": null,
+        "note": "",
+        "sources": []
+      },
+      "auditRecordPresent": false,
+      "claimFingerprint": "a1d89930",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "research_extension",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 645,
+      "key": "frameworks>mixedprecision:dep",
+      "sourceNodeId": "frameworks",
+      "targetNodeId": "mixedprecision",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "unassessed",
+      "audit": {
+        "state": "not_assessed",
+        "confidence": null,
+        "note": "",
+        "sources": []
+      },
+      "auditRecordPresent": false,
+      "claimFingerprint": "9f3341a2",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "research_extension",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 698,
+      "key": "sgd>maml:dep",
+      "sourceNodeId": "sgd",
+      "targetNodeId": "maml",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "unassessed",
+      "audit": {
+        "state": "not_assessed",
+        "confidence": null,
+        "note": "",
+        "sources": []
+      },
+      "auditRecordPresent": false,
+      "claimFingerprint": "c3de1681",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "research_extension",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 699,
+      "key": "hypernet>maml:dep",
+      "sourceNodeId": "hypernet",
+      "targetNodeId": "maml",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "unassessed",
+      "audit": {
+        "state": "not_assessed",
+        "confidence": null,
+        "note": "",
+        "sources": []
+      },
+      "auditRecordPresent": false,
+      "claimFingerprint": "ca9d0650",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "research_extension",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    }
+  ]
+}

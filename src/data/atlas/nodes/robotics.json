@@ -1,0 +1,1195 @@
+{
+  "schemaVersion": "1.0.0",
+  "laneId": "robotics",
+  "nodes": [
+    {
+      "ordinal": 241,
+      "id": "unimate",
+      "title": "Unimate — industrial robots",
+      "year": 1961,
+      "laneId": "robotics",
+      "classificationCode": "f",
+      "description": "GM's assembly-line arm. Automation without intelligence — but the hardware lineage AI would eventually inhabit.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact robot article.",
+          "sources": [
+            {
+              "title": "Unimate",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Unimate",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Unimate&oldid=1353232215",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "57518006"
+    },
+    {
+      "ordinal": 242,
+      "id": "shakey",
+      "title": "Shakey",
+      "year": 1968,
+      "laneId": "robotics",
+      "classificationCode": "f",
+      "description": "First robot to integrate perception, planning and action; A* and STRIPS were invented for it. Glacial in practice, generative in consequence.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact robot article; replaces the unrelated Shakey Graves match.",
+          "sources": [
+            {
+              "title": "Shakey the robot",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Shakey_the_robot",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Shakey%20the%20robot&oldid=1340026653",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "ea8a5139"
+    },
+    {
+      "ordinal": 243,
+      "id": "moravec",
+      "title": "Moravec's paradox",
+      "year": 1988,
+      "laneId": "robotics",
+      "classificationCode": "f",
+      "description": "What's hard for AI (perception, motor control) is easy for toddlers, and vice versa. The embodiment reality check, still collecting evidence.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact development article.",
+          "sources": [
+            {
+              "title": "Moravec's paradox",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Moravec%27s_paradox",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Moravec%27s%20paradox&oldid=1366535452",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "8d9c0faf"
+    },
+    {
+      "ordinal": 244,
+      "id": "subsumption",
+      "title": "Behavior-based robotics",
+      "year": 1986,
+      "laneId": "robotics",
+      "classificationCode": "f",
+      "description": "Brooks's layered behavior-based approach favored direct perception-action loops over centralized world models and strongly influenced embodied robotics and commercial mobile-robot design.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Direct field article covering subsumption-style robotics.",
+          "sources": [
+            {
+              "title": "Behavior-based robotics",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Behavior-based_robotics",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Behavior-based%20robotics&oldid=1300973158",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "brooks-layered-control-1986",
+            "title": "A Robust Layered Control System for a Mobile Robot",
+            "url": "https://people.csail.mit.edu/brooks/papers/AIM-864.pdf",
+            "year": 1986,
+            "kind": "paper",
+            "access": "author_open",
+            "role": "origin",
+            "authors": [
+              "Rodney A. Brooks"
+            ],
+            "note": ""
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "99ba944d"
+    },
+    {
+      "ordinal": 245,
+      "id": "cog",
+      "title": "Cog & the humanoid lab era",
+      "year": 1993,
+      "laneId": "robotics",
+      "classificationCode": "x",
+      "description": "Humanoid robots served as cognition testbeds in the Cog and ASIMO era. Those programs ended without general intelligence; humanoid research returned decades later through modern control and learned foundation models.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "not_assessed",
+        "trajectory": "ambiguous_ended_or_superseded",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact MIT humanoid-robot project article; replaces an unrelated Transformers result.",
+          "sources": [
+            {
+              "title": "Cog (project)",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Cog_(project)",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Cog%20%28project%29&oldid=1366153143",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "The Cog project page explicitly says all development had ceased by 2003 and that the robot is retired to the MIT Museum.",
+          "sources": [
+            {
+              "title": "Cog (project)",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Cog_(project)",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Cog%20%28project%29&oldid=1366153143",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "fb43447d"
+    },
+    {
+      "ordinal": 246,
+      "id": "alvinn",
+      "title": "ALVINN drives (1989)",
+      "year": 1989,
+      "laneId": "robotics",
+      "classificationCode": "f",
+      "description": "A neural net steering a van from camera pixels at CMU. Imitation learning's proof of concept, three decades early.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Navlab is the direct Wikipedia context for ALVINN; no standalone ALVINN article was returned.",
+          "sources": [
+            {
+              "title": "Navlab",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Navlab",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Navlab&oldid=1360712320",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "19cc7929"
+    },
+    {
+      "ordinal": 247,
+      "id": "slam",
+      "title": "SLAM",
+      "year": 1991,
+      "laneId": "robotics",
+      "classificationCode": "f",
+      "description": "Simultaneous localization and mapping is a core technique for many robots, drones and augmented-reality systems, alongside visual-inertial odometry, mapping services and learned perception.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact expanded-title article; replaces the unrelated Slam page.",
+          "sources": [
+            {
+              "title": "Simultaneous localization and mapping",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Simultaneous_localization_and_mapping",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Simultaneous%20localization%20and%20mapping&oldid=1365857410",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "21b36fdf"
+    },
+    {
+      "ordinal": 248,
+      "id": "evolrobotics",
+      "title": "Evolutionary & developmental robotics",
+      "year": 1994,
+      "laneId": "robotics",
+      "classificationCode": "d",
+      "description": "Evolutionary and developmental robotics jointly optimize controllers, behaviors and sometimes morphology. The field remains academically active, with more limited industrial adoption than mainstream deep learning and robotics.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "dormant",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact combined-field article.",
+          "sources": [
+            {
+              "title": "Evolutionary developmental robotics",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Evolutionary_developmental_robotics",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Evolutionary%20developmental%20robotics&oldid=1020694982",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Dormant” is an editorial assessment; no encyclopedic fate finding is inferred from article or link presence.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "9cae89dd"
+    },
+    {
+      "ordinal": 249,
+      "id": "bostondynamics",
+      "title": "Dynamic legged locomotion",
+      "year": 2008,
+      "laneId": "robotics",
+      "classificationCode": "f",
+      "description": "BigDog→Atlas backflips: model-predictive control at its athletic peak — a triumph of control theory largely without learning.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Direct topic context for dynamic legged locomotion; the node is broader than one Boston Dynamics machine.",
+          "sources": [
+            {
+              "title": "Legged robot",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Legged_robot",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Legged%20robot&oldid=1349387338",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "a48f2710"
+    },
+    {
+      "ordinal": 250,
+      "id": "darpagc",
+      "title": "DARPA Grand Challenge",
+      "year": 2005,
+      "laneId": "robotics",
+      "classificationCode": "f",
+      "description": "Stanley wins the desert race; the self-driving industry is born in a weekend. Benchmark-as-catalyst, the robotics edition.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact event article.",
+          "sources": [
+            {
+              "title": "DARPA Grand Challenge",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/DARPA_Grand_Challenge",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=DARPA%20Grand%20Challenge&oldid=1344673793",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "6b3d496e"
+    },
+    {
+      "ordinal": 251,
+      "id": "simenv",
+      "title": "Simulation environments",
+      "year": 2016,
+      "laneId": "robotics",
+      "classificationCode": "a",
+      "description": "MuJoCo, Gym, Isaac, Habitat: physics playgrounds where robot learning actually happens. Sim-to-real as a strategy, not a hack.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Direct article for robotics simulation environments; replaces generic Simulation.",
+          "sources": [
+            {
+              "title": "Robotics simulator",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Robotics_simulator",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Robotics%20simulator&oldid=1355753471",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Active” is an editorial assessment of current activity, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": "integrated",
+        "tags": [
+          "robotics",
+          "simulation",
+          "evaluation"
+        ],
+        "questions": [
+          "Which simulation variations produce robust transfer rather than hiding reality gaps behind benchmark success?"
+        ],
+        "sources": [
+          {
+            "title": "Domain Randomization for Transferring Deep Neural Networks from Simulation to the Real World",
+            "url": "https://arxiv.org/abs/1703.06907",
+            "year": 2017,
+            "role": "supporting_result",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "Which simulation variations produce robust transfer rather than hiding reality gaps behind benchmark success?"
+      ],
+      "direction": null,
+      "claimFingerprint": "64d3cab1"
+    },
+    {
+      "ordinal": 252,
+      "id": "deeprlrobot",
+      "title": "Deep RL manipulation",
+      "year": 2017,
+      "laneId": "robotics",
+      "classificationCode": "d",
+      "description": "Grasping via RL and domain randomization (OpenAI's Rubik's hand). Sample hunger stalled it; imitation + foundation models took the baton.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "dormant",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Closest field article for deep-RL robot manipulation; replaces the unrelated deep-brain-stimulation match.",
+          "sources": [
+            {
+              "title": "Robot learning",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Robot_learning",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Robot%20learning&oldid=1354162923",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Dormant” is an editorial assessment; no encyclopedic fate finding is inferred from article or link presence.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "a35adfa2"
+    },
+    {
+      "ordinal": 253,
+      "id": "selfdriving",
+      "title": "Self-driving's long grind",
+      "year": 2018,
+      "laneId": "robotics",
+      "classificationCode": "a",
+      "description": "A decade of overpromise, then real robotaxis at scale (Waymo, 2024–26). The long tail was the whole problem — and it's yielding slowly.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Direct development article; the node's 'long grind' status remains an editorial judgment.",
+          "sources": [
+            {
+              "title": "Self-driving car",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Self-driving_car",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Self-driving%20car&oldid=1366132857",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Active” is an editorial assessment of current activity, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "1dc44232"
+    },
+    {
+      "ordinal": 254,
+      "id": "rtfm",
+      "title": "Robot foundation models",
+      "year": 2022,
+      "laneId": "robotics",
+      "classificationCode": "h",
+      "description": "SayCan and RT-1 began the language-grounded lineage; RT-2, Open X-Embodiment, OpenVLA and π0 scaled vision-language-action learning. Robotics' claimed 'GPT moment' is still being tested.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "high_activity",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Most specific current article for robot foundation models; broader than any one named model.",
+          "sources": [
+            {
+              "title": "Vision–language–action model",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Vision%E2%80%93language%E2%80%93action_model",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Vision%E2%80%93language%E2%80%93action%20model&oldid=1359788720",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Hot frontier” is a time-sensitive editorial assessment, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": "integrated",
+        "tags": [
+          "robotics",
+          "foundation models",
+          "multimodal"
+        ],
+        "questions": [
+          "Which forms of internet-scale pretraining transfer to safe, data-efficient physical generalization?"
+        ],
+        "sources": [
+          {
+            "title": "Do As I Can, Not As I Say: Grounding Language in Robotic Affordances",
+            "url": "https://arxiv.org/abs/2204.01691",
+            "year": 2022,
+            "role": "origin",
+            "roleExplicit": true
+          },
+          {
+            "title": "RT-1: Robotics Transformer for Real-World Control at Scale",
+            "url": "https://arxiv.org/abs/2212.06817",
+            "year": 2022,
+            "role": "origin",
+            "roleExplicit": true
+          },
+          {
+            "title": "RT-2: Vision-Language-Action Models Transfer Web Knowledge to Robotic Control",
+            "url": "https://arxiv.org/abs/2307.15818",
+            "year": 2023,
+            "role": "supporting_result",
+            "roleExplicit": true
+          },
+          {
+            "title": "Open X-Embodiment",
+            "url": "https://arxiv.org/abs/2310.08864",
+            "year": 2023,
+            "role": "supporting_result",
+            "roleExplicit": true
+          },
+          {
+            "title": "OpenVLA",
+            "url": "https://arxiv.org/abs/2406.09246",
+            "year": 2024,
+            "role": "supporting_result",
+            "roleExplicit": true
+          },
+          {
+            "title": "π0: A Vision-Language-Action Flow Model",
+            "url": "https://arxiv.org/abs/2410.24164",
+            "year": 2024,
+            "role": "supporting_result",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "Which forms of internet-scale pretraining transfer to safe, data-efficient physical generalization?"
+      ],
+      "direction": null,
+      "claimFingerprint": "5b6c18c8"
+    },
+    {
+      "ordinal": 255,
+      "id": "humanoid26",
+      "title": "Humanoid renaissance",
+      "year": 2024,
+      "laneId": "robotics",
+      "classificationCode": "h",
+      "description": "Optimus, Figure Helix, Unitree: billions chasing general-purpose bodies, first pilot deployments 2025–26. Hype versus unit economics, unresolved.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "high_activity",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Topic article supports the technology; 'renaissance' is an editorial periodization.",
+          "sources": [
+            {
+              "title": "Humanoid robot",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Humanoid_robot",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Humanoid%20robot&oldid=1366367130",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Hot frontier” is a time-sensitive editorial assessment, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "85f6107b"
+    },
+    {
+      "ordinal": 256,
+      "id": "gap_swarm",
+      "title": "Swarms × foundation models",
+      "year": 2026,
+      "laneId": "robotics",
+      "classificationCode": "g",
+      "description": "Research direction: scale foundation-model multi-robot systems to decentralized, online-adaptive and fault-tolerant swarms. Early systems already combine large models with multi-robot coordination; robust embodied scaling remains unresolved.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "open_direction",
+        "significance": "not_assessed",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "hypothesis",
+          "confidence": null,
+          "note": "This is a map hypothesis; Wikipedia absence does not establish that the proposed gap is novel.",
+          "sources": []
+        },
+        "mapStatus": {
+          "state": "hypothesis",
+          "confidence": null,
+          "note": "This is explicitly a proposed gap; Wikipedia absence is not evidence that the proposal is novel.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "title": "CRAFT: Coaching Reinforcement Learning Autonomously using Foundation Models for Multi-Robot Coordination Tasks",
+            "url": "https://arxiv.org/abs/2509.14380",
+            "year": 2025,
+            "role": "supporting_result",
+            "roleExplicit": true
+          },
+          {
+            "title": "DeepFleet: Multi-Agent Foundation Models for Mobile Robots",
+            "url": "https://arxiv.org/abs/2508.08574",
+            "year": 2025,
+            "role": "supporting_result",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "Can foundation models improve embodied swarms while preserving decentralized execution, scaling to many inexpensive agents, and degrading gracefully under communication, member, sensor, and model failures?"
+      ],
+      "direction": {
+        "question": "Can foundation models improve embodied swarms while preserving decentralized execution, scaling to many inexpensive agents, and degrading gracefully under communication, member, sensor, and model failures?",
+        "closureCriteria": "Show increasing team utility across at least three swarm sizes; keep execution decentralized with explicit per-agent compute and bandwidth caps; compare against strong modular decentralized baselines; test packet loss, partitions, Byzantine or faulty members, sensor corruption, and model failure; and transfer to a physical swarm.",
+        "partialResults": [
+          "CRAFT uses language and vision-language foundation models to coach reinforcement learning for multi-robot coordination, and DeepFleet trains multi-agent foundation models on warehouse fleet movement data. RoCo and SMART-LLM coordinate smaller robot teams with language models. These invalidate a claim that the combination is nearly untouched, while leaving scalable online decentralized swarm intelligence and fault tolerance unresolved."
+        ],
+        "starters": [
+          "Individual: In ARGoS or Crazyswarm2 simulation, compare a local foundation-model coach with a modular decentralized controller across swarm sizes and a fixed packet-loss, sensor-noise, and member-dropout matrix.",
+          "Small lab: Test six to twelve inexpensive robots under packet loss, partitions, robot dropout, and stale or adversarial guidance; include centralization and communication-budget ablations.",
+          "Well-funded lab: Run a 50-plus heterogeneous-robot, multi-site study of online shared learning with decentralized execution, predefined graceful-degradation curves, safety supervision, and independent robustness auditing."
+        ],
+        "claimState": "editorial_hypothesis",
+        "asOf": "2026-08-04",
+        "confidence": "medium",
+        "noveltyReview": {
+          "status": "targeted_search",
+          "checkedAt": "2026-08-04",
+          "scope": "Targeted arXiv searches for foundation models in multi-robot coordination, fleet foundation models, LLM robot collaboration, decentralized swarm learning, embodied swarms, communication failures, and 2025-2026 follow-on papers; reference chaining from CRAFT, DeepFleet, RoCo, and SMART-LLM.",
+          "note": "Medium confidence that scalable, online, decentralized and fault-tolerant foundation-model swarms remain open. CRAFT and DeepFleet already demonstrate large-model coordination in smaller robot teams, narrowing the unresolved target. No priority claim is made."
+        },
+        "counterexamples": [
+          "CRAFT trains coordinated multi-quadruped navigation and bimanual manipulation policies with foundation-model coaching and reports physical-policy transfer, but it is not a large, cheap, online-adaptive swarm under broad failures.",
+          "DeepFleet models warehouse fleets using data from hundreds of thousands of operational robots and robot-centric local graphs, but focuses on prediction and fleet design using proprietary operational data rather than general online swarm control.",
+          "RoCoBench and SMART-LLM show language-model planning for small multi-robot teams; scale, decentralization, latency, and graceful degradation remain limited."
+        ],
+        "literature": [
+          {
+            "t": "CRAFT: Coaching Reinforcement Learning Autonomously using Foundation Models for Multi-Robot Coordination Tasks",
+            "u": "https://arxiv.org/abs/2509.14380",
+            "y": 2025,
+            "role": "supporting_result"
+          },
+          {
+            "t": "DeepFleet: Multi-Agent Foundation Models for Mobile Robots",
+            "u": "https://arxiv.org/abs/2508.08574",
+            "y": 2025,
+            "role": "supporting_result"
+          }
+        ],
+        "resources": {
+          "benchmarks": [
+            "RoCoBench",
+            "Multi-Agent Quadruped Environment tasks",
+            "Crazyswarm2 or ARGoS with a standardized communication-and-fault suite"
+          ],
+          "code": [
+            "https://github.com/MandiZhao/robot-collab",
+            "https://github.com/SMARTlab-Purdue/SMART-LLM",
+            "https://github.com/IMRCLab/crazyswarm2",
+            "https://github.com/ilpincy/argos3"
+          ],
+          "datasets": [
+            "RoCoBench language, plan, and trajectory tasks",
+            "SMART-LLM task data",
+            "A new open, fault-annotated multi-robot trajectory corpus; no canonical open foundation-model swarm corpus was identified"
+          ],
+          "estimated": {
+            "individual": "One modern GPU plus 16-64 CPU cores for simulation.",
+            "smallLab": "Four to twelve low-cost ground robots or three to six drones, four to eight GPUs, localization, spares, and safety supervision.",
+            "wellFundedLab": "Thirty-two to one hundred robots, mixed embodiments, motion capture or UWB localization, wireless instrumentation, safety operators, and substantial model-training compute."
+          }
+        },
+        "crowdedness": "Medium for language-model multi-robot planning; low-medium for decentralized foundation-model swarms with systematic fault tolerance.",
+        "tractability": "High in simulation, medium for a small physical fleet, and low for large heterogeneous swarms with convincing safety and robustness."
+      },
+      "claimFingerprint": "048b70b9"
+    },
+    {
+      "ordinal": 328,
+      "id": "visuomotor",
+      "title": "Generative visuomotor policies",
+      "year": 2023,
+      "laneId": "robotics",
+      "classificationCode": "h",
+      "description": "ACT predicts temporally chunked actions; Diffusion Policy models multimodal action distributions. These demonstration-driven policy representations bridge classical imitation learning and vision-language-action models.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "high_activity",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        },
+        "mapStatus": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": false,
+        "mapStatus": false
+      },
+      "research": {
+        "tier": "core",
+        "tags": [
+          "robotics",
+          "imitation learning",
+          "generative models"
+        ],
+        "questions": [
+          "How can generative robot policies handle long horizons, contact-rich recovery and distribution shift outside demonstrations?"
+        ],
+        "sources": [
+          {
+            "title": "Diffusion Policy: Visuomotor Policy Learning via Action Diffusion",
+            "url": "https://arxiv.org/abs/2303.04137",
+            "year": 2023,
+            "role": "origin",
+            "roleExplicit": true
+          },
+          {
+            "title": "Learning Fine-Grained Bimanual Manipulation with Low-Cost Hardware",
+            "url": "https://arxiv.org/abs/2304.13705",
+            "year": 2023,
+            "role": "adjacent_work",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "How can generative robot policies handle long horizons, contact-rich recovery and distribution shift outside demonstrations?"
+      ],
+      "direction": null,
+      "claimFingerprint": "120a17b2"
+    },
+    {
+      "ordinal": 338,
+      "id": "groundedplanning",
+      "title": "Language-grounded embodied planning",
+      "year": 2017,
+      "laneId": "robotics",
+      "classificationCode": "a",
+      "description": "Vision-and-language navigation and later SayCan ground language instructions in perception, affordances and executable skills. This is the planning bridge into robot foundation models.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        },
+        "mapStatus": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": false,
+        "mapStatus": false
+      },
+      "research": {
+        "tier": "specialist",
+        "tags": [
+          "robotics",
+          "planning",
+          "agents"
+        ],
+        "questions": [
+          "How can language plans remain grounded under uncertain perception, changing affordances and execution failures?"
+        ],
+        "sources": [
+          {
+            "title": "Vision-and-Language Navigation",
+            "url": "https://arxiv.org/abs/1711.07280",
+            "year": 2017,
+            "role": "benchmark",
+            "roleExplicit": true
+          },
+          {
+            "title": "Do As I Can, Not As I Say: Grounding Language in Robotic Affordances",
+            "url": "https://arxiv.org/abs/2204.01691",
+            "year": 2022,
+            "role": "supporting_result",
+            "roleExplicit": true
+          },
+          {
+            "title": "Inner Monologue",
+            "url": "https://arxiv.org/abs/2207.05608",
+            "year": 2022,
+            "role": "supporting_result",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "How can language plans remain grounded under uncertain perception, changing affordances and execution failures?"
+      ],
+      "direction": null,
+      "claimFingerprint": "b6c3fec4"
+    }
+  ]
+}

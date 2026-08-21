@@ -1,0 +1,954 @@
+{
+  "schemaVersion": "1.0.0",
+  "laneId": "science",
+  "nodes": [
+    {
+      "ordinal": 296,
+      "id": "alphafold",
+      "title": "AlphaFold 2",
+      "year": 2020,
+      "laneId": "science",
+      "classificationCode": "f",
+      "description": "AlphaFold 2 achieved near-experimental accuracy on many CASP14 protein-structure targets, and the AlphaFold Database expanded access to more than 200 million predictions. It is a major AI-for-science result, not a universal solution to structural biology.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Direct system/family article covering AlphaFold 2.",
+          "sources": [
+            {
+              "title": "AlphaFold",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/AlphaFold",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=AlphaFold&oldid=1367220831",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "jumper-alphafold2-2021",
+            "title": "Highly Accurate Protein Structure Prediction with AlphaFold",
+            "url": "https://www.nature.com/articles/s41586-021-03819-2",
+            "year": 2021,
+            "kind": "paper",
+            "access": "open_access",
+            "role": "origin",
+            "authors": [
+              "John Jumper et al."
+            ],
+            "note": ""
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "39885a7b"
+    },
+    {
+      "ordinal": 297,
+      "id": "proteinlm",
+      "title": "Protein LMs & generative design",
+      "year": 2022,
+      "laneId": "science",
+      "classificationCode": "a",
+      "description": "ESM language models and RFdiffusion: read protein space like text, then write new proteins into it. Design, not just prediction.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Broad domain context for protein language models and generative protein design; no direct Wikipedia article was found.",
+          "sources": [
+            {
+              "title": "Bioinformatics",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Bioinformatics",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Bioinformatics&oldid=1364125249",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Active” is an editorial assessment of current activity, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "4af6b38f"
+    },
+    {
+      "ordinal": 298,
+      "id": "alphafold3",
+      "title": "AlphaFold 3 & interactions",
+      "year": 2024,
+      "laneId": "science",
+      "classificationCode": "a",
+      "description": "Complexes, DNA/RNA, ligands via diffusion. Drug-discovery pipelines re-tooled around learned structure.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "The family article covers AlphaFold 3 and interaction prediction.",
+          "sources": [
+            {
+              "title": "AlphaFold",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/AlphaFold",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=AlphaFold&oldid=1367220831",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Active” is an editorial assessment of current activity, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "762da3f5"
+    },
+    {
+      "ordinal": 299,
+      "id": "weather",
+      "title": "AI weather (GraphCast→GenCast)",
+      "year": 2023,
+      "laneId": "science",
+      "classificationCode": "f",
+      "description": "Learned weather models such as GraphCast and GenCast reported strong benchmark performance and much lower inference cost than numerical forecasting systems on selected tasks. Operational adoption is growing, while physics-based models remain essential.",
+      "dateOverride": {
+        "start": 2022,
+        "end": 2025,
+        "label": "2022-2025",
+        "milestones": [
+          "GraphCast preprint 2022",
+          "GenCast 2024",
+          "Operational learned forecasting expansion 2025"
+        ]
+      },
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Field article provides context for GraphCast/GenCast; neither had a standalone article in the targeted search.",
+          "sources": [
+            {
+              "title": "Weather forecasting",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Weather_forecasting",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Weather%20forecasting&oldid=1365609314",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "cd7c4eac"
+    },
+    {
+      "ordinal": 300,
+      "id": "materials",
+      "title": "Materials discovery (GNoME)",
+      "year": 2023,
+      "laneId": "science",
+      "classificationCode": "a",
+      "description": "2.2M predicted crystals, autonomous labs synthesizing candidates — with a live replication debate about how many are truly new. Promise and friction together.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Broad applications context for GNoME materials discovery; no standalone GNoME article was found.",
+          "sources": [
+            {
+              "title": "Applications of artificial intelligence",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Applications_of_artificial_intelligence",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Applications%20of%20artificial%20intelligence&oldid=1367599529",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Active” is an editorial assessment of current activity, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": "integrated",
+        "tags": [
+          "science",
+          "materials",
+          "generative models"
+        ],
+        "questions": [
+          "How should predicted novelty and synthesizability be independently validated before claiming discovery?"
+        ],
+        "sources": [
+          {
+            "title": "MatterGen: a generative model for inorganic materials design",
+            "url": "https://arxiv.org/abs/2312.03687",
+            "year": 2023,
+            "role": "adjacent_work",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "How should predicted novelty and synthesizability be independently validated before claiming discovery?"
+      ],
+      "direction": null,
+      "claimFingerprint": "16358c91"
+    },
+    {
+      "ordinal": 301,
+      "id": "fusion",
+      "title": "Plasma & fusion control",
+      "year": 2022,
+      "laneId": "science",
+      "classificationCode": "a",
+      "description": "Deep RL shaping tokamak plasmas (TCV). Control physics by learning — a template for AI in big experimental science.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Domain context for ML plasma/fusion control; no standalone AI-control development article was found.",
+          "sources": [
+            {
+              "title": "Fusion power",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Fusion_power",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Fusion%20power&oldid=1364828242",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Active” is an editorial assessment of current activity, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "33e2f97c"
+    },
+    {
+      "ordinal": 302,
+      "id": "mathai",
+      "title": "AI mathematics (IMO gold)",
+      "year": 2024,
+      "laneId": "science",
+      "classificationCode": "h",
+      "description": "AlphaGeometry reached Olympiad-level geometry in 2024, while AlphaProof and AlphaGeometry 2 achieved silver-medal-equivalent IMO performance that year; later 2025 systems reported gold-level results.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "high_activity",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Representative direct system article for the AlphaProof/AlphaGeometry IMO result; no AlphaProof article was found.",
+          "sources": [
+            {
+              "title": "AlphaGeometry",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/AlphaGeometry",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=AlphaGeometry&oldid=1352772811",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Hot frontier” is a time-sensitive editorial assessment, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "ebc27d83"
+    },
+    {
+      "ordinal": 303,
+      "id": "medicine",
+      "title": "Medical AI deployment",
+      "year": 2023,
+      "laneId": "science",
+      "classificationCode": "a",
+      "description": "Radiology assist → clinical LLMs (Med-Gemini class). Regulation, liability and workflow — not accuracy — are now the rate limiters. Watson's failure is the syllabus.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Direct deployment-domain article.",
+          "sources": [
+            {
+              "title": "Artificial intelligence in healthcare",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Artificial_intelligence_in_healthcare",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Artificial%20intelligence%20in%20healthcare&oldid=1365489067",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Active” is an editorial assessment of current activity, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "6b181329"
+    },
+    {
+      "ordinal": 304,
+      "id": "genomics",
+      "title": "Genomics models (AlphaGenome, Evo)",
+      "year": 2025,
+      "laneId": "science",
+      "classificationCode": "a",
+      "description": "Long-context models reading regulatory DNA and whole genomes. The genome as a language — the next AlphaFold-shaped bet.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Direct for one named genomics model and contextual for the broader node, which also includes Evo.",
+          "sources": [
+            {
+              "title": "AlphaGenome",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/AlphaGenome",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=AlphaGenome&oldid=1361196056",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Active” is an editorial assessment of current activity, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "cea76724"
+    },
+    {
+      "ordinal": 305,
+      "id": "sciagents",
+      "title": "AI co-scientists",
+      "year": 2025,
+      "laneId": "science",
+      "classificationCode": "h",
+      "description": "Agentic hypothesis, literature and experiment pipelines have produced reported algorithmic and scientific results in bounded domains. Independent reproduction and research-integrity practice are still developing.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "high_activity",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Broad context for AI co-scientists; no direct co-scientist article was found.",
+          "sources": [
+            {
+              "title": "Applications of artificial intelligence",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Applications_of_artificial_intelligence",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Applications%20of%20artificial%20intelligence&oldid=1367599529",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Hot frontier” is a time-sensitive editorial assessment, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "8c9c682f"
+    },
+    {
+      "ordinal": 306,
+      "id": "gap_scilab",
+      "title": "General-purpose autonomous scientist",
+      "year": 2026,
+      "laneId": "science",
+      "classificationCode": "g",
+      "description": "Domain-specific self-driving laboratories already close design–execute–learn loops. The open challenge is reliable, reproducible autonomy that forms hypotheses and transfers across instruments, domains and scientific objectives.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "open_direction",
+        "significance": "not_assessed",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "hypothesis",
+          "confidence": null,
+          "note": "This is a map hypothesis; Wikipedia absence does not establish that the proposed gap is novel.",
+          "sources": []
+        },
+        "mapStatus": {
+          "state": "hypothesis",
+          "confidence": null,
+          "note": "This is explicitly a proposed gap; Wikipedia absence is not evidence that the proposal is novel.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": "integrated",
+        "tags": [
+          "open direction",
+          "science",
+          "robotics"
+        ],
+        "questions": [
+          "Which parts of scientific judgment transfer across domains, and how should autonomous labs document uncertainty and failed experiments?"
+        ],
+        "sources": [
+          {
+            "title": "Autonomous Laboratory Agent via Customized Domain-Specific Language Model and Modular AI Interface",
+            "url": "https://arxiv.org/abs/2602.20669",
+            "year": 2026,
+            "role": "supporting_result",
+            "roleExplicit": true
+          },
+          {
+            "title": "The AI Scientist-v2: Workshop-Level Automated Scientific Discovery via Agentic Tree Search",
+            "url": "https://arxiv.org/abs/2504.08066",
+            "year": 2025,
+            "role": "supporting_result",
+            "roleExplicit": true
+          },
+          {
+            "title": "A Mobile Robotic Chemist",
+            "url": "https://arxiv.org/abs/1906.05398",
+            "year": 2019,
+            "role": "adjacent_work",
+            "roleExplicit": true
+          },
+          {
+            "title": "Autonomous materials synthesis via hierarchical active learning of nonequilibrium phase diagrams",
+            "url": "https://arxiv.org/abs/2101.07385",
+            "year": 2021,
+            "role": "adjacent_work",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "Can one autonomous scientific system transfer across instruments and scientific domains while keeping experiments safe, uncertainty calibrated, provenance complete, and results independently reproducible?",
+        "Which parts of scientific judgment transfer across domains, and how should autonomous labs document uncertainty and failed experiments?"
+      ],
+      "direction": {
+        "question": "Can one autonomous scientific system transfer across instruments and scientific domains while keeping experiments safe, uncertainty calibrated, provenance complete, and results independently reproducible?",
+        "closureCriteria": "Pre-register transfer from at least one training domain or instrument to two materially different targets; require calibrated abstention and human safety gates; preserve machine-readable lineage from hypothesis through raw data and analysis; compare against domain-specific automation and human teams; and have an independent lab reproduce a claimed result from the released record.",
+        "partialResults": [
+          "A 2026 autonomous laboratory agent operates scanning probe microscopy through a domain-specific model and deterministic modular interface. AI Scientist-v2 automates computational machine-learning research across several subdomains, and earlier Coscientist work demonstrated bounded chemistry workflows. These systems establish real partial autonomy, but none closes cross-instrument, cross-domain transfer with independent physical reproduction and calibrated uncertainty."
+        ],
+        "starters": [
+          "Individual: Build a provenance-first agent for DiscoveryBench and ScienceAgentBench that must produce an executable rerun bundle, calibrated confidence, and an explicit abstention whenever evidence or permissions are missing.",
+          "Small lab: Connect the same policy layer to two instruments, or one instrument plus a high-fidelity simulator, preregister transfer tasks, retain human safety approval, and have a second operator independently repeat the result.",
+          "Well-funded lab: Run a two-domain, two-site autonomous-science challenge with different instruments, robotic sample handling, blind replication, machine-readable lineage, uncertainty calibration, and independent safety and research-integrity oversight."
+        ],
+        "claimState": "editorial_hypothesis",
+        "asOf": "2026-08-04",
+        "confidence": "high",
+        "noveltyReview": {
+          "status": "targeted_search",
+          "checkedAt": "2026-08-04",
+          "scope": "Targeted arXiv searches for autonomous laboratories, self-driving labs, AI scientists, laboratory agents, cross-domain scientific agents, instrument control, reproducibility, provenance, Coscientist, AI Scientist v2, and 2025-2026 systems and benchmarks; reference chaining from representative systems and benchmark papers.",
+          "note": "High confidence that transferable cross-instrument, cross-domain autonomy with independent physical replication remains open. Domain-specific and computational systems are already substantial, so the gap must not be described as absence of autonomous science. No priority claim is made."
+        },
+        "counterexamples": [
+          "Autonomous Laboratory Agent controls real-time atomic-resolution scanning probe microscopy using a customized domain model, deterministic validation, and modular orchestration; it remains a single instrument family and domain.",
+          "AI Scientist-v2 performs template-free computational ML research and produced workshop-level manuscripts, including one accepted at a workshop with a high acceptance rate; it does not demonstrate transfer across physical instruments or independent experimental reproduction.",
+          "Coscientist and other self-driving-lab systems demonstrate chemistry and materials workflows, while DiscoveryBench and ScienceAgentBench show that broad data-science agents still solve only a minority of realistic tasks."
+        ],
+        "literature": [
+          {
+            "t": "Autonomous Laboratory Agent via Customized Domain-Specific Language Model and Modular AI Interface",
+            "u": "https://arxiv.org/abs/2602.20669",
+            "y": 2026,
+            "role": "supporting_result"
+          },
+          {
+            "t": "The AI Scientist-v2: Workshop-Level Automated Scientific Discovery via Agentic Tree Search",
+            "u": "https://arxiv.org/abs/2504.08066",
+            "y": 2025,
+            "role": "supporting_result"
+          }
+        ],
+        "resources": {
+          "benchmarks": [
+            "ScienceAgentBench",
+            "DiscoveryBench",
+            "A preregistered cross-instrument protocol with an independent physical reproduction endpoint"
+          ],
+          "code": [
+            "https://github.com/DIAOZHUO/LLM-directed-SPM",
+            "https://github.com/SakanaAI/AI-Scientist-v2",
+            "https://github.com/allenai/discoverybench",
+            "https://github.com/snap-stanford/MLAgentBench"
+          ],
+          "datasets": [
+            "DiscoveryBench",
+            "ScienceAgentBench and LAB-Bench",
+            "Open Reaction Database and Materials Project for cross-domain data work, plus raw instrument traces and complete experiment lineage"
+          ],
+          "estimated": {
+            "individual": "One to four GPUs and data-only or simulated laboratories; no unsupervised wet-lab or physical actuation.",
+            "smallLab": "Four to sixteen GPUs, two API-controlled instruments or one instrument plus simulator, technician time, metrology, and safety review.",
+            "wellFundedLab": "Thirty-two or more GPUs, two domains and multiple workcells, robotic sample handling, instrument engineers, metrology, research-integrity controls, and an independent replication site."
+          }
+        },
+        "crowdedness": "High for computational science agents, medium for domain-specific self-driving labs, and low for the same system transferring across physical domains and sites.",
+        "tractability": "High for data-only provenance studies, medium for a single-instrument system, and low for cross-domain transfer with independent physical reproduction."
+      },
+      "claimFingerprint": "2b251c42"
+    },
+    {
+      "ordinal": 316,
+      "id": "pinn",
+      "title": "Physics-informed neural networks",
+      "year": 2017,
+      "laneId": "science",
+      "classificationCode": "a",
+      "description": "PINNs place differential equations and boundary conditions inside the training objective for forward and inverse problems. They opened a major scientific-ML program while retaining known optimization and scaling limits.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        },
+        "mapStatus": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": false,
+        "mapStatus": false
+      },
+      "research": {
+        "tier": "core",
+        "tags": [
+          "science",
+          "physics",
+          "optimization"
+        ],
+        "questions": [
+          "When do physical constraints improve extrapolation, and when do PINN optimization pathologies dominate?"
+        ],
+        "sources": [
+          {
+            "title": "Physics Informed Deep Learning",
+            "url": "https://arxiv.org/abs/1711.10561",
+            "year": 2017,
+            "role": "origin",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "When do physical constraints improve extrapolation, and when do PINN optimization pathologies dominate?"
+      ],
+      "direction": null,
+      "claimFingerprint": "27d64f1a"
+    },
+    {
+      "ordinal": 320,
+      "id": "selfdrivinglab",
+      "title": "Self-driving laboratories",
+      "year": 2019,
+      "laneId": "science",
+      "classificationCode": "a",
+      "description": "Domain-specific systems close a design–execute–measure–learn loop with robotics and active learning. They demonstrate real autonomous experimentation without yet providing a general-purpose robot scientist.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        },
+        "mapStatus": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": false,
+        "mapStatus": false
+      },
+      "research": {
+        "tier": "core",
+        "tags": [
+          "science",
+          "robotics",
+          "experimentation"
+        ],
+        "questions": [
+          "How can autonomous laboratories transfer across instruments and domains while preserving calibration, safety and reproducibility?"
+        ],
+        "sources": [
+          {
+            "title": "A Mobile Robotic Chemist",
+            "url": "https://arxiv.org/abs/1906.05398",
+            "year": 2019,
+            "role": "supporting_result",
+            "roleExplicit": true
+          },
+          {
+            "title": "Autonomous materials synthesis via hierarchical active learning of nonequilibrium phase diagrams",
+            "url": "https://arxiv.org/abs/2101.07385",
+            "year": 2021,
+            "role": "supporting_result",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "How can autonomous laboratories transfer across instruments and domains while preserving calibration, safety and reproducibility?"
+      ],
+      "direction": null,
+      "claimFingerprint": "bacba372"
+    },
+    {
+      "ordinal": 322,
+      "id": "neuraloperator",
+      "title": "Neural operators & learned PDE solvers",
+      "year": 2019,
+      "laneId": "science",
+      "classificationCode": "a",
+      "description": "DeepONet and Fourier Neural Operators learn mappings between functions rather than one fixed discretization. The approach now powers fast surrogate models in weather, fluids and engineering.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        },
+        "mapStatus": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": false,
+        "mapStatus": false
+      },
+      "research": {
+        "tier": "core",
+        "tags": [
+          "science",
+          "simulation",
+          "architecture"
+        ],
+        "questions": [
+          "Can learned operators preserve conservation laws and generalize across unseen geometries, grids and boundary conditions?"
+        ],
+        "sources": [
+          {
+            "title": "DeepONet: Learning nonlinear operators",
+            "url": "https://arxiv.org/abs/1910.03193",
+            "year": 2019,
+            "role": "origin",
+            "roleExplicit": true
+          },
+          {
+            "title": "Fourier Neural Operator for Parametric Partial Differential Equations",
+            "url": "https://arxiv.org/abs/2010.08895",
+            "year": 2020,
+            "role": "origin",
+            "roleExplicit": true
+          },
+          {
+            "title": "FourCastNet",
+            "url": "https://arxiv.org/abs/2202.11214",
+            "year": 2022,
+            "role": "supporting_result",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "Can learned operators preserve conservation laws and generalize across unseen geometries, grids and boundary conditions?"
+      ],
+      "direction": null,
+      "claimFingerprint": "9a5f7d7d"
+    }
+  ]
+}

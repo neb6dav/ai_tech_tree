@@ -131,7 +131,11 @@ function extractModel(html) {
     ;globalThis.__KG_MODEL__={
       project:PROJECT_META,
       lanes:LANES,
+      eras:ERAS,
       classifications:STATUS,
+      relationshipTypes:RELATION_TYPES,
+      researchGuide:RESEARCH_GUIDE,
+      wikipediaAudit:WIKI_AUDIT,
       nodes:NODES.map(nd=>({
         id:nd.id,title:nd.t,year:nd.y,laneId:nd.lane,classificationCode:nd.s,description:nd.d,
         dateOverride:DATE_OVERRIDES[nd.id]||null,
@@ -823,26 +827,38 @@ function applyKnowledgeGraph(html, datasetGraph) {
   return { html, jsonLdBody };
 }
 
-let html = fs.readFileSync(htmlPath, 'utf8').replace(/\r\n/g, '\n');
-const model = extractModel(html);
-const { plain, datasetGraph, ndjsonRecords } = buildExports(model);
-const applied = applyKnowledgeGraph(html, datasetGraph);
-const plainBody = JSON.stringify(plain, null, 2) + '\n';
-const ndjsonBody = ndjsonRecords.map(record => JSON.stringify(record)).join('\n') + '\n';
+function main() {
+  let html = fs.readFileSync(htmlPath, 'utf8').replace(/\r\n/g, '\n');
+  const model = extractModel(html);
+  const { plain, datasetGraph, ndjsonRecords } = buildExports(model);
+  const applied = applyKnowledgeGraph(html, datasetGraph);
+  const plainBody = JSON.stringify(plain, null, 2) + '\n';
+  const ndjsonBody = ndjsonRecords.map(record => JSON.stringify(record)).join('\n') + '\n';
 
-fs.writeFileSync(htmlPath, applied.html, 'utf8');
-fs.writeFileSync(jsonLdPath, applied.jsonLdBody, 'utf8');
-fs.writeFileSync(jsonPath, plainBody, 'utf8');
-fs.writeFileSync(ndjsonPath, ndjsonBody, 'utf8');
+  fs.writeFileSync(htmlPath, applied.html, 'utf8');
+  fs.writeFileSync(jsonLdPath, applied.jsonLdBody, 'utf8');
+  fs.writeFileSync(jsonPath, plainBody, 'utf8');
+  fs.writeFileSync(ndjsonPath, ndjsonBody, 'utf8');
 
-console.log(JSON.stringify({
-  datasetIri: DATASET_IRI,
-  dataDigest: plain.dataset.dataDigest,
-  counts: plain.dataset.counts,
-  bytes: {
-    html: Buffer.byteLength(applied.html),
-    jsonld: Buffer.byteLength(applied.jsonLdBody),
-    json: Buffer.byteLength(plainBody),
-    ndjson: Buffer.byteLength(ndjsonBody)
-  }
-}, null, 2));
+  console.log(JSON.stringify({
+    datasetIri: DATASET_IRI,
+    dataDigest: plain.dataset.dataDigest,
+    counts: plain.dataset.counts,
+    bytes: {
+      html: Buffer.byteLength(applied.html),
+      jsonld: Buffer.byteLength(applied.jsonLdBody),
+      json: Buffer.byteLength(plainBody),
+      ndjson: Buffer.byteLength(ndjsonBody)
+    }
+  }, null, 2));
+}
+
+if (require.main === module) main();
+
+module.exports = {
+  applyKnowledgeGraph,
+  buildExports,
+  extractModel,
+  main,
+  safeJson
+};

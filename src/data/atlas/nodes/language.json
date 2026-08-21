@@ -1,0 +1,2410 @@
+{
+  "schemaVersion": "1.0.0",
+  "laneId": "language",
+  "nodes": [
+    {
+      "ordinal": 142,
+      "id": "mtgeorgetown",
+      "title": "Georgetown MT demo → ALPAC",
+      "year": 1954,
+      "laneId": "language",
+      "classificationCode": "x",
+      "description": "Russian→English demo promised solved-in-5-years; the 1966 ALPAC report axed US funding. NLP's first boom-bust cycle, complete in twelve years.",
+      "dateOverride": {
+        "start": 1954,
+        "end": 1966,
+        "label": "1954-1966"
+      },
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "not_assessed",
+        "trajectory": "ambiguous_ended_or_superseded",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Direct for the 1954 demo and useful context for ALPAC, but the node combines the whole boom-bust trajectory.",
+          "sources": [
+            {
+              "title": "Georgetown–IBM experiment",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Georgetown%E2%80%93IBM_experiment",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Georgetown%E2%80%93IBM%20experiment&oldid=1309602218",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "The page explicitly says expectations were not fulfilled and funding was dramatically reduced after ALPAC, but it does not call the demonstration itself superseded.",
+          "sources": [
+            {
+              "title": "Georgetown–IBM experiment",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Georgetown%E2%80%93IBM_experiment",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Georgetown%E2%80%93IBM%20experiment&oldid=1309602218",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "ibm-georgetown-mt-1954",
+            "title": "The Georgetown-IBM Experiment",
+            "url": "https://aclanthology.org/www.mt-archive.info/IBM-1954.pdf",
+            "year": 1954,
+            "kind": "report",
+            "access": "free_to_read",
+            "role": "origin",
+            "authors": [
+              "IBM",
+              "Georgetown University"
+            ],
+            "note": "Contemporary archival account of the demonstration."
+          },
+          {
+            "id": "alpac-language-machines-1966",
+            "title": "Language and Machines: Computers in Translation and Linguistics",
+            "url": "https://nap.nationalacademies.org/resource/alpac_lm/ARC000005.pdf",
+            "year": 1966,
+            "kind": "report",
+            "access": "open_access",
+            "role": "critique",
+            "authors": [
+              "Automatic Language Processing Advisory Committee"
+            ],
+            "note": ""
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "244dc97e"
+    },
+    {
+      "ordinal": 143,
+      "id": "chomsky",
+      "title": "Generative grammar",
+      "year": 1957,
+      "laneId": "language",
+      "classificationCode": "f",
+      "description": "Chomsky's formal syntax hierarchies fueled symbolic NLP for decades — and his 'poverty of stimulus' argued pure learning could never acquire language. LLMs reopened the case.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact linguistic framework article.",
+          "sources": [
+            {
+              "title": "Generative grammar",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Generative_grammar",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Generative%20grammar&oldid=1360677330",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "5c757dd0"
+    },
+    {
+      "ordinal": 144,
+      "id": "eliza",
+      "title": "ELIZA",
+      "year": 1966,
+      "laneId": "language",
+      "classificationCode": "f",
+      "description": "Weizenbaum's pattern-matching 'therapist'. The first chatbot — and the first Eliza effect, as users projected understanding onto scripts.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact system article.",
+          "sources": [
+            {
+              "title": "ELIZA",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/ELIZA",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=ELIZA&oldid=1359967186",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "weizenbaum-eliza-1966",
+            "title": "ELIZA—A Computer Program for the Study of Natural Language Communication Between Man and Machine",
+            "url": "https://doi.org/10.1145/365153.365168",
+            "year": 1966,
+            "kind": "paper",
+            "access": "publisher_record",
+            "role": "origin",
+            "authors": [
+              "Joseph Weizenbaum"
+            ],
+            "note": ""
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "5441a0a0"
+    },
+    {
+      "ordinal": 145,
+      "id": "conceptualdep",
+      "title": "Scripts & conceptual dependency",
+      "year": 1972,
+      "laneId": "language",
+      "classificationCode": "d",
+      "description": "Schank: meaning as canonical structures, stories as scripts. Rich theory with a hand-built ceiling; faded with the statistical turn.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "dormant",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Direct for conceptual dependency but only contextual for the node's combined scripts-and-story-understanding program.",
+          "sources": [
+            {
+              "title": "Conceptual dependency theory",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Conceptual_dependency_theory",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Conceptual%20dependency%20theory&oldid=1328698518",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Dormant” is an editorial assessment; no encyclopedic fate finding is inferred from article or link presence.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "9c0fc2c8"
+    },
+    {
+      "ordinal": 146,
+      "id": "hmmspeech",
+      "title": "HMM speech recognition",
+      "year": 1975,
+      "laneId": "language",
+      "classificationCode": "x",
+      "description": "Jelinek's statistical turn ('every time I fire a linguist, performance goes up'). Ruled speech for 35 years — then deep nets retired it.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "not_assessed",
+        "trajectory": "ambiguous_ended_or_superseded",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Exact model family, used contextually for its long speech-recognition era.",
+          "sources": [
+            {
+              "title": "Hidden Markov model",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Hidden_Markov_model",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Hidden%20Markov%20model&oldid=1367448449",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "The assigned Hidden Markov model page still lists speech recognition among current applications and does not document the speech-recognition lineage as ended or superseded.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "e6fb4ae7"
+    },
+    {
+      "ordinal": 147,
+      "id": "ngram",
+      "title": "n-gram language models",
+      "year": 1980,
+      "laneId": "language",
+      "classificationCode": "x",
+      "description": "Count word sequences, predict the next. Powered search and speech for decades — the ancestor LLMs obliterated and descend from.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "not_assessed",
+        "trajectory": "ambiguous_ended_or_superseded",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact specialized article for word n-gram language modeling.",
+          "sources": [
+            {
+              "title": "Word n-gram language model",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Word_n-gram_language_model",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Word%20n-gram%20language%20model&oldid=1366321633",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "The Word n-gram language model page explicitly says word n-gram models were largely superseded first by recurrent neural models and then by Transformer-based models.",
+          "sources": [
+            {
+              "title": "Word n-gram language model",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Word_n-gram_language_model",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Word%20n-gram%20language%20model&oldid=1366321633",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "33eba71f"
+    },
+    {
+      "ordinal": 148,
+      "id": "ir",
+      "title": "Vector-space information retrieval",
+      "year": 1975,
+      "laneId": "language",
+      "classificationCode": "f",
+      "description": "Documents and queries represented as weighted term vectors made ranked search practical. This classical retrieval lineage runs through Watson and into retrieval-augmented generation.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Direct article for the vector-space information-retrieval development.",
+          "sources": [
+            {
+              "title": "Vector space model",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Vector_space_model",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Vector%20space%20model&oldid=1349395790",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "37446fd3"
+    },
+    {
+      "ordinal": 149,
+      "id": "treebank",
+      "title": "Penn Treebank & statistical NLP",
+      "year": 1993,
+      "laneId": "language",
+      "classificationCode": "f",
+      "description": "Annotated corpora turned linguistics into a measurable, competitive sport. The empirical culture LLMs inherited.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Penn Treebank currently redirects to this broader treebank article.",
+          "sources": [
+            {
+              "title": "Treebank",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Treebank",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Treebank&oldid=1361768498",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "b390a35a"
+    },
+    {
+      "ordinal": 150,
+      "id": "smt",
+      "title": "Statistical machine translation",
+      "year": 1993,
+      "laneId": "language",
+      "classificationCode": "x",
+      "description": "IBM's noisy-channel models revived MT from the ALPAC ashes; phrase-based SMT ran Google Translate for a decade — then neural MT ended it overnight.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "not_assessed",
+        "trajectory": "ambiguous_ended_or_superseded",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact machine-translation paradigm article.",
+          "sources": [
+            {
+              "title": "Statistical machine translation",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Statistical_machine_translation",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Statistical%20machine%20translation&oldid=1360867094",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "The Statistical machine translation page documents the transition of major services to neural machine translation and describes SMT as dominant before NMT, but stops short of declaring the whole method ended.",
+          "sources": [
+            {
+              "title": "Statistical machine translation",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Statistical_machine_translation",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Statistical%20machine%20translation&oldid=1360867094",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "975e973b"
+    },
+    {
+      "ordinal": 151,
+      "id": "wordnet",
+      "title": "WordNet & lexical resources",
+      "year": 1995,
+      "laneId": "language",
+      "classificationCode": "d",
+      "description": "Hand-built graphs of word meaning. Foundational for an era of NLP; essentially frozen since embeddings learned the same structure from text.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "dormant",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Exact for WordNet, used contextually for the node's broader hand-built lexical-resource era.",
+          "sources": [
+            {
+              "title": "WordNet",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/WordNet",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=WordNet&oldid=1367185779",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Dormant” is an editorial assessment; no encyclopedic fate finding is inferred from article or link presence.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "9252e64c"
+    },
+    {
+      "ordinal": 152,
+      "id": "bengio03",
+      "title": "Neural language model",
+      "year": 2003,
+      "laneId": "language",
+      "classificationCode": "f",
+      "description": "Bengio's neural LM: word embeddings + shared statistical strength. The right idea, one GPU generation too early.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Broad field article; no standalone article isolates Bengio's 2003 neural-language-model paper.",
+          "sources": [
+            {
+              "title": "Language model",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Language_model",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Language%20model&oldid=1364833754",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "bengio-neural-lm-2003",
+            "title": "A Neural Probabilistic Language Model",
+            "url": "https://www.jmlr.org/papers/v3/bengio03a.html",
+            "year": 2003,
+            "kind": "paper",
+            "access": "open_access",
+            "role": "origin",
+            "authors": [
+              "Yoshua Bengio",
+              "Réjean Ducharme",
+              "Pascal Vincent",
+              "Christian Jauvin"
+            ],
+            "note": ""
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "758835aa"
+    },
+    {
+      "ordinal": 153,
+      "id": "watson",
+      "title": "IBM Watson",
+      "year": 2011,
+      "laneId": "language",
+      "classificationCode": "x",
+      "description": "Jeopardy! triumph via hybrid NLP+IR — then a healthcare moonshot that burned billions and was sold for parts. The era's overclaim case study.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "not_assessed",
+        "trajectory": "ambiguous_ended_or_superseded",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact system article.",
+          "sources": [
+            {
+              "title": "IBM Watson",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/IBM_Watson",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=IBM%20Watson&oldid=1363865222",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "The page explicitly describes Watson's decline, mostly discontinued applications, the Watson Health sale, and IBM's shift to the distinct WatsonX initiative, though Watson did not wholly end.",
+          "sources": [
+            {
+              "title": "IBM Watson",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/IBM_Watson",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=IBM%20Watson&oldid=1363865222",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "82d9ed91"
+    },
+    {
+      "ordinal": 154,
+      "id": "dlspeech",
+      "title": "Deep speech recognition",
+      "year": 2012,
+      "laneId": "language",
+      "classificationCode": "f",
+      "description": "DNNs halved error rates and retired the HMM pipeline — deep learning's first industrial conquest, before vision's.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Broad field article used for the deep-neural transition in speech recognition.",
+          "sources": [
+            {
+              "title": "Speech recognition",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Speech_recognition",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Speech%20recognition&oldid=1366321755",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "712414a2"
+    },
+    {
+      "ordinal": 155,
+      "id": "word2vec",
+      "title": "word2vec / GloVe",
+      "year": 2013,
+      "laneId": "language",
+      "classificationCode": "x",
+      "description": "Meaning as geometry ('king − man + woman ≈ queen'). Static embeddings were superseded by contextual ones — but the vector worldview conquered everything.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "not_assessed",
+        "trajectory": "ambiguous_ended_or_superseded",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Direct for word2vec, but the node also combines GloVe and the wider static-embedding era.",
+          "sources": [
+            {
+              "title": "Word2vec",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Word2vec",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Word2vec&oldid=1365468370",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "The Word2vec page describes the model, uses, and limitations but does not explicitly state that word2vec, GloVe, or static embeddings ended or were superseded.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": "integrated",
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "title": "Efficient Estimation of Word Representations in Vector Space",
+            "url": "https://arxiv.org/abs/1301.3781",
+            "year": 2013,
+            "role": "origin",
+            "roleExplicit": true
+          }
+        ],
+        "works": [
+          {
+            "id": "pennington-socher-manning-glove-2014",
+            "title": "GloVe: Global Vectors for Word Representation",
+            "url": "https://aclanthology.org/D14-1162/",
+            "year": 2014,
+            "kind": "paper",
+            "access": "open_access",
+            "role": "supporting_result",
+            "authors": [
+              "Jeffrey Pennington",
+              "Richard Socher",
+              "Christopher D. Manning"
+            ],
+            "note": ""
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "4bac1346"
+    },
+    {
+      "ordinal": 156,
+      "id": "seq2seq",
+      "title": "seq2seq encoder–decoder",
+      "year": 2014,
+      "laneId": "language",
+      "classificationCode": "f",
+      "description": "Sentence in, sentence out, via LSTMs. Machine translation went neural — and 'everything is sequence transduction' became a research program.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact architecture article.",
+          "sources": [
+            {
+              "title": "Seq2seq",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Seq2seq",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Seq2seq&oldid=1358644085",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": "integrated",
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "title": "Sequence to Sequence Learning with Neural Networks",
+            "url": "https://arxiv.org/abs/1409.3215",
+            "year": 2014,
+            "role": "origin",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "9290b6e3"
+    },
+    {
+      "ordinal": 157,
+      "id": "nmt",
+      "title": "Neural MT deployed (GNMT)",
+      "year": 2016,
+      "laneId": "language",
+      "classificationCode": "f",
+      "description": "Google Translate's overnight quality jump — the first mass-scale deep NLP product, and SMT's abrupt retirement.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact deployed GNMT system article.",
+          "sources": [
+            {
+              "title": "Google Neural Machine Translation",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Google_Neural_Machine_Translation",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Google%20Neural%20Machine%20Translation&oldid=1356257536",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "28f43965"
+    },
+    {
+      "ordinal": 158,
+      "id": "bert",
+      "title": "BERT & pretrain–finetune",
+      "year": 2018,
+      "laneId": "language",
+      "classificationCode": "f",
+      "description": "Masked bidirectional pretraining transformed language understanding and transfer. Encoder models remain widely used for embeddings, retrieval and classification alongside decoder-only language models.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact model article.",
+          "sources": [
+            {
+              "title": "BERT (language model)",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/BERT_(language_model)",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=BERT%20%28language%20model%29&oldid=1364345417",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": "integrated",
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "title": "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding",
+            "url": "https://arxiv.org/abs/1810.04805",
+            "year": 2018,
+            "role": "origin",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "77296372"
+    },
+    {
+      "ordinal": 159,
+      "id": "gpt2",
+      "title": "GPT-2 — generation scales",
+      "year": 2019,
+      "laneId": "language",
+      "classificationCode": "f",
+      "description": "Decoder-only LM 'too dangerous to release' — showed unsupervised generation plus zero-shot glimmers. The scaling bet forms.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact model article.",
+          "sources": [
+            {
+              "title": "GPT-2",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/GPT-2",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=GPT-2&oldid=1364729290",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "radford-gpt2-2019",
+            "title": "Language Models are Unsupervised Multitask Learners",
+            "url": "https://openai.com/index/better-language-models/",
+            "year": 2019,
+            "kind": "report",
+            "access": "author_open",
+            "role": "origin",
+            "authors": [
+              "Alec Radford et al."
+            ],
+            "note": "Official OpenAI report page and paper link."
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "e7fcbb1a"
+    },
+    {
+      "ordinal": 160,
+      "id": "gpt3",
+      "title": "GPT-3 & in-context learning",
+      "year": 2020,
+      "laneId": "language",
+      "classificationCode": "f",
+      "description": "At 175B parameters, GPT-3 showed sharply improved few-shot in-context learning under next-token training and accelerated the shift toward language-model APIs.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact model article covering the in-context-learning milestone.",
+          "sources": [
+            {
+              "title": "GPT-3",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/GPT-3",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=GPT-3&oldid=1366996019",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": "integrated",
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "title": "Language Models are Few-Shot Learners",
+            "url": "https://arxiv.org/abs/2005.14165",
+            "year": 2020,
+            "role": "origin",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "69a0a5cf"
+    },
+    {
+      "ordinal": 161,
+      "id": "codegen",
+      "title": "Code generation (Codex→Copilot)",
+      "year": 2021,
+      "laneId": "language",
+      "classificationCode": "h",
+      "description": "From autocomplete to agentic software engineering. The capability that let AI build AI tooling — and reshaped programming itself.",
+      "dateOverride": {
+        "start": 2021,
+        "end": 2021,
+        "label": "2021",
+        "milestones": [
+          "Codex 2021",
+          "Copilot technical preview 2021"
+        ]
+      },
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "high_activity",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Direct for the deployed Copilot product but contextual for the wider Codex-to-agentic-code-generation arc.",
+          "sources": [
+            {
+              "title": "GitHub Copilot",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/GitHub_Copilot",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=GitHub%20Copilot&oldid=1355991945",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Hot frontier” is a time-sensitive editorial assessment, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "730d10b4"
+    },
+    {
+      "ordinal": 162,
+      "id": "cot",
+      "title": "Chain-of-thought prompting",
+      "year": 2022,
+      "laneId": "language",
+      "classificationCode": "f",
+      "description": "'Think step by step' unlocked latent multi-step reasoning. The prompt era's deepest finding — later trained-in via RL.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Chain-of-thought prompting currently redirects to this broader prompting article.",
+          "sources": [
+            {
+              "title": "Prompt engineering",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Prompt_engineering",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Prompt%20engineering&oldid=1367606830",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "762c9fb2"
+    },
+    {
+      "ordinal": 163,
+      "id": "instruct",
+      "title": "InstructGPT — RLHF assistants",
+      "year": 2022,
+      "laneId": "language",
+      "classificationCode": "f",
+      "description": "Supervised demonstrations, reward modeling and PPO turned pretrained LMs into preference-tuned assistants. This RLHF deployment recipe is distinct from the earlier supervised instruction-tuning lineage.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Direct for the core alignment method but broader than the specific InstructGPT recipe and release.",
+          "sources": [
+            {
+              "title": "Reinforcement learning from human feedback",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Reinforcement_learning_from_human_feedback",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Reinforcement%20learning%20from%20human%20feedback&oldid=1359064507",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": "integrated",
+        "tags": [
+          "language",
+          "alignment"
+        ],
+        "questions": [
+          "How should supervised instruction following and preference optimization be composed without reward-model overfitting?"
+        ],
+        "sources": [
+          {
+            "title": "Training language models to follow instructions with human feedback",
+            "url": "https://arxiv.org/abs/2203.02155",
+            "year": 2022,
+            "role": "origin",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "How should supervised instruction following and preference optimization be composed without reward-model overfitting?"
+      ],
+      "direction": null,
+      "claimFingerprint": "b09a89e3"
+    },
+    {
+      "ordinal": 164,
+      "id": "chatgpt",
+      "title": "ChatGPT moment",
+      "year": 2022,
+      "laneId": "language",
+      "classificationCode": "f",
+      "description": "100M users in two months. A research artifact became planetary infrastructure overnight — and reset funding, talent and politics for the whole field.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact product and launch article.",
+          "sources": [
+            {
+              "title": "ChatGPT",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/ChatGPT",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=ChatGPT&oldid=1367408136",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "ff53a3e8"
+    },
+    {
+      "ordinal": 165,
+      "id": "promptengineering",
+      "title": "Standalone prompt-engineer fad",
+      "year": 2023,
+      "laneId": "language",
+      "classificationCode": "x",
+      "description": "The short-lived job-title and incantation culture around prompt-only optimization faded. Prompt design itself remains active and was absorbed into broader context engineering, evaluation, retrieval, and product design.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "not_assessed",
+        "trajectory": "ambiguous_ended_or_superseded",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact practice article; it does not independently verify the map's fad or dead-end judgment.",
+          "sources": [
+            {
+              "title": "Prompt engineering",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Prompt_engineering",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Prompt%20engineering&oldid=1367606830",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "The Prompt engineering page explicitly says the dedicated prompt-engineer title lost traction and became obsolete, while prompt engineering itself remains active within broader practice, matching this node's narrowed job-title framing.",
+          "sources": [
+            {
+              "title": "Prompt engineering",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Prompt_engineering",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Prompt%20engineering&oldid=1367606830",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "ac7396f5"
+    },
+    {
+      "ordinal": 166,
+      "id": "contexteng",
+      "title": "Context engineering",
+      "year": 2025,
+      "laneId": "language",
+      "classificationCode": "h",
+      "description": "Designing the full information environment around a model: instructions, retrieved evidence, tools, memory, and state. The operational successor to prompt-only optimization for production agents.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "high_activity",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "No standalone English Wikipedia article existed at audit time; the prompt-engineering article discusses context engineering as the broader production practice.",
+          "sources": [
+            {
+              "title": "Prompt engineering",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Prompt_engineering",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Prompt%20engineering&oldid=1367606830",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Hot frontier” is a time-sensitive editorial assessment, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "29eb2524"
+    },
+    {
+      "ordinal": 167,
+      "id": "gpt4",
+      "title": "GPT-4-class multimodal LLMs",
+      "year": 2023,
+      "laneId": "language",
+      "classificationCode": "f",
+      "description": "Bar exams passed, images understood. The capability jump that reset expectations, safety debates and national policy at once.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Direct for GPT-4 but contextual for the node's broader class of multimodal frontier models.",
+          "sources": [
+            {
+              "title": "GPT-4",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/GPT-4",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=GPT-4&oldid=1364729719",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": "integrated",
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "title": "GPT-4 Technical Report",
+            "url": "https://arxiv.org/abs/2303.08774",
+            "year": 2023,
+            "role": "origin",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "0902c533"
+    },
+    {
+      "ordinal": 168,
+      "id": "openweights",
+      "title": "Open-weight ecosystem",
+      "year": 2023,
+      "laneId": "language",
+      "classificationCode": "h",
+      "description": "Llama leak → Llama 2/3 → Mistral, Qwen, DeepSeek. Weights in the wild: fine-tune culture, sovereignty politics, and a live frontier-gap debate.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "high_activity",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Relevant ecosystem article; open weights and open source are not identical categories.",
+          "sources": [
+            {
+              "title": "Open-source artificial intelligence",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Open-source_artificial_intelligence",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Open-source%20artificial%20intelligence&oldid=1367688496",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Hot frontier” is a time-sensitive editorial assessment, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "0c1040f8"
+    },
+    {
+      "ordinal": 169,
+      "id": "rag",
+      "title": "Retrieval-augmented generation",
+      "year": 2020,
+      "laneId": "language",
+      "classificationCode": "a",
+      "description": "Bolt a search engine to the model. The hallucination patch that became commodity plumbing — now competing with million-token contexts.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact technique article.",
+          "sources": [
+            {
+              "title": "Retrieval-augmented generation",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Retrieval-augmented_generation",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Retrieval-augmented%20generation&oldid=1365691175",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Active” is an editorial assessment of current activity, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "abfb6340"
+    },
+    {
+      "ordinal": 170,
+      "id": "longctx",
+      "title": "Long context (100K→1M+)",
+      "year": 2023,
+      "laneId": "language",
+      "classificationCode": "a",
+      "description": "RoPE scaling, efficient attention, context engineering. Whole books in the prompt — rivaling retrieval for many workloads.",
+      "dateOverride": {
+        "start": 2023,
+        "end": 2024,
+        "label": "2023-2024",
+        "milestones": [
+          "100K-class contexts 2023",
+          "1M-class contexts 2024"
+        ]
+      },
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact LLM context-window concept article.",
+          "sources": [
+            {
+              "title": "Context window",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Context_window",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Context%20window&oldid=1363155122",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Active” is an editorial assessment of current activity, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "d039c326"
+    },
+    {
+      "ordinal": 171,
+      "id": "reasoning",
+      "title": "Reasoning models (o1→o3, R1)",
+      "year": 2024,
+      "laneId": "language",
+      "classificationCode": "h",
+      "description": "RL-trained deliberate thinking with visible chains of thought. Olympiad-level math and code jumps — the current capability frontier.",
+      "dateOverride": {
+        "start": 2024,
+        "end": 2025,
+        "label": "2024-2025",
+        "milestones": [
+          "o1 2024",
+          "o3 and DeepSeek-R1 2025"
+        ]
+      },
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "high_activity",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact model-class article covering o1-style and R1-style reasoning models.",
+          "sources": [
+            {
+              "title": "Reasoning model",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Reasoning_model",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Reasoning%20model&oldid=1367476069",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Hot frontier” is a time-sensitive editorial assessment, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "e301e9ec"
+    },
+    {
+      "ordinal": 172,
+      "id": "diffusionllm",
+      "title": "Diffusion language models",
+      "year": 2025,
+      "laneId": "language",
+      "classificationCode": "a",
+      "description": "Mercury, Gemini Diffusion: parallel denoising instead of left-to-right generation. A speed-play challenger to autoregression — early days.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Direct for the diffusion family but only contextual for emerging diffusion language models.",
+          "sources": [
+            {
+              "title": "Diffusion model",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Diffusion_model",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Diffusion%20model&oldid=1360060028",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Active” is an editorial assessment of current activity, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "4cbf46dc"
+    },
+    {
+      "ordinal": 173,
+      "id": "frontier26",
+      "title": "Frontier assistants (GPT-5, Gemini 3, Claude)",
+      "year": 2025,
+      "laneId": "language",
+      "classificationCode": "h",
+      "description": "Converged reasoning + multimodal + agents, competing on reliability, cost and depth-of-thought. The 2026 state of the art.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "high_activity",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Broad class article for a composite, fast-changing set of frontier assistants; it does not validate the status judgment.",
+          "sources": [
+            {
+              "title": "Large language model",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Large_language_model",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Large%20language%20model&oldid=1367692471",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Hot frontier” is a time-sensitive editorial assessment, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "46cbb6c6"
+    },
+    {
+      "ordinal": 174,
+      "id": "elmo",
+      "title": "ELMo contextual embeddings",
+      "year": 2018,
+      "laneId": "language",
+      "classificationCode": "f",
+      "description": "Deep bidirectional language models produced word representations that changed with context. ELMo made the transition from static embeddings to BERT-style contextual pretraining explicit.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Direct article for the contextual language representation and its place before BERT.",
+          "sources": [
+            {
+              "title": "ELMo",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/ELMo",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=ELMo&oldid=1354732604",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": "integrated",
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "title": "Deep Contextualized Word Representations",
+            "url": "https://arxiv.org/abs/1802.05365",
+            "year": 2018,
+            "role": "origin",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "ee466a36"
+    },
+    {
+      "ordinal": 307,
+      "id": "subword",
+      "title": "Subword tokenization (BPE → SentencePiece)",
+      "year": 2015,
+      "laneId": "language",
+      "classificationCode": "f",
+      "description": "Open-vocabulary modeling with reusable word pieces made rare words, multilingual translation and modern LLM vocabularies practical. The quiet interface between raw text and neural sequence models.",
+      "dateOverride": {
+        "start": 2015,
+        "end": 2018,
+        "label": "2015-2018",
+        "milestones": [
+          "Subword NMT 2015",
+          "SentencePiece 2018"
+        ]
+      },
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        },
+        "mapStatus": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": false,
+        "mapStatus": false
+      },
+      "research": {
+        "tier": "core",
+        "tags": [
+          "language",
+          "data",
+          "systems"
+        ],
+        "questions": [
+          "Can learned or token-free representations improve multilingual efficiency without destabilizing training?"
+        ],
+        "sources": [
+          {
+            "title": "Neural Machine Translation of Rare Words with Subword Units",
+            "url": "https://arxiv.org/abs/1508.07909",
+            "year": 2015,
+            "role": "origin",
+            "roleExplicit": true
+          },
+          {
+            "title": "SentencePiece: A simple and language independent subword tokenizer",
+            "url": "https://arxiv.org/abs/1808.06226",
+            "year": 2018,
+            "role": "origin",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "Can learned or token-free representations improve multilingual efficiency without destabilizing training?"
+      ],
+      "direction": null,
+      "claimFingerprint": "072495e6"
+    },
+    {
+      "ordinal": 321,
+      "id": "denseretrieval",
+      "title": "Dense neural retrieval & dual encoders",
+      "year": 2019,
+      "laneId": "language",
+      "classificationCode": "f",
+      "description": "Dual encoders learned semantic query and document spaces, replacing much lexical matching in open-domain QA. Dense retrieval is the missing systems-and-model bridge into retrieval-augmented generation.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        },
+        "mapStatus": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": false,
+        "mapStatus": false
+      },
+      "research": {
+        "tier": "core",
+        "tags": [
+          "language",
+          "retrieval",
+          "systems"
+        ],
+        "questions": [
+          "How should retrievers manage freshness, provenance, adversarial documents and uncertainty rather than only top-k relevance?"
+        ],
+        "sources": [
+          {
+            "title": "Sentence-BERT: Sentence Embeddings using Siamese BERT-Networks",
+            "url": "https://arxiv.org/abs/1908.10084",
+            "year": 2019,
+            "role": "supporting_result",
+            "roleExplicit": true
+          },
+          {
+            "title": "Dense Passage Retrieval for Open-Domain Question Answering",
+            "url": "https://arxiv.org/abs/2004.04906",
+            "year": 2020,
+            "role": "origin",
+            "roleExplicit": true
+          },
+          {
+            "title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+            "url": "https://arxiv.org/abs/2005.11401",
+            "year": 2020,
+            "role": "adjacent_work",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "How should retrievers manage freshness, provenance, adversarial documents and uncertainty rather than only top-k relevance?"
+      ],
+      "direction": null,
+      "claimFingerprint": "dadd0ea5"
+    },
+    {
+      "ordinal": 323,
+      "id": "speechfm",
+      "title": "Speech foundation models (wav2vec 2.0 → Whisper)",
+      "year": 2020,
+      "laneId": "language",
+      "classificationCode": "f",
+      "description": "Self-supervised speech representation learning and weakly supervised web-scale transcription replaced task-specific acoustic pipelines with reusable speech models and robust multilingual transfer.",
+      "dateOverride": {
+        "start": 2020,
+        "end": 2022,
+        "label": "2020-2022"
+      },
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        },
+        "mapStatus": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": false,
+        "mapStatus": false
+      },
+      "research": {
+        "tier": "core",
+        "tags": [
+          "speech",
+          "multimodal",
+          "data"
+        ],
+        "questions": [
+          "How can speech models serve low-resource languages and noisy real-world audio without erasing dialect and speaker variation?"
+        ],
+        "sources": [
+          {
+            "title": "wav2vec 2.0",
+            "url": "https://arxiv.org/abs/2006.11477",
+            "year": 2020,
+            "role": "origin",
+            "roleExplicit": true
+          },
+          {
+            "title": "Robust Speech Recognition via Large-Scale Weak Supervision",
+            "url": "https://arxiv.org/abs/2212.04356",
+            "year": 2022,
+            "role": "origin",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "How can speech models serve low-resource languages and noisy real-world audio without erasing dialect and speaker variation?"
+      ],
+      "direction": null,
+      "claimFingerprint": "e7944faf"
+    },
+    {
+      "ordinal": 324,
+      "id": "instructiontune",
+      "title": "Instruction tuning",
+      "year": 2021,
+      "laneId": "language",
+      "classificationCode": "f",
+      "description": "Supervised fine-tuning across diverse natural-language tasks taught pretrained models to follow new instructions zero-shot. It is a separate lineage from preference modeling and RLHF.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        },
+        "mapStatus": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": false,
+        "mapStatus": false
+      },
+      "research": {
+        "tier": "core",
+        "tags": [
+          "language",
+          "data",
+          "alignment"
+        ],
+        "questions": [
+          "What task mixtures create genuine instruction generalization rather than benchmark-template recognition?"
+        ],
+        "sources": [
+          {
+            "title": "Finetuned Language Models Are Zero-Shot Learners",
+            "url": "https://arxiv.org/abs/2109.01652",
+            "year": 2021,
+            "role": "supporting_result",
+            "roleExplicit": true
+          },
+          {
+            "title": "Multitask Prompted Training Enables Zero-Shot Task Generalization",
+            "url": "https://arxiv.org/abs/2110.08207",
+            "year": 2021,
+            "role": "supporting_result",
+            "roleExplicit": true
+          },
+          {
+            "title": "Scaling Instruction-Finetuned Language Models",
+            "url": "https://arxiv.org/abs/2210.11416",
+            "year": 2022,
+            "role": "supporting_result",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "What task mixtures create genuine instruction generalization rather than benchmark-template recognition?"
+      ],
+      "direction": null,
+      "claimFingerprint": "67d35da0"
+    },
+    {
+      "ordinal": 336,
+      "id": "nucleus",
+      "title": "Nucleus sampling & decoding controls",
+      "year": 2019,
+      "laneId": "language",
+      "classificationCode": "f",
+      "description": "Top-p sampling truncates the unreliable probability tail dynamically, improving open-ended generation. Decoding policy became a consequential layer between model probabilities and visible behavior.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        },
+        "mapStatus": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": false,
+        "mapStatus": false
+      },
+      "research": {
+        "tier": "specialist",
+        "tags": [
+          "language",
+          "inference",
+          "evaluation"
+        ],
+        "questions": [
+          "Can decoding adapt to uncertainty and task risk without masking poor model calibration or amplifying bias?"
+        ],
+        "sources": [
+          {
+            "title": "The Curious Case of Neural Text Degeneration",
+            "url": "https://arxiv.org/abs/1904.09751",
+            "year": 2019,
+            "role": "origin",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "Can decoding adapt to uncertainty and task risk without masking poor model calibration or amplifying bias?"
+      ],
+      "direction": null,
+      "claimFingerprint": "0a814e0b"
+    }
+  ]
+}

@@ -1,0 +1,1361 @@
+{
+  "schemaVersion": "1.0.0",
+  "laneId": "generative",
+  "relationships": [
+    {
+      "ordinal": 371,
+      "key": "autoencoders>vae:dep",
+      "sourceNodeId": "autoencoders",
+      "targetNodeId": "vae",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed endpoint articles cross-link; this is contextual evidence, not causal confirmation.",
+        "sources": [
+          {
+            "title": "Autoencoder",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Autoencoder",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Autoencoder&oldid=1366805492",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          },
+          {
+            "title": "Variational autoencoder",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Variational_autoencoder",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Variational%20autoencoder&oldid=1358429264",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "c506bc66",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 372,
+      "key": "mcmc>vae:dep",
+      "sourceNodeId": "mcmc",
+      "targetNodeId": "vae",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "No cross-link was found between the reviewed endpoint pages; link absence does not disprove this map relationship.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "c0babd50",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 373,
+      "key": "gametheory>gan:dep",
+      "sourceNodeId": "gametheory",
+      "targetNodeId": "gan",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed “Generative adversarial network” article links to “Game theory”; this is contextual, not causal, evidence.",
+        "sources": [
+          {
+            "title": "Generative adversarial network",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Generative_adversarial_network",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Generative%20adversarial%20network&oldid=1366804724",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "61e4a36d",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 374,
+      "key": "vae>gan:dep",
+      "sourceNodeId": "vae",
+      "targetNodeId": "gan",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed endpoint articles cross-link; this is contextual evidence, not causal confirmation.",
+        "sources": [
+          {
+            "title": "Variational autoencoder",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Variational_autoencoder",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Variational%20autoencoder&oldid=1358429264",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          },
+          {
+            "title": "Generative adversarial network",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Generative_adversarial_network",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Generative%20adversarial%20network&oldid=1366804724",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "14a37746",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 375,
+      "key": "optimaltransport>gan:dep",
+      "sourceNodeId": "optimaltransport",
+      "targetNodeId": "gan",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "unassessed",
+      "audit": {
+        "state": "not_assessed",
+        "confidence": null,
+        "note": "",
+        "sources": []
+      },
+      "auditRecordPresent": false,
+      "claimFingerprint": "f43a1041",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "research_extension",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 376,
+      "key": "vae>flows:dep",
+      "sourceNodeId": "vae",
+      "targetNodeId": "flows",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed “Flow-based generative model” article links to “Variational autoencoder”; this is contextual, not causal, evidence.",
+        "sources": [
+          {
+            "title": "Flow-based generative model",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Flow-based_generative_model",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Flow-based%20generative%20model&oldid=1353126723",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "eff9020d",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 377,
+      "key": "optimaltransport>flows:dep",
+      "sourceNodeId": "optimaltransport",
+      "targetNodeId": "flows",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "unassessed",
+      "audit": {
+        "state": "not_assessed",
+        "confidence": null,
+        "note": "",
+        "sources": []
+      },
+      "auditRecordPresent": false,
+      "claimFingerprint": "b82e3ce6",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "research_extension",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 378,
+      "key": "alexnet>neuralstyle:dep",
+      "sourceNodeId": "alexnet",
+      "targetNodeId": "neuralstyle",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed “Neural style transfer” article links to “AlexNet”; this is contextual, not causal, evidence.",
+        "sources": [
+          {
+            "title": "Neural style transfer",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Neural_style_transfer",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Neural%20style%20transfer&oldid=1330246191",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "3346b07f",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 379,
+      "key": "cnn89>wavenet:dep",
+      "sourceNodeId": "cnn89",
+      "targetNodeId": "wavenet",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed “WaveNet” article links to “LeNet”; this is contextual, not causal, evidence.",
+        "sources": [
+          {
+            "title": "WaveNet",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/WaveNet",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=WaveNet&oldid=1329404574",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "5e94868a",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 380,
+      "key": "rnn>wavenet:dep",
+      "sourceNodeId": "rnn",
+      "targetNodeId": "wavenet",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed endpoint articles cross-link; this is contextual evidence, not causal confirmation.",
+        "sources": [
+          {
+            "title": "Recurrent neural network",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Recurrent_neural_network",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Recurrent%20neural%20network&oldid=1363820365",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          },
+          {
+            "title": "WaveNet",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/WaveNet",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=WaveNet&oldid=1329404574",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "6501a19e",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 381,
+      "key": "vae>diffusion:dep",
+      "sourceNodeId": "vae",
+      "targetNodeId": "diffusion",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed endpoint articles cross-link; this is contextual evidence, not causal confirmation.",
+        "sources": [
+          {
+            "title": "Variational autoencoder",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Variational_autoencoder",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Variational%20autoencoder&oldid=1358429264",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          },
+          {
+            "title": "Diffusion model",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Diffusion_model",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Diffusion%20model&oldid=1360060028",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "764c3c37",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 382,
+      "key": "boltzmann>diffusion:dep",
+      "sourceNodeId": "boltzmann",
+      "targetNodeId": "diffusion",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed “Diffusion model” article links to “Boltzmann machine”; this is contextual, not causal, evidence.",
+        "sources": [
+          {
+            "title": "Diffusion model",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Diffusion_model",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Diffusion%20model&oldid=1360060028",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "b3297686",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 383,
+      "key": "unet>diffusion:dep",
+      "sourceNodeId": "unet",
+      "targetNodeId": "diffusion",
+      "legacyKind": "dep",
+      "relationshipType": "component",
+      "rationale": "U-Net-style backbones are a core implementation component in influential diffusion systems.",
+      "reviewed": true,
+      "evidenceGrade": "direct",
+      "audit": {
+        "state": "confirmed",
+        "confidence": "high",
+        "note": "The U-Net article explicitly documents its use in diffusion models for iterative image denoising.",
+        "sources": [
+          {
+            "title": "U-Net",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/U-Net",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=U-Net&oldid=1365482926",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "e4789acf",
+      "reviewState": "reviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 384,
+      "key": "gan>diffusion:sup",
+      "sourceNodeId": "gan",
+      "targetNodeId": "diffusion",
+      "legacyKind": "sup",
+      "relationshipType": "legacy_supersession_claim",
+      "rationale": "Legacy supersession claim retained for review; it is not treated as established supersession.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed endpoint articles cross-link; this is contextual evidence, not causal confirmation.",
+        "sources": [
+          {
+            "title": "Generative adversarial network",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Generative_adversarial_network",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Generative%20adversarial%20network&oldid=1366804724",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          },
+          {
+            "title": "Diffusion model",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Diffusion_model",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Diffusion%20model&oldid=1360060028",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "6662ac27",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 385,
+      "key": "diffusion>txt2img:dep",
+      "sourceNodeId": "diffusion",
+      "targetNodeId": "txt2img",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed endpoint articles cross-link; this is contextual evidence, not causal confirmation.",
+        "sources": [
+          {
+            "title": "Diffusion model",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Diffusion_model",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Diffusion%20model&oldid=1360060028",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          },
+          {
+            "title": "Text-to-image model",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Text-to-image_model",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Text-to-image%20model&oldid=1366271711",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "1f19b6ce",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 386,
+      "key": "clip>txt2img:dep",
+      "sourceNodeId": "clip",
+      "targetNodeId": "txt2img",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "No cross-link was found between the reviewed endpoint pages; link absence does not disprove this map relationship.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "762ab32b",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 387,
+      "key": "vqcodes>txt2img:dep",
+      "sourceNodeId": "vqcodes",
+      "targetNodeId": "txt2img",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "unassessed",
+      "audit": {
+        "state": "not_assessed",
+        "confidence": null,
+        "note": "",
+        "sources": []
+      },
+      "auditRecordPresent": false,
+      "claimFingerprint": "8a6673fc",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "research_extension",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 388,
+      "key": "neuralstyle>txt2img:sup",
+      "sourceNodeId": "neuralstyle",
+      "targetNodeId": "txt2img",
+      "legacyKind": "sup",
+      "relationshipType": "legacy_supersession_claim",
+      "rationale": "Legacy supersession claim retained for review; it is not treated as established supersession.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "No cross-link was found between the reviewed endpoint pages; link absence does not disprove this map relationship.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "e3083883",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 389,
+      "key": "diffusion>dit:dep",
+      "sourceNodeId": "diffusion",
+      "targetNodeId": "dit",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "Both developments map to one article, so no distinct article cross-link supports this relationship; this is not disproof.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "9621c3c6",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 390,
+      "key": "vit>dit:dep",
+      "sourceNodeId": "vit",
+      "targetNodeId": "dit",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed endpoint articles cross-link; this is contextual evidence, not causal confirmation.",
+        "sources": [
+          {
+            "title": "Vision transformer",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Vision_transformer",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Vision%20transformer&oldid=1359765528",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          },
+          {
+            "title": "Diffusion model",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Diffusion_model",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Diffusion%20model&oldid=1360060028",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "acc233f2",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 391,
+      "key": "flowmatching>dit:dep",
+      "sourceNodeId": "flowmatching",
+      "targetNodeId": "dit",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "unassessed",
+      "audit": {
+        "state": "not_assessed",
+        "confidence": null,
+        "note": "",
+        "sources": []
+      },
+      "auditRecordPresent": false,
+      "claimFingerprint": "7ff3cd8a",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "research_extension",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 392,
+      "key": "wavenet>musicgen:dep",
+      "sourceNodeId": "wavenet",
+      "targetNodeId": "musicgen",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed endpoint articles cross-link; this is contextual evidence, not causal confirmation.",
+        "sources": [
+          {
+            "title": "WaveNet",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/WaveNet",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=WaveNet&oldid=1329404574",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          },
+          {
+            "title": "Artificial intelligence in music",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Artificial_intelligence_in_music",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Artificial%20intelligence%20in%20music&oldid=1361390074",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "3c095e2b",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 393,
+      "key": "diffusion>musicgen:dep",
+      "sourceNodeId": "diffusion",
+      "targetNodeId": "musicgen",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "No cross-link was found between the reviewed endpoint pages; link absence does not disprove this map relationship.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "eb2379e6",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 394,
+      "key": "vqcodes>musicgen:dep",
+      "sourceNodeId": "vqcodes",
+      "targetNodeId": "musicgen",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "unassessed",
+      "audit": {
+        "state": "not_assessed",
+        "confidence": null,
+        "note": "",
+        "sources": []
+      },
+      "auditRecordPresent": false,
+      "claimFingerprint": "2be8f230",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "research_extension",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 395,
+      "key": "speechfm>musicgen:dep",
+      "sourceNodeId": "speechfm",
+      "targetNodeId": "musicgen",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "unassessed",
+      "audit": {
+        "state": "not_assessed",
+        "confidence": null,
+        "note": "",
+        "sources": []
+      },
+      "auditRecordPresent": false,
+      "claimFingerprint": "acc46b5a",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "research_extension",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 396,
+      "key": "dit>video:dep",
+      "sourceNodeId": "dit",
+      "targetNodeId": "video",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed “Text-to-video model” article links to “Diffusion model”; this is contextual, not causal, evidence.",
+        "sources": [
+          {
+            "title": "Text-to-video model",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Text-to-video_model",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Text-to-video%20model&oldid=1367547608",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "3d0e7832",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 397,
+      "key": "txt2img>video:dep",
+      "sourceNodeId": "txt2img",
+      "targetNodeId": "video",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed endpoint articles cross-link; this is contextual evidence, not causal confirmation.",
+        "sources": [
+          {
+            "title": "Text-to-image model",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Text-to-image_model",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Text-to-image%20model&oldid=1366271711",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          },
+          {
+            "title": "Text-to-video model",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Text-to-video_model",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Text-to-video%20model&oldid=1367547608",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "d6109f76",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 398,
+      "key": "vqcodes>video:dep",
+      "sourceNodeId": "vqcodes",
+      "targetNodeId": "video",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "unassessed",
+      "audit": {
+        "state": "not_assessed",
+        "confidence": null,
+        "note": "",
+        "sources": []
+      },
+      "auditRecordPresent": false,
+      "claimFingerprint": "cde4bd8a",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "research_extension",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 399,
+      "key": "flowmatching>video:dep",
+      "sourceNodeId": "flowmatching",
+      "targetNodeId": "video",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "unassessed",
+      "audit": {
+        "state": "not_assessed",
+        "confidence": null,
+        "note": "",
+        "sources": []
+      },
+      "auditRecordPresent": false,
+      "claimFingerprint": "dc83a360",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "research_extension",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 400,
+      "key": "video>genie:dep",
+      "sourceNodeId": "video",
+      "targetNodeId": "genie",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed endpoint articles cross-link; this is contextual evidence, not causal confirmation.",
+        "sources": [
+          {
+            "title": "Text-to-video model",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Text-to-video_model",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Text-to-video%20model&oldid=1367547608",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          },
+          {
+            "title": "Genie (world model)",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Genie_(world_model)",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Genie%20%28world%20model%29&oldid=1367001693",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "9d87aa4f",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 401,
+      "key": "worldmodels18>genie:dep",
+      "sourceNodeId": "worldmodels18",
+      "targetNodeId": "genie",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed endpoint articles cross-link; this is contextual evidence, not causal confirmation.",
+        "sources": [
+          {
+            "title": "World model (artificial intelligence)",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/World_model_(artificial_intelligence)",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=World%20model%20%28artificial%20intelligence%29&oldid=1366501227",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          },
+          {
+            "title": "Genie (world model)",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Genie_(world_model)",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Genie%20%28world%20model%29&oldid=1367001693",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "f707017b",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 402,
+      "key": "vqcodes>genie:dep",
+      "sourceNodeId": "vqcodes",
+      "targetNodeId": "genie",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "unassessed",
+      "audit": {
+        "state": "not_assessed",
+        "confidence": null,
+        "note": "",
+        "sources": []
+      },
+      "auditRecordPresent": false,
+      "claimFingerprint": "73bfdadd",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "research_extension",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 403,
+      "key": "genie>gap_dreamtrain:gap",
+      "sourceNodeId": "genie",
+      "targetNodeId": "gap_dreamtrain",
+      "legacyKind": "gap",
+      "relationshipType": "proposed_combination",
+      "rationale": "Editorially proposed research combination; not a claim that the work already exists.",
+      "reviewed": true,
+      "evidenceGrade": "hypothesis",
+      "audit": {
+        "state": "hypothesis",
+        "confidence": null,
+        "note": "This proposed combination is a map hypothesis; Wikipedia absence does not establish novelty.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "8e90b035",
+      "reviewState": "reviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 404,
+      "key": "rtfm>gap_dreamtrain:gap",
+      "sourceNodeId": "rtfm",
+      "targetNodeId": "gap_dreamtrain",
+      "legacyKind": "gap",
+      "relationshipType": "proposed_combination",
+      "rationale": "Editorially proposed research combination; not a claim that the work already exists.",
+      "reviewed": true,
+      "evidenceGrade": "hypothesis",
+      "audit": {
+        "state": "hypothesis",
+        "confidence": null,
+        "note": "This proposed combination is a map hypothesis; Wikipedia absence does not establish novelty.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "f4a2445e",
+      "reviewState": "reviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 405,
+      "key": "simenv>gap_dreamtrain:gap",
+      "sourceNodeId": "simenv",
+      "targetNodeId": "gap_dreamtrain",
+      "legacyKind": "gap",
+      "relationshipType": "proposed_combination",
+      "rationale": "Editorially proposed research combination; not a claim that the work already exists.",
+      "reviewed": true,
+      "evidenceGrade": "hypothesis",
+      "audit": {
+        "state": "hypothesis",
+        "confidence": null,
+        "note": "This proposed combination is a map hypothesis; Wikipedia absence does not establish novelty.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "68240a5f",
+      "reviewState": "reviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 406,
+      "key": "visuomotor>gap_dreamtrain:gap",
+      "sourceNodeId": "visuomotor",
+      "targetNodeId": "gap_dreamtrain",
+      "legacyKind": "gap",
+      "relationshipType": "proposed_combination",
+      "rationale": "Editorially proposed research combination; not a claim that the work already exists.",
+      "reviewed": true,
+      "evidenceGrade": "hypothesis",
+      "audit": {
+        "state": "not_assessed",
+        "confidence": null,
+        "note": "",
+        "sources": []
+      },
+      "auditRecordPresent": false,
+      "claimFingerprint": "b56fb3da",
+      "reviewState": "reviewed",
+      "lifecycle": "active",
+      "origin": "research_extension",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 646,
+      "key": "vae>vqcodes:dep",
+      "sourceNodeId": "vae",
+      "targetNodeId": "vqcodes",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "unassessed",
+      "audit": {
+        "state": "not_assessed",
+        "confidence": null,
+        "note": "",
+        "sources": []
+      },
+      "auditRecordPresent": false,
+      "claimFingerprint": "c88c0985",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "research_extension",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 647,
+      "key": "autoencoders>vqcodes:dep",
+      "sourceNodeId": "autoencoders",
+      "targetNodeId": "vqcodes",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "unassessed",
+      "audit": {
+        "state": "not_assessed",
+        "confidence": null,
+        "note": "",
+        "sources": []
+      },
+      "auditRecordPresent": false,
+      "claimFingerprint": "14d7249b",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "research_extension",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 675,
+      "key": "flows>flowmatching:dep",
+      "sourceNodeId": "flows",
+      "targetNodeId": "flowmatching",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "unassessed",
+      "audit": {
+        "state": "not_assessed",
+        "confidence": null,
+        "note": "",
+        "sources": []
+      },
+      "auditRecordPresent": false,
+      "claimFingerprint": "adec3174",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "research_extension",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 676,
+      "key": "diffusion>flowmatching:dep",
+      "sourceNodeId": "diffusion",
+      "targetNodeId": "flowmatching",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "unassessed",
+      "audit": {
+        "state": "not_assessed",
+        "confidence": null,
+        "note": "",
+        "sources": []
+      },
+      "auditRecordPresent": false,
+      "claimFingerprint": "ad40f052",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "research_extension",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 677,
+      "key": "neuralode>flowmatching:dep",
+      "sourceNodeId": "neuralode",
+      "targetNodeId": "flowmatching",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "unassessed",
+      "audit": {
+        "state": "not_assessed",
+        "confidence": null,
+        "note": "",
+        "sources": []
+      },
+      "auditRecordPresent": false,
+      "claimFingerprint": "2507d9b6",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "research_extension",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 678,
+      "key": "optimaltransport>flowmatching:dep",
+      "sourceNodeId": "optimaltransport",
+      "targetNodeId": "flowmatching",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "unassessed",
+      "audit": {
+        "state": "not_assessed",
+        "confidence": null,
+        "note": "",
+        "sources": []
+      },
+      "auditRecordPresent": false,
+      "claimFingerprint": "d7f2ff96",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "research_extension",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    }
+  ]
+}

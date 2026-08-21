@@ -1,0 +1,1628 @@
+{
+  "schemaVersion": "1.0.0",
+  "laneId": "training",
+  "nodes": [
+    {
+      "ordinal": 120,
+      "id": "sgd",
+      "title": "Stochastic gradient descent",
+      "year": 1951,
+      "laneId": "training",
+      "classificationCode": "f",
+      "description": "Robbins–Monro stochastic approximation. The humble optimizer that, with tweaks, trained everything from ADALINE to GPT.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact optimization-method article.",
+          "sources": [
+            {
+              "title": "Stochastic gradient descent",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Stochastic_gradient_descent",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Stochastic%20gradient%20descent&oldid=1360442540",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "robbins-monro-1951",
+            "title": "A Stochastic Approximation Method",
+            "url": "https://doi.org/10.1214/aoms/1177729586",
+            "year": 1951,
+            "kind": "paper",
+            "access": "open_access",
+            "role": "origin",
+            "authors": [
+              "Herbert Robbins",
+              "Sutton Monro"
+            ],
+            "note": ""
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "c13c36b9"
+    },
+    {
+      "ordinal": 121,
+      "id": "catforget",
+      "title": "Catastrophic forgetting identified",
+      "year": 1989,
+      "laneId": "training",
+      "classificationCode": "f",
+      "description": "McCloskey & Cohen: networks overwrite old skills when learning new ones. The 35-year-old bug that still defines the continual-learning agenda.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact phenomenon article; Wikipedia uses catastrophic interference as the canonical title for catastrophic forgetting.",
+          "sources": [
+            {
+              "title": "Catastrophic interference",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Catastrophic_interference",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Catastrophic%20interference&oldid=1360648660",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "172cdb88"
+    },
+    {
+      "ordinal": 122,
+      "id": "relu",
+      "title": "ReLU, dropout & practical depth",
+      "year": 2011,
+      "laneId": "training",
+      "classificationCode": "f",
+      "description": "Two cheap tricks — sparse activations, random deletion — made deep nets trainable without pretraining scaffolds. Simplicity beat cleverness.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Direct for ReLU, but the node also combines dropout and the broader practical-depth transition.",
+          "sources": [
+            {
+              "title": "Rectified linear unit",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Rectified_linear_unit",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Rectified%20linear%20unit&oldid=1364669012",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "6270a781"
+    },
+    {
+      "ordinal": 123,
+      "id": "adam",
+      "title": "Adam → AdamW",
+      "year": 2014,
+      "laneId": "training",
+      "classificationCode": "f",
+      "description": "Adaptive moments became the default optimizer; AdamW's decoupled weight decay became the durable modern variant. A thousand challengers later, the family remains stubbornly dominant.",
+      "dateOverride": {
+        "start": 2014,
+        "end": 2017,
+        "label": "2014-2017",
+        "milestones": [
+          "Adam 2014",
+          "AdamW 2017"
+        ]
+      },
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "The article covers Adam within stochastic gradient descent; AdamW’s decoupled-weight-decay extension is supported by the attached primary paper.",
+          "sources": [
+            {
+              "title": "Stochastic gradient descent",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Stochastic_gradient_descent",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Stochastic%20gradient%20descent&oldid=1360442540",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": "integrated",
+        "tags": [
+          "optimization",
+          "training"
+        ],
+        "questions": [
+          "Which optimizer behavior is actually responsible for robust scaling across architectures and data regimes?"
+        ],
+        "sources": [
+          {
+            "title": "Adam: A Method for Stochastic Optimization",
+            "url": "https://arxiv.org/abs/1412.6980",
+            "year": 2014,
+            "role": "origin",
+            "roleExplicit": true
+          },
+          {
+            "title": "Decoupled Weight Decay Regularization",
+            "url": "https://arxiv.org/abs/1711.05101",
+            "year": 2017,
+            "role": "origin",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "Which optimizer behavior is actually responsible for robust scaling across architectures and data regimes?"
+      ],
+      "direction": null,
+      "claimFingerprint": "ccd76249"
+    },
+    {
+      "ordinal": 124,
+      "id": "batchnorm",
+      "title": "Batch normalization",
+      "year": 2015,
+      "laneId": "training",
+      "classificationCode": "f",
+      "description": "Mini-batch statistics stabilized and accelerated deep-network training, becoming a standard ingredient in convolutional networks and the ResNet lineage.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Direct for BatchNorm but only contextual for the node's BatchNorm-to-LayerNorm normalization era.",
+          "sources": [
+            {
+              "title": "Batch normalization",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Batch_normalization",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Batch%20normalization&oldid=1342628486",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": "integrated",
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "title": "Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift",
+            "url": "https://arxiv.org/abs/1502.03167",
+            "year": 2015,
+            "role": "origin",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "279c606d"
+    },
+    {
+      "ordinal": 125,
+      "id": "layernorm",
+      "title": "Layer normalization",
+      "year": 2016,
+      "laneId": "training",
+      "classificationCode": "f",
+      "description": "Normalization across a layer's features removed dependence on batch statistics. It became the normalization backbone of recurrent networks and transformers.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "The article's layer-normalization section directly covers the development; the former exact title redirects here.",
+          "sources": [
+            {
+              "title": "Normalization (machine learning)",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Normalization_(machine_learning)",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Normalization%20%28machine%20learning%29&oldid=1340395252",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": "integrated",
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "title": "Layer Normalization",
+            "url": "https://arxiv.org/abs/1607.06450",
+            "year": 2016,
+            "role": "origin",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "dd3191c5"
+    },
+    {
+      "ordinal": 126,
+      "id": "distillation",
+      "title": "Knowledge distillation",
+      "year": 2015,
+      "laneId": "training",
+      "classificationCode": "a",
+      "description": "Big teacher → small student. Now the pipeline by which frontier capability reaches phones and open models.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact technique article.",
+          "sources": [
+            {
+              "title": "Knowledge distillation",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Knowledge_distillation",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Knowledge%20distillation&oldid=1362290372",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Active” is an editorial assessment of current activity, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": "integrated",
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "title": "Distilling the Knowledge in a Neural Network",
+            "url": "https://arxiv.org/abs/1503.02531",
+            "year": 2015,
+            "role": "origin",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "61a260e0"
+    },
+    {
+      "ordinal": 127,
+      "id": "transfer",
+      "title": "Transfer learning era",
+      "year": 2018,
+      "laneId": "training",
+      "classificationCode": "f",
+      "description": "Pretraining followed by task adaptation became a dominant workflow across many domains, reducing but not eliminating from-scratch training and helping create the model-hub economy.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact field article for the pretrain-and-fine-tune development.",
+          "sources": [
+            {
+              "title": "Transfer learning",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Transfer_learning",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Transfer%20learning&oldid=1360633829",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "3e2f8f82"
+    },
+    {
+      "ordinal": 128,
+      "id": "selfsup",
+      "title": "Self-supervised learning",
+      "year": 2015,
+      "laneId": "training",
+      "classificationCode": "f",
+      "description": "Learning supervisory signals from the data itself: contrastive learning, masked prediction, and predictive pretraining. SimCLR, MAE, wav2vec and BERT made it a shared foundation across vision, speech and language.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact learning-paradigm article.",
+          "sources": [
+            {
+              "title": "Self-supervised learning",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Self-supervised_learning",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Self-supervised%20learning&oldid=1361866105",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": "integrated",
+        "tags": [
+          "training",
+          "vision",
+          "speech",
+          "language"
+        ],
+        "questions": [
+          "Which predictive objectives learn representations that transfer reliably across modalities and distribution shifts?"
+        ],
+        "sources": [
+          {
+            "title": "A Simple Framework for Contrastive Learning of Visual Representations",
+            "url": "https://arxiv.org/abs/2002.05709",
+            "year": 2020,
+            "role": "supporting_result",
+            "roleExplicit": true
+          },
+          {
+            "title": "Masked Autoencoders Are Scalable Vision Learners",
+            "url": "https://arxiv.org/abs/2111.06377",
+            "year": 2021,
+            "role": "supporting_result",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "Which predictive objectives learn representations that transfer reliably across modalities and distribution shifts?"
+      ],
+      "direction": null,
+      "claimFingerprint": "532882d5"
+    },
+    {
+      "ordinal": 129,
+      "id": "bitterlesson",
+      "title": "The Bitter Lesson",
+      "year": 2019,
+      "laneId": "training",
+      "classificationCode": "f",
+      "description": "Sutton's essay: general methods riding compute beat human-crafted cleverness, every time so far. The scaling era's ideology — and its critics' target.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article for Sutton's 2019 essay and principle.",
+          "sources": [
+            {
+              "title": "Bitter lesson",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Bitter_lesson",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Bitter%20lesson&oldid=1343753531",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "affc6302"
+    },
+    {
+      "ordinal": 130,
+      "id": "scalinglaws",
+      "title": "Scaling laws → Chinchilla",
+      "year": 2020,
+      "laneId": "training",
+      "classificationCode": "f",
+      "description": "Loss falls as a power law in compute, data, parameters (Kaplan 2020); Chinchilla corrected the data ratio (2022). Research became engineering.",
+      "dateOverride": {
+        "start": 2020,
+        "end": 2022,
+        "label": "2020-2022",
+        "milestones": [
+          "Kaplan scaling laws 2020",
+          "Chinchilla 2022"
+        ]
+      },
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Direct umbrella article for neural scaling laws, including compute, data, and inference scaling.",
+          "sources": [
+            {
+              "title": "Neural scaling law",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Neural_scaling_law",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Neural%20scaling%20law&oldid=1358720850",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": "integrated",
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "title": "Scaling Laws for Neural Language Models",
+            "url": "https://arxiv.org/abs/2001.08361",
+            "year": 2020,
+            "role": "origin",
+            "roleExplicit": true
+          },
+          {
+            "title": "Training Compute-Optimal Large Language Models",
+            "url": "https://arxiv.org/abs/2203.15556",
+            "year": 2022,
+            "role": "supporting_result",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "4f4a0a7b"
+    },
+    {
+      "ordinal": 131,
+      "id": "lora",
+      "title": "LoRA & parameter-efficient tuning",
+      "year": 2021,
+      "laneId": "training",
+      "classificationCode": "f",
+      "description": "Low-rank adapters: customize a giant model on one GPU. Democratized fine-tuning and powered the open-weight explosion.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact Low-Rank Adaptation technique article.",
+          "sources": [
+            {
+              "title": "LoRA (machine learning)",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/LoRA_(machine_learning)",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=LoRA%20%28machine%20learning%29&oldid=1363896193",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": "integrated",
+        "tags": [
+          "training",
+          "efficiency",
+          "adaptation"
+        ],
+        "questions": [
+          "How should low-rank adaptation interact with quantization, continual updates and model merging?"
+        ],
+        "sources": [
+          {
+            "title": "QLoRA: Efficient Finetuning of Quantized LLMs",
+            "url": "https://arxiv.org/abs/2305.14314",
+            "year": 2023,
+            "role": "supporting_result",
+            "roleExplicit": true
+          },
+          {
+            "title": "LoRA: Low-Rank Adaptation of Large Language Models",
+            "url": "https://arxiv.org/abs/2106.09685",
+            "year": 2021,
+            "role": "origin",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "How should low-rank adaptation interact with quantization, continual updates and model merging?"
+      ],
+      "direction": null,
+      "claimFingerprint": "9e81ed69"
+    },
+    {
+      "ordinal": 132,
+      "id": "quant",
+      "title": "Quantization & sparsity",
+      "year": 2022,
+      "laneId": "training",
+      "classificationCode": "a",
+      "description": "INT8→FP4, pruning and structured sparsity shrink models for deployment while trading off memory, throughput and accuracy.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Relevant umbrella for quantization, pruning and sparsity; the repaired node now limits itself to model compression.",
+          "sources": [
+            {
+              "title": "Model compression",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Model_compression",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Model%20compression&oldid=1352523580",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Active” is an editorial assessment of current activity, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": "integrated",
+        "tags": [
+          "efficiency",
+          "compression",
+          "inference"
+        ],
+        "questions": [
+          "How far can post-training compression go before rare, small or safety-critical behaviors degrade in ways aggregate benchmarks miss?"
+        ],
+        "sources": [
+          {
+            "title": "GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers",
+            "url": "https://arxiv.org/abs/2210.17323",
+            "year": 2022,
+            "role": "supporting_result",
+            "roleExplicit": true
+          },
+          {
+            "title": "SmoothQuant: Accurate and Efficient Post-Training Quantization for Large Language Models",
+            "url": "https://arxiv.org/abs/2211.10438",
+            "year": 2022,
+            "role": "supporting_result",
+            "roleExplicit": true
+          },
+          {
+            "title": "SparseGPT: Massive Language Models Can Be Accurately Pruned in One-Shot",
+            "url": "https://arxiv.org/abs/2301.00774",
+            "year": 2023,
+            "role": "supporting_result",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "How far can post-training compression go before rare, small or safety-critical behaviors degrade in ways aggregate benchmarks miss?"
+      ],
+      "direction": null,
+      "claimFingerprint": "28024d04"
+    },
+    {
+      "ordinal": 133,
+      "id": "flash",
+      "title": "FlashAttention & kernel craft",
+      "year": 2022,
+      "laneId": "training",
+      "classificationCode": "f",
+      "description": "IO-aware exact attention. Hardware-sympathetic algorithms beat clever approximations — and killed the linear-attention wave.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "FlashAttention currently redirects into the transformer article; there is no standalone canonical page for the wider kernel-craft node.",
+          "sources": [
+            {
+              "title": "Transformer (deep learning)",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Transformer_(deep_learning)",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Transformer%20%28deep%20learning%29&oldid=1362319941",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": "integrated",
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "title": "FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness",
+            "url": "https://arxiv.org/abs/2205.14135",
+            "year": 2022,
+            "role": "origin",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "56ba512c"
+    },
+    {
+      "ordinal": 134,
+      "id": "datacentric",
+      "title": "Data curation & synthetic data",
+      "year": 2023,
+      "laneId": "training",
+      "classificationCode": "a",
+      "description": "Mixtures, dedup, quality filters — then models teaching models (phi, distilled reasoning traces). Data quality as the real moat.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Direct for the data-centric approach but broader curation and synthetic-data claims remain contextual.",
+          "sources": [
+            {
+              "title": "Data-centric AI",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Data-centric_AI",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Data-centric%20AI&oldid=1353601724",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Active” is an editorial assessment of current activity, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": "integrated",
+        "tags": [
+          "data",
+          "evaluation"
+        ],
+        "questions": [
+          "How can dataset provenance, quality and representativeness remain auditable at web scale?"
+        ],
+        "sources": [
+          {
+            "title": "Datasheets for Datasets",
+            "url": "https://arxiv.org/abs/1803.09010",
+            "year": 2018,
+            "role": "adjacent_work",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "How can dataset provenance, quality and representativeness remain auditable at web scale?"
+      ],
+      "direction": null,
+      "claimFingerprint": "46e32075"
+    },
+    {
+      "ordinal": 135,
+      "id": "testtime",
+      "title": "Test-time compute scaling",
+      "year": 2024,
+      "laneId": "training",
+      "classificationCode": "h",
+      "description": "Think longer instead of training bigger — the o1 insight. A second scaling axis, with search and verification in the loop.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "high_activity",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "The current test-time-compute title redirects to this broader scaling-law article.",
+          "sources": [
+            {
+              "title": "Neural scaling law",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Neural_scaling_law",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Neural%20scaling%20law&oldid=1358720850",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Hot frontier” is a time-sensitive editorial assessment, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "70207f6f"
+    },
+    {
+      "ordinal": 136,
+      "id": "grpo",
+      "title": "Efficient RL recipes (GRPO, R1)",
+      "year": 2025,
+      "laneId": "training",
+      "classificationCode": "h",
+      "description": "DeepSeek's cheap RL-for-reasoning stack: frontier capability at a fraction of assumed cost. Efficiency itself as geopolitical disruption.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "high_activity",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "The DeepSeek article covers R1 and GRPO, but it is broader than the node's efficient-RL recipe.",
+          "sources": [
+            {
+              "title": "DeepSeek",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/DeepSeek",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=DeepSeek&oldid=1367645740",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Hot frontier” is a time-sensitive editorial assessment, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "b3a54401"
+    },
+    {
+      "ordinal": 137,
+      "id": "continual",
+      "title": "Continual learning push",
+      "year": 2025,
+      "laneId": "training",
+      "classificationCode": "h",
+      "description": "Nested learning, Titans-style memory, weight consolidation: the 2025–26 assault on catastrophic forgetting. Frontier labs now call it solvable.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "high_activity",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Continual learning currently redirects to this canonical synonymous field article.",
+          "sources": [
+            {
+              "title": "Incremental learning",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Incremental_learning",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Incremental%20learning&oldid=1352716927",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Hot frontier” is a time-sensitive editorial assessment, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "9bb22de9"
+    },
+    {
+      "ordinal": 138,
+      "id": "dp",
+      "title": "Differential privacy in ML",
+      "year": 2016,
+      "laneId": "training",
+      "classificationCode": "a",
+      "description": "Provable privacy budgets for training. Deployed in census and keyboards; a steady niche rather than a wave.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Exact privacy formalism, but broader than its machine-learning deployment summarized by the node.",
+          "sources": [
+            {
+              "title": "Differential privacy",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Differential_privacy",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Differential%20privacy&oldid=1366890541",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Active” is an editorial assessment of current activity, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": "integrated",
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "title": "Deep Learning with Differential Privacy",
+            "url": "https://arxiv.org/abs/1607.00133",
+            "year": 2016,
+            "role": "origin",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "7600b219"
+    },
+    {
+      "ordinal": 139,
+      "id": "federated",
+      "title": "Federated learning",
+      "year": 2017,
+      "laneId": "training",
+      "classificationCode": "a",
+      "description": "Training across devices or organizations without centralizing their raw data. It is deployed in privacy-sensitive settings and remains an active research area in optimization, security, and heterogeneous clients.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact learning-paradigm article.",
+          "sources": [
+            {
+              "title": "Federated learning",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Federated_learning",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Federated%20learning&oldid=1366715970",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Active” is an editorial assessment of current activity, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": "integrated",
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "title": "Communication-Efficient Learning of Deep Networks from Decentralized Data",
+            "url": "https://arxiv.org/abs/1602.05629",
+            "year": 2016,
+            "role": "origin",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "33de5c64"
+    },
+    {
+      "ordinal": 140,
+      "id": "dltheory",
+      "title": "Deep learning theory (NTK, double descent)",
+      "year": 2019,
+      "laneId": "training",
+      "classificationCode": "a",
+      "description": "Why do overparameterized nets generalize? NTK, double descent, lottery tickets — insight-rich, prediction-poor. Theory still trails practice by years.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Direct for NTK, one strand of a node that also combines double descent and lottery-ticket theory.",
+          "sources": [
+            {
+              "title": "Neural tangent kernel",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Neural_tangent_kernel",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Neural%20tangent%20kernel&oldid=1359706673",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Active” is an editorial assessment of current activity, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "abe229ce"
+    },
+    {
+      "ordinal": 141,
+      "id": "gap_memory",
+      "title": "Sleep & memory consolidation",
+      "year": 2026,
+      "laneId": "training",
+      "classificationCode": "g",
+      "description": "Research direction: develop principled offline consolidation that transfers episodic experience into durable behavior without destructive forgetting. Long context and external memory address related but different problems.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "open_direction",
+        "significance": "not_assessed",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "hypothesis",
+          "confidence": null,
+          "note": "This is a map hypothesis; Wikipedia absence does not establish that the proposed gap is novel.",
+          "sources": []
+        },
+        "mapStatus": {
+          "state": "hypothesis",
+          "confidence": null,
+          "note": "This is explicitly a proposed gap; Wikipedia absence is not evidence that the proposal is novel.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "title": "TRACE: A Comprehensive Benchmark for Continual Learning in Large Language Models",
+            "url": "https://arxiv.org/abs/2310.06762",
+            "year": 2023,
+            "role": "benchmark",
+            "roleExplicit": true
+          },
+          {
+            "title": "Not Just After One: Sleep-Inspired Replay Prevents Catastrophic Forgetting After Sequential Tasks",
+            "url": "https://arxiv.org/abs/2606.08447",
+            "year": 2026,
+            "role": "supporting_result",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "Can episodic experience be consolidated into durable parametric behavior while bounding forgetting and outperforming long-context, retrieval, and rehearsal controls?"
+      ],
+      "direction": {
+        "question": "Can episodic experience be consolidated into durable parametric behavior while bounding forgetting and outperforming long-context, retrieval, and rehearsal controls?",
+        "closureCriteria": "Across a long ordered experience stream, demonstrate retained prior-task performance, positive transfer, and stable general capability while beating matched replay-buffer, rehearsal, retrieval, long-context, and parameter-expansion controls at equal storage and compute.",
+        "partialResults": [
+          "TRACE exposes severe capability and instruction-following degradation during sequential LLM adaptation.",
+          "Delayed sleep-inspired replay can partially restore multiple sequentially learned tasks.",
+          "Replay, regularization, adapters, and dynamic expansion mitigate forgetting but do not establish general durable consolidation."
+        ],
+        "starters": [
+          "Individual: Compare delayed generative replay, immediate rehearsal, and LoRA isolation on a small TRACE stream with explicit storage and compute accounting.",
+          "Small lab: Consolidate episodic traces into a 7B model and compare parametric retention against retrieval, long context, and equal-size raw replay buffers.",
+          "Well-funded lab: Run a months-long multimodal experience stream with periodic consolidation, measuring forgetting, transfer, behavior drift, and retained safety properties."
+        ],
+        "claimState": "editorial_hypothesis",
+        "asOf": "2026-08-04",
+        "confidence": "high",
+        "noveltyReview": {
+          "status": "targeted_search",
+          "checkedAt": "2026-08-04",
+          "scope": "arXiv and official repositories for continual learning, catastrophic forgetting, generative replay, sleep-inspired consolidation, neural memory, and LLM adaptation.",
+          "note": "The field is crowded, but the targeted search did not find a frontier-scale system satisfying durable consolidation and matched external-memory controls."
+        },
+        "counterexamples": [
+          "Reasoning-augmented continual learning reduces some forgetting on TRACE.",
+          "Sleep-inspired replay partially restores prior tasks after multiple sequential updates.",
+          "Titans provides test-time neural memory but is not equivalent to offline parametric consolidation.",
+          "Long context and retrieval can preserve access to episodes without consolidating them into durable behavior."
+        ],
+        "literature": [
+          {
+            "t": "TRACE: A Comprehensive Benchmark for Continual Learning in Large Language Models",
+            "u": "https://arxiv.org/abs/2310.06762",
+            "y": 2023,
+            "role": "benchmark"
+          },
+          {
+            "t": "Not Just After One: Sleep-Inspired Replay Prevents Catastrophic Forgetting After Sequential Tasks",
+            "u": "https://arxiv.org/abs/2606.08447",
+            "y": 2026,
+            "role": "supporting_result"
+          }
+        ],
+        "resources": {
+          "benchmarks": [
+            "TRACE",
+            "CLINC150",
+            "Split-CIFAR100",
+            "DomainNet",
+            "CLEAR",
+            "RULER or LongBench as external-memory controls"
+          ],
+          "code": [
+            "https://github.com/ContinualAI/avalanche",
+            "https://github.com/aimagelab/mammoth",
+            "https://github.com/Wang-ML-Lab/llm-continual-learning-survey"
+          ],
+          "datasets": [
+            "TRACE eight-task stream",
+            "CLINC150",
+            "Versioned domain corpora with frozen held-out evaluations"
+          ],
+          "estimated": {
+            "individual": "1 x 24-48 GB GPU with a 0.5B-3B model for 3-7 days",
+            "smallLab": "8 x 80 GB GPUs for 7B sequential runs over 2-4 weeks",
+            "wellFundedLab": "64-128 accelerators for 13B-70B long-horizon studies over 4-8 weeks or longer"
+          }
+        },
+        "crowdedness": "High in continual learning; lower in biologically inspired offline consolidation at LLM scale.",
+        "tractability": "Medium for 1B-7B studies and low for frontier-scale long-horizon consolidation."
+      },
+      "claimFingerprint": "3fcb611c"
+    },
+    {
+      "ordinal": 312,
+      "id": "mixedprecision",
+      "title": "Mixed-precision training",
+      "year": 2017,
+      "laneId": "training",
+      "classificationCode": "f",
+      "description": "Lower-precision arithmetic with loss scaling accelerated training and reduced memory without sacrificing model quality. It became a standard training-systems technique, distinct from inference quantization.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        },
+        "mapStatus": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": false,
+        "mapStatus": false
+      },
+      "research": {
+        "tier": "core",
+        "tags": [
+          "systems",
+          "efficiency",
+          "hardware"
+        ],
+        "questions": [
+          "How low can training precision go while retaining predictable convergence and debuggable failure modes?"
+        ],
+        "sources": [
+          {
+            "title": "Mixed Precision Training",
+            "url": "https://arxiv.org/abs/1710.03740",
+            "year": 2017,
+            "role": "origin",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "How low can training precision go while retaining predictable convergence and debuggable failure modes?"
+      ],
+      "direction": null,
+      "claimFingerprint": "3799a086"
+    },
+    {
+      "ordinal": 332,
+      "id": "maml",
+      "title": "Deep meta-learning (MAML)",
+      "year": 2017,
+      "laneId": "training",
+      "classificationCode": "a",
+      "description": "Model-Agnostic Meta-Learning optimized parameters for rapid adaptation from a few examples. It made learning-to-learn concrete, though foundation-model adaptation later changed the center of gravity.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        },
+        "mapStatus": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": false,
+        "mapStatus": false
+      },
+      "research": {
+        "tier": "specialist",
+        "tags": [
+          "training",
+          "adaptation",
+          "optimization"
+        ],
+        "questions": [
+          "What remains uniquely useful about gradient-based meta-learning once large pretrained models can adapt in context?"
+        ],
+        "sources": [
+          {
+            "title": "Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks",
+            "url": "https://arxiv.org/abs/1703.03400",
+            "year": 2017,
+            "role": "origin",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "What remains uniquely useful about gradient-based meta-learning once large pretrained models can adapt in context?"
+      ],
+      "direction": null,
+      "claimFingerprint": "52dae70d"
+    }
+  ]
+}

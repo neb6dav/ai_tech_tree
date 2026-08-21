@@ -1,0 +1,1962 @@
+{
+  "schemaVersion": "1.0.0",
+  "laneId": "rl",
+  "nodes": [
+    {
+      "ordinal": 66,
+      "id": "bandits",
+      "title": "Multi-armed bandits",
+      "year": 1952,
+      "laneId": "rl",
+      "classificationCode": "f",
+      "description": "Robbins formalized explore-vs-exploit. From clinical trials to UCB — the mathematical kernel inside MCTS and every recommender.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "Multi-armed bandit",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Multi-armed_bandit",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Multi-armed%20bandit&oldid=1361868534",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "robbins-sequential-design-1952",
+            "title": "Some Aspects of the Sequential Design of Experiments",
+            "url": "https://projecteuclid.org/journals/bulletin-of-the-american-mathematical-society/volume-58/issue-5/Some-aspects-of-the-sequential-design-of-experiments/bams/1183517370.pdf",
+            "year": 1952,
+            "kind": "paper",
+            "access": "open_access",
+            "role": "origin",
+            "authors": [
+              "Herbert Robbins"
+            ],
+            "note": ""
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "0d5118ff"
+    },
+    {
+      "ordinal": 67,
+      "id": "mdp",
+      "title": "MDPs & Bellman equations",
+      "year": 1957,
+      "laneId": "rl",
+      "classificationCode": "f",
+      "description": "A mathematical framework for sequential decisions under uncertainty, with dynamic programming and Bellman equations underpinning many planning and value-based reinforcement-learning methods.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "Markov decision process",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Markov_decision_process",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Markov%20decision%20process&oldid=1366464633",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "bellman-mdp-1957",
+            "title": "A Markovian Decision Process",
+            "url": "https://iumj.org/article/1116/",
+            "year": 1957,
+            "kind": "paper",
+            "access": "open_access",
+            "role": "origin",
+            "authors": [
+              "Richard Bellman"
+            ],
+            "note": ""
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "c2869758"
+    },
+    {
+      "ordinal": 68,
+      "id": "samuel",
+      "title": "Samuel's checkers learner",
+      "year": 1959,
+      "laneId": "rl",
+      "classificationCode": "f",
+      "description": "Self-play plus a learned evaluation on 1950s hardware — machine learning's public debut and TD learning's ancestor.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "The computer-players section directly documents Arthur Samuel's adaptive checkers program.",
+          "sources": [
+            {
+              "title": "English draughts",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/English_draughts",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=English%20draughts&oldid=1356339082",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "d5d5edbf"
+    },
+    {
+      "ordinal": 69,
+      "id": "tdlearning",
+      "title": "Temporal-difference learning",
+      "year": 1988,
+      "laneId": "rl",
+      "classificationCode": "f",
+      "description": "Sutton: learn predictions from later predictions. RL's core algorithmic idea — later found running in dopamine neurons.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "Temporal difference learning",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Temporal_difference_learning",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Temporal%20difference%20learning&oldid=1361436562",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "sutton-td-1988",
+            "title": "Learning to Predict by the Methods of Temporal Differences",
+            "url": "https://incompleteideas.net/publications.html",
+            "year": 1988,
+            "kind": "paper",
+            "access": "author_open",
+            "role": "origin",
+            "authors": [
+              "Richard S. Sutton"
+            ],
+            "note": "Author publication index includes the paper and erratum."
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "fe54fa9c"
+    },
+    {
+      "ordinal": 70,
+      "id": "qlearning",
+      "title": "Q-learning",
+      "year": 1989,
+      "laneId": "rl",
+      "classificationCode": "f",
+      "description": "Watkins' off-policy value learning with a convergence proof. Tabular RL matured — then waited 24 years for deep nets.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "Q-learning",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Q-learning",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Q-learning&oldid=1365629760",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "watkins-dayan-qlearning-1992",
+            "title": "Q-Learning",
+            "url": "https://www.gatsby.ucl.ac.uk/~dayan/papers/wd92.html",
+            "year": 1992,
+            "kind": "paper",
+            "access": "author_open",
+            "role": "origin",
+            "authors": [
+              "Christopher J. C. H. Watkins",
+              "Peter Dayan"
+            ],
+            "note": ""
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "52c61281"
+    },
+    {
+      "ordinal": 71,
+      "id": "tdgammon",
+      "title": "TD-Gammon",
+      "year": 1992,
+      "laneId": "rl",
+      "classificationCode": "f",
+      "description": "Neural net + TD self-play reached top-human backgammon. The AlphaGo recipe, 24 years early — then largely ignored for a decade.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "TD-Gammon",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/TD-Gammon",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=TD-Gammon&oldid=1343006814",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "2d092a98"
+    },
+    {
+      "ordinal": 72,
+      "id": "policygrad",
+      "title": "Policy gradients (REINFORCE → actor–critic)",
+      "year": 1992,
+      "laneId": "rl",
+      "classificationCode": "f",
+      "description": "REINFORCE optimized policies directly from sampled returns; actor–critic methods paired that policy with a learned value function. This is the missing bridge to PPO and RLHF.",
+      "dateOverride": {
+        "start": 1992,
+        "end": 2000,
+        "label": "1992-2000",
+        "milestones": [
+          "REINFORCE 1992",
+          "Policy-gradient actor-critic consolidation, late 1990s"
+        ]
+      },
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Direct article covering REINFORCE, actor-critic methods, TRPO, and PPO.",
+          "sources": [
+            {
+              "title": "Policy gradient method",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Policy_gradient_method",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Policy%20gradient%20method&oldid=1358016730",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "williams-reinforce-1992",
+            "title": "Simple Statistical Gradient-Following Algorithms for Connectionist Reinforcement Learning",
+            "url": "https://doi.org/10.1007/BF00992696",
+            "year": 1992,
+            "kind": "paper",
+            "access": "publisher_record",
+            "role": "origin",
+            "authors": [
+              "Ronald J. Williams"
+            ],
+            "note": ""
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "4e09913e"
+    },
+    {
+      "ordinal": 73,
+      "id": "dopamine",
+      "title": "Dopamine = TD error",
+      "year": 1997,
+      "laneId": "rl",
+      "classificationCode": "f",
+      "description": "Schultz's recordings matched TD prediction error. Neuroscience validated RL's core signal — a rare two-way street between AI and brain.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "The reward section directly covers dopamine as a temporal-difference-like reward-prediction-error signal.",
+          "sources": [
+            {
+              "title": "Dopamine",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Dopamine",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Dopamine&oldid=1366608360",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "28231265"
+    },
+    {
+      "ordinal": 74,
+      "id": "rlbook",
+      "title": "RL synthesis (Sutton & Barto)",
+      "year": 1998,
+      "laneId": "rl",
+      "classificationCode": "f",
+      "description": "REINFORCE, actor-critic, the textbook. Reinforcement learning becomes a coherent field with a shared language.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Best field article; it cites and uses Sutton and Barto's synthesis, but the book lacks a dedicated page.",
+          "sources": [
+            {
+              "title": "Reinforcement learning",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Reinforcement_learning",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Reinforcement%20learning&oldid=1365856245",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "sutton-barto-rl-2018",
+            "title": "Reinforcement Learning: An Introduction, Second Edition",
+            "url": "https://www.incompleteideas.net/book/the-book-2nd.html",
+            "year": 2018,
+            "kind": "book",
+            "access": "author_open",
+            "role": "survey",
+            "authors": [
+              "Richard S. Sutton",
+              "Andrew G. Barto"
+            ],
+            "note": "The node marks the 1998 synthesis; this link is the authorized, updated 2018 edition."
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "34f73e02"
+    },
+    {
+      "ordinal": 75,
+      "id": "hrl",
+      "title": "Hierarchical RL (options)",
+      "year": 1999,
+      "laneId": "rl",
+      "classificationCode": "d",
+      "description": "Temporal abstraction: learn skills, compose them. Perennially promising, perpetually stuck — LLM planners now route around it from above.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "dormant",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "The article explicitly includes modular and hierarchical reinforcement learning as a research topic; no dedicated current page.",
+          "sources": [
+            {
+              "title": "Reinforcement learning",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Reinforcement_learning",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Reinforcement%20learning&oldid=1365856245",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Dormant” is an editorial assessment; no encyclopedic fate finding is inferred from article or link presence.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "df0dfb29"
+    },
+    {
+      "ordinal": 76,
+      "id": "dqn",
+      "title": "DQN — Atari from pixels",
+      "year": 2013,
+      "laneId": "rl",
+      "classificationCode": "f",
+      "description": "Deep nets + Q-learning + experience replay: one algorithm, 49 games, superhuman on many. Deep RL ignites (and DeepMind gets acquired).",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Directly covers Deep Q-Network; DQN itself is a disambiguation page.",
+          "sources": [
+            {
+              "title": "Deep reinforcement learning",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Deep_reinforcement_learning",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Deep%20reinforcement%20learning&oldid=1366321848",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": "integrated",
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "title": "Playing Atari with Deep Reinforcement Learning",
+            "url": "https://arxiv.org/abs/1312.5602",
+            "year": 2013,
+            "role": "origin",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "f79234b8"
+    },
+    {
+      "ordinal": 77,
+      "id": "alphago",
+      "title": "AlphaGo beats Lee Sedol",
+      "year": 2016,
+      "laneId": "rl",
+      "classificationCode": "f",
+      "description": "Policy/value networks + MCTS + self-play. Move 37 became the era's cultural shockwave — a decade ahead of expert predictions.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact event article matching the node.",
+          "sources": [
+            {
+              "title": "AlphaGo versus Lee Sedol",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/AlphaGo_versus_Lee_Sedol",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=AlphaGo%20versus%20Lee%20Sedol&oldid=1367441747",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "silver-alphago-2016",
+            "title": "Mastering the Game of Go with Deep Neural Networks and Tree Search",
+            "url": "https://doi.org/10.1038/nature16961",
+            "year": 2016,
+            "kind": "paper",
+            "access": "publisher_record",
+            "role": "origin",
+            "authors": [
+              "David Silver et al."
+            ],
+            "note": ""
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "9157285c"
+    },
+    {
+      "ordinal": 78,
+      "id": "alphazero",
+      "title": "AlphaZero / MuZero",
+      "year": 2017,
+      "laneId": "rl",
+      "classificationCode": "f",
+      "description": "Tabula-rasa self-play mastering Go, chess, shogi; MuZero learns the rules too. Search and learning unified — the lane's high-water mark.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Directly covers AlphaZero; the bundled MuZero development has its own page.",
+          "sources": [
+            {
+              "title": "AlphaZero",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/AlphaZero",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=AlphaZero&oldid=1364009325",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": "integrated",
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "title": "Mastering Chess and Shogi by Self-Play with a General Reinforcement Learning Algorithm",
+            "url": "https://arxiv.org/abs/1712.01815",
+            "year": 2017,
+            "role": "origin",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "7413a5d8"
+    },
+    {
+      "ordinal": 79,
+      "id": "a3cppo",
+      "title": "Policy-gradient workhorses (PPO)",
+      "year": 2017,
+      "laneId": "rl",
+      "classificationCode": "f",
+      "description": "A3C introduced asynchronous actor-critic training, and PPO became a common early optimization method for RLHF as well as a durable control baseline; later preference-training systems also use several alternatives.",
+      "dateOverride": {
+        "start": 2015,
+        "end": 2017,
+        "label": "2015-2017",
+        "milestones": [
+          "TRPO 2015",
+          "PPO 2017"
+        ]
+      },
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article for PPO and its TRPO predecessor.",
+          "sources": [
+            {
+              "title": "Proximal policy optimization",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Proximal_policy_optimization",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Proximal%20policy%20optimization&oldid=1355448120",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "2bc97d81"
+    },
+    {
+      "ordinal": 80,
+      "id": "curiosity",
+      "title": "Curiosity & intrinsic motivation",
+      "year": 2017,
+      "laneId": "rl",
+      "classificationCode": "d",
+      "description": "Rewards from novelty and prediction error. Hot 2017–19, then faded — exploration at scale remains genuinely unsolved.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "dormant",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article for curiosity-driven intrinsic rewards.",
+          "sources": [
+            {
+              "title": "Intrinsic motivation (artificial intelligence)",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Intrinsic_motivation_(artificial_intelligence)",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Intrinsic%20motivation%20%28artificial%20intelligence%29&oldid=1364573035",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Dormant” is an editorial assessment; no encyclopedic fate finding is inferred from article or link presence.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "7ca0931a"
+    },
+    {
+      "ordinal": 81,
+      "id": "marl",
+      "title": "Multi-agent RL",
+      "year": 2017,
+      "laneId": "rl",
+      "classificationCode": "a",
+      "description": "Emergent cooperation, competition and tool use (hide-and-seek). Re-energized by LLM agent societies and mechanism-design questions.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "Multi-agent reinforcement learning",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Multi-agent_reinforcement_learning",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Multi-agent%20reinforcement%20learning&oldid=1362396654",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Active” is an editorial assessment of current activity, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "303f6db8"
+    },
+    {
+      "ordinal": 82,
+      "id": "worldmodels18",
+      "title": "World Models (Ha & Schmidhuber)",
+      "year": 2018,
+      "laneId": "rl",
+      "classificationCode": "f",
+      "description": "VAE+RNN agent trained inside its own learned dream. The seed of today's world-model wave — imagination as a training ground.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Best labeled article for learned world models; not specific to the Ha-Schmidhuber paper alone.",
+          "sources": [
+            {
+              "title": "World model (artificial intelligence)",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/World_model_(artificial_intelligence)",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=World%20model%20%28artificial%20intelligence%29&oldid=1366501227",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "c925964c"
+    },
+    {
+      "ordinal": 83,
+      "id": "modelbased",
+      "title": "Model-based RL (Dreamer)",
+      "year": 2019,
+      "laneId": "rl",
+      "classificationCode": "a",
+      "description": "Learn the world, plan in imagination. The sample-efficiency path that matured into world-model agents for robots and games.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "The algorithms section directly covers model-based deep RL and Dreamer; no dedicated current page.",
+          "sources": [
+            {
+              "title": "Deep reinforcement learning",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Deep_reinforcement_learning",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Deep%20reinforcement%20learning&oldid=1366321848",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Active” is an editorial assessment of current activity, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "c4842742"
+    },
+    {
+      "ordinal": 84,
+      "id": "dota5",
+      "title": "OpenAI Five & AlphaStar",
+      "year": 2019,
+      "laneId": "rl",
+      "classificationCode": "f",
+      "description": "Superhuman Dota 2 and StarCraft II via massive self-play. Peak-then-pivot: point proven, labs promptly abandoned esports for language.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Directly covers one half of the bundled node; AlphaStar has a separate page.",
+          "sources": [
+            {
+              "title": "OpenAI Five",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/OpenAI_Five",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=OpenAI%20Five&oldid=1354051093",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "542c686b"
+    },
+    {
+      "ordinal": 85,
+      "id": "openended",
+      "title": "Open-endedness (POET)",
+      "year": 2019,
+      "laneId": "rl",
+      "classificationCode": "a",
+      "description": "Systems that endlessly generate their own challenges. Niche but philosophically central — the question behind 'never-ending' agents.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Its open-problems section directly discusses open-ended evolution; POET lacks a dedicated page.",
+          "sources": [
+            {
+              "title": "Artificial life",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Artificial_life",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Artificial%20life&oldid=1367099923",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Active” is an editorial assessment of current activity, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "810aa05f"
+    },
+    {
+      "ordinal": 86,
+      "id": "offlinerl",
+      "title": "Offline RL & sequence policies",
+      "year": 2020,
+      "laneId": "rl",
+      "classificationCode": "a",
+      "description": "Learn policies from logged trajectories without online exploration. Distribution shift remains hard, while Decision Transformer reframed policy learning as sequence modeling and the field feeds robotics and preference pipelines.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "The article directly defines offline or batch RL; no dedicated offline-RL page.",
+          "sources": [
+            {
+              "title": "Deep reinforcement learning",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Deep_reinforcement_learning",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Deep%20reinforcement%20learning&oldid=1366321848",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Active” is an editorial assessment of current activity, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": "integrated",
+        "tags": [
+          "reinforcement learning",
+          "sequence modeling",
+          "robotics"
+        ],
+        "questions": [
+          "How can offline policies avoid extrapolating beyond dataset support while still improving over the behavior policy?"
+        ],
+        "sources": [
+          {
+            "title": "Conservative Q-Learning for Offline Reinforcement Learning",
+            "url": "https://arxiv.org/abs/2006.04779",
+            "year": 2020,
+            "role": "supporting_result",
+            "roleExplicit": true
+          },
+          {
+            "title": "Decision Transformer",
+            "url": "https://arxiv.org/abs/2106.01345",
+            "year": 2021,
+            "role": "supporting_result",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "How can offline policies avoid extrapolating beyond dataset support while still improving over the behavior policy?"
+      ],
+      "direction": null,
+      "claimFingerprint": "54ab2809"
+    },
+    {
+      "ordinal": 87,
+      "id": "gato",
+      "title": "Generalist agents (Gato)",
+      "year": 2022,
+      "laneId": "rl",
+      "classificationCode": "d",
+      "description": "One transformer, 600 tasks, none mastered. Scaling alone didn't cure breadth-without-depth; quietly shelved as LLM agents took the crown.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "dormant",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "Gato (DeepMind)",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Gato_(DeepMind)",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Gato%20%28DeepMind%29&oldid=1336898337",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Dormant” is an editorial assessment; no encyclopedic fate finding is inferred from article or link presence.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "2f813457"
+    },
+    {
+      "ordinal": 88,
+      "id": "agentsllm",
+      "title": "LLM agents & tool use",
+      "year": 2023,
+      "laneId": "rl",
+      "classificationCode": "h",
+      "description": "ReAct→computer use→autonomous coding: language models that act. 2025–26's dominant paradigm — and its reliability problem.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "high_activity",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Best labeled article for tool-using LLM agents; the node is a broad synthesis.",
+          "sources": [
+            {
+              "title": "AI agent",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/AI_agent",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=AI%20agent&oldid=1367174193",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Hot frontier” is a time-sensitive editorial assessment, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": "integrated",
+        "tags": [
+          "agents",
+          "tools",
+          "language"
+        ],
+        "questions": [
+          "How should agents plan, recover, maintain state and expose uncertainty across long-running tool use?"
+        ],
+        "sources": [
+          {
+            "title": "ReAct: Synergizing Reasoning and Acting in Language Models",
+            "url": "https://arxiv.org/abs/2210.03629",
+            "year": 2022,
+            "role": "supporting_result",
+            "roleExplicit": true
+          },
+          {
+            "title": "Toolformer",
+            "url": "https://arxiv.org/abs/2302.04761",
+            "year": 2023,
+            "role": "supporting_result",
+            "roleExplicit": true
+          },
+          {
+            "title": "Reflexion",
+            "url": "https://arxiv.org/abs/2303.11366",
+            "year": 2023,
+            "role": "supporting_result",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "How should agents plan, recover, maintain state and expose uncertainty across long-running tool use?"
+      ],
+      "direction": null,
+      "claimFingerprint": "ec77fef4"
+    },
+    {
+      "ordinal": 89,
+      "id": "rlvr",
+      "title": "RL on verifiable rewards",
+      "year": 2024,
+      "laneId": "rl",
+      "classificationCode": "h",
+      "description": "Train reasoning against checkable answers (math, code, proofs). The engine of o1/R1-class models — RL's biggest win since AlphaGo.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "high_activity",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "The DeepSeek article documents DeepSeek-R1 as a prominent verifiable-reward reasoning system; no dedicated RLVR concept page exists.",
+          "sources": [
+            {
+              "title": "DeepSeek",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/DeepSeek",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=DeepSeek&oldid=1367645740",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Hot frontier” is a time-sensitive editorial assessment, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "d71d7049"
+    },
+    {
+      "ordinal": 90,
+      "id": "gap_openended",
+      "title": "Robust, general open-ended self-improvement",
+      "year": 2026,
+      "laneId": "rl",
+      "classificationCode": "g",
+      "description": "Self-generated tasks and self-editing agents now show bounded improvement under human-designed verifiers. Still missing: safe, broadly general, sustained improvement without benchmark gaming, collapse, or a fixed external objective.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "open_direction",
+        "significance": "not_assessed",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "hypothesis",
+          "confidence": null,
+          "note": "This is a map hypothesis; Wikipedia absence does not establish that the proposed gap is novel.",
+          "sources": []
+        },
+        "mapStatus": {
+          "state": "hypothesis",
+          "confidence": null,
+          "note": "This is explicitly a proposed gap; Wikipedia absence is not evidence that the proposal is novel.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": "integrated",
+        "tags": [
+          "open direction",
+          "agents",
+          "safety"
+        ],
+        "questions": [
+          "What would count as sustained general improvement rather than benchmark-specific optimization or evaluator exploitation?"
+        ],
+        "sources": [
+          {
+            "title": "Darwin Gödel Machine: Open-Ended Evolution of Self-Improving Agents",
+            "url": "https://arxiv.org/abs/2505.22954",
+            "year": 2025,
+            "role": "supporting_result",
+            "roleExplicit": true
+          },
+          {
+            "title": "Self-Adapting Language Models",
+            "url": "https://arxiv.org/abs/2506.10943",
+            "year": 2025,
+            "role": "supporting_result",
+            "roleExplicit": true
+          },
+          {
+            "title": "Absolute Zero: Reinforced Self-play Reasoning with Zero Data",
+            "url": "https://arxiv.org/abs/2505.03335",
+            "year": 2025,
+            "role": "adjacent_work",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "Can an AI system sustain repeated capability improvement across genuinely held-out domains without optimizing a fixed benchmark, depending on a hidden stronger teacher, or accumulating unacceptable safety regressions?",
+        "What would count as sustained general improvement rather than benchmark-specific optimization or evaluator exploitation?"
+      ],
+      "direction": {
+        "question": "Can an AI system sustain repeated capability improvement across genuinely held-out domains without optimizing a fixed benchmark, depending on a hidden stronger teacher, or accumulating unacceptable safety regressions?",
+        "closureCriteria": "Pre-register several improvement cycles and sealed domain families; show statistically reliable gains on newly unsealed tasks after every cycle; compare against static-agent, ordinary fine-tuning, search-only, and human-engineered baselines; publish compute, interventions, failures, contamination checks, and a safety-regression budget; and obtain an independent rerun.",
+        "partialResults": [
+          "The Darwin Gödel Machine evolves coding-agent implementations and improved bounded software-engineering benchmarks, while SEAL learns its own update directives and training data for bounded adaptation tasks. AlphaEvolve and related verifier-guided systems offer further evidence that self-generated search can improve artifacts. None yet demonstrates safe, durable, domain-general improvement under repeatedly refreshed evaluation."
+        ],
+        "starters": [
+          "Individual: Reproduce one DGM- or SEAL-style update loop on two disjoint small domains, freeze both evaluators before training, and publish every candidate, rollback, cost, and regression.",
+          "Small lab: Run a 10-cycle, multi-domain archive experiment with sealed future tasks and compare a static agent, self-editing agent, and diversity-preserving open-ended archive under the same inference and training budget.",
+          "Well-funded lab: Conduct a multi-model, long-horizon improvement trial with immutable external evaluations, independent red teaming, automatic rollback, full lineage, and a third-party audit of contamination and safety regressions."
+        ],
+        "claimState": "editorial_hypothesis",
+        "asOf": "2026-08-04",
+        "confidence": "high",
+        "noveltyReview": {
+          "status": "targeted_search",
+          "checkedAt": "2026-08-04",
+          "scope": "Targeted arXiv title-and-abstract searches for open-ended self-improvement, self-editing agents, self-adapting language models, automated coding-agent evolution, verifier-guided evolution, and 2025-2026 follow-on work; primary-paper reference chaining around DGM and SEAL.",
+          "note": "High confidence that the narrowed gap remains open. The evidence is strong for bounded self-improvement, but the search found no system satisfying repeated held-out cross-domain improvement, independence from a hidden stronger teacher, and bounded safety regressions together. This is a targeted review, not an exhaustive priority search or a priority claim."
+        },
+        "counterexamples": [
+          "Darwin Gödel Machine is a concrete self-editing, archive-based coding agent; its gains are on bounded coding benchmarks and one reported run cost about USD 22,000 in API use over roughly two weeks.",
+          "SEAL generates its own update directives and fine-tuning data, but evaluates bounded knowledge-incorporation and few-shot tasks rather than indefinite cross-domain improvement.",
+          "Search over self-edit strategies and verifier-guided evolutionary systems show useful improvement, while also exposing homogenization, evaluator gaming, and dependence on externally supplied objectives."
+        ],
+        "literature": [
+          {
+            "t": "Darwin Gödel Machine: Open-Ended Evolution of Self-Improving Agents",
+            "u": "https://arxiv.org/abs/2505.22954",
+            "y": 2025,
+            "role": "supporting_result"
+          },
+          {
+            "t": "Self-Adapting Language Models",
+            "u": "https://arxiv.org/abs/2506.10943",
+            "y": 2025,
+            "role": "supporting_result"
+          }
+        ],
+        "resources": {
+          "benchmarks": [
+            "SWE-bench Verified plus a sealed post-cutoff issue set",
+            "Aider Polyglot with language families held out by cycle",
+            "RE-Bench with new, externally authored environments"
+          ],
+          "code": [
+            "https://github.com/jennyzzt/dgm",
+            "https://github.com/Continual-Intelligence/SEAL",
+            "https://github.com/princeton-nlp/SWE-bench",
+            "https://github.com/METR/RE-Bench"
+          ],
+          "datasets": [
+            "Frozen SWE-bench repositories and issue snapshots",
+            "Aider Polyglot task set",
+            "Versioned RE-Bench environments and complete candidate-lineage logs"
+          ],
+          "estimated": {
+            "individual": "One to four modern GPUs for local 7B-14B models, or a tightly capped API budget; five to ten update cycles.",
+            "smallLab": "Eight to thirty-two GPUs, sandboxed execution, sealed multi-domain evaluations, and an independent evaluator.",
+            "wellFundedLab": "Several repeated DGM-scale runs across model families; the DGM paper reports about two weeks and USD 22,000 API cost for one run, before external evaluation and red-team costs."
+          }
+        },
+        "crowdedness": "High for self-improving agents and automated coding; lower for preregistered, repeatedly refreshed, cross-domain and safety-bounded trials.",
+        "tractability": "Medium for bounded coding experiments; low for a convincing general and safe long-horizon closure result."
+      },
+      "claimFingerprint": "bade7c8a"
+    },
+    {
+      "ordinal": 310,
+      "id": "imitation",
+      "title": "Modern imitation learning (DAgger → GAIL)",
+      "year": 2011,
+      "laneId": "rl",
+      "classificationCode": "f",
+      "description": "DAgger confronted policy-induced distribution shift; GAIL learned behavior by adversarially matching expert demonstrations. Together they formed the modern route from demonstrations to sequential policies.",
+      "dateOverride": {
+        "start": 2011,
+        "end": 2016,
+        "label": "2011-2016"
+      },
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        },
+        "mapStatus": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": false,
+        "mapStatus": false
+      },
+      "research": {
+        "tier": "core",
+        "tags": [
+          "reinforcement learning",
+          "robotics",
+          "data"
+        ],
+        "questions": [
+          "How can demonstration learning remain robust when the deployed policy visits states the demonstrator never covered?"
+        ],
+        "sources": [
+          {
+            "title": "A Reduction of Imitation Learning and Structured Prediction to No-Regret Online Learning",
+            "url": "https://arxiv.org/abs/1011.0686",
+            "year": 2011,
+            "role": "origin",
+            "roleExplicit": true
+          },
+          {
+            "title": "Generative Adversarial Imitation Learning",
+            "url": "https://arxiv.org/abs/1606.03476",
+            "year": 2016,
+            "role": "origin",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "How can demonstration learning remain robust when the deployed policy visits states the demonstrator never covered?"
+      ],
+      "direction": null,
+      "claimFingerprint": "931ec894"
+    },
+    {
+      "ordinal": 311,
+      "id": "continuousrl",
+      "title": "Deep continuous control (DDPG → SAC)",
+      "year": 2015,
+      "laneId": "rl",
+      "classificationCode": "f",
+      "description": "Off-policy actor–critic learning extended deep RL from discrete games to continuous actions; maximum-entropy SAC made the recipe substantially more stable for locomotion and manipulation.",
+      "dateOverride": {
+        "start": 2015,
+        "end": 2018,
+        "label": "2015-2018"
+      },
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        },
+        "mapStatus": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": false,
+        "mapStatus": false
+      },
+      "research": {
+        "tier": "core",
+        "tags": [
+          "reinforcement learning",
+          "robotics",
+          "optimization"
+        ],
+        "questions": [
+          "Which off-policy control methods remain stable under sparse rewards, imperfect simulators and real hardware constraints?"
+        ],
+        "sources": [
+          {
+            "title": "Continuous control with deep reinforcement learning",
+            "url": "https://arxiv.org/abs/1509.02971",
+            "year": 2015,
+            "role": "origin",
+            "roleExplicit": true
+          },
+          {
+            "title": "Soft Actor-Critic",
+            "url": "https://arxiv.org/abs/1801.01290",
+            "year": 2018,
+            "role": "origin",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "Which off-policy control methods remain stable under sparse rewards, imperfect simulators and real hardware constraints?"
+      ],
+      "direction": null,
+      "claimFingerprint": "08f55cc9"
+    },
+    {
+      "ordinal": 327,
+      "id": "agentbench",
+      "title": "Interactive agent benchmarks",
+      "year": 2023,
+      "laneId": "rl",
+      "classificationCode": "h",
+      "description": "WebArena, AgentBench, SWE-bench and OSWorld evaluate stateful execution in websites, repositories and computers. They expose planning and recovery failures that static question-answer benchmarks miss.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "high_activity",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        },
+        "mapStatus": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": false,
+        "mapStatus": false
+      },
+      "research": {
+        "tier": "core",
+        "tags": [
+          "agents",
+          "evaluation",
+          "software"
+        ],
+        "questions": [
+          "How can interactive benchmarks remain reproducible, contamination-resistant and representative of costly real-world failures?"
+        ],
+        "sources": [
+          {
+            "title": "WebArena: A Realistic Web Environment for Building Autonomous Agents",
+            "url": "https://arxiv.org/abs/2307.13854",
+            "year": 2023,
+            "role": "benchmark",
+            "roleExplicit": true
+          },
+          {
+            "title": "AgentBench",
+            "url": "https://arxiv.org/abs/2308.03688",
+            "year": 2023,
+            "role": "benchmark",
+            "roleExplicit": true
+          },
+          {
+            "title": "SWE-bench",
+            "url": "https://arxiv.org/abs/2310.06770",
+            "year": 2023,
+            "role": "benchmark",
+            "roleExplicit": true
+          },
+          {
+            "title": "OSWorld",
+            "url": "https://arxiv.org/abs/2404.07972",
+            "year": 2024,
+            "role": "benchmark",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "How can interactive benchmarks remain reproducible, contamination-resistant and representative of costly real-world failures?"
+      ],
+      "direction": null,
+      "claimFingerprint": "36d0ff10"
+    },
+    {
+      "ordinal": 331,
+      "id": "selfgenagents",
+      "title": "Self-generated curricula & self-editing agents",
+      "year": 2025,
+      "laneId": "rl",
+      "classificationCode": "h",
+      "description": "Voyager, Absolute Zero and Darwin Gödel Machine generate tasks, skills or agent modifications and retain measured improvements. Results are promising but bounded by designed environments, verifiers and benchmarks.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "high_activity",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        },
+        "mapStatus": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": false,
+        "mapStatus": false
+      },
+      "research": {
+        "tier": "emerging",
+        "tags": [
+          "agents",
+          "open-endedness",
+          "reinforcement learning"
+        ],
+        "questions": [
+          "Can improvement remain general, cumulative and safe without a fixed benchmark, hand-designed verifier or hidden human curriculum?"
+        ],
+        "sources": [
+          {
+            "title": "Voyager: An Open-Ended Embodied Agent with Large Language Models",
+            "url": "https://arxiv.org/abs/2305.16291",
+            "year": 2023,
+            "role": "supporting_result",
+            "roleExplicit": true
+          },
+          {
+            "title": "Absolute Zero: Reinforced Self-play Reasoning with Zero Data",
+            "url": "https://arxiv.org/abs/2505.03335",
+            "year": 2025,
+            "role": "supporting_result",
+            "roleExplicit": true
+          },
+          {
+            "title": "Darwin Gödel Machine",
+            "url": "https://arxiv.org/abs/2505.22954",
+            "year": 2025,
+            "role": "supporting_result",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "Can improvement remain general, cumulative and safe without a fixed benchmark, hand-designed verifier or hidden human curriculum?"
+      ],
+      "direction": null,
+      "claimFingerprint": "0e7821cf"
+    }
+  ]
+}

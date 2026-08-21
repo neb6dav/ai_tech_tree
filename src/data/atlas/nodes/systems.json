@@ -1,0 +1,1109 @@
+{
+  "schemaVersion": "1.0.0",
+  "laneId": "systems",
+  "nodes": [
+    {
+      "ordinal": 280,
+      "id": "moore",
+      "title": "Moore's law",
+      "year": 1965,
+      "laneId": "systems",
+      "classificationCode": "f",
+      "description": "Transistor counts double every ~2 years. The metronome under every AI wave — and every winter's eventual thaw.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact development article.",
+          "sources": [
+            {
+              "title": "Moore's law",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Moore%27s_law",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Moore%27s%20law&oldid=1366608381",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "175adc73"
+    },
+    {
+      "ordinal": 281,
+      "id": "internetdata",
+      "title": "The web as dataset",
+      "year": 1998,
+      "laneId": "systems",
+      "classificationCode": "f",
+      "description": "Crawls, Wikipedia, forums, Common Crawl. Humanity accidentally wrote its own training corpus.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Concrete web-scale dataset context for the broader 'web as dataset' shift; no single article represents the entire shift.",
+          "sources": [
+            {
+              "title": "Common Crawl",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Common_Crawl",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Common%20Crawl&oldid=1361639177",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "0bbd4126"
+    },
+    {
+      "ordinal": 282,
+      "id": "mturk",
+      "title": "Crowd labeling (MTurk)",
+      "year": 2005,
+      "laneId": "systems",
+      "classificationCode": "f",
+      "description": "Human annotation at industrial scale — made ImageNet possible, and prefigured today's RLHF data industry.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact platform article used for crowd labeling.",
+          "sources": [
+            {
+              "title": "Amazon Mechanical Turk",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Amazon_Mechanical_Turk",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Amazon%20Mechanical%20Turk&oldid=1366160403",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "5fcec760"
+    },
+    {
+      "ordinal": 283,
+      "id": "gpgpu",
+      "title": "GPGPU / CUDA",
+      "year": 2007,
+      "laneId": "systems",
+      "classificationCode": "f",
+      "description": "Graphics chips repurposed for general math. The hardware accident on which the entire deep-learning era balances.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Direct GPGPU article; CUDA is a major implementation named in the node.",
+          "sources": [
+            {
+              "title": "General-purpose computing on graphics processing units",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/General-purpose_computing_on_graphics_processing_units",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=General-purpose%20computing%20on%20graphics%20processing%20units&oldid=1363436162",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "750e1e0a"
+    },
+    {
+      "ordinal": 284,
+      "id": "frameworks",
+      "title": "Autodiff frameworks",
+      "year": 2015,
+      "laneId": "systems",
+      "classificationCode": "f",
+      "description": "Theano→TensorFlow→PyTorch: differentiable programming for everyone. Research velocity ×10; the field's shared workbench.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Core technical context for autodiff frameworks; no single framework article represents the ecosystem shift.",
+          "sources": [
+            {
+              "title": "Automatic differentiation",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Automatic_differentiation",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Automatic%20differentiation&oldid=1363506566",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "87190e8b"
+    },
+    {
+      "ordinal": 285,
+      "id": "tpu",
+      "title": "AI accelerators (TPU→Ironwood)",
+      "year": 2016,
+      "laneId": "systems",
+      "classificationCode": "f",
+      "description": "Silicon co-designed for tensors; NVIDIA's datacenter empire and its challengers. Compute as the strategic resource of the era.",
+      "dateOverride": {
+        "start": 2016,
+        "end": 2025,
+        "label": "2016-2025"
+      },
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Direct accelerator-family article.",
+          "sources": [
+            {
+              "title": "Tensor Processing Unit",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Tensor_Processing_Unit",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Tensor%20Processing%20Unit&oldid=1366020253",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "7dea9666"
+    },
+    {
+      "ordinal": 286,
+      "id": "hf",
+      "title": "Model hubs (Hugging Face)",
+      "year": 2019,
+      "laneId": "systems",
+      "classificationCode": "f",
+      "description": "Weights as a commons. The GitHub of ML — distribution infrastructure that made 'open-weight ecosystem' a real thing.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Direct model-hub organization/platform article.",
+          "sources": [
+            {
+              "title": "Hugging Face",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Hugging_Face",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Hugging%20Face&oldid=1367608234",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "acea3466"
+    },
+    {
+      "ordinal": 287,
+      "id": "distributed",
+      "title": "Distributed training",
+      "year": 2018,
+      "laneId": "systems",
+      "classificationCode": "f",
+      "description": "Data/model/pipeline parallelism (Megatron, ZeRO): choreography for ten thousand GPUs. Scaling laws made physical.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Underlying systems article for distributed model training; replaces the unrelated military training-center match.",
+          "sources": [
+            {
+              "title": "Distributed computing",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Distributed_computing",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Distributed%20computing&oldid=1344247039",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "3b31e4ba"
+    },
+    {
+      "ordinal": 288,
+      "id": "computegap",
+      "title": "Compute concentration",
+      "year": 2022,
+      "laneId": "systems",
+      "classificationCode": "a",
+      "description": "$100M+ training runs put frontier science behind capital walls. Academia's role crisis — and the open-weight movement's raison d'être.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Closest current article for concentrated frontier-compute infrastructure; replaces the unrelated concentration-camp match.",
+          "sources": [
+            {
+              "title": "AI infrastructure",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/AI_infrastructure",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=AI%20infrastructure&oldid=1365091848",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Active” is an editorial assessment of current activity, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "cf88cf9c"
+    },
+    {
+      "ordinal": 289,
+      "id": "benchmarkcrisis",
+      "title": "Benchmark saturation & contamination",
+      "year": 2023,
+      "laneId": "systems",
+      "classificationCode": "a",
+      "description": "MMLU→HLE: tests dissolve on contact with web-scale training. Measuring minds is now a bottleneck science.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Direct benchmark context; saturation and contamination are issues within the topic, not a standalone development article.",
+          "sources": [
+            {
+              "title": "Language model benchmark",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Language_model_benchmark",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Language%20model%20benchmark&oldid=1365992024",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Active” is an editorial assessment of current activity, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "6321a1b9"
+    },
+    {
+      "ordinal": 290,
+      "id": "datawalls",
+      "title": "Data walls & licensing fights",
+      "year": 2024,
+      "laneId": "systems",
+      "classificationCode": "a",
+      "description": "Lawsuits, robots.txt revolts, licensing deals, synthetic-data pivots. The free-data era that built the field is over.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Closest direct context for licensing/data-access disputes; replaces an unrelated fighting result.",
+          "sources": [
+            {
+              "title": "Artificial intelligence and copyright",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Artificial_intelligence_and_copyright",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Artificial%20intelligence%20and%20copyright&oldid=1367099015",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Active” is an editorial assessment of current activity, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "5621eb0f"
+    },
+    {
+      "ordinal": 291,
+      "id": "mcp",
+      "title": "Agent infrastructure (MCP)",
+      "year": 2024,
+      "laneId": "systems",
+      "classificationCode": "h",
+      "description": "Standardized model-tool-data plumbing and orchestration. The 'HTTP moment' for agents, possibly — the plumbing decides what agents can safely do.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "high_activity",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact protocol article found by expanded-name search.",
+          "sources": [
+            {
+              "title": "Model Context Protocol",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Model_Context_Protocol",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Model%20Context%20Protocol&oldid=1363310194",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Hot frontier” is a time-sensitive editorial assessment, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "da91442a"
+    },
+    {
+      "ordinal": 292,
+      "id": "inferecon",
+      "title": "Inference economics",
+      "year": 2024,
+      "laneId": "systems",
+      "classificationCode": "h",
+      "description": "Serving, caching, routing, token pricing: the cost curve that decides what actually deploys. Where systems research meets business model.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "high_activity",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Closest current article for inference-serving economics and infrastructure; no direct economics article was found.",
+          "sources": [
+            {
+              "title": "AI infrastructure",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/AI_infrastructure",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=AI%20infrastructure&oldid=1365091848",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Hot frontier” is a time-sensitive editorial assessment, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "1af12b8b"
+    },
+    {
+      "ordinal": 293,
+      "id": "energy",
+      "title": "Energy & datacenter buildout",
+      "year": 2024,
+      "laneId": "systems",
+      "classificationCode": "a",
+      "description": "Gigawatt campuses, nuclear PPAs, grid politics. AI's growth curve collided with physical infrastructure — the binding constraint after chips.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Direct infrastructure article for AI energy and datacenter buildout.",
+          "sources": [
+            {
+              "title": "AI data center",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/AI_data_center",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=AI%20data%20center&oldid=1364642463",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Active” is an editorial assessment of current activity, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "5cbe0fb1"
+    },
+    {
+      "ordinal": 294,
+      "id": "alphachip",
+      "title": "AI designs chips (AlphaChip)",
+      "year": 2021,
+      "laneId": "systems",
+      "classificationCode": "a",
+      "description": "RL placement shipping in production TPUs. The ouroboros: AI improving the hardware that trains AI.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact system article.",
+          "sources": [
+            {
+              "title": "AlphaChip",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/AlphaChip",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=AlphaChip&oldid=1367332618",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Active” is an editorial assessment of current activity, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "94650b74"
+    },
+    {
+      "ordinal": 295,
+      "id": "gap_data",
+      "title": "Post-data-wall learning",
+      "year": 2026,
+      "laneId": "systems",
+      "classificationCode": "g",
+      "description": "Research direction: sustain capability improvement under a constrained or synthetic-only data supply while preventing collapse, contamination and diversity loss. Collapse is not inevitable when real-data anchors or external diversity controls remain; the stricter synthetic-only capability ratchet remains unresolved.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "open_direction",
+        "significance": "not_assessed",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "hypothesis",
+          "confidence": null,
+          "note": "This is a map hypothesis; Wikipedia absence does not establish that the proposed gap is novel.",
+          "sources": []
+        },
+        "mapStatus": {
+          "state": "hypothesis",
+          "confidence": null,
+          "note": "This is explicitly a proposed gap; Wikipedia absence is not evidence that the proposal is novel.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "title": "The Curse of Recursion: Training on Generated Data Makes Models Forget",
+            "url": "https://arxiv.org/abs/2305.17493",
+            "year": 2023,
+            "role": "critique",
+            "roleExplicit": true
+          },
+          {
+            "title": "Is Model Collapse Inevitable? Breaking the Curse of Recursion by Accumulating Real and Synthetic Data",
+            "url": "https://arxiv.org/abs/2404.01413",
+            "year": 2024,
+            "role": "supporting_result",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "Can repeated generations of synthetic or self-generated experience preserve or improve held-out capability and diversity without fresh human data, contamination, or a hidden stronger teacher?"
+      ],
+      "direction": {
+        "question": "Can repeated generations of synthetic or self-generated experience preserve or improve held-out capability and diversity without fresh human data, contamination, or a hidden stronger teacher?",
+        "closureCriteria": "Run multiple recursive generations with immutable held-out human evaluations and provenance; measure average quality, tail coverage, diversity, calibration, memorization, and contamination each round; forbid fresh human data and undisclosed stronger-teacher labels after initialization; compare replacement, accumulation, curation, multi-teacher, and self-training regimes; and reproduce independently.",
+        "partialResults": [
+          "Recursive replacement with generated data can erase distribution tails and cause model collapse. Accumulating synthetic data with the original real distribution can avoid collapse in several modalities, and diverse or pluralistic curation can stabilize bounded regimes. These are genuine counterexamples to inevitability, but they retain real-data anchors, external rewards, multiple teachers, or bounded tasks and do not yet show a sustained synthetic-only capability ratchet."
+        ],
+        "starters": [
+          "Individual: Train a 100M-1B model for 10-20 recursive rounds under replacement, accumulation, and diversity-curation conditions using one cryptographically frozen human holdout and complete data lineage.",
+          "Small lab: Run a 1B-8B text or multimodal study for 10-30 rounds, auditing contamination, rare-skill retention, diversity, calibration, and teacher dependence with external evaluators fixed before training.",
+          "Well-funded lab: Run a 70B-scale, 30-generation multi-teacher experiment with no fresh human data after initialization, immutable external evaluation, explicit teacher-capability accounting, and an independent provenance and contamination audit."
+        ],
+        "claimState": "editorial_hypothesis",
+        "asOf": "2026-08-04",
+        "confidence": "medium",
+        "noveltyReview": {
+          "status": "targeted_search",
+          "checkedAt": "2026-08-04",
+          "scope": "Targeted arXiv searches for model collapse, recursive synthetic-data training, synthetic-data accumulation, curated synthetic data, pluralistic rewards, multi-teacher self-training, contamination, experience generation, and 2025-2026 recursive-loop studies; reference chaining from the two representative papers.",
+          "note": "Medium confidence that the synthetic-only, repeated capability-improvement gap remains open. Real-data accumulation or externally preserved diversity can prevent collapse in bounded settings; the unresolved target therefore excludes fresh anchors and hidden stronger teachers. No priority claim is made."
+        },
+        "counterexamples": [
+          "The Curse of Recursion demonstrates progressive loss of distribution tails when generated data replace real data across language and generative-model settings.",
+          "Is Model Collapse Inevitable? shows that accumulating synthetic data alongside the original real data avoids collapse in language, molecular, and image experiments; this does not satisfy a no-fresh-anchor synthetic-only loop.",
+          "Recent curated, diverse-teacher, and pluralistic-reward systems can delay or prevent collapse in bounded settings, but depend on external selection signals, anchored data, or stronger and diverse teachers."
+        ],
+        "literature": [
+          {
+            "t": "The Curse of Recursion: Training on Generated Data Makes Models Forget",
+            "u": "https://arxiv.org/abs/2305.17493",
+            "y": 2023,
+            "role": "critique"
+          },
+          {
+            "t": "Is Model Collapse Inevitable? Breaking the Curse of Recursion by Accumulating Real and Synthetic Data",
+            "u": "https://arxiv.org/abs/2404.01413",
+            "y": 2024,
+            "role": "supporting_result"
+          }
+        ],
+        "resources": {
+          "benchmarks": [
+            "DataComp-LM or DCLM controlled-data protocol",
+            "HELM or lm-evaluation-harness with immutable post-cutoff tasks",
+            "A shared recursive train-generate benchmark reporting tail coverage, diversity, calibration, and contamination by generation"
+          ],
+          "code": [
+            "https://github.com/mlfoundations/dclm",
+            "https://github.com/EleutherAI/lm-evaluation-harness",
+            "https://github.com/allenai/open-instruct"
+          ],
+          "datasets": [
+            "DCLM baseline or FineWeb-Edu with full manifests",
+            "Dolma",
+            "A cryptographically frozen held-out human corpus and provenance ledger not exposed to the generation loop"
+          ],
+          "estimated": {
+            "individual": "One to four GPUs for 100M-1B models over 5-20 rounds.",
+            "smallLab": "Sixteen to sixty-four GPUs for 1B-8B models, 10-30 rounds, and continuous provenance and contamination analysis.",
+            "wellFundedLab": "Frontier-scale training allocation for 70B or multimodal recursive loops, long-term dataset storage, and an independent data-audit team."
+          }
+        },
+        "crowdedness": "High; synthetic data, self-training, and model collapse are active topics, but deeply controlled multi-generation studies remain expensive and less common.",
+        "tractability": "High for causal small-model studies, medium for 1B-8B replication, and low for frontier-scale conclusions."
+      },
+      "claimFingerprint": "0370d4ff"
+    },
+    {
+      "ordinal": 319,
+      "id": "mlcompiler",
+      "title": "ML compilers & tensor/kernel IRs",
+      "year": 2018,
+      "laneId": "systems",
+      "classificationCode": "f",
+      "description": "TVM and MLIR created optimizing layers between model graphs and heterogeneous hardware. Compilation, scheduling and kernel generation became essential parts of ML performance rather than afterthoughts.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        },
+        "mapStatus": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": false,
+        "mapStatus": false
+      },
+      "research": {
+        "tier": "core",
+        "tags": [
+          "systems",
+          "hardware",
+          "compilers"
+        ],
+        "questions": [
+          "Can automatic scheduling deliver portable performance across rapidly changing accelerators without opaque regressions?"
+        ],
+        "sources": [
+          {
+            "title": "TVM: An Automated End-to-End Optimizing Compiler for Deep Learning",
+            "url": "https://arxiv.org/abs/1802.04799",
+            "year": 2018,
+            "role": "origin",
+            "roleExplicit": true
+          },
+          {
+            "title": "MLIR: A Compiler Infrastructure for the End of Moore's Law",
+            "url": "https://arxiv.org/abs/2002.11054",
+            "year": 2020,
+            "role": "origin",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "Can automatic scheduling deliver portable performance across rapidly changing accelerators without opaque regressions?"
+      ],
+      "direction": null,
+      "claimFingerprint": "5a4962da"
+    },
+    {
+      "ordinal": 326,
+      "id": "llmserving",
+      "title": "LLM inference & serving systems",
+      "year": 2022,
+      "laneId": "systems",
+      "classificationCode": "h",
+      "description": "Speculative decoding, continuous batching and PagedAttention attack latency, memory fragmentation and throughput. Serving systems are a distinct research layer from model compression.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "high_activity",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        },
+        "mapStatus": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": false,
+        "mapStatus": false
+      },
+      "research": {
+        "tier": "core",
+        "tags": [
+          "systems",
+          "inference",
+          "efficiency"
+        ],
+        "questions": [
+          "How should serving jointly optimize latency, throughput, memory, energy and tail reliability under heterogeneous workloads?"
+        ],
+        "sources": [
+          {
+            "title": "Fast Inference from Transformers via Speculative Decoding",
+            "url": "https://arxiv.org/abs/2211.17192",
+            "year": 2022,
+            "role": "origin",
+            "roleExplicit": true
+          },
+          {
+            "title": "Accelerating Large Language Model Decoding with Speculative Sampling",
+            "url": "https://arxiv.org/abs/2302.01318",
+            "year": 2023,
+            "role": "origin",
+            "roleExplicit": true
+          },
+          {
+            "title": "Efficient Memory Management for Large Language Model Serving with PagedAttention",
+            "url": "https://arxiv.org/abs/2309.06180",
+            "year": 2023,
+            "role": "origin",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "How should serving jointly optimize latency, throughput, memory, energy and tail reliability under heterogeneous workloads?"
+      ],
+      "direction": null,
+      "claimFingerprint": "8e177549"
+    }
+  ]
+}

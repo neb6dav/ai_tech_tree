@@ -1,0 +1,2178 @@
+{
+  "schemaVersion": "1.0.0",
+  "laneId": "safety",
+  "nodes": [
+    {
+      "ordinal": 257,
+      "id": "asimov",
+      "title": "Asimov's Three Laws",
+      "year": 1942,
+      "laneId": "safety",
+      "classificationCode": "f",
+      "description": "Fiction framed machine ethics decades before engineering could. Set the cultural frame every real safety debate still argues with.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact concept article.",
+          "sources": [
+            {
+              "title": "Three Laws of Robotics",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Three_Laws_of_Robotics",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Three%20Laws%20of%20Robotics&oldid=1365204792",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "asimov-i-robot-1950",
+            "title": "I, Robot",
+            "url": "https://www.penguinrandomhouse.com/books/5681/i-robot-by-isaac-asimov/paperback/",
+            "year": 1950,
+            "kind": "literary_work",
+            "access": "publisher_record",
+            "role": "context",
+            "authors": [
+              "Isaac Asimov"
+            ],
+            "note": "Literary context for the Three Laws, not technical evidence."
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "6ee7c5cf"
+    },
+    {
+      "ordinal": 258,
+      "id": "wienerwarn",
+      "title": "Wiener's control warning",
+      "year": 1960,
+      "laneId": "safety",
+      "classificationCode": "f",
+      "description": "'If we use, to achieve our purposes, a mechanical agency with whose operation we cannot interfere…' — value misalignment stated plainly, in 1960.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Biographical context for Wiener's automation/control warnings; no article for the specific 1960 warning was found.",
+          "sources": [
+            {
+              "title": "Norbert Wiener",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Norbert_Wiener",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Norbert%20Wiener&oldid=1366370557",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "926b0d42"
+    },
+    {
+      "ordinal": 259,
+      "id": "weizenbaum",
+      "title": "'Computer Power and Human Reason'",
+      "year": 1976,
+      "laneId": "safety",
+      "classificationCode": "f",
+      "description": "ELIZA's own creator warned against delegating judgment to machines. AI criticism as a serious intellectual tradition begins here.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact book article.",
+          "sources": [
+            {
+              "title": "Computer Power and Human Reason",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Computer_Power_and_Human_Reason",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Computer%20Power%20and%20Human%20Reason&oldid=1338715216",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "3b9b649f"
+    },
+    {
+      "ordinal": 260,
+      "id": "aixi",
+      "title": "AIXI — universal intelligence",
+      "year": 2000,
+      "laneId": "safety",
+      "classificationCode": "d",
+      "description": "Hutter: Solomonoff induction + RL as the optimal agent. Incomputable idealization — a framing device that shaped early alignment theory.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "dormant",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact development article.",
+          "sources": [
+            {
+              "title": "AIXI",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/AIXI",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=AIXI&oldid=1339322781",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Dormant” is an editorial assessment; no encyclopedic fate finding is inferred from article or link presence.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "4b46e671"
+    },
+    {
+      "ordinal": 261,
+      "id": "friendlyai",
+      "title": "Agent foundations (MIRI)",
+      "year": 2001,
+      "laneId": "safety",
+      "classificationCode": "d",
+      "description": "Yudkowsky's decision-theoretic alignment program for hypothetical superintelligences. Largely wound down by 2024 (pivot to advocacy) — a research road that ran out before LLMs arrived.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "dormant",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Direct organizational context for the agent-foundations program named in the node.",
+          "sources": [
+            {
+              "title": "Machine Intelligence Research Institute",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Machine_Intelligence_Research_Institute",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Machine%20Intelligence%20Research%20Institute&oldid=1367417501",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Dormant” is an editorial assessment; no encyclopedic fate finding is inferred from article or link presence.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "46198135"
+    },
+    {
+      "ordinal": 262,
+      "id": "superintbook",
+      "title": "'Superintelligence' (Bostrom)",
+      "year": 2014,
+      "laneId": "safety",
+      "classificationCode": "f",
+      "description": "Orthogonality, instrumental convergence, the treacherous turn. Made existential risk respectable in policy and tech circles.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact book article rather than the generic superintelligence concept.",
+          "sources": [
+            {
+              "title": "Superintelligence: Paths, Dangers, Strategies",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Superintelligence:_Paths,_Dangers,_Strategies",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Superintelligence%3A%20Paths%2C%20Dangers%2C%20Strategies&oldid=1362937934",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "bostrom-superintelligence-2014",
+            "title": "Superintelligence: Paths, Dangers, Strategies",
+            "url": "https://global.oup.com/academic/product/superintelligence-9780199678112",
+            "year": 2014,
+            "kind": "book",
+            "access": "publisher_record",
+            "role": "origin",
+            "authors": [
+              "Nick Bostrom"
+            ],
+            "note": ""
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "66df60b4"
+    },
+    {
+      "ordinal": 263,
+      "id": "concreteproblems",
+      "title": "Concrete Problems in AI Safety",
+      "year": 2016,
+      "laneId": "safety",
+      "classificationCode": "f",
+      "description": "Amodei et al. translated alignment into ML problems: reward hacking, safe exploration, scalable oversight. The field's practical founding paper.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "The paper is covered contextually by the AI-safety field article; no standalone paper article was found.",
+          "sources": [
+            {
+              "title": "AI safety",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/AI_safety",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=AI%20safety&oldid=1367413214",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "bee2458c"
+    },
+    {
+      "ordinal": 264,
+      "id": "rlhf",
+      "title": "RLHF — learning from preferences",
+      "year": 2017,
+      "laneId": "safety",
+      "classificationCode": "f",
+      "description": "Training reward models from human comparisons became an important component of instruction-following assistants, alongside supervised fine-tuning, data curation and safety systems; reward-model overoptimization remains a persistent specification risk.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact development article.",
+          "sources": [
+            {
+              "title": "Reinforcement learning from human feedback",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Reinforcement_learning_from_human_feedback",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Reinforcement%20learning%20from%20human%20feedback&oldid=1359064507",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": "integrated",
+        "tags": [
+          "alignment",
+          "preferences",
+          "reinforcement learning"
+        ],
+        "questions": [
+          "How can preference optimization resist reward-model overoptimization and evaluator misspecification?"
+        ],
+        "sources": [
+          {
+            "title": "Scaling Laws for Reward Model Overoptimization",
+            "url": "https://arxiv.org/abs/2210.10760",
+            "year": 2022,
+            "role": "critique",
+            "roleExplicit": true
+          },
+          {
+            "title": "Deep Reinforcement Learning from Human Preferences",
+            "url": "https://arxiv.org/abs/1706.03741",
+            "year": 2017,
+            "role": "origin",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "How can preference optimization resist reward-model overoptimization and evaluator misspecification?"
+      ],
+      "direction": null,
+      "claimFingerprint": "54eebdd0"
+    },
+    {
+      "ordinal": 265,
+      "id": "fairness",
+      "title": "Fairness & bias (FAccT)",
+      "year": 2016,
+      "laneId": "safety",
+      "classificationCode": "a",
+      "description": "Measuring and mitigating disparate harms — COMPAS, face-recognition audits, dataset documentation. Ethics as an ML subfield, and a political flashpoint.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Direct field article; FAccT is institutional context.",
+          "sources": [
+            {
+              "title": "Fairness (machine learning)",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Fairness_(machine_learning)",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Fairness%20%28machine%20learning%29&oldid=1360657528",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Active” is an editorial assessment of current activity, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "b3a986c5"
+    },
+    {
+      "ordinal": 266,
+      "id": "advexamples",
+      "title": "Adversarial examples",
+      "year": 2014,
+      "laneId": "safety",
+      "classificationCode": "a",
+      "description": "Imperceptible perturbations that fool networks. A decade of attack–defense arms race — unsolved, now mostly managed rather than fixed.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Direct field article covering adversarial examples.",
+          "sources": [
+            {
+              "title": "Adversarial machine learning",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Adversarial_machine_learning",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Adversarial%20machine%20learning&oldid=1367659041",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Active” is an editorial assessment of current activity, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "883a20db"
+    },
+    {
+      "ordinal": 267,
+      "id": "interp",
+      "title": "Early interpretability (saliency→circuits)",
+      "year": 2017,
+      "laneId": "safety",
+      "classificationCode": "a",
+      "description": "Feature visualization, attribution maps, Olah's circuits program. From pretty pictures toward an actual science of what networks compute.",
+      "dateOverride": {
+        "start": 2013,
+        "end": 2020,
+        "label": "2013-2020",
+        "milestones": [
+          "Neural saliency and feature visualization 2013-2014",
+          "Circuits program 2020"
+        ]
+      },
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Broad context for early saliency-to-circuits interpretability; the node combines several eras and methods.",
+          "sources": [
+            {
+              "title": "Explainable artificial intelligence",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Explainable_artificial_intelligence",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Explainable%20artificial%20intelligence&oldid=1364715146",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Active” is an editorial assessment of current activity, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "86cfdbb5"
+    },
+    {
+      "ordinal": 268,
+      "id": "debate",
+      "title": "Debate & amplification (IDA)",
+      "year": 2018,
+      "laneId": "safety",
+      "classificationCode": "d",
+      "description": "Alignment via argumentative games and recursive oversight. Theory-rich, deployment-poor — folded into today's scalable-oversight research.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "dormant",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Closest field article for debate and iterated-distillation/amplification proposals; no standalone method article was found.",
+          "sources": [
+            {
+              "title": "AI alignment",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/AI_alignment",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=AI%20alignment&oldid=1365623395",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Dormant” is an editorial assessment; no encyclopedic fate finding is inferred from article or link presence.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "a918abc0"
+    },
+    {
+      "ordinal": 269,
+      "id": "mechinterp",
+      "title": "Mechanistic interpretability",
+      "year": 2022,
+      "laneId": "safety",
+      "classificationCode": "h",
+      "description": "Induction heads, superposition, sparse autoencoders finding millions of features. Reverse-engineering models — with a live debate over whether SAE features are real.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "high_activity",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact field article.",
+          "sources": [
+            {
+              "title": "Mechanistic interpretability",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Mechanistic_interpretability",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Mechanistic%20interpretability&oldid=1361387035",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Hot frontier” is a time-sensitive editorial assessment, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "2d07ec42"
+    },
+    {
+      "ordinal": 270,
+      "id": "constitutional",
+      "title": "Constitutional AI & RLAIF",
+      "year": 2022,
+      "laneId": "safety",
+      "classificationCode": "a",
+      "description": "Models critique models against written principles — scaling oversight past human labeling. Anthropic's flagship alignment recipe.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Claude's article provides the closest coverage of Anthropic's Constitutional AI/RLAIF method; no standalone method article was found.",
+          "sources": [
+            {
+              "title": "Claude (AI)",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Claude_(AI)",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Claude%20%28AI%29&oldid=1367211532",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Active” is an editorial assessment of current activity, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": "integrated",
+        "tags": [
+          "alignment",
+          "defense"
+        ],
+        "questions": [
+          "How robust are constitutional defenses under adaptive attacks and changing tool access?"
+        ],
+        "sources": [
+          {
+            "title": "Constitutional Classifiers",
+            "url": "https://arxiv.org/abs/2501.18837",
+            "year": 2025,
+            "role": "supporting_result",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "How robust are constitutional defenses under adaptive attacks and changing tool access?"
+      ],
+      "direction": null,
+      "claimFingerprint": "85c2aa36"
+    },
+    {
+      "ordinal": 271,
+      "id": "dpo",
+      "title": "DPO & cheap preference tuning",
+      "year": 2023,
+      "laneId": "safety",
+      "classificationCode": "a",
+      "description": "Preference alignment without an RL loop. Made alignment tooling commodity — for better (open models) and worse (easy de-alignment).",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Current article context for direct preference optimization; no standalone DPO article was found.",
+          "sources": [
+            {
+              "title": "Post-training of large language models",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Post-training_of_large_language_models",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Post-training%20of%20large%20language%20models&oldid=1363846749",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Active” is an editorial assessment of current activity, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": "integrated",
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+            "url": "https://arxiv.org/abs/2305.18290",
+            "year": 2023,
+            "role": "origin",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "c113c7bb"
+    },
+    {
+      "ordinal": 272,
+      "id": "jailbreaks",
+      "title": "Jailbreaks & prompt injection",
+      "year": 2023,
+      "laneId": "safety",
+      "classificationCode": "a",
+      "description": "The attack surface of instruction-followers. Prompt injection remains the unsolved core vulnerability of agentic AI — the more tools, the more surface.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Direct article covering prompt injection and jailbreak attacks.",
+          "sources": [
+            {
+              "title": "Prompt injection",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Prompt_injection",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Prompt%20injection&oldid=1361336772",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Active” is an editorial assessment of current activity, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": "integrated",
+        "tags": [
+          "security",
+          "agents",
+          "defense"
+        ],
+        "questions": [
+          "Can prompt-injection defenses remain useful under adaptive attackers without blocking legitimate tool use?"
+        ],
+        "sources": [
+          {
+            "title": "Constitutional Classifiers",
+            "url": "https://arxiv.org/abs/2501.18837",
+            "year": 2025,
+            "role": "adjacent_work",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "Can prompt-injection defenses remain useful under adaptive attackers without blocking legitimate tool use?"
+      ],
+      "direction": null,
+      "claimFingerprint": "38c65c86"
+    },
+    {
+      "ordinal": 273,
+      "id": "superalign",
+      "title": "Superalignment (dissolved)",
+      "year": 2023,
+      "laneId": "safety",
+      "classificationCode": "x",
+      "description": "OpenAI's 20%-of-compute pledge to align superintelligence — team dissolved within a year amid departures. A very public dropped thread; weak-to-strong work survived it.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "not_assessed",
+        "trajectory": "ambiguous_ended_or_superseded",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Organizational article provides context for the now-dissolved Superalignment team; no standalone initiative article was found.",
+          "sources": [
+            {
+              "title": "OpenAI",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/OpenAI",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=OpenAI&oldid=1367554899",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "The OpenAI page explicitly says OpenAI ended the Superalignment project in May 2024 after its co-leaders left.",
+          "sources": [
+            {
+              "title": "OpenAI",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/OpenAI",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=OpenAI&oldid=1367554899",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "5d92fed6"
+    },
+    {
+      "ordinal": 274,
+      "id": "w2s",
+      "title": "Scalable oversight & weak-to-strong",
+      "year": 2023,
+      "laneId": "safety",
+      "classificationCode": "a",
+      "description": "Can weaker judges reliably train stronger models? The successor question once human feedback saturates — alignment's next hard problem.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Field context for scalable oversight and weak-to-strong generalization; no direct combined-method article was found.",
+          "sources": [
+            {
+              "title": "AI alignment",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/AI_alignment",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=AI%20alignment&oldid=1365623395",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Active” is an editorial assessment of current activity, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": "integrated",
+        "tags": [
+          "alignment",
+          "oversight",
+          "evaluation"
+        ],
+        "questions": [
+          "What feedback remains trustworthy when the model is more capable than its evaluator?"
+        ],
+        "sources": [
+          {
+            "title": "Let's Verify Step by Step",
+            "url": "https://arxiv.org/abs/2305.20050",
+            "year": 2023,
+            "role": "adjacent_work",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "What feedback remains trustworthy when the model is more capable than its evaluator?"
+      ],
+      "direction": null,
+      "claimFingerprint": "ae65985d"
+    },
+    {
+      "ordinal": 275,
+      "id": "evals",
+      "title": "Evals & red-teaming discipline",
+      "year": 2023,
+      "laneId": "safety",
+      "classificationCode": "h",
+      "description": "METR, AISIs, dangerous-capability evals, model cards. Measuring what models can do became its own research field — and the science is young.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "high_activity",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Field context for evaluations and AI red-teaming; the node combines practices without one direct article.",
+          "sources": [
+            {
+              "title": "AI safety",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/AI_safety",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=AI%20safety&oldid=1367413214",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Hot frontier” is a time-sensitive editorial assessment, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": "integrated",
+        "tags": [
+          "evaluation",
+          "safety",
+          "governance"
+        ],
+        "questions": [
+          "Which evaluations predict costly real-world behavior rather than benchmark-specific competence?"
+        ],
+        "sources": [
+          {
+            "title": "Model Cards for Model Reporting",
+            "url": "https://arxiv.org/abs/1810.03993",
+            "year": 2018,
+            "role": "supporting_result",
+            "roleExplicit": true
+          },
+          {
+            "title": "Datasheets for Datasets",
+            "url": "https://arxiv.org/abs/1803.09010",
+            "year": 2018,
+            "role": "adjacent_work",
+            "roleExplicit": true
+          },
+          {
+            "title": "Evaluating Frontier Models for Dangerous Capabilities",
+            "url": "https://arxiv.org/abs/2403.13793",
+            "year": 2024,
+            "role": "benchmark",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "Which evaluations predict costly real-world behavior rather than benchmark-specific competence?"
+      ],
+      "direction": null,
+      "claimFingerprint": "59d622be"
+    },
+    {
+      "ordinal": 276,
+      "id": "govern",
+      "title": "Governance era (EU AI Act, AISIs)",
+      "year": 2023,
+      "laneId": "safety",
+      "classificationCode": "a",
+      "description": "Law arrives: compute thresholds, transparency duties, incident reporting, safety institutes. Research and regulation now co-evolve.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Direct governance field article covering major regulatory institutions and laws.",
+          "sources": [
+            {
+              "title": "Regulation of artificial intelligence",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Regulation_of_artificial_intelligence",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Regulation%20of%20artificial%20intelligence&oldid=1366783883",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Active” is an editorial assessment of current activity, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "e5ad8359"
+    },
+    {
+      "ordinal": 277,
+      "id": "provablysafe",
+      "title": "Guaranteed-safe AI",
+      "year": 2023,
+      "laneId": "safety",
+      "classificationCode": "d",
+      "description": "Formal world-models and proof-carrying AI (Tegmark–Russell program). Aspiration far ahead of tooling — a program waiting for its methods.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "dormant",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Broad context for guaranteed-safe-AI research; no standalone paradigm article was found.",
+          "sources": [
+            {
+              "title": "AI safety",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/AI_safety",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=AI%20safety&oldid=1367413214",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Dormant” is an editorial assessment; no encyclopedic fate finding is inferred from article or link presence.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "7baabdec"
+    },
+    {
+      "ordinal": 278,
+      "id": "gap_interp",
+      "title": "Reliable interpretability-based control",
+      "year": 2026,
+      "laneId": "safety",
+      "classificationCode": "g",
+      "description": "Model editing and activation steering can change local facts and behaviors. Still missing: scalable, predictable interventions grounded in causal understanding, with robust generalization and meaningful guarantees.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "open_direction",
+        "significance": "not_assessed",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "hypothesis",
+          "confidence": null,
+          "note": "This is a map hypothesis; Wikipedia absence does not establish that the proposed gap is novel.",
+          "sources": []
+        },
+        "mapStatus": {
+          "state": "hypothesis",
+          "confidence": null,
+          "note": "This is explicitly a proposed gap; Wikipedia absence is not evidence that the proposal is novel.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": "integrated",
+        "tags": [
+          "open direction",
+          "interpretability",
+          "control"
+        ],
+        "questions": [
+          "Which causal abstractions support interventions that stay reliable across prompts, tasks and model updates?"
+        ],
+        "sources": [
+          {
+            "title": "AxBench: Steering LLMs? Even Simple Baselines Outperform Sparse Autoencoders",
+            "url": "https://arxiv.org/abs/2501.17148",
+            "year": 2025,
+            "role": "benchmark",
+            "roleExplicit": true
+          },
+          {
+            "title": "Does Localization Inform Editing? Surprising Differences in Causality-Based Localization vs. Knowledge Editing in Language Models",
+            "url": "https://arxiv.org/abs/2301.04213",
+            "year": 2023,
+            "role": "critique",
+            "roleExplicit": true
+          },
+          {
+            "title": "Locating and Editing Factual Associations in GPT",
+            "url": "https://arxiv.org/abs/2202.05262",
+            "year": 2022,
+            "role": "adjacent_work",
+            "roleExplicit": true
+          },
+          {
+            "title": "Steering Language Models With Activation Engineering",
+            "url": "https://arxiv.org/abs/2308.10248",
+            "year": 2023,
+            "role": "adjacent_work",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "Can interpretability methods support ex ante predictions of durable model-control interventions, including composition, persistence, and bounded side effects across models and tasks?",
+        "Which causal abstractions support interventions that stay reliable across prompts, tasks and model updates?"
+      ],
+      "direction": {
+        "question": "Can interpretability methods support ex ante predictions of durable model-control interventions, including composition, persistence, and bounded side effects across models and tasks?",
+        "closureCriteria": "Before applying each intervention, predict its target effect, collateral effects, interactions with other interventions, and persistence after additional training or context shifts; beat non-mechanistic baselines across multiple model families and seeds; and reproduce the prediction-to-control mapping independently.",
+        "partialResults": [
+          "Activation steering, representation engineering, sparse autoencoders, causal tracing, and model editing can alter behavior. AxBench finds simple prompting and fine-tuning baselines often beat sparse-autoencoder steering, while localization-versus-editing studies show that causal localization does not reliably identify the best place to edit. Early 2026 work predicts some steering side effects, but results remain method-, dictionary-, and model-dependent."
+        ],
+        "starters": [
+          "Individual: On two open small models, use AxBench and CounterFact to predict target and collateral changes before each intervention, then publish calibration curves and all failed predictions.",
+          "Small lab: Build a cross-model, cross-seed challenge spanning prompting, fine-tuning, steering, sparse autoencoders, and editing, with tests of intervention composition and persistence after additional training.",
+          "Well-funded lab: Run a blinded, preregistered intervention tournament across model families in which one team predicts effects, another executes interventions, and an independent group evaluates hidden targets and side effects."
+        ],
+        "claimState": "editorial_hypothesis",
+        "asOf": "2026-08-04",
+        "confidence": "high",
+        "noveltyReview": {
+          "status": "targeted_search",
+          "checkedAt": "2026-08-04",
+          "scope": "Targeted arXiv searches for mechanistic interpretability interventions, activation and representation steering, sparse-autoencoder steering, knowledge editing, causal localization, intervention side-effect prediction, SAEBench, AxBench, and 2025-2026 benchmark audits; reference chaining from the representative studies.",
+          "note": "High confidence that predictable, durable, composable control with bounded side effects remains open. There are meaningful local successes, so the claim is deliberately about calibrated ex ante prediction across methods and models, not whether interventions ever work. No priority claim is made."
+        },
+        "counterexamples": [
+          "AxBench provides a broad steering benchmark and finds prompting strongest overall, supervised fine-tuning next, and sparse autoencoders often uncompetitive; it is evidence both of controllability and of weak mechanistic advantage.",
+          "Causal localization can identify behaviorally relevant components, yet the localization-versus-editing study finds it does not consistently predict the most effective edit layer.",
+          "Recent work predicts some sparse-autoencoder steering side effects before intervention, but generalization varies across models, dictionaries, and target concepts."
+        ],
+        "literature": [
+          {
+            "t": "AxBench: Steering LLMs? Even Simple Baselines Outperform Sparse Autoencoders",
+            "u": "https://arxiv.org/abs/2501.17148",
+            "y": 2025,
+            "role": "benchmark"
+          },
+          {
+            "t": "Does Localization Inform Editing? Surprising Differences in Causality-Based Localization vs. Knowledge Editing in Language Models",
+            "u": "https://arxiv.org/abs/2301.04213",
+            "y": 2023,
+            "role": "critique"
+          }
+        ],
+        "resources": {
+          "benchmarks": [
+            "AxBench",
+            "SAEBench",
+            "CounterFact plus neighborhood tests and MQuAKE-style multi-hop edits"
+          ],
+          "code": [
+            "https://github.com/stanfordnlp/axbench",
+            "https://github.com/stanfordnlp/pyvene",
+            "https://github.com/kmeng01/rome",
+            "https://github.com/jbloomAus/SAELens"
+          ],
+          "datasets": [
+            "AxBench concept datasets and feature dictionaries",
+            "CounterFact and ZsRE",
+            "MQuAKE or an equivalent compositional-edit set"
+          ],
+          "estimated": {
+            "individual": "One 24-80 GB GPU for 0.5B-8B open models, depending on intervention and activation storage.",
+            "smallLab": "Four to sixteen GPUs across several 7B-70B models, methods, and random seeds.",
+            "wellFundedLab": "Thirty-two or more GPUs, multiple independently developed model families, blinded evaluation, and an external replication team."
+          }
+        },
+        "crowdedness": "High; mechanistic interpretability and steering are crowded, but preregistered prediction-to-control and independent replication are less common.",
+        "tractability": "High for bounded falsification studies, medium for cross-model predictive rules, and low for durable general guarantees."
+      },
+      "claimFingerprint": "3cfc8485"
+    },
+    {
+      "ordinal": 279,
+      "id": "gap_agents",
+      "title": "Provable agent boundaries",
+      "year": 2026,
+      "laneId": "safety",
+      "classificationCode": "g",
+      "description": "Research direction: develop testable containment, permission and corrigibility guarantees for tool-using agents under realistic interfaces and adversarial conditions.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "open_direction",
+        "significance": "not_assessed",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "hypothesis",
+          "confidence": null,
+          "note": "This is a map hypothesis; Wikipedia absence does not establish that the proposed gap is novel.",
+          "sources": []
+        },
+        "mapStatus": {
+          "state": "hypothesis",
+          "confidence": null,
+          "note": "This is explicitly a proposed gap; Wikipedia absence is not evidence that the proposal is novel.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "title": "AI Control: Improving Safety Despite Intentional Subversion",
+            "url": "https://arxiv.org/abs/2312.06942",
+            "year": 2023,
+            "role": "supporting_result",
+            "roleExplicit": true
+          },
+          {
+            "title": "AgentDojo: A Dynamic Environment to Evaluate Prompt Injection Attacks and Defenses for LLM Agents",
+            "url": "https://arxiv.org/abs/2406.13352",
+            "year": 2024,
+            "role": "benchmark",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "Can enforceable least-privilege and containment policies for adaptive tool-using agents survive realistic prompt injection, delegation, persistence, privilege escalation, and sandbox-escape attacks?"
+      ],
+      "direction": {
+        "question": "Can enforceable least-privilege and containment policies for adaptive tool-using agents survive realistic prompt injection, delegation, persistence, privilege escalation, and sandbox-escape attacks?",
+        "closureCriteria": "Specify the policy and threat model formally; enforce it below the model layer; test benign utility and adaptive attacks across real tool classes, delegation, memory, restart, identity, network, and code execution; show bounded failure probability under repeated trials; and obtain an independent penetration test.",
+        "partialResults": [
+          "AI Control shows that monitoring and protocol design can improve safety even when an untrusted model intentionally subverts a coding task. AgentDojo and Agent Security Bench provide realistic tool-agent prompt-injection and security suites, while SandboxEscapeBench tests container-escape capability. These are substantial defenses and measurements, but none establishes general containment under an adaptive real-tool threat model."
+        ],
+        "starters": [
+          "Individual: Add a deny-by-default, provenance-aware least-privilege wrapper to AgentDojo and compare it with prompt-only defenses on both benign utility and adaptive indirect prompt injection.",
+          "Small lab: Combine AgentDojo, Agent Security Bench, and sandbox-escape tasks in gVisor or Firecracker; red-team delegation, memory, restart, exfiltration, and privilege transitions across four model families.",
+          "Well-funded lab: Build an isolated replica of a real enterprise tool environment with formal identity, network, filesystem, and approval policies; commission independent model red teaming and a conventional penetration test."
+        ],
+        "claimState": "editorial_hypothesis",
+        "asOf": "2026-08-04",
+        "confidence": "high",
+        "noveltyReview": {
+          "status": "targeted_search",
+          "checkedAt": "2026-08-04",
+          "scope": "Targeted arXiv searches for AI control, agent containment, agent security benchmarks, prompt injection, capability control, least privilege, tool authorization, container escape, adaptive red teaming, and 2024-2026 follow-on work; reference chaining from AI Control, AgentDojo, ASB, and SandboxEscapeBench.",
+          "note": "High confidence that enforceable containment surviving adaptive attacks in realistic tool environments remains open. Empirical defenses and control protocols are active and valuable, so the claim is not that no defenses exist. No universal impossibility or priority claim is made."
+        },
+        "counterexamples": [
+          "AI Control demonstrates that trusted monitoring, auditing, and protocol design improve outcomes against an intentionally subversive untrusted coding model, within a bounded backdoor-insertion setting.",
+          "AgentDojo contains 97 benign tasks and 629 security test cases across four tool domains; tested agents and defenses still trade off utility and security.",
+          "Agent Security Bench spans ten scenarios, more than 400 tools, and roughly 90,000 tests, while SandboxEscapeBench adds realistic container-escape tasks; neither alone proves containment."
+        ],
+        "literature": [
+          {
+            "t": "AI Control: Improving Safety Despite Intentional Subversion",
+            "u": "https://arxiv.org/abs/2312.06942",
+            "y": 2023,
+            "role": "supporting_result"
+          },
+          {
+            "t": "AgentDojo: A Dynamic Environment to Evaluate Prompt Injection Attacks and Defenses for LLM Agents",
+            "u": "https://arxiv.org/abs/2406.13352",
+            "y": 2024,
+            "role": "benchmark"
+          }
+        ],
+        "resources": {
+          "benchmarks": [
+            "AgentDojo",
+            "Agent Security Bench",
+            "SandboxEscapeBench or ControlArena"
+          ],
+          "code": [
+            "https://github.com/ethz-spylab/agentdojo",
+            "https://github.com/agiresearch/ASB",
+            "https://github.com/google/gvisor",
+            "https://github.com/firecracker-microvm/firecracker"
+          ],
+          "datasets": [
+            "AgentDojo's 629 security cases and 97 utility tasks",
+            "Agent Security Bench's approximately 90,000 tests",
+            "Versioned sandbox-escape scenarios and complete tool, policy, and authorization traces"
+          ],
+          "estimated": {
+            "individual": "One workstation, containerized tools, and one or two local or API models; no live secrets or production accounts.",
+            "smallLab": "Four to eight model families, hardened microVM infrastructure, security engineering, and an adaptive red team.",
+            "wellFundedLab": "Isolated replicas of real tools and identity systems, kernel and network specialists, formal-policy expertise, independent penetration testing, and incident-response capacity."
+          }
+        },
+        "crowdedness": "High for empirical agent security and prompt injection; lower for formal, below-model enforcement tested against adaptive end-to-end attacks.",
+        "tractability": "High for benchmark and least-privilege improvements, medium for robust production patterns, and very low for broad formal containment guarantees."
+      },
+      "claimFingerprint": "d79af32a"
+    },
+    {
+      "ordinal": 308,
+      "id": "modelleak",
+      "title": "Privacy attacks & model leakage",
+      "year": 2016,
+      "laneId": "safety",
+      "classificationCode": "a",
+      "description": "Membership inference and related attacks showed that trained models can reveal whether specific records — and sometimes sensitive attributes — were present. Privacy became an empirical attack surface, not only a training objective.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        },
+        "mapStatus": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": false,
+        "mapStatus": false
+      },
+      "research": {
+        "tier": "core",
+        "tags": [
+          "privacy",
+          "security",
+          "evaluation"
+        ],
+        "questions": [
+          "How can leakage be measured and mitigated under realistic black-box access without hiding behind average-case metrics?"
+        ],
+        "sources": [
+          {
+            "title": "Membership Inference Attacks Against Machine Learning Models",
+            "url": "https://arxiv.org/abs/1610.05820",
+            "year": 2016,
+            "role": "origin",
+            "roleExplicit": true
+          },
+          {
+            "title": "Extracting Training Data from Large Language Models",
+            "url": "https://arxiv.org/abs/2012.07805",
+            "year": 2020,
+            "role": "origin",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "How can leakage be measured and mitigated under realistic black-box access without hiding behind average-case metrics?"
+      ],
+      "direction": null,
+      "claimFingerprint": "c716c087"
+    },
+    {
+      "ordinal": 309,
+      "id": "oodshift",
+      "title": "Distribution shift & OOD detection",
+      "year": 2016,
+      "laneId": "safety",
+      "classificationCode": "a",
+      "description": "Models can be confidently wrong when deployment data differs from training. Detection baselines, shift benchmarks and robustness methods made this a distinct reliability field rather than an edge case.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        },
+        "mapStatus": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": false,
+        "mapStatus": false
+      },
+      "research": {
+        "tier": "core",
+        "tags": [
+          "reliability",
+          "evaluation",
+          "safety"
+        ],
+        "questions": [
+          "Can systems recognize consequential distribution shift without labels and abstain without crippling useful coverage?"
+        ],
+        "sources": [
+          {
+            "title": "A Baseline for Detecting Misclassified and Out-of-Distribution Examples",
+            "url": "https://arxiv.org/abs/1610.02136",
+            "year": 2016,
+            "role": "supporting_result",
+            "roleExplicit": true
+          },
+          {
+            "title": "WILDS: A Benchmark of in-the-Wild Distribution Shifts",
+            "url": "https://arxiv.org/abs/2012.07421",
+            "year": 2020,
+            "role": "benchmark",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "Can systems recognize consequential distribution shift without labels and abstain without crippling useful coverage?"
+      ],
+      "direction": null,
+      "claimFingerprint": "0a315603"
+    },
+    {
+      "ordinal": 314,
+      "id": "neuralverify",
+      "title": "Neural robustness & formal verification",
+      "year": 2017,
+      "laneId": "safety",
+      "classificationCode": "a",
+      "description": "Adversarial training, SMT-based checking and certified defenses test or guarantee bounded neural-network behavior. These are working methods, though far narrower than whole-agent safety proofs.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        },
+        "mapStatus": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": false,
+        "mapStatus": false
+      },
+      "research": {
+        "tier": "core",
+        "tags": [
+          "verification",
+          "robustness",
+          "safety"
+        ],
+        "questions": [
+          "How can formal guarantees scale beyond small feed-forward networks to adaptive, tool-using systems?"
+        ],
+        "sources": [
+          {
+            "title": "Reluplex: An Efficient SMT Solver for Verifying Deep Neural Networks",
+            "url": "https://arxiv.org/abs/1702.01135",
+            "year": 2017,
+            "role": "origin",
+            "roleExplicit": true
+          },
+          {
+            "title": "Towards Deep Learning Models Resistant to Adversarial Attacks",
+            "url": "https://arxiv.org/abs/1706.06083",
+            "year": 2017,
+            "role": "supporting_result",
+            "roleExplicit": true
+          },
+          {
+            "title": "Certified Adversarial Robustness via Randomized Smoothing",
+            "url": "https://arxiv.org/abs/1902.02918",
+            "year": 2019,
+            "role": "supporting_result",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "How can formal guarantees scale beyond small feed-forward networks to adaptive, tool-using systems?"
+      ],
+      "direction": null,
+      "claimFingerprint": "37d89f7c"
+    },
+    {
+      "ordinal": 315,
+      "id": "backdoors",
+      "title": "Data poisoning & model backdoors",
+      "year": 2017,
+      "laneId": "safety",
+      "classificationCode": "a",
+      "description": "Training-time and supply-chain attacks implant trigger-dependent behavior that can survive ordinary retraining or safety tuning. This is distinct from test-time adversarial examples and prompt injection.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        },
+        "mapStatus": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": false,
+        "mapStatus": false
+      },
+      "research": {
+        "tier": "core",
+        "tags": [
+          "security",
+          "data",
+          "evaluation"
+        ],
+        "questions": [
+          "Can training-pipeline backdoors be detected before deployment when triggers and attacker objectives are unknown?"
+        ],
+        "sources": [
+          {
+            "title": "BadNets: Identifying Vulnerabilities in the Machine Learning Model Supply Chain",
+            "url": "https://arxiv.org/abs/1708.06733",
+            "year": 2017,
+            "role": "origin",
+            "roleExplicit": true
+          },
+          {
+            "title": "Sleeper Agents: Training Deceptive LLMs that Persist Through Safety Training",
+            "url": "https://arxiv.org/abs/2401.05566",
+            "year": 2024,
+            "role": "supporting_result",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "Can training-pipeline backdoors be detected before deployment when triggers and attacker objectives are unknown?"
+      ],
+      "direction": null,
+      "claimFingerprint": "39b5f02c"
+    },
+    {
+      "ordinal": 318,
+      "id": "goalmisgen",
+      "title": "Inner alignment & goal misgeneralization",
+      "year": 2019,
+      "laneId": "safety",
+      "classificationCode": "a",
+      "description": "A capable learned policy can pursue an unintended objective after distribution shift even when the training reward looked correct. Experiments establish the failure mode, not that every example is a mesa-optimizer.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        },
+        "mapStatus": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": false,
+        "mapStatus": false
+      },
+      "research": {
+        "tier": "core",
+        "tags": [
+          "alignment",
+          "reinforcement learning",
+          "evaluation"
+        ],
+        "questions": [
+          "Can a learned policy's operative objective be diagnosed before distribution shift reveals it behaviorally?"
+        ],
+        "sources": [
+          {
+            "title": "Risks from Learned Optimization in Advanced Machine Learning Systems",
+            "url": "https://arxiv.org/abs/1906.01820",
+            "year": 2019,
+            "role": "origin",
+            "roleExplicit": true
+          },
+          {
+            "title": "Goal Misgeneralization in Deep Reinforcement Learning",
+            "url": "https://arxiv.org/abs/2105.14111",
+            "year": 2021,
+            "role": "origin",
+            "roleExplicit": true
+          },
+          {
+            "title": "Alignment Faking in Large Language Models",
+            "url": "https://arxiv.org/abs/2412.14093",
+            "year": 2024,
+            "role": "supporting_result",
+            "roleExplicit": true
+          },
+          {
+            "title": "Emergent Misalignment",
+            "url": "https://arxiv.org/abs/2502.17424",
+            "year": 2025,
+            "role": "supporting_result",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "Can a learned policy's operative objective be diagnosed before distribution shift reveals it behaviorally?"
+      ],
+      "direction": null,
+      "claimFingerprint": "4f7647be"
+    },
+    {
+      "ordinal": 329,
+      "id": "modelediting",
+      "title": "Model editing & activation steering",
+      "year": 2022,
+      "laneId": "safety",
+      "classificationCode": "h",
+      "description": "Targeted weight edits and inference-time activation interventions can change facts or behaviors locally. Reliability, side effects, causal interpretation and generalization remain active limitations.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "high_activity",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        },
+        "mapStatus": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": false,
+        "mapStatus": false
+      },
+      "research": {
+        "tier": "core",
+        "tags": [
+          "interpretability",
+          "control",
+          "safety"
+        ],
+        "questions": [
+          "Can interventions be made predictable, composable and durable without damaging unrelated capabilities?"
+        ],
+        "sources": [
+          {
+            "title": "Locating and Editing Factual Associations in GPT",
+            "url": "https://arxiv.org/abs/2202.05262",
+            "year": 2022,
+            "role": "origin",
+            "roleExplicit": true
+          },
+          {
+            "title": "Steering Language Models With Activation Engineering",
+            "url": "https://arxiv.org/abs/2308.10248",
+            "year": 2023,
+            "role": "origin",
+            "roleExplicit": true
+          },
+          {
+            "title": "Representation Engineering",
+            "url": "https://arxiv.org/abs/2310.01405",
+            "year": 2023,
+            "role": "supporting_result",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "Can interventions be made predictable, composable and durable without damaging unrelated capabilities?"
+      ],
+      "direction": null,
+      "claimFingerprint": "05aac37d"
+    },
+    {
+      "ordinal": 330,
+      "id": "aicontrol",
+      "title": "AI control protocols",
+      "year": 2023,
+      "laneId": "safety",
+      "classificationCode": "h",
+      "description": "Control research evaluates how trusted monitors, resampling, editing and limited human audits can constrain an intentionally subversive model. It is an active defense–attack program, not a solved safeguard.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "high_activity",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        },
+        "mapStatus": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": false,
+        "mapStatus": false
+      },
+      "research": {
+        "tier": "core",
+        "tags": [
+          "safety",
+          "agents",
+          "evaluation"
+        ],
+        "questions": [
+          "Which control protocols survive adaptive attacks when trusted monitoring and human audit capacity are scarce?"
+        ],
+        "sources": [
+          {
+            "title": "AI Control: Improving Safety Despite Intentional Subversion",
+            "url": "https://arxiv.org/abs/2312.06942",
+            "year": 2023,
+            "role": "origin",
+            "roleExplicit": true
+          },
+          {
+            "title": "Adaptive Attacks on Trusted Monitors Subvert AI Control Protocols",
+            "url": "https://arxiv.org/abs/2510.09462",
+            "year": 2025,
+            "role": "critique",
+            "roleExplicit": true
+          },
+          {
+            "title": "Attack Selection in Agentic AI Control Evaluations Meaningfully Decreases Safety",
+            "url": "https://arxiv.org/abs/2606.06529",
+            "year": 2026,
+            "role": "critique",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "Which control protocols survive adaptive attacks when trusted monitoring and human audit capacity are scarce?"
+      ],
+      "direction": null,
+      "claimFingerprint": "f9e5d01a"
+    },
+    {
+      "ordinal": 337,
+      "id": "unlearning",
+      "title": "Machine unlearning",
+      "year": 2019,
+      "laneId": "safety",
+      "classificationCode": "a",
+      "description": "Unlearning asks a trained model to remove the influence of selected data without full retraining. Verification, utility preservation and realistic deletion guarantees remain open research problems.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        },
+        "mapStatus": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": false,
+        "mapStatus": false
+      },
+      "research": {
+        "tier": "specialist",
+        "tags": [
+          "privacy",
+          "data",
+          "governance"
+        ],
+        "questions": [
+          "What evidence is sufficient to verify that a record's influence was removed from a large generative model?"
+        ],
+        "sources": [
+          {
+            "title": "Machine Unlearning",
+            "url": "https://arxiv.org/abs/1912.03817",
+            "year": 2019,
+            "role": "origin",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "What evidence is sufficient to verify that a record's influence was removed from a large generative model?"
+      ],
+      "direction": null,
+      "claimFingerprint": "5c1ecdd4"
+    }
+  ]
+}

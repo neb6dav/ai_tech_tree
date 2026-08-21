@@ -1,0 +1,949 @@
+{
+  "schemaVersion": "1.0.0",
+  "laneId": "roots",
+  "relationships": [
+    {
+      "ordinal": 0,
+      "key": "logicprog>godel:dep",
+      "sourceNodeId": "logicprog",
+      "targetNodeId": "godel",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed endpoint articles cross-link; this is contextual evidence, not causal confirmation.",
+        "sources": [
+          {
+            "title": "Hilbert's program",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Hilbert%27s_program",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Hilbert%27s%20program&oldid=1356668245",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          },
+          {
+            "title": "Gödel's incompleteness theorems",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/G%C3%B6del%27s_incompleteness_theorems",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=G%C3%B6del%27s%20incompleteness%20theorems&oldid=1367320729",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "2c71eba5",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 1,
+      "key": "logicprog>turing36:dep",
+      "sourceNodeId": "logicprog",
+      "targetNodeId": "turing36",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "No cross-link was found between the reviewed endpoint pages; link absence does not disprove this map relationship.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "160ed4f6",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 2,
+      "key": "godel>turing36:dep",
+      "sourceNodeId": "godel",
+      "targetNodeId": "turing36",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed endpoint articles cross-link; this is contextual evidence, not causal confirmation.",
+        "sources": [
+          {
+            "title": "Gödel's incompleteness theorems",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/G%C3%B6del%27s_incompleteness_theorems",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=G%C3%B6del%27s%20incompleteness%20theorems&oldid=1367320729",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          },
+          {
+            "title": "Turing machine",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Turing_machine",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Turing%20machine&oldid=1361925546",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "53a0ea7d",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 3,
+      "key": "logicprog>shannon37:dep",
+      "sourceNodeId": "logicprog",
+      "targetNodeId": "shannon37",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "No cross-link was found between the reviewed endpoint pages; link absence does not disprove this map relationship.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "aaa9a3af",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 4,
+      "key": "turing36>mcculloch43:dep",
+      "sourceNodeId": "turing36",
+      "targetNodeId": "mcculloch43",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed “Artificial neuron” article links to “Turing machine”; this is contextual, not causal, evidence.",
+        "sources": [
+          {
+            "title": "Artificial neuron",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Artificial_neuron",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Artificial%20neuron&oldid=1361101243",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "742c92fb",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 5,
+      "key": "logicprog>mcculloch43:dep",
+      "sourceNodeId": "logicprog",
+      "targetNodeId": "mcculloch43",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "No cross-link was found between the reviewed endpoint pages; link absence does not disprove this map relationship.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "1c32dfb1",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 6,
+      "key": "turing36>vonneumann45:dep",
+      "sourceNodeId": "turing36",
+      "targetNodeId": "vonneumann45",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed “Turing machine” article links to “Stored-program computer”; this is contextual, not causal, evidence.",
+        "sources": [
+          {
+            "title": "Turing machine",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Turing_machine",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Turing%20machine&oldid=1361925546",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "9531bf6c",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 7,
+      "key": "mcculloch43>wiener48:dep",
+      "sourceNodeId": "mcculloch43",
+      "targetNodeId": "wiener48",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "No cross-link was found between the reviewed endpoint pages; link absence does not disprove this map relationship.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "6d4667b1",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 8,
+      "key": "markov>shannon48:dep",
+      "sourceNodeId": "markov",
+      "targetNodeId": "shannon48",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed “Markov chain” article links to “Information theory”; this is contextual, not causal, evidence.",
+        "sources": [
+          {
+            "title": "Markov chain",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Markov_chain",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Markov%20chain&oldid=1365852166",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "a94a166b",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 9,
+      "key": "shannon37>shannon48:dep",
+      "sourceNodeId": "shannon37",
+      "targetNodeId": "shannon48",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "No cross-link was found between the reviewed endpoint pages; link absence does not disprove this map relationship.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "24bd88ea",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 10,
+      "key": "mcculloch43>hebb49:dep",
+      "sourceNodeId": "mcculloch43",
+      "targetNodeId": "hebb49",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed endpoint articles cross-link; this is contextual evidence, not causal confirmation.",
+        "sources": [
+          {
+            "title": "Artificial neuron",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Artificial_neuron",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Artificial%20neuron&oldid=1361101243",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          },
+          {
+            "title": "Hebbian theory",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Hebbian_theory",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Hebbian%20theory&oldid=1360682756",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "61afd4f1",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 11,
+      "key": "turing36>turingtest:dep",
+      "sourceNodeId": "turing36",
+      "targetNodeId": "turingtest",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed endpoint articles cross-link; this is contextual evidence, not causal confirmation.",
+        "sources": [
+          {
+            "title": "Turing machine",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Turing_machine",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Turing%20machine&oldid=1361925546",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          },
+          {
+            "title": "Turing test",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Turing_test",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Turing%20test&oldid=1364989093",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "ec990229",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 12,
+      "key": "turingtest>dartmouth:dep",
+      "sourceNodeId": "turingtest",
+      "targetNodeId": "dartmouth",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "No cross-link was found between the reviewed endpoint pages; link absence does not disprove this map relationship.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "a35f2569",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 13,
+      "key": "wiener48>dartmouth:dep",
+      "sourceNodeId": "wiener48",
+      "targetNodeId": "dartmouth",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed endpoint articles cross-link; this is contextual evidence, not causal confirmation.",
+        "sources": [
+          {
+            "title": "Cybernetics",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Cybernetics",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Cybernetics&oldid=1361254571",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          },
+          {
+            "title": "Dartmouth workshop",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Dartmouth_workshop",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Dartmouth%20workshop&oldid=1360638286",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "254eb20c",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 14,
+      "key": "shannon48>cogrev:dep",
+      "sourceNodeId": "shannon48",
+      "targetNodeId": "cogrev",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "No cross-link was found between the reviewed endpoint pages; link absence does not disprove this map relationship.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "1bb07065",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 15,
+      "key": "turingtest>cogrev:dep",
+      "sourceNodeId": "turingtest",
+      "targetNodeId": "cogrev",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "No cross-link was found between the reviewed endpoint pages; link absence does not disprove this map relationship.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "b4c576a3",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 16,
+      "key": "hebb49>hubel59:dep",
+      "sourceNodeId": "hebb49",
+      "targetNodeId": "hubel59",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "No cross-link was found between the reviewed endpoint pages; link absence does not disprove this map relationship.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "0280aa7c",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 17,
+      "key": "shannon48>solomonoff:dep",
+      "sourceNodeId": "shannon48",
+      "targetNodeId": "solomonoff",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "No cross-link was found between the reviewed endpoint pages; link absence does not disprove this map relationship.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "b4c9ebc5",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 18,
+      "key": "turing36>solomonoff:dep",
+      "sourceNodeId": "turing36",
+      "targetNodeId": "solomonoff",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "No cross-link was found between the reviewed endpoint pages; link absence does not disprove this map relationship.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "888db3f4",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 19,
+      "key": "shannon48>kolmo:dep",
+      "sourceNodeId": "shannon48",
+      "targetNodeId": "kolmo",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed endpoint articles cross-link; this is contextual evidence, not causal confirmation.",
+        "sources": [
+          {
+            "title": "Information theory",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Information_theory",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Information%20theory&oldid=1366101152",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          },
+          {
+            "title": "Kolmogorov complexity",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Kolmogorov_complexity",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Kolmogorov%20complexity&oldid=1361738672",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "95d042c9",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 20,
+      "key": "turing36>kolmo:dep",
+      "sourceNodeId": "turing36",
+      "targetNodeId": "kolmo",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed endpoint articles cross-link; this is contextual evidence, not causal confirmation.",
+        "sources": [
+          {
+            "title": "Turing machine",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Turing_machine",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Turing%20machine&oldid=1361925546",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          },
+          {
+            "title": "Kolmogorov complexity",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Kolmogorov_complexity",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Kolmogorov%20complexity&oldid=1361738672",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "075c93a6",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 21,
+      "key": "turing36>complexity71:dep",
+      "sourceNodeId": "turing36",
+      "targetNodeId": "complexity71",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed “NP-completeness” article links to “Turing machine”; this is contextual, not causal, evidence.",
+        "sources": [
+          {
+            "title": "NP-completeness",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/NP-completeness",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=NP-completeness&oldid=1345732940",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "cf5ac2cc",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 22,
+      "key": "turingtest>chineseroom:dep",
+      "sourceNodeId": "turingtest",
+      "targetNodeId": "chineseroom",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed endpoint articles cross-link; this is contextual evidence, not causal confirmation.",
+        "sources": [
+          {
+            "title": "Turing test",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Turing_test",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Turing%20test&oldid=1364989093",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          },
+          {
+            "title": "Chinese room",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Chinese_room",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Chinese%20room&oldid=1365574016",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "822ff4a9",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 23,
+      "key": "pdp86>conndebate:dep",
+      "sourceNodeId": "pdp86",
+      "targetNodeId": "conndebate",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "Both developments map to one article, so no distinct article cross-link supports this relationship; this is not disproof.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "5a410761",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 24,
+      "key": "chomsky>conndebate:dep",
+      "sourceNodeId": "chomsky",
+      "targetNodeId": "conndebate",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "No cross-link was found between the reviewed endpoint pages; link absence does not disprove this map relationship.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "2b6eae43",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 25,
+      "key": "wiener48>freeenergy:dep",
+      "sourceNodeId": "wiener48",
+      "targetNodeId": "freeenergy",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed “Free energy principle” article links to “Cybernetics”; this is contextual, not causal, evidence.",
+        "sources": [
+          {
+            "title": "Free energy principle",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Free_energy_principle",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Free%20energy%20principle&oldid=1360798274",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "c11f6b8a",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 26,
+      "key": "bayesnets>freeenergy:dep",
+      "sourceNodeId": "bayesnets",
+      "targetNodeId": "freeenergy",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "No cross-link was found between the reviewed endpoint pages; link absence does not disprove this map relationship.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "9c2d5822",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 27,
+      "key": "freeenergy>gap_activeinf:gap",
+      "sourceNodeId": "freeenergy",
+      "targetNodeId": "gap_activeinf",
+      "legacyKind": "gap",
+      "relationshipType": "proposed_combination",
+      "rationale": "Editorially proposed research combination; not a claim that the work already exists.",
+      "reviewed": true,
+      "evidenceGrade": "hypothesis",
+      "audit": {
+        "state": "hypothesis",
+        "confidence": null,
+        "note": "This proposed combination is a map hypothesis; Wikipedia absence does not establish novelty.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "3cf0a1b3",
+      "reviewState": "reviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 28,
+      "key": "modelbased>gap_activeinf:gap",
+      "sourceNodeId": "modelbased",
+      "targetNodeId": "gap_activeinf",
+      "legacyKind": "gap",
+      "relationshipType": "proposed_combination",
+      "rationale": "Editorially proposed research combination; not a claim that the work already exists.",
+      "reviewed": true,
+      "evidenceGrade": "hypothesis",
+      "audit": {
+        "state": "hypothesis",
+        "confidence": null,
+        "note": "This proposed combination is a map hypothesis; Wikipedia absence does not establish novelty.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "a0b4a865",
+      "reviewState": "reviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    }
+  ]
+}

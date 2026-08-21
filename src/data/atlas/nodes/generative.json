@@ -1,0 +1,979 @@
+{
+  "schemaVersion": "1.0.0",
+  "laneId": "generative",
+  "nodes": [
+    {
+      "ordinal": 190,
+      "id": "vae",
+      "title": "Variational autoencoders",
+      "year": 2013,
+      "laneId": "generative",
+      "classificationCode": "f",
+      "description": "Probabilistic latent spaces you can sample. Generative deep learning's respectable start — and diffusion's mathematical grandparent.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact model-family article.",
+          "sources": [
+            {
+              "title": "Variational autoencoder",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Variational_autoencoder",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Variational%20autoencoder&oldid=1358429264",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": "integrated",
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "title": "Auto-Encoding Variational Bayes",
+            "url": "https://arxiv.org/abs/1312.6114",
+            "year": 2013,
+            "role": "origin",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "dd703cac"
+    },
+    {
+      "ordinal": 191,
+      "id": "gan",
+      "title": "GANs",
+      "year": 2014,
+      "laneId": "generative",
+      "classificationCode": "d",
+      "description": "Forger vs detective training. Ruled generation 2014–20 (StyleGAN faces, deepfakes) — dethroned by diffusion; lingers in fast-sampling and super-res niches.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "dormant",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact model-family article.",
+          "sources": [
+            {
+              "title": "Generative adversarial network",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Generative_adversarial_network",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Generative%20adversarial%20network&oldid=1366804724",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Dormant” is an editorial assessment; no encyclopedic fate finding is inferred from article or link presence.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": "integrated",
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "title": "Generative Adversarial Nets",
+            "url": "https://arxiv.org/abs/1406.2661",
+            "year": 2014,
+            "role": "origin",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "43858988"
+    },
+    {
+      "ordinal": 192,
+      "id": "flows",
+      "title": "Normalizing flows",
+      "year": 2015,
+      "laneId": "generative",
+      "classificationCode": "a",
+      "description": "Invertible networks provide exact likelihoods and efficient sampling. Diffusion dominates general image generation, but flows remain active in density estimation, simulation-based inference, and scientific applications.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact canonical article for normalizing-flow generative models.",
+          "sources": [
+            {
+              "title": "Flow-based generative model",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Flow-based_generative_model",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Flow-based%20generative%20model&oldid=1353126723",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Active” is an editorial assessment of current activity, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": "integrated",
+        "tags": [
+          "probability",
+          "generative models",
+          "science"
+        ],
+        "questions": [
+          "How can invertible models scale while retaining tractable density estimation and useful inductive bias?"
+        ],
+        "sources": [
+          {
+            "title": "The frontier of simulation-based inference",
+            "url": "https://arxiv.org/abs/1911.01429",
+            "year": 2019,
+            "role": "survey",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "How can invertible models scale while retaining tractable density estimation and useful inductive bias?"
+      ],
+      "direction": null,
+      "claimFingerprint": "bdb8a908"
+    },
+    {
+      "ordinal": 193,
+      "id": "neuralstyle",
+      "title": "DeepDream & style transfer",
+      "year": 2015,
+      "laneId": "generative",
+      "classificationCode": "x",
+      "description": "Gram-matrix artistry and dog-faced clouds — the first viral neural art. Charming, superseded by text-to-image control.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "not_assessed",
+        "trajectory": "ambiguous_ended_or_superseded",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Direct for style transfer but only contextual for the node's combined DeepDream-and-neural-art moment.",
+          "sources": [
+            {
+              "title": "Neural style transfer",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Neural_style_transfer",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Neural%20style%20transfer&oldid=1330246191",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "The Neural style transfer page describes the technique and its continuing variants without an explicit ending, failure, or supersession claim for the broader neural-art moment.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "aed158ba"
+    },
+    {
+      "ordinal": 194,
+      "id": "wavenet",
+      "title": "WaveNet & neural audio",
+      "year": 2016,
+      "laneId": "generative",
+      "classificationCode": "f",
+      "description": "Autoregressive raw-waveform modeling set a new quality bar for text-to-speech and influenced neural audio research; many current speech and music systems use different codec, diffusion or transformer architectures.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact model article.",
+          "sources": [
+            {
+              "title": "WaveNet",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/WaveNet",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=WaveNet&oldid=1329404574",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "00a12248"
+    },
+    {
+      "ordinal": 195,
+      "id": "diffusion",
+      "title": "Diffusion models",
+      "year": 2020,
+      "laneId": "generative",
+      "classificationCode": "f",
+      "description": "Denoise noise into data, step by step. Stable training beat GAN fragility — the generative workhorse across image, audio, video, molecules.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact generative-model family article.",
+          "sources": [
+            {
+              "title": "Diffusion model",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Diffusion_model",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Diffusion%20model&oldid=1360060028",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": "integrated",
+        "tags": [
+          "generative models",
+          "theory"
+        ],
+        "questions": [
+          "Which continuous-time formulations best trade training stability, controllability and sampling cost?"
+        ],
+        "sources": [
+          {
+            "title": "Denoising Diffusion Implicit Models",
+            "url": "https://arxiv.org/abs/2010.02502",
+            "year": 2020,
+            "role": "supporting_result",
+            "roleExplicit": true
+          },
+          {
+            "title": "Score-Based Generative Modeling through Stochastic Differential Equations",
+            "url": "https://arxiv.org/abs/2011.13456",
+            "year": 2020,
+            "role": "supporting_result",
+            "roleExplicit": true
+          },
+          {
+            "title": "Denoising Diffusion Probabilistic Models",
+            "url": "https://arxiv.org/abs/2006.11239",
+            "year": 2020,
+            "role": "origin",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "Which continuous-time formulations best trade training stability, controllability and sampling cost?"
+      ],
+      "direction": null,
+      "claimFingerprint": "e93984bd"
+    },
+    {
+      "ordinal": 196,
+      "id": "txt2img",
+      "title": "Text-to-image (latent + guided diffusion)",
+      "year": 2022,
+      "laneId": "generative",
+      "classificationCode": "f",
+      "description": "Latent diffusion made high-resolution synthesis economical; classifier-free guidance made text control practical. DALL·E 2 and Stable Diffusion brought language-steered imagery to everyone — and opened a copyright battlefield.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact model-class article covering systems such as DALL-E and Stable Diffusion.",
+          "sources": [
+            {
+              "title": "Text-to-image model",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Text-to-image_model",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Text-to-image%20model&oldid=1366271711",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": "integrated",
+        "tags": [
+          "generative models",
+          "multimodal"
+        ],
+        "questions": [
+          "How can controllability, provenance and creator rights improve without concentrating access to generation tools?"
+        ],
+        "sources": [
+          {
+            "title": "High-Resolution Image Synthesis with Latent Diffusion Models",
+            "url": "https://arxiv.org/abs/2112.10752",
+            "year": 2021,
+            "role": "origin",
+            "roleExplicit": true
+          },
+          {
+            "title": "Classifier-Free Diffusion Guidance",
+            "url": "https://arxiv.org/abs/2207.12598",
+            "year": 2022,
+            "role": "supporting_result",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "How can controllability, provenance and creator rights improve without concentrating access to generation tools?"
+      ],
+      "direction": null,
+      "claimFingerprint": "b472a77d"
+    },
+    {
+      "ordinal": 197,
+      "id": "dit",
+      "title": "Diffusion Transformers (DiT)",
+      "year": 2023,
+      "laneId": "generative",
+      "classificationCode": "f",
+      "description": "Transformer backbones gave diffusion models a scalable architecture used across image and increasingly video and audio generation; other backbones remain active.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Relevant parent architecture article; diffusion transformers do not have a standalone canonical page.",
+          "sources": [
+            {
+              "title": "Diffusion model",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Diffusion_model",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Diffusion%20model&oldid=1360060028",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "3f098be1"
+    },
+    {
+      "ordinal": 198,
+      "id": "musicgen",
+      "title": "Music & voice generation",
+      "year": 2023,
+      "laneId": "generative",
+      "classificationCode": "a",
+      "description": "Suno, ElevenLabs, voice cloning at consumer scale. Creative industries' negotiation with AI, conducted in real time.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Relevant field article for AI music generation; the node also includes voice cloning and specific products.",
+          "sources": [
+            {
+              "title": "Artificial intelligence in music",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Artificial_intelligence_in_music",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Artificial%20intelligence%20in%20music&oldid=1361390074",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Active” is an editorial assessment of current activity, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "3c3d3e0a"
+    },
+    {
+      "ordinal": 199,
+      "id": "video",
+      "title": "Video generation (Sora→Veo 3)",
+      "year": 2024,
+      "laneId": "generative",
+      "classificationCode": "h",
+      "description": "Minutes of coherent video with sound. The live question: are these world simulators in disguise, or very good pixel dreamers?",
+      "dateOverride": {
+        "start": 2024,
+        "end": 2025,
+        "label": "2024-2025"
+      },
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "high_activity",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact model-class article covering Sora- and Veo-style video generation.",
+          "sources": [
+            {
+              "title": "Text-to-video model",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Text-to-video_model",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Text-to-video%20model&oldid=1367547608",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Hot frontier” is a time-sensitive editorial assessment, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "bbff1f95"
+    },
+    {
+      "ordinal": 200,
+      "id": "genie",
+      "title": "Interactive world models (Genie 3)",
+      "year": 2024,
+      "laneId": "generative",
+      "classificationCode": "h",
+      "description": "Playable, promptable generated worlds. Games and training grounds for agents — a possible road to spatial intelligence (World Labs' Marble, too).",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "high_activity",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact Google DeepMind Genie world-model article.",
+          "sources": [
+            {
+              "title": "Genie (world model)",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Genie_(world_model)",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Genie%20%28world%20model%29&oldid=1367001693",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Hot frontier” is a time-sensitive editorial assessment, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "711cd671"
+    },
+    {
+      "ordinal": 201,
+      "id": "gap_dreamtrain",
+      "title": "Robots trained in dreamed worlds",
+      "year": 2026,
+      "laneId": "generative",
+      "classificationCode": "g",
+      "description": "Research direction: test whether policies trained predominantly in learned generative worlds can outperform matched classical-simulation baselines across multiple physical settings and embodiments. Learned-world-to-real policy loops already exist; robust general transfer remains unresolved.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "open_direction",
+        "significance": "not_assessed",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "hypothesis",
+          "confidence": null,
+          "note": "This is a map hypothesis; Wikipedia absence does not establish that the proposed gap is novel.",
+          "sources": []
+        },
+        "mapStatus": {
+          "state": "hypothesis",
+          "confidence": null,
+          "note": "This is explicitly a proposed gap; Wikipedia absence is not evidence that the proposal is novel.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "title": "Robot Learning from a Physical World Model",
+            "url": "https://arxiv.org/abs/2511.07416",
+            "year": 2025,
+            "role": "supporting_result",
+            "roleExplicit": true
+          },
+          {
+            "title": "Efficient Sim-to-Real Transfer of World-Action Models from Synthetic Priors",
+            "url": "https://arxiv.org/abs/2606.31101",
+            "year": 2026,
+            "role": "supporting_result",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "Can policies learned mainly inside learned generative world models transfer reliably to multiple physical settings and embodiments, and outperform classical simulation under the same real-world data and compute budget?"
+      ],
+      "direction": {
+        "question": "Can policies learned mainly inside learned generative world models transfer reliably to multiple physical settings and embodiments, and outperform classical simulation under the same real-world data and compute budget?",
+        "closureCriteria": "Pre-register at least three tasks, two physical settings, and two embodiments; hold real-world interaction budgets equal; compare learned-world, classical simulator, mixed, imitation-only, and direct-real-training baselines; report intervention and failure rates; and reproduce the result at an independent site.",
+        "partialResults": [
+          "PhysWorld reconstructs task-specific physical worlds from generated videos and trains residual policies that transfer to real manipulation; 2026 world-action-model work transfers synthetic priors to a Franka arm without real demonstrations on four tasks. DayDreamer, Cosmos Policy, DreamGen, and Gen2Act establish adjacent learned-world or generative-policy loops. These are important counterexamples to the old claim that the loop does not exist, but they do not yet establish robust multi-setting, multi-embodiment superiority over strong classical simulation."
+        ],
+        "starters": [
+          "Individual: In LIBERO or RoboCasa, train a policy from a learned video/world model and a classical physics simulator using identical synthetic trajectories, then evaluate both on the same held-out visual and dynamics shifts.",
+          "Small lab: Use one physical arm for three manipulation tasks and two scene shifts; cap real interactions and compare learned-world, domain-randomized simulator, mixed, and imitation baselines with blinded success scoring.",
+          "Well-funded lab: Run a preregistered multi-embodiment, multi-site transfer study with equal real-data budgets, safety cages, independent replication, and a full accounting of generation, reconstruction, simulation, and policy-training compute."
+        ],
+        "claimState": "editorial_hypothesis",
+        "asOf": "2026-08-04",
+        "confidence": "medium",
+        "noveltyReview": {
+          "status": "targeted_search",
+          "checkedAt": "2026-08-04",
+          "scope": "Targeted arXiv searches for physical world models, generative simulation, world-action models, synthetic-prior sim-to-real, robot policies from generated video, Dreamer/DayDreamer, Cosmos Policy, and 2025-2026 embodied transfer papers; primary-paper reference chaining.",
+          "note": "Medium confidence that the narrowed robust-transfer gap remains open. Existing learned-world-to-real loops narrow the question to multi-setting, multi-embodiment performance under equal budgets. This was a targeted, not exhaustive, priority search."
+        },
+        "counterexamples": [
+          "PhysWorld reports an average 82 percent success versus a 67 percent zero-shot baseline across its open-world manipulation evaluation, using generated task video and physical reconstruction; scope and simulator fidelity remain limiting factors.",
+          "Efficient Sim-to-Real Transfer of World-Action Models from Synthetic Priors reports about 800 synthetic demonstrations per task and 35 percent average Franka success over four tasks with no real demonstrations, but does not prove that the world-action model is necessary or better than a matched classical simulator.",
+          "DayDreamer learns online on physical robots, and Cosmos Policy performs strongly on standard manipulation suites, but neither is a clean demonstration of multi-embodiment policies trained mainly in dreamed worlds."
+        ],
+        "literature": [
+          {
+            "t": "Robot Learning from a Physical World Model",
+            "u": "https://arxiv.org/abs/2511.07416",
+            "y": 2025,
+            "role": "supporting_result"
+          },
+          {
+            "t": "Efficient Sim-to-Real Transfer of World-Action Models from Synthetic Priors",
+            "u": "https://arxiv.org/abs/2606.31101",
+            "y": 2026,
+            "role": "supporting_result"
+          }
+        ],
+        "resources": {
+          "benchmarks": [
+            "LIBERO",
+            "RoboCasa",
+            "CALVIN or SIMPLER with predefined real-to-sim correspondence"
+          ],
+          "code": [
+            "https://github.com/NVIDIA/cosmos",
+            "https://github.com/danijar/daydreamer",
+            "https://github.com/Lifelong-Robot-Learning/LIBERO"
+          ],
+          "datasets": [
+            "Open X-Embodiment",
+            "DROID",
+            "BridgeData V2"
+          ],
+          "estimated": {
+            "individual": "One to four high-memory GPUs and simulation-only evaluation.",
+            "smallLab": "Eight to thirty-two GPUs, one instrumented robot arm, replacement parts, and several weeks of supervised physical trials.",
+            "wellFundedLab": "Sixty-four or more GPUs, multiple robot embodiments and sites, motion capture and safety infrastructure, plus an independent replication team."
+          }
+        },
+        "crowdedness": "High for robot world models and generative policies; medium for controlled learned-world versus classical-simulator comparisons across physical settings.",
+        "tractability": "Medium in simulation, medium-low for one physical arm, and low for independent multi-embodiment closure."
+      },
+      "claimFingerprint": "987d90ec"
+    },
+    {
+      "ordinal": 313,
+      "id": "vqcodes",
+      "title": "Discrete neural representations & codecs",
+      "year": 2017,
+      "laneId": "generative",
+      "classificationCode": "a",
+      "description": "VQ-VAE learned discrete codebooks; VQGAN and neural audio codecs turned images and sound into learned tokens. This lineage connects generative models, compression and multimodal tokenization.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        },
+        "mapStatus": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": false,
+        "mapStatus": false
+      },
+      "research": {
+        "tier": "core",
+        "tags": [
+          "generative models",
+          "multimodal",
+          "compression"
+        ],
+        "questions": [
+          "Can learned discrete representations unify text, audio, images and actions without destructive information bottlenecks?"
+        ],
+        "sources": [
+          {
+            "title": "Neural Discrete Representation Learning",
+            "url": "https://arxiv.org/abs/1711.00937",
+            "year": 2017,
+            "role": "origin",
+            "roleExplicit": true
+          },
+          {
+            "title": "Taming Transformers for High-Resolution Image Synthesis",
+            "url": "https://arxiv.org/abs/2012.09841",
+            "year": 2020,
+            "role": "supporting_result",
+            "roleExplicit": true
+          },
+          {
+            "title": "SoundStream: An End-to-End Neural Audio Codec",
+            "url": "https://arxiv.org/abs/2107.03312",
+            "year": 2021,
+            "role": "supporting_result",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "Can learned discrete representations unify text, audio, images and actions without destructive information bottlenecks?"
+      ],
+      "direction": null,
+      "claimFingerprint": "92d99c8d"
+    },
+    {
+      "ordinal": 325,
+      "id": "flowmatching",
+      "title": "Flow matching & rectified flow",
+      "year": 2022,
+      "laneId": "generative",
+      "classificationCode": "h",
+      "description": "Continuous-time vector-field learning offers a direct path from noise to data, often with straighter and faster trajectories than diffusion sampling. It is now a major generative-model branch.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "high_activity",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        },
+        "mapStatus": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": false,
+        "mapStatus": false
+      },
+      "research": {
+        "tier": "core",
+        "tags": [
+          "generative models",
+          "theory",
+          "efficiency"
+        ],
+        "questions": [
+          "Which probability paths yield stable training, few-step generation and trustworthy likelihood or coverage behavior?"
+        ],
+        "sources": [
+          {
+            "title": "Flow Straight and Fast: Learning to Generate and Transfer Data with Rectified Flow",
+            "url": "https://arxiv.org/abs/2209.03003",
+            "year": 2022,
+            "role": "origin",
+            "roleExplicit": true
+          },
+          {
+            "title": "Flow Matching for Generative Modeling",
+            "url": "https://arxiv.org/abs/2210.02747",
+            "year": 2022,
+            "role": "origin",
+            "roleExplicit": true
+          },
+          {
+            "title": "Scaling Rectified Flow Transformers for High-Resolution Image Synthesis",
+            "url": "https://arxiv.org/abs/2403.03206",
+            "year": 2024,
+            "role": "supporting_result",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "Which probability paths yield stable training, few-step generation and trustworthy likelihood or coverage behavior?"
+      ],
+      "direction": null,
+      "claimFingerprint": "79ea10cf"
+    }
+  ]
+}

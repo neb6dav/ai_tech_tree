@@ -1,0 +1,1789 @@
+{
+  "schemaVersion": "1.0.0",
+  "laneId": "neural",
+  "relationships": [
+    {
+      "ordinal": 161,
+      "key": "mcculloch43>perceptron:dep",
+      "sourceNodeId": "mcculloch43",
+      "targetNodeId": "perceptron",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed endpoint articles cross-link; this is contextual evidence, not causal confirmation.",
+        "sources": [
+          {
+            "title": "Artificial neuron",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Artificial_neuron",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Artificial%20neuron&oldid=1361101243",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          },
+          {
+            "title": "Perceptron",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Perceptron",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Perceptron&oldid=1360590893",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "91d746a3",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 162,
+      "key": "hebb49>perceptron:dep",
+      "sourceNodeId": "hebb49",
+      "targetNodeId": "perceptron",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "No cross-link was found between the reviewed endpoint pages; link absence does not disprove this map relationship.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "07b8cc46",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 163,
+      "key": "perceptron>adaline:dep",
+      "sourceNodeId": "perceptron",
+      "targetNodeId": "adaline",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed “ADALINE” article links to “Perceptron”; this is contextual, not causal, evidence.",
+        "sources": [
+          {
+            "title": "ADALINE",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/ADALINE",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=ADALINE&oldid=1315790227",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "2fe97ad0",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 164,
+      "key": "perceptron>perceptronsbook:dep",
+      "sourceNodeId": "perceptron",
+      "targetNodeId": "perceptronsbook",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed endpoint articles cross-link; this is contextual evidence, not causal confirmation.",
+        "sources": [
+          {
+            "title": "Perceptron",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Perceptron",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Perceptron&oldid=1360590893",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          },
+          {
+            "title": "Perceptrons (book)",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Perceptrons_(book)",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Perceptrons%20%28book%29&oldid=1364005856",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "e95c9f64",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 165,
+      "key": "hubel59>neocognitron:dep",
+      "sourceNodeId": "hubel59",
+      "targetNodeId": "neocognitron",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "No cross-link was found between the reviewed endpoint pages; link absence does not disprove this map relationship.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "b7fb2d3b",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 166,
+      "key": "perceptron>neocognitron:dep",
+      "sourceNodeId": "perceptron",
+      "targetNodeId": "neocognitron",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "No cross-link was found between the reviewed endpoint pages; link absence does not disprove this map relationship.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "b812b77d",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 167,
+      "key": "hebb49>hopfield:dep",
+      "sourceNodeId": "hebb49",
+      "targetNodeId": "hopfield",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed endpoint articles cross-link; this is contextual evidence, not causal confirmation.",
+        "sources": [
+          {
+            "title": "Hebbian theory",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Hebbian_theory",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Hebbian%20theory&oldid=1360682756",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          },
+          {
+            "title": "Hopfield network",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Hopfield_network",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Hopfield%20network&oldid=1344832605",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "ee3ee111",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 168,
+      "key": "hopfield>boltzmann:dep",
+      "sourceNodeId": "hopfield",
+      "targetNodeId": "boltzmann",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed endpoint articles cross-link; this is contextual evidence, not causal confirmation.",
+        "sources": [
+          {
+            "title": "Hopfield network",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Hopfield_network",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Hopfield%20network&oldid=1344832605",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          },
+          {
+            "title": "Boltzmann machine",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Boltzmann_machine",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Boltzmann%20machine&oldid=1363781435",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "7ba134e4",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 169,
+      "key": "boltzmann>rbm:dep",
+      "sourceNodeId": "boltzmann",
+      "targetNodeId": "rbm",
+      "legacyKind": "dep",
+      "relationshipType": "extends",
+      "rationale": "Restricted Boltzmann machines are a constrained Boltzmann-machine form.",
+      "reviewed": true,
+      "evidenceGrade": "direct",
+      "audit": {
+        "state": "confirmed",
+        "confidence": "high",
+        "note": "The RBM article explicitly identifies restricted Boltzmann machines as a special case of Boltzmann machines.",
+        "sources": [
+          {
+            "title": "Restricted Boltzmann machine",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Restricted_Boltzmann_machine",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Restricted%20Boltzmann%20machine&oldid=1365856341",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "b0ea8d55",
+      "reviewState": "reviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 170,
+      "key": "adaline>backprop:dep",
+      "sourceNodeId": "adaline",
+      "targetNodeId": "backprop",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed endpoint articles cross-link; this is contextual evidence, not causal confirmation.",
+        "sources": [
+          {
+            "title": "ADALINE",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/ADALINE",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=ADALINE&oldid=1315790227",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          },
+          {
+            "title": "Backpropagation",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Backpropagation",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Backpropagation&oldid=1362127161",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "1aaed640",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 171,
+      "key": "perceptronsbook>backprop:dep",
+      "sourceNodeId": "perceptronsbook",
+      "targetNodeId": "backprop",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "No cross-link was found between the reviewed endpoint pages; link absence does not disprove this map relationship.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "41455ae0",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 172,
+      "key": "backprop>pdp86:dep",
+      "sourceNodeId": "backprop",
+      "targetNodeId": "pdp86",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "No cross-link was found between the reviewed endpoint pages; link absence does not disprove this map relationship.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "cf4e2244",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 173,
+      "key": "boltzmann>pdp86:dep",
+      "sourceNodeId": "boltzmann",
+      "targetNodeId": "pdp86",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed “Connectionism” article links to “Boltzmann machine”; this is contextual, not causal, evidence.",
+        "sources": [
+          {
+            "title": "Connectionism",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Connectionism",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Connectionism&oldid=1364296292",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "5caa7fb3",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 174,
+      "key": "backprop>universalapprox:dep",
+      "sourceNodeId": "backprop",
+      "targetNodeId": "universalapprox",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed “Universal approximation theorem” article links to “Backpropagation”; this is contextual, not causal, evidence.",
+        "sources": [
+          {
+            "title": "Universal approximation theorem",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Universal_approximation_theorem",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Universal%20approximation%20theorem&oldid=1361097573",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "c4f73e5f",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 175,
+      "key": "neocognitron>cnn89:dep",
+      "sourceNodeId": "neocognitron",
+      "targetNodeId": "cnn89",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "No cross-link was found between the reviewed endpoint pages; link absence does not disprove this map relationship.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "1c96d8b5",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 176,
+      "key": "backprop>cnn89:dep",
+      "sourceNodeId": "backprop",
+      "targetNodeId": "cnn89",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed endpoint articles cross-link; this is contextual evidence, not causal confirmation.",
+        "sources": [
+          {
+            "title": "Backpropagation",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Backpropagation",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Backpropagation&oldid=1362127161",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          },
+          {
+            "title": "LeNet",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/LeNet",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=LeNet&oldid=1365013191",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "95f94bac",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 177,
+      "key": "backprop>rnn:dep",
+      "sourceNodeId": "backprop",
+      "targetNodeId": "rnn",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed endpoint articles cross-link; this is contextual evidence, not causal confirmation.",
+        "sources": [
+          {
+            "title": "Backpropagation",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Backpropagation",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Backpropagation&oldid=1362127161",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          },
+          {
+            "title": "Recurrent neural network",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Recurrent_neural_network",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Recurrent%20neural%20network&oldid=1363820365",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "fb9e1198",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 178,
+      "key": "rnn>vanishing:dep",
+      "sourceNodeId": "rnn",
+      "targetNodeId": "vanishing",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed endpoint articles cross-link; this is contextual evidence, not causal confirmation.",
+        "sources": [
+          {
+            "title": "Recurrent neural network",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Recurrent_neural_network",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Recurrent%20neural%20network&oldid=1363820365",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          },
+          {
+            "title": "Vanishing gradient problem",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Vanishing_gradient_problem",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Vanishing%20gradient%20problem&oldid=1356326467",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "57385f0f",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 179,
+      "key": "rnn>lstm:dep",
+      "sourceNodeId": "rnn",
+      "targetNodeId": "lstm",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed endpoint articles cross-link; this is contextual evidence, not causal confirmation.",
+        "sources": [
+          {
+            "title": "Recurrent neural network",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Recurrent_neural_network",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Recurrent%20neural%20network&oldid=1363820365",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          },
+          {
+            "title": "Long short-term memory",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Long_short-term_memory",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Long%20short-term%20memory&oldid=1363766388",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "417860e0",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 180,
+      "key": "vanishing>lstm:dep",
+      "sourceNodeId": "vanishing",
+      "targetNodeId": "lstm",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed endpoint articles cross-link; this is contextual evidence, not causal confirmation.",
+        "sources": [
+          {
+            "title": "Vanishing gradient problem",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Vanishing_gradient_problem",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Vanishing%20gradient%20problem&oldid=1356326467",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          },
+          {
+            "title": "Long short-term memory",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Long_short-term_memory",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Long%20short-term%20memory&oldid=1363766388",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "6f338ea5",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 181,
+      "key": "rbm>dbn:dep",
+      "sourceNodeId": "rbm",
+      "targetNodeId": "dbn",
+      "legacyKind": "dep",
+      "relationshipType": "component",
+      "rationale": "Deep belief networks were constructed from stacked restricted Boltzmann machines.",
+      "reviewed": true,
+      "evidenceGrade": "direct",
+      "audit": {
+        "state": "confirmed",
+        "confidence": "high",
+        "note": "The RBM article explicitly says deep belief networks can be formed by stacking RBMs.",
+        "sources": [
+          {
+            "title": "Restricted Boltzmann machine",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Restricted_Boltzmann_machine",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Restricted%20Boltzmann%20machine&oldid=1365856341",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "8df793fe",
+      "reviewState": "reviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 182,
+      "key": "vanishing>dbn:dep",
+      "sourceNodeId": "vanishing",
+      "targetNodeId": "dbn",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed “Vanishing gradient problem” article links to “Deep belief network”; this is contextual, not causal, evidence.",
+        "sources": [
+          {
+            "title": "Vanishing gradient problem",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Vanishing_gradient_problem",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Vanishing%20gradient%20problem&oldid=1356326467",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "87e12931",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 183,
+      "key": "backprop>autoencoders:dep",
+      "sourceNodeId": "backprop",
+      "targetNodeId": "autoencoders",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed endpoint articles cross-link; this is contextual evidence, not causal confirmation.",
+        "sources": [
+          {
+            "title": "Backpropagation",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Backpropagation",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Backpropagation&oldid=1362127161",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          },
+          {
+            "title": "Autoencoder",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Autoencoder",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Autoencoder&oldid=1366805492",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "fd0ad140",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 184,
+      "key": "dbn>autoencoders:dep",
+      "sourceNodeId": "dbn",
+      "targetNodeId": "autoencoders",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed endpoint articles cross-link; this is contextual evidence, not causal confirmation.",
+        "sources": [
+          {
+            "title": "Deep belief network",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Deep_belief_network",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Deep%20belief%20network&oldid=1342493920",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          },
+          {
+            "title": "Autoencoder",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Autoencoder",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Autoencoder&oldid=1366805492",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "9bed9232",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 185,
+      "key": "seq2seq>attention:dep",
+      "sourceNodeId": "seq2seq",
+      "targetNodeId": "attention",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed endpoint articles cross-link; this is contextual evidence, not causal confirmation.",
+        "sources": [
+          {
+            "title": "Seq2seq",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Seq2seq",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Seq2seq&oldid=1358644085",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          },
+          {
+            "title": "Attention (machine learning)",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Attention_(machine_learning)",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Attention%20%28machine%20learning%29&oldid=1366682475",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "0d17064c",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 186,
+      "key": "lstm>ntm:dep",
+      "sourceNodeId": "lstm",
+      "targetNodeId": "ntm",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed endpoint articles cross-link; this is contextual evidence, not causal confirmation.",
+        "sources": [
+          {
+            "title": "Long short-term memory",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Long_short-term_memory",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Long%20short-term%20memory&oldid=1363766388",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          },
+          {
+            "title": "Neural Turing machine",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Neural_Turing_machine",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Neural%20Turing%20machine&oldid=1360712674",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "85ef9a53",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 187,
+      "key": "turing36>ntm:dep",
+      "sourceNodeId": "turing36",
+      "targetNodeId": "ntm",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed endpoint articles cross-link; this is contextual evidence, not causal confirmation.",
+        "sources": [
+          {
+            "title": "Turing machine",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Turing_machine",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Turing%20machine&oldid=1361925546",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          },
+          {
+            "title": "Neural Turing machine",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Neural_Turing_machine",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Neural%20Turing%20machine&oldid=1360712674",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "154ec911",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 188,
+      "key": "alexnet>resnet:dep",
+      "sourceNodeId": "alexnet",
+      "targetNodeId": "resnet",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed endpoint articles cross-link; this is contextual evidence, not causal confirmation.",
+        "sources": [
+          {
+            "title": "AlexNet",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/AlexNet",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=AlexNet&oldid=1366708512",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          },
+          {
+            "title": "Residual neural network",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Residual_neural_network",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Residual%20neural%20network&oldid=1360775117",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "f5c20a1c",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 189,
+      "key": "vanishing>resnet:dep",
+      "sourceNodeId": "vanishing",
+      "targetNodeId": "resnet",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed endpoint articles cross-link; this is contextual evidence, not causal confirmation.",
+        "sources": [
+          {
+            "title": "Vanishing gradient problem",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Vanishing_gradient_problem",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Vanishing%20gradient%20problem&oldid=1356326467",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          },
+          {
+            "title": "Residual neural network",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Residual_neural_network",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Residual%20neural%20network&oldid=1360775117",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "38f4c7d2",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 190,
+      "key": "batchnorm>resnet:dep",
+      "sourceNodeId": "batchnorm",
+      "targetNodeId": "resnet",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed endpoint articles cross-link; this is contextual evidence, not causal confirmation.",
+        "sources": [
+          {
+            "title": "Batch normalization",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Batch_normalization",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Batch%20normalization&oldid=1342628486",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          },
+          {
+            "title": "Residual neural network",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Residual_neural_network",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Residual%20neural%20network&oldid=1360775117",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "e3fe74a7",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 191,
+      "key": "rnn>hypernet:dep",
+      "sourceNodeId": "rnn",
+      "targetNodeId": "hypernet",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "A complete pair of reviewed endpoint pages was unavailable; this does not disprove the map relationship.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "671e4933",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 192,
+      "key": "attention>transformer:dep",
+      "sourceNodeId": "attention",
+      "targetNodeId": "transformer",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed endpoint articles cross-link; this is contextual evidence, not causal confirmation.",
+        "sources": [
+          {
+            "title": "Attention (machine learning)",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Attention_(machine_learning)",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Attention%20%28machine%20learning%29&oldid=1366682475",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          },
+          {
+            "title": "Transformer (deep learning)",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Transformer_(deep_learning)",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Transformer%20%28deep%20learning%29&oldid=1362319941",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "6ba08a5d",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 193,
+      "key": "layernorm>transformer:dep",
+      "sourceNodeId": "layernorm",
+      "targetNodeId": "transformer",
+      "legacyKind": "dep",
+      "relationshipType": "component",
+      "rationale": "Layer normalization is an explicit Transformer component.",
+      "reviewed": true,
+      "evidenceGrade": "direct",
+      "audit": {
+        "state": "confirmed",
+        "confidence": "high",
+        "note": "Wikipedia explicitly identifies LayerNorm as a key transformer component and describes its use in the original transformer.",
+        "sources": [
+          {
+            "title": "Normalization (machine learning)",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Normalization_(machine_learning)",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Normalization%20%28machine%20learning%29&oldid=1340395252",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "f15ad19c",
+      "reviewState": "reviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 194,
+      "key": "lstm>transformer:sup",
+      "sourceNodeId": "lstm",
+      "targetNodeId": "transformer",
+      "legacyKind": "sup",
+      "relationshipType": "legacy_supersession_claim",
+      "rationale": "Legacy supersession claim retained for review; it is not treated as established supersession.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed endpoint articles cross-link; this is contextual evidence, not causal confirmation.",
+        "sources": [
+          {
+            "title": "Long short-term memory",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Long_short-term_memory",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Long%20short-term%20memory&oldid=1363766388",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          },
+          {
+            "title": "Transformer (deep learning)",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Transformer_(deep_learning)",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Transformer%20%28deep%20learning%29&oldid=1362319941",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "a007e9e3",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 195,
+      "key": "cnn89>gnn:dep",
+      "sourceNodeId": "cnn89",
+      "targetNodeId": "gnn",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed “Graph neural network” article links to “LeNet”; this is contextual, not causal, evidence.",
+        "sources": [
+          {
+            "title": "Graph neural network",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Graph_neural_network",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Graph%20neural%20network&oldid=1360576321",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "0241460f",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 196,
+      "key": "kgraphs>gnn:dep",
+      "sourceNodeId": "kgraphs",
+      "targetNodeId": "gnn",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed “Knowledge graph” article links to “Graph neural network”; this is contextual, not causal, evidence.",
+        "sources": [
+          {
+            "title": "Knowledge graph",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Knowledge_graph",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Knowledge%20graph&oldid=1366997604",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "2ab083c5",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 197,
+      "key": "cnn89>capsules:dep",
+      "sourceNodeId": "cnn89",
+      "targetNodeId": "capsules",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "No cross-link was found between the reviewed endpoint pages; link absence does not disprove this map relationship.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "ee82c4fe",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 198,
+      "key": "resnet>neuralode:dep",
+      "sourceNodeId": "resnet",
+      "targetNodeId": "neuralode",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed “Neural differential equation” article links to “Residual neural network”; this is contextual, not causal, evidence.",
+        "sources": [
+          {
+            "title": "Neural differential equation",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Neural_differential_equation",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Neural%20differential%20equation&oldid=1360712677",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "001032fa",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 199,
+      "key": "transformer>moe:dep",
+      "sourceNodeId": "transformer",
+      "targetNodeId": "moe",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed endpoint articles cross-link; this is contextual evidence, not causal confirmation.",
+        "sources": [
+          {
+            "title": "Transformer (deep learning)",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Transformer_(deep_learning)",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Transformer%20%28deep%20learning%29&oldid=1362319941",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          },
+          {
+            "title": "Mixture of experts",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Mixture_of_experts",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Mixture%20of%20experts&oldid=1354462705",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "6bbdc0b0",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 200,
+      "key": "transformer>linattn:dep",
+      "sourceNodeId": "transformer",
+      "targetNodeId": "linattn",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed endpoint articles cross-link; this is contextual evidence, not causal confirmation.",
+        "sources": [
+          {
+            "title": "Transformer (deep learning)",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Transformer_(deep_learning)",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Transformer%20%28deep%20learning%29&oldid=1362319941",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          },
+          {
+            "title": "Neural network (machine learning)",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Neural_network_(machine_learning)",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Neural%20network%20%28machine%20learning%29&oldid=1367633569",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "485d8c43",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 201,
+      "key": "kalman>ssm:dep",
+      "sourceNodeId": "kalman",
+      "targetNodeId": "ssm",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "No cross-link was found between the reviewed endpoint pages; link absence does not disprove this map relationship.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "ee4ff161",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 202,
+      "key": "rnn>ssm:dep",
+      "sourceNodeId": "rnn",
+      "targetNodeId": "ssm",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed endpoint articles cross-link; this is contextual evidence, not causal confirmation.",
+        "sources": [
+          {
+            "title": "Recurrent neural network",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Recurrent_neural_network",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Recurrent%20neural%20network&oldid=1363820365",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          },
+          {
+            "title": "Mamba (deep learning architecture)",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Mamba_(deep_learning_architecture)",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Mamba%20%28deep%20learning%20architecture%29&oldid=1334999369",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "902a6f6b",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 203,
+      "key": "transformer>ssm:dep",
+      "sourceNodeId": "transformer",
+      "targetNodeId": "ssm",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed “Transformer (deep learning)” article links to “Mamba (deep learning architecture)”; this is contextual, not causal, evidence.",
+        "sources": [
+          {
+            "title": "Transformer (deep learning)",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Transformer_(deep_learning)",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Transformer%20%28deep%20learning%29&oldid=1362319941",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "cb332062",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 204,
+      "key": "transformer>titans:dep",
+      "sourceNodeId": "transformer",
+      "targetNodeId": "titans",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "A complete pair of reviewed endpoint pages was unavailable; this does not disprove the map relationship.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "be7b60e6",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 205,
+      "key": "ssm>titans:dep",
+      "sourceNodeId": "ssm",
+      "targetNodeId": "titans",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "A complete pair of reviewed endpoint pages was unavailable; this does not disprove the map relationship.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "7f247f10",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 206,
+      "key": "hypernet>titans:dep",
+      "sourceNodeId": "hypernet",
+      "targetNodeId": "titans",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "A complete pair of reviewed endpoint pages was unavailable; this does not disprove the map relationship.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "92e77654",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 207,
+      "key": "boltzmann>gap_energyllm:gap",
+      "sourceNodeId": "boltzmann",
+      "targetNodeId": "gap_energyllm",
+      "legacyKind": "gap",
+      "relationshipType": "proposed_combination",
+      "rationale": "Editorially proposed research combination; not a claim that the work already exists.",
+      "reviewed": true,
+      "evidenceGrade": "hypothesis",
+      "audit": {
+        "state": "hypothesis",
+        "confidence": null,
+        "note": "This proposed combination is a map hypothesis; Wikipedia absence does not establish novelty.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "e0349038",
+      "reviewState": "reviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 208,
+      "key": "vjepa>gap_energyllm:gap",
+      "sourceNodeId": "vjepa",
+      "targetNodeId": "gap_energyllm",
+      "legacyKind": "gap",
+      "relationshipType": "proposed_combination",
+      "rationale": "Editorially proposed research combination; not a claim that the work already exists.",
+      "reviewed": true,
+      "evidenceGrade": "hypothesis",
+      "audit": {
+        "state": "hypothesis",
+        "confidence": null,
+        "note": "This proposed combination is a map hypothesis; Wikipedia absence does not establish novelty.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "50108d83",
+      "reviewState": "reviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 654,
+      "key": "gnn>equivariance:dep",
+      "sourceNodeId": "gnn",
+      "targetNodeId": "equivariance",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "unassessed",
+      "audit": {
+        "state": "not_assessed",
+        "confidence": null,
+        "note": "",
+        "sources": []
+      },
+      "auditRecordPresent": false,
+      "claimFingerprint": "ae282938",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "research_extension",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 655,
+      "key": "cnn89>equivariance:dep",
+      "sourceNodeId": "cnn89",
+      "targetNodeId": "equivariance",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "unassessed",
+      "audit": {
+        "state": "not_assessed",
+        "confidence": null,
+        "note": "",
+        "sources": []
+      },
+      "auditRecordPresent": false,
+      "claimFingerprint": "65bbb851",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "research_extension",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    }
+  ]
+}

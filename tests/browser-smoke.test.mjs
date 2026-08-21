@@ -21,9 +21,17 @@ const HEADLESS_WEBGL_READBACK_WARNING = /^\[\.WebGL-0x[0-9a-f]+\]GL Driver Messa
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const performanceBudget = JSON.parse(await fs.readFile(path.join(repoRoot, 'performance-budget.json'), 'utf8'));
 const DOM_BUDGET = performanceBudget.regressionGuards.activeDomElements.maximum;
-const OBSERVED_DOM_BASELINE = performanceBudget.regressionGuards.activeDomElements.observedV0_2_0;
+const REVIEWED_DOM_PEAKS = performanceBudget.regressionGuards.activeDomElements.reviewedPeaksByPlatform;
 const siteRoot = path.join(repoRoot, '_site');
 const measuredDomSamples = [];
+
+function reviewedDomPeakForPlatform(platform) {
+  const peak = REVIEWED_DOM_PEAKS?.[platform];
+  assert.ok(Number.isSafeInteger(peak) && peak >= 0, `no reviewed DOM peak is configured for ${platform}`);
+  return peak;
+}
+
+const REVIEWED_DOM_PEAK = reviewedDomPeakForPlatform(process.platform);
 
 let browser;
 let stagedSite;
@@ -357,10 +365,15 @@ describe('staged browser smoke', { concurrency: false }, () => {
     session.assertClean();
   });
 
-  test('measured active DOM peak matches the recorded v0.2.0 baseline', () => {
+  test('measured active DOM peak matches the reviewed platform baseline', () => {
     const peak = measuredDomSamples.reduce((maximum, sample) => Math.max(maximum, sample.count), 0);
-    assert.equal(peak, OBSERVED_DOM_BASELINE, 'update the recorded DOM baseline only after reviewing the browser change');
+    assert.equal(
+      peak,
+      REVIEWED_DOM_PEAK,
+      `update the reviewed ${process.platform} DOM peak only after reviewing the browser change; samples: ${JSON.stringify(measuredDomSamples)}`
+    );
     assert.ok(peak <= DOM_BUDGET, `measured DOM peak ${peak} exceeds budget ${DOM_BUDGET}`);
+    assert.throws(() => reviewedDomPeakForPlatform('unsupported-platform'), /no reviewed DOM peak is configured/u);
   });
 
   test('warning filter ignores only the known headless WebGL diagnostic', () => {

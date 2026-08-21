@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 2,
+  "schemaVersion": 3,
   "purpose": "Enforce deterministic artifact and active-DOM budgets while measuring a pinned mobile Lighthouse profile for v0.2.2 calibration.",
   "measurement": {
     "artifactRoot": "_site",
@@ -34,7 +34,10 @@
     },
     "activeDomElements": {
       "maximum": 8000,
-      "observedV0_2_0": 7724
+      "reviewedPeaksByPlatform": {
+        "win32": 7724,
+        "linux": 7728
+      }
     },
     "mobileLighthouse": {
       "status": "blocking",

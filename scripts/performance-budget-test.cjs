@@ -33,6 +33,13 @@ function requiredNumber(value, label) {
   return value;
 }
 
+function requiredCount(value, label) {
+  if (!Number.isSafeInteger(value) || value < 0) {
+    throw budgetError(`${label} must be a non-negative safe integer`);
+  }
+  return value;
+}
+
 function requiredOddRunCount(value, label) {
   if (!Number.isSafeInteger(value) || value < 1 || value % 2 === 0) {
     throw budgetError(`${label} must be a positive odd integer`);
@@ -217,7 +224,7 @@ function evaluatePerformanceBudget({
   const root = path.resolve(repositoryRoot);
   const budgetPath = resolveInside(root, budgetFile, 'budget file');
   const budget = readJson(budgetPath, 'performance budget');
-  if (budget.schemaVersion !== 2) throw budgetError('schemaVersion must be 2');
+  if (budget.schemaVersion !== 3) throw budgetError('schemaVersion must be 3');
 
   const measurement = assertObject(budget.measurement, 'measurement');
   if (measurement.artifactRoot !== '_site') throw budgetError('measurement.artifactRoot must be exactly _site');
@@ -281,9 +288,25 @@ function evaluatePerformanceBudget({
   const initialGuard = assertObject(guards.initialDocument, 'regressionGuards.initialDocument');
   const baseline = assertObject(socialGuard.baseline, 'regressionGuards.socialImage.baseline');
   const domGuard = assertObject(guards.activeDomElements, 'regressionGuards.activeDomElements');
-  const domMaximum = requiredNumber(domGuard.maximum, 'regressionGuards.activeDomElements.maximum');
-  const observedDom = requiredNumber(domGuard.observedV0_2_0, 'regressionGuards.activeDomElements.observedV0_2_0');
-  if (observedDom > domMaximum) throw budgetError('observed v0.2.0 DOM baseline exceeds its blocking maximum');
+  const domMaximum = requiredCount(domGuard.maximum, 'regressionGuards.activeDomElements.maximum');
+  const reviewedPeaks = assertObject(
+    domGuard.reviewedPeaksByPlatform,
+    'regressionGuards.activeDomElements.reviewedPeaksByPlatform'
+  );
+  const reviewedPlatforms = Object.keys(reviewedPeaks).sort();
+  if (JSON.stringify(reviewedPlatforms) !== JSON.stringify(['linux', 'win32'])) {
+    throw budgetError('reviewed DOM peaks must contain exactly linux and win32');
+  }
+  const reviewedDomPeaks = Object.fromEntries(reviewedPlatforms.map(platform => [
+    platform,
+    requiredCount(
+      reviewedPeaks[platform],
+      `regressionGuards.activeDomElements.reviewedPeaksByPlatform.${platform}`
+    )
+  ]));
+  if (Object.values(reviewedDomPeaks).some(observed => observed > domMaximum)) {
+    throw budgetError('a reviewed platform DOM peak exceeds its blocking maximum');
+  }
   const mobile = assertObject(guards.mobileLighthouse, 'regressionGuards.mobileLighthouse');
   const lighthousePolicy = validateLighthouseCalibration(mobile, measurement);
   const expectedBrowserEnforcement = lighthousePolicy.status === 'blocking'
@@ -375,7 +398,7 @@ function evaluatePerformanceBudget({
       status: lighthousePolicy.status === 'blocking'
         ? 'DOM_AND_LIGHTHOUSE_BLOCKING'
         : 'DOM_BLOCKING_LIGHTHOUSE_CALIBRATION_PENDING',
-      activeDomElements: { observed: observedDom, maximum: domMaximum },
+      activeDomElements: { reviewedPeaksByPlatform: reviewedDomPeaks, maximum: domMaximum },
       mobileLighthouse: {
         status: lighthousePolicy.status,
         canonicalPlatform: measurement.canonicalPlatform,

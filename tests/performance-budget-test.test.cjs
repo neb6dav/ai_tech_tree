@@ -33,7 +33,7 @@ async function fixture(overrides = {}) {
     ]
   }, null, 2)}\n`);
   const budget = {
-    schemaVersion: 2,
+    schemaVersion: 3,
     measurement: {
       artifactRoot: '_site',
       initialDocument: 'index.html',
@@ -60,7 +60,10 @@ async function fixture(overrides = {}) {
         rawBytes: { maximum: 1000 },
         gzipBytes: { maximum: 1000 }
       },
-      activeDomElements: { maximum: 8000, observedV0_2_0: 7724 },
+      activeDomElements: {
+        maximum: 8000,
+        reviewedPeaksByPlatform: { win32: 7724, linux: 7728 }
+      },
       mobileLighthouse: {
         status: 'calibration_pending',
         calibration: {
@@ -118,7 +121,10 @@ test('passes deterministic artifact budgets and records pending Lighthouse calib
   assert.equal(report.status, 'PASS');
   assert.equal(report.failures.length, 0);
   assert.equal(report.browserMetrics.status, 'DOM_BLOCKING_LIGHTHOUSE_CALIBRATION_PENDING');
-  assert.deepEqual(report.browserMetrics.activeDomElements, { observed: 7724, maximum: 8000 });
+  assert.deepEqual(report.browserMetrics.activeDomElements, {
+    reviewedPeaksByPlatform: { linux: 7728, win32: 7724 },
+    maximum: 8000
+  });
   assert.equal(report.browserMetrics.mobileLighthouse.status, 'calibration_pending');
   assert.equal(report.browserMetrics.mobileLighthouse.calibration.requiredRuns, 5);
 });
@@ -230,6 +236,44 @@ test('fails a raw-byte regression and a stale social baseline', async t => {
   assert.equal(report.status, 'FAIL');
   assert(report.failures.some(check => check.name === 'initialDocument.rawBytes'));
   assert(report.failures.some(check => check.name === 'socialImage.baselineSha256'));
+});
+
+test('rejects incomplete reviewed platform DOM peaks', async t => {
+  const current = await fixture({
+    mutateBudget(budget) {
+      delete budget.regressionGuards.activeDomElements.reviewedPeaksByPlatform.linux;
+    }
+  });
+  t.after(() => fs.rm(current.root, { recursive: true, force: true }));
+
+  assert.throws(
+    () => evaluatePerformanceBudget({ repositoryRoot: current.root }),
+    /reviewed DOM peaks must contain exactly linux and win32/u
+  );
+});
+
+test('rejects invalid or over-budget reviewed platform DOM peaks', async t => {
+  const fractional = await fixture({
+    mutateBudget(budget) {
+      budget.regressionGuards.activeDomElements.reviewedPeaksByPlatform.win32 = 7724.5;
+    }
+  });
+  const excessive = await fixture({
+    mutateBudget(budget) {
+      budget.regressionGuards.activeDomElements.reviewedPeaksByPlatform.linux = 8001;
+    }
+  });
+  t.after(() => fs.rm(fractional.root, { recursive: true, force: true }));
+  t.after(() => fs.rm(excessive.root, { recursive: true, force: true }));
+
+  assert.throws(
+    () => evaluatePerformanceBudget({ repositoryRoot: fractional.root }),
+    /reviewedPeaksByPlatform\.win32 must be a non-negative safe integer/u
+  );
+  assert.throws(
+    () => evaluatePerformanceBudget({ repositoryRoot: excessive.root }),
+    /reviewed platform DOM peak exceeds its blocking maximum/u
+  );
 });
 
 test('rejects artifact paths that escape the staged root', async t => {

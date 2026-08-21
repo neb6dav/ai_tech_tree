@@ -5,7 +5,7 @@ active_work_package: "WP-011-B"
 issue_url: "https://github.com/neb6dav/ai_tech_tree/issues/6"
 pr_url: "https://github.com/neb6dav/ai_tech_tree/pull/7"
 base_sha: "85108c78fa86c86634d4c0944839696369e687cd"
-last_completed_checkpoint: "WP-011-B/C4.4-B2.2"
+last_completed_checkpoint: "WP-011-B/C4.4-B2.3-A"
 last_verified_commands:
   - command: "npm run build"
     status: "PASS"
@@ -251,11 +251,21 @@ last_verified_commands:
     status: "PASS after findings resolved"
     verified_by: "root plus two independent read-only reviewers"
     scope: "Corrected out-of-tree Pages proof, unreachable candidate cap, prototype and shared-intrinsic execution, noncanonical tar padding, extra workflow admission, __proto__ key loss, and unbound stable-notes semantics; replacement final review passed 238/238 focused checks and returned SHIP with no remaining P1/P2; output explicitly disclaims verifier execution and staged-payload derivation"
+  - command: "npm run build; AI_TREE_REQUIRE_CLEAN=true AI_TREE_STAGE_MODE=preview AI_TREE_COMMIT_SHA=5ee974ee0d20cc36011277f9e57b360372c9a44f npm test; git diff --exit-code"
+    status: "PASS"
+    runtime: "Node v24.14.1, npm 11.11.0, and Git 2.55"
+    verified_by: "root"
+    scope: "Exact C4.4-B2.3-A code commit 5ee974e; all core and publication gates including 69 promotion-preflight and 169 workflow-policy tests; 17/17 release inputs, 89 tracked entries, zero filters, 1,465 staged-site references, and local preview-manifest SHA-256 facc0fe00eb8246957792da6e762e6553c29aeab9feeab5a896c5fa10b846bca"
+  - command: "Reconcile C4.4-B2.3-A hosted validation and downloaded preview"
+    status: "PASS"
+    runtime: "GitHub Actions Node v24.19.0/npm 11.17.0 plus exact synthetic Node v24.14.1/npm 11.11.0"
+    verified_by: "root plus read-only reconciliation agent"
+    scope: "Workflow 32435789512; all seven jobs green; tested merge SHA 149a1bef0bbbd2a53e54506fa342fd870e1d142a has the same tree as pushed head 5ee974e; preview artifact 9430718136 passed 1,465 references, release identity 2/2, and performance gates; manifest SHA-256 7ea2833a4ab2fd067da9d7d52390d78e88321f11d1e5cf06ba8ce0ebb6288ca2; canonical 15-file closure SHA-256 83e638b247994817f26d56272803d38ef4f01e5a9a9cb28b7cd6efb548ecbff1; 17/17 inputs, 89 tracked entries, and zero filters; no tag, release, setting, deployment, or production request"
 next_exact_action: >-
-  Commit the hostile-reviewed C4.4-B2.3-A eight-file snapshot, run the exact-
-  clean full repository gate at that commit, push it, and reconcile the hosted
-  seven-job validation and downloaded preview before recording A complete and
-  beginning B2.3-B.
+  Implement the bounded C4.4-B2.3-B pure composite preflight, recomputing the
+  exact B2.3-A closure and B2.2 freshness decision from raw anchored inputs at
+  an explicit use time, while retaining false production, mutation, retry,
+  rollback, and operational-reuse authority and leaving B3 as the next gate.
 known_blockers:
   - "WP-011-B is stacked on verified draft PR #5 until WP-011-A is separately authorized to merge."
   - "No merge, annotated tag, GitHub Release, environment approval, or public deployment is authorized."
@@ -263,7 +273,7 @@ known_blockers:
   - "Browser performance metrics and automated preview screenshots remain pending WP-012-A."
   - "The github-pages environment has no required reviewer and permits administrator bypass; immutable GitHub Releases are disabled. These external controls require separate authorization before any C4 promotion run."
   - "No active no-bypass tag ruleset protects v0.1.1, and the verified production recovery artifact is local rather than durable and runner-accessible."
-release_gate_status: "wp_011_b_c4_4_b2_3_a_local_hostile_verified_pending_commit"
+release_gate_status: "wp_011_b_c4_4_b2_3_a_remote_verified_b2_3_b_ready"
 release_details:
   version: "v0.1.1"
   title: "Publication-contract repair"
@@ -287,16 +297,15 @@ release_details:
       artifact_id: 9392055435
       artifact_tar_sha256: "f04f46196b74982f9d725f032278f9b7ed48ae1ffd82db0dcff3fc39f739f9c4"
     active_checkpoint:
-      id: "C4.4-B2.3-A"
-      title: "Exact lifecycle-reference and provenance closure"
-      status: "local_hostile_verified_pending_checkpoint_commit"
+      id: "C4.4-B2.3-B"
+      title: "Fresh composite read-only promotion preflight"
+      status: "ready_to_implement"
       next_exact_action: >-
-        Commit this exact eight-file snapshot, run the exact-clean full gate,
-        push, and reconcile hosted validation plus the downloaded preview.
-        Retain fixture-only reference closure, false production, mutation, and
-        authority flags, and explicit non-attestation of verifier execution and
-        staged-payload derivation; fresh composite state plus rollback remain
-        B2.3-B and B3.
+        Recompute the exact fixture reference closure and control-consumption
+        decision from their raw anchored inputs at an explicit use time, bind a
+        complete bounded operation-state observation, and emit only reconcile,
+        block, or proceed-to-B3-read-only-preflight with every production,
+        mutation, retry, rollback, and reusable-operation flag false.
     scope:
       - "Publish stable and compatibility Opportunity endpoints."
       - "Move exported human URLs to the root application."

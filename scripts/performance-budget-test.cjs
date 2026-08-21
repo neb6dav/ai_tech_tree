@@ -7,6 +7,13 @@ const path = require('node:path');
 const zlib = require('node:zlib');
 
 const DEFAULT_BUDGET_FILE = 'performance-budget.json';
+const LIGHTHOUSE_METRICS = Object.freeze([
+  Object.freeze({ key: 'performanceScore', operator: 'minimum' }),
+  Object.freeze({ key: 'firstContentfulPaintMs', operator: 'maximum' }),
+  Object.freeze({ key: 'largestContentfulPaintMs', operator: 'maximum' }),
+  Object.freeze({ key: 'totalBlockingTimeMs', operator: 'maximum' }),
+  Object.freeze({ key: 'cumulativeLayoutShift', operator: 'maximum' })
+]);
 
 function budgetError(message) {
   return new Error(`performance-budget: ${message}`);
@@ -24,6 +31,107 @@ function requiredNumber(value, label) {
     throw budgetError(`${label} must be a finite non-negative number`);
   }
   return value;
+}
+
+function requiredOddRunCount(value, label) {
+  if (!Number.isSafeInteger(value) || value < 1 || value % 2 === 0) {
+    throw budgetError(`${label} must be a positive odd integer`);
+  }
+  return value;
+}
+
+function requiredString(value, label) {
+  if (typeof value !== 'string' || value.length === 0 || value.trim() !== value) {
+    throw budgetError(`${label} must be a non-empty trimmed string`);
+  }
+  return value;
+}
+
+function median(values, label) {
+  if (!Array.isArray(values) || values.length === 0 || values.length % 2 === 0) {
+    throw budgetError(`${label} must be a non-empty odd-length array`);
+  }
+  const ordered = values.map((value, index) => requiredNumber(value, `${label}[${index}]`)).sort((a, b) => a - b);
+  return ordered[Math.floor(ordered.length / 2)];
+}
+
+function validateLighthouseLimits(value, label) {
+  const limits = assertObject(value, label);
+  for (const metric of LIGHTHOUSE_METRICS) {
+    const configured = assertObject(limits[metric.key], `${label}.${metric.key}`);
+    const limit = requiredNumber(configured[metric.operator], `${label}.${metric.key}.${metric.operator}`);
+    if (metric.key === 'performanceScore' && limit > 100) {
+      throw budgetError(`${label}.performanceScore.minimum must not exceed 100`);
+    }
+  }
+  return limits;
+}
+
+function validateLighthouseCalibration(mobile, measurement) {
+  const calibration = assertObject(mobile.calibration, 'regressionGuards.mobileLighthouse.calibration');
+  if (calibration.requiredRuns !== measurement.calibrationRuns) {
+    throw budgetError('mobile Lighthouse calibration requiredRuns must match measurement.calibrationRuns');
+  }
+  if (calibration.requiredPlatform !== measurement.canonicalPlatform) {
+    throw budgetError('mobile Lighthouse calibration requiredPlatform must match measurement.canonicalPlatform');
+  }
+
+  if (mobile.status === 'calibration_pending') {
+    if (calibration.status !== 'pending') throw budgetError('pending mobile Lighthouse calibration must have status pending');
+    if (mobile.limits !== undefined || calibration.baseline !== undefined) {
+      throw budgetError('pending mobile Lighthouse calibration cannot declare blocking limits or a baseline');
+    }
+    return {
+      status: mobile.status,
+      calibration,
+      limits: validateLighthouseLimits(mobile.candidateLimits, 'regressionGuards.mobileLighthouse.candidateLimits')
+    };
+  }
+
+  if (mobile.status !== 'blocking') {
+    throw budgetError('regressionGuards.mobileLighthouse.status must be calibration_pending or blocking');
+  }
+  if (calibration.status !== 'complete') throw budgetError('blocking mobile Lighthouse calibration must have status complete');
+  if (mobile.candidateLimits !== undefined) throw budgetError('blocking mobile Lighthouse calibration cannot retain candidateLimits');
+  const limits = validateLighthouseLimits(mobile.limits, 'regressionGuards.mobileLighthouse.limits');
+  const sourcePlatform = requiredString(calibration.sourcePlatform, 'mobile Lighthouse calibration sourcePlatform');
+  if (!['required', 'confirmed'].includes(calibration.canonicalConfirmation)) {
+    throw budgetError('mobile Lighthouse calibration canonicalConfirmation must be required or confirmed');
+  }
+  if (!/^[0-9a-f]{64}$/u.test(String(calibration.profileSha256 || ''))) {
+    throw budgetError('mobile Lighthouse calibration profileSha256 must be lowercase SHA-256');
+  }
+  const toolchain = assertObject(calibration.toolchain, 'regressionGuards.mobileLighthouse.calibration.toolchain');
+  for (const key of ['lighthouseVersion', 'chromeLauncherVersion', 'playwrightVersion', 'chromiumRevision', 'chromiumVersion']) {
+    if (toolchain[key] !== measurement[key]) {
+      throw budgetError(`mobile Lighthouse calibration toolchain ${key} must match measurement.${key}`);
+    }
+  }
+  if (toolchain.platform !== sourcePlatform) {
+    throw budgetError('mobile Lighthouse calibration toolchain platform must match sourcePlatform');
+  }
+  requiredString(toolchain.nodeVersion, 'mobile Lighthouse calibration toolchain.nodeVersion');
+  requiredString(toolchain.architecture, 'mobile Lighthouse calibration toolchain.architecture');
+  const baseline = assertObject(calibration.baseline, 'regressionGuards.mobileLighthouse.calibration.baseline');
+  if (!/^[0-9a-f]{64}$/u.test(String(baseline.initialDocumentSha256 || ''))) {
+    throw budgetError('mobile Lighthouse baseline initialDocumentSha256 must be lowercase SHA-256');
+  }
+  if (baseline.runCount !== calibration.requiredRuns) {
+    throw budgetError('mobile Lighthouse baseline runCount must match calibration.requiredRuns');
+  }
+  if (!Array.isArray(baseline.runs) || baseline.runs.length !== baseline.runCount) {
+    throw budgetError('mobile Lighthouse baseline runs must match baseline.runCount');
+  }
+  const recordedMedians = assertObject(baseline.medians, 'regressionGuards.mobileLighthouse.calibration.baseline.medians');
+  for (const metric of LIGHTHOUSE_METRICS) {
+    const observed = median(
+      baseline.runs.map(run => assertObject(run, 'mobile Lighthouse baseline run')[metric.key]),
+      `mobile Lighthouse baseline ${metric.key} samples`
+    );
+    const recorded = requiredNumber(recordedMedians[metric.key], `mobile Lighthouse baseline medians.${metric.key}`);
+    if (observed !== recorded) throw budgetError(`mobile Lighthouse baseline median for ${metric.key} is stale`);
+  }
+  return { status: mobile.status, calibration, limits };
 }
 
 function normalizeRelativePath(value, label) {
@@ -109,15 +217,26 @@ function evaluatePerformanceBudget({
   const root = path.resolve(repositoryRoot);
   const budgetPath = resolveInside(root, budgetFile, 'budget file');
   const budget = readJson(budgetPath, 'performance budget');
-  if (budget.schemaVersion !== 1) throw budgetError('schemaVersion must be 1');
+  if (budget.schemaVersion !== 2) throw budgetError('schemaVersion must be 2');
 
   const measurement = assertObject(budget.measurement, 'measurement');
   if (measurement.artifactRoot !== '_site') throw budgetError('measurement.artifactRoot must be exactly _site');
   if (measurement.initialDocument !== 'index.html') {
     throw budgetError('measurement.initialDocument must be exactly index.html');
   }
-  if (measurement.browserProfile !== 'lighthouse-mobile' || measurement.browserAggregation !== 'median') {
-    throw budgetError('measurement browser profile must be lighthouse-mobile with median aggregation');
+  if (measurement.browserProfile !== 'lighthouse-mobile-v0.2.2' || measurement.browserAggregation !== 'median') {
+    throw budgetError('measurement browser profile must be lighthouse-mobile-v0.2.2 with median aggregation');
+  }
+  requiredOddRunCount(measurement.browserRuns, 'measurement.browserRuns');
+  requiredOddRunCount(measurement.calibrationRuns, 'measurement.calibrationRuns');
+  if (measurement.calibrationRuns <= measurement.browserRuns) {
+    throw budgetError('measurement.calibrationRuns must exceed measurement.browserRuns');
+  }
+  if (measurement.canonicalPlatform !== 'ubuntu-24.04') {
+    throw budgetError('measurement.canonicalPlatform must be exactly ubuntu-24.04');
+  }
+  for (const key of ['lighthouseVersion', 'chromeLauncherVersion', 'playwrightVersion', 'chromiumRevision', 'chromiumVersion']) {
+    requiredString(measurement[key], `measurement.${key}`);
   }
   if (measurement.scoreScale !== '0-100' || measurement.byteUnit !== 'bytes' || measurement.timeUnit !== 'milliseconds') {
     throw budgetError('measurement units or score scale do not match the release policy');
@@ -127,8 +246,8 @@ function evaluatePerformanceBudget({
   if (enforcement.artifactMetrics !== 'blocking') {
     throw budgetError('regressionGuards.enforcement.artifactMetrics must be blocking');
   }
-  if (enforcement.browserMetrics !== 'dom_blocking_lighthouse_pending_v0.2.2') {
-    throw budgetError('regressionGuards.enforcement.browserMetrics must block DOM and defer Lighthouse to v0.2.2');
+  if (!['dom_blocking_lighthouse_calibration_pending', 'dom_and_lighthouse_blocking'].includes(enforcement.browserMetrics)) {
+    throw budgetError('regressionGuards.enforcement.browserMetrics is not a recognized v0.2.2 state');
   }
 
   const artifactRoot = assertSafePathComponents(root, measurement.artifactRoot, 'measurement.artifactRoot', 'directory');
@@ -166,15 +285,13 @@ function evaluatePerformanceBudget({
   const observedDom = requiredNumber(domGuard.observedV0_2_0, 'regressionGuards.activeDomElements.observedV0_2_0');
   if (observedDom > domMaximum) throw budgetError('observed v0.2.0 DOM baseline exceeds its blocking maximum');
   const mobile = assertObject(guards.mobileLighthouse, 'regressionGuards.mobileLighthouse');
-  const performanceMinimum = requiredNumber(
-    assertObject(mobile.performanceScore, 'regressionGuards.mobileLighthouse.performanceScore').minimum,
-    'regressionGuards.mobileLighthouse.performanceScore.minimum'
-  );
-  if (performanceMinimum > 100) throw budgetError('mobile Lighthouse performance minimum must not exceed 100');
-  requiredNumber(assertObject(mobile.firstContentfulPaintMs, 'regressionGuards.mobileLighthouse.firstContentfulPaintMs').maximum, 'regressionGuards.mobileLighthouse.firstContentfulPaintMs.maximum');
-  requiredNumber(assertObject(mobile.largestContentfulPaintMs, 'regressionGuards.mobileLighthouse.largestContentfulPaintMs').maximum, 'regressionGuards.mobileLighthouse.largestContentfulPaintMs.maximum');
-  requiredNumber(assertObject(mobile.totalBlockingTimeMs, 'regressionGuards.mobileLighthouse.totalBlockingTimeMs').maximum, 'regressionGuards.mobileLighthouse.totalBlockingTimeMs.maximum');
-  requiredNumber(assertObject(mobile.cumulativeLayoutShift, 'regressionGuards.mobileLighthouse.cumulativeLayoutShift').maximum, 'regressionGuards.mobileLighthouse.cumulativeLayoutShift.maximum');
+  const lighthousePolicy = validateLighthouseCalibration(mobile, measurement);
+  const expectedBrowserEnforcement = lighthousePolicy.status === 'blocking'
+    ? 'dom_and_lighthouse_blocking'
+    : 'dom_blocking_lighthouse_calibration_pending';
+  if (enforcement.browserMetrics !== expectedBrowserEnforcement) {
+    throw budgetError('browserMetrics enforcement disagrees with mobileLighthouse.status');
+  }
 
   const future = assertObject(budget.futureTargets, 'futureTargets');
   if (future.enforcement !== 'nonblocking' || future.notBefore !== 'v0.2.2') {
@@ -255,10 +372,18 @@ function evaluatePerformanceBudget({
     artifactRoot: measurement.artifactRoot,
     checks,
     browserMetrics: {
-      status: 'DOM_BLOCKING_LIGHTHOUSE_PENDING',
+      status: lighthousePolicy.status === 'blocking'
+        ? 'DOM_AND_LIGHTHOUSE_BLOCKING'
+        : 'DOM_BLOCKING_LIGHTHOUSE_CALIBRATION_PENDING',
       activeDomElements: { observed: observedDom, maximum: domMaximum },
-      pendingCheckpoint: 'v0.2.2',
-      pendingMetrics: ['mobileLighthouse']
+      mobileLighthouse: {
+        status: lighthousePolicy.status,
+        canonicalPlatform: measurement.canonicalPlatform,
+        browserRuns: measurement.browserRuns,
+        calibrationRuns: measurement.calibrationRuns,
+        calibration: lighthousePolicy.calibration,
+        limits: lighthousePolicy.limits
+      }
     },
     failures
   };

@@ -1,35 +1,37 @@
 ---
-roadmap_version: 2
-active_release: "v0.1.1"
+roadmap_version: 3
+active_release: "v0.2.2"
 release_mode: "source_checkpoints_until_v1.0.0"
-active_work_package: "WP-011-B"
+active_work_package: "v0.2.2-hosted-runner-confirmation"
 base_sha: "85108c78fa86c86634d4c0944839696369e687cd"
 product_boundary_sha: "53e3a4f9c0624096aede63e0345390a3c021bac0"
 working_branch: "codex/v0.1.1-minimal-to-v1"
 expanded_archive_branch: "archive/v0.1.1-expanded-release-safety-0870d47"
-last_completed_checkpoint: "v0.1.1-product"
+last_completed_checkpoint: "v0.2.0"
 next_exact_action: >-
-  Commit and push the verified v0.1.1 source checkpoint, then begin the
-  v0.2.0 canonical-data shadow migration without changing public behavior.
+  Run the blocking three-run Lighthouse gate on the configured ubuntu-24.04
+  hosted runner and record canonical confirmation; keep v0.2.2 in progress
+  until that environment passes the Windows-derived regression limits.
 last_verified_commands:
-  - command: "npm run build"
+  - command: "node scripts/lighthouse-budget.mjs --calibrate"
     status: "PASS"
-    runtime: "Node v24.14.1"
-    scope: "Deterministic v0.1.1 product regeneration; clean generated diff"
-  - command: "npm test"
+    runtime: "win32 x64; Node v24.14.1; Lighthouse 13.4.1; Playwright 1.62.1; Chromium 151.0.7922.34 rev1234"
+    scope: "Five-run local calibration medians: score 53, FCP 22728.84345 ms, LCP 22900.34345 ms, TBT 166 ms, CLS 0.00082719"
+  - command: "npm run test:lighthouse"
     status: "PASS"
-    runtime: "Node v24.14.1 and npm 11.11.0"
-    scope: "Core gates, 72 focused tests, 14-file stage, release identity, artifact budgets, and 1,465-reference site contract"
+    runtime: "win32 x64; Node v24.14.1; Lighthouse 13.4.1; Playwright 1.62.1; Chromium 151.0.7922.34 rev1234"
+    scope: "Three-run blocking medians: score 52, FCP 22730.706 ms, LCP 22898.841 ms, TBT 204 ms, CLS 0.00082719"
 source_checkpoints:
   - version: "v0.1.1"
     status: "complete"
     purpose: "Publication URL and identity repair"
   - version: "v0.2.0"
-    status: "planned"
+    status: "complete"
     purpose: "Canonical 15-lane data shadow, parity proof, atomic authoring cutover, and browser verification"
   - version: "v0.2.2"
-    status: "planned"
-    purpose: "Performance enforcement and committed-generated-output policy decision"
+    status: "in_progress"
+    verification_state: "local_complete_hosted_unconfirmed"
+    purpose: "Calibrated local-origin performance regression gate and committed-generated-output policy confirmation"
   - version: "v1.0.0"
     status: "planned"
     purpose: "Stable public contract and release candidate"
@@ -51,6 +53,8 @@ releases. Only `v1.0.0` is the public release target. Each checkpoint must be a
 bounded product change with its own build, focused tests, generated-file check,
 and short review. Do not add a new promotion, receipt, rollback, provenance, or
 policy subsystem.
+
+Generated publication artifacts remain committed through `v1.0.0`.
 
 The expanded release-safety experiment remains preserved separately at
 `0870d4773249db9f81a491f0305c29a75fcb53a1`. It is not part of this branch.
@@ -82,6 +86,8 @@ Acceptance gate:
 
 ## v0.2.0 — canonical data and browser proof
 
+Status: source checkpoint complete at `6513e5e`.
+
 Deliverables:
 
 - Introduce the approved 15-lane-sharded canonical historical data as shadow
@@ -104,23 +110,41 @@ Acceptance gate:
   the complete build/test/browser gate remains green.
 - Generated publication artifacts remain committed through this checkpoint.
 
-## v0.2.2 — performance and repository-policy decision
+## v0.2.2 — performance calibration and repository-policy confirmation
+
+Status: local implementation and Windows calibration are complete; hosted
+confirmation is outstanding. This checkpoint remains in progress and is not
+yet established as reproducible on the configured `ubuntu-24.04` runner.
 
 Deliverables:
 
-- Measure active DOM size, mobile Lighthouse performance, FCP, LCP, TBT, and
-  CLS using the v0.2.0 browser harness.
-- Convert realistic measured targets into blocking budgets without masking
-  regressions or engineering solely to a synthetic score.
-- Decide whether generated publication artifacts remain committed. If the
-  evidence does not justify a change, keep the existing policy.
+- Run the `lighthouse-mobile-v0.2.2` profile against the staged application on
+  a controlled, uncompressed, `no-store` local origin. Each blocking gate uses
+  the independent median of three runs; source calibration uses five runs.
+- Use the Windows x64 source calibration recorded with Node.js v24.14.1,
+  Lighthouse 13.4.1, Playwright 1.62.1, and Chromium 151.0.7922.34 revision
+  1234 to establish provisional blocking regression limits.
+- Treat Lighthouse as a repeatable local-origin regression signal, not a
+  measurement of live GitHub Pages delivery or real-user field performance.
+- Keep generated publication artifacts committed through `v1.0.0`.
 
 Acceptance gate:
 
-- Browser measurements are reproducible on the pinned local/CI runtime.
-- Any blocking threshold is tied to an observed baseline and a documented
-  user-facing reason.
-- The generated-output decision is explicit, small, and does not change the
+- The five-run Windows medians are score 53, FCP 22,728.84345 ms, LCP
+  22,900.34345 ms, TBT 166 ms, and CLS 0.00082719.
+- The blocking limits are score at least 48, FCP and LCP at most 27,500 ms,
+  TBT at most 250 ms, and CLS at most 0.02. The score floor is five points below
+  the median; paint ceilings are rounded upward for local-run headroom; the TBT
+  ceiling covers the 0.5&ndash;206.5 ms calibration spread; and the CLS ceiling
+  detects a material regression above the near-zero baseline.
+- The local three-run gate passes with medians of score 52, FCP 22,730.706 ms,
+  LCP 22,898.841 ms, TBT 204 ms, and CLS 0.00082719.
+- The same blocking gate must pass on the configured `ubuntu-24.04` hosted
+  runner before this checkpoint is complete. The runner label and Node/npm
+  major-family declarations do not freeze an image or patch release.
+- Documentation and test output describe the measurement only as a controlled
+  regression signal and do not present it as live Pages or field performance.
+- The committed-generated-output decision is explicit and does not change the
   public data contract.
 
 ## v1.0.0 — stable release candidate
@@ -133,7 +157,9 @@ Deliverables:
 - Pass static and browser accessibility checks across representative desktop
   and mobile viewports, keyboard navigation, modal behavior, and no-JavaScript
   fallbacks.
-- Meet the v0.2.2 performance budgets.
+- Pass the calibrated v0.2.2 local-origin performance regression budgets.
+- Keep generated publication artifacts committed in the reviewed `v1.0.0`
+  source and release candidate.
 - Publish clear contribution, citation, data-status, evidence-limit, and
   versioning documentation.
 - Remove development-only wording and produce a reviewed `v1.0.0` release

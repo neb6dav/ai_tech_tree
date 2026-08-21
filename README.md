@@ -42,18 +42,20 @@ See [METHODOLOGY.md](METHODOLOGY.md) for the inclusion, sourcing, relationship, 
 
 ## Repository map
 
-The public beta keeps a single-file application as its canonical application source while generating deployment and machine-readable artifacts around it.
+The public beta keeps a single-file application shell while the historical atlas is authored in a strict 15-lane canonical dataset. The build projects that canonical data into the application and the machine-readable publication artifacts.
 
 ### Maintained source
 
-- `ai-research-tech-tree.html` — legacy canonical application source and embedded atlas data for this beta; the staged public path of the same name is a lightweight compatibility redirect
+- `ai-research-tech-tree.html` — maintained application shell; its embedded historical-atlas projections are generated from the canonical atlas and are not a second authoring source
+- `src/data/atlas/manifest.json`, `catalog.json`, sidecars, and the `nodes/` and `relationships/` lane shards — canonical historical-atlas authoring source
+- `canonical-atlas.js` — strict built-in loader and assembler for the canonical atlas
 - `src/compatibility/ai-research-tech-tree.html` — state-preserving public compatibility redirect to the root application
 - `src/network-view.js` — 2-D WebGL network-view source
 - `src/opportunity-view.js` and `src/opportunity-layout.cjs` — accessible Opportunity View renderer and deterministic layout logic
 - `src/data/opportunities/diffusion-models.alpha.json` — maintained diffusion-models Opportunity map, published canonically at `data/opportunities/diffusion-models.alpha.json`
 - `src/data/opportunities/opportunity-map.schema.json` and `validate-opportunity-data.js` — canonical schema and evidence-aware validation rules, published at `data/opportunities/opportunity-map.schema.json`
 - `src/compatibility/opportunity-map.schema.json` — delegating schema retained at the former public `src/data/...` URL
-- `generate-knowledge-graph.js` — machine-readable graph exporter
+- `generate-knowledge-graph.js` — canonical-data projector and machine-readable graph exporter
 - build, layout, and injection scripts — deterministic generation of the network layout and deployable page
 - `release-gate.js`, `ui-layout-gate.js`, `accessibility-gate.js`, `network-gate.js`, and `opportunity-gate.js` — validation gates
 - publication, methodology, governance, and contribution files in the repository root and `.github/`
@@ -72,11 +74,11 @@ The JSON, JSON-LD, and NDJSON exports currently describe the historical atlas. T
 
 `ai-research-tech-tree.original.html` is an archival pre-repair baseline retained for provenance. It is not the current application source.
 
-Generated artifacts are committed so releases can be inspected, downloaded, and served without a build service. Change maintained source, run the build, inspect the resulting diff, and commit the regenerated artifacts with the source change.
+Generated artifacts remain committed through `v1.0.0` so releases can be inspected, downloaded, and served without a build service. Change maintained source, run the build, inspect the resulting diff, and commit the regenerated artifacts with the source change.
 
 ## Build and validate
 
-Node.js 24 and npm 11 are the pinned artifact-producing toolchain. The graph-rendering dependency may support older runtimes, but release artifacts and generated-file checks are accepted only from the pinned major versions. Reproduce the checked-in artifacts with:
+The repository declares Node.js 24.x and npm 11.x as its artifact-producing toolchain families. Those declarations do not freeze a Node or npm patch release, and the `ubuntu-24.04` Actions label does not make the evolving hosted runner image immutable. Calibration and validation reports therefore record the exact observed runtime and browser versions. Reproduce the checked-in artifacts with:
 
 ```text
 npm ci
@@ -86,7 +88,19 @@ npm test
 git diff --exit-code
 ```
 
-`npm test` runs the data, accessibility, layout, Network, Opportunity, canonical-data, staging, contract, and deterministic artifact-budget gates; assembles `_site`; and exercises all four views in headless Chromium at desktop and mobile sizes. The browser gate blocks external requests, console errors and warnings, missing runtime fragments, broken deep links or focus restoration, and an active-DOM regression above the reviewed `8,000` ceiling. Lighthouse measurements remain deferred to the `v0.2.2` source checkpoint.
+`npm test` runs the data, accessibility, layout, Network, Opportunity, canonical-data, staging, contract, and deterministic artifact-budget gates; assembles `_site`; and exercises all four views in headless Chromium at desktop and mobile sizes. The browser gate blocks external requests, console errors and warnings, missing runtime fragments, broken deep links or focus restoration, and an active-DOM regression above the reviewed `8,000` ceiling.
+
+At the `v0.2.2` checkpoint, Lighthouse is a blocking regression signal against the staged application on a controlled, uncompressed, `no-store` local origin. The source calibration used five independent mobile-profile runs on Windows x64 with Node.js v24.14.1, Lighthouse 13.4.1, Playwright 1.62.1, and Playwright Chromium 151.0.7922.34 revision 1234. Each gate uses the independent median of three runs.
+
+| Metric | Five-run Windows median | Blocking limit | Local three-run gate |
+| --- | ---: | ---: | ---: |
+| Performance score | 53 | at least 48 | 52 |
+| First Contentful Paint | 22,728.84345 ms | at most 27,500 ms | 22,730.706 ms |
+| Largest Contentful Paint | 22,900.34345 ms | at most 27,500 ms | 22,898.841 ms |
+| Total Blocking Time | 166 ms | at most 250 ms | 204 ms |
+| Cumulative Layout Shift | 0.00082719 | at most 0.02 | 0.00082719 |
+
+The score floor leaves five points below the calibration median; the paint ceilings round upward to provide local-run headroom; the TBT ceiling covers the calibration's 0.5&ndash;206.5 ms spread; and the CLS ceiling guards against a material layout regression above the near-zero baseline. The local three-run gate passed all five limits. These are provisional Windows-derived regression bounds: confirmation on the configured `ubuntu-24.04` hosted runner is still required before `v0.2.2` is complete, so cross-environment reproducibility is not yet established. The measurements do not represent live GitHub Pages delivery or real-user field performance.
 
 The release manifest records the target package version, dataset edition, publication state, exact full commit, observed Node and npm versions, and every payload file's media type, byte count, and SHA-256. In clean-source mode, staging also proves that the configuration, metadata, individual artifacts, and complete directory inputs are regular committed blobs from the advertised `HEAD`; symlinks, gitlinks, Git LFS pointers, replacement objects, index concealment flags, dirty submodules, and generated or Git-administration input paths fail closed. The manifest cannot contain its own digest without a cryptographic self-reference, so it explicitly excludes itself; WP-011-B supplies the checksum of the complete release archive. Local dirty-tree staging remains available for pre-commit review but is labeled non-clean and cannot be deployed.
 
@@ -94,7 +108,7 @@ The static contract uses a pinned browser-compatible HTML attribute decoder, rej
 
 The stable Opportunity endpoints are `./data/opportunities/diffusion-models.alpha.json` and `./data/opportunities/opportunity-map.schema.json`. The former `./src/data/opportunities/...` endpoints remain available for compatibility: the data is an exact second publication of the maintained JSON, while the old schema URL is a small schema with its own truthful `$id` that delegates to the stable canonical schema. The public `./ai-research-tech-tree.html` alias likewise redirects to `./` and preserves query and hash state when JavaScript is available; its no-JavaScript fallback redirects to the root application.
 
-The same sequence runs in GitHub Actions. Pull requests receive a downloadable staged-site preview artifact. A pull request is not ready to merge if a build changes generated files or leaves untracked source files. Production publication remains under an explicit hold until WP-011-B/C4 implements approved annotated-tag promotion and post-deployment verification, and a release is separately authorized.
+The same sequence is configured to run in GitHub Actions on the `ubuntu-24.04` runner label; the label is fixed in the workflow, while the hosted image behind it can change. Pull requests receive a downloadable staged-site preview artifact. A pull request is not ready to merge if a build changes generated files or leaves untracked source files. Production publication remains under an explicit hold until WP-011-B/C4 implements approved annotated-tag promotion and post-deployment verification, and a release is separately authorized.
 
 ## Contributing
 

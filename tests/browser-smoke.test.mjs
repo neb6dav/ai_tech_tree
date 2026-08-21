@@ -1,13 +1,12 @@
 import assert from 'node:assert/strict';
 import { promises as fs } from 'node:fs';
-import http from 'node:http';
 import path from 'node:path';
 import { after, before, describe, test } from 'node:test';
 import { fileURLToPath } from 'node:url';
 
 import { chromium } from 'playwright';
+import { startStagedSiteServer } from '../scripts/lib/staged-site-server.mjs';
 
-const LOOPBACK = '127.0.0.1';
 const MOUNT_PATH = '/ai_tech_tree/';
 const APP_TIMEOUT = 30_000;
 const EXPECTED = Object.freeze({
@@ -26,122 +25,13 @@ const OBSERVED_DOM_BASELINE = performanceBudget.regressionGuards.activeDomElemen
 const siteRoot = path.join(repoRoot, '_site');
 const measuredDomSamples = [];
 
-const mediaTypes = new Map([
-  ['.cff', 'text/plain; charset=utf-8'],
-  ['.css', 'text/css; charset=utf-8'],
-  ['.html', 'text/html; charset=utf-8'],
-  ['.js', 'text/javascript; charset=utf-8'],
-  ['.json', 'application/json; charset=utf-8'],
-  ['.jsonld', 'application/ld+json; charset=utf-8'],
-  ['.mjs', 'text/javascript; charset=utf-8'],
-  ['.ndjson', 'application/x-ndjson; charset=utf-8'],
-  ['.png', 'image/png'],
-  ['.svg', 'image/svg+xml'],
-  ['.txt', 'text/plain; charset=utf-8'],
-  ['.xml', 'application/xml; charset=utf-8']
-]);
-
 let browser;
-let server;
+let stagedSite;
 let baseOrigin;
 let baseUrl;
 
 function isIgnorableBrowserWarning(message) {
   return HEADLESS_WEBGL_READBACK_WARNING.test(message);
-}
-
-function send(response, status, body, headers = {}) {
-  response.writeHead(status, {
-    'cache-control': 'no-store',
-    'content-type': 'text/plain; charset=utf-8',
-    'x-content-type-options': 'nosniff',
-    ...headers
-  });
-  response.end(body);
-}
-
-async function serveSite(request, response) {
-  try {
-    if (request.method !== 'GET' && request.method !== 'HEAD') {
-      send(response, 405, 'Method not allowed', { allow: 'GET, HEAD' });
-      return;
-    }
-
-    const requestUrl = new URL(request.url ?? '/', `http://${LOOPBACK}`);
-    if (requestUrl.pathname === MOUNT_PATH.slice(0, -1)) {
-      send(response, 308, '', { location: MOUNT_PATH });
-      return;
-    }
-    if (!requestUrl.pathname.startsWith(MOUNT_PATH)) {
-      send(response, 404, 'Not found');
-      return;
-    }
-
-    let relativePath;
-    try {
-      relativePath = decodeURIComponent(requestUrl.pathname.slice(MOUNT_PATH.length));
-    } catch {
-      send(response, 400, 'Malformed path');
-      return;
-    }
-    relativePath ||= 'index.html';
-
-    const segments = relativePath.split('/');
-    if (
-      relativePath.includes('\0') ||
-      relativePath.includes('\\') ||
-      segments.some(segment => segment === '..')
-    ) {
-      send(response, 400, 'Invalid path');
-      return;
-    }
-
-    let target = path.resolve(siteRoot, ...segments);
-    const relativeTarget = path.relative(siteRoot, target);
-    if (relativeTarget.startsWith('..') || path.isAbsolute(relativeTarget)) {
-      send(response, 403, 'Forbidden');
-      return;
-    }
-
-    const targetStat = await fs.stat(target);
-    if (targetStat.isDirectory()) target = path.join(target, 'index.html');
-    const payload = await fs.readFile(target);
-    response.writeHead(200, {
-      'cache-control': 'no-store',
-      'content-length': payload.byteLength,
-      'content-type': mediaTypes.get(path.extname(target).toLowerCase()) ?? 'application/octet-stream',
-      'x-content-type-options': 'nosniff'
-    });
-    response.end(request.method === 'HEAD' ? undefined : payload);
-  } catch (error) {
-    if (error?.code === 'ENOENT' || error?.code === 'ENOTDIR') {
-      send(response, 404, 'Not found');
-      return;
-    }
-    send(response, 500, 'Internal server error');
-  }
-}
-
-async function startServer() {
-  await fs.access(path.join(siteRoot, 'index.html'));
-  server = http.createServer((request, response) => {
-    void serveSite(request, response);
-  });
-  await new Promise((resolve, reject) => {
-    server.once('error', reject);
-    server.listen(0, LOOPBACK, resolve);
-  });
-  const address = server.address();
-  assert.ok(address && typeof address === 'object', 'loopback server did not expose an address');
-  baseOrigin = `http://${LOOPBACK}:${address.port}`;
-  baseUrl = `${baseOrigin}${MOUNT_PATH}`;
-}
-
-async function stopServer() {
-  if (!server?.listening) return;
-  await new Promise((resolve, reject) => {
-    server.close(error => (error ? reject(error) : resolve()));
-  });
 }
 
 async function makeSession(testContext, options = {}) {
@@ -302,7 +192,9 @@ async function waitForFocus(page, selector) {
 
 describe('staged browser smoke', { concurrency: false }, () => {
   before(async () => {
-    await startServer();
+    stagedSite = await startStagedSiteServer({ siteRoot });
+    baseOrigin = stagedSite.origin;
+    baseUrl = stagedSite.url;
     browser = await chromium.launch({ headless: true });
   });
 
@@ -310,7 +202,7 @@ describe('staged browser smoke', { concurrency: false }, () => {
     try {
       await browser?.close();
     } finally {
-      await stopServer();
+      await stagedSite?.close();
     }
   });
 

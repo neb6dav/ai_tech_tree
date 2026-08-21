@@ -33,12 +33,20 @@ async function fixture(overrides = {}) {
     ]
   }, null, 2)}\n`);
   const budget = {
-    schemaVersion: 1,
+    schemaVersion: 2,
     measurement: {
       artifactRoot: '_site',
       initialDocument: 'index.html',
-      browserProfile: 'lighthouse-mobile',
+      browserProfile: 'lighthouse-mobile-v0.2.2',
       browserAggregation: 'median',
+      browserRuns: 3,
+      calibrationRuns: 5,
+      canonicalPlatform: 'ubuntu-24.04',
+      lighthouseVersion: '13.4.1',
+      chromeLauncherVersion: '1.2.1',
+      playwrightVersion: '1.62.1',
+      chromiumRevision: '1234',
+      chromiumVersion: '151.0.7922.34',
       scoreScale: '0-100',
       byteUnit: 'bytes',
       timeUnit: 'milliseconds'
@@ -46,7 +54,7 @@ async function fixture(overrides = {}) {
     regressionGuards: {
       enforcement: {
         artifactMetrics: 'blocking',
-        browserMetrics: 'dom_blocking_lighthouse_pending_v0.2.2'
+        browserMetrics: 'dom_blocking_lighthouse_calibration_pending'
       },
       initialDocument: {
         rawBytes: { maximum: 1000 },
@@ -54,11 +62,19 @@ async function fixture(overrides = {}) {
       },
       activeDomElements: { maximum: 8000, observedV0_2_0: 7724 },
       mobileLighthouse: {
-        performanceScore: { minimum: 73 },
-        firstContentfulPaintMs: { maximum: 4500 },
-        largestContentfulPaintMs: { maximum: 4600 },
-        totalBlockingTimeMs: { maximum: 200 },
-        cumulativeLayoutShift: { maximum: 0.02 }
+        status: 'calibration_pending',
+        calibration: {
+          status: 'pending',
+          requiredRuns: 5,
+          requiredPlatform: 'ubuntu-24.04'
+        },
+        candidateLimits: {
+          performanceScore: { minimum: 73 },
+          firstContentfulPaintMs: { maximum: 4500 },
+          largestContentfulPaintMs: { maximum: 4600 },
+          totalBlockingTimeMs: { maximum: 200 },
+          cumulativeLayoutShift: { maximum: 0.02 }
+        }
       },
       socialImage: {
         path: 'social-card.png',
@@ -89,20 +105,121 @@ async function fixture(overrides = {}) {
   Object.assign(budget.regressionGuards.socialImage.baseline, overrides.baseline || {});
   if (overrides.socialPath) budget.regressionGuards.socialImage.path = overrides.socialPath;
   if (overrides.initialDocument) budget.measurement.initialDocument = overrides.initialDocument;
+  overrides.mutateBudget?.(budget, { document, social });
   await fs.writeFile(path.join(root, 'performance-budget.json'), `${JSON.stringify(budget, null, 2)}\n`);
   return { root };
 }
 
-test('passes deterministic artifact budgets and records the blocking DOM baseline', async t => {
+test('passes deterministic artifact budgets and records pending Lighthouse calibration', async t => {
   const current = await fixture();
   t.after(() => fs.rm(current.root, { recursive: true, force: true }));
 
   const report = evaluatePerformanceBudget({ repositoryRoot: current.root });
   assert.equal(report.status, 'PASS');
   assert.equal(report.failures.length, 0);
-  assert.equal(report.browserMetrics.status, 'DOM_BLOCKING_LIGHTHOUSE_PENDING');
+  assert.equal(report.browserMetrics.status, 'DOM_BLOCKING_LIGHTHOUSE_CALIBRATION_PENDING');
   assert.deepEqual(report.browserMetrics.activeDomElements, { observed: 7724, maximum: 8000 });
-  assert.equal(report.browserMetrics.pendingCheckpoint, 'v0.2.2');
+  assert.equal(report.browserMetrics.mobileLighthouse.status, 'calibration_pending');
+  assert.equal(report.browserMetrics.mobileLighthouse.calibration.requiredRuns, 5);
+});
+
+test('accepts a complete blocking Lighthouse calibration bound to the staged document', async t => {
+  const sample = {
+    performanceScore: 80,
+    firstContentfulPaintMs: 3000,
+    largestContentfulPaintMs: 3200,
+    totalBlockingTimeMs: 100,
+    cumulativeLayoutShift: 0.01
+  };
+  const current = await fixture({
+    mutateBudget(budget, { document }) {
+      budget.regressionGuards.enforcement.browserMetrics = 'dom_and_lighthouse_blocking';
+      const mobile = budget.regressionGuards.mobileLighthouse;
+      mobile.status = 'blocking';
+      mobile.limits = mobile.candidateLimits;
+      delete mobile.candidateLimits;
+      mobile.calibration = {
+        status: 'complete',
+        requiredRuns: 5,
+        requiredPlatform: 'ubuntu-24.04',
+        sourcePlatform: 'win32',
+        canonicalConfirmation: 'required',
+        profileSha256: '1'.repeat(64),
+        toolchain: {
+          lighthouseVersion: '13.4.1',
+          chromeLauncherVersion: '1.2.1',
+          playwrightVersion: '1.62.1',
+          chromiumRevision: '1234',
+          chromiumVersion: '151.0.7922.34',
+          nodeVersion: 'v24.14.1',
+          platform: 'win32',
+          architecture: 'x64'
+        },
+        baseline: {
+          initialDocumentSha256: crypto.createHash('sha256').update(document).digest('hex'),
+          runCount: 5,
+          runs: Array.from({ length: 5 }, () => ({ ...sample })),
+          medians: { ...sample }
+        }
+      };
+    }
+  });
+  t.after(() => fs.rm(current.root, { recursive: true, force: true }));
+
+  const report = evaluatePerformanceBudget({ repositoryRoot: current.root });
+  assert.equal(report.status, 'PASS');
+  assert.equal(report.browserMetrics.status, 'DOM_AND_LIGHTHOUSE_BLOCKING');
+  assert.equal(report.browserMetrics.mobileLighthouse.status, 'blocking');
+  assert.equal(report.browserMetrics.mobileLighthouse.calibration.baseline.initialDocumentSha256.length, 64);
+});
+
+test('rejects a stale calibrated median and inconsistent browser enforcement', async t => {
+  const current = await fixture({
+    mutateBudget(budget, { document }) {
+      budget.regressionGuards.enforcement.browserMetrics = 'dom_and_lighthouse_blocking';
+      const mobile = budget.regressionGuards.mobileLighthouse;
+      const sample = {
+        performanceScore: 80,
+        firstContentfulPaintMs: 3000,
+        largestContentfulPaintMs: 3200,
+        totalBlockingTimeMs: 100,
+        cumulativeLayoutShift: 0.01
+      };
+      mobile.status = 'blocking';
+      mobile.limits = mobile.candidateLimits;
+      delete mobile.candidateLimits;
+      mobile.calibration = {
+        status: 'complete',
+        requiredRuns: 5,
+        requiredPlatform: 'ubuntu-24.04',
+        sourcePlatform: 'win32',
+        canonicalConfirmation: 'required',
+        profileSha256: '1'.repeat(64),
+        toolchain: {
+          lighthouseVersion: '13.4.1',
+          chromeLauncherVersion: '1.2.1',
+          playwrightVersion: '1.62.1',
+          chromiumRevision: '1234',
+          chromiumVersion: '151.0.7922.34',
+          nodeVersion: 'v24.14.1',
+          platform: 'win32',
+          architecture: 'x64'
+        },
+        baseline: {
+          initialDocumentSha256: crypto.createHash('sha256').update(document).digest('hex'),
+          runCount: 5,
+          runs: Array.from({ length: 5 }, () => ({ ...sample })),
+          medians: { ...sample, performanceScore: 79 }
+        }
+      };
+    }
+  });
+  t.after(() => fs.rm(current.root, { recursive: true, force: true }));
+
+  assert.throws(
+    () => evaluatePerformanceBudget({ repositoryRoot: current.root }),
+    /baseline median for performanceScore is stale/u
+  );
 });
 
 test('fails a raw-byte regression and a stale social baseline', async t => {

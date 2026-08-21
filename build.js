@@ -79,6 +79,7 @@ function injectBuiltAssets(html, layoutText, networkBundleText, opportunityDataT
 }
 
 function main() {
+  run(process.execPath, [path.join(ROOT, 'generate-knowledge-graph.js')]);
   run(process.execPath, [path.join(ROOT, 'validate-opportunity-data.js')]);
   run(process.execPath, [path.join(ROOT, 'generate-network-layout.js')]);
   if (process.env.AI_TREE_PREBUILT_NETWORK !== '1') {

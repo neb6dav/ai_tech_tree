@@ -24,6 +24,8 @@ const FILES = {
   opportunityData: path.join('src', 'data', 'opportunities', 'diffusion-models.alpha.json'),
   opportunityBundle: 'opportunity-atlas.bundle.js',
   generator: 'generate-knowledge-graph.js',
+  canonicalLoader: 'canonical-atlas.js',
+  canonicalData: path.join('src', 'data', 'atlas'),
   layoutGenerator: 'generate-network-layout.js',
   build: 'build.js'
 };
@@ -523,6 +525,9 @@ function deterministicRegeneration(current) {
     assert(tempDir.startsWith(path.resolve(os.tmpdir()) + path.sep));
     fs.copyFileSync(path.join(ROOT, FILES.html), path.join(tempDir, FILES.html));
     fs.copyFileSync(path.join(ROOT, FILES.generator), path.join(tempDir, FILES.generator));
+    fs.copyFileSync(path.join(ROOT, FILES.canonicalLoader), path.join(tempDir, FILES.canonicalLoader));
+    fs.mkdirSync(path.join(tempDir, 'src', 'data'), { recursive: true });
+    fs.cpSync(path.join(ROOT, FILES.canonicalData), path.join(tempDir, FILES.canonicalData), { recursive: true });
     execFileSync(process.execPath, [path.join(tempDir, FILES.generator)], {
       cwd: tempDir,
       encoding: 'utf8',

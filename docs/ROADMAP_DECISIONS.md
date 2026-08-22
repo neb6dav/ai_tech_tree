@@ -194,11 +194,30 @@ records with `legacyKind: sup`, `evidenceGrade: contextual`, and
 established supersession. Presentation approval does not validate either
 claim.
 
-The branch and PR prepare a v1.2.0 Stable release candidate only. The public
-and live release remains the authorized v1.0.0 release, and `CITATION.cff`
-remains byte-for-byte at dataset citation version v1.0.0 because the semantic
-edition is unchanged. Merge, annotated tagging, and deployment require
-separate authorization after the Windows and hosted-Ubuntu gates pass.
+At the time of this decision, the branch and PR prepared a v1.2.0 Stable
+release candidate only. The public and live release remained the authorized
+v1.0.0 release, and `CITATION.cff` remained byte-for-byte at dataset citation
+version v1.0.0 because the semantic edition was unchanged. Merge, annotated
+tagging, and deployment were separate authorization gates after the Windows
+and hosted-Ubuntu checks passed.
+
+## RD-013 — Record the v1.2.0 squash merge and release-promotion hold
+
+On 2026-08-22, PR #11 was squash-merged by neb6dav into durable `main` as
+`f03b9c9851f786b5181e7d18adbb12a548838fbf`; the temporary source branch
+`codex/ui-v1.2.0` was deleted. The final PR validation run `32590675801`
+passed at pre-squash ledger tip
+`16e15efc7cd69de9168087ab267b0b15abf916e7`. Main validation run `32594523153`,
+job `97083295633`, passed on the exact squash commit, including the build,
+full tests, and generated-file cleanliness. Main validation does not upload a
+Pages preview.
+
+This records integration, not public release promotion. The v1.2.0 Stable UI
+release candidate is now in `main` but has no v1.2.0 tag, GitHub Pages dispatch, or
+deployment. The public/live release remains v1.0.0; `CITATION.cff` and the
+citable dataset identity remain v1.0.0; edition `2026-08-21-stable-1`, the
+339-node/711-relationship inventory, and the semantic digest are unchanged.
+Tagging and deployment remain separately unauthorized.
 
 ## Explicit deferrals
 

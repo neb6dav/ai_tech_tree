@@ -4,7 +4,7 @@ All notable public changes to the AI Research Tech Tree will be documented here.
 
 ## [Unreleased]
 
-**v1.2.0 Stable release candidate (not merged, released, tagged, or deployed).** This researcher-delivery checkpoint generates 339 static node pages, sitemap discovery, a semantic edition diff, and a read-only embed while preserving the canonical dataset identity. The public/live release remains v1.0.0 and the dataset citation remains v1.0.0.
+**v1.2.0 Stable UI release candidate (merged into `main`, untagged, and undeployed).** PR #11 was squash-merged by neb6dav on 2026-08-22 as `f03b9c9851f786b5181e7d18adbb12a548838fbf`; main validation passed on that exact commit. This researcher-delivery checkpoint generates 339 static node pages, sitemap discovery, a semantic edition diff, and a read-only embed while preserving the canonical dataset identity. The public/live release remains v1.0.0 and the dataset citation remains v1.0.0.
 
 ### Added
 

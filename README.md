@@ -2,7 +2,7 @@
 
 The AI Research Tech Tree is a public, evidence-linked atlas of artificial-intelligence research developments, open directions, landmark works, and recorded relationships. It combines a chronological Timeline, a structural Network, a capability-oriented Opportunity View, and an accessible List.
 
-**Public/live release: `v1.0.0` Stable.** The public site remains unchanged until a separately authorized promotion. The open branch and PR prepare a `v1.2.0` Stable release candidate carrying the unchanged dataset edition `2026-08-21-stable-1`; it has not been merged, tagged, or deployed. The citable dataset identity remains `v1.0.0` in [`CITATION.cff`](CITATION.cff) because this UI release makes no semantic dataset changes. Each staged build records its exact commit, tag state, and checksums in `release-manifest.json`; pull-request previews and untagged builds remain non-release artifacts. The atlas remains a curated research aid, not a complete literature review, a peer-reviewed historical account, or a claim that every displayed relationship is causal. Records expose their available sources and review state so that gaps can be inspected and improved in public.
+**Public/live release: `v1.0.0` Stable.** The public site remains unchanged until a separately authorized promotion. PR #11 was squash-merged into durable `main` by neb6dav on 2026-08-22 as `f03b9c9851f786b5181e7d18adbb12a548838fbf`, and the temporary `codex/ui-v1.2.0` branch was deleted. The resulting `v1.2.0 Stable UI release candidate` passed main validation but remains untagged and undeployed pending separate release-promotion authorization. The release candidate carries the unchanged dataset edition `2026-08-21-stable-1`; the citable dataset identity remains `v1.0.0` in [`CITATION.cff`](CITATION.cff) because this UI release makes no semantic dataset changes. Each staged build records its exact commit, tag state, and checksums in `release-manifest.json`; pull-request previews and untagged builds remain non-release artifacts. The atlas remains a curated research aid, not a complete literature review, a peer-reviewed historical account, or a claim that every displayed relationship is causal. Records expose their available sources and review state so that gaps can be inspected and improved in public.
 
 The bounded `v0.1.1`, `v0.2.0`, and `v0.2.2` source checkpoints are preserved
 in [`PLAN.md`](PLAN.md). The authorized `v1.0.0` release freezes the public
@@ -42,7 +42,7 @@ See [METHODOLOGY.md](METHODOLOGY.md) for the inclusion, sourcing, relationship, 
 
 ## Repository map
 
-The `v1.0.0` public release and the pending `v1.2.0` candidate keep a single-file application shell while the historical atlas is authored in a strict 15-lane canonical dataset. The build projects that canonical data into the application and the machine-readable publication artifacts.
+The `v1.0.0` public release and the merged, untagged `v1.2.0 Stable UI release candidate` keep a single-file application shell while the historical atlas is authored in a strict 15-lane canonical dataset. The build projects that canonical data into the application and the machine-readable publication artifacts.
 
 ### Maintained source
 
@@ -74,13 +74,13 @@ The JSON, JSON-LD, and NDJSON exports currently describe the historical atlas. T
 
 ### Use with LLM research systems
 
-The machine-readable exports and the 339 static node pages delivered in the v1.2.0 Stable source candidate are designed to be ingestible by retrieval systems and LLM-assisted research workflows. Stable IDs, typed relationships, chronology, lanes, evidence grades, review states, provenance, and durable source links can help a research agent retrieve relevant lineages, compare traditions, follow supporting or contradictory context, and identify documented evidence gaps. The static pages are a crawlable representation of the same canonical records, not a second semantic dataset; later combinatorial tools are intended to expose underexplored intersections without silently promoting them to facts.
+The machine-readable exports and the 339 static node pages delivered in the `v1.2.0 Stable UI release candidate` are designed to be ingestible by retrieval systems and LLM-assisted research workflows. Stable IDs, typed relationships, chronology, lanes, evidence grades, review states, provenance, and durable source links can help a research agent retrieve relevant lineages, compare traditions, follow supporting or contradictory context, and identify documented evidence gaps. The static pages are a crawlable representation of the same canonical records, not a second semantic dataset; later combinatorial tools are intended to expose underexplored intersections without silently promoting them to facts.
 
 This is a navigation and retrieval substrate, not an authoritative scientific knowledge base, a training corpus warranty, or evidence that an automatically suggested connection is true or novel. LLM workflows should preserve the atlas's evidence distinctions, treat contextual, editorial, unassessed, and hypothesis-grade relationships accordingly, and inspect the cited primary sources before making scientific claims.
 
 `ai-research-tech-tree.original.html` is an archival pre-repair baseline retained for provenance. It is not the current application source.
 
-Generated artifacts remain committed through the pending `v1.2.0` candidate so releases can be inspected, downloaded, and served without a build service. Change maintained source, run the build, inspect the resulting diff, and commit the regenerated artifacts with the source change.
+Generated artifacts remain committed through the merged `v1.2.0 Stable UI release candidate` so releases can be inspected, downloaded, and served without a build service. Change maintained source, run the build, inspect the resulting diff, and commit the regenerated artifacts with the source change.
 
 ## v1 public contract
 
@@ -168,7 +168,7 @@ The static contract uses a pinned browser-compatible HTML attribute decoder, rej
 
 The stable Opportunity endpoints are `./data/opportunities/diffusion-models.alpha.json` and `./data/opportunities/opportunity-map.schema.json`. The former `./src/data/opportunities/...` endpoints remain available for compatibility: the data is an exact second publication of the maintained JSON, while the old schema URL is a small schema with its own truthful `$id` that delegates to the stable canonical schema. The public `./ai-research-tech-tree.html` alias likewise redirects to `./` and preserves query and hash state when JavaScript is available; its no-JavaScript fallback redirects to the root application.
 
-The same sequence is configured to run in GitHub Actions on the `ubuntu-24.04` runner label; the label is fixed in the workflow, while the hosted image behind it can change. Pull requests receive a downloadable staged-site preview artifact. A pull request is not ready to merge if a build changes generated files or leaves untracked source files. Under RD-006 and RD-007, Pages deployment is a manual protected-`main` workflow that verifies and, after separate authorization, checks out the exact annotated `v1.2.0` tag before staging any public bytes. This candidate is not yet authorized for merge, tagging, or deployment; the live site remains the `v1.0.0` release.
+The same sequence is configured to run in GitHub Actions on the `ubuntu-24.04` runner label; the label is fixed in the workflow, while the hosted image behind it can change. Pull requests receive a downloadable staged-site preview artifact. A pull request is not ready to merge if a build changes generated files or leaves untracked source files. PR #11 is merged into `main`, and main validation run `32594523153` (job `97083295633`) passed on exact commit `f03b9c9`, including the build, full tests, and generated-file cleanliness; main does not upload a Pages preview. Under RD-006 and RD-007, Pages deployment is a manual protected-`main` workflow that verifies and, after separate authorization, checks out the exact annotated `v1.2.0` tag before staging any public bytes. The merged `v1.2.0 Stable UI release candidate` remains unauthorized for tagging or deployment; the live site remains the `v1.0.0` release.
 
 ## Contributing
 
@@ -186,7 +186,7 @@ GitHub issues and pull requests are the project's track-changes system. The main
 
 ## Citation
 
-Use the repository's **Cite this repository** control or [CITATION.cff](CITATION.cff). The file remains synchronized to the tagged `v1.0.0` dataset release and edition `2026-08-21-stable-1`; the pending UI candidate does not change it. A future archive may add a DOI without changing stable atlas IDs.
+Use the repository's **Cite this repository** control or [CITATION.cff](CITATION.cff). The file remains synchronized to the tagged `v1.0.0` dataset release and edition `2026-08-21-stable-1`; the merged, untagged `v1.2.0 Stable UI release candidate` does not change it. A future archive may add a DOI without changing stable atlas IDs.
 
 ## Licensing
 

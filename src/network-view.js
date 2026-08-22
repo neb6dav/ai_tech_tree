@@ -8,7 +8,7 @@ import { Graph } from '@cosmos.gl/graph'
  * translates WebGL interactions back to the host's original node/edge records.
  */
 
-export const VERSION = '1.0.0'
+export const VERSION = '1.0.1'
 export const COSMOS_GRAPH_VERSION = '3.4.0'
 
 export const THEMES = Object.freeze({
@@ -16,17 +16,31 @@ export const THEMES = Object.freeze({
     background: '#090d16',
     point: '#aab5c5',
     link: '#64748b',
+    activeLink: '#f8fafc',
     greyPoint: '#657080',
     ring: '#f8fafc',
-    outline: '#cbd5e1'
+    outline: '#cbd5e1',
+    linkFocusContrast: 3,
+    linkGreyoutOpacity: 0.07,
+    linkVisibilityMinTransparency: 0.45,
+    highlightedLinkMinTransparency: 1,
+    highlightedLinkWidth: 1.65,
+    focusedLinkWidthIncrease: 2.5
   }),
   light: Object.freeze({
     background: '#f8fafc',
     point: '#334155',
     link: '#718096',
+    activeLink: '#0f172a',
     greyPoint: '#94a3b8',
     ring: '#0f172a',
-    outline: '#334155'
+    outline: '#334155',
+    linkFocusContrast: 3,
+    linkGreyoutOpacity: 0.07,
+    linkVisibilityMinTransparency: 0.45,
+    highlightedLinkMinTransparency: 1,
+    highlightedLinkWidth: 1.65,
+    focusedLinkWidthIncrease: 2.5
   })
 })
 
@@ -132,6 +146,60 @@ function writeColor (buffer, index, color) {
   buffer[offset + 1] = color[1]
   buffer[offset + 2] = color[2]
   buffer[offset + 3] = color[3]
+}
+
+function srgbChannelToLinear (channel) {
+  return channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4
+}
+
+function relativeLuminance (color) {
+  return 0.2126 * srgbChannelToLinear(color[0]) +
+    0.7152 * srgbChannelToLinear(color[1]) +
+    0.0722 * srgbChannelToLinear(color[2])
+}
+
+function contrastRatio (first, second) {
+  const light = Math.max(relativeLuminance(first), relativeLuminance(second))
+  const dark = Math.min(relativeLuminance(first), relativeLuminance(second))
+  return (light + 0.05) / (dark + 0.05)
+}
+
+function compositeColor (foreground, background, alpha) {
+  return [
+    foreground[0] * alpha + background[0] * (1 - alpha),
+    foreground[1] * alpha + background[1] * (1 - alpha),
+    foreground[2] * alpha + background[2] * (1 - alpha),
+    1
+  ]
+}
+
+function minimumContrastAlpha (foreground, background, target) {
+  if (contrastRatio(compositeColor(foreground, background, 1), background) < target) return undefined
+  let low = 0
+  let high = 1
+  for (let index = 0; index < 14; index++) {
+    const middle = (low + high) / 2
+    if (contrastRatio(compositeColor(foreground, background, middle), background) >= target) high = middle
+    else low = middle
+  }
+  return high
+}
+
+function readableLinkColor (baseColor, theme) {
+  const background = rgba(theme.background, theme.name === 'light' ? '#f8fafc' : '#090d16')
+  const target = clamp(theme.linkFocusContrast, 1, 21, 3)
+  const candidates = [
+    baseColor,
+    rgba(theme.activeLink ?? theme.focusLink ?? theme.ring, theme.ring),
+    contrastRatio([0, 0, 0, 1], background) >= contrastRatio([1, 1, 1, 1], background)
+      ? [0, 0, 0, 1]
+      : [1, 1, 1, 1]
+  ]
+  for (const candidate of candidates) {
+    const minimum = minimumContrastAlpha(candidate, background, target)
+    if (minimum != null) return [candidate[0], candidate[1], candidate[2], Math.max(candidate[3] ?? 1, minimum)]
+  }
+  return candidates[candidates.length - 1]
 }
 
 function nodeLaneId (node) {
@@ -252,7 +320,15 @@ function normalizeTheme (theme) {
     return { name, ...THEMES[name] }
   }
   const name = theme.name === 'light' ? 'light' : 'dark'
-  return { name, ...THEMES[name], ...theme }
+  const normalized = { name, ...THEMES[name], ...theme }
+  normalized.activeLink = theme.activeLink ?? theme.focusLink ?? theme.highlightLink ?? normalized.activeLink
+  normalized.linkFocusContrast = clamp(theme.linkFocusContrast, 1, 21, normalized.linkFocusContrast)
+  normalized.linkGreyoutOpacity = clamp(theme.linkGreyoutOpacity, 0, 1, normalized.linkGreyoutOpacity)
+  normalized.linkVisibilityMinTransparency = clamp(theme.linkVisibilityMinTransparency, 0, 1, normalized.linkVisibilityMinTransparency)
+  normalized.highlightedLinkMinTransparency = clamp(theme.highlightedLinkMinTransparency, 0, 1, normalized.highlightedLinkMinTransparency)
+  normalized.highlightedLinkWidth = clamp(theme.highlightedLinkWidth, 0.25, 8, normalized.highlightedLinkWidth)
+  normalized.focusedLinkWidthIncrease = clamp(theme.focusedLinkWidthIncrease, 0, 12, normalized.focusedLinkWidthIncrease)
+  return normalized
 }
 
 function normalizeFilter (filter) {
@@ -352,10 +428,33 @@ function buildVisibleState (data, filter, theme, defaults) {
     pointSizes,
     links,
     linkColors,
+    baseLinkColors: linkColors.slice(),
     linkWidths,
+    baseLinkWidths: linkWidths.slice(),
     linkStyles,
     linkArrows
   }
+}
+
+function highlightedLinkBuffers (visible, highlight, theme) {
+  const colors = visible.baseLinkColors.slice()
+  const widths = visible.baseLinkWidths.slice()
+  const activeIds = new Set(highlight.edgeIds ?? [])
+  if (highlight.focusLinkId != null) activeIds.add(String(highlight.focusLinkId))
+  for (const id of activeIds) {
+    const index = visible.edgeIndexById.get(id)
+    if (index == null) continue
+    const offset = index * 4
+    const readable = readableLinkColor([
+      visible.baseLinkColors[offset],
+      visible.baseLinkColors[offset + 1],
+      visible.baseLinkColors[offset + 2],
+      visible.baseLinkColors[offset + 3]
+    ], theme)
+    writeColor(colors, index, readable)
+    widths[index] = Math.max(widths[index], theme.highlightedLinkWidth)
+  }
+  return { colors, widths }
 }
 
 function renderFallback (container, message) {
@@ -438,6 +537,8 @@ class NetworkAtlasController {
       pointSize: clamp(options.pointSize, 2, 24, 5.5),
       linkWidth: clamp(options.linkWidth, 0.25, 8, 0.8)
     }
+    this.labelNodeIds = iterableSet(options.labelNodeIds ?? options.labelNodes) ?? new Set()
+    this.labelPriority = typeof options.labelPriority === 'function' ? options.labelPriority : undefined
     this.filter = normalizeFilter(options.filter)
     this.highlight = normalizeHighlight(options.highlight)
     this.focusNodeId = options.focusNodeId == null ? undefined : String(options.focusNodeId)
@@ -470,7 +571,8 @@ class NetworkAtlasController {
       pointGreyoutOpacity: 0.16,
       linkDefaultColor: this.theme.link,
       linkDefaultWidth: this.defaults.linkWidth,
-      linkGreyoutOpacity: 0.05,
+      linkGreyoutOpacity: this.theme.linkGreyoutOpacity,
+      focusedLinkWidthIncrease: this.theme.focusedLinkWidthIncrease,
       renderHoveredPointRing: true,
       hoveredPointRingColor: this.theme.ring,
       focusedPointRingColor: this.theme.ring,
@@ -487,7 +589,7 @@ class NetworkAtlasController {
       scaleLinksOnZoom: false,
       curvedLinks: false,
       linkVisibilityDistanceRange: [80, 800],
-      linkVisibilityMinTransparency: 0.45,
+      linkVisibilityMinTransparency: this.theme.linkVisibilityMinTransparency,
       pointSamplingDistance: clamp(options.pointSamplingDistance, 16, 300, 96),
       onPointClick: (index, position, event) => this.handleNodeClick(index, position, event),
       onPointMouseOver: (index, position, event) => this.handleNodeHover(index, position, event),
@@ -558,12 +660,19 @@ class NetworkAtlasController {
     const focusLink = this.highlight.focusLinkId == null
       ? undefined
       : this.visible.edgeIndexById.get(String(this.highlight.focusLinkId))
+    const linkVisuals = highlightedLinkBuffers(this.visible, this.highlight, this.theme)
+    const hasActiveLink = links?.length > 0 || focusLink != null
+    this.graph.setLinkColors(linkVisuals.colors)
+    this.graph.setLinkWidths(linkVisuals.widths)
     this.graph.setConfigPartial({
       highlightedPointIndices: points,
       highlightedLinkIndices: links,
       outlinedPointIndices: outlines,
       focusedPointIndex: focusPoint,
-      focusedLinkIndex: focusLink
+      focusedLinkIndex: focusLink,
+      linkVisibilityMinTransparency: hasActiveLink
+        ? this.theme.highlightedLinkMinTransparency
+        : this.theme.linkVisibilityMinTransparency
     })
   }
 
@@ -594,6 +703,8 @@ class NetworkAtlasController {
         pointDefaultColor: nextTheme.point,
         pointGreyoutColor: nextTheme.greyPoint,
         linkDefaultColor: nextTheme.link,
+        linkGreyoutOpacity: nextTheme.linkGreyoutOpacity,
+        focusedLinkWidthIncrease: nextTheme.focusedLinkWidthIncrease,
         hoveredPointRingColor: nextTheme.ring,
         focusedPointRingColor: nextTheme.ring,
         outlinedPointRingColor: nextTheme.outline
@@ -748,9 +859,25 @@ class NetworkAtlasController {
       const sampledIndices = [...sampled.keys()]
         .filter(index => this.visible.nodes[index])
         .sort((left, right) => left - right)
-      const indices = sampledIndices.length
-        ? sampledIndices.slice(0, maximum)
-        : this.visible.nodes.slice(0, maximum).map((_, index) => index)
+      const indices = []
+      const seen = new Set()
+      const addIndex = index => {
+        if (index == null || !this.visible.nodes[index] || seen.has(index) || indices.length >= maximum) return
+        seen.add(index)
+        indices.push(index)
+      }
+      addIndex(this.visible.indexById.get(this.focusNodeId))
+      for (const id of this.highlight.outlineNodeIds ?? []) addIndex(this.visible.indexById.get(id))
+      for (const id of this.highlight.nodeIds ?? []) addIndex(this.visible.indexById.get(id))
+      for (const id of this.labelNodeIds) addIndex(this.visible.indexById.get(id))
+      const priorityNodes = this.visible.nodes.map((node, index) => {
+        const record = node.record
+        const explicit = finite(this.labelPriority?.(record, node.index) ?? record.networkLabelPriority ?? record.labelPriority)
+        const frontier = record.isFrontier === true || record.frontier === true || record.type === 'open_opportunity' || String(nodeStatusId(record)) === 'g'
+        return { index, priority: explicit ?? (frontier ? Number.MAX_SAFE_INTEGER : undefined) }
+      }).filter(item => item.priority != null).sort((left, right) => left.priority - right.priority || left.index - right.index)
+      for (const item of priorityNodes) addIndex(item.index)
+      for (const index of sampledIndices.length ? sampledIndices : this.visible.nodes.map((_, index) => index)) addIndex(index)
       return indices.map(index => {
         const node = this.visible.nodes[index]
         const spacePosition = sampled.get(index) ?? [
@@ -775,6 +902,8 @@ class NetworkAtlasController {
       ready: Boolean(this.graph?.isReady),
       theme: this.theme.name,
       focusNodeId: this.focusNodeId,
+      highlightedEdgeCount: this.highlight.edgeIds?.size ?? 0,
+      linkFocusContrast: this.theme.linkFocusContrast,
       nodeCount: this.visible?.nodes.length ?? 0,
       edgeCount: this.visible?.edges.length ?? 0,
       totalNodeCount: this.data?.nodes.length ?? 0,
@@ -847,6 +976,9 @@ class NetworkAtlasController {
  * @param {Array<object>} options.nodes Records with stable `id` values.
  * @param {Array<object>} options.edges Records with source/target IDs.
  * @param {Float32Array|Array|Map|object|function} options.positions Fixed x/y positions.
+ * @param {Iterable<string>} [options.labelNodeIds] Ordered IDs to return before sampled label candidates.
+ * @param {function(object, number): number} [options.labelPriority] Optional lower-first label priority.
+ * @param {string|object} [options.theme] Theme colors plus optional active-link contrast controls.
  * @returns {NetworkAtlasController|UnavailableNetworkAtlas}
  */
 export function create (options = {}) {

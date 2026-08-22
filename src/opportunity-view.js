@@ -1,6 +1,6 @@
 import { computeOpportunityLayout, opportunityPath } from './opportunity-layout.cjs'
 
-export const VERSION = '1.0.0'
+export const VERSION = '1.0.1'
 
 const SVG_NS = 'http://www.w3.org/2000/svg'
 const STATUS_LABELS = Object.freeze({
@@ -26,6 +26,20 @@ const SHORT_STATUS_LABELS = Object.freeze({
   not_yet_assessed: 'Unassessed'
 })
 
+const DIRECTIONAL_RELATIONSHIPS = new Set([
+  'adapts_formalism_from',
+  'applied_to',
+  'blocked_by',
+  'candidate_application',
+  'derives_from',
+  'displaced_in_context_by',
+  'documented_historical_influence',
+  'enables',
+  'improves',
+  'mitigates_constraint',
+  'reopened_by'
+])
+
 function svgElement (name, attributes = {}, text) {
   const element = document.createElementNS(SVG_NS, name)
   for (const [key, value] of Object.entries(attributes)) {
@@ -49,6 +63,78 @@ function domElement (name, attributes = {}, text) {
 
 function clamp (value, minimum, maximum) {
   return Math.max(minimum, Math.min(maximum, value))
+}
+
+function cssNumber (element, name, fallback) {
+  const value = Number.parseFloat(getComputedStyle(element).getPropertyValue(name))
+  return Number.isFinite(value) ? value : fallback
+}
+
+function hexToRgba (value) {
+  const hex = value.slice(1)
+  if (![3, 4, 6, 8].includes(hex.length) || !/^[0-9a-f]+$/i.test(hex)) return null
+  const expanded = hex.length < 5 ? [...hex].map(character => character + character).join('') : hex
+  return [
+    Number.parseInt(expanded.slice(0, 2), 16) / 255,
+    Number.parseInt(expanded.slice(2, 4), 16) / 255,
+    Number.parseInt(expanded.slice(4, 6), 16) / 255,
+    expanded.length === 8 ? Number.parseInt(expanded.slice(6, 8), 16) / 255 : 1
+  ]
+}
+
+function cssColorToRgba (value) {
+  const normalized = String(value || '').trim()
+  if (normalized.startsWith('#')) return hexToRgba(normalized)
+  const match = normalized.match(/^rgba?\(\s*([^)]*)\)$/i)
+  if (!match) return null
+  const channels = match[1].split(/[\s,/]+/).filter(Boolean)
+  if (channels.length < 3 || channels.length > 4) return null
+  const rgb = channels.slice(0, 3).map(channel => channel.endsWith('%')
+    ? clamp(Number.parseFloat(channel) / 100, 0, 1)
+    : clamp(Number.parseFloat(channel) / 255, 0, 1))
+  const alpha = channels[3] == null
+    ? 1
+    : channels[3].endsWith('%')
+      ? clamp(Number.parseFloat(channels[3]) / 100, 0, 1)
+      : clamp(Number.parseFloat(channels[3]), 0, 1)
+  return [...rgb, alpha]
+}
+
+function srgbChannelToLinear (channel) {
+  return channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4
+}
+
+function relativeLuminance (color) {
+  return 0.2126 * srgbChannelToLinear(color[0]) +
+    0.7152 * srgbChannelToLinear(color[1]) +
+    0.0722 * srgbChannelToLinear(color[2])
+}
+
+function contrastRatio (first, second) {
+  const light = Math.max(relativeLuminance(first), relativeLuminance(second))
+  const dark = Math.min(relativeLuminance(first), relativeLuminance(second))
+  return (light + 0.05) / (dark + 0.05)
+}
+
+function compositeColor (foreground, background, alpha) {
+  return [
+    foreground[0] * alpha + background[0] * (1 - alpha),
+    foreground[1] * alpha + background[1] * (1 - alpha),
+    foreground[2] * alpha + background[2] * (1 - alpha),
+    1
+  ]
+}
+
+function minimumContrastAlpha (foreground, background, target) {
+  if (contrastRatio(compositeColor(foreground, background, 1), background) < target) return undefined
+  let low = 0
+  let high = 1
+  for (let index = 0; index < 14; index++) {
+    const middle = (low + high) / 2
+    if (contrastRatio(compositeColor(foreground, background, middle), background) >= target) high = middle
+    else low = middle
+  }
+  return high
 }
 
 function yearLabel (node) {
@@ -130,6 +216,7 @@ export function create ({ container, payload, onNodeActivate, onSelectionChange,
     const branchById = new Map((payload.applicationBranches || []).map(branch => [branch.id, branch]))
     const layoutById = layout.byId
     const nodeElements = new Map()
+    const edgeElements = new Map()
     let selectedId = null
     let branchId = 'all'
     let zoom = 1
@@ -173,6 +260,78 @@ export function create ({ container, payload, onNodeActivate, onSelectionChange,
         const bounds = canvas.getBoundingClientRect()
         const baseScale = Math.min(bounds.width / layout.width, bounds.height / layout.height)
         svg.classList.toggle('is-overview', baseScale > 0 && 11.5 * zoom * baseScale < 8.5)
+        updateOverviewLabels(baseScale, bounds)
+      }
+    }
+
+    function updateOverviewLabels (baseScale, bounds) {
+      if (!svg) return
+      const overview = svg.classList.contains('is-overview')
+      for (const element of nodeElements.values()) {
+        element.classList.remove('is-overview-label')
+        element.removeAttribute('data-overview-label')
+        element.querySelectorAll('.opportunityNodeTitle').forEach((title, index) => {
+          title.style.removeProperty('display')
+          title.style.removeProperty('font-size')
+          title.style.removeProperty('paint-order')
+          title.style.removeProperty('stroke')
+          title.style.removeProperty('stroke-width')
+          title.style.removeProperty('stroke-linejoin')
+          title.setAttribute('x', '18')
+          title.setAttribute('y', String(15 + index * 13))
+          title.removeAttribute('text-anchor')
+        })
+      }
+      if (!overview || !(baseScale > 0)) return
+
+      const maximum = bounds.width <= 700 ? 4 : 8
+      const occupied = []
+      const candidateIds = []
+      const seen = new Set()
+      const add = id => {
+        if (id && visibleNodeIds.has(id) && !seen.has(id)) {
+          seen.add(id)
+          candidateIds.push(id)
+        }
+      }
+      add(selectedId)
+      add(branchById.get(branchId)?.anchorNodeId)
+      layout.nodes.filter(position => visibleNodeIds.has(position.id) && position.node.type === 'open_opportunity')
+        .sort((left, right) => left.x - right.x || left.y - right.y || left.id.localeCompare(right.id))
+        .forEach(position => add(position.id))
+
+      const renderedWidth = layout.width * baseScale
+      const renderedHeight = layout.height * baseScale
+      const offsetX = Math.max(0, (bounds.width - renderedWidth) / 2)
+      const offsetY = Math.max(0, (bounds.height - renderedHeight) / 2)
+      const actualScale = Math.max(0.01, baseScale * zoom)
+      for (const id of candidateIds) {
+        if (occupied.length >= maximum) break
+        const position = layoutById.get(id)
+        const element = nodeElements.get(id)
+        if (!position || !element) continue
+        const x = offsetX + (position.cx * zoom + translateX) * baseScale
+        const y = offsetY + (position.cy * zoom + translateY) * baseScale
+        const width = Math.min(190, Math.max(76, position.node.title.length * 6.1 + 18))
+        const height = 26
+        const rectangle = { left: x - width / 2, right: x + width / 2, top: y - height / 2, bottom: y + height / 2 }
+        const force = id === selectedId
+        if (!force && (rectangle.right < 0 || rectangle.left > bounds.width || rectangle.bottom < 0 || rectangle.top > bounds.height)) continue
+        if (!force && occupied.some(item => !(rectangle.right < item.left || rectangle.left > item.right || rectangle.bottom < item.top || rectangle.top > item.bottom))) continue
+        occupied.push(rectangle)
+        element.classList.add('is-overview-label')
+        element.dataset.overviewLabel = id === selectedId ? 'selected' : 'frontier'
+        element.querySelectorAll('.opportunityNodeTitle').forEach((title, index) => {
+          title.style.display = 'block'
+          title.style.fontSize = `${11.5 / actualScale}px`
+          title.style.paintOrder = 'stroke'
+          title.style.stroke = 'var(--surface)'
+          title.style.strokeWidth = `${3 / actualScale}px`
+          title.style.strokeLinejoin = 'round'
+          title.setAttribute('x', String(position.width / 2))
+          title.setAttribute('y', String((-8 + index * 13) / actualScale))
+          title.setAttribute('text-anchor', 'middle')
+        })
       }
     }
 
@@ -257,10 +416,13 @@ export function create ({ container, payload, onNodeActivate, onSelectionChange,
           class: `opportunityEdge evidence-${evidenceGrade(relationship)}`,
           d: pathData,
           'data-relationship-id': relationship.id,
-          'data-relationship-type': relationship.type
+          'data-relationship-type': relationship.type,
+          'data-directional': DIRECTIONAL_RELATIONSHIPS.has(relationship.type) ? 'true' : 'false',
+          'data-visual-state': 'context'
         })
         path.appendChild(svgElement('title', {}, `${relationship.type.replaceAll('_', ' ')}; ${evidenceGrade(relationship)} evidence`))
         group.appendChild(path)
+        edgeElements.set(relationship.id, path)
       }
       graphGroup.appendChild(group)
     }
@@ -276,7 +438,8 @@ export function create ({ container, payload, onNodeActivate, onSelectionChange,
         'aria-pressed': 'false',
         'aria-expanded': 'false',
         'data-node-id': node.id,
-        'data-node-type': node.type
+        'data-node-type': node.type,
+        'data-visual-state': 'context'
       })
       group.appendChild(svgElement('rect', {
         class: 'opportunityNodeBox',
@@ -363,10 +526,51 @@ export function create ({ container, payload, onNodeActivate, onSelectionChange,
       const branch = branchById.get(branchId)
       const selected = selectedId ? nodeById.get(selectedId) : null
       const scope = branch ? branch.title : 'All application branches'
-      const overview = svg?.classList.contains('is-overview') ? ' Overview mode: labels appear when you zoom or select a node.' : ''
+      const overview = svg?.classList.contains('is-overview') ? ' Overview mode: a bounded set of open-frontier labels remains visible; zoom for every label.' : ''
       status.textContent = selected
         ? `${scope}. ${visibleNodeIds.size} developments and opportunities shown. Selected: ${selected.title}.`
         : `${scope}. ${visibleNodeIds.size} developments and opportunities and ${visibleRelationshipIds.size} relationships shown. Select a node for evidence and research details.${overview}`
+    }
+
+    function resetEdgeInlineStyle (element) {
+      element.style.removeProperty('opacity')
+      element.style.removeProperty('stroke')
+      element.style.removeProperty('stroke-width')
+      element.style.removeProperty('marker-end')
+      element.removeAttribute('data-contrast-fallback')
+    }
+
+    function focusEdgeStyle (element) {
+      resetEdgeInlineStyle(element)
+      const canvasStyle = getComputedStyle(canvas)
+      const background = cssColorToRgba(canvasStyle.getPropertyValue('--surface')) || cssColorToRgba(canvasStyle.backgroundColor) || [0.055, 0.067, 0.09, 1]
+      const computedStroke = cssColorToRgba(getComputedStyle(element).stroke)
+      const target = clamp(cssNumber(canvas, '--opportunity-edge-focus-contrast', 3), 1, 21)
+      const preferredOpacity = clamp(cssNumber(canvas, '--opportunity-edge-focus-opacity', 0.96), 0, 1)
+      let stroke = computedStroke
+      let minimum = stroke ? minimumContrastAlpha(stroke, background, target) : undefined
+      if (minimum == null) {
+        const focusValue = canvasStyle.getPropertyValue('--opportunity-edge-focus').trim() || canvasStyle.getPropertyValue('--focus').trim()
+        const focusColor = cssColorToRgba(focusValue)
+        const focusMinimum = focusColor ? minimumContrastAlpha(focusColor, background, target) : undefined
+        if (focusMinimum != null) {
+          element.style.stroke = focusValue
+          stroke = focusColor
+          minimum = focusMinimum
+          element.dataset.contrastFallback = 'focus'
+        }
+      }
+      if (minimum == null) {
+        const black = [0, 0, 0, 1]
+        const white = [1, 1, 1, 1]
+        const fallback = contrastRatio(black, background) >= contrastRatio(white, background) ? black : white
+        element.style.stroke = fallback === black ? '#000' : '#fff'
+        minimum = minimumContrastAlpha(fallback, background, target) ?? 1
+        element.dataset.contrastFallback = 'monochrome'
+      }
+      element.style.opacity = String(Math.max(preferredOpacity, minimum))
+      element.style.strokeWidth = String(clamp(cssNumber(canvas, '--opportunity-edge-focus-width', 2.75), 1, 8))
+      element.style.markerEnd = element.dataset.directional === 'true' ? 'url(#opportunityArrow)' : 'none'
     }
 
     function updateHighlight () {
@@ -385,9 +589,11 @@ export function create ({ container, payload, onNodeActivate, onSelectionChange,
       if (graphGroup) graphGroup.classList.toggle('has-selection', Boolean(selectedId))
       for (const [id, element] of nodeElements) {
         const selected = id === selectedId
+        const related = Boolean(selectedId && relatedNodes.has(id))
         element.classList.toggle('is-selected', selected)
-        element.classList.toggle('is-related', Boolean(selectedId && relatedNodes.has(id)))
+        element.classList.toggle('is-related', related)
         element.classList.toggle('is-dim', Boolean(selectedId && !relatedNodes.has(id)))
+        element.dataset.visualState = selected ? 'selected' : related ? 'related' : selectedId ? 'muted' : 'context'
         element.setAttribute('aria-pressed', String(selected))
         element.tabIndex = selected ? 0 : -1
       }
@@ -395,15 +601,24 @@ export function create ({ container, payload, onNodeActivate, onSelectionChange,
         const first = layout.nodes.find(position => visibleNodeIds.has(position.id))
         if (first && nodeElements.has(first.id)) nodeElements.get(first.id).tabIndex = 0
       }
-      if (graphGroup) {
-        graphGroup.querySelectorAll('.opportunityEdge').forEach(element => {
-          const related = relatedEdges.has(element.dataset.relationshipId)
-          element.classList.toggle('is-related', related)
-        })
+      for (const [id, element] of edgeElements) {
+        const related = relatedEdges.has(id)
+        element.classList.toggle('is-related', related)
+        element.dataset.visualState = related ? 'focus' : selectedId ? 'muted' : 'context'
+        if (related) focusEdgeStyle(element)
+        else {
+          resetEdgeInlineStyle(element)
+          element.style.markerEnd = 'none'
+          if (selectedId) element.style.opacity = String(clamp(cssNumber(canvas, '--opportunity-edge-muted-opacity', 0.08), 0, 1))
+        }
       }
       outline.querySelectorAll('[data-opportunity-outline-id]').forEach(button => {
         button.setAttribute('aria-current', button.dataset.opportunityOutlineId === selectedId ? 'true' : 'false')
       })
+      if (svg) {
+        const bounds = canvas.getBoundingClientRect()
+        updateOverviewLabels(Math.min(bounds.width / layout.width, bounds.height / layout.height), bounds)
+      }
       updateStatus()
     }
 
@@ -555,6 +770,7 @@ export function create ({ container, payload, onNodeActivate, onSelectionChange,
       visibleRelationshipIds = sets.relationships
       if (selectedId && !visibleNodeIds.has(selectedId)) selectedId = null
       nodeElements.clear()
+      edgeElements.clear()
       canvas.replaceChildren()
       svg = svgElement('svg', {
         class: 'opportunityGraph',

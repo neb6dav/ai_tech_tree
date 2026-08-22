@@ -1,0 +1,368 @@
+{
+  "schemaVersion": "1.0.0",
+  "reviewStatus": "candidate_pending_owner_review",
+  "anchors": [
+    { "nodeId": "transformer", "labelPriority": 1 },
+    { "nodeId": "turing36", "labelPriority": 2 },
+    { "nodeId": "dartmouth", "labelPriority": 3 },
+    { "nodeId": "perceptron", "labelPriority": 4 },
+    { "nodeId": "backprop", "labelPriority": 5 },
+    { "nodeId": "imagenet", "labelPriority": 6 },
+    { "nodeId": "alexnet", "labelPriority": 7 },
+    { "nodeId": "gpt3", "labelPriority": 8 },
+    { "nodeId": "frontier26", "labelPriority": 9 },
+    { "nodeId": "alphago", "labelPriority": 10 },
+    { "nodeId": "rlhf", "labelPriority": 11 },
+    { "nodeId": "diffusion", "labelPriority": 12 },
+    { "nodeId": "gan", "labelPriority": 13 },
+    { "nodeId": "scalinglaws", "labelPriority": 14 },
+    { "nodeId": "gpgpu", "labelPriority": 15 },
+    { "nodeId": "mdp", "labelPriority": 16 },
+    { "nodeId": "agentsllm", "labelPriority": 17 },
+    { "nodeId": "expertshells", "labelPriority": 18 },
+    { "nodeId": "deepblue", "labelPriority": 19 },
+    { "nodeId": "astar", "labelPriority": 20 },
+    { "nodeId": "bayesnets", "labelPriority": 21 },
+    { "nodeId": "shakey", "labelPriority": 22 },
+    { "nodeId": "alphafold", "labelPriority": 23 },
+    { "nodeId": "ga", "labelPriority": 24 }
+  ],
+  "backboneRelationshipIds": [
+    "logicprog>godel:dep",
+    "godel>turing36:dep",
+    "turing36>mcculloch43:dep",
+    "mcculloch43>hebb49:dep",
+    "mcculloch43>perceptron:dep",
+    "turing36>turingtest:dep",
+    "turingtest>dartmouth:dep",
+    "wiener48>dartmouth:dep",
+    "shannon37>shannon48:dep",
+    "shannon48>shannonchess:dep",
+    "markov>mdp:dep",
+    "shannon37>moore:dep",
+    "dartmouth>lt56:dep",
+    "dartmouth>lisp:dep",
+    "lt56>gps:dep",
+    "lt56>dendral:dep",
+    "dendral>mycin:dep",
+    "mycin>expertshells:dep",
+    "expertshells>aiwinter2:dep",
+    "shannonchess>minimaxab:dep",
+    "minimaxab>astar:dep",
+    "astar>shakey:dep",
+    "shakey>subsumption:dep",
+    "minimaxab>deepblue:dep",
+    "perceptron>perceptronsbook:dep",
+    "perceptronsbook>backprop:dep",
+    "perceptronsbook>lighthill:dep",
+    "backprop>cnn89:dep",
+    "cnn89>alexnet:dep",
+    "imagenet>alexnet:dep",
+    "gpgpu>alexnet:dep",
+    "relu>alexnet:dep",
+    "moore>gpgpu:dep",
+    "backprop>bengio03:dep",
+    "bengio03>word2vec:dep",
+    "bengio03>seq2seq:dep",
+    "seq2seq>attention:dep",
+    "attention>transformer:dep",
+    "transformer>bert:dep",
+    "transformer>vit:dep",
+    "word2vec>bert:sup",
+    "mdp>tdlearning:dep",
+    "tdlearning>qlearning:dep",
+    "tdlearning>policygrad:dep",
+    "backprop>tdgammon:dep",
+    "qlearning>dqn:dep",
+    "alexnet>dqn:dep",
+    "mcts>alphago:dep",
+    "dqn>alphago:dep",
+    "alphago>alphazero:dep",
+    "sgd>policygrad:dep",
+    "rlhf>instruct:dep",
+    "gpt3>instruct:dep",
+    "instruct>chatgpt:dep",
+    "chatgpt>agentsllm:dep",
+    "rlhf>constitutional:dep",
+    "vae>gan:dep",
+    "vae>diffusion:dep",
+    "gan>diffusion:sup",
+    "diffusion>txt2img:dep",
+    "diffusion>dit:dep",
+    "vit>dit:dep",
+    "clip>txt2img:dep",
+    "diffusion>diffusionllm:dep",
+    "transformer>scalinglaws:dep",
+    "scalinglaws>gpt3:dep",
+    "transformer>alphafold:dep",
+    "vit>clip:dep",
+    "agentsllm>frontier26:dep",
+    "em>bayesnets:dep",
+    "bayesnets>causal:dep",
+    "evolstrat>ga:dep"
+  ],
+  "tours": [
+    {
+      "slug": "foundations-to-transformers",
+      "title": "Foundations to Transformers",
+      "summary": "Follow a small set of landmarks from formal computation to the architecture behind modern language models.",
+      "steps": [
+        {
+          "stepNumber": 1,
+          "nodeId": "turing36",
+          "narration": "Turing's abstract universal machine established a formal model of computation that still describes most digital AI software."
+        },
+        {
+          "stepNumber": 2,
+          "nodeId": "dartmouth",
+          "narration": "The 1956 Dartmouth workshop gave artificial intelligence its name and an enduring, if overoptimistic, founding agenda."
+        },
+        {
+          "stepNumber": 3,
+          "nodeId": "perceptron",
+          "narration": "Rosenblatt's perceptron learned from examples and became an early emblem of both neural-network promise and hype."
+        },
+        {
+          "stepNumber": 4,
+          "nodeId": "backprop",
+          "narration": "Backpropagation made multilayer credit assignment practical and became a central training method of the modern neural era."
+        },
+        {
+          "stepNumber": 5,
+          "nodeId": "imagenet",
+          "narration": "ImageNet paired a very large labeled image collection with an annual contest, making deep-learning progress easier to measure."
+        },
+        {
+          "stepNumber": 6,
+          "nodeId": "alexnet",
+          "narration": "AlexNet combined GPU training and convolutional networks to produce the ImageNet result that accelerated deep learning's adoption."
+        },
+        {
+          "stepNumber": 7,
+          "nodeId": "transformer",
+          "narration": "The Transformer centered attention and parallel training, supplying the architecture that defines much of the current era."
+        }
+      ]
+    },
+    {
+      "slug": "two-winters-and-revivals",
+      "title": "Two Winters and Revivals",
+      "summary": "Trace the field's early optimism, funding contractions, expert-system boom and collapse, and neural revival.",
+      "steps": [
+        {
+          "stepNumber": 1,
+          "nodeId": "dartmouth",
+          "narration": "Dartmouth's founders gave the field a bold name and timetable, establishing expectations that proved much harder to meet."
+        },
+        {
+          "stepNumber": 2,
+          "nodeId": "perceptron",
+          "narration": "The perceptron demonstrated learning from examples while public promises ran well ahead of the machine's actual capabilities."
+        },
+        {
+          "stepNumber": 3,
+          "nodeId": "perceptronsbook",
+          "narration": "Minsky and Papert documented limits of single-layer perceptrons; the broader funding reaction also sidelined multilayer approaches."
+        },
+        {
+          "stepNumber": 4,
+          "nodeId": "lighthill",
+          "narration": "The Lighthill review criticized unmet AI promises and contributed to a long contraction in British research support."
+        },
+        {
+          "stepNumber": 5,
+          "nodeId": "expertshells",
+          "narration": "Expert-system shells turned hand-built rules and knowledge engineering into a substantial commercial industry."
+        },
+        {
+          "stepNumber": 6,
+          "nodeId": "aiwinter2",
+          "narration": "The expert-system and Lisp-machine markets collapsed, making the AI label commercially toxic for another period."
+        },
+        {
+          "stepNumber": 7,
+          "nodeId": "backprop",
+          "narration": "Effective multilayer credit assignment helped restore connectionist research and prepared the ground for later deep learning."
+        }
+      ]
+    },
+    {
+      "slug": "scaling-era",
+      "title": "The Scaling Era",
+      "summary": "Connect the compute, data, architecture, and empirical scaling milestones behind frontier language models.",
+      "steps": [
+        {
+          "stepNumber": 1,
+          "nodeId": "moore",
+          "narration": "Decades of rising transistor counts supplied an underlying compute trend for successive waves of AI research."
+        },
+        {
+          "stepNumber": 2,
+          "nodeId": "gpgpu",
+          "narration": "General-purpose GPU computing turned graphics hardware into a practical engine for large neural-network workloads."
+        },
+        {
+          "stepNumber": 3,
+          "nodeId": "imagenet",
+          "narration": "ImageNet supplied both labeled data and a visible benchmark through which deep-learning systems could be compared."
+        },
+        {
+          "stepNumber": 4,
+          "nodeId": "alexnet",
+          "narration": "AlexNet's 2012 ImageNet result demonstrated the combined value of GPUs, data, and deep convolutional models."
+        },
+        {
+          "stepNumber": 5,
+          "nodeId": "transformer",
+          "narration": "Attention-based parallelism made the Transformer especially compatible with increasingly large training runs."
+        },
+        {
+          "stepNumber": 6,
+          "nodeId": "scalinglaws",
+          "narration": "Empirical scaling laws related model loss to compute, data, and parameter budgets, while Chinchilla revised their balance."
+        },
+        {
+          "stepNumber": 7,
+          "nodeId": "gpt3",
+          "narration": "GPT-3 showed much stronger few-shot behavior at 175 billion parameters and accelerated the language-model API era."
+        },
+        {
+          "stepNumber": 8,
+          "nodeId": "frontier26",
+          "narration": "The map's frontier grouping tracks assistants combining reasoning, multimodality, and agent capabilities while competing on reliability and cost."
+        }
+      ]
+    },
+    {
+      "slug": "reinforcement-keeps-returning",
+      "title": "Reinforcement Learning Keeps Returning",
+      "summary": "See how sequential decision theory, value learning, policy optimization, self-play, and preferences recur across AI eras.",
+      "steps": [
+        {
+          "stepNumber": 1,
+          "nodeId": "mdp",
+          "narration": "Markov decision processes and Bellman equations provided a mathematical framework for sequential decisions under uncertainty."
+        },
+        {
+          "stepNumber": 2,
+          "nodeId": "qlearning",
+          "narration": "Q-learning established off-policy value learning with convergence guarantees in the tabular setting."
+        },
+        {
+          "stepNumber": 3,
+          "nodeId": "policygrad",
+          "narration": "Policy-gradient methods optimized actions directly and helped establish the actor-critic family used in later systems."
+        },
+        {
+          "stepNumber": 4,
+          "nodeId": "tdgammon",
+          "narration": "TD-Gammon combined a neural network, temporal-difference learning, and self-play to reach top-level backgammon."
+        },
+        {
+          "stepNumber": 5,
+          "nodeId": "dqn",
+          "narration": "DQN joined deep networks, Q-learning, and experience replay to learn Atari games directly from pixels."
+        },
+        {
+          "stepNumber": 6,
+          "nodeId": "alphago",
+          "narration": "AlphaGo combined policy and value networks with tree search and self-play to defeat Lee Sedol."
+        },
+        {
+          "stepNumber": 7,
+          "nodeId": "rlhf",
+          "narration": "RLHF made learned human preferences one component of instruction-following assistants, while retaining specification risks."
+        },
+        {
+          "stepNumber": 8,
+          "nodeId": "agentsllm",
+          "narration": "Tool-using language-model agents extend models from generating text to acting, with reliability still a central limitation."
+        }
+      ]
+    },
+    {
+      "slug": "diffusion-decade",
+      "title": "The Diffusion Decade",
+      "summary": "Follow modern generative modeling from latent-variable and adversarial systems to diffusion across media and language.",
+      "steps": [
+        {
+          "stepNumber": 1,
+          "nodeId": "vae",
+          "narration": "Variational autoencoders introduced probabilistic latent spaces that could be sampled and optimized with neural networks."
+        },
+        {
+          "stepNumber": 2,
+          "nodeId": "gan",
+          "narration": "GANs used adversarial training to dominate much of image generation before diffusion became the more stable workhorse."
+        },
+        {
+          "stepNumber": 3,
+          "nodeId": "diffusion",
+          "narration": "Diffusion systems learn to reverse a noising process and now support generation across several data modalities."
+        },
+        {
+          "stepNumber": 4,
+          "nodeId": "txt2img",
+          "narration": "Latent diffusion and classifier-free guidance made high-resolution, language-directed image generation broadly practical."
+        },
+        {
+          "stepNumber": 5,
+          "nodeId": "dit",
+          "narration": "Diffusion Transformers apply scalable Transformer backbones to diffusion models in image, video, and audio work."
+        },
+        {
+          "stepNumber": 6,
+          "nodeId": "diffusionllm",
+          "narration": "Diffusion language models explore parallel denoising as an early alternative to left-to-right generation."
+        }
+      ]
+    },
+    {
+      "slug": "agents-and-alignment",
+      "title": "Agents and Alignment",
+      "summary": "Trace selected approaches to aligning and evaluating increasingly capable tool-using agents without implying that the problem is solved.",
+      "steps": [
+        {
+          "stepNumber": 1,
+          "nodeId": "friendlyai",
+          "narration": "Early agent-foundations work pursued decision-theoretic alignment for hypothetical superintelligence before the LLM era."
+        },
+        {
+          "stepNumber": 2,
+          "nodeId": "rlhf",
+          "narration": "RLHF uses human comparisons to train reward models, alongside supervised tuning, data curation, and other safety measures."
+        },
+        {
+          "stepNumber": 3,
+          "nodeId": "constitutional",
+          "narration": "Constitutional AI has models critique outputs against written principles as one way to scale oversight beyond direct labeling."
+        },
+        {
+          "stepNumber": 4,
+          "nodeId": "agentsllm",
+          "narration": "Language-model agents can call tools and act in external environments, expanding both usefulness and reliability concerns."
+        },
+        {
+          "stepNumber": 5,
+          "nodeId": "agentbench",
+          "narration": "Interactive benchmarks test agents in websites, repositories, and computers, exposing failures that static question answering misses."
+        },
+        {
+          "stepNumber": 6,
+          "nodeId": "aicontrol",
+          "narration": "AI control research studies monitors, resampling, editing, and limited audits as defenses against intentionally subversive models."
+        },
+        {
+          "stepNumber": 7,
+          "nodeId": "selfgenagents",
+          "narration": "Self-generating agents create tasks, skills, or modifications, but reported gains remain bounded by their environments and verifiers."
+        },
+        {
+          "stepNumber": 8,
+          "nodeId": "gap_agents",
+          "narration": "Provable agent boundaries is a proposed research direction for testable containment, permissions, and corrigibility guarantees."
+        }
+      ]
+    }
+  ]
+}

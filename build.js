@@ -14,6 +14,7 @@ const LAYOUT_FILE = 'network-layout-v1.json';
 const BUNDLE_FILE = 'network-atlas.bundle.js';
 const OPPORTUNITY_DATA_FILE = path.join('src', 'data', 'opportunities', 'diffusion-models.alpha.json');
 const OPPORTUNITY_BUNDLE_FILE = 'opportunity-atlas.bundle.js';
+const PRESENTATION_DATA_FILE = path.join('src', 'ui', 'atlas-presentation.v1.json');
 
 function run(executable, args) {
   execFileSync(executable, args, {
@@ -70,9 +71,22 @@ function injectOpportunityAssets(html, dataText, bundleText) {
   return declareRuntimeFragments(result, 'opportunity-view-engine', ['opportunityArrow']);
 }
 
-function injectBuiltAssets(html, layoutText, networkBundleText, opportunityDataText, opportunityBundleText) {
+function injectPresentationAsset(html, presentationText) {
+  const id = 'atlas-presentation-data';
+  if (new RegExp(`<script\\b[^>]*\\bid=["']${id}["']`, 'i').test(html)) {
+    return injectScriptBody(html, id, safeInlineJson(presentationText), 'application/json');
+  }
+  const marker = '<script id="network-layout-data"';
+  assert(html.includes(marker), 'Expected #network-layout-data marker for presentation-data insertion');
+  return html.replace(
+    marker,
+    `<script id="${id}" type="application/json">${safeInlineJson(presentationText)}</script>\n${marker}`
+  );
+}
+
+function injectBuiltAssets(html, layoutText, networkBundleText, opportunityDataText, opportunityBundleText, presentationText) {
   return injectOpportunityAssets(
-    injectNetworkAssets(html, layoutText, networkBundleText),
+    injectPresentationAsset(injectNetworkAssets(html, layoutText, networkBundleText), presentationText),
     opportunityDataText,
     opportunityBundleText
   );
@@ -81,6 +95,7 @@ function injectBuiltAssets(html, layoutText, networkBundleText, opportunityDataT
 function main() {
   run(process.execPath, [path.join(ROOT, 'generate-knowledge-graph.js')]);
   run(process.execPath, [path.join(ROOT, 'validate-opportunity-data.js')]);
+  run(process.execPath, [path.join(ROOT, 'scripts', 'validate-presentation-data.cjs')]);
   run(process.execPath, [path.join(ROOT, 'generate-network-layout.js')]);
   if (process.env.AI_TREE_PREBUILT_NETWORK !== '1') {
     esbuild.buildSync({
@@ -118,12 +133,14 @@ function main() {
   const bundlePath = path.join(ROOT, BUNDLE_FILE);
   const opportunityDataPath = path.join(ROOT, OPPORTUNITY_DATA_FILE);
   const opportunityBundlePath = path.join(ROOT, OPPORTUNITY_BUNDLE_FILE);
+  const presentationDataPath = path.join(ROOT, PRESENTATION_DATA_FILE);
   const html = fs.readFileSync(htmlPath, 'utf8').replace(/\r\n/g, '\n');
   const layout = fs.readFileSync(layoutPath, 'utf8');
   const bundle = fs.readFileSync(bundlePath, 'utf8');
   const opportunityData = fs.readFileSync(opportunityDataPath, 'utf8');
   const opportunityBundle = fs.readFileSync(opportunityBundlePath, 'utf8');
-  fs.writeFileSync(htmlPath, injectBuiltAssets(html, layout, bundle, opportunityData, opportunityBundle), 'utf8');
+  const presentationData = fs.readFileSync(presentationDataPath, 'utf8');
+  fs.writeFileSync(htmlPath, injectBuiltAssets(html, layout, bundle, opportunityData, opportunityBundle, presentationData), 'utf8');
 
   run(process.execPath, [path.join(ROOT, 'generate-knowledge-graph.js')]);
   run(process.execPath, [path.join(ROOT, 'validate-opportunity-data.js')]);
@@ -132,7 +149,7 @@ function main() {
   const refreshedLayout = fs.readFileSync(layoutPath, 'utf8');
   if (refreshedLayout !== firstLayout) {
     const refreshedHtml = fs.readFileSync(htmlPath, 'utf8').replace(/\r\n/g, '\n');
-    fs.writeFileSync(htmlPath, injectBuiltAssets(refreshedHtml, refreshedLayout, bundle, opportunityData, opportunityBundle), 'utf8');
+    fs.writeFileSync(htmlPath, injectBuiltAssets(refreshedHtml, refreshedLayout, bundle, opportunityData, opportunityBundle, presentationData), 'utf8');
     run(process.execPath, [path.join(ROOT, 'generate-knowledge-graph.js')]);
     run(process.execPath, [path.join(ROOT, 'validate-opportunity-data.js')]);
   }
@@ -146,7 +163,8 @@ function main() {
     layout: LAYOUT_FILE,
     bundle: BUNDLE_FILE,
     opportunityData: OPPORTUNITY_DATA_FILE.replace(/\\/g, '/'),
-    opportunityBundle: OPPORTUNITY_BUNDLE_FILE
+    opportunityBundle: OPPORTUNITY_BUNDLE_FILE,
+    presentationData: PRESENTATION_DATA_FILE.replace(/\\/g, '/')
   }, null, 2));
 }
 
@@ -157,6 +175,7 @@ module.exports = {
   injectBuiltAssets,
   injectNetworkAssets,
   injectOpportunityAssets,
+  injectPresentationAsset,
   injectScriptBody,
   safeInlineJson
 };

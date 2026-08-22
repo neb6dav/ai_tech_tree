@@ -23,6 +23,7 @@ const FILES = {
   bundle: 'network-atlas.bundle.js',
   opportunityData: path.join('src', 'data', 'opportunities', 'diffusion-models.alpha.json'),
   opportunityBundle: 'opportunity-atlas.bundle.js',
+  presentationData: path.join('src', 'ui', 'atlas-presentation.v1.json'),
   generator: 'generate-knowledge-graph.js',
   canonicalLoader: 'canonical-atlas.js',
   canonicalData: path.join('src', 'data', 'atlas'),
@@ -409,10 +410,10 @@ function parseCsp(value) {
   }));
 }
 
-function assertHtmlIntegration(html, jsonldBytes, data, layoutBytes, bundleBytes, opportunityDataBytes, opportunityBundleBytes) {
+function assertHtmlIntegration(html, jsonldBytes, data, layoutBytes, bundleBytes, opportunityDataBytes, opportunityBundleBytes, presentationDataBytes) {
   const scripts = extractBodies(html, 'script');
   const styles = extractBodies(html, 'style');
-  assert.equal(scripts.length, 10);
+  assert.equal(scripts.length, 11);
   assert.equal(styles.length, 2);
   const graphScripts = scripts.filter(script => /\btype=["']application\/ld\+json["']/i.test(script.attributes));
   assert.equal(graphScripts.length, 1);
@@ -447,6 +448,14 @@ function assertHtmlIntegration(html, jsonldBytes, data, layoutBytes, bundleBytes
   assert.equal(opportunityEngines.length, 1, 'Expected one embedded Opportunity View engine');
   assert.match(opportunityEngines[0].body, /OpportunityAtlas/);
   assert.equal(opportunityEngines[0].body, opportunityBundleBytes.toString('utf8').replace(/\r\n/g, '\n').trimEnd(), 'Embedded and sidecar Opportunity View engines differ');
+
+  const presentationScripts=scripts.filter(script=>/\bid=["']atlas-presentation-data["']/i.test(script.attributes));
+  assert.equal(presentationScripts.length,1,'Expected one embedded atlas presentation payload');
+  assert.match(presentationScripts[0].attributes,/\btype=["']application\/json["']/i);
+  const parsedPresentation=JSON.parse(presentationScripts[0].body);
+  assert.deepEqual(parsedPresentation,JSON.parse(presentationDataBytes.toString('utf8')),'Embedded and maintained presentation data differ');
+  assert.equal(parsedPresentation.anchors.length,24);
+  assert.equal(parsedPresentation.backboneRelationshipIds.length,72);
 
   const cspMatch = html.match(/<meta\s+http-equiv="Content-Security-Policy"\s+content="([^"]+)"/i);
   assert(cspMatch, 'Missing Content-Security-Policy meta tag');
@@ -579,7 +588,8 @@ function main() {
     layout: read(FILES.layout),
     bundle: read(FILES.bundle),
     opportunityData: read(FILES.opportunityData),
-    opportunityBundle: read(FILES.opportunityBundle)
+    opportunityBundle: read(FILES.opportunityBundle),
+    presentationData: read(FILES.presentationData)
   };
   assert.equal(Buffer.compare(buffers.index, buffers.html), 0, 'Generated index.html differs from the canonical HTML artifact');
   const html = buffers.html.toString('utf8');
@@ -601,7 +611,7 @@ function main() {
   assert.equal(data.schemaVersion, 2);
   assert.equal(data.generatorVersion, '1.3.1');
   assert.equal(data.dataset.edition, '2026-08-21-stable-1');
-  assert.equal(data.dataset.releaseState, 'Stable');
+  assert.equal(data.dataset.releaseState, 'Preview');
   assert.equal(data.dataset.asOf, '2026-08-04');
   assert.equal(data.dataset.canonicalUrl, 'https://neb6dav.github.io/ai_tech_tree/');
   assert.deepEqual(data.dataset.authors, ['@neb6dav']);
@@ -632,7 +642,8 @@ function main() {
     buffers.layout,
     buffers.bundle,
     buffers.opportunityData,
-    buffers.opportunityBundle
+    buffers.opportunityBundle,
+    buffers.presentationData
   );
   const determinism = deterministicRegeneration(buffers);
   const graphBody = extractBodies(html, 'script').find(script => /\btype=["']application\/ld\+json["']/i.test(script.attributes)).body;

@@ -104,9 +104,9 @@ test('canonical shadow reproduces every generated dataset byte and layout byte',
   assert.equal(ndjsonBody, read('ai-research-tech-tree.ndjson'));
   assert.equal(layoutBody, read('network-layout-v1.json'));
   assert.equal(plain.dataset.dataDigest, canonical.manifest.expected.dataDigest);
-  assert.equal(sha256(plainBody), '4445aeb9b4155719daae9e4ecdbc3a908ab404ee842879f3b928f51b69b220c2');
-  assert.equal(sha256(jsonLdBody), '601d559ab429b0f69f89d70946233f6538c227ac7d6cfa053294f5c40bf483d3');
-  assert.equal(sha256(ndjsonBody), 'a458bf83d50f4de799d1c1117a068b639372412403ee9619a1862b330d63af44');
+  assert.equal(sha256(plainBody), 'e9163737adc8cc20a642c03ca1625f2c7969037e0ef5b8daf3007f9fa9ee3155');
+  assert.equal(sha256(jsonLdBody), '37681fc2ff49ec07eab825a983e0baf0338d9c317587783a72d7c94cd55c7d4d');
+  assert.equal(sha256(ndjsonBody), 'e2ed848e1e937fa8c929d02b9372bc3431ba8446981efe3b63b0582616cfe449');
   assert.equal(sha256(layoutBody), 'f3b888046699599fbfb95b6c32ab55dc128f58d7a1dd2bf7d9f8b7d1c3bde120');
 });
 
@@ -207,7 +207,7 @@ test('canonical cutover fails closed instead of accepting missing or digest-drif
 test('canonical cutover rejects release-shell and normalized sidecar drift', () => {
   const html = read('ai-research-tech-tree.html');
   const staleVersion = html.replace(
-    '<meta name="ai-tree-version" content="1.0.0">',
+    '<meta name="ai-tree-version" content="1.0.1">',
     '<meta name="ai-tree-version" content="stale">'
   );
   assert.notEqual(staleVersion, html);

@@ -1,9 +1,9 @@
 {
   "schemaVersion": "1.0.0",
   "project": {
-    "version": "1.0.0",
+    "version": "1.0.1",
     "edition": "2026-08-21-stable-1",
-    "releaseState": "Stable",
+    "releaseState": "Preview",
     "asOf": "2026-08-04",
     "scope": "A navigable atlas of selected AI research developments, their recorded relationships, and research directions from 1879 through 2026.",
     "canonicalUrl": "https://neb6dav.github.io/ai_tech_tree/",
@@ -33,6 +33,10 @@
     "license": "https://creativecommons.org/licenses/by-sa/4.0/",
     "correctionsUrl": "https://github.com/neb6dav/ai_tech_tree/issues/new/choose",
     "changelog": [
+      "Repaired the first-minute map orientation with a curated, display-only 24-node anchor set and 72-relationship spine.",
+      "Exposed primary navigation across desktop and tablet layouts and added a compact mobile start chooser.",
+      "Renamed reader-facing relationship controls to Connections and Related without changing URL compatibility.",
+      "Simplified previews and reader-facing guidance while preserving the complete methodology under Help.",
       "Separated relationship meaning from evidence strength",
       "Separated significance, activity and trajectory facets",
       "Added reviewed ranges and disclosed nonlinear spacing",

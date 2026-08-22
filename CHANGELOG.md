@@ -4,6 +4,24 @@ All notable public changes to the AI Research Tech Tree will be documented here.
 
 ## [Unreleased]
 
+### Added
+
+- A candidate, display-only inventory of 24 canonical anchor nodes, 72 existing orientation relationships, and six future guided tours. The inventory remains subject to repository-owner review before release.
+- A compact mobile start chooser with routes to Transformers, current frontiers, research directions, and the whole map.
+
+### Changed
+
+- Repaired the default desktop landing with an always-visible orientation spine and canonical anchor labels.
+- Exposed Timeline, Network, Opportunity, List, Connections, theme, Share, and Help in responsive navigation appropriate to each breakpoint.
+- Renamed reader-facing “Links” and “On hover” controls to “Connections” and “Related” while preserving existing `mode=hover` URLs.
+- Simplified first-run help, node previews, List cards, Opportunity guidance, and the nonlinear-time explanation without removing methodology or evidence warnings.
+- Reused the 72 orientation relationship paths when expanding to All connections, avoiding a duplicate edge layer.
+
+### Verification
+
+- Preserved 339 canonical nodes, 711 canonical relationships, stable IDs, the no-JavaScript index, and the single-file offline runtime.
+- Kept active relationship and orientation-spine contrast above 3:1 in dark and light themes without adding universal arrowheads.
+
 ## [1.0.0] - 2026-08-21
 
 **Stable release.** This release publishes dataset edition `2026-08-21-stable-1` from the authorized annotated `v1.0.0` tag.

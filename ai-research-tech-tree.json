@@ -10,7 +10,7 @@
     "name": "AI Research Tech Tree",
     "description": "A navigable atlas of selected AI research developments, their recorded relationships, and research directions from 1879 through 2026.",
     "edition": "2026-08-21-stable-1",
-    "releaseState": "Stable",
+    "releaseState": "Preview",
     "asOf": "2026-08-04",
     "temporalCoverage": "1879/2026",
     "humanUrl": "./",
@@ -37,6 +37,10 @@
       "Network positions are generated from recorded associations; spatial proximity is not evidence of chronology, importance, similarity, consensus or causality"
     ],
     "changelog": [
+      "Repaired the first-minute map orientation with a curated, display-only 24-node anchor set and 72-relationship spine.",
+      "Exposed primary navigation across desktop and tablet layouts and added a compact mobile start chooser.",
+      "Renamed reader-facing relationship controls to Connections and Related without changing URL compatibility.",
+      "Simplified previews and reader-facing guidance while preserving the complete methodology under Help.",
       "Separated relationship meaning from evidence strength",
       "Separated significance, activity and trajectory facets",
       "Added reviewed ranges and disclosed nonlinear spacing",
@@ -195,7 +199,7 @@
         "encodingFormat": "application/x-ndjson"
       }
     ],
-    "dataDigest": "b375e9c0c732eda97cc4fcc90e30f022d60231f7388aec708760637c32f434e9"
+    "dataDigest": "865174514ba64e20d6f2a90471a6766b6d5fa18f5b0e62c85d9601de077a50f2"
   },
   "lanes": [
     {

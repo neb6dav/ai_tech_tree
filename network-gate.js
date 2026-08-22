@@ -23,7 +23,7 @@ const packageLock = JSON.parse(read('package-lock.json'));
 assert.equal(packageJson.dependencies['@cosmos.gl/graph'], '3.4.0', 'Cosmos graph dependency must be exactly pinned');
 assert.equal(packageLock.packages['node_modules/@cosmos.gl/graph'].version, '3.4.0', 'Lockfile Cosmos graph version drifted');
 assert.equal(packageLock.packages['node_modules/esbuild'].version, packageJson.devDependencies.esbuild, 'Lockfile esbuild version drifted');
-assert.match(source, /export const VERSION = '1\.0\.0'/u, 'Network source version must match v1.0.0');
+assert.match(source, /export const VERSION = '1\.0\.1'/u, 'Network source version must match v1.0.1');
 
 assert.equal(layout.schemaVersion, '1.0.0');
 assert.equal(layout.layoutVersion, 'network-v1');
@@ -72,7 +72,7 @@ assert(nearestOwnLane / layout.nodes.length >= 0.7, 'Lane clustering signal is t
 
 const scriptBodies = [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)]
   .map(match => ({ attributes: match[1], body: match[2] }));
-assert.equal(scriptBodies.length, 10, 'Expected ten inline script elements');
+assert.equal(scriptBodies.length, 11, 'Expected eleven inline script elements');
 const embeddedLayouts = scriptBodies.filter(script => /\bid=["']network-layout-data["']/i.test(script.attributes));
 assert.equal(embeddedLayouts.length, 1, 'Expected one embedded network layout');
 assert.match(embeddedLayouts[0].attributes, /\btype=["']application\/json["']/i);
@@ -83,7 +83,7 @@ assert.equal(embeddedEngines[0].body, bundle.trimEnd(), 'Embedded network engine
 assert.match(bundle, /COSMOS_GRAPH_VERSION/);
 assert.match(bundle, /3\.4\.0/);
 assert.match(bundle, /NetworkAtlas/);
-assert.match(bundle, /1\.0\.0/u, 'Network bundle version must match v1.0.0');
+assert.match(bundle, /1\.0\.1/u, 'Network bundle version must match v1.0.1');
 assert(!bundle.includes('0.1.1'), 'Network bundle contains the superseded pre-v1 version');
 assert(!/(?:eval\s*\(|new\s+Function\b)/.test(bundle), 'Network bundle requires unsafe evaluation');
 new vm.Script(bundle, { filename: 'network-atlas.bundle.js' });

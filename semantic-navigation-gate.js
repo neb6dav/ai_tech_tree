@@ -212,6 +212,19 @@ requirePattern(/PRESENTATION_TOURS\.map\(/, 'command palette includes generated 
 for (const functionName of ['openCommandPalette', 'closeCommandPalette', 'executeCommandPaletteCommand', 'startTour', 'showTourStep']) {
   functionSource(applicationScript, functionName);
 }
+/* Unfinished Business is a transient List lens over canonical questions. */
+requireText('id="questionDeck"', 'question deck host');
+requireText('id="unfinishedBtn"', 'visible Unfinished Business action');
+requireText("id:'unfinished-business',label:'Unfinished Business'", 'Unfinished Business command');
+requirePattern(/QUESTION_RECORDS\s*=\s*Object\.freeze\(/, 'question deck records are derived at runtime', applicationScript);
+const questionDeckSearchable = functionSource(applicationScript, 'questionDeckSearchable');
+requirePattern(/\[nd\.t,record\.question,\.\.\.guide\.tags\]/, 'question search is limited to canonical title, question, and tags', questionDeckSearchable);
+const renderQuestionDeck = functionSource(applicationScript, 'renderQuestionDeck');
+requirePattern(/slice\(start,start\+12\)/, 'question deck mounts at most twelve cards per page', renderQuestionDeck);
+requirePattern(/QUESTION_SEGMENTS\[questionDeckState\.segment\]/, 'question deck retains the three canonical segments', renderQuestionDeck);
+requirePattern(/questionDeckState\.page=0/, 'question deck resets paging when its transient query changes', renderQuestionDeck);
+requirePattern(/dataset\.questionAction/, 'question cards expose evidence and timeline actions', renderQuestionDeck);
+requirePattern(/research=questions|activeResearchFilter='questions'/, 'research=questions remains the entry contract', applicationScript);
 requirePattern(/\((?:event\.ctrlKey\s*\|\|\s*event\.metaKey|event\.metaKey\s*\|\|\s*event\.ctrlKey)\)[\s\S]{0,180}(?:event\.key\.toLowerCase\(\)|event\.key)\s*===\s*['"]k['"]/, 'Ctrl/Cmd+K opens the command palette', applicationScript);
 requirePattern(/event\.key\s*===\s*['"]\/['"][\s\S]{0,180}(?:q|searchInput)\.focus\(\)/, '/ remains direct search', applicationScript);
 

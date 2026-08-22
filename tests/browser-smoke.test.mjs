@@ -1418,6 +1418,123 @@ describe('staged browser smoke', { concurrency: false }, () => {
     session.assertClean();
   });
 
+  test('Unfinished Business deck preserves canonical question inventory and actions', async testContext => {
+    const session = await makeSession(testContext);
+    const { page } = session;
+    await navigate(page, '#view=list&research=questions');
+    await waitForApp(page);
+    const initial = await page.evaluate(() => ({
+      cards: document.querySelectorAll('.questionCard').length,
+      count: document.querySelector('#questionDeckCount')?.textContent,
+      segments: [...document.querySelectorAll('[data-question-segment]')].map(button => button.textContent),
+      first: document.querySelector('.questionCard')?.dataset.questionNode,
+      tableHidden: document.querySelector('#listView .tableScroll')?.hidden,
+      hash: window.location.hash
+    }));
+    assert.equal(initial.cards, 12);
+    assert.match(initial.count || '', /Showing 74 matching questions · Page 1 of 7/);
+    assert.deepEqual(initial.segments, ['All 74', 'Open directions 15', 'Other recorded questions 59']);
+    assert.equal(initial.first, 'gap_activeinf');
+    assert.equal(initial.tableHidden, true);
+    assert.match(initial.hash, /research=questions/);
+    assert.equal(await page.locator('#listView').getAttribute('aria-labelledby'), 'questionDeckTitle');
+    const desktopRects = await page.evaluate(() => {
+      const rect = selector => { const value = document.querySelector(selector)?.getBoundingClientRect(); return value ? { left: value.left, right: value.right, top: value.top, bottom: value.bottom, width: value.width, height: value.height } : null; };
+      return { chip: rect('#filterChip'), title: rect('#questionDeckTitle'), listTitle: rect('#listTitle'), listCount: rect('#listCount') };
+    });
+    const overlaps = (left, right) => left && right && left.width > 0 && right.width > 0 && left.right > right.left && right.right > left.left && left.bottom > right.top && right.bottom > left.top;
+    assert.equal(overlaps(desktopRects.chip, desktopRects.title), false);
+    assert.equal(overlaps(desktopRects.chip, desktopRects.listTitle), false);
+    assert.equal(overlaps(desktopRects.chip, desktopRects.listCount), false);
+
+    await page.locator('[data-question-segment="all"]').focus();
+    await page.keyboard.press('ArrowRight');
+    await page.waitForFunction(() => document.querySelector('#questionDeckCount')?.textContent.includes('15 matching questions'));
+    assert.equal(await page.evaluate(() => document.activeElement?.dataset.questionSegment), 'open');
+    assert.equal(await page.locator('[data-question-segment="open"]').getAttribute('tabindex'), '0');
+    assert.equal(await page.locator('[data-question-segment="all"]').getAttribute('tabindex'), '-1');
+    await page.keyboard.press('End');
+    await page.waitForFunction(() => document.querySelector('#questionDeckCount')?.textContent.includes('59 matching questions'));
+    assert.equal(await page.evaluate(() => document.activeElement?.dataset.questionSegment), 'other');
+    await page.keyboard.press('Home');
+    await page.waitForFunction(() => document.querySelector('#questionDeckCount')?.textContent.includes('74 matching questions'));
+    assert.equal(await page.evaluate(() => document.activeElement?.dataset.questionSegment), 'all');
+
+    await page.locator('[data-question-segment="open"]').click();
+    await page.waitForFunction(() => document.querySelector('#questionDeckCount')?.textContent.includes('Page 1 of 2'));
+    assert.equal(await page.locator('.questionCard').count(), 12);
+    const pagerNext = page.locator('#questionDeckPager button').nth(1);
+    await pagerNext.focus();
+    await page.keyboard.press('Enter');
+    await page.waitForFunction(() => document.querySelector('#questionDeckCount')?.textContent.includes('Page 2 of 2'));
+    await page.waitForFunction(() => document.activeElement === document.querySelectorAll('#questionDeckPager button')[0]);
+    await page.keyboard.press('Enter');
+    await page.waitForFunction(() => document.querySelector('#questionDeckCount')?.textContent.includes('Page 1 of 2'));
+    await page.waitForFunction(() => document.activeElement === document.querySelectorAll('#questionDeckPager button')[1]);
+    await page.locator('[data-question-segment="other"]').click();
+    await page.waitForFunction(() => document.querySelector('#questionDeckCount')?.textContent.includes('Page 1 of 5'));
+    assert.equal(await page.locator('.questionCard').count(), 12);
+    await page.locator('[data-question-segment="all"]').click();
+    await page.locator('#questionDeckSearch').fill('zzzz-no-canonical-question-match');
+    await page.waitForFunction(() => document.querySelectorAll('.questionCard').length === 0);
+    await page.locator('#questionDeckSearch').fill('');
+
+    await page.locator('#controlsBtn').click();
+    await page.locator('#spotBtn').click();
+    await page.waitForFunction(() => document.querySelector('#questionDeckCount')?.textContent.includes('18 matching questions'));
+    assert.equal(await page.locator('#filterChip').textContent(), '15 of 339 shown · Reset');
+    await page.locator('#filterChip').click();
+    await page.waitForFunction(() => document.querySelector('#questionDeck')?.hidden);
+    await page.locator('#unfinishedBtn').click({ force: true });
+    await page.waitForFunction(() => document.querySelector('#questionDeckCount')?.textContent.includes('74 matching questions'));
+
+    const evidenceCard = page.locator('.questionCard').first();
+    const evidenceTitle = await evidenceCard.locator('.questionCardMeta span').first().textContent();
+    await evidenceCard.locator('[data-question-action="evidence"]').click();
+    await page.waitForFunction(() => document.querySelector('#panel')?.classList.contains('open'));
+    assert.equal(await page.locator('#pTitle').textContent(), (evidenceTitle || '').replace(/^Title: /, ''));
+    await page.keyboard.press('Escape');
+    await page.waitForFunction(() => !document.querySelector('#panel')?.classList.contains('open'));
+    assert.equal(await page.evaluate(() => document.activeElement?.getAttribute('data-question-action')), 'evidence');
+
+    await page.locator('.questionCard').first().locator('[data-question-action="timeline"]').click();
+    await page.waitForFunction(() => document.body.dataset.view === 'map');
+    await page.locator('#unfinishedBtn').click({ force: true });
+    await page.waitForFunction(() => document.body.dataset.view === 'list' && !document.querySelector('#questionDeck')?.hidden);
+
+    await page.keyboard.press('Control+K');
+    await page.waitForFunction(() => !document.querySelector('#commandPalette')?.hidden);
+    await page.locator('#commandPaletteInput').fill('Unfinished Business');
+    await page.locator('[data-command-id="unfinished-business"]').click();
+    await page.waitForFunction(() => document.body.dataset.view === 'list' && !document.querySelector('#questionDeck')?.hidden);
+    await page.locator('#questionDeckClose').click();
+    await page.waitForFunction(() => document.querySelector('#questionDeck')?.hidden);
+    assert.equal(await page.locator('#listView').getAttribute('aria-labelledby'), 'listTitle');
+    await page.locator('#unfinishedBtn').click({ force: true });
+    await page.waitForFunction(() => !document.querySelector('#questionDeck')?.hidden);
+
+    await page.setViewportSize({ width: 375, height: 812 });
+    await page.waitForTimeout(150);
+    const mobile = await page.evaluate(() => ({
+      cards: document.querySelectorAll('.questionCard').length,
+      width: document.querySelector('.questionCard')?.getBoundingClientRect().width || 0,
+      actionHeights: [...document.querySelectorAll('.questionCardActions .btn')].map(button => button.getBoundingClientRect().height),
+      chip: (() => { const value = document.querySelector('#filterChip')?.getBoundingClientRect(); return value ? { left: value.left, right: value.right, top: value.top, bottom: value.bottom, width: value.width, height: value.height } : null; })(),
+      title: (() => { const value = document.querySelector('#questionDeckTitle')?.getBoundingClientRect(); return value ? { left: value.left, right: value.right, top: value.top, bottom: value.bottom, width: value.width, height: value.height } : null; })(),
+      listTitle: (() => { const value = document.querySelector('#listTitle')?.getBoundingClientRect(); return value ? { left: value.left, right: value.right, top: value.top, bottom: value.bottom, width: value.width, height: value.height } : null; })(),
+      listCount: (() => { const value = document.querySelector('#listCount')?.getBoundingClientRect(); return value ? { left: value.left, right: value.right, top: value.top, bottom: value.bottom, width: value.width, height: value.height } : null; })(),
+      overflow: document.documentElement.scrollWidth - window.innerWidth
+    }));
+    assert.ok(mobile.cards <= 12);
+    assert.ok(mobile.width <= 375);
+    assert.ok(mobile.actionHeights.length > 0 && mobile.actionHeights.every(height => height >= 44));
+    assert.equal(overlaps(mobile.chip, mobile.title), false);
+    assert.equal(overlaps(mobile.chip, mobile.listTitle), false);
+    assert.equal(overlaps(mobile.chip, mobile.listCount), false);
+    assert.ok(mobile.overflow <= 1);
+    session.assertClean();
+  });
+
   test('measured active DOM peak matches the reviewed platform baseline', () => {
     const peak = measuredDomSamples.reduce((maximum, sample) => Math.max(maximum, sample.count), 0);
     assert.equal(

@@ -2,7 +2,7 @@
 
 Thank you for helping improve the AI Research Tech Tree. This project welcomes corrections, additional evidence, new developments, open research directions, relationship revisions, accessibility improvements, and reproducibility fixes.
 
-The public atlas remains at the tagged `v1.0.0` Stable release boundary. The open `v1.2.0` branch is only a Stable release candidate: it is not merged, tagged, or deployed, and its UI approval does not change the citable dataset identity in `CITATION.cff`. Contributions should make uncertainty easier to see, not merely make the graph larger. Pull-request previews and untagged builds are not citable releases; public promotion remains a guarded maintainer action from an approved annotated tag.
+The public atlas remains at the tagged `v1.0.0` Stable release boundary. PR #11's `v1.2.0 Stable UI release candidate` was squash-merged into `main` by neb6dav on 2026-08-22 as `f03b9c9851f786b5181e7d18adbb12a548838fbf`; main validation passed, but the release candidate remains untagged and undeployed pending separate release-promotion authorization. Its UI approval does not change the citable dataset identity in `CITATION.cff`. Contributions should make uncertainty easier to see, not merely make the graph larger. Pull-request previews and untagged builds are not citable releases; public promotion remains a guarded maintainer action from an approved annotated tag.
 
 ## Choose the smallest useful contribution
 
@@ -52,12 +52,14 @@ A search-result snippet, unsourced model output, or citation title alone is not 
    ```text
    npm ci
    npm run build
-   npm test
+   npm run test:fast
    ```
+
+   `npm run test:fast` is the ordinary pull-request validation tier. Maintainers should install Chromium and run `npm test` for the manually dispatched release-candidate tier, which adds the browser and Lighthouse gates.
 
 5. Inspect the generated diff and the application in both light and dark themes and, when relevant, in Timeline, Network, Opportunity, and List views.
 6. Commit maintained-source changes and the generated artifact changes produced by the build.
-7. From the committed tree, rerun `npm run build`, `npm test`, and `git diff --exit-code` to prove that generation is reproducible and complete.
+7. From the committed tree, rerun `npm run build`, `npm run test:fast`, and `git diff --exit-code` to prove that generation is reproducible and complete. The maintainer release-candidate check additionally reruns `npm test` after Chromium is installed.
 8. Complete every applicable section of the pull-request template.
 
 Maintained historical data lives under `src/data/atlas/`: `manifest.json` fixes

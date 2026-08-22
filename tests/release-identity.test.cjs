@@ -61,6 +61,96 @@ function occurrenceCount(text, fragment) {
   return text.split(fragment).length - 1;
 }
 
+function topLevelBlock(text, key) {
+  const lines = text.split(/\r?\n/u);
+  const start = lines.findIndex((line) => line === `${key}:`);
+  assert(start >= 0, `workflow is missing top-level ${key}`);
+  const end = lines.findIndex((line, index) => index > start && /^\S/u.test(line));
+  return lines.slice(start, end < 0 ? lines.length : end).join('\n');
+}
+
+function childKeys(block, indent = 2) {
+  const prefix = ' '.repeat(indent);
+  const childPattern = new RegExp(`^${prefix}([A-Za-z0-9_-]+):`);
+  return block.split(/\r?\n/u).flatMap((line) => {
+    const match = line.match(childPattern);
+    return match ? [match[1]] : [];
+  });
+}
+
+function childBlock(parentBlock, key, indent = 2) {
+  const lines = parentBlock.split(/\r?\n/u);
+  const childPattern = new RegExp(`^${' '.repeat(indent)}${key}:$`);
+  const start = lines.findIndex((line) => childPattern.test(line));
+  assert(start >= 0, `workflow is missing ${key} block`);
+  const endPattern = new RegExp(`^${' '.repeat(indent)}\\S`);
+  const end = lines.findIndex((line, index) => index > start && endPattern.test(line));
+  return lines.slice(start, end < 0 ? lines.length : end).join('\n');
+}
+
+function assertCleanSourceCheck(block, label) {
+  assert(block.includes('git diff --exit-code'), `${label} must check tracked-source cleanliness`);
+  assert(block.includes('git status --porcelain --untracked-files=all'), `${label} must check untracked-source cleanliness`);
+}
+
+function assertValidateWorkflow(workflow) {
+  assert.equal(workflow.match(/^name: .*$/mu)?.[0], 'name: Validate pull requests and release candidates', 'validate workflow name');
+  const triggers = topLevelBlock(workflow, 'on');
+  assert.match(triggers, /^  pull_request:\s*$/mu, 'validate pull_request trigger');
+  assert.match(triggers, /^  workflow_dispatch:\s*$/mu, 'validate workflow_dispatch trigger');
+  assert.doesNotMatch(triggers, /^  push:/mu, 'validate workflow must not have a push trigger');
+  assert.doesNotMatch(workflow, /^  push:/mu, 'validate workflow must not declare an automatic main trigger');
+
+  const jobs = topLevelBlock(workflow, 'jobs');
+  assert.deepEqual(childKeys(jobs), ['pr-integrity', 'release-candidate'], 'validate top-level jobs');
+  const pr = childBlock(jobs, 'pr-integrity');
+  assert.match(pr, /^    name: Fast data, generation, and HTML integrity$/mu, 'PR job display name');
+  assert.match(pr, /if:\s*\$\{\{\s*github\.event_name\s*==\s*'pull_request'\s*\}\}/u, 'PR event condition');
+  assert(pr.includes('npm run build'), 'PR job build');
+  assert(pr.includes('npm run test:fast'), 'PR job fast tier');
+  assertCleanSourceCheck(pr, 'PR job');
+  assert.doesNotMatch(pr, /npx playwright install[^\n]*chromium/iu, 'PR job must not install Chromium');
+  assert.doesNotMatch(pr, /npm test(?:\s|$)/u, 'PR job must not run full npm test');
+  assert.doesNotMatch(pr, /test:browser|test:lighthouse|upload-artifact|preview/iu, 'PR job must not run browser/Lighthouse or upload preview');
+
+  const manual = childBlock(jobs, 'release-candidate');
+  assert.match(manual, /^    name: Full browser and Lighthouse validation$/mu, 'manual job display name');
+  assert.match(manual, /if:\s*\$\{\{\s*github\.event_name\s*==\s*'workflow_dispatch'\s*\}\}/u, 'manual event condition');
+  assert.match(manual, /npx playwright install[^\n]*chromium/iu, 'manual Chromium install');
+  assert(manual.includes('npm run build'), 'manual job build');
+  assert.match(manual, /run:\s*npm test\s*$/mu, 'manual full test suite');
+  assertCleanSourceCheck(manual, 'manual job');
+  assert.match(manual, /uses:\s*actions\/upload-artifact@v4/u, 'manual preview upload');
+  assert.match(manual, /name:\s*release-candidate-preview-/u, 'manual preview artifact name');
+}
+
+function assertPagesWorkflow(workflow) {
+  const triggers = topLevelBlock(workflow, 'on');
+  assert.match(triggers, /^  workflow_dispatch:\s*$/mu, 'Pages workflow_dispatch trigger');
+  assert.doesNotMatch(triggers, /^  (?:push|pull_request):/mu, 'Pages workflow must remain manual-only');
+  const jobs = topLevelBlock(workflow, 'jobs');
+  assert.deepEqual(childKeys(jobs), ['deploy'], 'Pages must have exactly one top-level job');
+  const deploy = childBlock(jobs, 'deploy');
+  for (const permission of ['contents: read', 'actions: read', 'pages: write', 'id-token: write']) {
+    assert(deploy.includes(`      ${permission}`), `Pages deploy job permission ${permission}`);
+  }
+  assert.doesNotMatch(deploy, /^\s+needs:/mu, 'Pages deploy must not use needs');
+  assert.doesNotMatch(deploy, /npx playwright install[^\n]*chromium|npm test(?:\s|$)|test:browser|test:lighthouse/iu, 'Pages must not run browser/full-suite gates');
+  assert.equal(occurrenceCount(deploy, 'npm run build'), 1, 'Pages build exactly once');
+  assert.equal(occurrenceCount(deploy, 'npm run stage:site'), 1, 'Pages stage exactly once');
+  assert.equal(occurrenceCount(deploy, 'npm run test:release-identity'), 1, 'Pages release identity exactly once');
+  const build = deploy.indexOf('npm run build');
+  const clean = deploy.indexOf('git diff --exit-code', build);
+  const stage = deploy.indexOf('npm run stage:site', clean);
+  const identity = deploy.indexOf('npm run test:release-identity', stage);
+  assert(build >= 0 && clean > build && stage > clean && identity > stage, 'Pages build/clean/stage/identity order');
+  assert.match(deploy, /uses:\s*actions\/configure-pages@v5/u, 'Pages configure step');
+  assert.match(deploy, /uses:\s*actions\/upload-pages-artifact@v5/u, 'Pages upload step');
+  assert.match(deploy, /include-hidden-files:\s*true/u, 'Pages preserves hidden files');
+  assert.match(deploy, /uses:\s*actions\/deploy-pages@v5/u, 'Pages deploy step');
+  assert.match(deploy, /environment:\s*\n\s+name:\s+github-pages\s*\n\s+url:/u, 'Pages environment and URL');
+}
+
 function loadSnapshot() {
   const ndjson = readNdjson('ai-research-tech-tree.ndjson');
   return {
@@ -81,6 +171,7 @@ function loadSnapshot() {
     catalog: readJson('src/data/atlas/catalog.json'),
     stageConfig: readJson('config/pages-stage.v1.json'),
     manifest: readJson('_site/release-manifest.json'),
+    validateWorkflow: read('.github/workflows/validate.yml'),
     pagesWorkflow: read('.github/workflows/pages.yml')
   };
 }
@@ -127,6 +218,8 @@ function assertHtmlIdentity(html, label) {
 }
 
 function assertIdentity(snapshot) {
+  assertValidateWorkflow(snapshot.validateWorkflow);
+
   assert.equal(snapshot.package.version, EXPECTED.version, 'package version');
   assert.equal(snapshot.packageLock.version, EXPECTED.version, 'package-lock top-level version');
   assert.equal(snapshot.packageLock.packages[''].version, EXPECTED.version, 'package-lock root-package version');
@@ -207,6 +300,7 @@ function assertIdentity(snapshot) {
   assert(snapshot.pagesWorkflow.includes('ref: refs/tags/v1.2.0'), 'Pages workflow exact v1.2.0 checkout');
   assert(!/^\s+inputs:/mu.test(snapshot.pagesWorkflow), 'Pages workflow must not accept arbitrary tag inputs');
   assert(!/^\s+(?:push|pull_request):/mu.test(snapshot.pagesWorkflow), 'Pages workflow must remain manual-only');
+  assertPagesWorkflow(snapshot.pagesWorkflow);
 
   for (const fragment of [
     'workflow_dispatch:',
@@ -218,7 +312,6 @@ function assertIdentity(snapshot) {
     'test "$tag_commit" = "$(git rev-parse HEAD)"',
     'test "$GITHUB_SHA" = "$main_commit"',
     'test "$tag_commit" = "$GITHUB_SHA"',
-    'npx playwright install --with-deps chromium',
     'AI_TREE_EXPECT_RELEASE_TAG=$AI_TREE_AUTHORIZED_TAG'
   ]) assert(snapshot.pagesWorkflow.includes(fragment), `Pages release guard missing ${fragment}`);
 }
@@ -250,7 +343,12 @@ test('identity contract fails closed on representative release-drift mutations',
     ['automatic release trigger', (copy) => { copy.pagesWorkflow += '\n  push:\n'; }],
     ['lightweight-tag release workflow', (copy) => { copy.pagesWorkflow = copy.pagesWorkflow.replace('git cat-file -t', 'git rev-parse'); }],
     ['unbounded recovery workflow', (copy) => { copy.pagesWorkflow = copy.pagesWorkflow.replace('test "$tag_commit" = "$GITHUB_SHA"', 'git merge-base --is-ancestor "$tag_commit" "$GITHUB_SHA"'); }],
-    ['missing browser runtime install', (copy) => { copy.pagesWorkflow = copy.pagesWorkflow.replace('npx playwright install --with-deps chromium', 'echo skip-browser-runtime'); }]
+    ['automatic main trigger', (copy) => { copy.validateWorkflow += '\n  push:\n    branches: [main]\n'; }],
+    ['slow PR regression', (copy) => { copy.validateWorkflow = copy.validateWorkflow.replace('npm run test:fast', 'npm test'); }],
+    ['missing manual browser gate', (copy) => { copy.validateWorkflow = copy.validateWorkflow.replace('npx playwright install --with-deps chromium', 'echo skip-browser-runtime'); }],
+    ['Pages full-test regression', (copy) => { copy.pagesWorkflow = copy.pagesWorkflow.replace('npm run test:release-identity', 'npm test'); }],
+    ['split Pages job regression', (copy) => { copy.pagesWorkflow += '\n  preview:\n    runs-on: ubuntu-24.04\n'; }],
+    ['Pages hidden-file regression', (copy) => { copy.pagesWorkflow = copy.pagesWorkflow.replace('include-hidden-files: true', 'include-hidden-files: false'); }]
   ];
   const original = loadSnapshot();
   for (const [label, mutate] of mutations) {

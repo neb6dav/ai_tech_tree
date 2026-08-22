@@ -469,6 +469,10 @@ function assertHtmlIntegration(html, jsonldBytes, data, layoutBytes, bundleBytes
   assert(!csp['script-src'].includes("'unsafe-eval'"));
   assert.deepEqual(csp['object-src'], ["'none'"]);
   assert.deepEqual(csp['base-uri'], ["'none'"]);
+  // Edition Diff lazily fetches one immutable fingerprint artifact. The
+  // policy permits only same-origin connections; the runtime also rejects
+  // cross-origin URLs before fetching.
+  assert.deepEqual(csp['connect-src'], ["'self'"]);
 
   const executable = scripts.filter(script => !/\btype=["']application\/(?:ld\+json|json)["']/i.test(script.attributes));
   assert.equal(executable.length, 7);

@@ -4,6 +4,13 @@ All notable public changes to the AI Research Tech Tree will be documented here.
 
 ## [Unreleased]
 
+**v1.2.0 Preview checkpoint (not released, tagged, or deployed).** This researcher-delivery checkpoint generates 339 static node pages, sitemap discovery, a semantic edition diff, and a read-only embed while preserving the canonical dataset identity.
+
+### Added
+
+- One static, source-backed page for each of the 339 canonical nodes, with crawlable metadata and citation conveniences.
+- Sitemap entries for the node pages and a read-only same-origin edition comparison and embed surface.
+
 **v1.1.0 Preview checkpoint (not released, tagged, or deployed).** This interface checkpoint adds semantic zoom altitudes, the evidence inspector, a readable linear scale, guided tours and palette controls, relationship pooling, and DOM disposal; it makes no semantic dataset changes.
 
 ### Added

@@ -40,11 +40,13 @@ const PUBLIC_TARGETS = Object.freeze([
   'social-card.png',
   'robots.txt',
   'sitemap.xml',
+  'nodes',
   'CITATION.cff',
   'data/opportunities/diffusion-models.alpha.json',
   'data/opportunities/opportunity-map.schema.json',
   'src/data/opportunities/diffusion-models.alpha.json',
-  'src/data/opportunities/opportunity-map.schema.json'
+  'src/data/opportunities/opportunity-map.schema.json',
+  'data/editions/v1.0.0-fingerprints.json'
 ]);
 const HISTORICAL_ID_COLLECTIONS = Object.freeze([
   'lanes',

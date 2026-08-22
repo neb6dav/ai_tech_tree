@@ -164,6 +164,8 @@ requirePattern(/next\s*===\s*['"]overview['"]/, 'overview altitude branch', sema
 requirePattern(/next\s*===\s*['"]mid['"]/, 'mid altitude branch', semanticZoom);
 requirePattern(/next\s*===\s*['"]detail['"]|k\s*>=\s*DETAIL_K/, 'detail altitude branch', semanticZoom);
 assert((semanticZoom.match(/rebuildSemanticClusters\(\)/g) || []).length >= 1, 'Mid altitude must render semantic lane-by-era cluster cards.');
+const anchorLabelVisibility = functionSource(applicationScript, 'updateAnchorLabels');
+requirePattern(/lodMode\s*===\s*['"]overview['"]/, 'standalone curated labels are reserved for the overview altitude', anchorLabelVisibility);
 
 /* Density is compatible-by-default; linear is explicitly proportional. */
 requirePattern(/id=["']scaleSeg["'][\s\S]*?data-scale=["']density["'][\s\S]*?data-scale=["']linear["']/i, 'density/linear time-scale control');
@@ -268,7 +270,7 @@ requirePattern(/['"]map['"][\s\S]{0,180}['"]opportunity['"][\s\S]{0,180}['"]netw
 
 console.log(JSON.stringify({
   status: 'PASS',
-  release: 'v1.1.0',
+  release: 'v1.2.0',
   tours: presentation.tours.length,
   tourSteps: tourStepCount,
   semanticAltitudes: ['overview', 'mid', 'detail'],

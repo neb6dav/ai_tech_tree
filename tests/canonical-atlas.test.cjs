@@ -207,7 +207,7 @@ test('canonical cutover fails closed instead of accepting missing or digest-drif
 test('canonical cutover rejects release-shell and normalized sidecar drift', () => {
   const html = read('ai-research-tech-tree.html');
   const staleVersion = html.replace(
-    '<meta name="ai-tree-version" content="1.1.0">',
+    '<meta name="ai-tree-version" content="1.2.0">',
     '<meta name="ai-tree-version" content="stale">'
   );
   assert.notEqual(staleVersion, html);

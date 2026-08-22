@@ -35,7 +35,7 @@
     "activeDomElements": {
       "maximum": 8000,
       "reviewedPeaksByPlatform": {
-        "win32": 7724,
+        "win32": 7244,
         "linux": 7728
       }
     },

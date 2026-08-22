@@ -84,7 +84,7 @@ for (const [fragment, label] of [
   ['function rebuildSemanticClusters(){', 'deterministic semantic cluster rebuild'],
   ["const visible=NODES.filter(isNodeVisible),signature=timeScale+'|'+visible.map(nd=>nd.id).join('|');", 'semantic cluster rebuild signature'],
   ["document.getElementById('filterStatus').textContent", 'screen-reader filter result feedback'],
-  ["version:'1.1.0',edition:'2026-08-21-stable-1',releaseState:'Preview'", 'v1.1.0 Preview identity over the unchanged Stable dataset'],
+  ["version:'1.2.0',edition:'2026-08-21-stable-1',releaseState:'Preview'", 'v1.2.0 Preview identity over the unchanged Stable dataset'],
   ['id="editionBadge" href="./release-manifest.json"', 'visible exact-build badge'],
   ['id="contributeLink" href="https://github.com/neb6dav/ai_tech_tree/issues/new/choose"', 'persistent contribution link'],
   ['#repositoryLink{color:var(--ink);text-decoration:none;display:flex;align-items:center;justify-content:center;min-width:32px;min-height:32px', 'repository minimum pointer target'],
@@ -199,7 +199,7 @@ for (const helper of ['appendStatusProfile', 'renderResearchGuide', 'renderNodeA
 }
 
 const firstRunSource = sourceForFunction(applicationScript, 'shouldShowFirstRun');
-assert(/return\s+!restored\s*&&\s*shouldShowWelcome\(\)/.test(firstRunSource), 'Restored deep links must bypass first-run onboarding');
+assert(/return\s+!embedMode\s*&&\s*!restored\s*&&\s*shouldShowWelcome\(\)/.test(firstRunSource), 'Embed mode and restored deep links must bypass first-run onboarding');
 assert((applicationScript.match(/shouldShowFirstRun\(/g) || []).length >= 2, 'Startup must consult shouldShowFirstRun() after restoring state');
 const activeOverlaySource = sourceForFunction(applicationScript, 'activeOverlayModal');
 assert(/legend[^;\n]*classList\.contains\(['"]welcome['"]\)/.test(activeOverlaySource), 'First-run side sheet must retain modal focus containment');

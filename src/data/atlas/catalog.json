@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
   "project": {
-    "version": "1.1.0",
+    "version": "1.2.0",
     "edition": "2026-08-21-stable-1",
     "releaseState": "Preview",
     "asOf": "2026-08-04",

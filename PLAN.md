@@ -1,18 +1,21 @@
 ---
 roadmap_version: 7
-active_release: "v1.0.1"
+active_release: "v1.2.0"
 release_mode: "source_checkpoints_v1.0.1_through_v1.2.0"
-active_work_package: "first_minute_readability_repair"
+active_work_package: "researcher_delivery"
 base_sha: "85108c78fa86c86634d4c0944839696369e687cd"
 product_boundary_sha: "53e3a4f9c0624096aede63e0345390a3c021bac0"
-working_branch: "main"
+working_branch: "codex/ui-v1.2.0"
 expanded_archive_branch: "archive/v0.1.1-expanded-release-safety-0870d47"
 last_completed_checkpoint: "v1.0.0"
-last_completed_local_checkpoint: "v1.0.0"
+last_completed_local_checkpoint: "v1.2.0"
+active_release_status: "v1.2.0_source_candidate_locally_windows_verified_ubuntu_pr_verification_pending_not_released_tagged_or_deployed"
 next_exact_action: >-
-  Preserve public v1.0.0 while implementing the approved v1.0.1 readability
-  checkpoint. Validate each UI release candidate independently; do not merge,
-  tag, or deploy without separate promotion authorization.
+  Commit and push the single codex/ui-v1.2.0 candidate branch, open its PR, and
+  use measured Ubuntu CI evidence (including the exact Linux DOM peak if it
+  differs) for the remaining verification. Do not merge, tag, or deploy
+  without separate promotion authorization.
+presentation_inventory_owner_review: "pending_for_24_anchors_and_72_spine_relationships"
 potential_future_editions:
   - version: "v1.3.0"
     status: "roadmap_candidate_not_authorized"
@@ -21,6 +24,10 @@ potential_future_editions:
     status: "roadmap_candidate_not_authorized"
     purpose: "Curator-reviewed hypothesis workbench with structured tests, provenance, deduplication, and explicit promotion into canonical Opportunity data"
 last_verified_commands:
+  - command: "npm test"
+    status: "PASS"
+    runtime: "Windows x64; Node v24.14.1"
+    scope: "Final v1.2.0 source-candidate closure: 18/18 browser tests, DOM peak 7244, HTML 4,589,274 bytes, gzip 672,520 bytes, semantic digest 865174514ba64e20d6f2a90471a6766b6d5fa18f5b0e62c85d9601de077a50f2, researcher delivery 339 nodes/711 relationships/339 sitemap node URLs/0 semantic changes/embed read-only, Lighthouse medians score 52/FCP 23182.861/LCP 23333.861/TBT 196.5/CLS 0"
   - command: "GitHub Actions Pages run 32548737168 and live payload reconciliation"
     status: "PASS"
     runtime: "ubuntu-24.04; protected-main workflow source 1f5d730193985665b7bcd2139cac4aca902513f0; tagged source 7d0d26fe87c8be2868c63738c503f90d35789b3a"
@@ -69,6 +76,20 @@ source_checkpoints:
     date: "2026-08-21"
     tag_and_deployment: "completed_2026-08-21"
     purpose: "Stable public contract and authorized release"
+  - version: "v1.1.0"
+    status: "complete"
+    verification_state: "source_checkpoint_verified"
+    product_version: "1.1.0"
+    release_state: "Preview"
+    checkpoint_commit: "710138d"
+    purpose: "Semantic navigation redesign source checkpoint"
+  - version: "v1.2.0"
+    status: "source_candidate"
+    verification_state: "preview_windows_verified_ubuntu_pending_not_globally_complete"
+    product_version: "1.2.0"
+    release_state: "Preview"
+    tag_and_deployment: "not_authorized"
+    purpose: "Researcher delivery with static node pages and read-only comparison/embed"
 authorization:
   source_checkpoint_implementation: "authorized"
   source_checkpoint_commits: "authorized"

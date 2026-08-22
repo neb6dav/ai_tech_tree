@@ -9,7 +9,7 @@ const ROOT = path.resolve(__dirname, '..');
 const EXPECTED_RELEASE_TAG = process.env.AI_TREE_EXPECT_RELEASE_TAG || null;
 assert.equal(EXPECTED_RELEASE_TAG, null, 'Preview candidates must not be staged with an expected release tag');
 const EXPECTED = Object.freeze({
-  version: '1.1.0',
+  version: '1.2.0',
   citationVersion: '1.0.0',
   edition: '2026-08-21-stable-1',
   releaseState: 'Preview',
@@ -82,14 +82,14 @@ function loadSnapshot() {
 }
 
 function assertHtmlIdentity(html, label) {
-  assert(html.includes('<title>AI Research Tech Tree - v1.1.0 Preview</title>'), `${label} title`);
+  assert(html.includes('<title>AI Research Tech Tree - v1.2.0 Preview</title>'), `${label} title`);
   for (const fragment of [
-    '<meta name="description" content="The v1.1.0 preview',
-    '<meta property="og:title" content="AI Research Tech Tree - v1.1.0 Preview">',
-    '<meta property="og:description" content="Explore the v1.1.0 preview',
-    '<meta name="twitter:title" content="AI Research Tech Tree - v1.1.0 Preview">',
-    '<meta name="twitter:description" content="The v1.1.0 preview',
-    '<meta name="ai-tree-version" content="1.1.0">',
+    '<meta name="description" content="The v1.2.0 preview',
+    '<meta property="og:title" content="AI Research Tech Tree - v1.2.0 Preview">',
+    '<meta property="og:description" content="Explore the v1.2.0 preview',
+    '<meta name="twitter:title" content="AI Research Tech Tree - v1.2.0 Preview">',
+    '<meta name="twitter:description" content="The v1.2.0 preview',
+    '<meta name="ai-tree-version" content="1.2.0">',
     '<meta name="ai-tree-edition" content="2026-08-21-stable-1">',
     '<meta name="ai-tree-release-state" content="Preview">'
   ]) assert(html.includes(fragment), `${label} missing ${fragment}`);
@@ -99,7 +99,7 @@ function assertHtmlIdentity(html, label) {
 
   assert.equal(occurrenceCount(html, 'id="editionBadge"'), 1, `${label} edition badge count`);
   assert(html.includes('id="editionBadge" href="./release-manifest.json"'), `${label} manifest badge target`);
-  assert(html.includes('Preview &middot; v1.1.0'), `${label} visible Preview label`);
+  assert(html.includes('Preview &middot; v1.2.0'), `${label} visible Preview label`);
   assert(html.includes('<span class="editionShort" aria-hidden="true">Dev</span>'), `${label} compact Preview label`);
   assert(html.includes(`id="repositoryLink" href="${EXPECTED.repositoryUrl}" target="_blank" rel="noopener noreferrer"`), `${label} repository link`);
   assert(html.includes(`id="contributeLink" href="${EXPECTED.correctionsUrl}" target="_blank" rel="noopener noreferrer"`), `${label} contribution link`);
@@ -160,8 +160,8 @@ function assertIdentity(snapshot) {
   assert(snapshot.sitemap.includes(`<lastmod>${EXPECTED.date}</lastmod>`), 'sitemap lastmod');
   assert.equal(EXPECTED.edition.slice(0, 10), EXPECTED.date, 'edition date and sitemap date contract');
 
-  assert.match(snapshot.networkSource, /export const VERSION = '1\.1\.0'/u, 'Network source version');
-  assert.match(snapshot.opportunitySource, /export const VERSION = '1\.1\.0'/u, 'Opportunity renderer source version');
+  assert.match(snapshot.networkSource, /export const VERSION = '1\.2\.0'/u, 'Network source version');
+  assert.match(snapshot.opportunitySource, /export const VERSION = '1\.2\.0'/u, 'Opportunity renderer source version');
   assert.equal(snapshot.opportunityData.metadata.asOf, EXPECTED.opportunityAsOf, 'Opportunity review date remains distinct');
   assert.equal(snapshot.opportunityData.metadata.status, EXPECTED.opportunityStatus, 'Opportunity data status remains alpha');
   assert.equal(snapshot.opportunityData.metadata.importStatus.state, EXPECTED.opportunityImportStatus, 'Opportunity import remains unreviewed');
@@ -178,7 +178,7 @@ function assertIdentity(snapshot) {
   assert.equal(snapshot.manifest.schemaVersion, '1.2.0', 'staged manifest identity schema');
   assert.match(snapshot.manifest.commit, /^[0-9a-f]{40}$/u, 'staged manifest full commit');
   assert.equal(snapshot.manifest.tag, EXPECTED_RELEASE_TAG, 'staged manifest must match the explicitly expected release tag');
-  assert.equal(snapshot.manifest.fileCount, 14, 'stable manifest payload count');
+  assert.equal(snapshot.manifest.fileCount, 354, 'staged manifest payload count (339 node pages plus prior artifacts)');
   const citationFile = snapshot.manifest.files.find((file) => file.path === 'CITATION.cff');
   assert(citationFile, 'staged CITATION payload');
   assert.equal(citationFile.mediaType, 'text/yaml; charset=utf-8', 'staged CITATION payload media type');
@@ -208,7 +208,7 @@ function assertIdentity(snapshot) {
   ]) assert(snapshot.pagesWorkflow.includes(fragment), `Pages release guard missing ${fragment}`);
 }
 
-test('v1.1.0 Preview identity is synchronized without promoting data or minting a release tag', () => {
+test('v1.2.0 Preview identity is synchronized without promoting data or minting a release tag', () => {
   assertIdentity(loadSnapshot());
 });
 
@@ -217,14 +217,14 @@ test('identity contract fails closed on representative release-drift mutations',
     ['stale lockfile', (copy) => { copy.packageLock.version = '0.1.0'; }],
     ['stale export', (copy) => { copy.normalized.dataset.edition = '2026-08-20-public-beta-2'; }],
     ['stale citation date', (copy) => { copy.citation = copy.citation.replace('date-released: "2026-08-21"', 'date-released: "2026-08-20"'); }],
-    ['missing social identity', (copy) => { copy.indexHtml = copy.indexHtml.replace('AI Research Tech Tree - v1.1.0 Preview', 'AI Research Tech Tree'); }],
+    ['missing social identity', (copy) => { copy.indexHtml = copy.indexHtml.replace('AI Research Tech Tree - v1.2.0 Preview', 'AI Research Tech Tree'); }],
     ['misdirected badge', (copy) => { copy.canonicalHtml = copy.canonicalHtml.replace('id="editionBadge" href="./release-manifest.json"', 'id="editionBadge" href="./"'); }],
-    ['unexpected tag', (copy) => { copy.manifest.tag = 'v1.1.0'; }],
+    ['unexpected tag', (copy) => { copy.manifest.tag = 'v1.2.0'; }],
     ['stale manifest release state', (copy) => { copy.manifest.releaseState = 'Development edition'; }],
     ['renamed public distribution', (copy) => { copy.normalized.dataset.distributions[0].filename = 'graph.jsonld'; }],
     ['redirected contribution guide', (copy) => { copy.catalog.project.contributionGuideUrl = 'https://example.test/contribute'; }],
     ['promoted Opportunity data', (copy) => { copy.opportunityData.metadata.importStatus.state = 'validated'; }],
-    ['stale Network source version', (copy) => { copy.networkSource = copy.networkSource.replace("VERSION = '1.1.0'", "VERSION = '0.1.1'"); }],
+    ['stale Network source version', (copy) => { copy.networkSource = copy.networkSource.replace("VERSION = '1.2.0'", "VERSION = '0.1.1'"); }],
     ['missing citation payload', (copy) => { copy.manifest.files = copy.manifest.files.filter((file) => file.path !== 'CITATION.cff'); }],
     ['lightweight-tag release workflow', (copy) => { copy.pagesWorkflow = copy.pagesWorkflow.replace('git cat-file -t', 'git rev-parse'); }],
     ['unbounded recovery workflow', (copy) => { copy.pagesWorkflow = copy.pagesWorkflow.replace('M\\tdocs/ROADMAP_DECISIONS.md', 'M\\tREADME.md'); }],

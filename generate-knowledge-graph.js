@@ -555,7 +555,16 @@ function extractModel(html) {
     warn(...args) { warnings.push(args.map(value => typeof value === 'string' ? value : JSON.stringify(value)).join(' ')); },
     error(...args) { warnings.push(args.map(value => typeof value === 'string' ? value : JSON.stringify(value)).join(' ')); }
   };
-  const context = vm.createContext({ URL, console: safeConsole });
+  // The extracted engine prefix contains the browser entry-point's embed-mode
+  // probe. Keep extraction deterministic without adding a DOM implementation:
+  // the empty location represents the canonical no-query/no-hash build state,
+  // while Node supplies the standards-compliant URLSearchParams constructor.
+  const context = vm.createContext({
+    URL,
+    URLSearchParams,
+    location: { href: 'http://localhost/', search: '', hash: '' },
+    console: safeConsole
+  });
   vm.runInContext(atlasData, context, { filename: 'atlas-data.js' });
   vm.runInContext(wikipediaAudit, context, { filename: 'wikipedia-audit.js' });
   vm.runInContext(researchGuide, context, { filename: 'research-guide.js' });
@@ -1248,7 +1257,10 @@ function applyKnowledgeGraph(html, datasetGraph) {
     `style-src-elem ${styles.map(cspHash).join(' ')}`,
     "style-src-attr 'unsafe-inline'",
     'img-src data:',
-    "connect-src 'none'",
+    // The interactive Diff view lazy-loads one immutable, same-origin
+    // fingerprint artifact. Keep the connection surface limited to this
+    // origin; runtime code independently rejects cross-origin URLs.
+    "connect-src 'self'",
     "font-src 'none'",
     "media-src 'none'",
     "worker-src 'none'",

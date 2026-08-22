@@ -116,6 +116,90 @@ dated `2026-08-19` with import state `imported_unreviewed`. Promoting that state
 requires source-by-source human review rather than a version or documentation
 change.
 
+## RD-010 — Treat combinatorial exploration as hypothesis assistance
+
+Potential post-v1 editions may help readers combine and compare ideas already
+represented in the atlas. They must extend the existing orthogonal relationship
+and evidence model rather than create an unsourced parallel authority. In
+particular, `proposed_combination`, `hypothesis`, open-direction, constraint,
+and Opportunity-card semantics remain visibly distinct from documented
+historical relationships and demonstrated capabilities.
+
+A potential `v1.3.0` edition may add a read-only combinatorial lens. It may
+surface bounded pairs or triples, shared prerequisites, complementary
+capabilities, tensions, blockers, recorded proposals, and dataset-derived
+candidates. Every result must retain its exact input record IDs and evidence
+status. A generated candidate is at most a dataset-local hypothesis: absence
+from the current atlas or source audit is not evidence of real-world novelty.
+Derived candidates remain ephemeral or export-only and cannot alter canonical
+records, counts, IDs, or review state.
+
+A potential `v1.4.0` edition may add a curator-reviewed hypothesis workbench.
+Any candidate considered for canonical Opportunity data must state its proposed
+mechanism, source and adjacent-work scope, minimal experiment, baselines,
+disconfirming result, blockers, resources, and failure reasons. Human source
+review and duplicate/adjacent-work review are mandatory before promotion.
+The record must retain its input stable IDs, source edition, derivation origin
+(`human`, `rule`, or `model`), and material AI-assistance disclosure. Sources
+for the constituent ideas are not evidence for the synthesized combination
+unless they explicitly address it. Canonical inclusion records a reviewed
+proposal; it does not validate the combination or establish global novelty.
+Creating a canonical ID requires RD-009 compatibility review and a deliberate
+inventory-baseline update; reviewing one candidate must not upgrade the
+surrounding `imported_unreviewed` data.
+
+These editions are roadmap candidates without dates or implementation,
+schema-change, tag, or deployment authorization. They require a separate
+bounded decision before work begins and must preserve the frozen v1 identities,
+URLs, evidence vocabulary, accessibility, publication contracts, and the
+separate canonical authority of the historical atlas and Opportunity data.
+
+## RD-011 — Repair orientation before adding new semantic product surface
+
+The approved post-v1 UI program occupies `v1.0.1` through `v1.2.0` and is
+implemented as sequential source checkpoints. `v1.0.1` repairs first-minute
+readability, `v1.1.0` adds semantic navigation and curated tours, and `v1.2.0`
+adds generated researcher pages, edition comparison, and read-only embedding.
+The combinatorial candidates therefore move to `v1.3.0` and `v1.4.0`.
+
+The visible overview uses a manually reviewed presentation inventory rather
+than an algorithmic importance score. Anchor and spine membership are display
+metadata only: they cannot alter canonical node identity, relationship type,
+direction, rationale, evidence grade, or review state. Full relationship mode
+remains a detail-scale choice because the UI has a separately enforced
+8,000-element ceiling and the graph contains many contextual editorial
+associations.
+
+The implementation must preserve the v1 URL vocabulary, single-file default
+experience, no-JavaScript publication index, committed generated artifacts,
+zero external runtime dependencies, and the 339-node/711-relationship semantic
+inventory. New URL state is additive. Promotion of any checkpoint remains a
+separate merge, tag, and deployment decision after Windows and hosted-Ubuntu
+verification.
+
+## RD-012 — Approve the v1.2.0 Stable presentation candidate
+
+On 2026-08-22 the repository owner approved the existing presentation
+inventory for the v1.2.0 Stable release candidate: exactly 24 ordered anchors
+with their existing label priorities, all 72 existing orientation-spine
+relationship IDs, and all six existing tour narratives. This is a
+display-membership approval only. It does not change the canonical 339-node,
+711-relationship dataset, stable IDs, relationship types, direction,
+rationales, evidence grades, or review states.
+
+The two retained legacy supersession links, `word2vec>bert:sup` and
+`gan>diffusion:sup`, remain explicitly caveated `legacy_supersession_claim`
+records with `legacyKind: sup`, `evidenceGrade: contextual`, and
+`reviewed: false`; their rationale continues to state that they are not
+established supersession. Presentation approval does not validate either
+claim.
+
+The branch and PR prepare a v1.2.0 Stable release candidate only. The public
+and live release remains the authorized v1.0.0 release, and `CITATION.cff`
+remains byte-for-byte at dataset citation version v1.0.0 because the semantic
+edition is unchanged. Merge, annotated tagging, and deployment require
+separate authorization after the Windows and hosted-Ubuntu gates pass.
+
 ## Explicit deferrals
 
 ### Through v0.2.0
@@ -139,3 +223,8 @@ provided the normal configured `ubuntu-24.04` confirmation.
 ### Through 1.0
 
 SHACL is deferred through `1.0` unless the roadmap is explicitly re-authorized.
+
+### Post-v1 roadmap candidates
+
+The combinatorial lens and hypothesis workbench described in RD-010 remain
+deferred, unimplemented, and unauthorized until separately approved.

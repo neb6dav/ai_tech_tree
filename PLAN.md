@@ -1,18 +1,53 @@
 ---
-roadmap_version: 5
-active_release: "v1.0.0"
-release_mode: "source_checkpoints_until_v1.0.0"
-active_work_package: "complete"
+roadmap_version: 8
+active_release: "v1.2.0"
+release_mode: "source_checkpoints_v1.0.1_through_v1.2.0"
+active_work_package: "stable_release_candidate"
 base_sha: "85108c78fa86c86634d4c0944839696369e687cd"
 product_boundary_sha: "53e3a4f9c0624096aede63e0345390a3c021bac0"
-working_branch: "main"
+working_branch: "codex/ui-v1.2.0"
 expanded_archive_branch: "archive/v0.1.1-expanded-release-safety-0870d47"
+verified_implementation_head: "9b2d33d249704a92719df74f8d3900e1998a4cf2"
+pull_request: 11
+pull_request_status: "open_mergeable_blocked_review_required_not_merged"
+public_live_release: "v1.0.0"
+v1_2_tag_and_deployment: "none"
+verification_merge_tree: "8bca644f2160bfbfc0574ae150fb92fa9fd49c6b"
 last_completed_checkpoint: "v1.0.0"
-last_completed_local_checkpoint: "v1.0.0"
+last_completed_local_checkpoint: "v1.2.0"
+active_release_status: "v1.2.0_stable_release_candidate_owner_approved_windows_and_ubuntu_verified_open_unmerged_untagged_undeployed"
 next_exact_action: >-
-  No checkpoint work remains. Monitor the public v1.0.0 release and create a
-  new roadmap decision before making any post-v1 product or data changes.
+  Hold for separate merge, annotated-tag, and deployment authorization. The
+  public/live release remains v1.0.0; no v1.2.0 tag or deployment exists.
+presentation_inventory_owner_review: "owner_approved_2026-08-22_exact_24_anchors_72_spine_edges_and_six_tours_44_narratives_digest_ca4240fdaf5a3e6ac4484fafac28e0311ea5cbb4dff725dfb5894c1265001722_caveated_supersession_ids_contextual_reviewed_false_not_established"
+potential_future_editions:
+  - version: "v1.3.0"
+    status: "roadmap_candidate_not_authorized"
+    purpose: "Read-only combinatorial lens over existing sourced records, constraints, open directions, and hypothesis-grade proposed combinations"
+  - version: "v1.4.0"
+    status: "roadmap_candidate_not_authorized"
+    purpose: "Curator-reviewed hypothesis workbench with structured tests, provenance, deduplication, and explicit promotion into canonical Opportunity data"
 last_verified_commands:
+  - command: "PowerShell: $env:AI_TREE_REQUIRE_CLEAN='true'; npm test"
+    status: "PASS"
+    runtime: "Windows x64; Node v24.14.1; exact clean head 9b2d33d249704a92719df74f8d3900e1998a4cf2"
+    scope: "Final v1.2.0 Stable-candidate verification: 18/18 browser tests, DOM peak 7244/8000, HTML 4,589,551 bytes, gzip 672,588 bytes, semantic digest 865174514ba64e20d6f2a90471a6766b6d5fa18f5b0e62c85d9601de077a50f2, 339 nodes/711 relationships/339 sitemap node URLs/0 semantic changes/embed read-only, clean manifest commit matches head, tag null, inputsMatchCommit true, Lighthouse medians score 52/FCP 23182.4641/LCP 23347.9641/TBT 199.5/CLS 0"
+  - command: "PowerShell: $env:AI_TREE_REQUIRE_CLEAN='true'; $env:AI_TREE_RELEASE_TAG='v1.2.0'; $env:AI_TREE_EXPECT_RELEASE_TAG='v1.2.0'; npm run stage:site; node --test --test-isolation=none tests/release-identity.test.cjs"
+    status: "PASS"
+    runtime: "Windows x64; local fixed-tag environment simulation to be rerun clean after the PLAN ledger commit; no real tag created"
+    scope: "Release identity accepts the exact future v1.2.0 tag contract while this candidate remains untagged and undeployed; clean simulation is not claimed at head 9b2d33d"
+  - command: "GitHub Actions PR #11 run 32590220575, job 97072770449"
+    status: "PASS"
+    runtime: "ubuntu-24.04; candidate head 9b2d33d249704a92719df74f8d3900e1998a4cf2; tested merge tree 8bca644f2160bfbfc0574ae150fb92fa9fd49c6b; base 34b0c12"
+    scope: "Hosted-Ubuntu Stable-candidate verification: 18/18 browser tests, DOM peak 7244/8000, HTML 4,589,551 bytes, gzip 672,588 bytes, owner_approved presentation inventory, unchanged semantic digest, zero semantic changes, inputsMatchCommit true, generated artifacts clean, preview uploaded, Lighthouse medians score 42/FCP 23183.8298/LCP 23418.2526/TBT 515/CLS 0"
+  - command: "npm test"
+    status: "PASS"
+    runtime: "Windows x64; Node v24.14.1"
+    scope: "Historical v1.2.0 Preview checkpoint evidence before owner-approved Stable-candidate changes: 18/18 browser tests, DOM peak 7244, HTML 4,589,553 bytes, gzip 672,590 bytes, semantic digest 865174514ba64e20d6f2a90471a6766b6d5fa18f5b0e62c85d9601de077a50f2, researcher delivery 339 nodes/711 relationships/339 sitemap node URLs/0 semantic changes/embed read-only, Lighthouse medians score 55/FCP 23398.714/LCP 23409.214/TBT 3/CLS 0"
+  - command: "GitHub Actions PR #11 run 32587459751, job 97065915025"
+    status: "PASS"
+    runtime: "ubuntu-24.04; tested PR merge tree 0aeb9ec5b5e21709fced9e3321cef0b3a849aea9; candidate head 3fff379adc9f21b73c9af18a3ad538e09813f15d"
+    scope: "Historical v1.2.0 Preview checkpoint evidence before owner-approved Stable-candidate changes: Ubuntu 18/18 browser tests, DOM peak 7244/8000, HTML 4,589,553 bytes, gzip 672,590 bytes, Lighthouse medians score 44/FCP 23180.6411/LCP 23399.51595/TBT 451.5/CLS 0; generated files committed and preview uploaded"
   - command: "GitHub Actions Pages run 32548737168 and live payload reconciliation"
     status: "PASS"
     runtime: "ubuntu-24.04; protected-main workflow source 1f5d730193985665b7bcd2139cac4aca902513f0; tagged source 7d0d26fe87c8be2868c63738c503f90d35789b3a"
@@ -61,6 +96,21 @@ source_checkpoints:
     date: "2026-08-21"
     tag_and_deployment: "completed_2026-08-21"
     purpose: "Stable public contract and authorized release"
+  - version: "v1.1.0"
+    status: "complete"
+    verification_state: "source_checkpoint_verified"
+    product_version: "1.1.0"
+    release_state: "Preview"
+    checkpoint_commit: "710138d"
+    purpose: "Semantic navigation redesign source checkpoint"
+  - version: "v1.2.0"
+    status: "owner_approved_stable_release_candidate_complete"
+    verification_state: "owner_approved_stable_candidate_verified_windows_and_ubuntu"
+    product_version: "1.2.0"
+    release_state: "Stable candidate"
+    checkpoint_commit: "9b2d33d249704a92719df74f8d3900e1998a4cf2"
+    tag_and_deployment: "not_authorized_not_merged_tagged_or_deployed"
+    purpose: "Researcher delivery with static node pages and read-only comparison/embed"
 authorization:
   source_checkpoint_implementation: "authorized"
   source_checkpoint_commits: "authorized"
@@ -68,9 +118,11 @@ authorization:
   intermediate_public_tags: "not_planned"
   intermediate_public_deployments: "not_planned"
   v1_public_tag_and_deployment: "completed_2026-08-21"
+  post_v1_ui_repair_program: "implementation_authorized_release_promotion_not_authorized"
+  post_v1_combinatorial_editions: "roadmap_only_not_authorized"
 ---
 
-# Product roadmap to v1.0.0
+# Product roadmap
 
 ## Operating rule
 
@@ -230,6 +282,96 @@ Acceptance gate:
   run `32489666292` before the v1 source candidate was declared complete.
 - The final diff contains only product, data, documentation, and proportionate
   test changes required by this roadmap.
+
+## v1.0.1 through v1.2.0 — UI, navigation, and researcher delivery
+
+Status: implementation authorized as source checkpoints. Each checkpoint must
+preserve the v1 semantic inventory and pass the existing publication contract.
+Merge, public tag, and deployment remain separate promotion decisions.
+
+### v1.0.1 — first-minute readability repair
+
+- Make the no-state desktop landing legible at whole-map scale through a
+  curator-reviewed orientation spine and anchor labels.
+- Give mobile readers guided starts before the whole-map overview.
+- Expose primary view and connection controls at normal desktop widths; simplify
+  onboarding, previews, List, Opportunity copy, and nonlinear-time guidance.
+- Preserve every existing URL key, evidence field, and semantic record.
+
+### v1.1.0 — semantic navigation redesign
+
+- Establish overview, mid, and detail altitudes without rendering every
+  relationship at low zoom.
+- Add a shared inspector, density/linear time choice, six curated tours, and a
+  command palette while retaining keyboard, touch, and no-JavaScript access.
+- Reuse relationship paths and retire inactive lazy-view DOM so the complete
+  interaction sequence remains below the independent 8,000-element ceiling.
+
+### v1.2.0 — researcher delivery
+
+- Generate one static, source-backed page for every canonical node, including
+  sitemap discovery and metadata-safe citation conveniences.
+- Add a lazy same-origin edition comparison and a read-only embed mode.
+- Keep the default interactive shell single-file and free of external runtime
+  dependencies.
+
+Acceptance for all three editions includes unchanged 339-node and
+711-relationship identities, both themes, responsive and keyboard behavior,
+URL round trips, generated-artifact parity, publication tests, the calibrated
+DOM/HTML/gzip budgets, and the current Lighthouse limits.
+
+## Potential later editions — combinatorial exploration
+
+Status: roadmap candidates only. Neither implementation nor release is
+authorized, and no target date is assigned. The intent is to help readers
+reason across ideas already represented in the atlas without presenting a
+machine-generated combination as a discovery, demonstrated capability, or
+globally novel research direction.
+
+### v1.3.0 candidate — read-only combinatorial lens
+
+- Let a reader select or traverse a bounded set of existing developments, open
+  directions, constraints, and Opportunity records.
+- Show recorded relationships, hypothesis-grade `proposed_combination` links,
+  shared prerequisites, complementary capabilities, tensions, and known
+  blockers while preserving the exact source record IDs and citations.
+- Distinguish a combination explicitly supported by an attached source, an
+  existing editorial or hypothesis proposal, and a dataset-derived candidate.
+  Absence from this edition means only "not represented here," not novelty.
+- Keep derived candidates ephemeral or export-only. They must not write to the
+  canonical atlas, receive stable public IDs, or affect evidence counts.
+- Bound pair/triple exploration and expose filters so the feature aids thought
+  rather than dumping an unreviewable combinatorial product.
+
+Acceptance planning for this edition must define deterministic candidate
+inputs, provenance display, evidence/status labeling, duplicate suppression,
+performance bounds, accessibility, and hostile cases where proximity or a
+missing source is incorrectly treated as evidence or novelty.
+
+### v1.4.0 candidate — curator-reviewed hypothesis workbench
+
+- Turn a selected candidate into a structured hypothesis card containing the
+  proposed mechanism, relevant records and sources, unmet need, novelty-search
+  scope, minimal experiment, baselines, disconfirming result, likely resources,
+  blockers, and failure reasons.
+- Require human review, source checking, and duplicate/adjacent-work review
+  before a candidate can enter canonical Opportunity data.
+- Retain the input stable IDs, source edition, derivation origin
+  (`human`, `rule`, or `model`), and material AI-assistance disclosure. Sources
+  supporting the constituent ideas do not support the synthesized combination
+  unless they explicitly address that combination.
+- Preserve the distinction between proposal, review, and evidence. Approved
+  inclusion records that a hypothesis was curated; it does not establish that
+  the combination works or is globally novel.
+- Assign or freeze a public ID only at approved canonical promotion, after an
+  RD-009 compatibility review and deliberate inventory-baseline update. Review
+  of one candidate must not upgrade the surrounding `imported_unreviewed` data.
+
+Both candidates must preserve the v1 URL and identity contract; preserve the
+separate canonical authority and semantics of the historical atlas and
+Opportunity data; avoid unreviewed bulk AI imports; and receive a separate
+implementation/release authorization before code, schema, or public data
+changes begin.
 
 ## Explicit non-goals through v1.0.0
 

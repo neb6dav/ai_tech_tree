@@ -4,6 +4,34 @@ All notable public changes to the AI Research Tech Tree will be documented here.
 
 ## [Unreleased]
 
+**v1.2.0 Stable release candidate (not merged, released, tagged, or deployed).** This researcher-delivery checkpoint generates 339 static node pages, sitemap discovery, a semantic edition diff, and a read-only embed while preserving the canonical dataset identity. The public/live release remains v1.0.0 and the dataset citation remains v1.0.0.
+
+### Added
+
+- One static, source-backed page for each of the 339 canonical nodes, with crawlable metadata and citation conveniences.
+- Sitemap entries for the node pages and a read-only same-origin edition comparison and embed surface.
+- Repository-owner approval of the exact 24-anchor, 72-relationship orientation inventory and all six tour narratives. The two legacy supersession links remain explicitly contextual, unreviewed, and not established by this display approval.
+
+**v1.1.0 Preview checkpoint (not released, tagged, or deployed).** This interface checkpoint adds semantic zoom altitudes, the evidence inspector, a readable linear scale, guided tours and palette controls, relationship pooling, and DOM disposal; it makes no semantic dataset changes.
+
+### Added
+
+- A display-only inventory of 24 canonical anchor nodes, 72 existing orientation relationships, and six guided tours. Membership does not alter canonical relationship type, direction, rationale, evidence grade, or review state.
+- A compact mobile start chooser with routes to Transformers, current frontiers, research directions, and the whole map.
+
+### Changed
+
+- Repaired the default desktop landing with an always-visible orientation spine and canonical anchor labels.
+- Exposed Timeline, Network, Opportunity, List, Connections, theme, Share, and Help in responsive navigation appropriate to each breakpoint.
+- Renamed reader-facing “Links” and “On hover” controls to “Connections” and “Related” while preserving existing `mode=hover` URLs.
+- Simplified first-run help, node previews, List cards, Opportunity guidance, and the nonlinear-time explanation without removing methodology or evidence warnings.
+- Reused the 72 orientation relationship paths when expanding to All connections, avoiding a duplicate edge layer.
+
+### Verification
+
+- Preserved 339 canonical nodes, 711 canonical relationships, stable IDs, the no-JavaScript index, and the single-file offline runtime.
+- Kept active relationship and orientation-spine contrast above 3:1 in dark and light themes without adding universal arrowheads.
+
 ## [1.0.0] - 2026-08-21
 
 **Stable release.** This release publishes dataset edition `2026-08-21-stable-1` from the authorized annotated `v1.0.0` tag.

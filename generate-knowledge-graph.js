@@ -14,6 +14,7 @@ const JSON_NAME = 'ai-research-tech-tree.json';
 const NDJSON_NAME = 'ai-research-tech-tree.ndjson';
 const APPLICATION_HUMAN_URL = './';
 const GENERATOR_VERSION = '1.3.1';
+const SEMANTIC_DIGEST_RELEASE_STATE = 'Preview';
 const DATASET_UUID = uuidV5('ai-research-tech-tree.public-artifact', '6ba7b810-9dad-11d1-80b4-00c04fd430c8');
 const DATASET_IRI = `urn:uuid:${DATASET_UUID}`;
 const VOCAB_IRI = `${DATASET_IRI}#vocab-`;
@@ -519,7 +520,7 @@ function omitEmpty(object) {
 
 function extractModel(html) {
   const scripts = scriptsIn(html);
-  assert(scripts.length === 10, `Expected 10 script elements, found ${scripts.length}`);
+  assert(scripts.length === 11, `Expected 11 script elements, found ${scripts.length}`);
   const findScript = (description, predicate) => {
     const matches = scripts.filter(predicate);
     assert(matches.length === 1, `Expected exactly one ${description} script, found ${matches.length}`);
@@ -530,11 +531,16 @@ function extractModel(html) {
   const wikipediaAudit = findScript('Wikipedia audit data', script => /^<script\b[^>]*\bid="wiki-audit-data"[^>]*>/i.test(script[0]));
   const researchGuide = findScript('research guide data', script => /^<script\b[^>]*\bid="research-guide-data"[^>]*>/i.test(script[0]));
   const opportunityData = findScript('opportunity data', script => /^<script\b[^>]*\bid="opportunity-data"[^>]*>/i.test(script[0]));
+  const presentationData = findScript('atlas presentation data', script => /^<script\b[^>]*\bid="atlas-presentation-data"[^>]*>/i.test(script[0]));
   findScript('opportunity view engine', script => /^<script\b[^>]*\bid="opportunity-view-engine"[^>]*>/i.test(script[0]));
   const networkLayout = findScript('network layout data', script => /^<script\b[^>]*\bid="network-layout-data"[^>]*>/i.test(script[0]));
   findScript('network view engine', script => /^<script\b[^>]*\bid="network-view-engine"[^>]*>/i.test(script[0]));
   assert(/^<script\b[^>]*\btype="application\/json"[^>]*>/i.test(scripts.find(script => script[1] === networkLayout)[0]), 'Network layout script must use application/json');
   assert(/^<script\b[^>]*\btype="application\/json"[^>]*>/i.test(scripts.find(script => script[1] === opportunityData)[0]), 'Opportunity data script must use application/json');
+  assert(/^<script\b[^>]*\btype="application\/json"[^>]*>/i.test(scripts.find(script => script[1] === presentationData)[0]), 'Atlas presentation script must use application/json');
+  const parsedPresentationData = JSON.parse(presentationData || '{}');
+  assert(parsedPresentationData.schemaVersion === '1.0.0', 'Atlas presentation data is missing schemaVersion=1.0.0');
+  assert(parsedPresentationData.anchors?.length === 24 && parsedPresentationData.backboneRelationshipIds?.length === 72, 'Atlas presentation data must contain 24 anchors and 72 spine relationships');
   const parsedOpportunityData = JSON.parse(opportunityData || '{}');
   assert(parsedOpportunityData.metadata?.id === 'diffusion-models-opportunity-map', 'Opportunity data is missing metadata.id=diffusion-models-opportunity-map');
   assert(parsedOpportunityData.metadata?.anchorAtlasNodeId === 'diffusion', 'Opportunity data is missing its diffusion atlas anchor');
@@ -550,7 +556,16 @@ function extractModel(html) {
     warn(...args) { warnings.push(args.map(value => typeof value === 'string' ? value : JSON.stringify(value)).join(' ')); },
     error(...args) { warnings.push(args.map(value => typeof value === 'string' ? value : JSON.stringify(value)).join(' ')); }
   };
-  const context = vm.createContext({ URL, console: safeConsole });
+  // The extracted engine prefix contains the browser entry-point's embed-mode
+  // probe. Keep extraction deterministic without adding a DOM implementation:
+  // the empty location represents the canonical no-query/no-hash build state,
+  // while Node supplies the standards-compliant URLSearchParams constructor.
+  const context = vm.createContext({
+    URL,
+    URLSearchParams,
+    location: { href: 'http://localhost/', search: '', hash: '' },
+    console: safeConsole
+  });
   vm.runInContext(atlasData, context, { filename: 'atlas-data.js' });
   vm.runInContext(wikipediaAudit, context, { filename: 'wikipedia-audit.js' });
   vm.runInContext(researchGuide, context, { filename: 'research-guide.js' });
@@ -941,7 +956,11 @@ function buildExports(model) {
     landmarkWorkLinks,
     wikipediaSources
   };
-  dataset.dataDigest = sha256(JSON.stringify(plain));
+  // Release channel is publication metadata, not semantic atlas content;
+  // normalize it to the frozen v1.2 semantic-digest baseline.
+  const semanticDigestInput = clone(plain);
+  semanticDigestInput.dataset.releaseState = SEMANTIC_DIGEST_RELEASE_STATE;
+  dataset.dataDigest = sha256(JSON.stringify(semanticDigestInput));
 
   const graphEntities = [];
   for (const lane of lanes) {
@@ -1233,7 +1252,7 @@ function applyKnowledgeGraph(html, datasetGraph) {
 
   const scripts = scriptsIn(html).map(match => match[1]);
   const styles = [...html.matchAll(/<style(?:\s[^>]*)?>([\s\S]*?)<\/style>/gi)].map(match => match[1]);
-  assert(scripts.length === 10 && styles.length === 2, `Unexpected inline body counts: ${scripts.length} scripts, ${styles.length} styles`);
+  assert(scripts.length === 11 && styles.length === 2, `Unexpected inline body counts: ${scripts.length} scripts, ${styles.length} styles`);
   const cspHash = body => `'sha256-${crypto.createHash('sha256').update(body, 'utf8').digest('base64')}'`;
   const policy = [
     "default-src 'none'",
@@ -1243,7 +1262,10 @@ function applyKnowledgeGraph(html, datasetGraph) {
     `style-src-elem ${styles.map(cspHash).join(' ')}`,
     "style-src-attr 'unsafe-inline'",
     'img-src data:',
-    "connect-src 'none'",
+    // The interactive Diff view lazy-loads one immutable, same-origin
+    // fingerprint artifact. Keep the connection surface limited to this
+    // origin; runtime code independently rejects cross-origin URLs.
+    "connect-src 'self'",
     "font-src 'none'",
     "media-src 'none'",
     "worker-src 'none'",

@@ -16,11 +16,22 @@ function variablesFrom(block) {
   return variables;
 }
 
+function numericVariablesFrom(block) {
+  const variables = {};
+  for (const match of block.matchAll(/--([a-z0-9-]+)\s*:\s*(-?(?:\d+\.?\d*|\.\d+))\s*(?:;|$)/gi)) {
+    variables[match[1]] = Number(match[2]);
+  }
+  return variables;
+}
+
 const rootMatch = css.match(/:root\s*\{([^}]*)\}/i);
 assert(rootMatch, 'Root theme variables are missing');
 const dark = variablesFrom(rootMatch[1]);
 const light = { ...dark };
 for (const match of css.matchAll(/body\[data-theme="light"\]\s*\{([^}]*)\}/gi)) Object.assign(light, variablesFrom(match[1]));
+const darkNumbers = numericVariablesFrom(rootMatch[1]);
+const lightNumbers = { ...darkNumbers };
+for (const match of css.matchAll(/body\[data-theme="light"\]\s*\{([^}]*)\}/gi)) Object.assign(lightNumbers, numericVariablesFrom(match[1]));
 
 function rgb(hex) {
   let value = hex.replace('#', '');
@@ -46,14 +57,26 @@ function mix(foreground, background, amount) {
   return fg.map((channel, index) => Math.round(channel * amount + bg[index] * (1 - amount)));
 }
 
+function composite(foreground, background, opacity) {
+  assert(Number.isFinite(opacity) && opacity >= 0 && opacity <= 1, `Invalid alpha ${opacity}`);
+  const fg = rgb(foreground), bg = rgb(background);
+  return fg.map((channel, index) => channel * opacity + bg[index] * (1 - opacity));
+}
+
 function check(name, foreground, background, minimum, results) {
   const ratio = contrast(foreground, background);
   assert(ratio + 1e-9 >= minimum, `${name}: ${ratio.toFixed(2)}:1 is below ${minimum}:1`);
   results[name] = Number(ratio.toFixed(2));
 }
 
+function checkComposited(name, foreground, background, opacity, minimum, results) {
+  const ratio = contrast(composite(foreground, background, opacity), background);
+  assert(ratio + 1e-9 >= minimum, `${name} at alpha ${opacity}: ${ratio.toFixed(2)}:1 is below ${minimum}:1`);
+  results[name] = Number(ratio.toFixed(2));
+}
+
 const report = {};
-for (const [themeName, theme] of Object.entries({ dark, light })) {
+for (const [themeName, theme, numericTheme] of [['dark', dark, darkNumbers], ['light', light, lightNumbers]]) {
   const results = {};
   for (const token of ['ink', 'ink2', 'ink3', 'subtle-text']) {
     for (const surface of ['surface', 'panel', 'panel2']) check(`${themeName}.${token}/${surface}`, theme[token], theme[surface], 4.5, results);
@@ -61,7 +84,17 @@ for (const [themeName, theme] of Object.entries({ dark, light })) {
   check(`${themeName}.node-label/surface`, theme['node-label'], theme.surface, 4.5, results);
   for (const surface of ['surface', 'panel', 'panel2']) check(`${themeName}.control-line/${surface}`, theme['control-line'], theme[surface], 3, results);
   for (const surface of ['surface', 'panel']) check(`${themeName}.focus/${surface}`, theme.focus, theme[surface], 3, results);
-  for (const edge of ['e-in', 'e-out', 'e-sup', 'e-gap']) check(`${themeName}.${edge}/surface`, theme[edge], theme.surface, 3, results);
+  assert(theme['e-backbone'], `${themeName} theme is missing --e-backbone`);
+  assert(Number.isFinite(numericTheme['e-backbone-opacity']), `${themeName} theme is missing --e-backbone-opacity`);
+  assert(Number.isFinite(numericTheme['e-active-opacity']), `${themeName} theme is missing --e-active-opacity`);
+  checkComposited(`${themeName}.e-backbone@alpha/surface`, theme['e-backbone'], theme.surface, numericTheme['e-backbone-opacity'], 3, results);
+  for (const edge of ['e-in', 'e-out', 'e-sup', 'e-gap']) {
+    checkComposited(`${themeName}.${edge}@active-alpha/surface`, theme[edge], theme.surface, numericTheme['e-active-opacity'], 3, results);
+  }
+  results[`${themeName}.e-ctx@passive-alpha/surface`] = Number(contrast(
+    composite(theme['e-ctx'], theme.surface, 0.35),
+    theme.surface
+  ).toFixed(2));
   for (const status of ['c-f', 'c-a', 'c-h', 'c-d', 'c-x', 'c-r', 'c-g']) {
     const tintedNode = mix(theme[status], theme.surface, 0.13);
     check(`${themeName}.${status}/node`, theme[status], tintedNode, 4.5, results);
@@ -72,9 +105,32 @@ for (const [themeName, theme] of Object.entries({ dark, light })) {
   report[themeName] = results;
 }
 
+const backboneRule = css.match(/#edgesBackbone\s+path\s*\{([^}]*)\}/i);
+assert(backboneRule, 'Persistent spine paths are missing their audited style rule');
+assert(/stroke\s*:\s*var\(--e-backbone\)/i.test(backboneRule[1]), 'Persistent spine paths must consume --e-backbone');
+assert(/opacity\s*:\s*var\(--e-backbone-opacity\)/i.test(backboneRule[1]), 'Persistent spine paths must consume --e-backbone-opacity');
+
+const activeRule = css.match(/#edgesHi\s+path\s*\{([^}]*)\}/i);
+assert(activeRule, 'Active relationship paths are missing their audited style rule');
+assert(/opacity\s*:\s*var\(--e-active-opacity\)/i.test(activeRule[1]), 'Active relationship paths must consume --e-active-opacity');
+for (const match of css.matchAll(/#edgesHi\s+path\.evidence-[^{]+\{([^}]*)\}/gi)) {
+assert(!/\bopacity\s*:\s*(?!var\(--e-active-opacity\))[^;}]+/i.test(match[1]), 'Evidence-grade rules must not reduce active relationship contrast with a numeric opacity override');
+}
+
 assert(css.includes('.chip.off{opacity:1; color:var(--ink3); background:transparent; border-style:dashed}'), 'Inactive filters must remain readable without whole-control opacity');
 assert(!css.includes('.chip.off{opacity:.38}'), 'Low-contrast inactive filter styling remains');
-assert(css.includes('g.overviewCluster .clusterDot{fill:var(--node-color);fill-opacity:1;'), 'Overview bubbles must use the audited solid fill');
+const semanticCardRule = css.match(/g\.semanticCluster\s+\.clusterCard\s*\{([^}]*)\}/i);
+assert(semanticCardRule, 'Semantic lane-by-era cards are missing their audited style rule');
+assert(/fill\s*:\s*color-mix\(in\s+srgb\s*,?\s*var\(--node-color\)\s+10%\s*,\s*var\(--panel\)\)/i.test(semanticCardRule[1]), 'Semantic cards must blend their status color with the panel surface');
+assert(/stroke\s*:\s*var\(--node-color\)/i.test(semanticCardRule[1]), 'Semantic cards must retain their status-colored boundary');
+const semanticFocusRule = css.match(/g\.semanticCluster:hover\s+\.clusterCard\s*,\s*g\.semanticCluster:focus\s+\.clusterCard\s*\{([^}]*)\}/i);
+assert(semanticFocusRule && /stroke\s*:\s*var\(--focus\)/i.test(semanticFocusRule[1]) && /stroke-width\s*:\s*2\.5/i.test(semanticFocusRule[1]), 'Semantic cards must expose a high-contrast pointer and keyboard focus state');
+const anchorTextRule = css.match(/g\.anchorLabel\s+text\s*\{([^}]*)\}/i);
+assert(anchorTextRule && /fill\s*:\s*var\(--ink\)/i.test(anchorTextRule[1]) && /stroke\s*:\s*var\(--surface\)/i.test(anchorTextRule[1]), 'Curated overview anchor labels must retain audited text contrast');
+const anchorGlyphRule = css.match(/g\.anchorLabel\s+circle\s*\{([^}]*)\}/i);
+assert(anchorGlyphRule && /fill\s*:\s*var\(--e-backbone\)/i.test(anchorGlyphRule[1]) && /stroke\s*:\s*var\(--surface\)/i.test(anchorGlyphRule[1]), 'Curated overview anchor glyphs must use the audited spine contrast');
+const anchorFocusRule = css.match(/g\.anchorLabel:focus\s+text\s*,\s*g\.anchorLabel:hover\s+text\s*\{([^}]*)\}/i);
+assert(anchorFocusRule && /fill\s*:\s*var\(--focus\)/i.test(anchorFocusRule[1]), 'Curated overview anchors must expose a high-contrast pointer and keyboard focus state');
 assert(css.includes('color:var(--swatch-ink)'), 'Legend bubble glyphs must use a theme-specific contrasting color');
 assert(css.includes('button:disabled{opacity:1;'), 'Disabled controls must remain readable');
 assert(!css.includes('border-color:#33405c') && !css.includes('border-color:#3c4c6e'), 'Theme-invariant control borders remain');
@@ -86,9 +142,9 @@ assert(!html.includes('id="allStatusBtn"') && !html.includes("getElementById('al
 assert(html.includes("label:'Dark mode',ariaLabel:'Switch to dark mode'"), 'Light theme does not advertise the dark-mode action');
 assert(html.includes("label:'Light mode',ariaLabel:'Switch to light mode'"), 'Dark theme does not advertise the light-mode action');
 assert(html.includes("themeLabel.textContent=action.label") && html.includes("themeIcon.textContent=action.icon"), 'Theme action presentation is not refreshed on every theme change');
-assert(html.includes("setLegendOpen(true,false,'welcome')"), 'Centered first-load guide is not opened');
+assert(html.includes("setLegendOpen(true,false,'welcome')"), 'First-load guide is not opened');
 assert(html.includes("setLegendPresentation('docked')"), 'Guide cannot transition to its left dock');
-assert(html.includes("const WELCOME_REVISION='2'"), 'First-load guide state is not versioned');
+assert(html.includes("const WELCOME_REVISION='3'"), 'v1.1.0 first-load guide state is not versioned');
 assert(/<button\b(?=[^>]*\bdata-view="network")(?=[^>]*\baria-pressed="false")[^>]*>\s*Network\s*<\/button>/i.test(html), 'Network selector must expose its pressed state');
 assert(/<[^>]+\bid="networkView"(?=[^>]*\baria-label=)[^>]*>/i.test(html), 'Network view must be an explicitly labelled region');
 assert(/<[^>]+\bid="networkStatus"(?=[^>]*\brole="status")(?=[^>]*\baria-live="polite")[^>]*>/i.test(html), 'Network status must be announced politely');
@@ -99,7 +155,7 @@ assert(/<button\b(?=[^>]*\bdata-view="opportunity")(?=[^>]*\baria-pressed="false
 assert(/<[^>]+\bid="opportunityView"(?=[^>]*\baria-labelledby="opportunityTitle")(?=[^>]*\baria-describedby="opportunityIntro opportunityNote")[^>]*>/i.test(html), 'Opportunity view must be labelled and described by visible copy');
 assert(/<[^>]+\bid="opportunityStatus"(?=[^>]*\brole="status")(?=[^>]*\baria-live="polite")[^>]*>/i.test(html), 'Opportunity status must be announced politely');
 assert(/<[^>]+\bid="opportunityNote"(?=[^>]*\brole="note")[^>]*>/i.test(html), 'Opportunity interpretation warning must use note semantics');
-assert(html.includes('Width is uniform and does not represent volume, importance, value, certainty, or remaining opportunity.'), 'Opportunity view must state that path width is non-quantitative');
+assert(html.includes('Position and width do not imply importance, certainty, value, or rank.'), 'Opportunity view must state that position and path width are non-quantitative');
 assert(/<[^>]+\bid="opportunityCanvas"(?=[^>]*\brole="group")(?=[^>]*\baria-label=)[^>]*>/i.test(html), 'Opportunity canvas must expose a readable group label');
 assert(/<details\b[^>]*\bid="opportunityOutlineDetails"[^>]*>[\s\S]*?<summary>Opportunity outline<\/summary>[\s\S]*?\bid="opportunityOutline"/i.test(html), 'Opportunity view must include a structured non-canvas outline');
 assert(html.includes('The Opportunity View is unavailable.'), 'Opportunity rendering failure must expose a readable fallback');

@@ -13,6 +13,8 @@ const zlib = require('node:zlib');
 const { execFileSync } = require('node:child_process');
 
 const ROOT = __dirname;
+// Normalize publication-channel metadata to the frozen v1.2 semantic-digest baseline.
+const SEMANTIC_DIGEST_RELEASE_STATE = 'Preview';
 const FILES = {
   html: 'ai-research-tech-tree.html',
   index: 'index.html',
@@ -23,6 +25,7 @@ const FILES = {
   bundle: 'network-atlas.bundle.js',
   opportunityData: path.join('src', 'data', 'opportunities', 'diffusion-models.alpha.json'),
   opportunityBundle: 'opportunity-atlas.bundle.js',
+  presentationData: path.join('src', 'ui', 'atlas-presentation.v1.json'),
   generator: 'generate-knowledge-graph.js',
   canonicalLoader: 'canonical-atlas.js',
   canonicalData: path.join('src', 'data', 'atlas'),
@@ -409,10 +412,10 @@ function parseCsp(value) {
   }));
 }
 
-function assertHtmlIntegration(html, jsonldBytes, data, layoutBytes, bundleBytes, opportunityDataBytes, opportunityBundleBytes) {
+function assertHtmlIntegration(html, jsonldBytes, data, layoutBytes, bundleBytes, opportunityDataBytes, opportunityBundleBytes, presentationDataBytes) {
   const scripts = extractBodies(html, 'script');
   const styles = extractBodies(html, 'style');
-  assert.equal(scripts.length, 10);
+  assert.equal(scripts.length, 11);
   assert.equal(styles.length, 2);
   const graphScripts = scripts.filter(script => /\btype=["']application\/ld\+json["']/i.test(script.attributes));
   assert.equal(graphScripts.length, 1);
@@ -448,6 +451,14 @@ function assertHtmlIntegration(html, jsonldBytes, data, layoutBytes, bundleBytes
   assert.match(opportunityEngines[0].body, /OpportunityAtlas/);
   assert.equal(opportunityEngines[0].body, opportunityBundleBytes.toString('utf8').replace(/\r\n/g, '\n').trimEnd(), 'Embedded and sidecar Opportunity View engines differ');
 
+  const presentationScripts=scripts.filter(script=>/\bid=["']atlas-presentation-data["']/i.test(script.attributes));
+  assert.equal(presentationScripts.length,1,'Expected one embedded atlas presentation payload');
+  assert.match(presentationScripts[0].attributes,/\btype=["']application\/json["']/i);
+  const parsedPresentation=JSON.parse(presentationScripts[0].body);
+  assert.deepEqual(parsedPresentation,JSON.parse(presentationDataBytes.toString('utf8')),'Embedded and maintained presentation data differ');
+  assert.equal(parsedPresentation.anchors.length,24);
+  assert.equal(parsedPresentation.backboneRelationshipIds.length,72);
+
   const cspMatch = html.match(/<meta\s+http-equiv="Content-Security-Policy"\s+content="([^"]+)"/i);
   assert(cspMatch, 'Missing Content-Security-Policy meta tag');
   const csp = parseCsp(cspMatch[1]);
@@ -460,6 +471,10 @@ function assertHtmlIntegration(html, jsonldBytes, data, layoutBytes, bundleBytes
   assert(!csp['script-src'].includes("'unsafe-eval'"));
   assert.deepEqual(csp['object-src'], ["'none'"]);
   assert.deepEqual(csp['base-uri'], ["'none'"]);
+  // Edition Diff lazily fetches one immutable fingerprint artifact. The
+  // policy permits only same-origin connections; the runtime also rejects
+  // cross-origin URLs before fetching.
+  assert.deepEqual(csp['connect-src'], ["'self'"]);
 
   const executable = scripts.filter(script => !/\btype=["']application\/(?:ld\+json|json)["']/i.test(script.attributes));
   assert.equal(executable.length, 7);
@@ -579,7 +594,8 @@ function main() {
     layout: read(FILES.layout),
     bundle: read(FILES.bundle),
     opportunityData: read(FILES.opportunityData),
-    opportunityBundle: read(FILES.opportunityBundle)
+    opportunityBundle: read(FILES.opportunityBundle),
+    presentationData: read(FILES.presentationData)
   };
   assert.equal(Buffer.compare(buffers.index, buffers.html), 0, 'Generated index.html differs from the canonical HTML artifact');
   const html = buffers.html.toString('utf8');
@@ -595,6 +611,7 @@ function main() {
 
   const digestCopy = clone(data);
   delete digestCopy.dataset.dataDigest;
+  digestCopy.dataset.releaseState = SEMANTIC_DIGEST_RELEASE_STATE;
   assert.equal(hash(Buffer.from(JSON.stringify(digestCopy))), data.dataset.dataDigest);
   assert.equal(document['tree:dataDigest'], data.dataset.dataDigest);
   assert.equal(document['@id'], data.namespace.datasetIri);
@@ -632,7 +649,8 @@ function main() {
     buffers.layout,
     buffers.bundle,
     buffers.opportunityData,
-    buffers.opportunityBundle
+    buffers.opportunityBundle,
+    buffers.presentationData
   );
   const determinism = deterministicRegeneration(buffers);
   const graphBody = extractBodies(html, 'script').find(script => /\btype=["']application\/ld\+json["']/i.test(script.attributes)).body;

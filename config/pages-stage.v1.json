@@ -57,6 +57,11 @@
       "mediaType": "application/xml; charset=utf-8"
     },
     {
+      "kind": "directory",
+      "source": "nodes",
+      "target": "nodes"
+    },
+    {
       "kind": "file",
       "source": "CITATION.cff",
       "target": "CITATION.cff",
@@ -78,6 +83,12 @@
       "kind": "file",
       "source": "src/data/opportunities/diffusion-models.alpha.json",
       "target": "src/data/opportunities/diffusion-models.alpha.json",
+      "mediaType": "application/json; charset=utf-8"
+    },
+    {
+      "kind": "file",
+      "source": "src/data/editions/v1.0.0-fingerprints.json",
+      "target": "data/editions/v1.0.0-fingerprints.json",
       "mediaType": "application/json; charset=utf-8"
     },
     {

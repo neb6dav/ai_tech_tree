@@ -1,9 +1,8 @@
 name: Prepare GitHub Pages release
 
 # RD-006/RD-007 release path: an authorized manual run starts on protected
-# main, then checks out and verifies the exact annotated v1.0.0 tag. The first
-# deployment recovery permits one direct-child main commit whose exact diff is
-# limited to this runner fix, its source-lock test, and the decision record.
+# main, then checks out and verifies the exact annotated v1.2.0 tag. The
+# workflow is intentionally manual and has no arbitrary tag input.
 on:
   workflow_dispatch:
 
@@ -21,15 +20,13 @@ jobs:
     timeout-minutes: 20
     env:
       AI_TREE_REQUIRE_CLEAN: "true"
-      AI_TREE_AUTHORIZED_TAG: "v1.0.0"
-      AI_TREE_AUTHORIZED_TAG_OBJECT: "67e1f7b7dea394451d4a2d54a929037982d30517"
-      AI_TREE_AUTHORIZED_TAG_COMMIT: "7d0d26fe87c8be2868c63738c503f90d35789b3a"
+      AI_TREE_AUTHORIZED_TAG: "v1.2.0"
 
     steps:
       - name: Check out authorized release tag
         uses: actions/checkout@v7
         with:
-          ref: refs/tags/v1.0.0
+          ref: refs/tags/v1.2.0
           fetch-depth: 0
           fetch-tags: true
           persist-credentials: false
@@ -49,20 +46,12 @@ jobs:
           test "$GITHUB_WORKFLOW_REF" = "${GITHUB_REPOSITORY}/.github/workflows/pages.yml@refs/heads/main"
           tag_ref="refs/tags/${AI_TREE_AUTHORIZED_TAG}"
           test "$(git cat-file -t "$tag_ref")" = "tag"
-          tag_object="$(git rev-parse "$tag_ref")"
-          test "$tag_object" = "$AI_TREE_AUTHORIZED_TAG_OBJECT"
           tag_commit="$(git rev-parse "${tag_ref}^{commit}")"
-          test "$tag_commit" = "$AI_TREE_AUTHORIZED_TAG_COMMIT"
           test "$tag_commit" = "$(git rev-parse HEAD)"
           git show-ref --verify --quiet refs/remotes/origin/main
           main_commit="$(git rev-parse refs/remotes/origin/main)"
           test "$GITHUB_SHA" = "$main_commit"
-          git merge-base --is-ancestor "$tag_commit" "$main_commit"
-          test "$(git rev-list --count "${tag_commit}..${main_commit}")" = "1"
-          test "$(git rev-parse "${main_commit}^")" = "$tag_commit"
-          expected_recovery_delta=$'M\t.github/workflows/pages.yml\nM\tdocs/ROADMAP_DECISIONS.md\nM\ttests/release-identity.test.cjs'
-          actual_recovery_delta="$(git diff --name-status --no-renames "$tag_commit" "$main_commit")"
-          test "$actual_recovery_delta" = "$expected_recovery_delta"
+          test "$tag_commit" = "$GITHUB_SHA"
           package_version="$(node -p "require('./package.json').version")"
           test "v${package_version}" = "$AI_TREE_AUTHORIZED_TAG"
           echo "AI_TREE_COMMIT_SHA=$tag_commit" >> "$GITHUB_ENV"

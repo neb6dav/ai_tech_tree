@@ -9,6 +9,9 @@ const vm = require('node:vm');
 const root = __dirname;
 const html = fs.readFileSync(path.join(root, 'ai-research-tech-tree.html'), 'utf8');
 const data = JSON.parse(fs.readFileSync(path.join(root, 'ai-research-tech-tree.json'), 'utf8'));
+const cssMatch = html.match(/<style>([\s\S]*?)<\/style>/i);
+assert(cssMatch, 'Inline stylesheet is missing');
+const css = cssMatch[1];
 
 function requireText(fragment, label) {
   assert(html.includes(fragment), `Missing UI contract: ${label}`);
@@ -16,6 +19,31 @@ function requireText(fragment, label) {
 
 function forbidText(fragment, label) {
   assert(!html.includes(fragment), `Obsolete UI remains: ${label}`);
+}
+
+function requirePattern(pattern, label, source = html) {
+  assert(pattern.test(source), `Missing UI contract: ${label}`);
+}
+
+function sourceForFunction(source, name) {
+  const start = source.indexOf(`function ${name}(`);
+  assert(start >= 0, `Missing UI contract: ${name}() is defined`);
+  const tailStart = start + `function ${name}(`.length;
+  const nextMatch = /\bfunction\s+[A-Za-z_$][\w$]*\s*\(/.exec(source.slice(tailStart));
+  const next = nextMatch ? tailStart + nextMatch.index : source.length;
+  return source.slice(start, next);
+}
+
+function cssAtRuleBlock(pattern, label) {
+  const match = pattern.exec(css);
+  assert(match, `Missing UI contract: ${label}`);
+  const open = css.indexOf('{', match.index);
+  let depth = 0;
+  for (let index = open; index < css.length; index++) {
+    if (css[index] === '{') depth++;
+    if (css[index] === '}' && --depth === 0) return css.slice(open + 1, index);
+  }
+  assert.fail(`Malformed stylesheet block: ${label}`);
 }
 
 function executableScripts() {
@@ -27,7 +55,6 @@ function executableScripts() {
 for (const [fragment, label] of [
   ['--lane-rail:clamp(184px,18vw,272px)', 'responsive desktop branch rail'],
   ['#svg{clip-path:inset(0 0 0 var(--map-left))}', 'hard map clipping at the dock-aware branch boundary'],
-  [':root{--lane-rail:0px;--dock-edge:0px;--map-left:0px;--safe-center-offset:0px}', 'zero-width mobile rail and dock reset'],
   ['#laneHud{display:none}', 'hidden mobile branch HUD'],
   ['body.guide-docked #laneHud{left:var(--dock-edge)}', 'docked guide shifts the branch-label rail'],
   ['body.guide-docked #listView{left:var(--dock-edge)}', 'docked guide reserves list-view space'],
@@ -36,30 +63,30 @@ for (const [fragment, label] of [
   ['const left=mapLeftInset();', 'camera uses the dock-aware map boundary'],
   ['const rail=mapLeftInset();', 'era labels use the dock-aware map boundary'],
   ["document.body.classList.toggle('guide-docked',docked)", 'docked layout state is explicit'],
-  ["!canDockGuide())setLegendPresentation('welcome')", 'narrow resize falls back to a modal guide'],
-  ["function activeOverlayModal(){if(legend?.classList.contains('open')&&legend.classList.contains('welcome'))return legend;", 'centered welcome is modal at every viewport width'],
-  ["const WELCOME_REVISION='2'", 'versioned welcome state'],
-  ["if(showWelcome)setLegendOpen(true,false,'welcome')", 'welcome is independent of restored URL state'],
-  ["dock.textContent='Dock it to the left'", 'first-load dock action'],
-  ["dismiss.textContent='Close guide'", 'first-load close action'],
+  ["const WELCOME_REVISION='3'", 'v1.1.0 first-run state revision'],
   ["theme==='light'?{icon:'\\u263e',label:'Dark mode',ariaLabel:'Switch to dark mode'}", 'light theme advertises the dark-mode action'],
   ["{icon:'\\u2600',label:'Light mode',ariaLabel:'Switch to light mode'}", 'dark theme advertises the light-mode action'],
-  ['const DETAIL_K = 0.8, OVERVIEW_K = 0.2, OVERVIEW_CELL_PX = 20;', 'three-level semantic zoom thresholds'],
+  ['const DETAIL_K = 0.8, OVERVIEW_K = 0.2;', 'three-level semantic zoom thresholds'],
   ["const next=k>=DETAIL_K?'detail':k>=OVERVIEW_K?'mid':'overview';", 'semantic zoom mode selection'],
-  ['svg.mid #edgesAll{display:none!important}', 'global-link suppression below detail zoom'],
-  ['svg.overview #nodes,svg.overview #edgesAll,svg.overview #edgesHi{display:none}', 'overview aggregation replaces individual nodes'],
-  ['role="group" aria-label="Grouped overview markers.', 'accessible overview cluster group'],
-  ["if(cluster.nodes.length===1){const nd=cluster.nodes[0];select(nd.id);flyTo(nd,Math.max(k,.95));return;}", 'single overview markers open their detail panel'],
+  ['id="clusters" role="group" aria-label="Lane-by-era summaries.', 'accessible semantic cluster group'],
   ['function renderNodeAudit(nd){', 'detail-panel evidence renderer is defined'],
-  ["activateOverviewCluster(cluster);", 'pointer and keyboard cluster activation'],
+  ["activateSemanticCluster(cluster);", 'pointer and keyboard cluster activation'],
   ["nodeId:targetNode?.getAttribute('data-id')||null", 'pointer-origin node fallback'],
+  ["clusterKey:targetCluster?.getAttribute('data-cluster-key')||null", 'pointer-origin semantic cluster fallback'],
+  ["const clusterKey=cluster?.getAttribute('data-cluster-key')||started?.clusterKey", 'release semantic cluster fallback'],
   ["nodeId=g?.getAttribute('data-id')||started?.nodeId", 'release hit-test fallback'],
-  ["role:'button',tabindex:cluster.key===overviewFocusKey?0:-1", 'roving cluster keyboard focus'],
+  ["role:'button',tabindex:cluster.key===semanticFocusKey?0:-1", 'roving semantic cluster keyboard focus'],
+  ["class:'semanticCluster'", 'semantic cluster group data contract'],
+  ["class:'clusterCard'", 'semantic cluster card data contract'],
+  ["class:'clusterTitle'", 'semantic cluster title data contract'],
+  ["class:'clusterCount'", 'semantic cluster count data contract'],
+  ["class:'clusterAnchor'", 'semantic cluster landmark data contract'],
+  ['function rebuildSemanticClusters(){', 'deterministic semantic cluster rebuild'],
+  ["const visible=NODES.filter(isNodeVisible),signature=timeScale+'|'+visible.map(nd=>nd.id).join('|');", 'semantic cluster rebuild signature'],
   ["document.getElementById('filterStatus').textContent", 'screen-reader filter result feedback'],
-  ["version:'1.0.0',edition:'2026-08-21-stable-1',releaseState:'Stable'", 'current Stable identity marker'],
+  ["version:'1.2.0',edition:'2026-08-21-stable-1',releaseState:'Stable'", 'v1.2.0 Stable identity over the unchanged dataset'],
   ['id="editionBadge" href="./release-manifest.json"', 'visible exact-build badge'],
   ['id="contributeLink" href="https://github.com/neb6dav/ai_tech_tree/issues/new/choose"', 'persistent contribution link'],
-  ['id="controlsBtn" aria-label="Filters and view options"', 'stable responsive controls accessible name'],
   ['#repositoryLink{color:var(--ink);text-decoration:none;display:flex;align-items:center;justify-content:center;min-width:32px;min-height:32px', 'repository minimum pointer target'],
   ['@media (max-width:480px){#noscript{inset:104px 8px auto;max-height:calc(100dvh - 112px)}#noscriptIdentity{inset:8px 8px auto}}', 'narrow no-JavaScript cards do not overlap'],
   ['function layoutYear(nd){return DATE_OVERRIDES[nd.id]?.start??nd.y;}', 'composite nodes anchor at first milestone'],
@@ -67,6 +94,55 @@ for (const [fragment, label] of [
   ['Linked works or papers', 'generalized linked-work filter'],
   ["Frege's Begriffsschrift → Hilbert's formalist program", 'visible 1879 development']
 ]) requireText(fragment, label);
+
+requirePattern(/@media\s*\(\s*max-width\s*:\s*740px\s*\)\s*\{[\s\S]*?:root\s*\{(?=[^}]*--lane-rail\s*:\s*0px)(?=[^}]*--dock-edge\s*:\s*0px)(?=[^}]*--map-left\s*:\s*0px)(?=[^}]*--safe-center-offset\s*:\s*0px)[^}]*\}/i, 'zero-width mobile rail and dock reset', css);
+
+for (const [pattern, label] of [
+  [/<g\b(?=[^>]*\bid="edgesBackbone")[^>]*>/i, 'persistent orientation-spine SVG group'],
+  [/<g\b(?=[^>]*\bid="anchorLabels")[^>]*>/i, 'curated anchor-label SVG group'],
+  [/<[^>]+\bid="primaryControls"[^>]*>[\s\S]*?\bid="viewSeg"/i, 'desktop primary controls keep the four-view switcher direct'],
+  [/<[^>]+\bid="mobileStart"(?=[^>]*\baria-labelledby=)[^>]*>/i, 'labelled mobile first-run chooser'],
+  [/<[^>]+\bid="allZoomNotice"(?=[^>]*\brole="status")(?=[^>]*\baria-live="polite")[^>]*>/i, 'polite low-zoom All-mode notice'],
+  [/data-start-node="transformer"/i, 'mobile Transformer guided start'],
+  [/data-start-node="frontier26"/i, 'mobile frontier guided start'],
+  [/data-start-view="opportunity"/i, 'mobile research-directions guided start'],
+  [/data-start-action="whole-map"/i, 'mobile Whole Map fallback'],
+  [/Showing the orientation spine at this zoom; zoom in for all connections\./i, 'low-zoom All-mode explanation'],
+  [/>\s*Connections\s*</i, 'reader-facing Connections label'],
+  [/>\s*Related\s*</i, 'reader-facing Related relationship mode']
+]) requirePattern(pattern, label);
+
+const primaryRule = css.match(/#primaryControls\s*\{([^}]*)\}/i);
+assert(primaryRule && /display\s*:\s*(?:flex|grid)/i.test(primaryRule[1]), 'Desktop primary controls must be directly visible by default at 1024px and wider');
+const primaryStart = html.indexOf('id="primaryControls"');
+const secondaryStart = html.indexOf('id="secondaryControls"');
+assert(primaryStart >= 0 && secondaryStart > primaryStart, 'Primary and secondary control groups must remain distinct');
+const primaryMarkup = html.slice(primaryStart, secondaryStart);
+for (const id of ['viewSeg', 'modeSeg', 'themeBtn', 'shareBtn', 'helpBtn']) {
+  assert(primaryMarkup.includes(`id="${id}"`), `Desktop primary controls must directly expose #${id}`);
+}
+
+const mobileCss = cssAtRuleBlock(/@media\s*\(\s*max-width\s*:\s*740px\s*\)/i, '740px mobile layout breakpoint');
+assert(/#mobileStart\s*\{[^}]*display\s*:\s*(?:grid|flex|block)/i.test(mobileCss), 'Mobile first-run chooser must be visible at 740px and below');
+assert(/#nodeTable\s*,[^{}]*#nodeTable\s+tr\s*,[^{}]*#nodeTable\s+td\s*\{[^}]*display\s*:\s*block/i.test(mobileCss), 'Mobile List must reflow the existing table into cards');
+assert(/#nodeTable\s+thead\s*\{[^}]*position\s*:\s*absolute/i.test(mobileCss), 'Mobile List column headings must be visually hidden without removing table semantics');
+assert(/#nodeTable\s+td::before\s*\{[^}]*content\s*:\s*attr\(data-label\)/i.test(mobileCss), 'Mobile List cards must expose column labels from data-label attributes');
+assert(!/\bid="mobileList"/i.test(html), 'Mobile List must not duplicate the 339-record table');
+
+const hiddenSelectors = [...css.matchAll(/([^{}]+)\{([^{}]*\bdisplay\s*:\s*none(?:\s*!important)?[^{}]*)\}/gi)]
+  .map(match => match[1]);
+assert(hiddenSelectors.some(selector => /svg\.overview\s+#nodes/.test(selector)), 'Overview must replace full node cards with curated orientation marks');
+assert(hiddenSelectors.some(selector => /svg\.overview\s+#edgesAll/.test(selector)), 'Overview must keep the 711-edge All layer detail-only');
+assert(hiddenSelectors.some(selector => /svg\.overview\s+#edgesHi/.test(selector)), 'Overview must suppress stale transient highlight paths');
+assert(hiddenSelectors
+  .filter(selector => /svg\.(?:overview|mid)/.test(selector))
+  .every(selector => !/#edgesBackbone|#anchorLabels/.test(selector)), 'Low-zoom orientation spine and anchor labels must never be hidden by a display:none rule');
+
+const presentationMatch = html.match(/<script\b(?=[^>]*\bid="atlas-presentation-data")(?=[^>]*\btype="application\/json")[^>]*>([\s\S]*?)<\/script>/i);
+assert(presentationMatch, 'Embedded v1.1.0 presentation payload is missing');
+const presentation = JSON.parse(presentationMatch[1]);
+assert.equal(presentation.anchors.length, 24, 'Embedded presentation payload must expose exactly 24 curated anchors');
+assert.equal(presentation.backboneRelationshipIds.length, 72, 'Embedded presentation payload must expose exactly 72 curated spine relationships');
 
 for (const [fragment, label] of [
   ['id="networkView"', 'network-view host'],
@@ -107,6 +183,8 @@ for (const [fragment, label] of [
   ["getElementById('allStatusBtn')", 'removed all-classifications handler'],
   ['aria-pressed="false" aria-label="Light mode"', 'state-labeled theme toggle']
 ]) forbidText(fragment, label);
+assert(!/>\s*Links\s*</i.test(html), 'Obsolete reader-facing Links label remains');
+assert(!/>\s*On hover\s*</i.test(html), 'Obsolete reader-facing On hover label remains');
 
 const scripts = executableScripts();
 assert.equal(scripts.length, 7, 'Expected seven executable inline scripts plus JSON and JSON-LD data scripts');
@@ -114,8 +192,54 @@ scripts.forEach((body, index) => new vm.Script(body, { filename: `inline-script-
 
 const applicationScript = scripts.find(body => body.includes('function openPanel(nd)'));
 assert(applicationScript, 'Main application script is missing');
+assert(!/\bcontrols\.setAttribute\(['"]aria-hidden['"]/.test(applicationScript), 'The visible #primaryControls must not be hidden through aria-hidden on its parent');
+assert(/(?:\bsecondaryControls\w*|document\.getElementById\(['"]secondaryControls['"]\))\.setAttribute\(['"]aria-hidden['"]/.test(applicationScript), 'Responsive hidden state must be scoped to #secondaryControls');
 for (const helper of ['appendStatusProfile', 'renderResearchGuide', 'renderNodeAudit', 'renderSourceActions', 'appendRelationGroup']) {
   assert(new RegExp(`function ${helper}\\(`).test(applicationScript), `Detail panel calls undefined critical helper ${helper}`);
+}
+
+const firstRunSource = sourceForFunction(applicationScript, 'shouldShowFirstRun');
+assert(/return\s+!embedMode\s*&&\s*!restored\s*&&\s*shouldShowWelcome\(\)/.test(firstRunSource), 'Embed mode and restored deep links must bypass first-run onboarding');
+assert((applicationScript.match(/shouldShowFirstRun\(/g) || []).length >= 2, 'Startup must consult shouldShowFirstRun() after restoring state');
+const activeOverlaySource = sourceForFunction(applicationScript, 'activeOverlayModal');
+assert(/legend[^;\n]*classList\.contains\(['"]welcome['"]\)/.test(activeOverlaySource), 'First-run side sheet must retain modal focus containment');
+
+const orientationSpineSource = sourceForFunction(applicationScript, 'buildOrientationSpine');
+assert(/mountRelationshipLayer\(['"]backbone['"]\)/.test(orientationSpineSource), 'Orientation spine must delegate mounting to the keyed relationship layer');
+const orientationMountSource = sourceForFunction(applicationScript, 'mountRelationshipLayer');
+assert(/\(PRESENTATION_DATA\?\.backboneRelationshipIds\|\|\[\]\)\.forEach\(relationshipId=>/.test(orientationMountSource), 'Orientation spine mount must iterate the curated relationship inventory');
+assert(/relationshipById\.get\(relationshipId\),path=edge&&acquireRelationshipPath\(edge,'backbone'\)/.test(orientationMountSource), 'Orientation spine mount must acquire each curated relationship through the keyed path pool');
+assert(/gEdgesBackbone\.replaceChildren\(spineFragment\)/.test(orientationMountSource), 'Orientation spine mount must atomically replace its keyed paths');
+const anchorLabelsSource = sourceForFunction(applicationScript, 'buildAnchorLabels');
+assert(/\.anchors[^;\n]{0,48}\.(?:forEach|map)\(/.test(anchorLabelsSource), 'Anchor labels must render from the curated node inventory');
+assert(/gAnchorLabels\.replaceChildren\(/.test(anchorLabelsSource), 'Anchor labels must atomically replace their 24 labels');
+assert((applicationScript.match(/buildOrientationSpine\(\)/g) || []).length >= 2, 'Startup must build the curated orientation spine');
+assert((applicationScript.match(/buildAnchorLabels\(\)/g) || []).length >= 2, 'Startup must build the curated anchor labels');
+
+const clearPreviewSource = sourceForFunction(applicationScript, 'clearPreviewState');
+assert(/hoverId\s*=\s*null/.test(clearPreviewSource), 'Preview cleanup must reset its hover identity');
+assert(/hideInspector\(\)/.test(clearPreviewSource), 'Preview cleanup must dismiss its shared inspector');
+assert(/clearHi\(\)/.test(clearPreviewSource), 'Preview cleanup must remove highlighted relationships');
+const setViewSource = sourceForFunction(applicationScript, 'setViewMode');
+assert(/clearPreviewState\(\)/.test(setViewSource), 'Every view change must centrally clear the prior preview');
+
+const allZoomNoticeSource = sourceForFunction(applicationScript, 'updateAllZoomNotice');
+assert(/mode\s*===\s*['"]all['"]/.test(allZoomNoticeSource), 'All-mode notice must depend on the selected connection mode');
+assert(/(?:k\s*<\s*DETAIL_K|lodMode\s*!==\s*['"]detail['"])/.test(allZoomNoticeSource), 'All-mode notice must cover both overview and mid zoom');
+assert(/\b(?:notice|allZoomNotice)\.hidden\s*=/.test(allZoomNoticeSource), 'All-mode notice must use the native hidden state');
+const relationshipLayerSource = sourceForFunction(applicationScript, 'syncRelationshipLayers');
+assert(/lodMode\s*===\s*['"]detail['"][^;\n]*mode\s*===\s*['"]all['"]/.test(relationshipLayerSource), 'The full 711-relationship layer must be limited to detail zoom in All mode');
+assert(/gEdgesAll\.style\.display\s*=\s*full\s*\?/.test(relationshipLayerSource), 'The full relationship layer must be hidden outside its detail-only state');
+const semanticZoomSource = sourceForFunction(applicationScript, 'updateSemanticZoom');
+assert(/updateAllZoomNotice\(\)/.test(semanticZoomSource), 'Semantic zoom changes must refresh the All-mode notice');
+const modeHandlerStart = applicationScript.indexOf("document.getElementById('modeSeg').addEventListener");
+assert(modeHandlerStart >= 0, 'Connections mode handler is missing');
+assert(/updateAllZoomNotice\(\)/.test(applicationScript.slice(modeHandlerStart, modeHandlerStart + 2400)), 'Connection-mode changes must refresh the All-mode notice');
+
+const listRendererSource = sourceForFunction(applicationScript, 'renderListView');
+assert(/\.dataset\.label\s*=/.test(listRendererSource), 'List cells must carry mobile data-label metadata');
+for (const label of ['Year', 'Atlas entry', 'Branch', 'Classification', 'Evidence']) {
+  assert(listRendererSource.includes(`'${label}'`) || listRendererSource.includes(`"${label}"`), `Mobile List is missing its ${label} card label`);
 }
 assert.equal((applicationScript.match(/function renderNodeAudit\(nd\)\{/g) || []).length, 1, 'Evidence renderer must have exactly one definition');
 assert(applicationScript.includes(';renderNodeAudit(nd);renderSourceActions(nd);'), 'Detail panel no longer invokes its evidence renderer');
@@ -281,43 +405,22 @@ for (const scale of [0.2, 0.34, 0.79]) {
 assert(26 * 0.8 >= 20, 'Detail cards begin before they reach a readable height');
 assert(12 * 0.8 >= 9.5, 'Detail labels begin before they reach a readable text size');
 
-const clusterResults = [];
-for (const scale of [0.02, 0.05, 0.1, 0.199]) {
-  const cell = 20;
-  const groups = new Map();
-  for (const node of nodes) {
-    const gx = Math.floor(((node.x + node.width / 2) * scale) / cell);
-    const gy = Math.floor(((node.y + 13) * scale) / cell);
-    const key = `${gx}:${gy}`;
-    groups.set(key, (groups.get(key) || 0) + 1);
-  }
-  const total = [...groups.values()].reduce((sum, count) => sum + count, 0);
-  assert.equal(total, nodes.length, `Overview grouping lost entries at scale ${scale}`);
-  assert(12 + 1.25 < cell, 'Maximum overview glyph exceeds its map cell');
-  clusterResults.push({ scale, markers: groups.size, entries: total, largestGroup: Math.max(...groups.values()) });
-}
-
-const activationMatch = html.match(/function activateOverviewCluster\(cluster\)\{[\s\S]*?\n\}/);
-assert(activationMatch, 'Overview activation function is missing');
-const activationCalls = [];
-const activationContext = {
-  k: 0.1,
-  select: id => activationCalls.push(['select', id]),
-  flyTo: (node, scale) => activationCalls.push(['flyTo', node.id, scale]),
-  zoomOverviewCluster: cluster => activationCalls.push(['zoom', cluster.nodes.length])
+const semanticClusterSource = sourceForFunction(applicationScript, 'rebuildSemanticClusters');
+assert(/semanticClusters=\[\.\.\.groups\.values\(\)\]\.sort\(\(a,b\)=>LANES\.indexOf\(a\.lane\)-LANES\.indexOf\(b\.lane\)\|\|a\.era\.y0-b\.era\.y0\|\|a\.key\.localeCompare\(b\.key\)\)/.test(semanticClusterSource), 'Semantic cards must use deterministic lane/era/key ordering');
+assert(/cluster\.nodes\.sort\(\(a,b\)=>layoutYear\(a\)-layoutYear\(b\)\|\|a\.t\.localeCompare\(b\.t\)\|\|a\.id\.localeCompare\(b\.id\)\)/.test(semanticClusterSource), 'Semantic card contents must use deterministic node ordering');
+assert(/data-cluster-key/.test(semanticClusterSource), 'Semantic cards must expose their stable cluster key');
+assert(/semanticFocusKey/.test(semanticClusterSource), 'Semantic cards must preserve roving focus state');
+assert(/activateSemanticCluster\(cluster\)/.test(applicationScript), 'Semantic cluster activation function is missing');
+const semanticClusterResults = {
+  classes: ['semanticCluster', 'clusterCard', 'clusterTitle', 'clusterCount', 'clusterAnchor'],
+  deterministic: true
 };
-vm.runInNewContext(activationMatch[0] + ';globalThis.activateOverviewCluster=activateOverviewCluster;', activationContext);
-activationContext.activateOverviewCluster({ nodes: [{ id: 'singleton' }] });
-assert.deepEqual(activationCalls, [['select', 'singleton'], ['flyTo', 'singleton', 0.95]], 'A singleton overview marker must open and reveal its node');
-activationCalls.length = 0;
-activationContext.activateOverviewCluster({ nodes: [{ id: 'one' }, { id: 'two' }] });
-assert.deepEqual(activationCalls, [['zoom', 2]], 'A multi-entry overview marker must remain a disambiguating zoom action');
 
 console.log(JSON.stringify({
   status: 'PASS',
   edition: data.dataset.edition,
   world: { width: worldWidth, approximateHeight: worldHeight },
-  semanticZoom: { detailAt: 0.8, overviewBelow: 0.2, midResults, clusterResults },
+  semanticZoom: { detailAt: 0.8, overviewBelow: 0.2, midResults, semanticClusterResults },
   dockResults,
   fitResults,
   footerStatisticsPresent: false,

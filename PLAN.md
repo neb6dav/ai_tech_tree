@@ -1,8 +1,8 @@
 ---
-roadmap_version: 5
-active_release: "v1.0.0"
-release_mode: "source_checkpoints_until_v1.0.0"
-active_work_package: "complete"
+roadmap_version: 7
+active_release: "v1.0.1"
+release_mode: "source_checkpoints_v1.0.1_through_v1.2.0"
+active_work_package: "first_minute_readability_repair"
 base_sha: "85108c78fa86c86634d4c0944839696369e687cd"
 product_boundary_sha: "53e3a4f9c0624096aede63e0345390a3c021bac0"
 working_branch: "main"
@@ -10,8 +10,16 @@ expanded_archive_branch: "archive/v0.1.1-expanded-release-safety-0870d47"
 last_completed_checkpoint: "v1.0.0"
 last_completed_local_checkpoint: "v1.0.0"
 next_exact_action: >-
-  No checkpoint work remains. Monitor the public v1.0.0 release and create a
-  new roadmap decision before making any post-v1 product or data changes.
+  Preserve public v1.0.0 while implementing the approved v1.0.1 readability
+  checkpoint. Validate each UI release candidate independently; do not merge,
+  tag, or deploy without separate promotion authorization.
+potential_future_editions:
+  - version: "v1.3.0"
+    status: "roadmap_candidate_not_authorized"
+    purpose: "Read-only combinatorial lens over existing sourced records, constraints, open directions, and hypothesis-grade proposed combinations"
+  - version: "v1.4.0"
+    status: "roadmap_candidate_not_authorized"
+    purpose: "Curator-reviewed hypothesis workbench with structured tests, provenance, deduplication, and explicit promotion into canonical Opportunity data"
 last_verified_commands:
   - command: "GitHub Actions Pages run 32548737168 and live payload reconciliation"
     status: "PASS"
@@ -68,9 +76,11 @@ authorization:
   intermediate_public_tags: "not_planned"
   intermediate_public_deployments: "not_planned"
   v1_public_tag_and_deployment: "completed_2026-08-21"
+  post_v1_ui_repair_program: "implementation_authorized_release_promotion_not_authorized"
+  post_v1_combinatorial_editions: "roadmap_only_not_authorized"
 ---
 
-# Product roadmap to v1.0.0
+# Product roadmap
 
 ## Operating rule
 
@@ -230,6 +240,96 @@ Acceptance gate:
   run `32489666292` before the v1 source candidate was declared complete.
 - The final diff contains only product, data, documentation, and proportionate
   test changes required by this roadmap.
+
+## v1.0.1 through v1.2.0 — UI, navigation, and researcher delivery
+
+Status: implementation authorized as source checkpoints. Each checkpoint must
+preserve the v1 semantic inventory and pass the existing publication contract.
+Merge, public tag, and deployment remain separate promotion decisions.
+
+### v1.0.1 — first-minute readability repair
+
+- Make the no-state desktop landing legible at whole-map scale through a
+  curator-reviewed orientation spine and anchor labels.
+- Give mobile readers guided starts before the whole-map overview.
+- Expose primary view and connection controls at normal desktop widths; simplify
+  onboarding, previews, List, Opportunity copy, and nonlinear-time guidance.
+- Preserve every existing URL key, evidence field, and semantic record.
+
+### v1.1.0 — semantic navigation redesign
+
+- Establish overview, mid, and detail altitudes without rendering every
+  relationship at low zoom.
+- Add a shared inspector, density/linear time choice, six curated tours, and a
+  command palette while retaining keyboard, touch, and no-JavaScript access.
+- Reuse relationship paths and retire inactive lazy-view DOM so the complete
+  interaction sequence remains below the independent 8,000-element ceiling.
+
+### v1.2.0 — researcher delivery
+
+- Generate one static, source-backed page for every canonical node, including
+  sitemap discovery and metadata-safe citation conveniences.
+- Add a lazy same-origin edition comparison and a read-only embed mode.
+- Keep the default interactive shell single-file and free of external runtime
+  dependencies.
+
+Acceptance for all three editions includes unchanged 339-node and
+711-relationship identities, both themes, responsive and keyboard behavior,
+URL round trips, generated-artifact parity, publication tests, the calibrated
+DOM/HTML/gzip budgets, and the current Lighthouse limits.
+
+## Potential later editions — combinatorial exploration
+
+Status: roadmap candidates only. Neither implementation nor release is
+authorized, and no target date is assigned. The intent is to help readers
+reason across ideas already represented in the atlas without presenting a
+machine-generated combination as a discovery, demonstrated capability, or
+globally novel research direction.
+
+### v1.3.0 candidate — read-only combinatorial lens
+
+- Let a reader select or traverse a bounded set of existing developments, open
+  directions, constraints, and Opportunity records.
+- Show recorded relationships, hypothesis-grade `proposed_combination` links,
+  shared prerequisites, complementary capabilities, tensions, and known
+  blockers while preserving the exact source record IDs and citations.
+- Distinguish a combination explicitly supported by an attached source, an
+  existing editorial or hypothesis proposal, and a dataset-derived candidate.
+  Absence from this edition means only "not represented here," not novelty.
+- Keep derived candidates ephemeral or export-only. They must not write to the
+  canonical atlas, receive stable public IDs, or affect evidence counts.
+- Bound pair/triple exploration and expose filters so the feature aids thought
+  rather than dumping an unreviewable combinatorial product.
+
+Acceptance planning for this edition must define deterministic candidate
+inputs, provenance display, evidence/status labeling, duplicate suppression,
+performance bounds, accessibility, and hostile cases where proximity or a
+missing source is incorrectly treated as evidence or novelty.
+
+### v1.4.0 candidate — curator-reviewed hypothesis workbench
+
+- Turn a selected candidate into a structured hypothesis card containing the
+  proposed mechanism, relevant records and sources, unmet need, novelty-search
+  scope, minimal experiment, baselines, disconfirming result, likely resources,
+  blockers, and failure reasons.
+- Require human review, source checking, and duplicate/adjacent-work review
+  before a candidate can enter canonical Opportunity data.
+- Retain the input stable IDs, source edition, derivation origin
+  (`human`, `rule`, or `model`), and material AI-assistance disclosure. Sources
+  supporting the constituent ideas do not support the synthesized combination
+  unless they explicitly address that combination.
+- Preserve the distinction between proposal, review, and evidence. Approved
+  inclusion records that a hypothesis was curated; it does not establish that
+  the combination works or is globally novel.
+- Assign or freeze a public ID only at approved canonical promotion, after an
+  RD-009 compatibility review and deliberate inventory-baseline update. Review
+  of one candidate must not upgrade the surrounding `imported_unreviewed` data.
+
+Both candidates must preserve the v1 URL and identity contract; preserve the
+separate canonical authority and semantics of the historical atlas and
+Opportunity data; avoid unreviewed bulk AI imports; and receive a separate
+implementation/release authorization before code, schema, or public data
+changes begin.
 
 ## Explicit non-goals through v1.0.0
 

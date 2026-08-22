@@ -1,19 +1,22 @@
 ---
-roadmap_version: 4
+roadmap_version: 5
 active_release: "v1.0.0"
 release_mode: "source_checkpoints_until_v1.0.0"
-active_work_package: "v1.0.0-authorized-release"
+active_work_package: "complete"
 base_sha: "85108c78fa86c86634d4c0944839696369e687cd"
 product_boundary_sha: "53e3a4f9c0624096aede63e0345390a3c021bac0"
-working_branch: "codex/v0.1.1-minimal-to-v1"
+working_branch: "main"
 expanded_archive_branch: "archive/v0.1.1-expanded-release-safety-0870d47"
-last_completed_checkpoint: "v1.0.0-stable-pre-tag-source-candidate"
-last_completed_local_checkpoint: "v1.0.0-stable-pre-tag-source-candidate"
+last_completed_checkpoint: "v1.0.0"
+last_completed_local_checkpoint: "v1.0.0"
 next_exact_action: >-
-  Merge the exact hosted-verified release tree to protected main through the
-  squash-only pull-request path, create annotated tag v1.0.0 at that exact main
-  commit, dispatch the guarded Pages workflow from main, and verify live bytes.
+  No checkpoint work remains. Monitor the public v1.0.0 release and create a
+  new roadmap decision before making any post-v1 product or data changes.
 last_verified_commands:
+  - command: "GitHub Actions Pages run 32548737168 and live payload reconciliation"
+    status: "PASS"
+    runtime: "ubuntu-24.04; protected-main workflow source 1f5d730193985665b7bcd2139cac4aca902513f0; tagged source 7d0d26fe87c8be2868c63738c503f90d35789b3a"
+    scope: "Annotated tag object 67e1f7b7dea394451d4a2d54a929037982d30517 -> exact v1.0.0 commit; deployment 6032724134; live manifest SHA-256 d39b65a71d015e9e6b1a26e9020bf3ee2d3e9d44ebf33c9bed08fa64709e1811; all 13 HTTP-exposed payloads match manifest bytes and SHA-256; .nojekyll remains an artifact-only Pages control file"
   - command: "node scripts/lighthouse-budget.mjs --calibrate"
     status: "PASS"
     runtime: "win32 x64; Node v24.14.1; Lighthouse 13.4.1; Playwright 1.62.1; Chromium 151.0.7922.34 rev1234"
@@ -50,12 +53,13 @@ source_checkpoints:
     verification_state: "hosted_verified"
     purpose: "Calibrated local-origin performance regression gate and committed-generated-output policy confirmation"
   - version: "v1.0.0"
-    status: "authorized_release_in_progress"
+    status: "complete"
+    verification_state: "public_release_verified"
     product_version: "1.0.0"
     release_state: "Stable"
     edition: "2026-08-21-stable-1"
     date: "2026-08-21"
-    tag_and_deployment: "authorized_2026-08-21"
+    tag_and_deployment: "completed_2026-08-21"
     purpose: "Stable public contract and authorized release"
 authorization:
   source_checkpoint_implementation: "authorized"
@@ -63,7 +67,7 @@ authorization:
   source_checkpoint_pushes: "authorized"
   intermediate_public_tags: "not_planned"
   intermediate_public_deployments: "not_planned"
-  v1_public_tag_and_deployment: "authorized_2026-08-21"
+  v1_public_tag_and_deployment: "completed_2026-08-21"
 ---
 
 # Product roadmap to v1.0.0
@@ -172,11 +176,13 @@ Acceptance gate:
 
 ## v1.0.0 — stable release
 
-Status: release implementation, review, and hosted verification are
-complete, and the final annotated tag and public deployment were explicitly
-authorized on 2026-08-21. The full local and `ubuntu-24.04` build/test closures
-pass, and hostile review reports no open P1/P2. The stable release identity is version
-`1.0.0`, release state
+Status: complete. Release implementation, review, hosted verification,
+annotated tag, public deployment, and live byte reconciliation all passed on
+2026-08-21. The immutable `v1.0.0` tag object `67e1f7b7` peels to release
+commit `7d0d26fe`; Pages run `32548737168` deployed it successfully as
+deployment `6032724134`. The full local and `ubuntu-24.04` build/test closures
+pass, and hostile review reports no open P1/P2. The stable release identity is
+version `1.0.0`, release state
 `Stable`, edition `2026-08-21-stable-1`, dated 2026-08-21.
 
 Deliverables:

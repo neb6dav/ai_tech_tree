@@ -692,7 +692,6 @@ function resolveTag(repositoryRoot, environment) {
   if (!tag && typeof environment.GITHUB_REF === 'string' && environment.GITHUB_REF.startsWith('refs/tags/')) {
     tag = environment.GITHUB_REF.slice('refs/tags/'.length).trim();
   }
-  if (!tag) tag = gitOutput(repositoryRoot, ['describe', '--tags', '--exact-match', 'HEAD']);
   if (!tag) return null;
   return assertNonEmptyString(tag, 'release tag');
 }

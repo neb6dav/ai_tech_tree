@@ -141,6 +141,30 @@ test('stages a deterministic tree and sorted release manifest', async () => {
   await assert.rejects(readFile(path.join(root, '_site', 'stale.txt')), error => error.code === 'ENOENT');
 });
 
+test('does not infer a release tag from ambient local git tags', async () => {
+  const root = await makeRoot();
+  await writeBaseFixture(root);
+  execFileSync('git', ['init', '--quiet'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['config', 'user.name', 'stage-site-test'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['config', 'user.email', 'stage-site-test@example.invalid'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['config', 'core.autocrlf', 'false'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['add', '--', '.'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['commit', '--quiet', '-m', 'fixture'], { cwd: root, windowsHide: true });
+  execFileSync('git', ['tag', '-a', 'v1.2.3', '-m', 'fixture release'], { cwd: root, windowsHide: true });
+  const head = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8', windowsHide: true }).trim();
+
+  const result = await stageSite({
+    repositoryRoot: root,
+    environment: {
+      AI_TREE_COMMIT_SHA: head,
+      npm_config_user_agent: environment.npm_config_user_agent
+    },
+    checkOnly: true
+  });
+
+  assert.equal(result.manifest.tag, null);
+});
+
 test('requires an explicit dataset release state for the staged identity', async () => {
   const root = await makeRoot();
   await writeBaseFixture(root);

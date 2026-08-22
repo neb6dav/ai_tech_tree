@@ -2,7 +2,7 @@
 roadmap_version: 4
 active_release: "v1.0.0"
 release_mode: "source_checkpoints_until_v1.0.0"
-active_work_package: "v1.0.0-final-authorization-hold"
+active_work_package: "v1.0.0-authorized-release"
 base_sha: "85108c78fa86c86634d4c0944839696369e687cd"
 product_boundary_sha: "53e3a4f9c0624096aede63e0345390a3c021bac0"
 working_branch: "codex/v0.1.1-minimal-to-v1"
@@ -10,9 +10,9 @@ expanded_archive_branch: "archive/v0.1.1-expanded-release-safety-0870d47"
 last_completed_checkpoint: "v1.0.0-stable-pre-tag-source-candidate"
 last_completed_local_checkpoint: "v1.0.0-stable-pre-tag-source-candidate"
 next_exact_action: >-
-  Await separate explicit authorization before creating an annotated v1.0.0
-  tag or performing any public deployment. Do not tag, deploy, or promote the
-  hosted-verified source candidate without that authorization.
+  Merge the exact hosted-verified release tree to protected main through the
+  squash-only pull-request path, create annotated tag v1.0.0 at that exact main
+  commit, dispatch the guarded Pages workflow from main, and verify live bytes.
 last_verified_commands:
   - command: "node scripts/lighthouse-budget.mjs --calibrate"
     status: "PASS"
@@ -50,20 +50,20 @@ source_checkpoints:
     verification_state: "hosted_verified"
     purpose: "Calibrated local-origin performance regression gate and committed-generated-output policy confirmation"
   - version: "v1.0.0"
-    status: "hosted_verified_pre_tag"
+    status: "authorized_release_in_progress"
     product_version: "1.0.0"
     release_state: "Stable"
     edition: "2026-08-21-stable-1"
     date: "2026-08-21"
-    tag_and_deployment: "requires_final_confirmation"
-    purpose: "Stable public contract and release candidate"
+    tag_and_deployment: "authorized_2026-08-21"
+    purpose: "Stable public contract and authorized release"
 authorization:
   source_checkpoint_implementation: "authorized"
   source_checkpoint_commits: "authorized"
   source_checkpoint_pushes: "authorized"
   intermediate_public_tags: "not_planned"
   intermediate_public_deployments: "not_planned"
-  v1_public_tag_and_deployment: "requires_final_confirmation"
+  v1_public_tag_and_deployment: "authorized_2026-08-21"
 ---
 
 # Product roadmap to v1.0.0
@@ -170,16 +170,14 @@ Acceptance gate:
 - The committed-generated-output decision is explicit and does not change the
   public data contract.
 
-## v1.0.0 — stable release candidate
+## v1.0.0 — stable release
 
-Status: source-candidate implementation, review, and hosted verification are
-complete. The full local and `ubuntu-24.04` build/test closures pass, and
-hostile review reports no open P1/P2. The stable source identity is version
+Status: release implementation, review, and hosted verification are
+complete, and the final annotated tag and public deployment were explicitly
+authorized on 2026-08-21. The full local and `ubuntu-24.04` build/test closures
+pass, and hostile review reports no open P1/P2. The stable release identity is version
 `1.0.0`, release state
-`Stable`, edition `2026-08-21-stable-1`, dated 2026-08-21. `Stable` is artifact
-and data identity for the final pre-tag source bytes; it does not attest an
-annotated tag, deployment, or public promotion. Those remain separately
-authorized final actions.
+`Stable`, edition `2026-08-21-stable-1`, dated 2026-08-21.
 
 Deliverables:
 
@@ -207,8 +205,8 @@ Deliverables:
 - Keep the historical review cutoff at `2026-08-04` and the diffusion
   Opportunity map explicitly `alpha`, dated `2026-08-19`, and
   `imported_unreviewed`; stable application status does not upgrade evidence.
-- Produce a reviewed `v1.0.0` source candidate. Tagging and public deployment
-  remain final explicit actions.
+- Promote only the exact reviewed `v1.0.0` commit through an annotated tag on
+  protected `main` and the guarded manual Pages workflow.
 
 Acceptance gate:
 
@@ -219,8 +217,9 @@ Acceptance gate:
   the ordered historical and Opportunity identity digests match the frozen v1
   baseline.
 - Version `1.0.0`, edition `2026-08-21-stable-1`, date 2026-08-21, citation,
-  application shell, generated exports, and staged manifest agree while the
-  pre-tag manifest truthfully records that no release tag has been authorized.
+  application shell, generated exports, and staged manifest agree; ordinary
+  validation expects a null tag, while the deployment gate requires exactly
+  the authorized annotated `v1.0.0` tag.
 - The v0.2.2 gate received `ubuntu-24.04` hosted-runner confirmation in Actions
   run `32489666292` before the v1 source candidate was declared complete.
 - The final diff contains only product, data, documentation, and proportionate

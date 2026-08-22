@@ -2,7 +2,7 @@
 
 ## Purpose and release status
 
-The AI Research Tech Tree is a public research atlas designed to help readers explore the chronology and recorded relationships of artificial-intelligence research. Version `1.0.0`, release state `Stable`, edition `2026-08-21-stable-1`, is the stable source candidate. `Stable` identifies the artifact and data in the final pre-tag source bytes; it does not attest an annotated tag, deployment, or public promotion, which remain separately authorized actions. It is a navigational and synthesis artifact. It is not a substitute for reading the cited literature, an exhaustive bibliography, a systematic review, or a peer-reviewed causal history.
+The AI Research Tech Tree is a public research atlas designed to help readers explore the chronology and recorded relationships of artificial-intelligence research. Version `1.0.0`, release state `Stable`, edition `2026-08-21-stable-1`, is the tagged stable release. The release is promoted only from its approved annotated tag on protected `main`. It is a navigational and synthesis artifact. It is not a substitute for reading the cited literature, an exhaustive bibliography, a systematic review, or a peer-reviewed causal history.
 
 The project favors transparent uncertainty over false completeness. A visible evidence gap or unassessed relationship is part of the published record and an invitation to improve it.
 

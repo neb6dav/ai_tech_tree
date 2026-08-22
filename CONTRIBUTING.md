@@ -2,7 +2,7 @@
 
 Thank you for helping improve the AI Research Tech Tree. This project welcomes corrections, additional evidence, new developments, open research directions, relationship revisions, accessibility improvements, and reproducibility fixes.
 
-The atlas is at the `v1.0.0` stable source-candidate boundary. Contributions should make uncertainty easier to see, not merely make the graph larger. Tagging and deployment are separate maintainer actions; a source candidate or pull-request preview is not itself a citable release.
+The atlas is at the tagged `v1.0.0` Stable release boundary. Contributions should make uncertainty easier to see, not merely make the graph larger. Pull-request previews and untagged builds are not citable releases; public promotion remains a guarded maintainer action from an approved annotated tag.
 
 ## Choose the smallest useful contribution
 

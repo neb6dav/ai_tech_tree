@@ -1,10 +1,10 @@
 name: Prepare GitHub Pages release
 
-# Publication hold: under RD-006 and RD-007, this reusable-only entry point
-# must not deploy an intermediate or tag-null artifact from main. Annotated-tag
-# promotion and public deployment require separate explicit authorization.
+# RD-006/RD-007 release path: an authorized manual run starts on protected
+# main, then checks out and verifies the exact annotated v1.0.0 tag. This keeps
+# the github-pages environment's main-only policy while deploying tagged bytes.
 on:
-  workflow_call:
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -16,15 +16,19 @@ concurrency:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
     env:
       AI_TREE_REQUIRE_CLEAN: "true"
+      AI_TREE_AUTHORIZED_TAG: "v1.0.0"
 
     steps:
-      - name: Check out repository
+      - name: Check out authorized release tag
         uses: actions/checkout@v7
         with:
+          ref: refs/tags/v1.0.0
+          fetch-depth: 0
+          fetch-tags: true
           persist-credentials: false
 
       - name: Set up Node.js
@@ -32,6 +36,24 @@ jobs:
         with:
           node-version: 24
           cache: npm
+
+      - name: Verify annotated tag and protected-main ancestry
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_REF" = "refs/heads/main"
+          tag_ref="refs/tags/${AI_TREE_AUTHORIZED_TAG}"
+          test "$(git cat-file -t "$tag_ref")" = "tag"
+          tag_commit="$(git rev-parse "${tag_ref}^{commit}")"
+          test "$tag_commit" = "$(git rev-parse HEAD)"
+          git show-ref --verify --quiet refs/remotes/origin/main
+          test "$tag_commit" = "$GITHUB_SHA"
+          test "$tag_commit" = "$(git rev-parse refs/remotes/origin/main)"
+          package_version="$(node -p "require('./package.json').version")"
+          test "v${package_version}" = "$AI_TREE_AUTHORIZED_TAG"
+          echo "AI_TREE_COMMIT_SHA=$tag_commit" >> "$GITHUB_ENV"
+          echo "AI_TREE_RELEASE_TAG=$AI_TREE_AUTHORIZED_TAG" >> "$GITHUB_ENV"
+          echo "AI_TREE_EXPECT_RELEASE_TAG=$AI_TREE_AUTHORIZED_TAG" >> "$GITHUB_ENV"
 
       - name: Install exact dependencies
         run: npm ci

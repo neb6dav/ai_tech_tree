@@ -4,7 +4,9 @@ All notable public changes to the AI Research Tech Tree will be documented here.
 
 ## [Unreleased]
 
-**Target: v1.0.0 Stable — 2026-08-21.** This section describes the final pre-tag source bytes for dataset edition `2026-08-21-stable-1`. It records neither an authorized tag nor a promotion or deployment.
+## [1.0.0] - 2026-08-21
+
+**Stable release.** This release publishes dataset edition `2026-08-21-stable-1` from the authorized annotated `v1.0.0` tag.
 
 ### Added
 
@@ -19,7 +21,7 @@ All notable public changes to the AI Research Tech Tree will be documented here.
 
 - Extended the deterministic build, Content Security Policy hashes, release checks, accessibility checks, and contribution guidance to cover the Opportunity View.
 - Moved exported atlas record URLs to the root application while retaining the former HTML filename as a state-preserving compatibility entry point.
-- Synchronized the v1.0.0 Stable identity across the package, application, datasets, citation metadata, changelog, sitemap, and staged manifest while retaining a null staged tag until authorization.
+- Synchronized the v1.0.0 Stable identity across the package, application, datasets, citation metadata, changelog, sitemap, and tagged staged manifest.
 
 ### Known limitations
 
@@ -58,5 +60,6 @@ All notable public changes to the AI Research Tech Tree will be documented here.
 - The public-beta canonical atlas records remain embedded in the application source, so some content diffs are larger than the intended long-term source layout.
 - The 2-D WebGL network view requires browser graphics support; Timeline and List remain the fallback views.
 
-[Unreleased]: https://github.com/neb6dav/ai_tech_tree/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/neb6dav/ai_tech_tree/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/neb6dav/ai_tech_tree/compare/v0.1.0...v1.0.0
 [0.1.0]: https://github.com/neb6dav/ai_tech_tree/releases/tag/v0.1.0

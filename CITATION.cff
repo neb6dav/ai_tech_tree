@@ -1,15 +1,14 @@
 cff-version: 1.2.0
 message: >-
-  These are the final v1.0.0 stable source bytes dated 2026-08-21. Cite the
-  tagged release once available. The exact staged-source commit and checksums
-  are recorded in release-manifest.json; a null manifest tag means the source
-  has not yet been tagged or published.
+  Cite the tagged v1.0.0 stable release dated 2026-08-21. The exact staged-source
+  commit, release tag, and checksums are recorded in release-manifest.json.
 title: "AI Research Tech Tree"
 type: dataset
 authors:
   - name: "@neb6dav"
     website: "https://github.com/neb6dav"
 version: 1.0.0
+date-released: "2026-08-21"
 repository-code: "https://github.com/neb6dav/ai_tech_tree"
 url: "https://neb6dav.github.io/ai_tech_tree/"
 license: CC-BY-SA-4.0

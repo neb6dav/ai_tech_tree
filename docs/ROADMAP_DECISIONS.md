@@ -37,8 +37,10 @@ requires a separate explicit decision; do not change the policy opportunisticall
 
 ## RD-006 — Promote releases from approved annotated tags
 
-Promote the public root only from approved annotated tags reachable from
-protected `main`. Pull requests receive downloadable preview artifacts and
+Promote the public root only from approved annotated tags at the exact current
+protected-`main` commit. The authorized manual workflow starts from `main`,
+checks out the tag, rejects lightweight or mismatched tags, and stages the
+tagged commit explicitly. Pull requests receive downloadable preview artifacts and
 there is no public `/dev` lane. The v0.2.0 Chromium smoke gate verifies
 representative desktop, mobile, deep-link, focus, and no-JavaScript behavior.
 Screenshots remain optional review artifacts rather than brittle golden-image
@@ -48,8 +50,8 @@ assertions.
 
 Treat `v0.1.1`, `v0.2.0`, and `v0.2.2` as internal source checkpoints. They
 do not require public tags or deployments. `v1.0.0` is the sole public release
-target in this sequence, and its tag and deployment remain a final explicit
-action after the complete product gate passes.
+target in this sequence. Its annotated tag and deployment were explicitly
+authorized on 2026-08-21 after the complete product gate passed.
 
 The sequence is intentionally narrow: publication repair, canonical-data
 parity and browser proof, performance calibration and generated-output policy
@@ -81,13 +83,11 @@ run `32489666292`, completing the `v0.2.2` source checkpoint. The workflow label
 does not freeze the evolving runner image, and the measurements are not live
 GitHub Pages delivery or real-user field performance.
 
-## RD-009 — Freeze the v1 stable source-candidate contract
+## RD-009 — Freeze the v1 stable release contract
 
-The stable source candidate carries product version `1.0.0`, release state
-`Stable`, dataset edition `2026-08-21-stable-1`, and date 2026-08-21. `Stable`
-is artifact and data identity for the final pre-tag source bytes; it does not
-attest or authorize an annotated tag, deployment, or public promotion. Those
-remain separate explicit actions under RD-006 and RD-007.
+The stable release carries product version `1.0.0`, release state `Stable`,
+dataset edition `2026-08-21-stable-1`, and date 2026-08-21. Its authorized
+annotated tag and guarded Pages deployment follow RD-006 and RD-007.
 
 The v1 contract freezes the existing root application and compatibility alias,
 historical JSON/JSON-LD/NDJSON exports, stable and compatibility Opportunity

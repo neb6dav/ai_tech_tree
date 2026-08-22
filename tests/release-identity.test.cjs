@@ -6,6 +6,11 @@ const path = require('node:path');
 const test = require('node:test');
 
 const ROOT = path.resolve(__dirname, '..');
+const EXPECTED_RELEASE_TAG = process.env.AI_TREE_EXPECT_RELEASE_TAG || null;
+assert.ok(
+  EXPECTED_RELEASE_TAG === null || EXPECTED_RELEASE_TAG === 'v1.0.0',
+  'AI_TREE_EXPECT_RELEASE_TAG must be unset or exactly v1.0.0'
+);
 const EXPECTED = Object.freeze({
   version: '1.0.0',
   citationVersion: '1.0.0',
@@ -74,7 +79,8 @@ function loadSnapshot() {
     opportunityData: readJson('src/data/opportunities/diffusion-models.alpha.json'),
     catalog: readJson('src/data/atlas/catalog.json'),
     stageConfig: readJson('config/pages-stage.v1.json'),
-    manifest: readJson('_site/release-manifest.json')
+    manifest: readJson('_site/release-manifest.json'),
+    pagesWorkflow: read('.github/workflows/pages.yml')
   };
 }
 
@@ -143,17 +149,14 @@ function assertIdentity(snapshot) {
   assertHtmlIdentity(snapshot.indexHtml, 'generated index');
 
   assert.match(snapshot.citation, /^version:\s*1\.0\.0\s*$/mu, 'CITATION stable source version');
-  assert(!/^date-released:/mu.test(snapshot.citation), 'CITATION must not claim a public release date before an authorized tag');
-  assert(snapshot.citation.includes('final v1.0.0 stable source bytes dated 2026-08-21'), 'CITATION stable source date');
-  assert.match(snapshot.citation, /Cite the\s+tagged release once available/u, 'CITATION future citation instruction');
-  assert.match(snapshot.citation, /null manifest tag means the source\s+has not yet been tagged or published/u, 'CITATION pre-tag boundary');
+  assert.match(snapshot.citation, /^date-released:\s*"2026-08-21"\s*$/mu, 'CITATION release date');
+  assert.match(snapshot.citation, /Cite the tagged v1\.0\.0 stable release dated 2026-08-21/u, 'CITATION tagged-release instruction');
   assert(snapshot.citation.includes('release-manifest.json'), 'CITATION exact-build route');
   assert(!/development edition|public[ -]beta/iu.test(snapshot.citation), 'CITATION current identity must be stable');
 
   assert(snapshot.changelog.includes('## [Unreleased]'), 'CHANGELOG Unreleased section');
-  assert(snapshot.changelog.includes('Target: v1.0.0 Stable — 2026-08-21'), 'CHANGELOG stable source target');
-  assert(snapshot.changelog.includes('records neither an authorized tag nor a promotion or deployment'), 'CHANGELOG pre-tag boundary');
-  assert(!/^## \[1\.0\.0\]/mu.test(snapshot.changelog), 'CHANGELOG must not claim a v1.0.0 public release before tagging');
+  assert(snapshot.changelog.includes('## [1.0.0] - 2026-08-21'), 'CHANGELOG stable release section');
+  assert(snapshot.changelog.includes('authorized annotated `v1.0.0` tag'), 'CHANGELOG annotated-tag release boundary');
   const currentChangelog = snapshot.changelog.slice(0, snapshot.changelog.indexOf('## [0.1.0]'));
   assert(!/development edition|public[ -]beta/iu.test(currentChangelog), 'current CHANGELOG identity must be stable');
   assert(snapshot.changelog.includes('**Public beta**'), 'historical public-beta changelog wording must remain');
@@ -177,15 +180,25 @@ function assertIdentity(snapshot) {
   assert.equal(snapshot.manifest.releaseState, EXPECTED.releaseState, 'staged manifest release state');
   assert.equal(snapshot.manifest.schemaVersion, '1.2.0', 'staged manifest identity schema');
   assert.match(snapshot.manifest.commit, /^[0-9a-f]{40}$/u, 'staged manifest full commit');
-  assert.equal(snapshot.manifest.tag, null, 'stable pre-tag manifest must remain unauthorized');
+  assert.equal(snapshot.manifest.tag, EXPECTED_RELEASE_TAG, 'staged manifest must match the explicitly expected release tag');
   assert.equal(snapshot.manifest.fileCount, 14, 'stable manifest payload count');
   const citationFile = snapshot.manifest.files.find((file) => file.path === 'CITATION.cff');
   assert(citationFile, 'staged CITATION payload');
   assert.equal(citationFile.mediaType, 'text/yaml; charset=utf-8', 'staged CITATION payload media type');
   assert.match(citationFile.sha256, /^[0-9a-f]{64}$/u, 'staged CITATION payload digest');
+
+  for (const fragment of [
+    'workflow_dispatch:',
+    'ref: refs/tags/v1.0.0',
+    'test "$GITHUB_REF" = "refs/heads/main"',
+    'test "$(git cat-file -t "$tag_ref")" = "tag"',
+    'test "$tag_commit" = "$GITHUB_SHA"',
+    'test "$tag_commit" = "$(git rev-parse refs/remotes/origin/main)"',
+    'AI_TREE_EXPECT_RELEASE_TAG=$AI_TREE_AUTHORIZED_TAG'
+  ]) assert(snapshot.pagesWorkflow.includes(fragment), `Pages release guard missing ${fragment}`);
 }
 
-test('v1.0.0 Stable pre-tag identity is synchronized without promoting alpha Opportunity data', () => {
+test('v1.0.0 Stable release identity is synchronized without promoting alpha Opportunity data', () => {
   assertIdentity(loadSnapshot());
 });
 
@@ -193,16 +206,17 @@ test('identity contract fails closed on representative release-drift mutations',
   const mutations = [
     ['stale lockfile', (copy) => { copy.packageLock.version = '0.1.0'; }],
     ['stale export', (copy) => { copy.normalized.dataset.edition = '2026-08-20-public-beta-2'; }],
-    ['released citation', (copy) => { copy.citation += '\ndate-released: "2026-08-21"\n'; }],
+    ['stale citation date', (copy) => { copy.citation = copy.citation.replace('date-released: "2026-08-21"', 'date-released: "2026-08-20"'); }],
     ['missing social identity', (copy) => { copy.indexHtml = copy.indexHtml.replace('AI Research Tech Tree - v1.0.0 Stable', 'AI Research Tech Tree'); }],
     ['misdirected badge', (copy) => { copy.canonicalHtml = copy.canonicalHtml.replace('id="editionBadge" href="./release-manifest.json"', 'id="editionBadge" href="./"'); }],
-    ['premature tag', (copy) => { copy.manifest.tag = 'v1.0.0'; }],
+    ['unexpected tag', (copy) => { copy.manifest.tag = EXPECTED_RELEASE_TAG === null ? 'v1.0.0' : null; }],
     ['stale manifest release state', (copy) => { copy.manifest.releaseState = 'Development edition'; }],
     ['renamed public distribution', (copy) => { copy.normalized.dataset.distributions[0].filename = 'graph.jsonld'; }],
     ['redirected contribution guide', (copy) => { copy.catalog.project.contributionGuideUrl = 'https://example.test/contribute'; }],
     ['promoted Opportunity data', (copy) => { copy.opportunityData.metadata.importStatus.state = 'validated'; }],
     ['stale Network source version', (copy) => { copy.networkSource = copy.networkSource.replace("VERSION = '1.0.0'", "VERSION = '0.1.1'"); }],
-    ['missing citation payload', (copy) => { copy.manifest.files = copy.manifest.files.filter((file) => file.path !== 'CITATION.cff'); }]
+    ['missing citation payload', (copy) => { copy.manifest.files = copy.manifest.files.filter((file) => file.path !== 'CITATION.cff'); }],
+    ['lightweight-tag release workflow', (copy) => { copy.pagesWorkflow = copy.pagesWorkflow.replace('git cat-file -t', 'git rev-parse'); }]
   ];
   const original = loadSnapshot();
   for (const [label, mutate] of mutations) {

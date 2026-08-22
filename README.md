@@ -2,11 +2,11 @@
 
 The AI Research Tech Tree is a public, evidence-linked atlas of artificial-intelligence research developments, open directions, landmark works, and recorded relationships. It combines a chronological Timeline, a structural Network, a capability-oriented Opportunity View, and an accessible List.
 
-**Release channel: `v1.0.0` stable source candidate.** The candidate carries release state `Stable` and dataset edition `2026-08-21-stable-1`, dated 2026-08-21. `Stable` is the artifact and data identity of the final pre-tag source bytes; it does not attest an annotated tag, deployment, or public promotion. Those remain separate explicit actions, so an untagged source build or pull-request preview is not a citable release. Each staged preview records its exact commit, tag state, and checksums in `release-manifest.json`. The atlas remains a curated research aid, not a complete literature review, a peer-reviewed historical account, or a claim that every displayed relationship is causal. Records expose their available sources and review state so that gaps can be inspected and improved in public.
+**Release channel: `v1.0.0` Stable.** The release carries dataset edition `2026-08-21-stable-1`, dated 2026-08-21, and is promoted only from the authorized annotated `v1.0.0` tag on protected `main`. Each staged build records its exact commit, tag state, and checksums in `release-manifest.json`; pull-request previews and untagged builds remain non-release artifacts. The atlas remains a curated research aid, not a complete literature review, a peer-reviewed historical account, or a claim that every displayed relationship is causal. Records expose their available sources and review state so that gaps can be inspected and improved in public.
 
 The bounded `v0.1.1`, `v0.2.0`, and `v0.2.2` source checkpoints are preserved
-in [`PLAN.md`](PLAN.md). The `v1.0.0` source candidate freezes the public
-contract described below; it does not authorize its own tag or deployment.
+in [`PLAN.md`](PLAN.md). The authorized `v1.0.0` release freezes the public
+contract described below and retains the same bounded product scope.
 
 - Public site: <https://neb6dav.github.io/ai_tech_tree/>
 - Repository: <https://github.com/neb6dav/ai_tech_tree>
@@ -42,7 +42,7 @@ See [METHODOLOGY.md](METHODOLOGY.md) for the inclusion, sourcing, relationship, 
 
 ## Repository map
 
-The `v1.0.0` source candidate keeps a single-file application shell while the historical atlas is authored in a strict 15-lane canonical dataset. The build projects that canonical data into the application and the machine-readable publication artifacts.
+The `v1.0.0` release keeps a single-file application shell while the historical atlas is authored in a strict 15-lane canonical dataset. The build projects that canonical data into the application and the machine-readable publication artifacts.
 
 ### Maintained source
 
@@ -78,9 +78,8 @@ Generated artifacts remain committed through `v1.0.0` so releases can be inspect
 
 ## v1 public contract
 
-The stable source identity is version `1.0.0`, release state `Stable`, edition
-`2026-08-21-stable-1`, dated 2026-08-21. This is artifact and data identity,
-not evidence of a tag or deployment. The historical-atlas review cutoff
+The stable release identity is version `1.0.0`, release state `Stable`, edition
+`2026-08-21-stable-1`, dated 2026-08-21. The historical-atlas review cutoff
 remains `2026-08-04`; the edition date does not imply that every historical
 record was re-reviewed on 2026-08-21. The diffusion Opportunity map remains an
 `alpha` dataset dated `2026-08-19` with import state `imported_unreviewed`.
@@ -163,7 +162,7 @@ The static contract uses a pinned browser-compatible HTML attribute decoder, rej
 
 The stable Opportunity endpoints are `./data/opportunities/diffusion-models.alpha.json` and `./data/opportunities/opportunity-map.schema.json`. The former `./src/data/opportunities/...` endpoints remain available for compatibility: the data is an exact second publication of the maintained JSON, while the old schema URL is a small schema with its own truthful `$id` that delegates to the stable canonical schema. The public `./ai-research-tech-tree.html` alias likewise redirects to `./` and preserves query and hash state when JavaScript is available; its no-JavaScript fallback redirects to the root application.
 
-The same sequence is configured to run in GitHub Actions on the `ubuntu-24.04` runner label; the label is fixed in the workflow, while the hosted image behind it can change. Pull requests receive a downloadable staged-site preview artifact. A pull request is not ready to merge if a build changes generated files or leaves untracked source files. Under RD-006 and RD-007, an annotated tag and public deployment remain under explicit hold until separately authorized.
+The same sequence is configured to run in GitHub Actions on the `ubuntu-24.04` runner label; the label is fixed in the workflow, while the hosted image behind it can change. Pull requests receive a downloadable staged-site preview artifact. A pull request is not ready to merge if a build changes generated files or leaves untracked source files. Under RD-006 and RD-007, Pages deployment is a manual protected-`main` workflow that verifies and checks out the exact annotated `v1.0.0` tag before staging any public bytes.
 
 ## Contributing
 
@@ -181,7 +180,7 @@ GitHub issues and pull requests are the project's track-changes system. The main
 
 ## Citation
 
-Use the repository's **Cite this repository** control or [CITATION.cff](CITATION.cff). The file is synchronized to the `v1.0.0` source candidate and edition `2026-08-21-stable-1`, but cite a tagged release rather than an untagged source build. A future archive may add a DOI without changing stable atlas IDs.
+Use the repository's **Cite this repository** control or [CITATION.cff](CITATION.cff). The file is synchronized to the tagged `v1.0.0` release and edition `2026-08-21-stable-1`. A future archive may add a DOI without changing stable atlas IDs.
 
 ## Licensing
 

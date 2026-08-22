@@ -1,23 +1,25 @@
 ---
-roadmap_version: 7
+roadmap_version: 8
 active_release: "v1.2.0"
 release_mode: "source_checkpoints_v1.0.1_through_v1.2.0"
-active_work_package: "researcher_delivery"
+active_work_package: "stable_release_candidate"
 base_sha: "85108c78fa86c86634d4c0944839696369e687cd"
 product_boundary_sha: "53e3a4f9c0624096aede63e0345390a3c021bac0"
 working_branch: "codex/ui-v1.2.0"
 expanded_archive_branch: "archive/v0.1.1-expanded-release-safety-0870d47"
-verified_implementation_head: "3fff379adc9f21b73c9af18a3ad538e09813f15d"
+verified_implementation_head: "9b2d33d249704a92719df74f8d3900e1998a4cf2"
 pull_request: 11
-verification_merge_tree: "0aeb9ec5b5e21709fced9e3321cef0b3a849aea9"
+pull_request_status: "open_mergeable_blocked_review_required_not_merged"
+public_live_release: "v1.0.0"
+v1_2_tag_and_deployment: "none"
+verification_merge_tree: "8bca644f2160bfbfc0574ae150fb92fa9fd49c6b"
 last_completed_checkpoint: "v1.0.0"
 last_completed_local_checkpoint: "v1.2.0"
-active_release_status: "v1.2.0_stable_release_candidate_owner_approved_verification_pending_not_merged_tagged_or_deployed"
+active_release_status: "v1.2.0_stable_release_candidate_owner_approved_windows_and_ubuntu_verified_open_unmerged_untagged_undeployed"
 next_exact_action: >-
-  Root runs the final Stable-candidate Windows and hosted-Ubuntu verification,
-  then holds for separate merge, tag, and deployment authorization. Do not
-  perform any promotion action under this checkpoint.
-presentation_inventory_owner_review: "owner_approved_2026-08-22_exact_24_anchors_72_spine_edges_and_six_tours"
+  Hold for separate merge, annotated-tag, and deployment authorization. The
+  public/live release remains v1.0.0; no v1.2.0 tag or deployment exists.
+presentation_inventory_owner_review: "owner_approved_2026-08-22_exact_24_anchors_72_spine_edges_and_six_tours_44_narratives_digest_ca4240fdaf5a3e6ac4484fafac28e0311ea5cbb4dff725dfb5894c1265001722_caveated_supersession_ids_contextual_reviewed_false_not_established"
 potential_future_editions:
   - version: "v1.3.0"
     status: "roadmap_candidate_not_authorized"
@@ -26,6 +28,18 @@ potential_future_editions:
     status: "roadmap_candidate_not_authorized"
     purpose: "Curator-reviewed hypothesis workbench with structured tests, provenance, deduplication, and explicit promotion into canonical Opportunity data"
 last_verified_commands:
+  - command: "PowerShell: $env:AI_TREE_REQUIRE_CLEAN='true'; npm test"
+    status: "PASS"
+    runtime: "Windows x64; Node v24.14.1; exact clean head 9b2d33d249704a92719df74f8d3900e1998a4cf2"
+    scope: "Final v1.2.0 Stable-candidate verification: 18/18 browser tests, DOM peak 7244/8000, HTML 4,589,551 bytes, gzip 672,588 bytes, semantic digest 865174514ba64e20d6f2a90471a6766b6d5fa18f5b0e62c85d9601de077a50f2, 339 nodes/711 relationships/339 sitemap node URLs/0 semantic changes/embed read-only, clean manifest commit matches head, tag null, inputsMatchCommit true, Lighthouse medians score 52/FCP 23182.4641/LCP 23347.9641/TBT 199.5/CLS 0"
+  - command: "PowerShell: $env:AI_TREE_REQUIRE_CLEAN='true'; $env:AI_TREE_RELEASE_TAG='v1.2.0'; $env:AI_TREE_EXPECT_RELEASE_TAG='v1.2.0'; npm run stage:site; node --test --test-isolation=none tests/release-identity.test.cjs"
+    status: "PASS"
+    runtime: "Windows x64; local fixed-tag environment simulation to be rerun clean after the PLAN ledger commit; no real tag created"
+    scope: "Release identity accepts the exact future v1.2.0 tag contract while this candidate remains untagged and undeployed; clean simulation is not claimed at head 9b2d33d"
+  - command: "GitHub Actions PR #11 run 32590220575, job 97072770449"
+    status: "PASS"
+    runtime: "ubuntu-24.04; candidate head 9b2d33d249704a92719df74f8d3900e1998a4cf2; tested merge tree 8bca644f2160bfbfc0574ae150fb92fa9fd49c6b; base 34b0c12"
+    scope: "Hosted-Ubuntu Stable-candidate verification: 18/18 browser tests, DOM peak 7244/8000, HTML 4,589,551 bytes, gzip 672,588 bytes, owner_approved presentation inventory, unchanged semantic digest, zero semantic changes, inputsMatchCommit true, generated artifacts clean, preview uploaded, Lighthouse medians score 42/FCP 23183.8298/LCP 23418.2526/TBT 515/CLS 0"
   - command: "npm test"
     status: "PASS"
     runtime: "Windows x64; Node v24.14.1"
@@ -90,11 +104,11 @@ source_checkpoints:
     checkpoint_commit: "710138d"
     purpose: "Semantic navigation redesign source checkpoint"
   - version: "v1.2.0"
-    status: "owner_approved_candidate_pending_final_verification"
-    verification_state: "owner_approved_stable_candidate_verification_pending_windows_and_ubuntu"
+    status: "owner_approved_stable_release_candidate_complete"
+    verification_state: "owner_approved_stable_candidate_verified_windows_and_ubuntu"
     product_version: "1.2.0"
     release_state: "Stable candidate"
-    checkpoint_commit: "3fff379"
+    checkpoint_commit: "9b2d33d249704a92719df74f8d3900e1998a4cf2"
     tag_and_deployment: "not_authorized_not_merged_tagged_or_deployed"
     purpose: "Researcher delivery with static node pages and read-only comparison/embed"
 authorization:

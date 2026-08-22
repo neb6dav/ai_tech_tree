@@ -23,7 +23,8 @@
     "test:sitemap": "node --test tests/sitemap-generation.test.cjs",
     "test:fingerprint": "node --test tests/edition-fingerprints.test.cjs",
     "test:stage-site": "node --test scripts/stage-site.test.mjs",
-    "test:researcher-delivery": "npm run stage:site && node researcher-delivery-gate.js",
+    "test:researcher-delivery:staged": "node researcher-delivery-gate.js",
+    "test:researcher-delivery": "npm run stage:site && npm run test:researcher-delivery:staged",
     "test:site-contract:unit": "node --test tests/site-contract-test.test.cjs",
     "test:site-contract": "node scripts/site-contract-test.cjs",
     "test:performance-budget:unit": "node --test tests/performance-budget-test.test.cjs",
@@ -31,12 +32,14 @@
     "test:lighthouse:unit": "node --test tests/lighthouse-budget.test.mjs",
     "test:lighthouse": "node scripts/lighthouse-budget.mjs",
     "test:canonical-data": "node --test tests/canonical-atlas.test.cjs",
-    "test:browser": "npm run stage:site && node --test tests/browser-smoke.test.mjs && npm run test:lighthouse",
+    "test:browser:staged": "node --test tests/browser-smoke.test.mjs && npm run test:lighthouse",
+    "test:browser": "npm run stage:site && npm run test:browser:staged",
     "test:publication-compatibility": "node --test tests/publication-compatibility.test.cjs",
     "test:export-human-urls": "node --test tests/export-human-urls.test.cjs",
     "test:release-identity": "node --test tests/release-identity.test.cjs",
-    "test:publication": "npm run test:canonical-data && npm run test:node-pages && npm run test:sitemap && npm run test:fingerprint && npm run test:stage-site && npm run test:site-contract:unit && npm run test:performance-budget:unit && npm run test:lighthouse:unit && npm run test:publication-compatibility && npm run test:export-human-urls && npm run stage:site && npm run test:researcher-delivery && npm run test:release-identity && npm run test:performance-budget && npm run test:site-contract",
-    "test": "npm run test:core && npm run test:publication && npm run test:browser"
+    "test:publication": "npm run test:canonical-data && npm run test:node-pages && npm run test:sitemap && npm run test:fingerprint && npm run test:stage-site && npm run test:site-contract:unit && npm run test:performance-budget:unit && npm run test:lighthouse:unit && npm run test:publication-compatibility && npm run test:export-human-urls && npm run stage:site && npm run test:researcher-delivery:staged && npm run test:release-identity && npm run test:performance-budget && npm run test:site-contract",
+    "test:fast": "npm run test:core && npm run test:publication",
+    "test": "npm run test:fast && npm run test:browser:staged"
   },
   "dependencies": {
     "@cosmos.gl/graph": "3.4.0"

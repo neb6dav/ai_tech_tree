@@ -1,5 +1,5 @@
 ---
-roadmap_version: 9
+roadmap_version: 10
 active_release: "v1.2.0"
 release_mode: "source_checkpoints_v1.0.1_through_v1.2.0"
 active_work_package: "release_promotion_hold"
@@ -22,6 +22,12 @@ main_validation_commit: "f03b9c9851f786b5181e7d18adbb12a548838fbf"
 last_completed_checkpoint: "v1.0.0"
 last_completed_local_checkpoint: "v1.2.0"
 active_release_status: "v1.2.0_stable_ui_release_candidate_merged_main_validated_untagged_undeployed"
+workflow_policy_status: "implemented_tiered_validation_single_pass_pages"
+workflow_policy:
+  pull_request: "fast_data_generation_html_integrity_no_browser_no_preview"
+  release_candidate: "manual_full_browser_lighthouse_validation_with_preview"
+  pages: "manual_single_job_build_stage_upload_deploy_release_identity_only"
+  post_merge_main: "no_automatic_repetition"
 next_exact_action: >-
   Hold for separate v1.2.0 annotated-tag and deployment authorization. The
   public/live release remains v1.0.0; no v1.2.0 tag, GitHub Pages dispatch, or

@@ -142,13 +142,12 @@ The repository declares Node.js 24.x and npm 11.x as its artifact-producing tool
 
 ```text
 npm ci
-npx playwright install chromium
 npm run build
-npm test
+npm run test:fast
 git diff --exit-code
 ```
 
-`npm test` runs the data, accessibility, layout, Network, Opportunity, canonical-data, staging, contract, and deterministic artifact-budget gates; assembles `_site`; and exercises all four views in headless Chromium at desktop and mobile sizes. The browser gate blocks external requests, console errors and warnings, missing runtime fragments, broken deep links or focus restoration, and active-DOM drift from the reviewed platform peaks (`7,724` on Windows and `7,728` on Linux, reflecting platform font metrics) as well as any breach of the unchanged `8,000` ceiling.
+`npm run test:fast` is the ordinary pull-request tier: it runs the data, accessibility, layout, Network, Opportunity, canonical-data, staging, contract, and deterministic artifact-budget gates without a browser or preview upload. Maintainers can install Chromium and run `npm test` for the manual release-candidate tier; that full suite assembles `_site`, exercises all four views in headless Chromium at desktop and mobile sizes, and runs Lighthouse. The browser gate blocks external requests, console errors and warnings, missing runtime fragments, broken deep links or focus restoration, and active-DOM drift from the reviewed platform peaks (`7,244` on Windows and `7,244` on Linux) as well as any breach of the unchanged `8,000` ceiling.
 
 At the `v0.2.2` checkpoint, Lighthouse is a blocking regression signal against the staged application on a controlled, uncompressed, `no-store` local origin. The source calibration used five independent mobile-profile runs on Windows x64 with Node.js v24.14.1, Lighthouse 13.4.1, Playwright 1.62.1, and Playwright Chromium 151.0.7922.34 revision 1234. Each gate uses the independent median of three runs.
 
@@ -168,7 +167,7 @@ The static contract uses a pinned browser-compatible HTML attribute decoder, rej
 
 The stable Opportunity endpoints are `./data/opportunities/diffusion-models.alpha.json` and `./data/opportunities/opportunity-map.schema.json`. The former `./src/data/opportunities/...` endpoints remain available for compatibility: the data is an exact second publication of the maintained JSON, while the old schema URL is a small schema with its own truthful `$id` that delegates to the stable canonical schema. The public `./ai-research-tech-tree.html` alias likewise redirects to `./` and preserves query and hash state when JavaScript is available; its no-JavaScript fallback redirects to the root application.
 
-The same sequence is configured to run in GitHub Actions on the `ubuntu-24.04` runner label; the label is fixed in the workflow, while the hosted image behind it can change. Pull requests receive a downloadable staged-site preview artifact. A pull request is not ready to merge if a build changes generated files or leaves untracked source files. PR #11 is merged into `main`, and main validation run `32594523153` (job `97083295633`) passed on exact commit `f03b9c9`, including the build, full tests, and generated-file cleanliness; main does not upload a Pages preview. Under RD-006 and RD-007, Pages deployment is a manual protected-`main` workflow that verifies and, after separate authorization, checks out the exact annotated `v1.2.0` tag before staging any public bytes. The merged `v1.2.0 Stable UI release candidate` remains unauthorized for tagging or deployment; the live site remains the `v1.0.0` release.
+GitHub Actions runs the fast, non-browser integrity tier for pull requests and does not upload a preview from that path. A maintainer can manually dispatch the release-candidate mode for full browser/Lighthouse validation and a downloadable preview artifact. There is no automatic post-merge `main` rerun. Under RD-006 and RD-007, Pages is one manual protected-`main` job that checks out the exact annotated `v1.2.0` tag, builds, stages, checks release identity, and uploads and deploys the artifact without rerunning the full suite. The merged `v1.2.0 Stable UI release candidate` remains unauthorized for tagging or deployment; the live site remains the `v1.0.0` release.
 
 ## Contributing
 

@@ -12,6 +12,10 @@ All notable public changes to the AI Research Tech Tree will be documented here.
 - Sitemap entries for the node pages and a read-only same-origin edition comparison and embed surface.
 - Repository-owner approval of the exact 24-anchor, 72-relationship orientation inventory and all six tour narratives. The two legacy supersession links remain explicitly contextual, unreviewed, and not established by this display approval.
 
+### Changed
+
+- Tiered validation now keeps ordinary pull requests fast and non-browser, while manual release candidates run the full browser/Lighthouse suite; Pages uses one manual single-pass build/stage/deploy job.
+
 **v1.1.0 Preview checkpoint (not released, tagged, or deployed).** This interface checkpoint adds semantic zoom altitudes, the evidence inspector, a readable linear scale, guided tours and palette controls, relationship pooling, and DOM disposal; it makes no semantic dataset changes.
 
 ### Added

@@ -52,12 +52,14 @@ A search-result snippet, unsourced model output, or citation title alone is not 
    ```text
    npm ci
    npm run build
-   npm test
+   npm run test:fast
    ```
+
+   `npm run test:fast` is the ordinary pull-request validation tier. Maintainers should install Chromium and run `npm test` for the manually dispatched release-candidate tier, which adds the browser and Lighthouse gates.
 
 5. Inspect the generated diff and the application in both light and dark themes and, when relevant, in Timeline, Network, Opportunity, and List views.
 6. Commit maintained-source changes and the generated artifact changes produced by the build.
-7. From the committed tree, rerun `npm run build`, `npm test`, and `git diff --exit-code` to prove that generation is reproducible and complete.
+7. From the committed tree, rerun `npm run build`, `npm run test:fast`, and `git diff --exit-code` to prove that generation is reproducible and complete. The maintainer release-candidate check additionally reruns `npm test` after Chromium is installed.
 8. Complete every applicable section of the pull-request template.
 
 Maintained historical data lives under `src/data/atlas/`: `manifest.json` fixes

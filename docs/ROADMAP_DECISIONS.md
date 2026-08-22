@@ -219,6 +219,22 @@ citable dataset identity remain v1.0.0; edition `2026-08-21-stable-1`, the
 339-node/711-relationship inventory, and the semantic digest are unchanged.
 Tagging and deployment remain separately unauthorized.
 
+## RD-014 — Bound validation tiers and single-pass Pages publication
+
+The validation workflow now has two mutually exclusive modes. Pull requests
+run the fast data, generation, and HTML integrity tier without Chromium,
+Lighthouse, or a preview upload. A maintainer may manually dispatch the
+release-candidate mode for the full browser and Lighthouse suite and a preview
+artifact. There is no automatic post-merge `main` repetition of those checks.
+
+The manual Pages workflow remains protected by the exact annotated `v1.2.0`
+tag and `main` guards, but its build, source-cleanliness check, staging,
+release-identity check, Pages upload, and deployment now run sequentially in
+one job. Pages does not rerun the full browser suite. This is a bounded
+workflow policy decision only: it records no hosted run result, tag creation,
+or deployment authorization, and preserves the v1.0.0 public/citation
+boundary.
+
 ## Explicit deferrals
 
 ### Through v0.2.0

@@ -268,10 +268,12 @@ function renderCatalogBlock(catalog) {
 }
 
 function renderProject(project) {
-  const properties = Object.entries(project).map(([key, value]) => {
-    const rendered = Array.isArray(value) ? `Object.freeze(${compactJs(value)})` : compactJs(value);
-    return `${jsKey(key)}:${rendered}`;
-  });
+  const properties = Object.entries(project)
+    .filter(([key]) => key !== 'changelog')
+    .map(([key, value]) => {
+      const rendered = Array.isArray(value) ? `Object.freeze(${compactJs(value)})` : compactJs(value);
+      return `${jsKey(key)}:${rendered}`;
+    });
   return `const PROJECT_META=Object.freeze({${properties.join(',')}});`;
 }
 
@@ -430,9 +432,17 @@ function renderNoScriptRows(canonical) {
   }).join('');
 }
 
+function removeRuntimeChangelog(html) {
+  const pattern = /methodology\.appendChild\(legendText\('h4','This edition'\)\);const changes=document\.createElement\('ul'\);PROJECT_META\.changelog\.forEach\(text=>\{const item=document\.createElement\('li'\);item\.textContent=text;changes\.appendChild\(item\);\}\);methodology\.appendChild\(changes\);/g;
+  const matches = [...html.matchAll(pattern)];
+  assert(matches.length <= 1, `Expected at most one runtime changelog projection, found ${matches.length}`);
+  return matches.length === 0 ? html : html.replace(pattern, '');
+}
+
 function applyCanonicalAtlas(html, canonical) {
   assert(canonical && canonical.manifest && canonical.catalog, 'Canonical atlas is required');
   let result = renderCanonicalNodeBlocks(html, canonical);
+  result = removeRuntimeChangelog(result);
   result = replaceFrozenDataScript(result, 'wiki-audit-data', 'const WIKI_AUDIT = Object.freeze(', canonical.sidecars.wikipediaAudit.data);
   result = replaceFrozenDataScript(result, 'research-guide-data', 'const RESEARCH_GUIDE=Object.freeze(', canonical.sidecars.researchGuide.data);
   result = replaceExactlyOnce(
@@ -627,7 +637,14 @@ function extractModel(html) {
   `;
   vm.runInContext(engine.slice(0, extractionAt) + exportCode, context, { filename: 'atlas-engine-prefix.js' });
   assert(warnings.length === 0, `Atlas emitted validation warnings: ${warnings.join(' | ')}`);
-  return clone(context.__KG_MODEL__);
+  const model = clone(context.__KG_MODEL__);
+  // Changelog history remains canonical export metadata, not runtime UI state.
+  // Restore it for the legacy-model parity boundary after the compact runtime
+  // PROJECT_META projection intentionally omits the duplicated list.
+  if (!Object.hasOwn(model.project, 'changelog')) {
+    model.project.changelog = loadCanonicalAtlas().catalog.project.changelog;
+  }
+  return model;
 }
 
 function buildExports(model) {
@@ -1354,6 +1371,7 @@ module.exports = {
   buildExports,
   extractModel,
   main,
+  renderProject,
   renderNoScriptRows,
   safeJson,
   validateReleaseShell

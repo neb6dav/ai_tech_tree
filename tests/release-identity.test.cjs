@@ -191,9 +191,22 @@ function assertIdentity(snapshot) {
     'workflow_dispatch:',
     'ref: refs/tags/v1.0.0',
     'test "$GITHUB_REF" = "refs/heads/main"',
+    'test "$GITHUB_WORKFLOW_SHA" = "$GITHUB_SHA"',
+    'pages.yml@refs/heads/main',
     'test "$(git cat-file -t "$tag_ref")" = "tag"',
-    'test "$tag_commit" = "$GITHUB_SHA"',
-    'test "$tag_commit" = "$(git rev-parse refs/remotes/origin/main)"',
+    '67e1f7b7dea394451d4a2d54a929037982d30517',
+    '7d0d26fe87c8be2868c63738c503f90d35789b3a',
+    'test "$tag_object" = "$AI_TREE_AUTHORIZED_TAG_OBJECT"',
+    'test "$tag_commit" = "$AI_TREE_AUTHORIZED_TAG_COMMIT"',
+    'test "$GITHUB_SHA" = "$main_commit"',
+    'git merge-base --is-ancestor "$tag_commit" "$main_commit"',
+    'test "$(git rev-list --count "${tag_commit}..${main_commit}")" = "1"',
+    'test "$(git rev-parse "${main_commit}^")" = "$tag_commit"',
+    'git diff --name-status --no-renames "$tag_commit" "$main_commit"',
+    'M\\t.github/workflows/pages.yml',
+    'M\\tdocs/ROADMAP_DECISIONS.md',
+    'M\\ttests/release-identity.test.cjs',
+    'npx playwright install --with-deps chromium',
     'AI_TREE_EXPECT_RELEASE_TAG=$AI_TREE_AUTHORIZED_TAG'
   ]) assert(snapshot.pagesWorkflow.includes(fragment), `Pages release guard missing ${fragment}`);
 }
@@ -216,7 +229,9 @@ test('identity contract fails closed on representative release-drift mutations',
     ['promoted Opportunity data', (copy) => { copy.opportunityData.metadata.importStatus.state = 'validated'; }],
     ['stale Network source version', (copy) => { copy.networkSource = copy.networkSource.replace("VERSION = '1.0.0'", "VERSION = '0.1.1'"); }],
     ['missing citation payload', (copy) => { copy.manifest.files = copy.manifest.files.filter((file) => file.path !== 'CITATION.cff'); }],
-    ['lightweight-tag release workflow', (copy) => { copy.pagesWorkflow = copy.pagesWorkflow.replace('git cat-file -t', 'git rev-parse'); }]
+    ['lightweight-tag release workflow', (copy) => { copy.pagesWorkflow = copy.pagesWorkflow.replace('git cat-file -t', 'git rev-parse'); }],
+    ['unbounded recovery workflow', (copy) => { copy.pagesWorkflow = copy.pagesWorkflow.replace('M\\tdocs/ROADMAP_DECISIONS.md', 'M\\tREADME.md'); }],
+    ['missing browser runtime install', (copy) => { copy.pagesWorkflow = copy.pagesWorkflow.replace('npx playwright install --with-deps chromium', 'echo skip-browser-runtime'); }]
   ];
   const original = loadSnapshot();
   for (const [label, mutate] of mutations) {

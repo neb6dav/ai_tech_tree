@@ -37,11 +37,15 @@ requires a separate explicit decision; do not change the policy opportunisticall
 
 ## RD-006 — Promote releases from approved annotated tags
 
-Promote the public root only from approved annotated tags at the exact current
-protected-`main` commit. The authorized manual workflow starts from `main`,
-checks out the tag, rejects lightweight or mismatched tags, and stages the
-tagged commit explicitly. Pull requests receive downloadable preview artifacts and
-there is no public `/dev` lane. The v0.2.0 Chromium smoke gate verifies
+Promote the public root only from approved annotated tags on protected `main`.
+The authorized manual workflow starts from `main`, checks out the tag, rejects
+lightweight or mismatched tags, and stages the tagged commit explicitly. The
+first `v1.0.0` deployment may use one direct-child recovery commit on `main`
+only when its exact diff is limited to the Pages runner definition, the
+release-identity source lock, and this decision record; those files are not
+public payload inputs and the annotated tag remains immutable. Pull requests
+receive downloadable preview artifacts and there is no public `/dev` lane. The
+v0.2.0 Chromium smoke gate verifies
 representative desktop, mobile, deep-link, focus, and no-JavaScript behavior.
 Screenshots remain optional review artifacts rather than brittle golden-image
 assertions.

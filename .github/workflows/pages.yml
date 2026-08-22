@@ -1,8 +1,9 @@
 name: Prepare GitHub Pages release
 
 # RD-006/RD-007 release path: an authorized manual run starts on protected
-# main, then checks out and verifies the exact annotated v1.0.0 tag. This keeps
-# the github-pages environment's main-only policy while deploying tagged bytes.
+# main, then checks out and verifies the exact annotated v1.0.0 tag. The first
+# deployment recovery permits one direct-child main commit whose exact diff is
+# limited to this runner fix, its source-lock test, and the decision record.
 on:
   workflow_dispatch:
 
@@ -21,6 +22,8 @@ jobs:
     env:
       AI_TREE_REQUIRE_CLEAN: "true"
       AI_TREE_AUTHORIZED_TAG: "v1.0.0"
+      AI_TREE_AUTHORIZED_TAG_OBJECT: "67e1f7b7dea394451d4a2d54a929037982d30517"
+      AI_TREE_AUTHORIZED_TAG_COMMIT: "7d0d26fe87c8be2868c63738c503f90d35789b3a"
 
     steps:
       - name: Check out authorized release tag
@@ -42,13 +45,24 @@ jobs:
         run: |
           set -euo pipefail
           test "$GITHUB_REF" = "refs/heads/main"
+          test "$GITHUB_WORKFLOW_SHA" = "$GITHUB_SHA"
+          test "$GITHUB_WORKFLOW_REF" = "${GITHUB_REPOSITORY}/.github/workflows/pages.yml@refs/heads/main"
           tag_ref="refs/tags/${AI_TREE_AUTHORIZED_TAG}"
           test "$(git cat-file -t "$tag_ref")" = "tag"
+          tag_object="$(git rev-parse "$tag_ref")"
+          test "$tag_object" = "$AI_TREE_AUTHORIZED_TAG_OBJECT"
           tag_commit="$(git rev-parse "${tag_ref}^{commit}")"
+          test "$tag_commit" = "$AI_TREE_AUTHORIZED_TAG_COMMIT"
           test "$tag_commit" = "$(git rev-parse HEAD)"
           git show-ref --verify --quiet refs/remotes/origin/main
-          test "$tag_commit" = "$GITHUB_SHA"
-          test "$tag_commit" = "$(git rev-parse refs/remotes/origin/main)"
+          main_commit="$(git rev-parse refs/remotes/origin/main)"
+          test "$GITHUB_SHA" = "$main_commit"
+          git merge-base --is-ancestor "$tag_commit" "$main_commit"
+          test "$(git rev-list --count "${tag_commit}..${main_commit}")" = "1"
+          test "$(git rev-parse "${main_commit}^")" = "$tag_commit"
+          expected_recovery_delta=$'M\t.github/workflows/pages.yml\nM\tdocs/ROADMAP_DECISIONS.md\nM\ttests/release-identity.test.cjs'
+          actual_recovery_delta="$(git diff --name-status --no-renames "$tag_commit" "$main_commit")"
+          test "$actual_recovery_delta" = "$expected_recovery_delta"
           package_version="$(node -p "require('./package.json').version")"
           test "v${package_version}" = "$AI_TREE_AUTHORIZED_TAG"
           echo "AI_TREE_COMMIT_SHA=$tag_commit" >> "$GITHUB_ENV"
@@ -57,6 +71,9 @@ jobs:
 
       - name: Install exact dependencies
         run: npm ci
+
+      - name: Install Chromium for the browser gate
+        run: npx playwright install --with-deps chromium
 
       - name: Build, validate, and stage the public artifact
         run: |

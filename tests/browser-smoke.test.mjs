@@ -896,6 +896,30 @@ describe('staged browser smoke', { concurrency: false }, () => {
     await navigate(page);
     await waitForApp(page);
     await assertCurrentView(page, 'map');
+    const mobileOrientation = await page.evaluate(() => {
+      const row = document.querySelector('#mobileOrientation');
+      const selector = document.querySelector('#eraSelect');
+      const rowBox = row?.getBoundingClientRect();
+      const selectorBox = selector?.getBoundingClientRect();
+      return {
+        rowVisible: row ? getComputedStyle(row).display !== 'none' : false,
+        rowHeight: rowBox?.height ?? 0,
+        selectorHeight: selectorBox?.height ?? 0,
+        selectorOptions: selector?.options.length ?? 0,
+        eraHud: getComputedStyle(document.querySelector('#eraHud')).display,
+        laneHud: getComputedStyle(document.querySelector('#laneHud')).display,
+        visibleDateTags: [...document.querySelectorAll('#eraHud .dateRulerTag')].filter(element => getComputedStyle(element).display !== 'none').length,
+        documentOverflow: document.documentElement.scrollWidth - innerWidth
+      };
+    });
+    assert.equal(mobileOrientation.rowVisible, true, 'mobile map is missing the compact orientation row');
+    assert.ok(mobileOrientation.rowHeight >= 44 - 0.01, 'mobile orientation row misses the 44px target height');
+    assert.ok(mobileOrientation.selectorHeight >= 44 - 0.01, 'mobile era selector misses the 44px target height');
+    assert.equal(mobileOrientation.selectorOptions, 13, 'mobile era selector must retain all 13 eras');
+    assert.equal(mobileOrientation.eraHud, 'none', 'mobile map must not show the desktop era rail');
+    assert.equal(mobileOrientation.laneHud, 'none', 'mobile map must not show the desktop lane rail');
+    assert.equal(mobileOrientation.visibleDateTags, 0, 'mobile map must not show desktop date labels');
+    assert.ok(mobileOrientation.documentOverflow <= 1, 'mobile orientation row creates horizontal page overflow');
     await recordDomCount(page, domSamples, 'mobile Timeline');
 
     await page.locator('#controlsBtn').focus();
@@ -921,6 +945,41 @@ describe('staged browser smoke', { concurrency: false }, () => {
 
     assert.ok(Math.max(...domSamples.map(sample => sample.count)) <= DOM_BUDGET);
     session.assertClean();
+  });
+
+  test('pinned era labels stay collision-free at the reviewed boundary widths', async testContext => {
+    for (const width of [1280, 1109, 1024, 1023, 960, 741, 740, 375]) {
+      const session = await makeSession(testContext, { viewport: { width, height: width <= 740 ? 480 : 768 } });
+      const { page } = session;
+      await navigate(page, '#view=map', `?smoke=era-culling-${width}`);
+      await waitForApp(page);
+      const metrics = await page.evaluate(() => {
+        const visible = element => Boolean(element) && getComputedStyle(element).display !== 'none' && element.getBoundingClientRect().width > 0;
+        const eraTags = [...document.querySelectorAll('#eraHud .eraTag')].filter(visible).map(element => {
+          const rect = element.getBoundingClientRect();
+          return { left: rect.left, right: rect.right, top: rect.top, bottom: rect.bottom };
+        }).sort((a, b) => a.left - b.left);
+        const overlaps = eraTags.some((tag, index) => index > 0 && tag.left < eraTags[index - 1].right + 9);
+        return {
+          eraTags,
+          overlaps,
+          dateTags: [...document.querySelectorAll('#eraHud .dateRulerTag')].filter(visible).length,
+          options: document.querySelectorAll('#eraSelect option').length,
+          mobileRow: visible(document.querySelector('#mobileOrientation')),
+          desktopRails: [document.querySelector('#eraHud'), document.querySelector('#laneHud')].map(visible),
+          overflow: document.documentElement.scrollWidth - innerWidth
+        };
+      });
+      assert.equal(metrics.overlaps, false, `${width}px era labels overlap`);
+      assert.ok(metrics.dateTags <= 32, `${width}px date ruler exceeds 32 labels`);
+      assert.equal(metrics.options, 13, `${width}px era selector lost an era`);
+      if (width <= 740) {
+        assert.equal(metrics.mobileRow, true, `${width}px compact orientation row is missing`);
+        assert.deepEqual(metrics.desktopRails, [false, false], `${width}px desktop rails remain visible`);
+      }
+      assert.ok(metrics.overflow <= 1, `${width}px orientation surfaces create horizontal overflow`);
+      session.assertClean();
+    }
   });
 
   test('narrow detail and compact filter surfaces avoid horizontal overflow', async testContext => {
@@ -1211,6 +1270,151 @@ describe('staged browser smoke', { concurrency: false }, () => {
     );
     await returnLink.click();
     assert.equal(new URL(page.url()).hash, '#node=transformer');
+    session.assertClean();
+  });
+
+  test('trace restoration, low-LOD previews, view teardown, and era lens contracts hold', async testContext => {
+    const session = await makeSession(testContext);
+    const { page } = session;
+
+    await navigate(page, '#trace=transformer&node=gpt3');
+    await waitForApp(page);
+    await page.waitForFunction(() => document.querySelector('#inspector')?.dataset.mode === 'trace');
+    const noCamera = await page.evaluate(() => ({
+      camera: window.__AI_TREE_RESTORE_STATE__?.camera,
+      transform: document.querySelector('#world')?.getAttribute('transform'),
+      summary: document.querySelector('#inspector')?.textContent
+    }));
+    assert.equal(noCamera.camera.valid, false);
+    assert.equal(await page.locator('#inspector h3').textContent(), 'Full lineage · Transformer', 'valid trace must win over a conflicting node hash');
+    assert.match(noCamera.summary, /117 total nodes/);
+    assert.match(noCamera.summary, /196 total relationships/);
+    assert.doesNotMatch(noCamera.transform || '', /scale\(1\)$/u);
+
+    await navigate(page, '#trace=transformer&cx=0&cy=0&z=1');
+    await waitForApp(page);
+    const completeCamera = await page.evaluate(() => ({
+      camera: window.__AI_TREE_RESTORE_STATE__?.camera,
+      transform: document.querySelector('#world')?.getAttribute('transform')
+    }));
+    assert.equal(completeCamera.camera.valid, true);
+    assert.match(completeCamera.transform || '', /scale\(1\)$/u);
+
+    await navigate(page, '#trace=transformer&mode=off&cx=1000&cy=500&z=0.250');
+    await waitForApp(page);
+    await page.waitForFunction(() => {
+      const params = new URLSearchParams(window.location.hash.slice(1));
+      return params.get('cx') && params.get('cy') && params.get('z') && document.querySelector('#inspector')?.dataset.mode === 'trace';
+    });
+    const roundTripCamera = await page.evaluate(() => {
+      const params = new URLSearchParams(window.location.hash.slice(1));
+      return { cx: Number(params.get('cx')), cy: Number(params.get('cy')), z: Number(params.get('z')) };
+    });
+    assert.ok(Math.abs(roundTripCamera.cx - 1000) <= 0.2, `camera cx drifted to ${roundTripCamera.cx}`);
+    assert.ok(Math.abs(roundTripCamera.cy - 500) <= 0.2, `camera cy drifted to ${roundTripCamera.cy}`);
+    assert.ok(Math.abs(roundTripCamera.z - 0.25) <= 0.002, `camera z drifted to ${roundTripCamera.z}`);
+
+    await navigate(page, '#trace=transformer&mode=off');
+    await waitForApp(page);
+    assert.ok(await page.locator('#edgesHi path').count() > 0, 'explicit trace must render with Connections Off');
+    await openControls(page);
+    await page.locator('#chips .chip[data-s="d"]').click();
+    await page.waitForFunction(() => document.querySelector('#inspector')?.textContent.includes('filter-hidden'));
+    assert.match(await page.locator('#inspector').textContent(), /filter-hidden/);
+    await page.locator('#resetFiltersBtn').click();
+    await page.waitForFunction(() => document.querySelector('#inspector')?.textContent.includes('0 filter-hidden'));
+    await page.keyboard.press('Escape');
+    await page.locator('#fitAllBtn').click();
+    await waitForSemanticZoom(page, 'overview');
+    const lowLod = await page.evaluate(() => ({
+      dots: document.querySelectorAll('#nodes .node.lit .ndot').length,
+      labels: document.querySelectorAll('#traceLabels .traceLabel:not([aria-hidden="true"])').length,
+      unlitCards: [...document.querySelectorAll('#nodes .node:not(.lit)')].filter(node => getComputedStyle(node).display !== 'none').length
+    }));
+    assert.ok(lowLod.dots > 0 && lowLod.labels > 0);
+    assert.equal(lowLod.unlitCards, 0);
+
+    const previewNode = page.locator('#nodes .node.lit[data-id]:not([data-id="transformer"])').first();
+    await previewNode.hover({ force: true });
+    await page.waitForFunction(() => document.querySelector('#inspector')?.dataset.mode === 'preview');
+    const hoverText = await page.locator('#inspector').textContent();
+    await previewNode.focus({ force: true });
+    await page.waitForFunction(() => document.querySelector('#inspector')?.dataset.mode === 'preview');
+    const previewText = await page.locator('#inspector').textContent();
+    assert.ok(previewText?.trim());
+    assert.equal(previewText, hoverText, 'pointer and keyboard lineage previews must match');
+    await previewNode.press('Enter');
+    await page.waitForFunction(() => document.querySelector('#panel')?.classList.contains('open'));
+    assert.equal(await page.locator('#traceBtn').getAttribute('aria-pressed'), 'true', 'opening a lineage node must preserve the active trace');
+    await page.keyboard.press('Escape');
+    await page.waitForFunction(() => document.querySelector('#inspector')?.dataset.mode === 'trace');
+    const lstmTraceLabel = page.locator('#traceLabels .traceLabel[data-node-id="lstm"]');
+    assert.equal(await lstmTraceLabel.count(), 1, 'overview trace must expose the LSTM lineage marker');
+    await lstmTraceLabel.click({ force: true });
+    await page.waitForFunction(() => document.querySelector('#panel')?.classList.contains('open'));
+    assert.match(await page.evaluate(() => window.location.hash), /trace=transformer/);
+    assert.ok(await page.locator('#edgesHi path').count() > 0, 'trace-label activation must retain lineage paths');
+    await page.keyboard.press('Escape');
+    await page.waitForFunction(() => document.querySelector('#inspector')?.dataset.mode === 'trace');
+    assert.equal(await page.evaluate(() => document.activeElement?.matches('#inspector .traceSummary h3')), true, 'Escape from lineage details must focus the trace summary');
+    await page.locator('#controlsBtn').focus();
+    await page.waitForFunction(() => document.querySelector('#inspector')?.dataset.mode === 'trace');
+
+    await switchView(page, 'network');
+    await page.waitForFunction(() => document.querySelector('#inspector')?.dataset.mode === 'trace');
+    const networkLabelIds = await page.locator('.networkLabel').evaluateAll(elements => elements.map(element => element.textContent));
+    assert.ok(networkLabelIds.length > 0);
+    await switchView(page, 'list');
+    assert.equal(await page.locator('#inspector').getAttribute('data-mode'), null);
+    await switchView(page, 'map');
+    await page.waitForFunction(() => document.querySelector('#inspector')?.dataset.mode !== 'trace' && !document.querySelector('#svg')?.classList.contains('trace-active'));
+    assert.doesNotMatch(await page.evaluate(() => window.location.hash), /trace=/, 'returning from List must not resurrect the trace hash');
+    assert.equal(await page.locator('#traceLabels .traceLabel').count(), 0, 'returning from List must not resurrect trace labels');
+    await navigate(page, '#trace=transformer');
+    await waitForApp(page);
+    await page.waitForFunction(() => document.querySelector('#inspector')?.dataset.mode === 'trace');
+    await switchView(page, 'opportunity');
+    assert.equal(await page.locator('#inspector').getAttribute('data-mode'), null, 'Opportunity view must clear an active trace');
+    await switchView(page, 'map');
+    await page.waitForFunction(() => document.querySelector('#inspector')?.dataset.mode !== 'trace' && !document.querySelector('#svg')?.classList.contains('trace-active'));
+    assert.doesNotMatch(await page.evaluate(() => window.location.hash), /trace=/, 'returning from Opportunity must not resurrect the trace hash');
+    assert.equal(await page.locator('#traceLabels .traceLabel').count(), 0, 'returning from Opportunity must not resurrect trace labels');
+    await navigate(page, '#trace=transformer&mode=all');
+    await waitForApp(page);
+    await zoomToSemanticLevel(page, 'detail');
+    const allPool = await page.evaluate(() => {
+      const ids = [...document.querySelectorAll('#edgesBackbone path[data-relationship-id],#edgesAll path[data-relationship-id],#edgesHi path[data-relationship-id]')].map(path => path.dataset.relationshipId);
+      return { count: ids.length, unique: new Set(ids).size };
+    });
+    assert.equal(allPool.count, 711, 'All mode must mount exactly one path for each canonical relationship');
+    assert.equal(allPool.unique, 711, 'All mode must not duplicate pooled relationship paths');
+    await page.locator('#fitAllBtn').click();
+    await waitForSemanticZoom(page, 'overview');
+    await page.locator('#traceBtn').count();
+    await page.keyboard.press('Escape');
+    const clearedPaths = await page.evaluate(() => ({
+      backbone: document.querySelectorAll('#edgesBackbone path[data-relationship-id]').length,
+      all: document.querySelectorAll('#edgesAll path[data-relationship-id]').length,
+      active: document.querySelectorAll('#edgesHi path[data-relationship-id]').length
+    }));
+    assert.deepEqual(clearedPaths, { backbone: 72, all: 0, active: 0 }, 'clearing an overview trace must restore only the 72-path spine');
+
+    await page.locator('#eraSelect').selectOption('0');
+    await page.waitForFunction(() => document.querySelector('#inspector')?.dataset.mode === 'era' && document.querySelectorAll('.eraCard').length > 0);
+    assert.ok(await page.locator('.eraLaneGroup h4').count() > 0);
+    assert.ok(await page.locator('.eraCard').count() <= 24);
+    const eraPageOne = await page.locator('.eraPager span').textContent();
+    assert.match(eraPageOne || '', /Page 1 of [2-9]/);
+    await page.locator('.eraPager .btn').last().click();
+    await page.waitForFunction(() => document.querySelector('.eraPager span')?.textContent.includes('Page 2 of'));
+    await page.locator('.eraPager .btn').first().click();
+    await page.waitForFunction(() => document.querySelector('.eraPager span')?.textContent.includes('Page 1 of'));
+    await page.locator('#controlsBtn').focus();
+    assert.equal(await page.evaluate(() => document.activeElement?.id), 'controlsBtn');
+    await switchView(page, 'network');
+    assert.equal(await page.locator('#inspector').getAttribute('data-mode'), null);
+    await switchView(page, 'opportunity');
+    assert.equal(await page.locator('#inspector').getAttribute('data-mode'), null);
     session.assertClean();
   });
 

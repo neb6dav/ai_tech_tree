@@ -181,11 +181,12 @@ requirePattern(/['"]density['"]/, 'time-scale setter accepts density', setTimeSc
 requirePattern(/['"]linear['"]/, 'time-scale setter accepts linear', setTimeScale);
 requirePattern(/relayoutTimeline\(\)/, 'time-scale setter relayouts the map', setTimeScale);
 
-/* URL compatibility and the only v1.1 hash additions. */
+/* URL compatibility: prior keys remain stable; trace is the sole v1.2.1 addition. */
 const currentParams = functionSource(applicationScript, 'currentParams');
-for (const key of ['scale', 'tour', 'step']) {
+for (const key of ['scale', 'tour', 'step', 'mode', 'view']) {
   requirePattern(new RegExp(`\\.set\\(['"]${key}['"]\\s*,`), `${key}= is serialized`, currentParams);
 }
+requirePattern(/\.set\(['"]trace['"]\s*,/, 'trace= is the sole v1.2.1 hash addition', currentParams);
 requirePattern(/timeScale\s*!==\s*['"]density['"]|timeScale\s*===\s*['"]linear['"]/, 'density URLs remain backward compatible without scale=', currentParams);
 requirePattern(/mode\s*!==\s*['"]hover['"]/, 'default Related mode keeps the legacy compact URL', currentParams);
 const restoreState = functionSource(applicationScript, 'restoreState');
@@ -214,8 +215,8 @@ for (const functionName of ['openCommandPalette', 'closeCommandPalette', 'execut
 requirePattern(/\((?:event\.ctrlKey\s*\|\|\s*event\.metaKey|event\.metaKey\s*\|\|\s*event\.ctrlKey)\)[\s\S]{0,180}(?:event\.key\.toLowerCase\(\)|event\.key)\s*===\s*['"]k['"]/, 'Ctrl/Cmd+K opens the command palette', applicationScript);
 requirePattern(/event\.key\s*===\s*['"]\/['"][\s\S]{0,180}(?:q|searchInput)\.focus\(\)/, '/ remains direct search', applicationScript);
 
-/* One fixed inspector is shared by pointer hover and keyboard focus. */
-requirePattern(/id=["']inspector["'][^>]*\brole=["']status["'][^>]*\baria-live=["']polite["']/i, 'polite inspector status region');
+/* One fixed context dock is shared by pointer hover and keyboard focus; announcements live separately. */
+requirePattern(/id=["']contextAnnouncement["'][^>]*\brole=["']status["'][^>]*\baria-live=["']polite["']/i, 'polite context announcement region');
 const inspectorRule = css.match(/#inspector\s*\{([^}]*)\}/i);
 assert(inspectorRule, 'Missing v1.1 semantic-navigation contract: #inspector style rule.');
 requirePattern(/position\s*:\s*fixed/i, 'desktop inspector is fixed', inspectorRule[1]);
@@ -271,12 +272,14 @@ requirePattern(/['"]map['"][\s\S]{0,180}['"]opportunity['"][\s\S]{0,180}['"]netw
 console.log(JSON.stringify({
   status: 'PASS',
   release: 'v1.2.0',
+  candidate: 'v1.2.1',
   tours: presentation.tours.length,
   tourSteps: tourStepCount,
   semanticAltitudes: ['overview', 'mid', 'detail'],
   timeScales: ['density', 'linear'],
   relationshipPathCeiling: canonical.relationships.length,
   activeDomLimit: 8000,
-  hashAdditions: ['scale', 'tour', 'step'],
+  hashAdditions: ['trace'],
+  preservedHashKeys: ['scale', 'tour', 'step', 'mode', 'view'],
   legacyHashMode: 'hover'
 }, null, 2));

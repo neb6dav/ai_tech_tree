@@ -104,9 +104,9 @@ test('canonical shadow reproduces every generated dataset byte and layout byte',
   assert.equal(ndjsonBody, read('ai-research-tech-tree.ndjson'));
   assert.equal(layoutBody, read('network-layout-v1.json'));
   assert.equal(plain.dataset.dataDigest, canonical.manifest.expected.dataDigest);
-  assert.equal(sha256(plainBody), 'e9163737adc8cc20a642c03ca1625f2c7969037e0ef5b8daf3007f9fa9ee3155');
-  assert.equal(sha256(jsonLdBody), '37681fc2ff49ec07eab825a983e0baf0338d9c317587783a72d7c94cd55c7d4d');
-  assert.equal(sha256(ndjsonBody), 'e2ed848e1e937fa8c929d02b9372bc3431ba8446981efe3b63b0582616cfe449');
+  assert.equal(sha256(plainBody), '6b70ef24ee62f96b5564284ac1877d90e3dd00472de4a093fdcd8ecbb5c09468');
+  assert.equal(sha256(jsonLdBody), 'c5e83de813a88a19093b1c829ae6bc18c600af0fd2bfc00a800f0bc34f48549c');
+  assert.equal(sha256(ndjsonBody), '6aa6124136ce56aab0ecaa4745d0f23d32fb286253a13c5c76946e17b4179e72');
   assert.equal(sha256(layoutBody), 'f3b888046699599fbfb95b6c32ab55dc128f58d7a1dd2bf7d9f8b7d1c3bde120');
 });
 

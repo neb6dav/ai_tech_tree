@@ -12,12 +12,12 @@ pull_request: 11
 verification_merge_tree: "0aeb9ec5b5e21709fced9e3321cef0b3a849aea9"
 last_completed_checkpoint: "v1.0.0"
 last_completed_local_checkpoint: "v1.2.0"
-active_release_status: "v1.2.0_source_checkpoint_complete_windows_and_ubuntu_verified_preview_not_merged_tagged_or_deployed"
+active_release_status: "v1.2.0_stable_release_candidate_owner_approved_verification_pending_not_merged_tagged_or_deployed"
 next_exact_action: >-
-  Repository owner reviews and approves or revises the 24 anchors and 72 spine
-  relationships, then separately authorizes promotion. Do not merge, tag, or
-  deploy without that separate authorization.
-presentation_inventory_owner_review: "pending_for_24_anchors_and_72_spine_relationships"
+  Root runs the final Stable-candidate Windows and hosted-Ubuntu verification,
+  then holds for separate merge, tag, and deployment authorization. Do not
+  perform any promotion action under this checkpoint.
+presentation_inventory_owner_review: "owner_approved_2026-08-22_exact_24_anchors_72_spine_edges_and_six_tours"
 potential_future_editions:
   - version: "v1.3.0"
     status: "roadmap_candidate_not_authorized"
@@ -29,11 +29,11 @@ last_verified_commands:
   - command: "npm test"
     status: "PASS"
     runtime: "Windows x64; Node v24.14.1"
-    scope: "Final v1.2.0 source-checkpoint closure: 18/18 browser tests, DOM peak 7244, HTML 4,589,553 bytes, gzip 672,590 bytes, semantic digest 865174514ba64e20d6f2a90471a6766b6d5fa18f5b0e62c85d9601de077a50f2, researcher delivery 339 nodes/711 relationships/339 sitemap node URLs/0 semantic changes/embed read-only, Lighthouse medians score 55/FCP 23398.714/LCP 23409.214/TBT 3/CLS 0"
+    scope: "Historical v1.2.0 Preview checkpoint evidence before owner-approved Stable-candidate changes: 18/18 browser tests, DOM peak 7244, HTML 4,589,553 bytes, gzip 672,590 bytes, semantic digest 865174514ba64e20d6f2a90471a6766b6d5fa18f5b0e62c85d9601de077a50f2, researcher delivery 339 nodes/711 relationships/339 sitemap node URLs/0 semantic changes/embed read-only, Lighthouse medians score 55/FCP 23398.714/LCP 23409.214/TBT 3/CLS 0"
   - command: "GitHub Actions PR #11 run 32587459751, job 97065915025"
     status: "PASS"
     runtime: "ubuntu-24.04; tested PR merge tree 0aeb9ec5b5e21709fced9e3321cef0b3a849aea9; candidate head 3fff379adc9f21b73c9af18a3ad538e09813f15d"
-    scope: "Ubuntu 18/18 browser tests, DOM peak 7244/8000, HTML 4,589,553 bytes, gzip 672,590 bytes, Lighthouse medians score 44/FCP 23180.6411/LCP 23399.51595/TBT 451.5/CLS 0; generated files committed and preview uploaded"
+    scope: "Historical v1.2.0 Preview checkpoint evidence before owner-approved Stable-candidate changes: Ubuntu 18/18 browser tests, DOM peak 7244/8000, HTML 4,589,553 bytes, gzip 672,590 bytes, Lighthouse medians score 44/FCP 23180.6411/LCP 23399.51595/TBT 451.5/CLS 0; generated files committed and preview uploaded"
   - command: "GitHub Actions Pages run 32548737168 and live payload reconciliation"
     status: "PASS"
     runtime: "ubuntu-24.04; protected-main workflow source 1f5d730193985665b7bcd2139cac4aca902513f0; tagged source 7d0d26fe87c8be2868c63738c503f90d35789b3a"
@@ -90,10 +90,10 @@ source_checkpoints:
     checkpoint_commit: "710138d"
     purpose: "Semantic navigation redesign source checkpoint"
   - version: "v1.2.0"
-    status: "complete"
-    verification_state: "source_checkpoint_verified_windows_and_ubuntu"
+    status: "owner_approved_candidate_pending_final_verification"
+    verification_state: "owner_approved_stable_candidate_verification_pending_windows_and_ubuntu"
     product_version: "1.2.0"
-    release_state: "Preview"
+    release_state: "Stable candidate"
     checkpoint_commit: "3fff379"
     tag_and_deployment: "not_authorized_not_merged_tagged_or_deployed"
     purpose: "Researcher delivery with static node pages and read-only comparison/embed"

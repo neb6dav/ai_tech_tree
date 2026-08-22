@@ -10,7 +10,7 @@
     "name": "AI Research Tech Tree",
     "description": "A navigable atlas of selected AI research developments, their recorded relationships, and research directions from 1879 through 2026.",
     "edition": "2026-08-21-stable-1",
-    "releaseState": "Preview",
+    "releaseState": "Stable",
     "asOf": "2026-08-04",
     "temporalCoverage": "1879/2026",
     "humanUrl": "./",

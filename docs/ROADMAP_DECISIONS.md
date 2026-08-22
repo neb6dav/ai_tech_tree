@@ -177,6 +177,29 @@ inventory. New URL state is additive. Promotion of any checkpoint remains a
 separate merge, tag, and deployment decision after Windows and hosted-Ubuntu
 verification.
 
+## RD-012 — Approve the v1.2.0 Stable presentation candidate
+
+On 2026-08-22 the repository owner approved the existing presentation
+inventory for the v1.2.0 Stable release candidate: exactly 24 ordered anchors
+with their existing label priorities, all 72 existing orientation-spine
+relationship IDs, and all six existing tour narratives. This is a
+display-membership approval only. It does not change the canonical 339-node,
+711-relationship dataset, stable IDs, relationship types, direction,
+rationales, evidence grades, or review states.
+
+The two retained legacy supersession links, `word2vec>bert:sup` and
+`gan>diffusion:sup`, remain explicitly caveated `legacy_supersession_claim`
+records with `legacyKind: sup`, `evidenceGrade: contextual`, and
+`reviewed: false`; their rationale continues to state that they are not
+established supersession. Presentation approval does not validate either
+claim.
+
+The branch and PR prepare a v1.2.0 Stable release candidate only. The public
+and live release remains the authorized v1.0.0 release, and `CITATION.cff`
+remains byte-for-byte at dataset citation version v1.0.0 because the semantic
+edition is unchanged. Merge, annotated tagging, and deployment require
+separate authorization after the Windows and hosted-Ubuntu gates pass.
+
 ## Explicit deferrals
 
 ### Through v0.2.0

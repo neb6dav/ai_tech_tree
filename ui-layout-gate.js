@@ -84,7 +84,7 @@ for (const [fragment, label] of [
   ['function rebuildSemanticClusters(){', 'deterministic semantic cluster rebuild'],
   ["const visible=NODES.filter(isNodeVisible),signature=timeScale+'|'+visible.map(nd=>nd.id).join('|');", 'semantic cluster rebuild signature'],
   ["document.getElementById('filterStatus').textContent", 'screen-reader filter result feedback'],
-  ["version:'1.2.0',edition:'2026-08-21-stable-1',releaseState:'Preview'", 'v1.2.0 Preview identity over the unchanged Stable dataset'],
+  ["version:'1.2.0',edition:'2026-08-21-stable-1',releaseState:'Stable'", 'v1.2.0 Stable identity over the unchanged dataset'],
   ['id="editionBadge" href="./release-manifest.json"', 'visible exact-build badge'],
   ['id="contributeLink" href="https://github.com/neb6dav/ai_tech_tree/issues/new/choose"', 'persistent contribution link'],
   ['#repositoryLink{color:var(--ink);text-decoration:none;display:flex;align-items:center;justify-content:center;min-width:32px;min-height:32px', 'repository minimum pointer target'],
@@ -284,7 +284,7 @@ assert(auditRoot.children.some(child => child.tagName === 'strong' && child.text
 assert(auditRoot.children.some(child => child.tagName === 'details' && child.className === 'auditLimits'), 'Evidence renderer omitted its interpretation limits');
 
 assert.equal(data.dataset.edition, '2026-08-21-stable-1');
-assert.equal(data.dataset.releaseState, 'Preview');
+assert.equal(data.dataset.releaseState, 'Stable');
 assert.equal(data.nodes.length, 339);
 assert.equal(data.lanes.length, 15);
 assert.equal(data.landmarkWorks.length, 76);

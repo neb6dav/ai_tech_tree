@@ -14,6 +14,7 @@ const JSON_NAME = 'ai-research-tech-tree.json';
 const NDJSON_NAME = 'ai-research-tech-tree.ndjson';
 const APPLICATION_HUMAN_URL = './';
 const GENERATOR_VERSION = '1.3.1';
+const SEMANTIC_DIGEST_RELEASE_STATE = 'Preview';
 const DATASET_UUID = uuidV5('ai-research-tech-tree.public-artifact', '6ba7b810-9dad-11d1-80b4-00c04fd430c8');
 const DATASET_IRI = `urn:uuid:${DATASET_UUID}`;
 const VOCAB_IRI = `${DATASET_IRI}#vocab-`;
@@ -955,7 +956,11 @@ function buildExports(model) {
     landmarkWorkLinks,
     wikipediaSources
   };
-  dataset.dataDigest = sha256(JSON.stringify(plain));
+  // Release channel is publication metadata, not semantic atlas content;
+  // normalize it to the frozen v1.2 semantic-digest baseline.
+  const semanticDigestInput = clone(plain);
+  semanticDigestInput.dataset.releaseState = SEMANTIC_DIGEST_RELEASE_STATE;
+  dataset.dataDigest = sha256(JSON.stringify(semanticDigestInput));
 
   const graphEntities = [];
   for (const lane of lanes) {

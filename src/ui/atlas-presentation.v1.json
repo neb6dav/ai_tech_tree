@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "reviewStatus": "candidate_pending_owner_review",
+  "reviewStatus": "owner_approved",
   "anchors": [
     { "nodeId": "transformer", "labelPriority": 1 },
     { "nodeId": "turing36", "labelPriority": 2 },

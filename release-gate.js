@@ -13,6 +13,8 @@ const zlib = require('node:zlib');
 const { execFileSync } = require('node:child_process');
 
 const ROOT = __dirname;
+// Normalize publication-channel metadata to the frozen v1.2 semantic-digest baseline.
+const SEMANTIC_DIGEST_RELEASE_STATE = 'Preview';
 const FILES = {
   html: 'ai-research-tech-tree.html',
   index: 'index.html',
@@ -609,13 +611,14 @@ function main() {
 
   const digestCopy = clone(data);
   delete digestCopy.dataset.dataDigest;
+  digestCopy.dataset.releaseState = SEMANTIC_DIGEST_RELEASE_STATE;
   assert.equal(hash(Buffer.from(JSON.stringify(digestCopy))), data.dataset.dataDigest);
   assert.equal(document['tree:dataDigest'], data.dataset.dataDigest);
   assert.equal(document['@id'], data.namespace.datasetIri);
   assert.equal(data.schemaVersion, 2);
   assert.equal(data.generatorVersion, '1.3.1');
   assert.equal(data.dataset.edition, '2026-08-21-stable-1');
-  assert.equal(data.dataset.releaseState, 'Preview');
+  assert.equal(data.dataset.releaseState, 'Stable');
   assert.equal(data.dataset.asOf, '2026-08-04');
   assert.equal(data.dataset.canonicalUrl, 'https://neb6dav.github.io/ai_tech_tree/');
   assert.deepEqual(data.dataset.authors, ['@neb6dav']);

@@ -7,12 +7,15 @@ const test = require('node:test');
 
 const ROOT = path.resolve(__dirname, '..');
 const EXPECTED_RELEASE_TAG = process.env.AI_TREE_EXPECT_RELEASE_TAG || null;
-assert.equal(EXPECTED_RELEASE_TAG, null, 'Preview candidates must not be staged with an expected release tag');
+assert(
+  EXPECTED_RELEASE_TAG === null || EXPECTED_RELEASE_TAG === 'v1.2.0',
+  'Stable candidates may only be staged without a tag or with the exact v1.2.0 release tag'
+);
 const EXPECTED = Object.freeze({
   version: '1.2.0',
   citationVersion: '1.0.0',
   edition: '2026-08-21-stable-1',
-  releaseState: 'Preview',
+  releaseState: 'Stable',
   asOf: '2026-08-04',
   date: '2026-08-21',
   opportunityAsOf: '2026-08-19',
@@ -74,6 +77,7 @@ function loadSnapshot() {
     networkSource: read('src/network-view.js'),
     opportunitySource: read('src/opportunity-view.js'),
     opportunityData: readJson('src/data/opportunities/diffusion-models.alpha.json'),
+    presentationData: readJson('src/ui/atlas-presentation.v1.json'),
     catalog: readJson('src/data/atlas/catalog.json'),
     stageConfig: readJson('config/pages-stage.v1.json'),
     manifest: readJson('_site/release-manifest.json'),
@@ -82,16 +86,16 @@ function loadSnapshot() {
 }
 
 function assertHtmlIdentity(html, label) {
-  assert(html.includes('<title>AI Research Tech Tree - v1.2.0 Preview</title>'), `${label} title`);
+  assert(html.includes('<title>AI Research Tech Tree - v1.2.0 Stable</title>'), `${label} title`);
   for (const fragment of [
-    '<meta name="description" content="The v1.2.0 preview',
-    '<meta property="og:title" content="AI Research Tech Tree - v1.2.0 Preview">',
-    '<meta property="og:description" content="Explore the v1.2.0 preview',
-    '<meta name="twitter:title" content="AI Research Tech Tree - v1.2.0 Preview">',
-    '<meta name="twitter:description" content="The v1.2.0 preview',
+    '<meta name="description" content="The v1.2.0 stable edition',
+    '<meta property="og:title" content="AI Research Tech Tree - v1.2.0 Stable">',
+    '<meta property="og:description" content="Explore the v1.2.0 stable edition',
+    '<meta name="twitter:title" content="AI Research Tech Tree - v1.2.0 Stable">',
+    '<meta name="twitter:description" content="The v1.2.0 stable edition',
     '<meta name="ai-tree-version" content="1.2.0">',
     '<meta name="ai-tree-edition" content="2026-08-21-stable-1">',
-    '<meta name="ai-tree-release-state" content="Preview">'
+    '<meta name="ai-tree-release-state" content="Stable">'
   ]) assert(html.includes(fragment), `${label} missing ${fragment}`);
 
   const head = html.slice(0, html.indexOf('</head>'));
@@ -99,8 +103,8 @@ function assertHtmlIdentity(html, label) {
 
   assert.equal(occurrenceCount(html, 'id="editionBadge"'), 1, `${label} edition badge count`);
   assert(html.includes('id="editionBadge" href="./release-manifest.json"'), `${label} manifest badge target`);
-  assert(html.includes('Preview &middot; v1.2.0'), `${label} visible Preview label`);
-  assert(html.includes('<span class="editionShort" aria-hidden="true">Dev</span>'), `${label} compact Preview label`);
+  assert(html.includes('Stable &middot; v1.2.0'), `${label} visible Stable label`);
+  assert(html.includes('<span class="editionShort" aria-hidden="true">Stable</span>'), `${label} compact Stable label`);
   assert(html.includes(`id="repositoryLink" href="${EXPECTED.repositoryUrl}" target="_blank" rel="noopener noreferrer"`), `${label} repository link`);
   assert(html.includes(`id="contributeLink" href="${EXPECTED.correctionsUrl}" target="_blank" rel="noopener noreferrer"`), `${label} contribution link`);
 
@@ -167,6 +171,21 @@ function assertIdentity(snapshot) {
   assert.equal(snapshot.opportunityData.metadata.importStatus.state, EXPECTED.opportunityImportStatus, 'Opportunity import remains unreviewed');
   assert.match(snapshot.opportunityData.metadata.importStatus.notes, /manual bibliography[\s\S]*review before publication-level promotion/iu, 'Opportunity disclosure');
 
+  assert.equal(snapshot.presentationData.reviewStatus, 'owner_approved', 'presentation inventory owner approval');
+  assert.equal(snapshot.presentationData.anchors.length, 24, 'approved anchor inventory count');
+  assert.equal(snapshot.presentationData.backboneRelationshipIds.length, 72, 'approved orientation-spine count');
+  assert.equal(snapshot.presentationData.tours.length, 6, 'approved tour count');
+  for (const relationshipId of ['word2vec>bert:sup', 'gan>diffusion:sup']) {
+    assert(snapshot.presentationData.backboneRelationshipIds.includes(relationshipId), `approved spine retains ${relationshipId}`);
+    const relationship = snapshot.normalized.relationships.find((candidate) => candidate.id === relationshipId);
+    assert(relationship, `canonical caveated relationship ${relationshipId}`);
+    assert.equal(relationship.relationshipType, 'legacy_supersession_claim', `${relationshipId} relationship type`);
+    assert.equal(relationship.legacyKind, 'sup', `${relationshipId} legacy kind`);
+    assert.equal(relationship.evidenceGrade, 'contextual', `${relationshipId} evidence grade`);
+    assert.equal(relationship.reviewed, false, `${relationshipId} review state`);
+    assert.match(relationship.rationale, /not treated as established supersession/iu, `${relationshipId} rationale`);
+  }
+
   const citationArtifact = snapshot.stageConfig.artifacts.find((artifact) => artifact.target === 'CITATION.cff');
   assert(citationArtifact, 'CITATION staging entry');
   assert.equal(citationArtifact.source, 'CITATION.cff', 'CITATION staging source');
@@ -184,31 +203,27 @@ function assertIdentity(snapshot) {
   assert.equal(citationFile.mediaType, 'text/yaml; charset=utf-8', 'staged CITATION payload media type');
   assert.match(citationFile.sha256, /^[0-9a-f]{64}$/u, 'staged CITATION payload digest');
 
+  assert(snapshot.pagesWorkflow.includes('AI_TREE_AUTHORIZED_TAG: "v1.2.0"'), 'Pages workflow exact authorized v1.2.0 tag');
+  assert(snapshot.pagesWorkflow.includes('ref: refs/tags/v1.2.0'), 'Pages workflow exact v1.2.0 checkout');
+  assert(!/^\s+inputs:/mu.test(snapshot.pagesWorkflow), 'Pages workflow must not accept arbitrary tag inputs');
+  assert(!/^\s+(?:push|pull_request):/mu.test(snapshot.pagesWorkflow), 'Pages workflow must remain manual-only');
+
   for (const fragment of [
     'workflow_dispatch:',
-    'ref: refs/tags/v1.0.0',
+    'ref: refs/tags/v1.2.0',
     'test "$GITHUB_REF" = "refs/heads/main"',
     'test "$GITHUB_WORKFLOW_SHA" = "$GITHUB_SHA"',
     'pages.yml@refs/heads/main',
     'test "$(git cat-file -t "$tag_ref")" = "tag"',
-    '67e1f7b7dea394451d4a2d54a929037982d30517',
-    '7d0d26fe87c8be2868c63738c503f90d35789b3a',
-    'test "$tag_object" = "$AI_TREE_AUTHORIZED_TAG_OBJECT"',
-    'test "$tag_commit" = "$AI_TREE_AUTHORIZED_TAG_COMMIT"',
+    'test "$tag_commit" = "$(git rev-parse HEAD)"',
     'test "$GITHUB_SHA" = "$main_commit"',
-    'git merge-base --is-ancestor "$tag_commit" "$main_commit"',
-    'test "$(git rev-list --count "${tag_commit}..${main_commit}")" = "1"',
-    'test "$(git rev-parse "${main_commit}^")" = "$tag_commit"',
-    'git diff --name-status --no-renames "$tag_commit" "$main_commit"',
-    'M\\t.github/workflows/pages.yml',
-    'M\\tdocs/ROADMAP_DECISIONS.md',
-    'M\\ttests/release-identity.test.cjs',
+    'test "$tag_commit" = "$GITHUB_SHA"',
     'npx playwright install --with-deps chromium',
     'AI_TREE_EXPECT_RELEASE_TAG=$AI_TREE_AUTHORIZED_TAG'
   ]) assert(snapshot.pagesWorkflow.includes(fragment), `Pages release guard missing ${fragment}`);
 }
 
-test('v1.2.0 Preview identity is synchronized without promoting data or minting a release tag', () => {
+test('v1.2.0 Stable candidate identity is synchronized without requiring a release tag', () => {
   assertIdentity(loadSnapshot());
 });
 
@@ -217,17 +232,24 @@ test('identity contract fails closed on representative release-drift mutations',
     ['stale lockfile', (copy) => { copy.packageLock.version = '0.1.0'; }],
     ['stale export', (copy) => { copy.normalized.dataset.edition = '2026-08-20-public-beta-2'; }],
     ['stale citation date', (copy) => { copy.citation = copy.citation.replace('date-released: "2026-08-21"', 'date-released: "2026-08-20"'); }],
-    ['missing social identity', (copy) => { copy.indexHtml = copy.indexHtml.replace('AI Research Tech Tree - v1.2.0 Preview', 'AI Research Tech Tree'); }],
+    ['missing social identity', (copy) => { copy.indexHtml = copy.indexHtml.replace('AI Research Tech Tree - v1.2.0 Stable', 'AI Research Tech Tree'); }],
     ['misdirected badge', (copy) => { copy.canonicalHtml = copy.canonicalHtml.replace('id="editionBadge" href="./release-manifest.json"', 'id="editionBadge" href="./"'); }],
-    ['unexpected tag', (copy) => { copy.manifest.tag = 'v1.2.0'; }],
+    ['unexpected tag', (copy) => { copy.manifest.tag = 'v1.0.0'; }],
     ['stale manifest release state', (copy) => { copy.manifest.releaseState = 'Development edition'; }],
     ['renamed public distribution', (copy) => { copy.normalized.dataset.distributions[0].filename = 'graph.jsonld'; }],
     ['redirected contribution guide', (copy) => { copy.catalog.project.contributionGuideUrl = 'https://example.test/contribute'; }],
     ['promoted Opportunity data', (copy) => { copy.opportunityData.metadata.importStatus.state = 'validated'; }],
+    ['unapproved presentation inventory', (copy) => { copy.presentationData.reviewStatus = 'candidate_pending_owner_review'; }],
+    ['removed caveated spine link', (copy) => { copy.presentationData.backboneRelationshipIds = copy.presentationData.backboneRelationshipIds.filter((id) => id !== 'gan>diffusion:sup'); }],
     ['stale Network source version', (copy) => { copy.networkSource = copy.networkSource.replace("VERSION = '1.2.0'", "VERSION = '0.1.1'"); }],
     ['missing citation payload', (copy) => { copy.manifest.files = copy.manifest.files.filter((file) => file.path !== 'CITATION.cff'); }],
+    ['wrong authorized release tag', (copy) => { copy.pagesWorkflow = copy.pagesWorkflow.replace('AI_TREE_AUTHORIZED_TAG: "v1.2.0"', 'AI_TREE_AUTHORIZED_TAG: "v1.1.0"'); }],
+    ['mismatched release checkout', (copy) => { copy.pagesWorkflow = copy.pagesWorkflow.replace('ref: refs/tags/v1.2.0', 'ref: refs/tags/v1.1.0'); }],
+    ['tag not pinned to checked-out HEAD', (copy) => { copy.pagesWorkflow = copy.pagesWorkflow.replace('test "$tag_commit" = "$(git rev-parse HEAD)"', 'git merge-base --is-ancestor "$tag_commit" HEAD'); }],
+    ['arbitrary release tag input', (copy) => { copy.pagesWorkflow = copy.pagesWorkflow.replace('  workflow_dispatch:', '  workflow_dispatch:\n    inputs:\n      tag:\n        required: true'); }],
+    ['automatic release trigger', (copy) => { copy.pagesWorkflow += '\n  push:\n'; }],
     ['lightweight-tag release workflow', (copy) => { copy.pagesWorkflow = copy.pagesWorkflow.replace('git cat-file -t', 'git rev-parse'); }],
-    ['unbounded recovery workflow', (copy) => { copy.pagesWorkflow = copy.pagesWorkflow.replace('M\\tdocs/ROADMAP_DECISIONS.md', 'M\\tREADME.md'); }],
+    ['unbounded recovery workflow', (copy) => { copy.pagesWorkflow = copy.pagesWorkflow.replace('test "$tag_commit" = "$GITHUB_SHA"', 'git merge-base --is-ancestor "$tag_commit" "$GITHUB_SHA"'); }],
     ['missing browser runtime install', (copy) => { copy.pagesWorkflow = copy.pagesWorkflow.replace('npx playwright install --with-deps chromium', 'echo skip-browser-runtime'); }]
   ];
   const original = loadSnapshot();

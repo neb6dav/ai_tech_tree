@@ -1,11 +1,13 @@
 'use strict';
 
 const fs = require('node:fs');
+const crypto = require('node:crypto');
 const path = require('node:path');
 
 const ROOT = path.resolve(__dirname, '..');
 const PRESENTATION_PATH = path.join(ROOT, 'src', 'ui', 'atlas-presentation.v1.json');
 const CANONICAL_PATH = path.join(ROOT, 'ai-research-tech-tree.json');
+const APPROVED_PRESENTATION_SHA256 = 'ca4240fdaf5a3e6ac4484fafac28e0311ea5cbb4dff725dfb5894c1265001722';
 
 const EXPECTED_TOURS = new Map([
   [
@@ -116,6 +118,15 @@ function validate() {
   const presentation = readJson(PRESENTATION_PATH);
   const canonical = readJson(CANONICAL_PATH);
 
+  const presentationDigest = crypto
+    .createHash('sha256')
+    .update(JSON.stringify(presentation), 'utf8')
+    .digest('hex');
+  invariant(
+    presentationDigest === APPROVED_PRESENTATION_SHA256,
+    `Approved presentation inventory digest mismatch: expected ${APPROVED_PRESENTATION_SHA256}, found ${presentationDigest}. Any anchor, order, priority, spine, tour, or narrative change requires renewed owner approval and a deliberate digest update.`
+  );
+
   assertExactKeys(
     presentation,
     ['schemaVersion', 'reviewStatus', 'anchors', 'backboneRelationshipIds', 'tours'],
@@ -124,8 +135,8 @@ function validate() {
   assertNoCanonicalOverrides(presentation);
   invariant(presentation.schemaVersion === '1.0.0', 'schemaVersion must be exactly "1.0.0".');
   invariant(
-    presentation.reviewStatus === 'candidate_pending_owner_review',
-    'reviewStatus must remain "candidate_pending_owner_review" until the repository owner approves the inventory.'
+    presentation.reviewStatus === 'owner_approved',
+    'reviewStatus must be exactly "owner_approved" after repository-owner approval.'
   );
 
   invariant(Array.isArray(canonical.nodes), 'Canonical export must contain a nodes array.');
@@ -202,6 +213,28 @@ function validate() {
     );
     return relationship;
   });
+
+  const caveatedLegacySupersessionIds = ['word2vec>bert:sup', 'gan>diffusion:sup'];
+  for (const relationshipId of caveatedLegacySupersessionIds) {
+    invariant(
+      backboneIds.has(relationshipId),
+      `Approved orientation spine must retain caveated relationship "${relationshipId}".`
+    );
+    const relationship = relationshipsById.get(relationshipId);
+    invariant(
+      relationship.relationshipType === 'legacy_supersession_claim' &&
+        relationship.legacyKind === 'sup' &&
+        relationship.evidenceGrade === 'contextual' &&
+        relationship.reviewed === false,
+      `Caveated relationship "${relationshipId}" must remain an unreviewed contextual legacy supersession claim.`
+    );
+    invariant(
+      typeof relationship.rationale === 'string' &&
+        /legacy supersession claim retained for review/iu.test(relationship.rationale) &&
+        /not treated as established supersession/iu.test(relationship.rationale),
+      `Caveated relationship "${relationshipId}" must retain its not-established supersession rationale.`
+    );
+  }
 
   const uncoveredAnchors = [...anchorIds].filter(
     (nodeId) =>

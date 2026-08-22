@@ -2,7 +2,7 @@
 
 Thank you for helping improve the AI Research Tech Tree. This project welcomes corrections, additional evidence, new developments, open research directions, relationship revisions, accessibility improvements, and reproducibility fixes.
 
-The atlas is at the tagged `v1.0.0` Stable release boundary. Contributions should make uncertainty easier to see, not merely make the graph larger. Pull-request previews and untagged builds are not citable releases; public promotion remains a guarded maintainer action from an approved annotated tag.
+The public atlas remains at the tagged `v1.0.0` Stable release boundary. The open `v1.2.0` branch is only a Stable release candidate: it is not merged, tagged, or deployed, and its UI approval does not change the citable dataset identity in `CITATION.cff`. Contributions should make uncertainty easier to see, not merely make the graph larger. Pull-request previews and untagged builds are not citable releases; public promotion remains a guarded maintainer action from an approved annotated tag.
 
 ## Choose the smallest useful contribution
 

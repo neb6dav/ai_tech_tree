@@ -15,7 +15,10 @@ const {
   buildNodePageArtifacts,
   generateNodePages,
   isBibTeXEligible,
-  renderBibTeX
+  renderBibTeX,
+  SOCIAL_IMAGE_ALT,
+  SOCIAL_IMAGE_HEIGHT,
+  SOCIAL_IMAGE_WIDTH
 } = require('../scripts/generate-node-pages.cjs');
 
 function readAtlas() {
@@ -65,6 +68,9 @@ test('build produces one deterministic traversal-safe page for every canonical n
     assert.match(artifact.contents, /<h2 id="evidence-title">Evidence caveat<\/h2>/u);
     assert.match(artifact.contents, /href="\/ai_tech_tree\/#node=/u);
     assert.match(artifact.contents, /<meta property="og:image" content="https:\/\//u);
+    assert.match(artifact.contents, new RegExp(`<meta property="og:image:width" content="${SOCIAL_IMAGE_WIDTH}">`, 'u'));
+    assert.match(artifact.contents, new RegExp(`<meta property="og:image:height" content="${SOCIAL_IMAGE_HEIGHT}">`, 'u'));
+    assert.match(artifact.contents, new RegExp(`<meta property="og:image:alt" content="${SOCIAL_IMAGE_ALT.replace(/[.*+?^${}()|[\]\\]/gu, '\\$&')}">`, 'u'));
     assert(!/<script\b/iu.test(artifact.contents));
   }
 });
@@ -126,6 +132,9 @@ test('node content and metadata are escaped while backlink, canonical URL, and s
   assert(html.includes(`<link rel="canonical" href="${PROJECT_URL}nodes/transformer/">`));
   assert(html.includes(`<meta property="og:url" content="${PROJECT_URL}nodes/transformer/">`));
   assert(html.includes(`<meta property="og:image" content="${PROJECT_URL}social-card.png">`));
+  assert(html.includes(`<meta property="og:image:width" content="${SOCIAL_IMAGE_WIDTH}">`));
+  assert(html.includes(`<meta property="og:image:height" content="${SOCIAL_IMAGE_HEIGHT}">`));
+  assert(html.includes(`<meta property="og:image:alt" content="${SOCIAL_IMAGE_ALT}">`));
   assert(html.includes('<link rel="alternate" type="application/json" href="/ai_tech_tree/ai-research-tech-tree.json"'));
   assert(!/<script\b/iu.test(html));
   for (const requiredText of ['Year', 'Lane', 'Status', 'Works and sources', 'Evidence caveat']) {

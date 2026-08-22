@@ -418,6 +418,18 @@ function replaceFrozenDataScript(html, id, assignment, value) {
   );
 }
 
+function renderNoScriptRows(canonical) {
+  const rows = canonical?.sidecars?.noScript?.rows;
+  assert(Array.isArray(rows), 'Canonical no-script rows are required');
+  return rows.map((row, index) => {
+    assert(row && typeof row.nodeId === 'string', `Canonical no-script row ${index} is missing its node ID`);
+    assert(typeof row.rowHtml === 'string', `Canonical no-script row ${row.nodeId} is missing HTML`);
+    assert(row.rowHtml.includes(`<a href="nodes/${row.nodeId}/">`), `Canonical no-script row ${row.nodeId} is missing its static node link`);
+    assert(!row.rowHtml.includes('nsDesc'), `Canonical no-script row ${row.nodeId} still embeds a duplicated description`);
+    return row.rowHtml;
+  }).join('');
+}
+
 function applyCanonicalAtlas(html, canonical) {
   assert(canonical && canonical.manifest && canonical.catalog, 'Canonical atlas is required');
   let result = renderCanonicalNodeBlocks(html, canonical);
@@ -426,7 +438,7 @@ function applyCanonicalAtlas(html, canonical) {
   result = replaceExactlyOnce(
     result,
     /(<noscript><style>#bootPending\{display:none!important\}<\/style><section id="noscript"[\s\S]*?<tbody>)[\s\S]*?(<\/tbody><\/table><\/div><\/section><\/noscript>)/g,
-    (_match, opening, closing) => `${opening}${canonical.sidecars.noScript.rows.map(row => row.rowHtml).join('')}${closing}`,
+    (_match, opening, closing) => `${opening}${renderNoScriptRows(canonical)}${closing}`,
     'no-script canonical projection'
   );
   result = replaceExactlyOnce(
@@ -1342,6 +1354,7 @@ module.exports = {
   buildExports,
   extractModel,
   main,
+  renderNoScriptRows,
   safeJson,
   validateReleaseShell
 };

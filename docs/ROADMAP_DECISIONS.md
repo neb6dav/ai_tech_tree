@@ -200,6 +200,78 @@ remains byte-for-byte at dataset citation version v1.0.0 because the semantic
 edition is unchanged. Merge, annotated tagging, and deployment require
 separate authorization after the Windows and hosted-Ubuntu gates pass.
 
+## RD-013 — Approve the v1.2.1 orientation and research-navigation patch
+
+The approved `v1.2.1` program is a presentation-only UI/UX source checkpoint
+for orientation and research navigation. It may refine the existing Timeline,
+Network, Opportunity, and List surfaces, but it must preserve all 339 canonical
+nodes, 711 canonical relationships, stable IDs, canonical evidence and review
+state, the v1.0.0 dataset citation, offline/single-file operation, static node
+pages, and the `v1.3.0` Combinatorial Lens and `v1.4.0` Hypothesis Workbench
+roadmap slots. It does not rebuild the already-reviewed anchors, orientation
+spine, semantic zoom, tours, inspector foundation, light-theme edge treatment,
+compact onboarding, or edition-diff surfaces.
+
+Startup must keep URL intent, restored camera, and focused target separate. A
+camera is restored only from a complete valid `cx`, `cy`, and `z` tuple. Trace,
+node, and tour intents frame their target without a camera; filtered intents fit
+visible records; empty, partial, legacy, and zero-result states receive a safe
+whole-map transform and recovery controls. The header must remain contained at
+all specified widths, with measured lower-priority overflow in `More`, 44px
+mobile targets, a map-only pinned 48px date ruler (at most 32 deterministic
+labels and all 13 eras reachable), and a canonical 15-lane rail that becomes a
+compact current-era/current-lane row on mobile. Fit calculations include every
+visible shell element, including panels, docks, guides, and embeds.
+
+Timeline and Network share one cycle-safe relationship-neighborhood function
+and one pooled SVG path per canonical relationship. The only new URL key is
+`trace=<canonical-node-id>`: it implies selection and full lineage, is valid in
+Timeline and Network, is ignored in List and Opportunity, and wins over a
+conflicting `node`. Existing keys and meanings remain unchanged. A valid camera
+overrides trace fitting; general Share preserves trace and camera, while trace
+summary Copy link omits the camera. Trace survives semantic zoom, filters, All
+mode, detail-panel transitions, and view changes between Timeline and Network;
+it is cleared by Opportunity/List. The trace summary reports total, visible,
+and filter-hidden node/relationship counts and provides the bounded recovery
+actions specified by the interface contract without changing the saved
+Connections preference.
+
+The shared context dock may host ordinary previews, trace summaries, and
+transient era cards, with a separate polite announcement node. Era selection
+is a map-plus-card-strip lens with canonical lane-grouped titles and at most 24
+cards per page; cards add no URL state. The existing 74 questions on 71 nodes
+become the `view=list&research=questions` “Unfinished Business” deck: segments,
+12-card paging, deterministic ordering, canonical-title/question/tag search,
+keyboard navigation, and focus restoration are required while retaining the
+hash meaning. Non-default status/evidence/research filters expose a reset chip.
+Pointer and keyboard relationship-rationale previews must match for all six
+canonical evidence grades, while canvas styling alone groups them into the
+three approved presentation buckets (9 direct/partial, 658 contextual/
+editorial/unassessed, and 44 hypothesis relationships); the canonical grades
+remain intact in panels, methodology, exports, fingerprints, and static pages.
+
+The fresh, state-free, non-embed landing may animate only the existing 72 spine
+paths and 24 anchors after guide dismissal, with cancellation, Skip animation,
+reduced-motion/forced-colors/deep-link/embed bypasses, and no focus theft. The
+social card is an owner-reviewed 1200x630 asset under 500KB with the approved
+recorded-lineage caveat; root and static-node Open Graph metadata must not
+promise fragment-specific trace previews. Headroom work may remove duplicated
+no-JavaScript descriptions in favor of existing static-page links and replace
+the duplicated runtime release-history array with the maintained changelog
+note, without adding dependencies, services, duplicate graphs, or budget.
+
+The implementation checkpoint must verify unchanged IDs/fingerprints and zero
+semantic edition diff; Transformer lineage remains exactly 117 nodes and 196
+unique relationships in Timeline and Network; pooled All-mode relationships
+remain exactly 711 and clearing overview returns exactly 72 spine paths. It
+must exercise the complete hash, filter, trace, era, question, responsive,
+theme, embed, accessibility, hostile-sequence, DOM, HTML, gzip, and
+cross-platform Lighthouse checks in the implementation plan. This branch
+starts with this docs-only roadmap/decision checkpoint. A Stable `v1.2.1`
+release candidate may be prepared after implementation and verification, but
+merge, annotated tagging, deployment, and any change to the v1.0.0 citation
+remain separately unauthorized.
+
 ## Explicit deferrals
 
 ### Through v0.2.0

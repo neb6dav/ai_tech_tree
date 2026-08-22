@@ -33,7 +33,7 @@ assert.equal(data.metadata.status, 'alpha', 'Stable atlas identity must not prom
 assert.equal(data.metadata.importStatus.state, 'imported_unreviewed', 'Opportunity import must remain unreviewed');
 assert.match(data.metadata.importStatus.notes, /manual bibliography[\s\S]*review before publication-level promotion/iu, 'Opportunity import disclosure drifted');
 assert.equal(data.metadata.pathWidthMode, 'fixed', 'Opportunity paths must never encode a quantitative flow width');
-assert.match(source, /export const VERSION = '1\.0\.1'/u, 'Opportunity source version must match v1.0.1');
+assert.match(source, /export const VERSION = '1\.1\.0'/u, 'Opportunity source version must match v1.1.0');
 
 const validation = validateOpportunityData(data, { atlasData: atlas });
 assert.deepEqual(validation.errors, [], validation.errors.map(item => `${item.location}: ${item.message}`).join('\n'));
@@ -88,7 +88,7 @@ const embeddedEngines = scripts.filter(script => /\bid=["']opportunity-view-engi
 assert.equal(embeddedEngines.length, 1, 'Expected one embedded Opportunity View engine');
 assert.equal(embeddedEngines[0].body, bundle, 'Embedded Opportunity View engine differs from the reproducible bundle');
 assert.match(bundle, /OpportunityAtlas/);
-assert.match(bundle, /1\.0\.1/u, 'Opportunity bundle version must match v1.0.1');
+assert.match(bundle, /1\.1\.0/u, 'Opportunity bundle version must match v1.1.0');
 assert(!bundle.includes('0.1.1'), 'Opportunity bundle contains the superseded pre-v1 version');
 assert(!/(?:eval\s*\(|new\s+Function\b)/.test(bundle), 'Opportunity bundle requires unsafe evaluation');
 assert(!/\.innerHTML\s*=|\.outerHTML\s*=|insertAdjacentHTML\s*\(|document\.write\s*\(/.test(bundle), 'Opportunity bundle contains an HTML injection sink');

@@ -72,6 +72,12 @@ The `v1.0.0` release keeps a single-file application shell while the historical 
 
 The JSON, JSON-LD, and NDJSON exports currently describe the historical atlas. Their dataset human URL resolves to `./`, and each of the 339 atlas records resolves directly to `./#node=<stable-id>`; the former published HTML filename remains only a compatibility entry point. The Opportunity map remains a separate, schema-linked JSON graph and is advertised from the page as an alternate machine-readable representation; this prevents capability assessments and hypotheses from being silently recast as historical lineage.
 
+### Use with LLM research systems
+
+The machine-readable exports are designed to be ingestible by retrieval systems and LLM-assisted research workflows. Stable IDs, typed relationships, chronology, lanes, evidence grades, review states, provenance, and durable source links can help a research agent retrieve relevant lineages, compare traditions, follow supporting or contradictory context, and identify documented evidence gaps. The static node pages planned for v1.2.0 provide an additional crawlable representation of the same canonical records; later combinatorial tools are intended to expose underexplored intersections without silently promoting them to facts.
+
+This is a navigation and retrieval substrate, not an authoritative scientific knowledge base, a training corpus warranty, or evidence that an automatically suggested connection is true or novel. LLM workflows should preserve the atlas's evidence distinctions, treat contextual, editorial, unassessed, and hypothesis-grade relationships accordingly, and inspect the cited primary sources before making scientific claims.
+
 `ai-research-tech-tree.original.html` is an archival pre-repair baseline retained for provenance. It is not the current application source.
 
 Generated artifacts remain committed through `v1.0.0` so releases can be inspected, downloaded, and served without a build service. Change maintained source, run the build, inspect the resulting diff, and commit the regenerated artifacts with the source change.

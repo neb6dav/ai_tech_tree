@@ -14,7 +14,7 @@ const EXPECTED_TOURS = new Map([
   ],
   [
     'two-winters-and-revivals',
-    ['dartmouth', 'perceptron', 'perceptronsbook', 'lighthill', 'expertshells', 'aiwinter2', 'backprop']
+    ['dartmouth', 'perceptronsbook', 'lighthill', 'expertshells', 'aiwinter2', 'backprop', 'alexnet']
   ],
   [
     'scaling-era',

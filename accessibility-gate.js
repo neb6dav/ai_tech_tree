@@ -114,12 +114,23 @@ const activeRule = css.match(/#edgesHi\s+path\s*\{([^}]*)\}/i);
 assert(activeRule, 'Active relationship paths are missing their audited style rule');
 assert(/opacity\s*:\s*var\(--e-active-opacity\)/i.test(activeRule[1]), 'Active relationship paths must consume --e-active-opacity');
 for (const match of css.matchAll(/#edgesHi\s+path\.evidence-[^{]+\{([^}]*)\}/gi)) {
-  assert(!/\bopacity\s*:\s*(?!var\(--e-active-opacity\))[^;}]+/i.test(match[1]), 'Evidence-grade rules must not reduce active relationship contrast with a numeric opacity override');
+assert(!/\bopacity\s*:\s*(?!var\(--e-active-opacity\))[^;}]+/i.test(match[1]), 'Evidence-grade rules must not reduce active relationship contrast with a numeric opacity override');
 }
 
 assert(css.includes('.chip.off{opacity:1; color:var(--ink3); background:transparent; border-style:dashed}'), 'Inactive filters must remain readable without whole-control opacity');
 assert(!css.includes('.chip.off{opacity:.38}'), 'Low-contrast inactive filter styling remains');
-assert(css.includes('g.overviewCluster .clusterDot{fill:var(--node-color);fill-opacity:1;'), 'Overview bubbles must use the audited solid fill');
+const semanticCardRule = css.match(/g\.semanticCluster\s+\.clusterCard\s*\{([^}]*)\}/i);
+assert(semanticCardRule, 'Semantic lane-by-era cards are missing their audited style rule');
+assert(/fill\s*:\s*color-mix\(in\s+srgb\s*,?\s*var\(--node-color\)\s+10%\s*,\s*var\(--panel\)\)/i.test(semanticCardRule[1]), 'Semantic cards must blend their status color with the panel surface');
+assert(/stroke\s*:\s*var\(--node-color\)/i.test(semanticCardRule[1]), 'Semantic cards must retain their status-colored boundary');
+const semanticFocusRule = css.match(/g\.semanticCluster:hover\s+\.clusterCard\s*,\s*g\.semanticCluster:focus\s+\.clusterCard\s*\{([^}]*)\}/i);
+assert(semanticFocusRule && /stroke\s*:\s*var\(--focus\)/i.test(semanticFocusRule[1]) && /stroke-width\s*:\s*2\.5/i.test(semanticFocusRule[1]), 'Semantic cards must expose a high-contrast pointer and keyboard focus state');
+const anchorTextRule = css.match(/g\.anchorLabel\s+text\s*\{([^}]*)\}/i);
+assert(anchorTextRule && /fill\s*:\s*var\(--ink\)/i.test(anchorTextRule[1]) && /stroke\s*:\s*var\(--surface\)/i.test(anchorTextRule[1]), 'Curated overview anchor labels must retain audited text contrast');
+const anchorGlyphRule = css.match(/g\.anchorLabel\s+circle\s*\{([^}]*)\}/i);
+assert(anchorGlyphRule && /fill\s*:\s*var\(--e-backbone\)/i.test(anchorGlyphRule[1]) && /stroke\s*:\s*var\(--surface\)/i.test(anchorGlyphRule[1]), 'Curated overview anchor glyphs must use the audited spine contrast');
+const anchorFocusRule = css.match(/g\.anchorLabel:focus\s+text\s*,\s*g\.anchorLabel:hover\s+text\s*\{([^}]*)\}/i);
+assert(anchorFocusRule && /fill\s*:\s*var\(--focus\)/i.test(anchorFocusRule[1]), 'Curated overview anchors must expose a high-contrast pointer and keyboard focus state');
 assert(css.includes('color:var(--swatch-ink)'), 'Legend bubble glyphs must use a theme-specific contrasting color');
 assert(css.includes('button:disabled{opacity:1;'), 'Disabled controls must remain readable');
 assert(!css.includes('border-color:#33405c') && !css.includes('border-color:#3c4c6e'), 'Theme-invariant control borders remain');
@@ -133,7 +144,7 @@ assert(html.includes("label:'Light mode',ariaLabel:'Switch to light mode'"), 'Da
 assert(html.includes("themeLabel.textContent=action.label") && html.includes("themeIcon.textContent=action.icon"), 'Theme action presentation is not refreshed on every theme change');
 assert(html.includes("setLegendOpen(true,false,'welcome')"), 'First-load guide is not opened');
 assert(html.includes("setLegendPresentation('docked')"), 'Guide cannot transition to its left dock');
-assert(html.includes("const WELCOME_REVISION='3'"), 'v1.0.1 first-load guide state is not versioned');
+assert(html.includes("const WELCOME_REVISION='3'"), 'v1.1.0 first-load guide state is not versioned');
 assert(/<button\b(?=[^>]*\bdata-view="network")(?=[^>]*\baria-pressed="false")[^>]*>\s*Network\s*<\/button>/i.test(html), 'Network selector must expose its pressed state');
 assert(/<[^>]+\bid="networkView"(?=[^>]*\baria-label=)[^>]*>/i.test(html), 'Network view must be an explicitly labelled region');
 assert(/<[^>]+\bid="networkStatus"(?=[^>]*\brole="status")(?=[^>]*\baria-live="polite")[^>]*>/i.test(html), 'Network status must be announced politely');

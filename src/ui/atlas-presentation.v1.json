@@ -156,33 +156,33 @@
         },
         {
           "stepNumber": 2,
-          "nodeId": "perceptron",
-          "narration": "The perceptron demonstrated learning from examples while public promises ran well ahead of the machine's actual capabilities."
-        },
-        {
-          "stepNumber": 3,
           "nodeId": "perceptronsbook",
           "narration": "Minsky and Papert documented limits of single-layer perceptrons; the broader funding reaction also sidelined multilayer approaches."
         },
         {
-          "stepNumber": 4,
+          "stepNumber": 3,
           "nodeId": "lighthill",
           "narration": "The Lighthill review criticized unmet AI promises and contributed to a long contraction in British research support."
         },
         {
-          "stepNumber": 5,
+          "stepNumber": 4,
           "nodeId": "expertshells",
           "narration": "Expert-system shells turned hand-built rules and knowledge engineering into a substantial commercial industry."
         },
         {
-          "stepNumber": 6,
+          "stepNumber": 5,
           "nodeId": "aiwinter2",
           "narration": "The expert-system and Lisp-machine markets collapsed, making the AI label commercially toxic for another period."
         },
         {
-          "stepNumber": 7,
+          "stepNumber": 6,
           "nodeId": "backprop",
           "narration": "Effective multilayer credit assignment helped restore connectionist research and prepared the ground for later deep learning."
+        },
+        {
+          "stepNumber": 7,
+          "nodeId": "alexnet",
+          "narration": "AlexNet's 2012 ImageNet result demonstrated the combined value of GPUs, data, and deep convolutional models."
         }
       ]
     },

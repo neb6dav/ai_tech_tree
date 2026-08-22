@@ -4,6 +4,8 @@ All notable public changes to the AI Research Tech Tree will be documented here.
 
 ## [Unreleased]
 
+**v1.1.0 Preview checkpoint (not released, tagged, or deployed).** This interface checkpoint adds semantic zoom altitudes, the evidence inspector, a readable linear scale, guided tours and palette controls, relationship pooling, and DOM disposal; it makes no semantic dataset changes.
+
 ### Added
 
 - A candidate, display-only inventory of 24 canonical anchor nodes, 72 existing orientation relationships, and six future guided tours. The inventory remains subject to repository-owner review before release.

@@ -1,6 +1,6 @@
 {
   "name": "ai-research-tech-tree",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "private": true,
   "description": "Build tooling for the AI Research Tech Tree static atlas.",
   "engines": {
@@ -15,9 +15,10 @@
     "build": "node build.js",
     "validate:presentation": "node scripts/validate-presentation-data.cjs",
     "stage:site": "node scripts/stage-site.mjs",
-    "test:core": "npm run validate:presentation && node release-gate.js && node accessibility-gate.js && node ui-layout-gate.js && node network-gate.js && node opportunity-gate.js",
+    "test:core": "npm run validate:presentation && node release-gate.js && node accessibility-gate.js && node ui-layout-gate.js && npm run test:semantic-navigation && node network-gate.js && node opportunity-gate.js",
     "test:network": "node network-gate.js",
     "test:opportunity": "node opportunity-gate.js",
+    "test:semantic-navigation": "node semantic-navigation-gate.js",
     "test:stage-site": "node --test scripts/stage-site.test.mjs",
     "test:site-contract:unit": "node --test tests/site-contract-test.test.cjs",
     "test:site-contract": "node scripts/site-contract-test.cjs",

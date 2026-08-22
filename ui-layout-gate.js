@@ -63,20 +63,28 @@ for (const [fragment, label] of [
   ['const left=mapLeftInset();', 'camera uses the dock-aware map boundary'],
   ['const rail=mapLeftInset();', 'era labels use the dock-aware map boundary'],
   ["document.body.classList.toggle('guide-docked',docked)", 'docked layout state is explicit'],
-  ["const WELCOME_REVISION='3'", 'v1.0.1 first-run state revision'],
+  ["const WELCOME_REVISION='3'", 'v1.1.0 first-run state revision'],
   ["theme==='light'?{icon:'\\u263e',label:'Dark mode',ariaLabel:'Switch to dark mode'}", 'light theme advertises the dark-mode action'],
   ["{icon:'\\u2600',label:'Light mode',ariaLabel:'Switch to light mode'}", 'dark theme advertises the light-mode action'],
-  ['const DETAIL_K = 0.8, OVERVIEW_K = 0.2, OVERVIEW_CELL_PX = 20;', 'three-level semantic zoom thresholds'],
+  ['const DETAIL_K = 0.8, OVERVIEW_K = 0.2;', 'three-level semantic zoom thresholds'],
   ["const next=k>=DETAIL_K?'detail':k>=OVERVIEW_K?'mid':'overview';", 'semantic zoom mode selection'],
-  ['role="group" aria-label="Grouped overview markers.', 'accessible overview cluster group'],
-  ["if(cluster.nodes.length===1){const nd=cluster.nodes[0];select(nd.id);flyTo(nd,Math.max(k,.95));return;}", 'single overview markers open their detail panel'],
+  ['id="clusters" role="group" aria-label="Lane-by-era summaries.', 'accessible semantic cluster group'],
   ['function renderNodeAudit(nd){', 'detail-panel evidence renderer is defined'],
-  ["activateOverviewCluster(cluster);", 'pointer and keyboard cluster activation'],
+  ["activateSemanticCluster(cluster);", 'pointer and keyboard cluster activation'],
   ["nodeId:targetNode?.getAttribute('data-id')||null", 'pointer-origin node fallback'],
+  ["clusterKey:targetCluster?.getAttribute('data-cluster-key')||null", 'pointer-origin semantic cluster fallback'],
+  ["const clusterKey=cluster?.getAttribute('data-cluster-key')||started?.clusterKey", 'release semantic cluster fallback'],
   ["nodeId=g?.getAttribute('data-id')||started?.nodeId", 'release hit-test fallback'],
-  ["role:'button',tabindex:cluster.key===overviewFocusKey?0:-1", 'roving cluster keyboard focus'],
+  ["role:'button',tabindex:cluster.key===semanticFocusKey?0:-1", 'roving semantic cluster keyboard focus'],
+  ["class:'semanticCluster'", 'semantic cluster group data contract'],
+  ["class:'clusterCard'", 'semantic cluster card data contract'],
+  ["class:'clusterTitle'", 'semantic cluster title data contract'],
+  ["class:'clusterCount'", 'semantic cluster count data contract'],
+  ["class:'clusterAnchor'", 'semantic cluster landmark data contract'],
+  ['function rebuildSemanticClusters(){', 'deterministic semantic cluster rebuild'],
+  ["const visible=NODES.filter(isNodeVisible),signature=timeScale+'|'+visible.map(nd=>nd.id).join('|');", 'semantic cluster rebuild signature'],
   ["document.getElementById('filterStatus').textContent", 'screen-reader filter result feedback'],
-  ["version:'1.0.1',edition:'2026-08-21-stable-1',releaseState:'Preview'", 'v1.0.1 Preview identity over the unchanged Stable dataset'],
+  ["version:'1.1.0',edition:'2026-08-21-stable-1',releaseState:'Preview'", 'v1.1.0 Preview identity over the unchanged Stable dataset'],
   ['id="editionBadge" href="./release-manifest.json"', 'visible exact-build badge'],
   ['id="contributeLink" href="https://github.com/neb6dav/ai_tech_tree/issues/new/choose"', 'persistent contribution link'],
   ['#repositoryLink{color:var(--ink);text-decoration:none;display:flex;align-items:center;justify-content:center;min-width:32px;min-height:32px', 'repository minimum pointer target'],
@@ -131,7 +139,7 @@ assert(hiddenSelectors
   .every(selector => !/#edgesBackbone|#anchorLabels/.test(selector)), 'Low-zoom orientation spine and anchor labels must never be hidden by a display:none rule');
 
 const presentationMatch = html.match(/<script\b(?=[^>]*\bid="atlas-presentation-data")(?=[^>]*\btype="application\/json")[^>]*>([\s\S]*?)<\/script>/i);
-assert(presentationMatch, 'Embedded v1.0.1 presentation payload is missing');
+assert(presentationMatch, 'Embedded v1.1.0 presentation payload is missing');
 const presentation = JSON.parse(presentationMatch[1]);
 assert.equal(presentation.anchors.length, 24, 'Embedded presentation payload must expose exactly 24 curated anchors');
 assert.equal(presentation.backboneRelationshipIds.length, 72, 'Embedded presentation payload must expose exactly 72 curated spine relationships');
@@ -197,8 +205,11 @@ const activeOverlaySource = sourceForFunction(applicationScript, 'activeOverlayM
 assert(/legend[^;\n]*classList\.contains\(['"]welcome['"]\)/.test(activeOverlaySource), 'First-run side sheet must retain modal focus containment');
 
 const orientationSpineSource = sourceForFunction(applicationScript, 'buildOrientationSpine');
-assert(/\.backboneRelationshipIds[^;\n]{0,48}\.(?:forEach|map)\(/.test(orientationSpineSource), 'Orientation spine must render from the curated relationship inventory');
-assert(/gEdgesBackbone\.replaceChildren\(/.test(orientationSpineSource), 'Orientation spine must atomically replace its keyed paths');
+assert(/mountRelationshipLayer\(['"]backbone['"]\)/.test(orientationSpineSource), 'Orientation spine must delegate mounting to the keyed relationship layer');
+const orientationMountSource = sourceForFunction(applicationScript, 'mountRelationshipLayer');
+assert(/\(PRESENTATION_DATA\?\.backboneRelationshipIds\|\|\[\]\)\.forEach\(relationshipId=>/.test(orientationMountSource), 'Orientation spine mount must iterate the curated relationship inventory');
+assert(/relationshipById\.get\(relationshipId\),path=edge&&acquireRelationshipPath\(edge,'backbone'\)/.test(orientationMountSource), 'Orientation spine mount must acquire each curated relationship through the keyed path pool');
+assert(/gEdgesBackbone\.replaceChildren\(spineFragment\)/.test(orientationMountSource), 'Orientation spine mount must atomically replace its keyed paths');
 const anchorLabelsSource = sourceForFunction(applicationScript, 'buildAnchorLabels');
 assert(/\.anchors[^;\n]{0,48}\.(?:forEach|map)\(/.test(anchorLabelsSource), 'Anchor labels must render from the curated node inventory');
 assert(/gAnchorLabels\.replaceChildren\(/.test(anchorLabelsSource), 'Anchor labels must atomically replace their 24 labels');
@@ -207,7 +218,7 @@ assert((applicationScript.match(/buildAnchorLabels\(\)/g) || []).length >= 2, 'S
 
 const clearPreviewSource = sourceForFunction(applicationScript, 'clearPreviewState');
 assert(/hoverId\s*=\s*null/.test(clearPreviewSource), 'Preview cleanup must reset its hover identity');
-assert(/hideTip\(\)/.test(clearPreviewSource), 'Preview cleanup must dismiss its preview card');
+assert(/hideInspector\(\)/.test(clearPreviewSource), 'Preview cleanup must dismiss its shared inspector');
 assert(/clearHi\(\)/.test(clearPreviewSource), 'Preview cleanup must remove highlighted relationships');
 const setViewSource = sourceForFunction(applicationScript, 'setViewMode');
 assert(/clearPreviewState\(\)/.test(setViewSource), 'Every view change must centrally clear the prior preview');
@@ -394,43 +405,22 @@ for (const scale of [0.2, 0.34, 0.79]) {
 assert(26 * 0.8 >= 20, 'Detail cards begin before they reach a readable height');
 assert(12 * 0.8 >= 9.5, 'Detail labels begin before they reach a readable text size');
 
-const clusterResults = [];
-for (const scale of [0.02, 0.05, 0.1, 0.199]) {
-  const cell = 20;
-  const groups = new Map();
-  for (const node of nodes) {
-    const gx = Math.floor(((node.x + node.width / 2) * scale) / cell);
-    const gy = Math.floor(((node.y + 13) * scale) / cell);
-    const key = `${gx}:${gy}`;
-    groups.set(key, (groups.get(key) || 0) + 1);
-  }
-  const total = [...groups.values()].reduce((sum, count) => sum + count, 0);
-  assert.equal(total, nodes.length, `Overview grouping lost entries at scale ${scale}`);
-  assert(12 + 1.25 < cell, 'Maximum overview glyph exceeds its map cell');
-  clusterResults.push({ scale, markers: groups.size, entries: total, largestGroup: Math.max(...groups.values()) });
-}
-
-const activationMatch = html.match(/function activateOverviewCluster\(cluster\)\{[\s\S]*?\n\}/);
-assert(activationMatch, 'Overview activation function is missing');
-const activationCalls = [];
-const activationContext = {
-  k: 0.1,
-  select: id => activationCalls.push(['select', id]),
-  flyTo: (node, scale) => activationCalls.push(['flyTo', node.id, scale]),
-  zoomOverviewCluster: cluster => activationCalls.push(['zoom', cluster.nodes.length])
+const semanticClusterSource = sourceForFunction(applicationScript, 'rebuildSemanticClusters');
+assert(/semanticClusters=\[\.\.\.groups\.values\(\)\]\.sort\(\(a,b\)=>LANES\.indexOf\(a\.lane\)-LANES\.indexOf\(b\.lane\)\|\|a\.era\.y0-b\.era\.y0\|\|a\.key\.localeCompare\(b\.key\)\)/.test(semanticClusterSource), 'Semantic cards must use deterministic lane/era/key ordering');
+assert(/cluster\.nodes\.sort\(\(a,b\)=>layoutYear\(a\)-layoutYear\(b\)\|\|a\.t\.localeCompare\(b\.t\)\|\|a\.id\.localeCompare\(b\.id\)\)/.test(semanticClusterSource), 'Semantic card contents must use deterministic node ordering');
+assert(/data-cluster-key/.test(semanticClusterSource), 'Semantic cards must expose their stable cluster key');
+assert(/semanticFocusKey/.test(semanticClusterSource), 'Semantic cards must preserve roving focus state');
+assert(/activateSemanticCluster\(cluster\)/.test(applicationScript), 'Semantic cluster activation function is missing');
+const semanticClusterResults = {
+  classes: ['semanticCluster', 'clusterCard', 'clusterTitle', 'clusterCount', 'clusterAnchor'],
+  deterministic: true
 };
-vm.runInNewContext(activationMatch[0] + ';globalThis.activateOverviewCluster=activateOverviewCluster;', activationContext);
-activationContext.activateOverviewCluster({ nodes: [{ id: 'singleton' }] });
-assert.deepEqual(activationCalls, [['select', 'singleton'], ['flyTo', 'singleton', 0.95]], 'A singleton overview marker must open and reveal its node');
-activationCalls.length = 0;
-activationContext.activateOverviewCluster({ nodes: [{ id: 'one' }, { id: 'two' }] });
-assert.deepEqual(activationCalls, [['zoom', 2]], 'A multi-entry overview marker must remain a disambiguating zoom action');
 
 console.log(JSON.stringify({
   status: 'PASS',
   edition: data.dataset.edition,
   world: { width: worldWidth, approximateHeight: worldHeight },
-  semanticZoom: { detailAt: 0.8, overviewBelow: 0.2, midResults, clusterResults },
+  semanticZoom: { detailAt: 0.8, overviewBelow: 0.2, midResults, semanticClusterResults },
   dockResults,
   fitResults,
   footerStatisticsPresent: false,

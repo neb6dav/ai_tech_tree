@@ -7,14 +7,16 @@ base_sha: "85108c78fa86c86634d4c0944839696369e687cd"
 product_boundary_sha: "53e3a4f9c0624096aede63e0345390a3c021bac0"
 working_branch: "codex/ui-v1.2.0"
 expanded_archive_branch: "archive/v0.1.1-expanded-release-safety-0870d47"
+verified_implementation_head: "3fff379adc9f21b73c9af18a3ad538e09813f15d"
+pull_request: 11
+verification_merge_tree: "0aeb9ec5b5e21709fced9e3321cef0b3a849aea9"
 last_completed_checkpoint: "v1.0.0"
 last_completed_local_checkpoint: "v1.2.0"
-active_release_status: "v1.2.0_source_candidate_locally_windows_verified_ubuntu_pr_verification_pending_not_released_tagged_or_deployed"
+active_release_status: "v1.2.0_source_checkpoint_complete_windows_and_ubuntu_verified_preview_not_merged_tagged_or_deployed"
 next_exact_action: >-
-  Commit and push the single codex/ui-v1.2.0 candidate branch, open its PR, and
-  use measured Ubuntu CI evidence (including the exact Linux DOM peak if it
-  differs) for the remaining verification. Do not merge, tag, or deploy
-  without separate promotion authorization.
+  Repository owner reviews and approves or revises the 24 anchors and 72 spine
+  relationships, then separately authorizes promotion. Do not merge, tag, or
+  deploy without that separate authorization.
 presentation_inventory_owner_review: "pending_for_24_anchors_and_72_spine_relationships"
 potential_future_editions:
   - version: "v1.3.0"
@@ -27,7 +29,11 @@ last_verified_commands:
   - command: "npm test"
     status: "PASS"
     runtime: "Windows x64; Node v24.14.1"
-    scope: "Final v1.2.0 source-candidate closure: 18/18 browser tests, DOM peak 7244, HTML 4,589,274 bytes, gzip 672,520 bytes, semantic digest 865174514ba64e20d6f2a90471a6766b6d5fa18f5b0e62c85d9601de077a50f2, researcher delivery 339 nodes/711 relationships/339 sitemap node URLs/0 semantic changes/embed read-only, Lighthouse medians score 52/FCP 23182.861/LCP 23333.861/TBT 196.5/CLS 0"
+    scope: "Final v1.2.0 source-checkpoint closure: 18/18 browser tests, DOM peak 7244, HTML 4,589,553 bytes, gzip 672,590 bytes, semantic digest 865174514ba64e20d6f2a90471a6766b6d5fa18f5b0e62c85d9601de077a50f2, researcher delivery 339 nodes/711 relationships/339 sitemap node URLs/0 semantic changes/embed read-only, Lighthouse medians score 55/FCP 23398.714/LCP 23409.214/TBT 3/CLS 0"
+  - command: "GitHub Actions PR #11 run 32587459751, job 97065915025"
+    status: "PASS"
+    runtime: "ubuntu-24.04; tested PR merge tree 0aeb9ec5b5e21709fced9e3321cef0b3a849aea9; candidate head 3fff379adc9f21b73c9af18a3ad538e09813f15d"
+    scope: "Ubuntu 18/18 browser tests, DOM peak 7244/8000, HTML 4,589,553 bytes, gzip 672,590 bytes, Lighthouse medians score 44/FCP 23180.6411/LCP 23399.51595/TBT 451.5/CLS 0; generated files committed and preview uploaded"
   - command: "GitHub Actions Pages run 32548737168 and live payload reconciliation"
     status: "PASS"
     runtime: "ubuntu-24.04; protected-main workflow source 1f5d730193985665b7bcd2139cac4aca902513f0; tagged source 7d0d26fe87c8be2868c63738c503f90d35789b3a"
@@ -84,11 +90,12 @@ source_checkpoints:
     checkpoint_commit: "710138d"
     purpose: "Semantic navigation redesign source checkpoint"
   - version: "v1.2.0"
-    status: "source_candidate"
-    verification_state: "preview_windows_verified_ubuntu_pending_not_globally_complete"
+    status: "complete"
+    verification_state: "source_checkpoint_verified_windows_and_ubuntu"
     product_version: "1.2.0"
     release_state: "Preview"
-    tag_and_deployment: "not_authorized"
+    checkpoint_commit: "3fff379"
+    tag_and_deployment: "not_authorized_not_merged_tagged_or_deployed"
     purpose: "Researcher delivery with static node pages and read-only comparison/embed"
 authorization:
   source_checkpoint_implementation: "authorized"

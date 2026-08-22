@@ -1,0 +1,97 @@
+{
+  "schemaVersion": "1.0.0",
+  "outputDirectory": "_site",
+  "releaseManifest": "release-manifest.json",
+  "metadata": {
+    "packageFile": "package.json",
+    "packageLockFile": "package-lock.json",
+    "datasetFile": "ai-research-tech-tree.json"
+  },
+  "artifacts": [
+    {
+      "kind": "file",
+      "source": "index.html",
+      "target": "index.html",
+      "mediaType": "text/html; charset=utf-8"
+    },
+    {
+      "kind": "file",
+      "source": "src/compatibility/ai-research-tech-tree.html",
+      "target": "ai-research-tech-tree.html",
+      "mediaType": "text/html; charset=utf-8"
+    },
+    {
+      "kind": "file",
+      "source": "ai-research-tech-tree.json",
+      "target": "ai-research-tech-tree.json",
+      "mediaType": "application/json; charset=utf-8"
+    },
+    {
+      "kind": "file",
+      "source": "ai-research-tech-tree.jsonld",
+      "target": "ai-research-tech-tree.jsonld",
+      "mediaType": "application/ld+json"
+    },
+    {
+      "kind": "file",
+      "source": "ai-research-tech-tree.ndjson",
+      "target": "ai-research-tech-tree.ndjson",
+      "mediaType": "application/x-ndjson"
+    },
+    {
+      "kind": "file",
+      "source": "social-card.png",
+      "target": "social-card.png",
+      "mediaType": "image/png"
+    },
+    {
+      "kind": "file",
+      "source": "robots.txt",
+      "target": "robots.txt",
+      "mediaType": "text/plain; charset=utf-8"
+    },
+    {
+      "kind": "file",
+      "source": "sitemap.xml",
+      "target": "sitemap.xml",
+      "mediaType": "application/xml; charset=utf-8"
+    },
+    {
+      "kind": "file",
+      "source": "CITATION.cff",
+      "target": "CITATION.cff",
+      "mediaType": "text/yaml; charset=utf-8"
+    },
+    {
+      "kind": "file",
+      "source": "src/data/opportunities/diffusion-models.alpha.json",
+      "target": "data/opportunities/diffusion-models.alpha.json",
+      "mediaType": "application/json; charset=utf-8"
+    },
+    {
+      "kind": "file",
+      "source": "src/data/opportunities/opportunity-map.schema.json",
+      "target": "data/opportunities/opportunity-map.schema.json",
+      "mediaType": "application/json; charset=utf-8"
+    },
+    {
+      "kind": "file",
+      "source": "src/data/opportunities/diffusion-models.alpha.json",
+      "target": "src/data/opportunities/diffusion-models.alpha.json",
+      "mediaType": "application/json; charset=utf-8"
+    },
+    {
+      "kind": "file",
+      "source": "src/compatibility/opportunity-map.schema.json",
+      "target": "src/data/opportunities/opportunity-map.schema.json",
+      "mediaType": "application/json; charset=utf-8"
+    }
+  ],
+  "generatedFiles": [
+    {
+      "target": ".nojekyll",
+      "contents": "",
+      "mediaType": "application/octet-stream"
+    }
+  ]
+}

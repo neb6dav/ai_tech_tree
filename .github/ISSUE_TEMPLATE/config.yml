@@ -3,6 +3,6 @@ contact_links:
   - name: Read the contribution guide
     url: https://github.com/neb6dav/ai_tech_tree/blob/main/CONTRIBUTING.md
     about: Review scope, evidence, generated-file, and AI-disclosure requirements before submitting.
-  - name: Explore the public beta
+  - name: Explore the published atlas
     url: https://neb6dav.github.io/ai_tech_tree/
     about: Confirm the current public record and copy its stable ID before reporting a change.

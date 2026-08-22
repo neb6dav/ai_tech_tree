@@ -1,0 +1,1700 @@
+{
+  "schemaVersion": "1.0.0",
+  "rows": [
+    {
+      "ordinal": 0,
+      "nodeId": "markov",
+      "rowHtml": "<tr><td>1913</td><td><strong>Markov chains</strong><span class=\"nsDesc\">Statistical models of state-to-state transitions. The mathematical seed of language modeling, HMMs and reinforcement learning's state formalism.</span></td><td>ROOTS · MATH, NEURO &amp; CYBERNETICS</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 1,
+      "nodeId": "logicprog",
+      "rowHtml": "<tr><td>1879-1928</td><td><strong>Formal logic program (Frege→Hilbert)</strong><span class=\"nsDesc\">The project of reducing reasoning to symbol manipulation. Made 'thinking machines' conceivable before computers existed.</span></td><td>ROOTS · MATH, NEURO &amp; CYBERNETICS</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 2,
+      "nodeId": "godel",
+      "rowHtml": "<tr><td>1931</td><td><strong>Gödel incompleteness</strong><span class=\"nsDesc\">Gödel showed that any consistent, effectively axiomatized formal system expressive enough for arithmetic contains true statements it cannot prove. This bounds mechanized reasoning without precluding useful automation.</span></td><td>ROOTS · MATH, NEURO &amp; CYBERNETICS</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 3,
+      "nodeId": "turing36",
+      "rowHtml": "<tr><td>1936</td><td><strong>Turing machine</strong><span class=\"nsDesc\">Turing formalized computation with an abstract universal machine. Most digital AI software fits this computational model, while analog and quantum systems extend the hardware story.</span></td><td>ROOTS · MATH, NEURO &amp; CYBERNETICS</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 4,
+      "nodeId": "shannon37",
+      "rowHtml": "<tr><td>1937</td><td><strong>Boolean circuits (Shannon's thesis)</strong><span class=\"nsDesc\">Switching circuits implement logic. The bridge from abstract symbols to physical hardware.</span></td><td>ROOTS · MATH, NEURO &amp; CYBERNETICS</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 5,
+      "nodeId": "mcculloch43",
+      "rowHtml": "<tr><td>1943</td><td><strong>McCulloch–Pitts neuron</strong><span class=\"nsDesc\">McCulloch and Pitts modeled idealized neurons as logical threshold units, creating an early bridge from neurobiology to artificial neural computation.</span></td><td>ROOTS · MATH, NEURO &amp; CYBERNETICS</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 6,
+      "nodeId": "gametheory",
+      "rowHtml": "<tr><td>1944</td><td><strong>Game theory (von Neumann–Morgenstern)</strong><span class=\"nsDesc\">Strategic rationality formalized. Underpins multi-agent AI, GANs, poker solvers and mechanism design.</span></td><td>ROOTS · MATH, NEURO &amp; CYBERNETICS</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 7,
+      "nodeId": "vonneumann45",
+      "rowHtml": "<tr><td>1945</td><td><strong>Stored-program computer</strong><span class=\"nsDesc\">Stored-program architecture became computing's dominant general-purpose substrate. Specialized accelerators retain it at system level, while neuromorphic, analog and quantum approaches explore alternatives to the von Neumann bottleneck.</span></td><td>ROOTS · MATH, NEURO &amp; CYBERNETICS</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 8,
+      "nodeId": "wiener48",
+      "rowHtml": "<tr><td>1948</td><td><strong>Cybernetics (Wiener)</strong><span class=\"nsDesc\">Feedback, control and communication in animal and machine. Seeded AI, control theory, robotics and the first misalignment worries.</span></td><td>ROOTS · MATH, NEURO &amp; CYBERNETICS</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 9,
+      "nodeId": "shannon48",
+      "rowHtml": "<tr><td>1948</td><td><strong>Information theory</strong><span class=\"nsDesc\">Information quantified; prediction and compression unified. The deep reason language modeling works at all.</span></td><td>ROOTS · MATH, NEURO &amp; CYBERNETICS</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 10,
+      "nodeId": "hebb49",
+      "rowHtml": "<tr><td>1949</td><td><strong>Hebbian learning</strong><span class=\"nsDesc\">Hebbian learning linked correlated neural activity to synaptic change and remains foundational in associative and biologically plausible learning; modern gradient updates are not generally Hebbian.</span></td><td>ROOTS · MATH, NEURO &amp; CYBERNETICS</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 11,
+      "nodeId": "turingtest",
+      "rowHtml": "<tr><td>1950</td><td><strong>Turing test</strong><span class=\"nsDesc\">'Computing Machinery and Intelligence' reframed 'can machines think?' as an imitation game. The field's north star and favorite argument.</span></td><td>ROOTS · MATH, NEURO &amp; CYBERNETICS</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 12,
+      "nodeId": "hodgkin52",
+      "rowHtml": "<tr><td>1952</td><td><strong>Hodgkin–Huxley neuron model</strong><span class=\"nsDesc\">The biophysics of the spike, measured and modeled. Ground truth for spiking networks and neuromorphic silicon.</span></td><td>ROOTS · MATH, NEURO &amp; CYBERNETICS</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 13,
+      "nodeId": "dartmouth",
+      "rowHtml": "<tr><td>1956</td><td><strong>Dartmouth workshop — 'AI' named</strong><span class=\"nsDesc\">McCarthy, Minsky, Shannon, Rochester bet a summer could crack intelligence. Wrong on timing, right on ambition — the field's founding myth.</span></td><td>ROOTS · MATH, NEURO &amp; CYBERNETICS</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 14,
+      "nodeId": "cogrev",
+      "rowHtml": "<tr><td>1956</td><td><strong>Cognitive revolution</strong><span class=\"nsDesc\">Miller, Chomsky, Newell &amp; Simon recast mind as information processing. Psychology and AI were born entangled.</span></td><td>ROOTS · MATH, NEURO &amp; CYBERNETICS</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 15,
+      "nodeId": "hubel59",
+      "rowHtml": "<tr><td>1959</td><td><strong>Hubel &amp; Wiesel visual cortex</strong><span class=\"nsDesc\">Orientation-selective cells stacked in layers — the biological blueprint later copied by the neocognitron and CNNs.</span></td><td>ROOTS · MATH, NEURO &amp; CYBERNETICS</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 16,
+      "nodeId": "solomonoff",
+      "rowHtml": "<tr><td>1964</td><td><strong>Solomonoff induction</strong><span class=\"nsDesc\">Universal prediction by weighting all programs by simplicity. The idealized learner behind AIXI and compression-based views of intelligence.</span></td><td>ROOTS · MATH, NEURO &amp; CYBERNETICS</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 17,
+      "nodeId": "kolmo",
+      "rowHtml": "<tr><td>1965</td><td><strong>Kolmogorov complexity &amp; MDL</strong><span class=\"nsDesc\">Learning as compression, formalized. Quietly resurfaces in every era — most recently in 'compression is intelligence' scaling arguments.</span></td><td>ROOTS · MATH, NEURO &amp; CYBERNETICS</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 18,
+      "nodeId": "complexity71",
+      "rowHtml": "<tr><td>1971</td><td><strong>NP-completeness (Cook–Karp)</strong><span class=\"nsDesc\">Which problems are intractable. Explains why naive search-based AI hit walls — and why heuristics and learning are necessary.</span></td><td>ROOTS · MATH, NEURO &amp; CYBERNETICS</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 19,
+      "nodeId": "chineseroom",
+      "rowHtml": "<tr><td>1980</td><td><strong>Chinese Room &amp; symbol grounding</strong><span class=\"nsDesc\">Searle: syntax isn't semantics. The grounding critique haunted symbolic AI; multimodal, embodied learning is the modern rebuttal-in-progress.</span></td><td>ROOTS · MATH, NEURO &amp; CYBERNETICS</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 20,
+      "nodeId": "conndebate",
+      "rowHtml": "<tr><td>1988</td><td><strong>Symbolic vs connectionist war</strong><span class=\"nsDesc\">Fodor &amp; Pylyshyn: can networks compose meaning? The systematicity debate — reopened, not settled, by LLM reasoning.</span></td><td>ROOTS · MATH, NEURO &amp; CYBERNETICS</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 21,
+      "nodeId": "freeenergy",
+      "rowHtml": "<tr><td>2005</td><td><strong>Free-energy principle</strong><span class=\"nsDesc\">Friston: brains minimize prediction error. Grand, contested, hard to operationalize — the neuroscience shadow of world-model AI.</span></td><td>ROOTS · MATH, NEURO &amp; CYBERNETICS</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 22,
+      "nodeId": "gap_activeinf",
+      "rowHtml": "<tr><td>2026</td><td><strong>Active inference at scale</strong><span class=\"nsDesc\">Research direction: test whether active-inference objectives can support competitive, large-scale agents. Existing work has not yet established parity with frontier-scale model-based agents.</span></td><td>ROOTS · MATH, NEURO &amp; CYBERNETICS</td><td>Open direction; Open direction</td></tr>"
+    },
+    {
+      "ordinal": 23,
+      "nodeId": "lt56",
+      "rowHtml": "<tr><td>1956</td><td><strong>Logic Theorist</strong><span class=\"nsDesc\">Newell &amp; Simon's first AI program — proved theorems from Principia by heuristic search over symbols. AI's opening move.</span></td><td>SYMBOLIC AI &amp; KNOWLEDGE</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 24,
+      "nodeId": "lisp",
+      "rowHtml": "<tr><td>1958</td><td><strong>LISP</strong><span class=\"nsDesc\">McCarthy's symbolic language: code as data, recursion, garbage collection. AI's native tongue for 30 years.</span></td><td>SYMBOLIC AI &amp; KNOWLEDGE</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 25,
+      "nodeId": "gps",
+      "rowHtml": "<tr><td>1959</td><td><strong>General Problem Solver</strong><span class=\"nsDesc\">Means–ends analysis as a theory of thought. 'General' proved elusive beyond puzzles — but it seeded planning and cognitive architectures.</span></td><td>SYMBOLIC AI &amp; KNOWLEDGE</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 26,
+      "nodeId": "advicetaker",
+      "rowHtml": "<tr><td>1959</td><td><strong>Advice Taker &amp; the logicist creed</strong><span class=\"nsDesc\">McCarthy's program: represent knowledge as logical sentences, act by deduction. The purist wing of symbolic AI.</span></td><td>SYMBOLIC AI &amp; KNOWLEDGE</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 27,
+      "nodeId": "resolution",
+      "rowHtml": "<tr><td>1965</td><td><strong>Resolution theorem proving</strong><span class=\"nsDesc\">Robinson's single complete inference rule made automated deduction real — and revealed combinatorial explosion as the enemy.</span></td><td>SYMBOLIC AI &amp; KNOWLEDGE</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 28,
+      "nodeId": "dendral",
+      "rowHtml": "<tr><td>1965</td><td><strong>DENDRAL — first expert system</strong><span class=\"nsDesc\">Mass-spectrometry chemistry via encoded expertise. Proved domain knowledge beats general search — the knowledge turn begins.</span></td><td>SYMBOLIC AI &amp; KNOWLEDGE</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 29,
+      "nodeId": "semanticnets",
+      "rowHtml": "<tr><td>1966</td><td><strong>Semantic networks</strong><span class=\"nsDesc\">Quillian's concepts-as-graphs. Ancestor of frames, ontologies, knowledge graphs — and, arguably, of embeddings-as-relations.</span></td><td>SYMBOLIC AI &amp; KNOWLEDGE</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 30,
+      "nodeId": "shrdlu",
+      "rowHtml": "<tr><td>1970</td><td><strong>SHRDLU &amp; blocks world</strong><span class=\"nsDesc\">Winograd's dazzling language-plus-planning demo in a toy world. Famously refused to scale — the archetype of the demo-to-world gap.</span></td><td>SYMBOLIC AI &amp; KNOWLEDGE</td><td>Development; Ended / superseded (legacy)</td></tr>"
+    },
+    {
+      "ordinal": 31,
+      "nodeId": "prolog",
+      "rowHtml": "<tr><td>1972</td><td><strong>Prolog &amp; logic programming</strong><span class=\"nsDesc\">Computation as deduction. Once a national strategy (Japan bet on it); now a respected niche in verification, Datalog and answer-set programming.</span></td><td>SYMBOLIC AI &amp; KNOWLEDGE</td><td>Development; Dormant</td></tr>"
+    },
+    {
+      "ordinal": 32,
+      "nodeId": "lighthill",
+      "rowHtml": "<tr><td>1973-1980</td><td><strong>Lighthill Report → first AI winter</strong><span class=\"nsDesc\">UK review damning AI's unmet promises; with DARPA cuts it froze funding for a decade. The field's first reckoning with its own hype.</span></td><td>SYMBOLIC AI &amp; KNOWLEDGE</td><td>Development; Ended / superseded (legacy)</td></tr>"
+    },
+    {
+      "ordinal": 33,
+      "nodeId": "mycin",
+      "rowHtml": "<tr><td>1974</td><td><strong>MYCIN</strong><span class=\"nsDesc\">Rule-based infection diagnosis that rivaled experts — and was never deployed (liability, integration, trust). The expert-system template and its fate in one system.</span></td><td>SYMBOLIC AI &amp; KNOWLEDGE</td><td>Development; Ended / superseded (legacy)</td></tr>"
+    },
+    {
+      "ordinal": 34,
+      "nodeId": "frames",
+      "rowHtml": "<tr><td>1974</td><td><strong>Frames (Minsky)</strong><span class=\"nsDesc\">Structured slots and defaults for commonsense knowledge. Ancestor of objects, schemas, ontologies — and of every 'context' hack since.</span></td><td>SYMBOLIC AI &amp; KNOWLEDGE</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 35,
+      "nodeId": "ameurisko",
+      "rowHtml": "<tr><td>1976</td><td><strong>AM &amp; EURISKO</strong><span class=\"nsDesc\">Lenat's discovery programs invented concepts, won wargame tournaments — then 'ran out of steam.' Their post-mortem led him to Cyc.</span></td><td>SYMBOLIC AI &amp; KNOWLEDGE</td><td>Development; Dormant</td></tr>"
+    },
+    {
+      "ordinal": 36,
+      "nodeId": "blackboard",
+      "rowHtml": "<tr><td>1980</td><td><strong>Blackboard architectures</strong><span class=\"nsDesc\">HEARSAY-II's shared-workspace coordination of specialist modules. Faded — yet echoes in every multi-agent orchestration framework today.</span></td><td>SYMBOLIC AI &amp; KNOWLEDGE</td><td>Development; Dormant</td></tr>"
+    },
+    {
+      "ordinal": 37,
+      "nodeId": "xcon",
+      "rowHtml": "<tr><td>1980</td><td><strong>XCON at DEC</strong><span class=\"nsDesc\">Configured VAX orders with 10,000+ rules, saved ~$40M/yr — then drowned in rule-maintenance. The boom's flagship and its cautionary tale.</span></td><td>SYMBOLIC AI &amp; KNOWLEDGE</td><td>Development; Ended / superseded (legacy)</td></tr>"
+    },
+    {
+      "ordinal": 38,
+      "nodeId": "nonmono",
+      "rowHtml": "<tr><td>1980</td><td><strong>Non-monotonic logic &amp; frame problem</strong><span class=\"nsDesc\">Formalizing defeasible commonsense reasoning. Non-monotonic logics provide rigorous tools, while the broader frame problem remains open and many practical systems use learned or domain-specific workarounds.</span></td><td>SYMBOLIC AI &amp; KNOWLEDGE</td><td>Development; Dormant</td></tr>"
+    },
+    {
+      "ordinal": 39,
+      "nodeId": "expertshells",
+      "rowHtml": "<tr><td>1981</td><td><strong>Expert-systems industry</strong><span class=\"nsDesc\">Shells, consultancies, and knowledge engineers turned expert systems into an industry. Lisp-machine workstations helped enable the boom; brittle rules and costly upkeep helped collapse it by 1990.</span></td><td>SYMBOLIC AI &amp; KNOWLEDGE</td><td>Development; Ended / superseded (legacy)</td></tr>"
+    },
+    {
+      "ordinal": 40,
+      "nodeId": "lispmachines",
+      "rowHtml": "<tr><td>1980</td><td><strong>Lisp machines</strong><span class=\"nsDesc\">A whole hardware industry (Symbolics, LMI) for symbolic AI — wiped out by commodity workstations by 1987. Hardware bet on a software fad.</span></td><td>SYMBOLIC AI &amp; KNOWLEDGE</td><td>Development; Ended / superseded (legacy)</td></tr>"
+    },
+    {
+      "ordinal": 41,
+      "nodeId": "fifthgen",
+      "rowHtml": "<tr><td>1982</td><td><strong>Fifth Generation Project</strong><span class=\"nsDesc\">Japan's $850M national bet on massively parallel logic programming. Delivered little; its shadow scared funders worldwide for a decade.</span></td><td>SYMBOLIC AI &amp; KNOWLEDGE</td><td>Development; Ended / superseded (legacy)</td></tr>"
+    },
+    {
+      "ordinal": 42,
+      "nodeId": "soar",
+      "rowHtml": "<tr><td>1983</td><td><strong>SOAR &amp; ACT-R architectures</strong><span class=\"nsDesc\">Unified theories of cognition with dedicated labs for decades — marginal to modern AI, but a likely quarry for LLM-agent memory design.</span></td><td>SYMBOLIC AI &amp; KNOWLEDGE</td><td>Development; Dormant</td></tr>"
+    },
+    {
+      "ordinal": 43,
+      "nodeId": "cbr",
+      "rowHtml": "<tr><td>1983</td><td><strong>Case-based reasoning</strong><span class=\"nsDesc\">Solve new problems by adapting stored cases. A thriving 90s subfield that faded to niche — conceptually reborn as retrieval-augmented everything.</span></td><td>SYMBOLIC AI &amp; KNOWLEDGE</td><td>Development; Dormant</td></tr>"
+    },
+    {
+      "ordinal": 44,
+      "nodeId": "cyc",
+      "rowHtml": "<tr><td>1984</td><td><strong>Cyc — commonsense by hand</strong><span class=\"nsDesc\">Lenat's 40-year, million-axiom quest to hand-encode common sense. The grandest knowledge-engineering grind; still no general reasoner emerged.</span></td><td>SYMBOLIC AI &amp; KNOWLEDGE</td><td>Development; Dormant</td></tr>"
+    },
+    {
+      "ordinal": 45,
+      "nodeId": "aiwinter2",
+      "rowHtml": "<tr><td>1988</td><td><strong>Second AI winter</strong><span class=\"nsDesc\">Expert-system market collapse plus Lisp-machine crash. 'AI' became a dirty word; survivors rebranded as 'machine learning.'</span></td><td>SYMBOLIC AI &amp; KNOWLEDGE</td><td>Development; Ended / superseded (legacy)</td></tr>"
+    },
+    {
+      "ordinal": 46,
+      "nodeId": "itp",
+      "rowHtml": "<tr><td>1989</td><td><strong>Interactive theorem provers</strong><span class=\"nsDesc\">Coq→Isabelle→Lean: humans and machines formalizing mathematics. A quiet community for 30 years — now the verification substrate for AI mathematicians.</span></td><td>SYMBOLIC AI &amp; KNOWLEDGE</td><td>Development; Revived</td></tr>"
+    },
+    {
+      "ordinal": 47,
+      "nodeId": "ilp",
+      "rowHtml": "<tr><td>1991</td><td><strong>Inductive logic programming</strong><span class=\"nsDesc\">Learning logic rules from examples. Elegant, interpretable, data-inefficient — sidelined by statistical ML; small revival alongside program synthesis.</span></td><td>SYMBOLIC AI &amp; KNOWLEDGE</td><td>Development; Dormant</td></tr>"
+    },
+    {
+      "ordinal": 48,
+      "nodeId": "dlogic",
+      "rowHtml": "<tr><td>1991</td><td><strong>Description logics &amp; ontologies</strong><span class=\"nsDesc\">Decidable fragments of logic for taxonomies; became OWL. Industrial ontology work persists; the research frontier moved on.</span></td><td>SYMBOLIC AI &amp; KNOWLEDGE</td><td>Development; Dormant</td></tr>"
+    },
+    {
+      "ordinal": 49,
+      "nodeId": "fuzzy",
+      "rowHtml": "<tr><td>1965</td><td><strong>Fuzzy logic</strong><span class=\"nsDesc\">Zadeh's graded truth. Ran 80s–90s consumer devices (cameras, rice cookers, trains), then drifted out of core AI research entirely.</span></td><td>SYMBOLIC AI &amp; KNOWLEDGE</td><td>Development; Dormant</td></tr>"
+    },
+    {
+      "ordinal": 50,
+      "nodeId": "semweb",
+      "rowHtml": "<tr><td>2001</td><td><strong>Semantic Web (RDF/OWL)</strong><span class=\"nsDesc\">RDF and OWL standardized a machine-readable web of linked facts. The universal Semantic Web vision receded, but the standards persist in knowledge graphs and linked-data systems.</span></td><td>SYMBOLIC AI &amp; KNOWLEDGE</td><td>Development; Dormant</td></tr>"
+    },
+    {
+      "ordinal": 51,
+      "nodeId": "kgraphs",
+      "rowHtml": "<tr><td>2012</td><td><strong>Knowledge graphs at scale</strong><span class=\"nsDesc\">Google KG, Wikidata: semantic networks reborn industrially. Now the structured complement — and grounding source — for LLMs.</span></td><td>SYMBOLIC AI &amp; KNOWLEDGE</td><td>Development; Revived</td></tr>"
+    },
+    {
+      "ordinal": 52,
+      "nodeId": "neurosymbolic",
+      "rowHtml": "<tr><td>2019</td><td><strong>Neuro-symbolic AI</strong><span class=\"nsDesc\">Marrying networks and symbols: program synthesis, tool use, logic-guided decoding. Perennial hope, real progress, no unified paradigm yet.</span></td><td>SYMBOLIC AI &amp; KNOWLEDGE</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 53,
+      "nodeId": "gap_neurosym",
+      "rowHtml": "<tr><td>2026</td><td><strong>Symbolic rigor at LLM scale</strong><span class=\"nsDesc\">Research direction: combine broad language-model capabilities with end-to-end formal verification. Current systems demonstrate verified reasoning in bounded mathematics and code settings; broad coverage remains unresolved.</span></td><td>SYMBOLIC AI &amp; KNOWLEDGE</td><td>Open direction; Open direction</td></tr>"
+    },
+    {
+      "ordinal": 54,
+      "nodeId": "shannonchess",
+      "rowHtml": "<tr><td>1950</td><td><strong>Shannon's chess blueprint</strong><span class=\"nsDesc\">'Programming a Computer for Playing Chess': minimax plus evaluation functions. The founding document of game AI.</span></td><td>SEARCH, PLANNING &amp; GAMES</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 55,
+      "nodeId": "minimaxab",
+      "rowHtml": "<tr><td>1958</td><td><strong>Alpha–beta &amp; heuristic search</strong><span class=\"nsDesc\">Pruning cut game trees exponentially; heuristic evaluation made search practical. The workhorse of classical AI.</span></td><td>SEARCH, PLANNING &amp; GAMES</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 56,
+      "nodeId": "astar",
+      "rowHtml": "<tr><td>1968</td><td><strong>A* search</strong><span class=\"nsDesc\">Optimal pathfinding with admissible heuristics, built for Shakey. In every router, game engine and planner since.</span></td><td>SEARCH, PLANNING &amp; GAMES</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 57,
+      "nodeId": "strips",
+      "rowHtml": "<tr><td>1971</td><td><strong>STRIPS planning</strong><span class=\"nsDesc\">Actions as precondition/effect schemas. The planning formalism — and the stage on which the frame problem performed.</span></td><td>SEARCH, PLANNING &amp; GAMES</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 58,
+      "nodeId": "csp",
+      "rowHtml": "<tr><td>1977</td><td><strong>Constraint satisfaction</strong><span class=\"nsDesc\">Waltz line-labeling to Mackworth's arc consistency: propagate constraints instead of searching blindly. Scheduling and layout still run on it.</span></td><td>SEARCH, PLANNING &amp; GAMES</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 59,
+      "nodeId": "chinook",
+      "rowHtml": "<tr><td>1994</td><td><strong>Checkers conquered (Chinook)</strong><span class=\"nsDesc\">First program to win a world title from humans; checkers fully solved by 2007. Proof of how far brute search + endgame tables go.</span></td><td>SEARCH, PLANNING &amp; GAMES</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 60,
+      "nodeId": "deepblue",
+      "rowHtml": "<tr><td>1997</td><td><strong>Deep Blue beats Kasparov</strong><span class=\"nsDesc\">200M positions/sec plus hand-tuned evaluation topples chess. Taught two lessons: search scales, and chess wasn't intelligence after all.</span></td><td>SEARCH, PLANNING &amp; GAMES</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 61,
+      "nodeId": "planningpddl",
+      "rowHtml": "<tr><td>1998</td><td><strong>Classical planning &amp; PDDL</strong><span class=\"nsDesc\">Mature solvers, annual competitions, logistics benchmarks — then a plateau outside them. Now probed again as scaffolding for LLM agents.</span></td><td>SEARCH, PLANNING &amp; GAMES</td><td>Development; Dormant</td></tr>"
+    },
+    {
+      "ordinal": 62,
+      "nodeId": "satsolvers",
+      "rowHtml": "<tr><td>2001</td><td><strong>Modern SAT/SMT solvers</strong><span class=\"nsDesc\">CDCL made logical search industrial: chip verification, software analysis. Symbolic AI's quietest, most deployed victory.</span></td><td>SEARCH, PLANNING &amp; GAMES</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 63,
+      "nodeId": "mcts",
+      "rowHtml": "<tr><td>2006</td><td><strong>Monte Carlo Tree Search</strong><span class=\"nsDesc\">Random rollouts + bandit selection cracked Go's branching factor. The bridge from classical search to AlphaGo — and to test-time reasoning.</span></td><td>SEARCH, PLANNING &amp; GAMES</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 64,
+      "nodeId": "poker",
+      "rowHtml": "<tr><td>2017</td><td><strong>Imperfect-info games solved</strong><span class=\"nsDesc\">Libratus and Pluribus beat top pros via counterfactual regret minimization. Game theory made computational — then the labs moved on.</span></td><td>SEARCH, PLANNING &amp; GAMES</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 65,
+      "nodeId": "llmsearch",
+      "rowHtml": "<tr><td>2023</td><td><strong>LLM-guided search</strong><span class=\"nsDesc\">Tree-of-Thoughts, planner hybrids, verifier-guided decoding: classical search reborn with learned heuristics. The search lane merges into the LLM lane.</span></td><td>SEARCH, PLANNING &amp; GAMES</td><td>Development; Hot frontier</td></tr>"
+    },
+    {
+      "ordinal": 66,
+      "nodeId": "bandits",
+      "rowHtml": "<tr><td>1952</td><td><strong>Multi-armed bandits</strong><span class=\"nsDesc\">Robbins formalized explore-vs-exploit. From clinical trials to UCB — the mathematical kernel inside MCTS and every recommender.</span></td><td>REINFORCEMENT LEARNING &amp; AGENTS</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 67,
+      "nodeId": "mdp",
+      "rowHtml": "<tr><td>1957</td><td><strong>MDPs &amp; Bellman equations</strong><span class=\"nsDesc\">A mathematical framework for sequential decisions under uncertainty, with dynamic programming and Bellman equations underpinning many planning and value-based reinforcement-learning methods.</span></td><td>REINFORCEMENT LEARNING &amp; AGENTS</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 68,
+      "nodeId": "samuel",
+      "rowHtml": "<tr><td>1959</td><td><strong>Samuel's checkers learner</strong><span class=\"nsDesc\">Self-play plus a learned evaluation on 1950s hardware — machine learning's public debut and TD learning's ancestor.</span></td><td>REINFORCEMENT LEARNING &amp; AGENTS</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 69,
+      "nodeId": "tdlearning",
+      "rowHtml": "<tr><td>1988</td><td><strong>Temporal-difference learning</strong><span class=\"nsDesc\">Sutton: learn predictions from later predictions. RL's core algorithmic idea — later found running in dopamine neurons.</span></td><td>REINFORCEMENT LEARNING &amp; AGENTS</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 70,
+      "nodeId": "qlearning",
+      "rowHtml": "<tr><td>1989</td><td><strong>Q-learning</strong><span class=\"nsDesc\">Watkins' off-policy value learning with a convergence proof. Tabular RL matured — then waited 24 years for deep nets.</span></td><td>REINFORCEMENT LEARNING &amp; AGENTS</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 71,
+      "nodeId": "tdgammon",
+      "rowHtml": "<tr><td>1992</td><td><strong>TD-Gammon</strong><span class=\"nsDesc\">Neural net + TD self-play reached top-human backgammon. The AlphaGo recipe, 24 years early — then largely ignored for a decade.</span></td><td>REINFORCEMENT LEARNING &amp; AGENTS</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 72,
+      "nodeId": "policygrad",
+      "rowHtml": "<tr><td>1992-2000</td><td><strong>Policy gradients (REINFORCE → actor–critic)</strong><span class=\"nsDesc\">REINFORCE optimized policies directly from sampled returns; actor–critic methods paired that policy with a learned value function. This is the missing bridge to PPO and RLHF.</span></td><td>REINFORCEMENT LEARNING &amp; AGENTS</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 73,
+      "nodeId": "dopamine",
+      "rowHtml": "<tr><td>1997</td><td><strong>Dopamine = TD error</strong><span class=\"nsDesc\">Schultz's recordings matched TD prediction error. Neuroscience validated RL's core signal — a rare two-way street between AI and brain.</span></td><td>REINFORCEMENT LEARNING &amp; AGENTS</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 74,
+      "nodeId": "rlbook",
+      "rowHtml": "<tr><td>1998</td><td><strong>RL synthesis (Sutton &amp; Barto)</strong><span class=\"nsDesc\">REINFORCE, actor-critic, the textbook. Reinforcement learning becomes a coherent field with a shared language.</span></td><td>REINFORCEMENT LEARNING &amp; AGENTS</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 75,
+      "nodeId": "hrl",
+      "rowHtml": "<tr><td>1999</td><td><strong>Hierarchical RL (options)</strong><span class=\"nsDesc\">Temporal abstraction: learn skills, compose them. Perennially promising, perpetually stuck — LLM planners now route around it from above.</span></td><td>REINFORCEMENT LEARNING &amp; AGENTS</td><td>Development; Dormant</td></tr>"
+    },
+    {
+      "ordinal": 76,
+      "nodeId": "dqn",
+      "rowHtml": "<tr><td>2013</td><td><strong>DQN — Atari from pixels</strong><span class=\"nsDesc\">Deep nets + Q-learning + experience replay: one algorithm, 49 games, superhuman on many. Deep RL ignites (and DeepMind gets acquired).</span></td><td>REINFORCEMENT LEARNING &amp; AGENTS</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 77,
+      "nodeId": "alphago",
+      "rowHtml": "<tr><td>2016</td><td><strong>AlphaGo beats Lee Sedol</strong><span class=\"nsDesc\">Policy/value networks + MCTS + self-play. Move 37 became the era's cultural shockwave — a decade ahead of expert predictions.</span></td><td>REINFORCEMENT LEARNING &amp; AGENTS</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 78,
+      "nodeId": "alphazero",
+      "rowHtml": "<tr><td>2017</td><td><strong>AlphaZero / MuZero</strong><span class=\"nsDesc\">Tabula-rasa self-play mastering Go, chess, shogi; MuZero learns the rules too. Search and learning unified — the lane's high-water mark.</span></td><td>REINFORCEMENT LEARNING &amp; AGENTS</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 79,
+      "nodeId": "a3cppo",
+      "rowHtml": "<tr><td>2015-2017</td><td><strong>Policy-gradient workhorses (PPO)</strong><span class=\"nsDesc\">A3C introduced asynchronous actor-critic training, and PPO became a common early optimization method for RLHF as well as a durable control baseline; later preference-training systems also use several alternatives.</span></td><td>REINFORCEMENT LEARNING &amp; AGENTS</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 80,
+      "nodeId": "curiosity",
+      "rowHtml": "<tr><td>2017</td><td><strong>Curiosity &amp; intrinsic motivation</strong><span class=\"nsDesc\">Rewards from novelty and prediction error. Hot 2017–19, then faded — exploration at scale remains genuinely unsolved.</span></td><td>REINFORCEMENT LEARNING &amp; AGENTS</td><td>Development; Dormant</td></tr>"
+    },
+    {
+      "ordinal": 81,
+      "nodeId": "marl",
+      "rowHtml": "<tr><td>2017</td><td><strong>Multi-agent RL</strong><span class=\"nsDesc\">Emergent cooperation, competition and tool use (hide-and-seek). Re-energized by LLM agent societies and mechanism-design questions.</span></td><td>REINFORCEMENT LEARNING &amp; AGENTS</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 82,
+      "nodeId": "worldmodels18",
+      "rowHtml": "<tr><td>2018</td><td><strong>World Models (Ha &amp; Schmidhuber)</strong><span class=\"nsDesc\">VAE+RNN agent trained inside its own learned dream. The seed of today's world-model wave — imagination as a training ground.</span></td><td>REINFORCEMENT LEARNING &amp; AGENTS</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 83,
+      "nodeId": "modelbased",
+      "rowHtml": "<tr><td>2019</td><td><strong>Model-based RL (Dreamer)</strong><span class=\"nsDesc\">Learn the world, plan in imagination. The sample-efficiency path that matured into world-model agents for robots and games.</span></td><td>REINFORCEMENT LEARNING &amp; AGENTS</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 84,
+      "nodeId": "dota5",
+      "rowHtml": "<tr><td>2019</td><td><strong>OpenAI Five &amp; AlphaStar</strong><span class=\"nsDesc\">Superhuman Dota 2 and StarCraft II via massive self-play. Peak-then-pivot: point proven, labs promptly abandoned esports for language.</span></td><td>REINFORCEMENT LEARNING &amp; AGENTS</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 85,
+      "nodeId": "openended",
+      "rowHtml": "<tr><td>2019</td><td><strong>Open-endedness (POET)</strong><span class=\"nsDesc\">Systems that endlessly generate their own challenges. Niche but philosophically central — the question behind 'never-ending' agents.</span></td><td>REINFORCEMENT LEARNING &amp; AGENTS</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 86,
+      "nodeId": "offlinerl",
+      "rowHtml": "<tr><td>2020</td><td><strong>Offline RL &amp; sequence policies</strong><span class=\"nsDesc\">Learn policies from logged trajectories without online exploration. Distribution shift remains hard, while Decision Transformer reframed policy learning as sequence modeling and the field feeds robotics and preference pipelines.</span></td><td>REINFORCEMENT LEARNING &amp; AGENTS</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 87,
+      "nodeId": "gato",
+      "rowHtml": "<tr><td>2022</td><td><strong>Generalist agents (Gato)</strong><span class=\"nsDesc\">One transformer, 600 tasks, none mastered. Scaling alone didn't cure breadth-without-depth; quietly shelved as LLM agents took the crown.</span></td><td>REINFORCEMENT LEARNING &amp; AGENTS</td><td>Development; Dormant</td></tr>"
+    },
+    {
+      "ordinal": 88,
+      "nodeId": "agentsllm",
+      "rowHtml": "<tr><td>2023</td><td><strong>LLM agents &amp; tool use</strong><span class=\"nsDesc\">ReAct→computer use→autonomous coding: language models that act. 2025–26's dominant paradigm — and its reliability problem.</span></td><td>REINFORCEMENT LEARNING &amp; AGENTS</td><td>Development; Hot frontier</td></tr>"
+    },
+    {
+      "ordinal": 89,
+      "nodeId": "rlvr",
+      "rowHtml": "<tr><td>2024</td><td><strong>RL on verifiable rewards</strong><span class=\"nsDesc\">Train reasoning against checkable answers (math, code, proofs). The engine of o1/R1-class models — RL's biggest win since AlphaGo.</span></td><td>REINFORCEMENT LEARNING &amp; AGENTS</td><td>Development; Hot frontier</td></tr>"
+    },
+    {
+      "ordinal": 90,
+      "nodeId": "gap_openended",
+      "rowHtml": "<tr><td>2026</td><td><strong>Robust, general open-ended self-improvement</strong><span class=\"nsDesc\">Self-generated tasks and self-editing agents now show bounded improvement under human-designed verifiers. Still missing: safe, broadly general, sustained improvement without benchmark gaming, collapse, or a fixed external objective.</span></td><td>REINFORCEMENT LEARNING &amp; AGENTS</td><td>Open direction; Open direction</td></tr>"
+    },
+    {
+      "ordinal": 91,
+      "nodeId": "perceptron",
+      "rowHtml": "<tr><td>1958</td><td><strong>Perceptron (Rosenblatt)</strong><span class=\"nsDesc\">Hardware neuron that learned from examples; the Navy promised it would 'walk, talk, see, write.' The hype and the machine that started it all.</span></td><td>NEURAL ARCHITECTURES</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 92,
+      "nodeId": "adaline",
+      "rowHtml": "<tr><td>1960</td><td><strong>ADALINE &amp; delta rule</strong><span class=\"nsDesc\">Widrow–Hoff gradient learning in analog hardware. LMS still runs in every modem — neural nets' first quiet deployment.</span></td><td>NEURAL ARCHITECTURES</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 93,
+      "nodeId": "perceptronsbook",
+      "rowHtml": "<tr><td>1969</td><td><strong>'Perceptrons' kills the field</strong><span class=\"nsDesc\">Minsky &amp; Papert proved single-layer limits (XOR); funding evaporated for 15 years. The canonical premature burial — multilayer nets weren't disproven, just undone.</span></td><td>NEURAL ARCHITECTURES</td><td>Development; Ended / superseded (legacy)</td></tr>"
+    },
+    {
+      "ordinal": 94,
+      "nodeId": "neocognitron",
+      "rowHtml": "<tr><td>1980</td><td><strong>Neocognitron</strong><span class=\"nsDesc\">Fukushima stacked Hubel–Wiesel receptive fields into a deep hierarchy. CNNs before backprop — an idea waiting 30 years for compute.</span></td><td>NEURAL ARCHITECTURES</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 95,
+      "nodeId": "hopfield",
+      "rowHtml": "<tr><td>1982</td><td><strong>Hopfield networks</strong><span class=\"nsDesc\">Energy-based associative memory that re-legitimized neural research. Faded for decades — then 'modern Hopfield' math turned out to equal attention. 2024 Nobel.</span></td><td>NEURAL ARCHITECTURES</td><td>Development; Revived</td></tr>"
+    },
+    {
+      "ordinal": 96,
+      "nodeId": "boltzmann",
+      "rowHtml": "<tr><td>1985</td><td><strong>Boltzmann machines</strong><span class=\"nsDesc\">Stochastic energy models with hidden units. Training pain sidelined them, but their DNA lives in RBMs, energy-based models and diffusion.</span></td><td>NEURAL ARCHITECTURES</td><td>Development; Dormant</td></tr>"
+    },
+    {
+      "ordinal": 97,
+      "nodeId": "rbm",
+      "rowHtml": "<tr><td>1986</td><td><strong>Restricted Boltzmann machines</strong><span class=\"nsDesc\">Smolensky's bipartite Harmonium made Boltzmann machines easier to train; contrastive divergence revived it in the mid-2000s. Stacking RBMs supplied the pretraining recipe for deep belief networks.</span></td><td>NEURAL ARCHITECTURES</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 98,
+      "nodeId": "backprop",
+      "rowHtml": "<tr><td>1986</td><td><strong>Backpropagation</strong><span class=\"nsDesc\">Rumelhart–Hinton–Williams popularized credit assignment through layers (roots: Linnainmaa '70, Werbos '74). THE algorithm of the modern era.</span></td><td>NEURAL ARCHITECTURES</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 99,
+      "nodeId": "pdp86",
+      "rowHtml": "<tr><td>1986</td><td><strong>PDP &amp; connectionism revival</strong><span class=\"nsDesc\">The two-volume manifesto that brought neural nets back into cognitive science and AI. Winter number one, officially over.</span></td><td>NEURAL ARCHITECTURES</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 100,
+      "nodeId": "universalapprox",
+      "rowHtml": "<tr><td>1989</td><td><strong>Universal approximation</strong><span class=\"nsDesc\">MLPs can represent any function — existence, not learnability. Comfort, and false comfort, for a generation of theorists.</span></td><td>NEURAL ARCHITECTURES</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 101,
+      "nodeId": "cnn89",
+      "rowHtml": "<tr><td>1989</td><td><strong>LeNet CNNs</strong><span class=\"nsDesc\">LeCun fused neocognitron structure with backprop; read ~10% of US checks by the late 90s. Then waited 15 years for its GPU moment.</span></td><td>NEURAL ARCHITECTURES</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 102,
+      "nodeId": "rnn",
+      "rowHtml": "<tr><td>1990</td><td><strong>Recurrent networks</strong><span class=\"nsDesc\">Elman nets and backprop-through-time: sequence processing with memory. NLP's neural substrate until 2017.</span></td><td>NEURAL ARCHITECTURES</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 103,
+      "nodeId": "vanishing",
+      "rowHtml": "<tr><td>1991</td><td><strong>Vanishing-gradient diagnosis</strong><span class=\"nsDesc\">Hochreiter's analysis of why depth wouldn't train. The diagnosis behind LSTM, pretraining detours, and eventually residual connections.</span></td><td>NEURAL ARCHITECTURES</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 104,
+      "nodeId": "lstm",
+      "rowHtml": "<tr><td>1997</td><td><strong>LSTM</strong><span class=\"nsDesc\">Gated memory defeats vanishing gradients. Carried speech and translation until 2017 — then dethroned by the transformer.</span></td><td>NEURAL ARCHITECTURES</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 105,
+      "nodeId": "dbn",
+      "rowHtml": "<tr><td>2006</td><td><strong>Deep belief nets &amp; pretraining</strong><span class=\"nsDesc\">Layer-wise stacks of restricted Boltzmann machines re-ignited deep learning, then were superseded once ReLU networks and GPUs trained effectively end to end. A historically important transitional method.</span></td><td>NEURAL ARCHITECTURES</td><td>Development; Ended / superseded (legacy)</td></tr>"
+    },
+    {
+      "ordinal": 106,
+      "nodeId": "autoencoders",
+      "rowHtml": "<tr><td>2006</td><td><strong>Autoencoders</strong><span class=\"nsDesc\">Compression as self-supervision. Ancestor of VAEs, masked pretraining, and the representation-learning worldview.</span></td><td>NEURAL ARCHITECTURES</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 107,
+      "nodeId": "attention",
+      "rowHtml": "<tr><td>2014</td><td><strong>Attention mechanism</strong><span class=\"nsDesc\">Bahdanau's soft alignment for translation: look where it matters. The seed the transformer grew from.</span></td><td>NEURAL ARCHITECTURES</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 108,
+      "nodeId": "ntm",
+      "rowHtml": "<tr><td>2014</td><td><strong>Neural Turing Machines / DNC</strong><span class=\"nsDesc\">Differentiable external memory. Beautiful, barely trainable, abandoned — yet it foreshadowed tool use, RAG and memory-augmented agents.</span></td><td>NEURAL ARCHITECTURES</td><td>Development; Ended / superseded (legacy)</td></tr>"
+    },
+    {
+      "ordinal": 109,
+      "nodeId": "resnet",
+      "rowHtml": "<tr><td>2015</td><td><strong>ResNet — residual connections</strong><span class=\"nsDesc\">Skip connections let 100+ layers train. In literally everything since, transformers included. Depth's final unlock.</span></td><td>NEURAL ARCHITECTURES</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 110,
+      "nodeId": "hypernet",
+      "rowHtml": "<tr><td>2016</td><td><strong>Hypernetworks &amp; fast weights</strong><span class=\"nsDesc\">Networks generating other networks' weights. Never mainstream, but conceptually adjacent to LoRA, in-context learning and test-time adaptation.</span></td><td>NEURAL ARCHITECTURES</td><td>Development; Dormant</td></tr>"
+    },
+    {
+      "ordinal": 111,
+      "nodeId": "transformer",
+      "rowHtml": "<tr><td>2017</td><td><strong>Transformer</strong><span class=\"nsDesc\">'Attention Is All You Need': ditch recurrence, keep attention, parallelize everything. The architecture of the modern era — still unseated in 2026.</span></td><td>NEURAL ARCHITECTURES</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 112,
+      "nodeId": "gnn",
+      "rowHtml": "<tr><td>2017</td><td><strong>Graph neural networks</strong><span class=\"nsDesc\">Message passing on graphs. The 2018–21 hype cooled; quietly indispensable in chemistry, chip design and weather.</span></td><td>NEURAL ARCHITECTURES</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 113,
+      "nodeId": "capsules",
+      "rowHtml": "<tr><td>2017</td><td><strong>Capsule networks</strong><span class=\"nsDesc\">Part–whole representations with learned routing offered an alternative to conventional CNNs. They did not become a mainstream replacement, but remain a specialist research line rather than a proven impossibility.</span></td><td>NEURAL ARCHITECTURES</td><td>Development; Ended / superseded (legacy)</td></tr>"
+    },
+    {
+      "ordinal": 114,
+      "nodeId": "neuralode",
+      "rowHtml": "<tr><td>2018</td><td><strong>Neural ODEs</strong><span class=\"nsDesc\">Neural networks parameterize continuous-time dynamics solved by differential-equation methods. Adoption is specialized but active in time series, control, scientific machine learning, and continuous normalizing flows.</span></td><td>NEURAL ARCHITECTURES</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 115,
+      "nodeId": "moe",
+      "rowHtml": "<tr><td>2017</td><td><strong>Mixture-of-Experts</strong><span class=\"nsDesc\">Conditional compute: route each token through a sliver of a huge model. A 1991 idea that became the standard frontier architecture (Mixtral, DeepSeek-V3).</span></td><td>NEURAL ARCHITECTURES</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 116,
+      "nodeId": "linattn",
+      "rowHtml": "<tr><td>2020</td><td><strong>Linear-attention wave</strong><span class=\"nsDesc\">Performer, RWKV, and related methods sought subquadratic alternatives to exact attention. Better kernels narrowed the case, but recurrent and linear-attention variants remain an active efficiency niche and influenced state-space models.</span></td><td>NEURAL ARCHITECTURES</td><td>Development; Dormant</td></tr>"
+    },
+    {
+      "ordinal": 117,
+      "nodeId": "ssm",
+      "rowHtml": "<tr><td>2021-2023</td><td><strong>State-space models (S4→Mamba)</strong><span class=\"nsDesc\">Linear-time sequence modeling rooted in control theory. S4 and Mamba revived state-space models as competitive sequence architectures; hybrid attention-SSM designs are active and relative performance remains task- and scale-dependent.</span></td><td>NEURAL ARCHITECTURES</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 118,
+      "nodeId": "titans",
+      "rowHtml": "<tr><td>2025</td><td><strong>Test-time memory (Titans)</strong><span class=\"nsDesc\">Architectures whose weights update while running — nested learning against frozen-model amnesia. The architectural frontier of 2025–26.</span></td><td>NEURAL ARCHITECTURES</td><td>Development; Hot frontier</td></tr>"
+    },
+    {
+      "ordinal": 119,
+      "nodeId": "gap_energyllm",
+      "rowHtml": "<tr><td>2026</td><td><strong>Energy-based LMs at scale</strong><span class=\"nsDesc\">Research direction: compare energy-based, diffusion-language-model and JEPA-style non-autoregressive systems with strong autoregressive baselines at equal data, parameter, inference-compute and latency budgets. Capable 8B-14B non-autoregressive systems already exist; robust parity across broad language tasks, efficiency and controllability remains unresolved.</span></td><td>NEURAL ARCHITECTURES</td><td>Open direction; Open direction</td></tr>"
+    },
+    {
+      "ordinal": 120,
+      "nodeId": "sgd",
+      "rowHtml": "<tr><td>1951</td><td><strong>Stochastic gradient descent</strong><span class=\"nsDesc\">Robbins–Monro stochastic approximation. The humble optimizer that, with tweaks, trained everything from ADALINE to GPT.</span></td><td>TRAINING, SCALE &amp; EFFICIENCY</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 121,
+      "nodeId": "catforget",
+      "rowHtml": "<tr><td>1989</td><td><strong>Catastrophic forgetting identified</strong><span class=\"nsDesc\">McCloskey &amp; Cohen: networks overwrite old skills when learning new ones. The 35-year-old bug that still defines the continual-learning agenda.</span></td><td>TRAINING, SCALE &amp; EFFICIENCY</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 122,
+      "nodeId": "relu",
+      "rowHtml": "<tr><td>2011</td><td><strong>ReLU, dropout &amp; practical depth</strong><span class=\"nsDesc\">Two cheap tricks — sparse activations, random deletion — made deep nets trainable without pretraining scaffolds. Simplicity beat cleverness.</span></td><td>TRAINING, SCALE &amp; EFFICIENCY</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 123,
+      "nodeId": "adam",
+      "rowHtml": "<tr><td>2014-2017</td><td><strong>Adam → AdamW</strong><span class=\"nsDesc\">Adaptive moments became the default optimizer; AdamW's decoupled weight decay became the durable modern variant. A thousand challengers later, the family remains stubbornly dominant.</span></td><td>TRAINING, SCALE &amp; EFFICIENCY</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 124,
+      "nodeId": "batchnorm",
+      "rowHtml": "<tr><td>2015</td><td><strong>Batch normalization</strong><span class=\"nsDesc\">Mini-batch statistics stabilized and accelerated deep-network training, becoming a standard ingredient in convolutional networks and the ResNet lineage.</span></td><td>TRAINING, SCALE &amp; EFFICIENCY</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 125,
+      "nodeId": "layernorm",
+      "rowHtml": "<tr><td>2016</td><td><strong>Layer normalization</strong><span class=\"nsDesc\">Normalization across a layer's features removed dependence on batch statistics. It became the normalization backbone of recurrent networks and transformers.</span></td><td>TRAINING, SCALE &amp; EFFICIENCY</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 126,
+      "nodeId": "distillation",
+      "rowHtml": "<tr><td>2015</td><td><strong>Knowledge distillation</strong><span class=\"nsDesc\">Big teacher → small student. Now the pipeline by which frontier capability reaches phones and open models.</span></td><td>TRAINING, SCALE &amp; EFFICIENCY</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 127,
+      "nodeId": "transfer",
+      "rowHtml": "<tr><td>2018</td><td><strong>Transfer learning era</strong><span class=\"nsDesc\">Pretraining followed by task adaptation became a dominant workflow across many domains, reducing but not eliminating from-scratch training and helping create the model-hub economy.</span></td><td>TRAINING, SCALE &amp; EFFICIENCY</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 128,
+      "nodeId": "selfsup",
+      "rowHtml": "<tr><td>2015</td><td><strong>Self-supervised learning</strong><span class=\"nsDesc\">Learning supervisory signals from the data itself: contrastive learning, masked prediction, and predictive pretraining. SimCLR, MAE, wav2vec and BERT made it a shared foundation across vision, speech and language.</span></td><td>TRAINING, SCALE &amp; EFFICIENCY</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 129,
+      "nodeId": "bitterlesson",
+      "rowHtml": "<tr><td>2019</td><td><strong>The Bitter Lesson</strong><span class=\"nsDesc\">Sutton's essay: general methods riding compute beat human-crafted cleverness, every time so far. The scaling era's ideology — and its critics' target.</span></td><td>TRAINING, SCALE &amp; EFFICIENCY</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 130,
+      "nodeId": "scalinglaws",
+      "rowHtml": "<tr><td>2020-2022</td><td><strong>Scaling laws → Chinchilla</strong><span class=\"nsDesc\">Loss falls as a power law in compute, data, parameters (Kaplan 2020); Chinchilla corrected the data ratio (2022). Research became engineering.</span></td><td>TRAINING, SCALE &amp; EFFICIENCY</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 131,
+      "nodeId": "lora",
+      "rowHtml": "<tr><td>2021</td><td><strong>LoRA &amp; parameter-efficient tuning</strong><span class=\"nsDesc\">Low-rank adapters: customize a giant model on one GPU. Democratized fine-tuning and powered the open-weight explosion.</span></td><td>TRAINING, SCALE &amp; EFFICIENCY</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 132,
+      "nodeId": "quant",
+      "rowHtml": "<tr><td>2022</td><td><strong>Quantization &amp; sparsity</strong><span class=\"nsDesc\">INT8→FP4, pruning and structured sparsity shrink models for deployment while trading off memory, throughput and accuracy.</span></td><td>TRAINING, SCALE &amp; EFFICIENCY</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 133,
+      "nodeId": "flash",
+      "rowHtml": "<tr><td>2022</td><td><strong>FlashAttention &amp; kernel craft</strong><span class=\"nsDesc\">IO-aware exact attention. Hardware-sympathetic algorithms beat clever approximations — and killed the linear-attention wave.</span></td><td>TRAINING, SCALE &amp; EFFICIENCY</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 134,
+      "nodeId": "datacentric",
+      "rowHtml": "<tr><td>2023</td><td><strong>Data curation &amp; synthetic data</strong><span class=\"nsDesc\">Mixtures, dedup, quality filters — then models teaching models (phi, distilled reasoning traces). Data quality as the real moat.</span></td><td>TRAINING, SCALE &amp; EFFICIENCY</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 135,
+      "nodeId": "testtime",
+      "rowHtml": "<tr><td>2024</td><td><strong>Test-time compute scaling</strong><span class=\"nsDesc\">Think longer instead of training bigger — the o1 insight. A second scaling axis, with search and verification in the loop.</span></td><td>TRAINING, SCALE &amp; EFFICIENCY</td><td>Development; Hot frontier</td></tr>"
+    },
+    {
+      "ordinal": 136,
+      "nodeId": "grpo",
+      "rowHtml": "<tr><td>2025</td><td><strong>Efficient RL recipes (GRPO, R1)</strong><span class=\"nsDesc\">DeepSeek's cheap RL-for-reasoning stack: frontier capability at a fraction of assumed cost. Efficiency itself as geopolitical disruption.</span></td><td>TRAINING, SCALE &amp; EFFICIENCY</td><td>Development; Hot frontier</td></tr>"
+    },
+    {
+      "ordinal": 137,
+      "nodeId": "continual",
+      "rowHtml": "<tr><td>2025</td><td><strong>Continual learning push</strong><span class=\"nsDesc\">Nested learning, Titans-style memory, weight consolidation: the 2025–26 assault on catastrophic forgetting. Frontier labs now call it solvable.</span></td><td>TRAINING, SCALE &amp; EFFICIENCY</td><td>Development; Hot frontier</td></tr>"
+    },
+    {
+      "ordinal": 138,
+      "nodeId": "dp",
+      "rowHtml": "<tr><td>2016</td><td><strong>Differential privacy in ML</strong><span class=\"nsDesc\">Provable privacy budgets for training. Deployed in census and keyboards; a steady niche rather than a wave.</span></td><td>TRAINING, SCALE &amp; EFFICIENCY</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 139,
+      "nodeId": "federated",
+      "rowHtml": "<tr><td>2017</td><td><strong>Federated learning</strong><span class=\"nsDesc\">Training across devices or organizations without centralizing their raw data. It is deployed in privacy-sensitive settings and remains an active research area in optimization, security, and heterogeneous clients.</span></td><td>TRAINING, SCALE &amp; EFFICIENCY</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 140,
+      "nodeId": "dltheory",
+      "rowHtml": "<tr><td>2019</td><td><strong>Deep learning theory (NTK, double descent)</strong><span class=\"nsDesc\">Why do overparameterized nets generalize? NTK, double descent, lottery tickets — insight-rich, prediction-poor. Theory still trails practice by years.</span></td><td>TRAINING, SCALE &amp; EFFICIENCY</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 141,
+      "nodeId": "gap_memory",
+      "rowHtml": "<tr><td>2026</td><td><strong>Sleep &amp; memory consolidation</strong><span class=\"nsDesc\">Research direction: develop principled offline consolidation that transfers episodic experience into durable behavior without destructive forgetting. Long context and external memory address related but different problems.</span></td><td>TRAINING, SCALE &amp; EFFICIENCY</td><td>Open direction; Open direction</td></tr>"
+    },
+    {
+      "ordinal": 142,
+      "nodeId": "mtgeorgetown",
+      "rowHtml": "<tr><td>1954-1966</td><td><strong>Georgetown MT demo → ALPAC</strong><span class=\"nsDesc\">Russian→English demo promised solved-in-5-years; the 1966 ALPAC report axed US funding. NLP's first boom-bust cycle, complete in twelve years.</span></td><td>LANGUAGE &amp; LLMs</td><td>Development; Ended / superseded (legacy)</td></tr>"
+    },
+    {
+      "ordinal": 143,
+      "nodeId": "chomsky",
+      "rowHtml": "<tr><td>1957</td><td><strong>Generative grammar</strong><span class=\"nsDesc\">Chomsky's formal syntax hierarchies fueled symbolic NLP for decades — and his 'poverty of stimulus' argued pure learning could never acquire language. LLMs reopened the case.</span></td><td>LANGUAGE &amp; LLMs</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 144,
+      "nodeId": "eliza",
+      "rowHtml": "<tr><td>1966</td><td><strong>ELIZA</strong><span class=\"nsDesc\">Weizenbaum's pattern-matching 'therapist'. The first chatbot — and the first Eliza effect, as users projected understanding onto scripts.</span></td><td>LANGUAGE &amp; LLMs</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 145,
+      "nodeId": "conceptualdep",
+      "rowHtml": "<tr><td>1972</td><td><strong>Scripts &amp; conceptual dependency</strong><span class=\"nsDesc\">Schank: meaning as canonical structures, stories as scripts. Rich theory with a hand-built ceiling; faded with the statistical turn.</span></td><td>LANGUAGE &amp; LLMs</td><td>Development; Dormant</td></tr>"
+    },
+    {
+      "ordinal": 146,
+      "nodeId": "hmmspeech",
+      "rowHtml": "<tr><td>1975</td><td><strong>HMM speech recognition</strong><span class=\"nsDesc\">Jelinek's statistical turn ('every time I fire a linguist, performance goes up'). Ruled speech for 35 years — then deep nets retired it.</span></td><td>LANGUAGE &amp; LLMs</td><td>Development; Ended / superseded (legacy)</td></tr>"
+    },
+    {
+      "ordinal": 147,
+      "nodeId": "ngram",
+      "rowHtml": "<tr><td>1980</td><td><strong>n-gram language models</strong><span class=\"nsDesc\">Count word sequences, predict the next. Powered search and speech for decades — the ancestor LLMs obliterated and descend from.</span></td><td>LANGUAGE &amp; LLMs</td><td>Development; Ended / superseded (legacy)</td></tr>"
+    },
+    {
+      "ordinal": 148,
+      "nodeId": "ir",
+      "rowHtml": "<tr><td>1975</td><td><strong>Vector-space information retrieval</strong><span class=\"nsDesc\">Documents and queries represented as weighted term vectors made ranked search practical. This classical retrieval lineage runs through Watson and into retrieval-augmented generation.</span></td><td>LANGUAGE &amp; LLMs</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 149,
+      "nodeId": "treebank",
+      "rowHtml": "<tr><td>1993</td><td><strong>Penn Treebank &amp; statistical NLP</strong><span class=\"nsDesc\">Annotated corpora turned linguistics into a measurable, competitive sport. The empirical culture LLMs inherited.</span></td><td>LANGUAGE &amp; LLMs</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 150,
+      "nodeId": "smt",
+      "rowHtml": "<tr><td>1993</td><td><strong>Statistical machine translation</strong><span class=\"nsDesc\">IBM's noisy-channel models revived MT from the ALPAC ashes; phrase-based SMT ran Google Translate for a decade — then neural MT ended it overnight.</span></td><td>LANGUAGE &amp; LLMs</td><td>Development; Ended / superseded (legacy)</td></tr>"
+    },
+    {
+      "ordinal": 151,
+      "nodeId": "wordnet",
+      "rowHtml": "<tr><td>1995</td><td><strong>WordNet &amp; lexical resources</strong><span class=\"nsDesc\">Hand-built graphs of word meaning. Foundational for an era of NLP; essentially frozen since embeddings learned the same structure from text.</span></td><td>LANGUAGE &amp; LLMs</td><td>Development; Dormant</td></tr>"
+    },
+    {
+      "ordinal": 152,
+      "nodeId": "bengio03",
+      "rowHtml": "<tr><td>2003</td><td><strong>Neural language model</strong><span class=\"nsDesc\">Bengio's neural LM: word embeddings + shared statistical strength. The right idea, one GPU generation too early.</span></td><td>LANGUAGE &amp; LLMs</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 153,
+      "nodeId": "watson",
+      "rowHtml": "<tr><td>2011</td><td><strong>IBM Watson</strong><span class=\"nsDesc\">Jeopardy! triumph via hybrid NLP+IR — then a healthcare moonshot that burned billions and was sold for parts. The era's overclaim case study.</span></td><td>LANGUAGE &amp; LLMs</td><td>Development; Ended / superseded (legacy)</td></tr>"
+    },
+    {
+      "ordinal": 154,
+      "nodeId": "dlspeech",
+      "rowHtml": "<tr><td>2012</td><td><strong>Deep speech recognition</strong><span class=\"nsDesc\">DNNs halved error rates and retired the HMM pipeline — deep learning's first industrial conquest, before vision's.</span></td><td>LANGUAGE &amp; LLMs</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 155,
+      "nodeId": "word2vec",
+      "rowHtml": "<tr><td>2013</td><td><strong>word2vec / GloVe</strong><span class=\"nsDesc\">Meaning as geometry ('king − man + woman ≈ queen'). Static embeddings were superseded by contextual ones — but the vector worldview conquered everything.</span></td><td>LANGUAGE &amp; LLMs</td><td>Development; Ended / superseded (legacy)</td></tr>"
+    },
+    {
+      "ordinal": 156,
+      "nodeId": "seq2seq",
+      "rowHtml": "<tr><td>2014</td><td><strong>seq2seq encoder–decoder</strong><span class=\"nsDesc\">Sentence in, sentence out, via LSTMs. Machine translation went neural — and 'everything is sequence transduction' became a research program.</span></td><td>LANGUAGE &amp; LLMs</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 157,
+      "nodeId": "nmt",
+      "rowHtml": "<tr><td>2016</td><td><strong>Neural MT deployed (GNMT)</strong><span class=\"nsDesc\">Google Translate's overnight quality jump — the first mass-scale deep NLP product, and SMT's abrupt retirement.</span></td><td>LANGUAGE &amp; LLMs</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 158,
+      "nodeId": "bert",
+      "rowHtml": "<tr><td>2018</td><td><strong>BERT &amp; pretrain–finetune</strong><span class=\"nsDesc\">Masked bidirectional pretraining transformed language understanding and transfer. Encoder models remain widely used for embeddings, retrieval and classification alongside decoder-only language models.</span></td><td>LANGUAGE &amp; LLMs</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 159,
+      "nodeId": "gpt2",
+      "rowHtml": "<tr><td>2019</td><td><strong>GPT-2 — generation scales</strong><span class=\"nsDesc\">Decoder-only LM 'too dangerous to release' — showed unsupervised generation plus zero-shot glimmers. The scaling bet forms.</span></td><td>LANGUAGE &amp; LLMs</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 160,
+      "nodeId": "gpt3",
+      "rowHtml": "<tr><td>2020</td><td><strong>GPT-3 &amp; in-context learning</strong><span class=\"nsDesc\">At 175B parameters, GPT-3 showed sharply improved few-shot in-context learning under next-token training and accelerated the shift toward language-model APIs.</span></td><td>LANGUAGE &amp; LLMs</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 161,
+      "nodeId": "codegen",
+      "rowHtml": "<tr><td>2021</td><td><strong>Code generation (Codex→Copilot)</strong><span class=\"nsDesc\">From autocomplete to agentic software engineering. The capability that let AI build AI tooling — and reshaped programming itself.</span></td><td>LANGUAGE &amp; LLMs</td><td>Development; Hot frontier</td></tr>"
+    },
+    {
+      "ordinal": 162,
+      "nodeId": "cot",
+      "rowHtml": "<tr><td>2022</td><td><strong>Chain-of-thought prompting</strong><span class=\"nsDesc\">'Think step by step' unlocked latent multi-step reasoning. The prompt era's deepest finding — later trained-in via RL.</span></td><td>LANGUAGE &amp; LLMs</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 163,
+      "nodeId": "instruct",
+      "rowHtml": "<tr><td>2022</td><td><strong>InstructGPT — RLHF assistants</strong><span class=\"nsDesc\">Supervised demonstrations, reward modeling and PPO turned pretrained LMs into preference-tuned assistants. This RLHF deployment recipe is distinct from the earlier supervised instruction-tuning lineage.</span></td><td>LANGUAGE &amp; LLMs</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 164,
+      "nodeId": "chatgpt",
+      "rowHtml": "<tr><td>2022</td><td><strong>ChatGPT moment</strong><span class=\"nsDesc\">100M users in two months. A research artifact became planetary infrastructure overnight — and reset funding, talent and politics for the whole field.</span></td><td>LANGUAGE &amp; LLMs</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 165,
+      "nodeId": "promptengineering",
+      "rowHtml": "<tr><td>2023</td><td><strong>Standalone prompt-engineer fad</strong><span class=\"nsDesc\">The short-lived job-title and incantation culture around prompt-only optimization faded. Prompt design itself remains active and was absorbed into broader context engineering, evaluation, retrieval, and product design.</span></td><td>LANGUAGE &amp; LLMs</td><td>Development; Ended / superseded (legacy)</td></tr>"
+    },
+    {
+      "ordinal": 166,
+      "nodeId": "contexteng",
+      "rowHtml": "<tr><td>2025</td><td><strong>Context engineering</strong><span class=\"nsDesc\">Designing the full information environment around a model: instructions, retrieved evidence, tools, memory, and state. The operational successor to prompt-only optimization for production agents.</span></td><td>LANGUAGE &amp; LLMs</td><td>Development; Hot frontier</td></tr>"
+    },
+    {
+      "ordinal": 167,
+      "nodeId": "gpt4",
+      "rowHtml": "<tr><td>2023</td><td><strong>GPT-4-class multimodal LLMs</strong><span class=\"nsDesc\">Bar exams passed, images understood. The capability jump that reset expectations, safety debates and national policy at once.</span></td><td>LANGUAGE &amp; LLMs</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 168,
+      "nodeId": "openweights",
+      "rowHtml": "<tr><td>2023</td><td><strong>Open-weight ecosystem</strong><span class=\"nsDesc\">Llama leak → Llama 2/3 → Mistral, Qwen, DeepSeek. Weights in the wild: fine-tune culture, sovereignty politics, and a live frontier-gap debate.</span></td><td>LANGUAGE &amp; LLMs</td><td>Development; Hot frontier</td></tr>"
+    },
+    {
+      "ordinal": 169,
+      "nodeId": "rag",
+      "rowHtml": "<tr><td>2020</td><td><strong>Retrieval-augmented generation</strong><span class=\"nsDesc\">Bolt a search engine to the model. The hallucination patch that became commodity plumbing — now competing with million-token contexts.</span></td><td>LANGUAGE &amp; LLMs</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 170,
+      "nodeId": "longctx",
+      "rowHtml": "<tr><td>2023-2024</td><td><strong>Long context (100K→1M+)</strong><span class=\"nsDesc\">RoPE scaling, efficient attention, context engineering. Whole books in the prompt — rivaling retrieval for many workloads.</span></td><td>LANGUAGE &amp; LLMs</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 171,
+      "nodeId": "reasoning",
+      "rowHtml": "<tr><td>2024-2025</td><td><strong>Reasoning models (o1→o3, R1)</strong><span class=\"nsDesc\">RL-trained deliberate thinking with visible chains of thought. Olympiad-level math and code jumps — the current capability frontier.</span></td><td>LANGUAGE &amp; LLMs</td><td>Development; Hot frontier</td></tr>"
+    },
+    {
+      "ordinal": 172,
+      "nodeId": "diffusionllm",
+      "rowHtml": "<tr><td>2025</td><td><strong>Diffusion language models</strong><span class=\"nsDesc\">Mercury, Gemini Diffusion: parallel denoising instead of left-to-right generation. A speed-play challenger to autoregression — early days.</span></td><td>LANGUAGE &amp; LLMs</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 173,
+      "nodeId": "frontier26",
+      "rowHtml": "<tr><td>2025</td><td><strong>Frontier assistants (GPT-5, Gemini 3, Claude)</strong><span class=\"nsDesc\">Converged reasoning + multimodal + agents, competing on reliability, cost and depth-of-thought. The 2026 state of the art.</span></td><td>LANGUAGE &amp; LLMs</td><td>Development; Hot frontier</td></tr>"
+    },
+    {
+      "ordinal": 174,
+      "nodeId": "elmo",
+      "rowHtml": "<tr><td>2018</td><td><strong>ELMo contextual embeddings</strong><span class=\"nsDesc\">Deep bidirectional language models produced word representations that changed with context. ELMo made the transition from static embeddings to BERT-style contextual pretraining explicit.</span></td><td>LANGUAGE &amp; LLMs</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 175,
+      "nodeId": "roberts63",
+      "rowHtml": "<tr><td>1963</td><td><strong>Blocks-world vision</strong><span class=\"nsDesc\">Roberts' edges and 3D from line drawings — computer vision's first thesis. Minsky assigned vision as a summer project in 1966; it took 50 years.</span></td><td>VISION &amp; MULTIMODAL</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 176,
+      "nodeId": "marr",
+      "rowHtml": "<tr><td>1979</td><td><strong>Marr's computational vision</strong><span class=\"nsDesc\">Levels of analysis, primal sketch → 2.5D → 3D. Shaped a generation of vision science; aged into the anti-example for end-to-end learning.</span></td><td>VISION &amp; MULTIMODAL</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 177,
+      "nodeId": "sift",
+      "rowHtml": "<tr><td>1999</td><td><strong>Hand-crafted features (SIFT, HOG)</strong><span class=\"nsDesc\">Engineered descriptors ruled recognition for a decade of careful pipelines — rendered obsolete in one conference cycle after AlexNet.</span></td><td>VISION &amp; MULTIMODAL</td><td>Development; Ended / superseded (legacy)</td></tr>"
+    },
+    {
+      "ordinal": 178,
+      "nodeId": "facedetect",
+      "rowHtml": "<tr><td>2001</td><td><strong>Viola–Jones face detection</strong><span class=\"nsDesc\">Viola-Jones cascades enabled real-time face detection and were widely deployed in early cameras and vision products; later learned detectors largely displaced the original pipeline.</span></td><td>VISION &amp; MULTIMODAL</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 179,
+      "nodeId": "imagenet",
+      "rowHtml": "<tr><td>2009</td><td><strong>ImageNet &amp; benchmark culture</strong><span class=\"nsDesc\">14M crowd-labeled images and an annual contest. The dataset that made deep learning measurable — and made benchmarks the field's engine.</span></td><td>VISION &amp; MULTIMODAL</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 180,
+      "nodeId": "alexnet",
+      "rowHtml": "<tr><td>2012</td><td><strong>AlexNet — the big bang</strong><span class=\"nsDesc\">GPU-trained CNN dropped ImageNet error from 26% to 16%. The result that flipped the entire field to deep learning within 18 months.</span></td><td>VISION &amp; MULTIMODAL</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 181,
+      "nodeId": "detection",
+      "rowHtml": "<tr><td>2015</td><td><strong>Detection &amp; segmentation</strong><span class=\"nsDesc\">R-CNN→Mask R-CNN→DETR: from labels to boxes to pixels. The perception stack under AVs, robots and medical imaging.</span></td><td>VISION &amp; MULTIMODAL</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 182,
+      "nodeId": "deepface",
+      "rowHtml": "<tr><td>2014</td><td><strong>Face recognition surpasses humans</strong><span class=\"nsDesc\">DeepFace/FaceNet crossed human accuracy — and dragged AI into surveillance politics, bias audits and bans. Capability and controversy, together.</span></td><td>VISION &amp; MULTIMODAL</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 183,
+      "nodeId": "unet",
+      "rowHtml": "<tr><td>2015</td><td><strong>U-Net</strong><span class=\"nsDesc\">An encoder–decoder with skip connections built for biomedical segmentation. Its multiscale denoising shape later became the workhorse backbone of diffusion models.</span></td><td>VISION &amp; MULTIMODAL</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 184,
+      "nodeId": "vit",
+      "rowHtml": "<tr><td>2020</td><td><strong>Vision Transformer</strong><span class=\"nsDesc\">Treating images as patch tokens made pure transformers competitive for image recognition at scale and helped unify vision-language architectures; convolutional networks remain widely used.</span></td><td>VISION &amp; MULTIMODAL</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 185,
+      "nodeId": "clip",
+      "rowHtml": "<tr><td>2021</td><td><strong>CLIP — language-supervised vision</strong><span class=\"nsDesc\">400M web image-text pairs; open-vocabulary recognition for free. The bridge into multimodal LLMs and the guidance system of image generation.</span></td><td>VISION &amp; MULTIMODAL</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 186,
+      "nodeId": "sam",
+      "rowHtml": "<tr><td>2023</td><td><strong>Promptable segmentation (SAM)</strong><span class=\"nsDesc\">Segment anything, zero-shot, from a click or a phrase. Foundation-model economics arrive in core vision tooling.</span></td><td>VISION &amp; MULTIMODAL</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 187,
+      "nodeId": "neural3d",
+      "rowHtml": "<tr><td>2020-2023</td><td><strong>Neural 3D (NeRF→Gaussian splatting)</strong><span class=\"nsDesc\">Scenes as learned radiance fields; photoreal 3D from phone photos. Feeding robotics sims, film, and world models.</span></td><td>VISION &amp; MULTIMODAL</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 188,
+      "nodeId": "vjepa",
+      "rowHtml": "<tr><td>2024</td><td><strong>JEPA world models (V-JEPA 2)</strong><span class=\"nsDesc\">LeCun's anti-autoregressive program: predict in representation space, not pixels. Embodied common sense as the goal; the bet against LLM-only intelligence.</span></td><td>VISION &amp; MULTIMODAL</td><td>Development; Hot frontier</td></tr>"
+    },
+    {
+      "ordinal": 189,
+      "nodeId": "multimodal",
+      "rowHtml": "<tr><td>2023</td><td><strong>Native multimodal models</strong><span class=\"nsDesc\">GPT-4V→Gemini: see, hear, speak in one model. Vision stopped being a separate field and became an input mode.</span></td><td>VISION &amp; MULTIMODAL</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 190,
+      "nodeId": "vae",
+      "rowHtml": "<tr><td>2013</td><td><strong>Variational autoencoders</strong><span class=\"nsDesc\">Probabilistic latent spaces you can sample. Generative deep learning's respectable start — and diffusion's mathematical grandparent.</span></td><td>GENERATIVE MEDIA</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 191,
+      "nodeId": "gan",
+      "rowHtml": "<tr><td>2014</td><td><strong>GANs</strong><span class=\"nsDesc\">Forger vs detective training. Ruled generation 2014–20 (StyleGAN faces, deepfakes) — dethroned by diffusion; lingers in fast-sampling and super-res niches.</span></td><td>GENERATIVE MEDIA</td><td>Development; Dormant</td></tr>"
+    },
+    {
+      "ordinal": 192,
+      "nodeId": "flows",
+      "rowHtml": "<tr><td>2015</td><td><strong>Normalizing flows</strong><span class=\"nsDesc\">Invertible networks provide exact likelihoods and efficient sampling. Diffusion dominates general image generation, but flows remain active in density estimation, simulation-based inference, and scientific applications.</span></td><td>GENERATIVE MEDIA</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 193,
+      "nodeId": "neuralstyle",
+      "rowHtml": "<tr><td>2015</td><td><strong>DeepDream &amp; style transfer</strong><span class=\"nsDesc\">Gram-matrix artistry and dog-faced clouds — the first viral neural art. Charming, superseded by text-to-image control.</span></td><td>GENERATIVE MEDIA</td><td>Development; Ended / superseded (legacy)</td></tr>"
+    },
+    {
+      "ordinal": 194,
+      "nodeId": "wavenet",
+      "rowHtml": "<tr><td>2016</td><td><strong>WaveNet &amp; neural audio</strong><span class=\"nsDesc\">Autoregressive raw-waveform modeling set a new quality bar for text-to-speech and influenced neural audio research; many current speech and music systems use different codec, diffusion or transformer architectures.</span></td><td>GENERATIVE MEDIA</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 195,
+      "nodeId": "diffusion",
+      "rowHtml": "<tr><td>2020</td><td><strong>Diffusion models</strong><span class=\"nsDesc\">Denoise noise into data, step by step. Stable training beat GAN fragility — the generative workhorse across image, audio, video, molecules.</span></td><td>GENERATIVE MEDIA</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 196,
+      "nodeId": "txt2img",
+      "rowHtml": "<tr><td>2022</td><td><strong>Text-to-image (latent + guided diffusion)</strong><span class=\"nsDesc\">Latent diffusion made high-resolution synthesis economical; classifier-free guidance made text control practical. DALL·E 2 and Stable Diffusion brought language-steered imagery to everyone — and opened a copyright battlefield.</span></td><td>GENERATIVE MEDIA</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 197,
+      "nodeId": "dit",
+      "rowHtml": "<tr><td>2023</td><td><strong>Diffusion Transformers (DiT)</strong><span class=\"nsDesc\">Transformer backbones gave diffusion models a scalable architecture used across image and increasingly video and audio generation; other backbones remain active.</span></td><td>GENERATIVE MEDIA</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 198,
+      "nodeId": "musicgen",
+      "rowHtml": "<tr><td>2023</td><td><strong>Music &amp; voice generation</strong><span class=\"nsDesc\">Suno, ElevenLabs, voice cloning at consumer scale. Creative industries' negotiation with AI, conducted in real time.</span></td><td>GENERATIVE MEDIA</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 199,
+      "nodeId": "video",
+      "rowHtml": "<tr><td>2024-2025</td><td><strong>Video generation (Sora→Veo 3)</strong><span class=\"nsDesc\">Minutes of coherent video with sound. The live question: are these world simulators in disguise, or very good pixel dreamers?</span></td><td>GENERATIVE MEDIA</td><td>Development; Hot frontier</td></tr>"
+    },
+    {
+      "ordinal": 200,
+      "nodeId": "genie",
+      "rowHtml": "<tr><td>2024</td><td><strong>Interactive world models (Genie 3)</strong><span class=\"nsDesc\">Playable, promptable generated worlds. Games and training grounds for agents — a possible road to spatial intelligence (World Labs' Marble, too).</span></td><td>GENERATIVE MEDIA</td><td>Development; Hot frontier</td></tr>"
+    },
+    {
+      "ordinal": 201,
+      "nodeId": "gap_dreamtrain",
+      "rowHtml": "<tr><td>2026</td><td><strong>Robots trained in dreamed worlds</strong><span class=\"nsDesc\">Research direction: test whether policies trained predominantly in learned generative worlds can outperform matched classical-simulation baselines across multiple physical settings and embodiments. Learned-world-to-real policy loops already exist; robust general transfer remains unresolved.</span></td><td>GENERATIVE MEDIA</td><td>Open direction; Open direction</td></tr>"
+    },
+    {
+      "ordinal": 202,
+      "nodeId": "stats25",
+      "rowHtml": "<tr><td>1925</td><td><strong>Statistical inference (Fisher; Bayes)</strong><span class=\"nsDesc\">Maximum likelihood, hypothesis testing, the Bayes–Laplace tradition. The bedrock mathematics machine learning repeatedly rediscovers.</span></td><td>PROBABILISTIC &amp; STATISTICAL ML</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 203,
+      "nodeId": "kalman",
+      "rowHtml": "<tr><td>1960</td><td><strong>Kalman filter</strong><span class=\"nsDesc\">Kalman filtering formalized optimal linear-Gaussian state estimation and became widely used in navigation, tracking and control, often alongside particle filters, factor graphs and learned estimators.</span></td><td>PROBABILISTIC &amp; STATISTICAL ML</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 204,
+      "nodeId": "patternrec",
+      "rowHtml": "<tr><td>1973</td><td><strong>Statistical pattern recognition</strong><span class=\"nsDesc\">Duda &amp; Hart: classification as statistics. Machine learning before the name existed.</span></td><td>PROBABILISTIC &amp; STATISTICAL ML</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 205,
+      "nodeId": "em",
+      "rowHtml": "<tr><td>1977</td><td><strong>EM algorithm</strong><span class=\"nsDesc\">Fit models with hidden variables by alternating expectation and maximization. The engine under HMMs, mixtures and topic models.</span></td><td>PROBABILISTIC &amp; STATISTICAL ML</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 206,
+      "nodeId": "pac",
+      "rowHtml": "<tr><td>1984</td><td><strong>PAC learning &amp; COLT</strong><span class=\"nsDesc\">Valiant: what is learnable, from how many examples? Learning theory born — rigor that both guided and lagged practice.</span></td><td>PROBABILISTIC &amp; STATISTICAL ML</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 207,
+      "nodeId": "dtrees",
+      "rowHtml": "<tr><td>1986</td><td><strong>Decision trees (ID3/CART)</strong><span class=\"nsDesc\">Interpretable recursive splits. Still royalty on tabular data through their ensemble descendants.</span></td><td>PROBABILISTIC &amp; STATISTICAL ML</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 208,
+      "nodeId": "bayesnets",
+      "rowHtml": "<tr><td>1988</td><td><strong>Bayesian networks (Pearl)</strong><span class=\"nsDesc\">Modular probabilistic reasoning; rescued uncertainty from logic's grip, won Pearl a Turing Award, and seeded the causal turn.</span></td><td>PROBABILISTIC &amp; STATISTICAL ML</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 209,
+      "nodeId": "mcmc",
+      "rowHtml": "<tr><td>1990</td><td><strong>MCMC &amp; variational inference</strong><span class=\"nsDesc\">Sample or bound intractable posteriors. The machinery under Bayesian ML — and, via the ELBO, under VAEs and diffusion.</span></td><td>PROBABILISTIC &amp; STATISTICAL ML</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 210,
+      "nodeId": "svm",
+      "rowHtml": "<tr><td>1995</td><td><strong>SVMs &amp; kernel methods</strong><span class=\"nsDesc\">Max-margin plus the kernel trick: ML's monarch 1995–2010, with actual theory. Dethroned by deep nets; retired to small-data niches.</span></td><td>PROBABILISTIC &amp; STATISTICAL ML</td><td>Development; Dormant</td></tr>"
+    },
+    {
+      "ordinal": 211,
+      "nodeId": "gp",
+      "rowHtml": "<tr><td>1996</td><td><strong>Gaussian processes</strong><span class=\"nsDesc\">Priors over functions with honest uncertainty. Elegant, O(n³)-cursed — survives inside Bayesian optimization.</span></td><td>PROBABILISTIC &amp; STATISTICAL ML</td><td>Development; Dormant</td></tr>"
+    },
+    {
+      "ordinal": 212,
+      "nodeId": "adaboost",
+      "rowHtml": "<tr><td>1996</td><td><strong>Boosting &amp; random forests</strong><span class=\"nsDesc\">Committees of weak learners (AdaBoost→XGBoost). Thirty years on, still the champion of messy tabular business data.</span></td><td>PROBABILISTIC &amp; STATISTICAL ML</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 213,
+      "nodeId": "graphicalmodels",
+      "rowHtml": "<tr><td>2001</td><td><strong>Structured prediction (CRFs)</strong><span class=\"nsDesc\">Conditional random fields were central to structured prediction in 2000s NLP and vision. Neural models displaced them from the frontier, but CRFs remain useful where structured labels and explicit dependencies matter.</span></td><td>PROBABILISTIC &amp; STATISTICAL ML</td><td>Development; Dormant</td></tr>"
+    },
+    {
+      "ordinal": 214,
+      "nodeId": "topicmodels",
+      "rowHtml": "<tr><td>2003</td><td><strong>Topic models (LDA)</strong><span class=\"nsDesc\">Latent Dirichlet allocation modeled corpora as mixtures of themes. Embeddings and LLMs displaced it from the frontier, while interpretable corpus exploration and digital-humanities uses persist.</span></td><td>PROBABILISTIC &amp; STATISTICAL ML</td><td>Development; Dormant</td></tr>"
+    },
+    {
+      "ordinal": 215,
+      "nodeId": "recsys",
+      "rowHtml": "<tr><td>2007</td><td><strong>Recommender systems</strong><span class=\"nsDesc\">Netflix Prize matrix factorization → trillion-parameter ad models. The profitable dark matter of ML — huge, deployed, rarely glamorous.</span></td><td>PROBABILISTIC &amp; STATISTICAL ML</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 216,
+      "nodeId": "causal",
+      "rowHtml": "<tr><td>2000</td><td><strong>Causal inference</strong><span class=\"nsDesc\">do-calculus and counterfactuals: reasoning about interventions, not correlations. Deep learning's acknowledged blind spot; integration keeps being attempted.</span></td><td>PROBABILISTIC &amp; STATISTICAL ML</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 217,
+      "nodeId": "bayesopt",
+      "rowHtml": "<tr><td>2012</td><td><strong>Bayesian optimization, NAS &amp; AutoML</strong><span class=\"nsDesc\">Bayesian optimization tunes expensive black boxes sample-efficiently; neural architecture search and population-based training broadened AutoML into architecture and schedule search. Useful everywhere, fully automatic science nowhere.</span></td><td>PROBABILISTIC &amp; STATISTICAL ML</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 218,
+      "nodeId": "probprog",
+      "rowHtml": "<tr><td>2012</td><td><strong>Probabilistic programming</strong><span class=\"nsDesc\">Models expressed as programs with automated inference, including Stan and language-based systems descended from Church. A specialist but active ecosystem used in science, statistics, and uncertainty-aware modeling.</span></td><td>PROBABILISTIC &amp; STATISTICAL ML</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 219,
+      "nodeId": "conformal",
+      "rowHtml": "<tr><td>2016</td><td><strong>Calibration, ensembles &amp; conformal UQ</strong><span class=\"nsDesc\">Deep ensembles and calibration estimate uncertainty empirically; conformal methods add distribution-free coverage guarantees under stated assumptions. A broader reliability toolkit than any one method — still underused in LLM deployment.</span></td><td>PROBABILISTIC &amp; STATISTICAL ML</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 220,
+      "nodeId": "gap_causal",
+      "rowHtml": "<tr><td>2026</td><td><strong>Causal world models</strong><span class=\"nsDesc\">Research direction: test whether explicit causal intervention and counterfactual structure improves learned-world-model planning under distribution shift. Partial causal-world systems exist; reliable gains at useful scale and under hidden confounding remain unresolved.</span></td><td>PROBABILISTIC &amp; STATISTICAL ML</td><td>Open direction; Open direction</td></tr>"
+    },
+    {
+      "ordinal": 221,
+      "nodeId": "gap_tabular",
+      "rowHtml": "<tr><td>2026</td><td><strong>Deep learning vs tabular data</strong><span class=\"nsDesc\">Research direction: predict and test the data regimes, shifts, modalities and tuning budgets under which deep tabular models outperform strong boosted-tree ensembles. Deep models already win in some large, multimodal or representation-rich settings; a reliable regime-selection rule remains unresolved.</span></td><td>PROBABILISTIC &amp; STATISTICAL ML</td><td>Open direction; Open direction</td></tr>"
+    },
+    {
+      "ordinal": 222,
+      "nodeId": "cellauto",
+      "rowHtml": "<tr><td>1951</td><td><strong>Self-reproducing automata</strong><span class=\"nsDesc\">Von Neumann's cellular automata: machines that copy themselves. The origin of artificial life and complexity science.</span></td><td>EVOLUTIONARY, NEUROMORPHIC &amp; EXOTIC</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 223,
+      "nodeId": "evolstrat",
+      "rowHtml": "<tr><td>1965</td><td><strong>Evolution strategies</strong><span class=\"nsDesc\">Rechenberg &amp; Schwefel: mutate, select, repeat — optimization borrowed from biology, born in wind-tunnel engineering.</span></td><td>EVOLUTIONARY, NEUROMORPHIC &amp; EXOTIC</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 224,
+      "nodeId": "ga",
+      "rowHtml": "<tr><td>1975</td><td><strong>Genetic algorithms</strong><span class=\"nsDesc\">Holland's crossover + fitness + schema theorem. The adaptationist program in computing; parent of a whole evolutionary lane.</span></td><td>EVOLUTIONARY, NEUROMORPHIC &amp; EXOTIC</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 225,
+      "nodeId": "alife",
+      "rowHtml": "<tr><td>1987</td><td><strong>Artificial life</strong><span class=\"nsDesc\">Tierra, Avida: digital ecologies of self-replicators. The open-ended-evolution question remains open — the lane's unfinished business.</span></td><td>EVOLUTIONARY, NEUROMORPHIC &amp; EXOTIC</td><td>Development; Dormant</td></tr>"
+    },
+    {
+      "ordinal": 226,
+      "nodeId": "gp92",
+      "rowHtml": "<tr><td>1992</td><td><strong>Genetic programming</strong><span class=\"nsDesc\">Koza: evolve the programs themselves. Produced patentable circuits, then was eclipsed by gradient methods — reborn as LLM-guided evolution.</span></td><td>EVOLUTIONARY, NEUROMORPHIC &amp; EXOTIC</td><td>Development; Dormant</td></tr>"
+    },
+    {
+      "ordinal": 227,
+      "nodeId": "swarm",
+      "rowHtml": "<tr><td>1995</td><td><strong>Swarm intelligence (ACO, PSO)</strong><span class=\"nsDesc\">Bio-inspired ant, particle and flocking methods became established optimization techniques with selected operational and robotics applications; integration with foundation-model robotics remains early.</span></td><td>EVOLUTIONARY, NEUROMORPHIC &amp; EXOTIC</td><td>Development; Dormant</td></tr>"
+    },
+    {
+      "ordinal": 228,
+      "nodeId": "neat",
+      "rowHtml": "<tr><td>2002</td><td><strong>Neuroevolution (NEAT)</strong><span class=\"nsDesc\">Evolving network topologies. Charming results, outscaled by gradient descent — brief ES-for-RL revival in 2017, then quiet again.</span></td><td>EVOLUTIONARY, NEUROMORPHIC &amp; EXOTIC</td><td>Development; Dormant</td></tr>"
+    },
+    {
+      "ordinal": 229,
+      "nodeId": "spiking",
+      "rowHtml": "<tr><td>1997</td><td><strong>Spiking neural networks</strong><span class=\"nsDesc\">Event-driven, biologically-timed neurons — the 'third generation' that never found its killer app. Persistent hope of the neuromorphic program.</span></td><td>EVOLUTIONARY, NEUROMORPHIC &amp; EXOTIC</td><td>Development; Dormant</td></tr>"
+    },
+    {
+      "ordinal": 230,
+      "nodeId": "mead",
+      "rowHtml": "<tr><td>1989</td><td><strong>Analog VLSI neural hardware</strong><span class=\"nsDesc\">Carver Mead's silicon retinas and cochleas. Neuromorphic engineering's founding — physics as computation.</span></td><td>EVOLUTIONARY, NEUROMORPHIC &amp; EXOTIC</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 231,
+      "nodeId": "reservoir",
+      "rowHtml": "<tr><td>2001</td><td><strong>Reservoir computing</strong><span class=\"nsDesc\">Fixed random recurrence + trained readout. A clever shortcut that found its ceiling — revived interest wherever physical substrates compute.</span></td><td>EVOLUTIONARY, NEUROMORPHIC &amp; EXOTIC</td><td>Development; Dormant</td></tr>"
+    },
+    {
+      "ordinal": 232,
+      "nodeId": "htm",
+      "rowHtml": "<tr><td>2004</td><td><strong>Hierarchical Temporal Memory</strong><span class=\"nsDesc\">Hawkins' cortical theory as product (Numenta). Two decades of conviction, minimal ML impact — a parallel track that never merged with the mainline.</span></td><td>EVOLUTIONARY, NEUROMORPHIC &amp; EXOTIC</td><td>Development; Ended / superseded (legacy)</td></tr>"
+    },
+    {
+      "ordinal": 233,
+      "nodeId": "dna",
+      "rowHtml": "<tr><td>1994</td><td><strong>DNA computing</strong><span class=\"nsDesc\">Adleman demonstrated combinatorial computation in DNA. General-purpose molecular computing remains niche, while adjacent DNA data-storage and biosensing research continues.</span></td><td>EVOLUTIONARY, NEUROMORPHIC &amp; EXOTIC</td><td>Development; Dormant</td></tr>"
+    },
+    {
+      "ordinal": 234,
+      "nodeId": "neuromorphic",
+      "rowHtml": "<tr><td>2014</td><td><strong>Neuromorphic chips (Loihi)</strong><span class=\"nsDesc\">TrueNorth, Loihi, SpiNNaker: silicon spikes at microwatts. Research platforms in search of a market for a decade and counting.</span></td><td>EVOLUTIONARY, NEUROMORPHIC &amp; EXOTIC</td><td>Development; Dormant</td></tr>"
+    },
+    {
+      "ordinal": 235,
+      "nodeId": "quantumml",
+      "rowHtml": "<tr><td>2014</td><td><strong>Quantum machine learning</strong><span class=\"nsDesc\">HHL and variational circuits promised speedups; barren plateaus and dequantization deflated them. No practical ML advantage demonstrated yet.</span></td><td>EVOLUTIONARY, NEUROMORPHIC &amp; EXOTIC</td><td>Development; Dormant</td></tr>"
+    },
+    {
+      "ordinal": 236,
+      "nodeId": "optical",
+      "rowHtml": "<tr><td>2017</td><td><strong>Optical neural networks</strong><span class=\"nsDesc\">Optical systems perform neural-network operations using light. Photonic interconnects are nearer-term, while optical compute remains an active research program with continuing 2020s demonstrations.</span></td><td>EVOLUTIONARY, NEUROMORPHIC &amp; EXOTIC</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 237,
+      "nodeId": "analogai",
+      "rowHtml": "<tr><td>2020</td><td><strong>Analog in-memory computing</strong><span class=\"nsDesc\">Compute inside memory cells to escape the von Neumann bottleneck. Real inference chips exist; training precision remains the wall.</span></td><td>EVOLUTIONARY, NEUROMORPHIC &amp; EXOTIC</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 238,
+      "nodeId": "alphaevolve",
+      "rowHtml": "<tr><td>2025</td><td><strong>LLM-guided evolution (AlphaEvolve)</strong><span class=\"nsDesc\">Evolutionary search with LLM mutation operators: new matrix-multiplication records, kernel speedups, open math results. Genetic programming's revenge.</span></td><td>EVOLUTIONARY, NEUROMORPHIC &amp; EXOTIC</td><td>Development; Hot frontier</td></tr>"
+    },
+    {
+      "ordinal": 239,
+      "nodeId": "gap_biolearn",
+      "rowHtml": "<tr><td>2026</td><td><strong>Learning without backprop</strong><span class=\"nsDesc\">Research direction: test whether local or biologically plausible learning rules can approach backpropagation at useful scale and map efficiently to neuromorphic or analog hardware.</span></td><td>EVOLUTIONARY, NEUROMORPHIC &amp; EXOTIC</td><td>Open direction; Open direction</td></tr>"
+    },
+    {
+      "ordinal": 240,
+      "nodeId": "gap_quant",
+      "rowHtml": "<tr><td>2026</td><td><strong>Quantum advantage for learning</strong><span class=\"nsDesc\">Research direction: establish a practically relevant, independently replicated quantum-learning advantage with classical data or explicitly costed quantum-data access. Provable advantages exist under specified access models; practical end-to-end advantage under full resource accounting remains unresolved.</span></td><td>EVOLUTIONARY, NEUROMORPHIC &amp; EXOTIC</td><td>Open direction; Open direction</td></tr>"
+    },
+    {
+      "ordinal": 241,
+      "nodeId": "unimate",
+      "rowHtml": "<tr><td>1961</td><td><strong>Unimate — industrial robots</strong><span class=\"nsDesc\">GM's assembly-line arm. Automation without intelligence — but the hardware lineage AI would eventually inhabit.</span></td><td>ROBOTICS &amp; EMBODIED AI</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 242,
+      "nodeId": "shakey",
+      "rowHtml": "<tr><td>1968</td><td><strong>Shakey</strong><span class=\"nsDesc\">First robot to integrate perception, planning and action; A* and STRIPS were invented for it. Glacial in practice, generative in consequence.</span></td><td>ROBOTICS &amp; EMBODIED AI</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 243,
+      "nodeId": "moravec",
+      "rowHtml": "<tr><td>1988</td><td><strong>Moravec's paradox</strong><span class=\"nsDesc\">What's hard for AI (perception, motor control) is easy for toddlers, and vice versa. The embodiment reality check, still collecting evidence.</span></td><td>ROBOTICS &amp; EMBODIED AI</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 244,
+      "nodeId": "subsumption",
+      "rowHtml": "<tr><td>1986</td><td><strong>Behavior-based robotics</strong><span class=\"nsDesc\">Brooks's layered behavior-based approach favored direct perception-action loops over centralized world models and strongly influenced embodied robotics and commercial mobile-robot design.</span></td><td>ROBOTICS &amp; EMBODIED AI</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 245,
+      "nodeId": "cog",
+      "rowHtml": "<tr><td>1993</td><td><strong>Cog &amp; the humanoid lab era</strong><span class=\"nsDesc\">Humanoid robots served as cognition testbeds in the Cog and ASIMO era. Those programs ended without general intelligence; humanoid research returned decades later through modern control and learned foundation models.</span></td><td>ROBOTICS &amp; EMBODIED AI</td><td>Development; Ended / superseded (legacy)</td></tr>"
+    },
+    {
+      "ordinal": 246,
+      "nodeId": "alvinn",
+      "rowHtml": "<tr><td>1989</td><td><strong>ALVINN drives (1989)</strong><span class=\"nsDesc\">A neural net steering a van from camera pixels at CMU. Imitation learning's proof of concept, three decades early.</span></td><td>ROBOTICS &amp; EMBODIED AI</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 247,
+      "nodeId": "slam",
+      "rowHtml": "<tr><td>1991</td><td><strong>SLAM</strong><span class=\"nsDesc\">Simultaneous localization and mapping is a core technique for many robots, drones and augmented-reality systems, alongside visual-inertial odometry, mapping services and learned perception.</span></td><td>ROBOTICS &amp; EMBODIED AI</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 248,
+      "nodeId": "evolrobotics",
+      "rowHtml": "<tr><td>1994</td><td><strong>Evolutionary &amp; developmental robotics</strong><span class=\"nsDesc\">Evolutionary and developmental robotics jointly optimize controllers, behaviors and sometimes morphology. The field remains academically active, with more limited industrial adoption than mainstream deep learning and robotics.</span></td><td>ROBOTICS &amp; EMBODIED AI</td><td>Development; Dormant</td></tr>"
+    },
+    {
+      "ordinal": 249,
+      "nodeId": "bostondynamics",
+      "rowHtml": "<tr><td>2008</td><td><strong>Dynamic legged locomotion</strong><span class=\"nsDesc\">BigDog→Atlas backflips: model-predictive control at its athletic peak — a triumph of control theory largely without learning.</span></td><td>ROBOTICS &amp; EMBODIED AI</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 250,
+      "nodeId": "darpagc",
+      "rowHtml": "<tr><td>2005</td><td><strong>DARPA Grand Challenge</strong><span class=\"nsDesc\">Stanley wins the desert race; the self-driving industry is born in a weekend. Benchmark-as-catalyst, the robotics edition.</span></td><td>ROBOTICS &amp; EMBODIED AI</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 251,
+      "nodeId": "simenv",
+      "rowHtml": "<tr><td>2016</td><td><strong>Simulation environments</strong><span class=\"nsDesc\">MuJoCo, Gym, Isaac, Habitat: physics playgrounds where robot learning actually happens. Sim-to-real as a strategy, not a hack.</span></td><td>ROBOTICS &amp; EMBODIED AI</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 252,
+      "nodeId": "deeprlrobot",
+      "rowHtml": "<tr><td>2017</td><td><strong>Deep RL manipulation</strong><span class=\"nsDesc\">Grasping via RL and domain randomization (OpenAI's Rubik's hand). Sample hunger stalled it; imitation + foundation models took the baton.</span></td><td>ROBOTICS &amp; EMBODIED AI</td><td>Development; Dormant</td></tr>"
+    },
+    {
+      "ordinal": 253,
+      "nodeId": "selfdriving",
+      "rowHtml": "<tr><td>2018</td><td><strong>Self-driving's long grind</strong><span class=\"nsDesc\">A decade of overpromise, then real robotaxis at scale (Waymo, 2024–26). The long tail was the whole problem — and it's yielding slowly.</span></td><td>ROBOTICS &amp; EMBODIED AI</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 254,
+      "nodeId": "rtfm",
+      "rowHtml": "<tr><td>2022</td><td><strong>Robot foundation models</strong><span class=\"nsDesc\">SayCan and RT-1 began the language-grounded lineage; RT-2, Open X-Embodiment, OpenVLA and π0 scaled vision-language-action learning. Robotics' claimed 'GPT moment' is still being tested.</span></td><td>ROBOTICS &amp; EMBODIED AI</td><td>Development; Hot frontier</td></tr>"
+    },
+    {
+      "ordinal": 255,
+      "nodeId": "humanoid26",
+      "rowHtml": "<tr><td>2024</td><td><strong>Humanoid renaissance</strong><span class=\"nsDesc\">Optimus, Figure Helix, Unitree: billions chasing general-purpose bodies, first pilot deployments 2025–26. Hype versus unit economics, unresolved.</span></td><td>ROBOTICS &amp; EMBODIED AI</td><td>Development; Hot frontier</td></tr>"
+    },
+    {
+      "ordinal": 256,
+      "nodeId": "gap_swarm",
+      "rowHtml": "<tr><td>2026</td><td><strong>Swarms × foundation models</strong><span class=\"nsDesc\">Research direction: scale foundation-model multi-robot systems to decentralized, online-adaptive and fault-tolerant swarms. Early systems already combine large models with multi-robot coordination; robust embodied scaling remains unresolved.</span></td><td>ROBOTICS &amp; EMBODIED AI</td><td>Open direction; Open direction</td></tr>"
+    },
+    {
+      "ordinal": 257,
+      "nodeId": "asimov",
+      "rowHtml": "<tr><td>1942</td><td><strong>Asimov's Three Laws</strong><span class=\"nsDesc\">Fiction framed machine ethics decades before engineering could. Set the cultural frame every real safety debate still argues with.</span></td><td>SAFETY, ALIGNMENT &amp; INTERPRETABILITY</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 258,
+      "nodeId": "wienerwarn",
+      "rowHtml": "<tr><td>1960</td><td><strong>Wiener's control warning</strong><span class=\"nsDesc\">'If we use, to achieve our purposes, a mechanical agency with whose operation we cannot interfere…' — value misalignment stated plainly, in 1960.</span></td><td>SAFETY, ALIGNMENT &amp; INTERPRETABILITY</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 259,
+      "nodeId": "weizenbaum",
+      "rowHtml": "<tr><td>1976</td><td><strong>'Computer Power and Human Reason'</strong><span class=\"nsDesc\">ELIZA's own creator warned against delegating judgment to machines. AI criticism as a serious intellectual tradition begins here.</span></td><td>SAFETY, ALIGNMENT &amp; INTERPRETABILITY</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 260,
+      "nodeId": "aixi",
+      "rowHtml": "<tr><td>2000</td><td><strong>AIXI — universal intelligence</strong><span class=\"nsDesc\">Hutter: Solomonoff induction + RL as the optimal agent. Incomputable idealization — a framing device that shaped early alignment theory.</span></td><td>SAFETY, ALIGNMENT &amp; INTERPRETABILITY</td><td>Development; Dormant</td></tr>"
+    },
+    {
+      "ordinal": 261,
+      "nodeId": "friendlyai",
+      "rowHtml": "<tr><td>2001</td><td><strong>Agent foundations (MIRI)</strong><span class=\"nsDesc\">Yudkowsky's decision-theoretic alignment program for hypothetical superintelligences. Largely wound down by 2024 (pivot to advocacy) — a research road that ran out before LLMs arrived.</span></td><td>SAFETY, ALIGNMENT &amp; INTERPRETABILITY</td><td>Development; Dormant</td></tr>"
+    },
+    {
+      "ordinal": 262,
+      "nodeId": "superintbook",
+      "rowHtml": "<tr><td>2014</td><td><strong>'Superintelligence' (Bostrom)</strong><span class=\"nsDesc\">Orthogonality, instrumental convergence, the treacherous turn. Made existential risk respectable in policy and tech circles.</span></td><td>SAFETY, ALIGNMENT &amp; INTERPRETABILITY</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 263,
+      "nodeId": "concreteproblems",
+      "rowHtml": "<tr><td>2016</td><td><strong>Concrete Problems in AI Safety</strong><span class=\"nsDesc\">Amodei et al. translated alignment into ML problems: reward hacking, safe exploration, scalable oversight. The field's practical founding paper.</span></td><td>SAFETY, ALIGNMENT &amp; INTERPRETABILITY</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 264,
+      "nodeId": "rlhf",
+      "rowHtml": "<tr><td>2017</td><td><strong>RLHF — learning from preferences</strong><span class=\"nsDesc\">Training reward models from human comparisons became an important component of instruction-following assistants, alongside supervised fine-tuning, data curation and safety systems; reward-model overoptimization remains a persistent specification risk.</span></td><td>SAFETY, ALIGNMENT &amp; INTERPRETABILITY</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 265,
+      "nodeId": "fairness",
+      "rowHtml": "<tr><td>2016</td><td><strong>Fairness &amp; bias (FAccT)</strong><span class=\"nsDesc\">Measuring and mitigating disparate harms — COMPAS, face-recognition audits, dataset documentation. Ethics as an ML subfield, and a political flashpoint.</span></td><td>SAFETY, ALIGNMENT &amp; INTERPRETABILITY</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 266,
+      "nodeId": "advexamples",
+      "rowHtml": "<tr><td>2014</td><td><strong>Adversarial examples</strong><span class=\"nsDesc\">Imperceptible perturbations that fool networks. A decade of attack–defense arms race — unsolved, now mostly managed rather than fixed.</span></td><td>SAFETY, ALIGNMENT &amp; INTERPRETABILITY</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 267,
+      "nodeId": "interp",
+      "rowHtml": "<tr><td>2013-2020</td><td><strong>Early interpretability (saliency→circuits)</strong><span class=\"nsDesc\">Feature visualization, attribution maps, Olah's circuits program. From pretty pictures toward an actual science of what networks compute.</span></td><td>SAFETY, ALIGNMENT &amp; INTERPRETABILITY</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 268,
+      "nodeId": "debate",
+      "rowHtml": "<tr><td>2018</td><td><strong>Debate &amp; amplification (IDA)</strong><span class=\"nsDesc\">Alignment via argumentative games and recursive oversight. Theory-rich, deployment-poor — folded into today's scalable-oversight research.</span></td><td>SAFETY, ALIGNMENT &amp; INTERPRETABILITY</td><td>Development; Dormant</td></tr>"
+    },
+    {
+      "ordinal": 269,
+      "nodeId": "mechinterp",
+      "rowHtml": "<tr><td>2022</td><td><strong>Mechanistic interpretability</strong><span class=\"nsDesc\">Induction heads, superposition, sparse autoencoders finding millions of features. Reverse-engineering models — with a live debate over whether SAE features are real.</span></td><td>SAFETY, ALIGNMENT &amp; INTERPRETABILITY</td><td>Development; Hot frontier</td></tr>"
+    },
+    {
+      "ordinal": 270,
+      "nodeId": "constitutional",
+      "rowHtml": "<tr><td>2022</td><td><strong>Constitutional AI &amp; RLAIF</strong><span class=\"nsDesc\">Models critique models against written principles — scaling oversight past human labeling. Anthropic's flagship alignment recipe.</span></td><td>SAFETY, ALIGNMENT &amp; INTERPRETABILITY</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 271,
+      "nodeId": "dpo",
+      "rowHtml": "<tr><td>2023</td><td><strong>DPO &amp; cheap preference tuning</strong><span class=\"nsDesc\">Preference alignment without an RL loop. Made alignment tooling commodity — for better (open models) and worse (easy de-alignment).</span></td><td>SAFETY, ALIGNMENT &amp; INTERPRETABILITY</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 272,
+      "nodeId": "jailbreaks",
+      "rowHtml": "<tr><td>2023</td><td><strong>Jailbreaks &amp; prompt injection</strong><span class=\"nsDesc\">The attack surface of instruction-followers. Prompt injection remains the unsolved core vulnerability of agentic AI — the more tools, the more surface.</span></td><td>SAFETY, ALIGNMENT &amp; INTERPRETABILITY</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 273,
+      "nodeId": "superalign",
+      "rowHtml": "<tr><td>2023</td><td><strong>Superalignment (dissolved)</strong><span class=\"nsDesc\">OpenAI's 20%-of-compute pledge to align superintelligence — team dissolved within a year amid departures. A very public dropped thread; weak-to-strong work survived it.</span></td><td>SAFETY, ALIGNMENT &amp; INTERPRETABILITY</td><td>Development; Ended / superseded (legacy)</td></tr>"
+    },
+    {
+      "ordinal": 274,
+      "nodeId": "w2s",
+      "rowHtml": "<tr><td>2023</td><td><strong>Scalable oversight &amp; weak-to-strong</strong><span class=\"nsDesc\">Can weaker judges reliably train stronger models? The successor question once human feedback saturates — alignment's next hard problem.</span></td><td>SAFETY, ALIGNMENT &amp; INTERPRETABILITY</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 275,
+      "nodeId": "evals",
+      "rowHtml": "<tr><td>2023</td><td><strong>Evals &amp; red-teaming discipline</strong><span class=\"nsDesc\">METR, AISIs, dangerous-capability evals, model cards. Measuring what models can do became its own research field — and the science is young.</span></td><td>SAFETY, ALIGNMENT &amp; INTERPRETABILITY</td><td>Development; Hot frontier</td></tr>"
+    },
+    {
+      "ordinal": 276,
+      "nodeId": "govern",
+      "rowHtml": "<tr><td>2023</td><td><strong>Governance era (EU AI Act, AISIs)</strong><span class=\"nsDesc\">Law arrives: compute thresholds, transparency duties, incident reporting, safety institutes. Research and regulation now co-evolve.</span></td><td>SAFETY, ALIGNMENT &amp; INTERPRETABILITY</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 277,
+      "nodeId": "provablysafe",
+      "rowHtml": "<tr><td>2023</td><td><strong>Guaranteed-safe AI</strong><span class=\"nsDesc\">Formal world-models and proof-carrying AI (Tegmark–Russell program). Aspiration far ahead of tooling — a program waiting for its methods.</span></td><td>SAFETY, ALIGNMENT &amp; INTERPRETABILITY</td><td>Development; Dormant</td></tr>"
+    },
+    {
+      "ordinal": 278,
+      "nodeId": "gap_interp",
+      "rowHtml": "<tr><td>2026</td><td><strong>Reliable interpretability-based control</strong><span class=\"nsDesc\">Model editing and activation steering can change local facts and behaviors. Still missing: scalable, predictable interventions grounded in causal understanding, with robust generalization and meaningful guarantees.</span></td><td>SAFETY, ALIGNMENT &amp; INTERPRETABILITY</td><td>Open direction; Open direction</td></tr>"
+    },
+    {
+      "ordinal": 279,
+      "nodeId": "gap_agents",
+      "rowHtml": "<tr><td>2026</td><td><strong>Provable agent boundaries</strong><span class=\"nsDesc\">Research direction: develop testable containment, permission and corrigibility guarantees for tool-using agents under realistic interfaces and adversarial conditions.</span></td><td>SAFETY, ALIGNMENT &amp; INTERPRETABILITY</td><td>Open direction; Open direction</td></tr>"
+    },
+    {
+      "ordinal": 280,
+      "nodeId": "moore",
+      "rowHtml": "<tr><td>1965</td><td><strong>Moore's law</strong><span class=\"nsDesc\">Transistor counts double every ~2 years. The metronome under every AI wave — and every winter's eventual thaw.</span></td><td>COMPUTE, SYSTEMS &amp; DATA</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 281,
+      "nodeId": "internetdata",
+      "rowHtml": "<tr><td>1998</td><td><strong>The web as dataset</strong><span class=\"nsDesc\">Crawls, Wikipedia, forums, Common Crawl. Humanity accidentally wrote its own training corpus.</span></td><td>COMPUTE, SYSTEMS &amp; DATA</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 282,
+      "nodeId": "mturk",
+      "rowHtml": "<tr><td>2005</td><td><strong>Crowd labeling (MTurk)</strong><span class=\"nsDesc\">Human annotation at industrial scale — made ImageNet possible, and prefigured today's RLHF data industry.</span></td><td>COMPUTE, SYSTEMS &amp; DATA</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 283,
+      "nodeId": "gpgpu",
+      "rowHtml": "<tr><td>2007</td><td><strong>GPGPU / CUDA</strong><span class=\"nsDesc\">Graphics chips repurposed for general math. The hardware accident on which the entire deep-learning era balances.</span></td><td>COMPUTE, SYSTEMS &amp; DATA</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 284,
+      "nodeId": "frameworks",
+      "rowHtml": "<tr><td>2015</td><td><strong>Autodiff frameworks</strong><span class=\"nsDesc\">Theano→TensorFlow→PyTorch: differentiable programming for everyone. Research velocity ×10; the field's shared workbench.</span></td><td>COMPUTE, SYSTEMS &amp; DATA</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 285,
+      "nodeId": "tpu",
+      "rowHtml": "<tr><td>2016-2025</td><td><strong>AI accelerators (TPU→Ironwood)</strong><span class=\"nsDesc\">Silicon co-designed for tensors; NVIDIA's datacenter empire and its challengers. Compute as the strategic resource of the era.</span></td><td>COMPUTE, SYSTEMS &amp; DATA</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 286,
+      "nodeId": "hf",
+      "rowHtml": "<tr><td>2019</td><td><strong>Model hubs (Hugging Face)</strong><span class=\"nsDesc\">Weights as a commons. The GitHub of ML — distribution infrastructure that made 'open-weight ecosystem' a real thing.</span></td><td>COMPUTE, SYSTEMS &amp; DATA</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 287,
+      "nodeId": "distributed",
+      "rowHtml": "<tr><td>2018</td><td><strong>Distributed training</strong><span class=\"nsDesc\">Data/model/pipeline parallelism (Megatron, ZeRO): choreography for ten thousand GPUs. Scaling laws made physical.</span></td><td>COMPUTE, SYSTEMS &amp; DATA</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 288,
+      "nodeId": "computegap",
+      "rowHtml": "<tr><td>2022</td><td><strong>Compute concentration</strong><span class=\"nsDesc\">$100M+ training runs put frontier science behind capital walls. Academia's role crisis — and the open-weight movement's raison d'être.</span></td><td>COMPUTE, SYSTEMS &amp; DATA</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 289,
+      "nodeId": "benchmarkcrisis",
+      "rowHtml": "<tr><td>2023</td><td><strong>Benchmark saturation &amp; contamination</strong><span class=\"nsDesc\">MMLU→HLE: tests dissolve on contact with web-scale training. Measuring minds is now a bottleneck science.</span></td><td>COMPUTE, SYSTEMS &amp; DATA</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 290,
+      "nodeId": "datawalls",
+      "rowHtml": "<tr><td>2024</td><td><strong>Data walls &amp; licensing fights</strong><span class=\"nsDesc\">Lawsuits, robots.txt revolts, licensing deals, synthetic-data pivots. The free-data era that built the field is over.</span></td><td>COMPUTE, SYSTEMS &amp; DATA</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 291,
+      "nodeId": "mcp",
+      "rowHtml": "<tr><td>2024</td><td><strong>Agent infrastructure (MCP)</strong><span class=\"nsDesc\">Standardized model-tool-data plumbing and orchestration. The 'HTTP moment' for agents, possibly — the plumbing decides what agents can safely do.</span></td><td>COMPUTE, SYSTEMS &amp; DATA</td><td>Development; Hot frontier</td></tr>"
+    },
+    {
+      "ordinal": 292,
+      "nodeId": "inferecon",
+      "rowHtml": "<tr><td>2024</td><td><strong>Inference economics</strong><span class=\"nsDesc\">Serving, caching, routing, token pricing: the cost curve that decides what actually deploys. Where systems research meets business model.</span></td><td>COMPUTE, SYSTEMS &amp; DATA</td><td>Development; Hot frontier</td></tr>"
+    },
+    {
+      "ordinal": 293,
+      "nodeId": "energy",
+      "rowHtml": "<tr><td>2024</td><td><strong>Energy &amp; datacenter buildout</strong><span class=\"nsDesc\">Gigawatt campuses, nuclear PPAs, grid politics. AI's growth curve collided with physical infrastructure — the binding constraint after chips.</span></td><td>COMPUTE, SYSTEMS &amp; DATA</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 294,
+      "nodeId": "alphachip",
+      "rowHtml": "<tr><td>2021</td><td><strong>AI designs chips (AlphaChip)</strong><span class=\"nsDesc\">RL placement shipping in production TPUs. The ouroboros: AI improving the hardware that trains AI.</span></td><td>COMPUTE, SYSTEMS &amp; DATA</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 295,
+      "nodeId": "gap_data",
+      "rowHtml": "<tr><td>2026</td><td><strong>Post-data-wall learning</strong><span class=\"nsDesc\">Research direction: sustain capability improvement under a constrained or synthetic-only data supply while preventing collapse, contamination and diversity loss. Collapse is not inevitable when real-data anchors or external diversity controls remain; the stricter synthetic-only capability ratchet remains unresolved.</span></td><td>COMPUTE, SYSTEMS &amp; DATA</td><td>Open direction; Open direction</td></tr>"
+    },
+    {
+      "ordinal": 296,
+      "nodeId": "alphafold",
+      "rowHtml": "<tr><td>2020</td><td><strong>AlphaFold 2</strong><span class=\"nsDesc\">AlphaFold 2 achieved near-experimental accuracy on many CASP14 protein-structure targets, and the AlphaFold Database expanded access to more than 200 million predictions. It is a major AI-for-science result, not a universal solution to structural biology.</span></td><td>AI FOR SCIENCE &amp; APPLICATIONS</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 297,
+      "nodeId": "proteinlm",
+      "rowHtml": "<tr><td>2022</td><td><strong>Protein LMs &amp; generative design</strong><span class=\"nsDesc\">ESM language models and RFdiffusion: read protein space like text, then write new proteins into it. Design, not just prediction.</span></td><td>AI FOR SCIENCE &amp; APPLICATIONS</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 298,
+      "nodeId": "alphafold3",
+      "rowHtml": "<tr><td>2024</td><td><strong>AlphaFold 3 &amp; interactions</strong><span class=\"nsDesc\">Complexes, DNA/RNA, ligands via diffusion. Drug-discovery pipelines re-tooled around learned structure.</span></td><td>AI FOR SCIENCE &amp; APPLICATIONS</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 299,
+      "nodeId": "weather",
+      "rowHtml": "<tr><td>2022-2025</td><td><strong>AI weather (GraphCast→GenCast)</strong><span class=\"nsDesc\">Learned weather models such as GraphCast and GenCast reported strong benchmark performance and much lower inference cost than numerical forecasting systems on selected tasks. Operational adoption is growing, while physics-based models remain essential.</span></td><td>AI FOR SCIENCE &amp; APPLICATIONS</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 300,
+      "nodeId": "materials",
+      "rowHtml": "<tr><td>2023</td><td><strong>Materials discovery (GNoME)</strong><span class=\"nsDesc\">2.2M predicted crystals, autonomous labs synthesizing candidates — with a live replication debate about how many are truly new. Promise and friction together.</span></td><td>AI FOR SCIENCE &amp; APPLICATIONS</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 301,
+      "nodeId": "fusion",
+      "rowHtml": "<tr><td>2022</td><td><strong>Plasma &amp; fusion control</strong><span class=\"nsDesc\">Deep RL shaping tokamak plasmas (TCV). Control physics by learning — a template for AI in big experimental science.</span></td><td>AI FOR SCIENCE &amp; APPLICATIONS</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 302,
+      "nodeId": "mathai",
+      "rowHtml": "<tr><td>2024</td><td><strong>AI mathematics (IMO gold)</strong><span class=\"nsDesc\">AlphaGeometry reached Olympiad-level geometry in 2024, while AlphaProof and AlphaGeometry 2 achieved silver-medal-equivalent IMO performance that year; later 2025 systems reported gold-level results.</span></td><td>AI FOR SCIENCE &amp; APPLICATIONS</td><td>Development; Hot frontier</td></tr>"
+    },
+    {
+      "ordinal": 303,
+      "nodeId": "medicine",
+      "rowHtml": "<tr><td>2023</td><td><strong>Medical AI deployment</strong><span class=\"nsDesc\">Radiology assist → clinical LLMs (Med-Gemini class). Regulation, liability and workflow — not accuracy — are now the rate limiters. Watson's failure is the syllabus.</span></td><td>AI FOR SCIENCE &amp; APPLICATIONS</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 304,
+      "nodeId": "genomics",
+      "rowHtml": "<tr><td>2025</td><td><strong>Genomics models (AlphaGenome, Evo)</strong><span class=\"nsDesc\">Long-context models reading regulatory DNA and whole genomes. The genome as a language — the next AlphaFold-shaped bet.</span></td><td>AI FOR SCIENCE &amp; APPLICATIONS</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 305,
+      "nodeId": "sciagents",
+      "rowHtml": "<tr><td>2025</td><td><strong>AI co-scientists</strong><span class=\"nsDesc\">Agentic hypothesis, literature and experiment pipelines have produced reported algorithmic and scientific results in bounded domains. Independent reproduction and research-integrity practice are still developing.</span></td><td>AI FOR SCIENCE &amp; APPLICATIONS</td><td>Development; Hot frontier</td></tr>"
+    },
+    {
+      "ordinal": 306,
+      "nodeId": "gap_scilab",
+      "rowHtml": "<tr><td>2026</td><td><strong>General-purpose autonomous scientist</strong><span class=\"nsDesc\">Domain-specific self-driving laboratories already close design–execute–learn loops. The open challenge is reliable, reproducible autonomy that forms hypotheses and transfers across instruments, domains and scientific objectives.</span></td><td>AI FOR SCIENCE &amp; APPLICATIONS</td><td>Open direction; Open direction</td></tr>"
+    },
+    {
+      "ordinal": 307,
+      "nodeId": "subword",
+      "rowHtml": "<tr><td>2015-2018</td><td><strong>Subword tokenization (BPE → SentencePiece)</strong><span class=\"nsDesc\">Open-vocabulary modeling with reusable word pieces made rare words, multilingual translation and modern LLM vocabularies practical. The quiet interface between raw text and neural sequence models.</span></td><td>LANGUAGE &amp; LLMs</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 308,
+      "nodeId": "modelleak",
+      "rowHtml": "<tr><td>2016</td><td><strong>Privacy attacks &amp; model leakage</strong><span class=\"nsDesc\">Membership inference and related attacks showed that trained models can reveal whether specific records — and sometimes sensitive attributes — were present. Privacy became an empirical attack surface, not only a training objective.</span></td><td>SAFETY, ALIGNMENT &amp; INTERPRETABILITY</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 309,
+      "nodeId": "oodshift",
+      "rowHtml": "<tr><td>2016</td><td><strong>Distribution shift &amp; OOD detection</strong><span class=\"nsDesc\">Models can be confidently wrong when deployment data differs from training. Detection baselines, shift benchmarks and robustness methods made this a distinct reliability field rather than an edge case.</span></td><td>SAFETY, ALIGNMENT &amp; INTERPRETABILITY</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 310,
+      "nodeId": "imitation",
+      "rowHtml": "<tr><td>2011-2016</td><td><strong>Modern imitation learning (DAgger → GAIL)</strong><span class=\"nsDesc\">DAgger confronted policy-induced distribution shift; GAIL learned behavior by adversarially matching expert demonstrations. Together they formed the modern route from demonstrations to sequential policies.</span></td><td>REINFORCEMENT LEARNING &amp; AGENTS</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 311,
+      "nodeId": "continuousrl",
+      "rowHtml": "<tr><td>2015-2018</td><td><strong>Deep continuous control (DDPG → SAC)</strong><span class=\"nsDesc\">Off-policy actor–critic learning extended deep RL from discrete games to continuous actions; maximum-entropy SAC made the recipe substantially more stable for locomotion and manipulation.</span></td><td>REINFORCEMENT LEARNING &amp; AGENTS</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 312,
+      "nodeId": "mixedprecision",
+      "rowHtml": "<tr><td>2017</td><td><strong>Mixed-precision training</strong><span class=\"nsDesc\">Lower-precision arithmetic with loss scaling accelerated training and reduced memory without sacrificing model quality. It became a standard training-systems technique, distinct from inference quantization.</span></td><td>TRAINING, SCALE &amp; EFFICIENCY</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 313,
+      "nodeId": "vqcodes",
+      "rowHtml": "<tr><td>2017</td><td><strong>Discrete neural representations &amp; codecs</strong><span class=\"nsDesc\">VQ-VAE learned discrete codebooks; VQGAN and neural audio codecs turned images and sound into learned tokens. This lineage connects generative models, compression and multimodal tokenization.</span></td><td>GENERATIVE MEDIA</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 314,
+      "nodeId": "neuralverify",
+      "rowHtml": "<tr><td>2017</td><td><strong>Neural robustness &amp; formal verification</strong><span class=\"nsDesc\">Adversarial training, SMT-based checking and certified defenses test or guarantee bounded neural-network behavior. These are working methods, though far narrower than whole-agent safety proofs.</span></td><td>SAFETY, ALIGNMENT &amp; INTERPRETABILITY</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 315,
+      "nodeId": "backdoors",
+      "rowHtml": "<tr><td>2017</td><td><strong>Data poisoning &amp; model backdoors</strong><span class=\"nsDesc\">Training-time and supply-chain attacks implant trigger-dependent behavior that can survive ordinary retraining or safety tuning. This is distinct from test-time adversarial examples and prompt injection.</span></td><td>SAFETY, ALIGNMENT &amp; INTERPRETABILITY</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 316,
+      "nodeId": "pinn",
+      "rowHtml": "<tr><td>2017</td><td><strong>Physics-informed neural networks</strong><span class=\"nsDesc\">PINNs place differential equations and boundary conditions inside the training objective for forward and inverse problems. They opened a major scientific-ML program while retaining known optimization and scaling limits.</span></td><td>AI FOR SCIENCE &amp; APPLICATIONS</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 317,
+      "nodeId": "equivariance",
+      "rowHtml": "<tr><td>2018</td><td><strong>Equivariant &amp; geometric deep learning</strong><span class=\"nsDesc\">Architectures that respect rotation, translation and other symmetries became foundational for molecular, physical and 3D learning. Built-in geometry improves data efficiency and physical plausibility.</span></td><td>NEURAL ARCHITECTURES</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 318,
+      "nodeId": "goalmisgen",
+      "rowHtml": "<tr><td>2019</td><td><strong>Inner alignment &amp; goal misgeneralization</strong><span class=\"nsDesc\">A capable learned policy can pursue an unintended objective after distribution shift even when the training reward looked correct. Experiments establish the failure mode, not that every example is a mesa-optimizer.</span></td><td>SAFETY, ALIGNMENT &amp; INTERPRETABILITY</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 319,
+      "nodeId": "mlcompiler",
+      "rowHtml": "<tr><td>2018</td><td><strong>ML compilers &amp; tensor/kernel IRs</strong><span class=\"nsDesc\">TVM and MLIR created optimizing layers between model graphs and heterogeneous hardware. Compilation, scheduling and kernel generation became essential parts of ML performance rather than afterthoughts.</span></td><td>COMPUTE, SYSTEMS &amp; DATA</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 320,
+      "nodeId": "selfdrivinglab",
+      "rowHtml": "<tr><td>2019</td><td><strong>Self-driving laboratories</strong><span class=\"nsDesc\">Domain-specific systems close a design–execute–measure–learn loop with robotics and active learning. They demonstrate real autonomous experimentation without yet providing a general-purpose robot scientist.</span></td><td>AI FOR SCIENCE &amp; APPLICATIONS</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 321,
+      "nodeId": "denseretrieval",
+      "rowHtml": "<tr><td>2019</td><td><strong>Dense neural retrieval &amp; dual encoders</strong><span class=\"nsDesc\">Dual encoders learned semantic query and document spaces, replacing much lexical matching in open-domain QA. Dense retrieval is the missing systems-and-model bridge into retrieval-augmented generation.</span></td><td>LANGUAGE &amp; LLMs</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 322,
+      "nodeId": "neuraloperator",
+      "rowHtml": "<tr><td>2019</td><td><strong>Neural operators &amp; learned PDE solvers</strong><span class=\"nsDesc\">DeepONet and Fourier Neural Operators learn mappings between functions rather than one fixed discretization. The approach now powers fast surrogate models in weather, fluids and engineering.</span></td><td>AI FOR SCIENCE &amp; APPLICATIONS</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 323,
+      "nodeId": "speechfm",
+      "rowHtml": "<tr><td>2020-2022</td><td><strong>Speech foundation models (wav2vec 2.0 → Whisper)</strong><span class=\"nsDesc\">Self-supervised speech representation learning and weakly supervised web-scale transcription replaced task-specific acoustic pipelines with reusable speech models and robust multilingual transfer.</span></td><td>LANGUAGE &amp; LLMs</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 324,
+      "nodeId": "instructiontune",
+      "rowHtml": "<tr><td>2021</td><td><strong>Instruction tuning</strong><span class=\"nsDesc\">Supervised fine-tuning across diverse natural-language tasks taught pretrained models to follow new instructions zero-shot. It is a separate lineage from preference modeling and RLHF.</span></td><td>LANGUAGE &amp; LLMs</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 325,
+      "nodeId": "flowmatching",
+      "rowHtml": "<tr><td>2022</td><td><strong>Flow matching &amp; rectified flow</strong><span class=\"nsDesc\">Continuous-time vector-field learning offers a direct path from noise to data, often with straighter and faster trajectories than diffusion sampling. It is now a major generative-model branch.</span></td><td>GENERATIVE MEDIA</td><td>Development; Hot frontier</td></tr>"
+    },
+    {
+      "ordinal": 326,
+      "nodeId": "llmserving",
+      "rowHtml": "<tr><td>2022</td><td><strong>LLM inference &amp; serving systems</strong><span class=\"nsDesc\">Speculative decoding, continuous batching and PagedAttention attack latency, memory fragmentation and throughput. Serving systems are a distinct research layer from model compression.</span></td><td>COMPUTE, SYSTEMS &amp; DATA</td><td>Development; Hot frontier</td></tr>"
+    },
+    {
+      "ordinal": 327,
+      "nodeId": "agentbench",
+      "rowHtml": "<tr><td>2023</td><td><strong>Interactive agent benchmarks</strong><span class=\"nsDesc\">WebArena, AgentBench, SWE-bench and OSWorld evaluate stateful execution in websites, repositories and computers. They expose planning and recovery failures that static question-answer benchmarks miss.</span></td><td>REINFORCEMENT LEARNING &amp; AGENTS</td><td>Development; Hot frontier</td></tr>"
+    },
+    {
+      "ordinal": 328,
+      "nodeId": "visuomotor",
+      "rowHtml": "<tr><td>2023</td><td><strong>Generative visuomotor policies</strong><span class=\"nsDesc\">ACT predicts temporally chunked actions; Diffusion Policy models multimodal action distributions. These demonstration-driven policy representations bridge classical imitation learning and vision-language-action models.</span></td><td>ROBOTICS &amp; EMBODIED AI</td><td>Development; Hot frontier</td></tr>"
+    },
+    {
+      "ordinal": 329,
+      "nodeId": "modelediting",
+      "rowHtml": "<tr><td>2022</td><td><strong>Model editing &amp; activation steering</strong><span class=\"nsDesc\">Targeted weight edits and inference-time activation interventions can change facts or behaviors locally. Reliability, side effects, causal interpretation and generalization remain active limitations.</span></td><td>SAFETY, ALIGNMENT &amp; INTERPRETABILITY</td><td>Development; Hot frontier</td></tr>"
+    },
+    {
+      "ordinal": 330,
+      "nodeId": "aicontrol",
+      "rowHtml": "<tr><td>2023</td><td><strong>AI control protocols</strong><span class=\"nsDesc\">Control research evaluates how trusted monitors, resampling, editing and limited human audits can constrain an intentionally subversive model. It is an active defense–attack program, not a solved safeguard.</span></td><td>SAFETY, ALIGNMENT &amp; INTERPRETABILITY</td><td>Development; Hot frontier</td></tr>"
+    },
+    {
+      "ordinal": 331,
+      "nodeId": "selfgenagents",
+      "rowHtml": "<tr><td>2025</td><td><strong>Self-generated curricula &amp; self-editing agents</strong><span class=\"nsDesc\">Voyager, Absolute Zero and Darwin Gödel Machine generate tasks, skills or agent modifications and retain measured improvements. Results are promising but bounded by designed environments, verifiers and benchmarks.</span></td><td>REINFORCEMENT LEARNING &amp; AGENTS</td><td>Development; Hot frontier</td></tr>"
+    },
+    {
+      "ordinal": 332,
+      "nodeId": "maml",
+      "rowHtml": "<tr><td>2017</td><td><strong>Deep meta-learning (MAML)</strong><span class=\"nsDesc\">Model-Agnostic Meta-Learning optimized parameters for rapid adaptation from a few examples. It made learning-to-learn concrete, though foundation-model adaptation later changed the center of gravity.</span></td><td>TRAINING, SCALE &amp; EFFICIENCY</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 333,
+      "nodeId": "mapelites",
+      "rowHtml": "<tr><td>2015</td><td><strong>Quality-diversity search (MAP-Elites)</strong><span class=\"nsDesc\">Instead of one optimum, MAP-Elites builds an archive of diverse high-performing solutions across behavioral niches. The archive idea feeds evolutionary design and open-ended exploration.</span></td><td>EVOLUTIONARY, NEUROMORPHIC &amp; EXOTIC</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 334,
+      "nodeId": "neuralprog",
+      "rowHtml": "<tr><td>2016</td><td><strong>Neural-guided program synthesis</strong><span class=\"nsDesc\">DeepCoder and DreamCoder use learned guidance, search and reusable abstractions to synthesize programs from examples. The lineage links symbolic search to modern code generation.</span></td><td>SYMBOLIC AI &amp; KNOWLEDGE</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 335,
+      "nodeId": "optimaltransport",
+      "rowHtml": "<tr><td>2013</td><td><strong>Computational optimal transport</strong><span class=\"nsDesc\">Entropic regularization made transport distances computationally practical; Wasserstein objectives then influenced generative modeling, domain adaptation and representation learning.</span></td><td>PROBABILISTIC &amp; STATISTICAL ML</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 336,
+      "nodeId": "nucleus",
+      "rowHtml": "<tr><td>2019</td><td><strong>Nucleus sampling &amp; decoding controls</strong><span class=\"nsDesc\">Top-p sampling truncates the unreliable probability tail dynamically, improving open-ended generation. Decoding policy became a consequential layer between model probabilities and visible behavior.</span></td><td>LANGUAGE &amp; LLMs</td><td>Development; Foundational</td></tr>"
+    },
+    {
+      "ordinal": 337,
+      "nodeId": "unlearning",
+      "rowHtml": "<tr><td>2019</td><td><strong>Machine unlearning</strong><span class=\"nsDesc\">Unlearning asks a trained model to remove the influence of selected data without full retraining. Verification, utility preservation and realistic deletion guarantees remain open research problems.</span></td><td>SAFETY, ALIGNMENT &amp; INTERPRETABILITY</td><td>Development; Active</td></tr>"
+    },
+    {
+      "ordinal": 338,
+      "nodeId": "groundedplanning",
+      "rowHtml": "<tr><td>2017</td><td><strong>Language-grounded embodied planning</strong><span class=\"nsDesc\">Vision-and-language navigation and later SayCan ground language instructions in perception, affordances and executable skills. This is the planning bridge into robot foundation models.</span></td><td>ROBOTICS &amp; EMBODIED AI</td><td>Development; Active</td></tr>"
+    }
+  ]
+}

@@ -1,0 +1,187 @@
+{
+  "schemaVersion": "1.0.0",
+  "laneOrder": [
+    "roots",
+    "symbolic",
+    "search",
+    "rl",
+    "neural",
+    "training",
+    "language",
+    "vision",
+    "generative",
+    "prob",
+    "alt",
+    "robotics",
+    "safety",
+    "systems",
+    "science"
+  ],
+  "nodeShards": [
+    {
+      "laneId": "roots",
+      "file": "nodes/roots.json",
+      "count": 23
+    },
+    {
+      "laneId": "symbolic",
+      "file": "nodes/symbolic.json",
+      "count": 32
+    },
+    {
+      "laneId": "search",
+      "file": "nodes/search.json",
+      "count": 12
+    },
+    {
+      "laneId": "rl",
+      "file": "nodes/rl.json",
+      "count": 29
+    },
+    {
+      "laneId": "neural",
+      "file": "nodes/neural.json",
+      "count": 30
+    },
+    {
+      "laneId": "training",
+      "file": "nodes/training.json",
+      "count": 24
+    },
+    {
+      "laneId": "language",
+      "file": "nodes/language.json",
+      "count": 38
+    },
+    {
+      "laneId": "vision",
+      "file": "nodes/vision.json",
+      "count": 15
+    },
+    {
+      "laneId": "generative",
+      "file": "nodes/generative.json",
+      "count": 14
+    },
+    {
+      "laneId": "prob",
+      "file": "nodes/prob.json",
+      "count": 21
+    },
+    {
+      "laneId": "alt",
+      "file": "nodes/alt.json",
+      "count": 20
+    },
+    {
+      "laneId": "robotics",
+      "file": "nodes/robotics.json",
+      "count": 18
+    },
+    {
+      "laneId": "safety",
+      "file": "nodes/safety.json",
+      "count": 31
+    },
+    {
+      "laneId": "systems",
+      "file": "nodes/systems.json",
+      "count": 18
+    },
+    {
+      "laneId": "science",
+      "file": "nodes/science.json",
+      "count": 14
+    }
+  ],
+  "relationshipShards": [
+    {
+      "laneId": "roots",
+      "file": "relationships/roots.json",
+      "count": 29
+    },
+    {
+      "laneId": "symbolic",
+      "file": "relationships/symbolic.json",
+      "count": 53
+    },
+    {
+      "laneId": "search",
+      "file": "relationships/search.json",
+      "count": 23
+    },
+    {
+      "laneId": "rl",
+      "file": "relationships/rl.json",
+      "count": 68
+    },
+    {
+      "laneId": "neural",
+      "file": "relationships/neural.json",
+      "count": 50
+    },
+    {
+      "laneId": "training",
+      "file": "relationships/training.json",
+      "count": 47
+    },
+    {
+      "laneId": "language",
+      "file": "relationships/language.json",
+      "count": 97
+    },
+    {
+      "laneId": "vision",
+      "file": "relationships/vision.json",
+      "count": 33
+    },
+    {
+      "laneId": "generative",
+      "file": "relationships/generative.json",
+      "count": 42
+    },
+    {
+      "laneId": "prob",
+      "file": "relationships/prob.json",
+      "count": 40
+    },
+    {
+      "laneId": "alt",
+      "file": "relationships/alt.json",
+      "count": 30
+    },
+    {
+      "laneId": "robotics",
+      "file": "relationships/robotics.json",
+      "count": 47
+    },
+    {
+      "laneId": "safety",
+      "file": "relationships/safety.json",
+      "count": 72
+    },
+    {
+      "laneId": "systems",
+      "file": "relationships/systems.json",
+      "count": 38
+    },
+    {
+      "laneId": "science",
+      "file": "relationships/science.json",
+      "count": 42
+    }
+  ],
+  "sidecars": {
+    "catalog": "catalog.json",
+    "directions": "directions.json",
+    "researchGuide": "research-guide.json",
+    "wikipediaAudit": "wikipedia-audit.json",
+    "reviewFingerprints": "review-fingerprints.json",
+    "noScript": "no-script.json"
+  },
+  "expected": {
+    "nodes": 339,
+    "relationships": 711,
+    "dataDigest": "b375e9c0c732eda97cc4fcc90e30f022d60231f7388aec708760637c32f434e9"
+  }
+}

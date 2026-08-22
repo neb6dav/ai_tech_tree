@@ -1,21 +1,45 @@
 {
   "name": "ai-research-tech-tree",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "description": "Build tooling for the AI Research Tech Tree static atlas.",
+  "engines": {
+    "node": "24.x",
+    "npm": ">=11 <12"
+  },
+  "packageManager": "npm@11.11.0",
   "scripts": {
     "build:network": "esbuild src/network-view.js --bundle --format=iife --global-name=NetworkAtlas --platform=browser --target=es2020 --outfile=network-atlas.bundle.js --minify --legal-comments=eof",
     "build:opportunity": "esbuild src/opportunity-view.js --bundle --format=iife --global-name=OpportunityAtlas --platform=browser --target=es2020 --outfile=opportunity-atlas.bundle.js --minify --legal-comments=eof",
     "build:layout": "node generate-network-layout.js",
     "build": "node build.js",
+    "stage:site": "node scripts/stage-site.mjs",
+    "test:core": "node release-gate.js && node accessibility-gate.js && node ui-layout-gate.js && node network-gate.js && node opportunity-gate.js",
     "test:network": "node network-gate.js",
     "test:opportunity": "node opportunity-gate.js",
-    "test": "node release-gate.js && node accessibility-gate.js && node ui-layout-gate.js && node network-gate.js && node opportunity-gate.js"
+    "test:stage-site": "node --test scripts/stage-site.test.mjs",
+    "test:site-contract:unit": "node --test tests/site-contract-test.test.cjs",
+    "test:site-contract": "node scripts/site-contract-test.cjs",
+    "test:performance-budget:unit": "node --test tests/performance-budget-test.test.cjs",
+    "test:performance-budget": "node scripts/performance-budget-test.cjs",
+    "test:lighthouse:unit": "node --test tests/lighthouse-budget.test.mjs",
+    "test:lighthouse": "node scripts/lighthouse-budget.mjs",
+    "test:canonical-data": "node --test tests/canonical-atlas.test.cjs",
+    "test:browser": "npm run stage:site && node --test tests/browser-smoke.test.mjs && npm run test:lighthouse",
+    "test:publication-compatibility": "node --test tests/publication-compatibility.test.cjs",
+    "test:export-human-urls": "node --test tests/export-human-urls.test.cjs",
+    "test:release-identity": "node --test tests/release-identity.test.cjs",
+    "test:publication": "npm run test:canonical-data && npm run test:stage-site && npm run test:site-contract:unit && npm run test:performance-budget:unit && npm run test:lighthouse:unit && npm run test:publication-compatibility && npm run test:export-human-urls && npm run stage:site && npm run test:release-identity && npm run test:performance-budget && npm run test:site-contract",
+    "test": "npm run test:core && npm run test:publication && npm run test:browser"
   },
   "dependencies": {
     "@cosmos.gl/graph": "3.4.0"
   },
   "devDependencies": {
-    "esbuild": "0.25.12"
+    "chrome-launcher": "1.2.1",
+    "entities": "8.0.0",
+    "esbuild": "0.25.12",
+    "lighthouse": "13.4.1",
+    "playwright": "1.62.1"
   }
 }

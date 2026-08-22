@@ -1,0 +1,1656 @@
+{
+  "schemaVersion": "1.0.0",
+  "laneId": "roots",
+  "nodes": [
+    {
+      "ordinal": 0,
+      "id": "markov",
+      "title": "Markov chains (1906→1913)",
+      "year": 1913,
+      "laneId": "roots",
+      "classificationCode": "f",
+      "description": "Markov introduced chains of dependent random variables in work communicated in 1906 and published in 1907, then used a chain model to analyze letter patterns in Eugene Onegin in 1913. The lineage underpins HMMs, MDPs and probabilistic sequence modeling.",
+      "dateOverride": {
+        "start": 1906,
+        "end": 1913,
+        "label": "1906-1913",
+        "milestones": [
+          "Dependent-variable chains communicated 1906 and published 1907",
+          "Eugene Onegin text study 1913"
+        ]
+      },
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article for the stochastic process.",
+          "sources": [
+            {
+              "title": "Markov chain",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Markov_chain",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Markov%20chain&oldid=1365852166",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "markov-dependent-trials-1907",
+            "title": "Investigation of a Remarkable Case of Dependent Trials",
+            "url": "https://www.mathnet.ru/eng/im7832",
+            "year": 1907,
+            "kind": "paper",
+            "access": "public_domain",
+            "role": "origin",
+            "authors": [
+              "Andrey Markov"
+            ],
+            "note": "Original Russian full text; this is the mathematical chain-dependence work, not the later text example."
+          },
+          {
+            "id": "markov-onegin-1913",
+            "title": "An Example of Statistical Investigation of the Text Eugene Onegin Concerning the Connection of Samples in Chains",
+            "url": "https://doi.org/10.1017/S0269889706001074",
+            "year": 1913,
+            "kind": "paper",
+            "access": "publisher_record",
+            "role": "supporting_result",
+            "authors": [
+              "Andrey Markov"
+            ],
+            "note": "The linked English translation was published in 2006; it is not labeled public domain."
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "2cbb26f1"
+    },
+    {
+      "ordinal": 1,
+      "id": "logicprog",
+      "title": "Frege's Begriffsschrift → Hilbert's formalist program",
+      "year": 1928,
+      "laneId": "roots",
+      "classificationCode": "f",
+      "description": "Frege's 1879 Begriffsschrift established a modern formal language for predicate logic; Hilbert's 1920s program pursued formalization and mechanical decision procedures. This 1879–1928 composite is plotted at its beginning so the timeline's starting date is visible and explained.",
+      "dateOverride": {
+        "start": 1879,
+        "end": 1928,
+        "label": "1879-1928",
+        "milestones": [
+          "Frege Begriffsschrift 1879",
+          "Hilbert formalist program 1920s-1928"
+        ]
+      },
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Best labeled article for the formalist program; the node also reaches back to Frege.",
+          "sources": [
+            {
+              "title": "Hilbert's program",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Hilbert%27s_program",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Hilbert%27s%20program&oldid=1356668245",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "frege-begriffsschrift-1879",
+            "title": "Begriffsschrift",
+            "url": "https://commons.wikimedia.org/wiki/File:Begriffsschrift.djvu",
+            "year": 1879,
+            "kind": "book",
+            "access": "public_domain",
+            "role": "origin",
+            "authors": [
+              "Gottlob Frege"
+            ],
+            "note": "Original German scan; the file page records the work as public domain."
+          },
+          {
+            "id": "hilbert-ackermann-logic-1928",
+            "title": "Grundzüge der theoretischen Logik",
+            "url": "https://books.google.com/books?id=DlCP9FtlR4cC",
+            "year": 1928,
+            "kind": "book",
+            "access": "free_to_read",
+            "role": "supporting_result",
+            "authors": [
+              "David Hilbert",
+              "Wilhelm Ackermann"
+            ],
+            "note": "Full-view historical scan; reuse rights can vary by jurisdiction."
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "4c9c4189"
+    },
+    {
+      "ordinal": 2,
+      "id": "godel",
+      "title": "Gödel incompleteness",
+      "year": 1931,
+      "laneId": "roots",
+      "classificationCode": "f",
+      "description": "Gödel showed that any consistent, effectively axiomatized formal system expressive enough for arithmetic contains true statements it cannot prove. This bounds mechanized reasoning without precluding useful automation.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "Gödel's incompleteness theorems",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/G%C3%B6del%27s_incompleteness_theorems",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=G%C3%B6del%27s%20incompleteness%20theorems&oldid=1367320729",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "godel-incompleteness-1931",
+            "title": "Über formal unentscheidbare Sätze der Principia Mathematica und verwandter Systeme I",
+            "url": "https://doi.org/10.1007/BF01700692",
+            "year": 1931,
+            "kind": "paper",
+            "access": "publisher_record",
+            "role": "origin",
+            "authors": [
+              "Kurt Gödel"
+            ],
+            "note": ""
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "66a2215d"
+    },
+    {
+      "ordinal": 3,
+      "id": "turing36",
+      "title": "Turing machine",
+      "year": 1936,
+      "laneId": "roots",
+      "classificationCode": "f",
+      "description": "Turing formalized computation with an abstract universal machine. Most digital AI software fits this computational model, while analog and quantum systems extend the hardware story.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "Turing machine",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Turing_machine",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Turing%20machine&oldid=1361925546",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "turing-computable-numbers-1936",
+            "title": "On Computable Numbers, with an Application to the Entscheidungsproblem",
+            "url": "https://www.cs.ox.ac.uk/activities/ieg/e-library/sources/tp2-ie.pdf",
+            "year": 1936,
+            "kind": "paper",
+            "access": "free_to_read",
+            "role": "origin",
+            "authors": [
+              "Alan M. Turing"
+            ],
+            "note": "Authorized reproduction hosted by Oxford; includes the published correction."
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "0c20a3b8"
+    },
+    {
+      "ordinal": 4,
+      "id": "shannon37",
+      "title": "Boolean circuits (Shannon's thesis)",
+      "year": 1937,
+      "laneId": "roots",
+      "classificationCode": "f",
+      "description": "Switching circuits implement logic. The bridge from abstract symbols to physical hardware.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article for Shannon's thesis result.",
+          "sources": [
+            {
+              "title": "A Symbolic Analysis of Relay and Switching Circuits",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/A_Symbolic_Analysis_of_Relay_and_Switching_Circuits",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=A%20Symbolic%20Analysis%20of%20Relay%20and%20Switching%20Circuits&oldid=1352077364",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "shannon-switching-thesis-1937",
+            "title": "A Symbolic Analysis of Relay and Switching Circuits",
+            "url": "https://dspace.mit.edu/handle/1721.1/11173",
+            "year": 1937,
+            "kind": "thesis",
+            "access": "author_open",
+            "role": "origin",
+            "authors": [
+              "Claude E. Shannon"
+            ],
+            "note": "MIT institutional repository record and full text."
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "365be045"
+    },
+    {
+      "ordinal": 5,
+      "id": "mcculloch43",
+      "title": "McCulloch–Pitts neuron",
+      "year": 1943,
+      "laneId": "roots",
+      "classificationCode": "f",
+      "description": "McCulloch and Pitts modeled idealized neurons as logical threshold units, creating an early bridge from neurobiology to artificial neural computation.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Covers the McCulloch-Pitts formal neuron; no dedicated current article.",
+          "sources": [
+            {
+              "title": "Artificial neuron",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Artificial_neuron",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Artificial%20neuron&oldid=1361101243",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "mcculloch-pitts-1943",
+            "title": "A Logical Calculus of the Ideas Immanent in Nervous Activity",
+            "url": "https://doi.org/10.1007/BF02478259",
+            "year": 1943,
+            "kind": "paper",
+            "access": "publisher_record",
+            "role": "origin",
+            "authors": [
+              "Warren S. McCulloch",
+              "Walter Pitts"
+            ],
+            "note": ""
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "ed9bb4a3"
+    },
+    {
+      "ordinal": 6,
+      "id": "gametheory",
+      "title": "Game theory (von Neumann–Morgenstern)",
+      "year": 1944,
+      "laneId": "roots",
+      "classificationCode": "f",
+      "description": "Strategic rationality formalized. Underpins multi-agent AI, GANs, poker solvers and mechanism design.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact field article covering the von Neumann-Morgenstern foundation.",
+          "sources": [
+            {
+              "title": "Game theory",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Game_theory",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Game%20theory&oldid=1367609795",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "vonneumann-morgenstern-games-1944",
+            "title": "Theory of Games and Economic Behavior",
+            "url": "https://archive.org/details/in.ernet.dli.2015.215284",
+            "year": 1944,
+            "kind": "book",
+            "access": "free_to_read",
+            "role": "origin",
+            "authors": [
+              "John von Neumann",
+              "Oskar Morgenstern"
+            ],
+            "note": "Readable archival scan; the item does not establish public-domain status."
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "70809aa5"
+    },
+    {
+      "ordinal": 7,
+      "id": "vonneumann45",
+      "title": "Stored-program computer",
+      "year": 1945,
+      "laneId": "roots",
+      "classificationCode": "f",
+      "description": "Stored-program architecture became computing's dominant general-purpose substrate. Specialized accelerators retain it at system level, while neuromorphic, analog and quantum approaches explore alternatives to the von Neumann bottleneck.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "Stored-program computer",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Stored-program_computer",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Stored-program%20computer&oldid=1366970646",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "vonneumann-edvac-1945",
+            "title": "First Draft of a Report on the EDVAC",
+            "url": "https://library.si.edu/digital-library/book/firstdraftofrepo00vonn",
+            "year": 1945,
+            "kind": "report",
+            "access": "public_domain",
+            "role": "origin",
+            "authors": [
+              "John von Neumann"
+            ],
+            "note": "Smithsonian public-domain/CC0 scan; the broader EDVAC team also shaped the architecture."
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "1ea8f18f"
+    },
+    {
+      "ordinal": 8,
+      "id": "wiener48",
+      "title": "Cybernetics (Wiener)",
+      "year": 1948,
+      "laneId": "roots",
+      "classificationCode": "f",
+      "description": "Feedback, control and communication in animal and machine. Seeded AI, control theory, robotics and the first misalignment worries.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "Cybernetics",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Cybernetics",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Cybernetics&oldid=1361254571",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "wiener-cybernetics-1948",
+            "title": "Cybernetics: Or Control and Communication in the Animal and the Machine",
+            "url": "https://mitpress.mit.edu/9780262537841/cybernetics-or-control-and-communication-in-the-animal-and-the-machine/",
+            "year": 1948,
+            "kind": "book",
+            "access": "publisher_record",
+            "role": "origin",
+            "authors": [
+              "Norbert Wiener"
+            ],
+            "note": ""
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "a4f56b2d"
+    },
+    {
+      "ordinal": 9,
+      "id": "shannon48",
+      "title": "Information theory",
+      "year": 1948,
+      "laneId": "roots",
+      "classificationCode": "f",
+      "description": "Information quantified; prediction and compression unified. The deep reason language modeling works at all.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "Information theory",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Information_theory",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Information%20theory&oldid=1366101152",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "shannon-communication-1948",
+            "title": "A Mathematical Theory of Communication",
+            "url": "https://reach.ieee.org/primary-sources/a-mathematical-theory-of-communication/",
+            "year": 1948,
+            "kind": "paper",
+            "access": "free_to_read",
+            "role": "origin",
+            "authors": [
+              "Claude E. Shannon"
+            ],
+            "note": "Authoritative IEEE reading page and scan."
+          },
+          {
+            "id": "mackay-information-theory-2003",
+            "title": "Information Theory, Inference, and Learning Algorithms",
+            "url": "https://www.inference.org.uk/itprnn/book.pdf",
+            "year": 2003,
+            "kind": "book",
+            "access": "author_open",
+            "role": "survey",
+            "authors": [
+              "David J. C. MacKay"
+            ],
+            "note": "Author-hosted complete book."
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "39194e37"
+    },
+    {
+      "ordinal": 10,
+      "id": "hebb49",
+      "title": "Hebbian learning",
+      "year": 1949,
+      "laneId": "roots",
+      "classificationCode": "f",
+      "description": "Hebbian learning linked correlated neural activity to synaptic change and remains foundational in associative and biologically plausible learning; modern gradient updates are not generally Hebbian.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article for Hebbian learning.",
+          "sources": [
+            {
+              "title": "Hebbian theory",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Hebbian_theory",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Hebbian%20theory&oldid=1360682756",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "hebb-organization-behavior-1949",
+            "title": "The Organization of Behavior",
+            "url": "https://pure.mpg.de/view/item_2346268_3",
+            "year": 1949,
+            "kind": "book",
+            "access": "author_open",
+            "role": "origin",
+            "authors": [
+              "Donald O. Hebb"
+            ],
+            "note": "Free institutional copy; copyright is retained."
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "9c3a0c88"
+    },
+    {
+      "ordinal": 11,
+      "id": "turingtest",
+      "title": "Turing test",
+      "year": 1950,
+      "laneId": "roots",
+      "classificationCode": "f",
+      "description": "'Computing Machinery and Intelligence' reframed 'can machines think?' as an imitation game. The field's north star and favorite argument.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "Turing test",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Turing_test",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Turing%20test&oldid=1364989093",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "turing-computing-machinery-1950",
+            "title": "Computing Machinery and Intelligence",
+            "url": "https://doi.org/10.1093/mind/LIX.236.433",
+            "year": 1950,
+            "kind": "paper",
+            "access": "publisher_record",
+            "role": "origin",
+            "authors": [
+              "Alan M. Turing"
+            ],
+            "note": ""
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "f003e2ba"
+    },
+    {
+      "ordinal": 12,
+      "id": "hodgkin52",
+      "title": "Hodgkin–Huxley neuron model",
+      "year": 1952,
+      "laneId": "roots",
+      "classificationCode": "f",
+      "description": "The biophysics of the spike, measured and modeled. Ground truth for spiking networks and neuromorphic silicon.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "Hodgkin–Huxley model",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Hodgkin%E2%80%93Huxley_model",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Hodgkin%E2%80%93Huxley%20model&oldid=1345552266",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "hodgkin-huxley-1952",
+            "title": "A Quantitative Description of Membrane Current and Its Application to Conduction and Excitation in Nerve",
+            "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC1392413/",
+            "year": 1952,
+            "kind": "paper",
+            "access": "open_access",
+            "role": "origin",
+            "authors": [
+              "A. L. Hodgkin",
+              "A. F. Huxley"
+            ],
+            "note": ""
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "426d32c9"
+    },
+    {
+      "ordinal": 13,
+      "id": "dartmouth",
+      "title": "Dartmouth workshop — 'AI' named",
+      "year": 1956,
+      "laneId": "roots",
+      "classificationCode": "f",
+      "description": "McCarthy, Minsky, Shannon, Rochester bet a summer could crack intelligence. Wrong on timing, right on ambition — the field's founding myth.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "Dartmouth workshop",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Dartmouth_workshop",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Dartmouth%20workshop&oldid=1360638286",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "dartmouth-ai-proposal-1955",
+            "title": "A Proposal for the Dartmouth Summer Research Project on Artificial Intelligence",
+            "url": "https://www-formal.stanford.edu/jmc/history/dartmouth/dartmouth.html",
+            "year": 1955,
+            "kind": "proposal",
+            "access": "author_open",
+            "role": "origin",
+            "authors": [
+              "John McCarthy",
+              "Marvin Minsky",
+              "Nathaniel Rochester",
+              "Claude Shannon"
+            ],
+            "note": ""
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "830f8ba0"
+    },
+    {
+      "ordinal": 14,
+      "id": "cogrev",
+      "title": "Cognitive revolution",
+      "year": 1956,
+      "laneId": "roots",
+      "classificationCode": "f",
+      "description": "Miller, Chomsky, Newell & Simon recast mind as information processing. Psychology and AI were born entangled.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "Cognitive revolution",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Cognitive_revolution",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Cognitive%20revolution&oldid=1364306186",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "miller-magical-seven-1956",
+            "title": "The Magical Number Seven, Plus or Minus Two",
+            "url": "https://pure.mpg.de/view/item_2364276",
+            "year": 1956,
+            "kind": "paper",
+            "access": "author_open",
+            "role": "origin",
+            "authors": [
+              "George A. Miller"
+            ],
+            "note": ""
+          },
+          {
+            "id": "chomsky-three-models-1956",
+            "title": "Three Models for the Description of Language",
+            "url": "https://doi.org/10.1109/TIT.1956.1056813",
+            "year": 1956,
+            "kind": "paper",
+            "access": "publisher_record",
+            "role": "supporting_result",
+            "authors": [
+              "Noam Chomsky"
+            ],
+            "note": ""
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "be1453c9"
+    },
+    {
+      "ordinal": 15,
+      "id": "hubel59",
+      "title": "Hubel & Wiesel visual cortex",
+      "year": 1959,
+      "laneId": "roots",
+      "classificationCode": "f",
+      "description": "Orientation-selective cells stacked in layers — the biological blueprint later copied by the neocognitron and CNNs.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Best article covering Hubel and Wiesel's receptive-field findings.",
+          "sources": [
+            {
+              "title": "Visual cortex",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Visual_cortex",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Visual%20cortex&oldid=1365408970",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "f79f7014"
+    },
+    {
+      "ordinal": 16,
+      "id": "solomonoff",
+      "title": "Solomonoff induction",
+      "year": 1964,
+      "laneId": "roots",
+      "classificationCode": "f",
+      "description": "Universal prediction by weighting all programs by simplicity. The idealized learner behind AIXI and compression-based views of intelligence.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "Solomonoff's theory of inductive inference",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Solomonoff%27s_theory_of_inductive_inference",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Solomonoff%27s%20theory%20of%20inductive%20inference&oldid=1365857607",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "4be92ad1"
+    },
+    {
+      "ordinal": 17,
+      "id": "kolmo",
+      "title": "Kolmogorov complexity & MDL",
+      "year": 1965,
+      "laneId": "roots",
+      "classificationCode": "f",
+      "description": "Learning as compression, formalized. Quietly resurfaces in every era — most recently in 'compression is intelligence' scaling arguments.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Directly covers the first bundled development; MDL has a separate article.",
+          "sources": [
+            {
+              "title": "Kolmogorov complexity",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Kolmogorov_complexity",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Kolmogorov%20complexity&oldid=1361738672",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "700beb91"
+    },
+    {
+      "ordinal": 18,
+      "id": "complexity71",
+      "title": "NP-completeness (Cook–Karp)",
+      "year": 1971,
+      "laneId": "roots",
+      "classificationCode": "f",
+      "description": "Which problems are intractable. Explains why naive search-based AI hit walls — and why heuristics and learning are necessary.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article covering Cook-Karp foundations.",
+          "sources": [
+            {
+              "title": "NP-completeness",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/NP-completeness",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=NP-completeness&oldid=1345732940",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "cook-complexity-1971",
+            "title": "The Complexity of Theorem-Proving Procedures",
+            "url": "https://www.cs.toronto.edu/~sacook/homepage/1971.pdf",
+            "year": 1971,
+            "kind": "paper",
+            "access": "author_open",
+            "role": "origin",
+            "authors": [
+              "Stephen A. Cook"
+            ],
+            "note": ""
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "64b60038"
+    },
+    {
+      "ordinal": 19,
+      "id": "chineseroom",
+      "title": "Chinese Room & symbol grounding",
+      "year": 1980,
+      "laneId": "roots",
+      "classificationCode": "f",
+      "description": "Searle: syntax isn't semantics. The grounding critique haunted symbolic AI; multimodal, embodied learning is the modern rebuttal-in-progress.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Directly covers the first bundled critique; symbol grounding has a separate article.",
+          "sources": [
+            {
+              "title": "Chinese room",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Chinese_room",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Chinese%20room&oldid=1365574016",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "searle-minds-brains-programs-1980",
+            "title": "Minds, Brains, and Programs",
+            "url": "https://doi.org/10.1017/S0140525X00005756",
+            "year": 1980,
+            "kind": "paper",
+            "access": "publisher_record",
+            "role": "origin",
+            "authors": [
+              "John R. Searle"
+            ],
+            "note": ""
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "7c5580f9"
+    },
+    {
+      "ordinal": 20,
+      "id": "conndebate",
+      "title": "Symbolic vs connectionist war",
+      "year": 1988,
+      "laneId": "roots",
+      "classificationCode": "f",
+      "description": "Fodor & Pylyshyn: can networks compose meaning? The systematicity debate — reopened, not settled, by LLM reasoning.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Best labeled article for the symbolic-connectionist and systematicity debate.",
+          "sources": [
+            {
+              "title": "Connectionism",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Connectionism",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Connectionism&oldid=1364296292",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "f3a54f9e"
+    },
+    {
+      "ordinal": 21,
+      "id": "freeenergy",
+      "title": "Free-energy principle",
+      "year": 2005,
+      "laneId": "roots",
+      "classificationCode": "a",
+      "description": "Friston: brains minimize prediction error. Grand, contested, hard to operationalize — the neuroscience shadow of world-model AI.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "Free energy principle",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Free_energy_principle",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Free%20energy%20principle&oldid=1360798274",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Active” is an editorial assessment of current activity, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "9cf4521d"
+    },
+    {
+      "ordinal": 22,
+      "id": "gap_activeinf",
+      "title": "Active inference at scale",
+      "year": 2026,
+      "laneId": "roots",
+      "classificationCode": "g",
+      "description": "Research direction: test whether active-inference objectives can support competitive, large-scale agents. Existing work has not yet established parity with frontier-scale model-based agents.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "open_direction",
+        "significance": "not_assessed",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "hypothesis",
+          "confidence": null,
+          "note": "This is a map hypothesis; Wikipedia absence does not establish that the proposed gap is novel.",
+          "sources": []
+        },
+        "mapStatus": {
+          "state": "hypothesis",
+          "confidence": null,
+          "note": "This is explicitly a proposed gap; Wikipedia absence is not evidence that the proposal is novel.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "title": "Deep active inference agents using Monte-Carlo methods",
+            "url": "https://arxiv.org/abs/2006.04176",
+            "year": 2020,
+            "role": "supporting_result",
+            "roleExplicit": true
+          },
+          {
+            "title": "Active Inference in Robotics and Artificial Agents: Survey and Challenges",
+            "url": "https://arxiv.org/abs/2112.01871",
+            "year": 2021,
+            "role": "survey",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "Can active-inference objectives produce compute-matched agents that equal strong model-based reinforcement-learning baselines on planning, adaptation, robustness, and efficiency?"
+      ],
+      "direction": {
+        "question": "Can active-inference objectives produce compute-matched agents that equal strong model-based reinforcement-learning baselines on planning, adaptation, robustness, and efficiency?",
+        "closureCriteria": "Under identical observations, model capacity, environment steps, and tuning budgets, an active-inference agent matches or exceeds strong model-based baselines across several environment families, with objective ablations identifying where expected-free-energy terms add value.",
+        "partialResults": [
+          "Deep active inference with Monte Carlo tree search plans in dSprites and Animal-AI environments.",
+          "Discrete active-inference agents and the maintained pymdp library establish reproducible small-scale feasibility."
+        ],
+        "starters": [
+          "Individual: Implement a pymdp or neural active-inference agent on MiniGrid and compare it with PPO and a model-based baseline under fixed environment-step and tuning budgets.",
+          "Small lab: Run preregistered objective ablations across MiniGrid, Procgen, and selected DeepMind Control Suite tasks, measuring adaptation after dynamics and reward shifts.",
+          "Well-funded lab: Build a distributed active-inference agent and conduct a compute-matched simulation-to-robot evaluation with robustness, calibration, and wall-clock efficiency measurements."
+        ],
+        "claimState": "editorial_hypothesis",
+        "asOf": "2026-08-04",
+        "confidence": "high",
+        "noveltyReview": {
+          "status": "targeted_search",
+          "checkedAt": "2026-08-04",
+          "scope": "arXiv titles and abstracts for active inference, expected free energy, robotics, planning, and reinforcement learning, plus modern control benchmarks and official implementations.",
+          "note": "Existing demonstrations are mainly small, simulated, or robotics-specific; the search did not establish priority or exhaust every venue."
+        },
+        "counterexamples": [
+          "Fountas et al. demonstrate a deep active-inference MCTS agent in continuous-state simulations.",
+          "Sajid et al. compare active inference with reinforcement learning in discrete Gym-style settings.",
+          "pymdp provides a maintained implementation for discrete Markov decision processes."
+        ],
+        "literature": [
+          {
+            "t": "Deep active inference agents using Monte-Carlo methods",
+            "u": "https://arxiv.org/abs/2006.04176",
+            "y": 2020,
+            "role": "supporting_result"
+          },
+          {
+            "t": "Active Inference in Robotics and Artificial Agents: Survey and Challenges",
+            "u": "https://arxiv.org/abs/2112.01871",
+            "y": 2021,
+            "role": "survey"
+          }
+        ],
+        "resources": {
+          "benchmarks": [
+            "MiniGrid",
+            "Procgen",
+            "DeepMind Control Suite",
+            "Animal-AI"
+          ],
+          "code": [
+            "https://github.com/infer-actively/pymdp",
+            "https://github.com/zfountas/deep-active-inference-mc"
+          ],
+          "datasets": [
+            "https://github.com/google-deepmind/dsprites-dataset",
+            "Procedurally generated interaction traces from MiniGrid, Procgen, and Animal-AI"
+          ],
+          "estimated": {
+            "individual": "1 x 24-48 GB GPU for several days",
+            "smallLab": "4-8 x 80 GB GPUs for 1-2 weeks",
+            "wellFundedLab": "32-64 accelerators for a multi-suite sweep and robotics follow-up"
+          }
+        },
+        "crowdedness": "Low to medium; active communities exist, but large compute-matched benchmark studies are uncommon.",
+        "tractability": "High for controlled comparisons and medium for broad generalization or robotics."
+      },
+      "claimFingerprint": "365cd761"
+    }
+  ]
+}

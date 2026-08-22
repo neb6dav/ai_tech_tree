@@ -3,13 +3,17 @@
 const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
+const util = require('util');
 const vm = require('vm');
+
+const { loadCanonicalAtlas } = require('./canonical-atlas.js');
 
 const HTML_NAME = 'ai-research-tech-tree.html';
 const JSONLD_NAME = 'ai-research-tech-tree.jsonld';
 const JSON_NAME = 'ai-research-tech-tree.json';
 const NDJSON_NAME = 'ai-research-tech-tree.ndjson';
-const GENERATOR_VERSION = '1.3.0';
+const APPLICATION_HUMAN_URL = './';
+const GENERATOR_VERSION = '1.3.1';
 const DATASET_UUID = uuidV5('ai-research-tech-tree.public-artifact', '6ba7b810-9dad-11d1-80b4-00c04fd430c8');
 const DATASET_IRI = `urn:uuid:${DATASET_UUID}`;
 const VOCAB_IRI = `${DATASET_IRI}#vocab-`;
@@ -48,6 +52,436 @@ function compareText(a, b) {
 
 function unique(values) {
   return [...new Set(values)];
+}
+
+const DATE_OVERRIDE_ORDER = Object.freeze([
+  'markov',
+  'logicprog',
+  'mtgeorgetown',
+  'lighthill',
+  'policygrad',
+  'imitation',
+  'continuousrl',
+  'speechfm',
+  'tpu',
+  'video',
+  'a3cppo',
+  'adam',
+  'scalinglaws',
+  'ssm',
+  'codegen',
+  'longctx',
+  'reasoning',
+  'neural3d',
+  'interp',
+  'weather',
+  'subword'
+]);
+
+const DESCRIPTION_REPAIR_ORDER = Object.freeze([
+  'gap_activeinf',
+  'gap_neurosym',
+  'gap_energyllm',
+  'gap_memory',
+  'gap_dreamtrain',
+  'gap_causal',
+  'gap_tabular',
+  'gap_biolearn',
+  'gap_quant',
+  'gap_swarm',
+  'gap_agents',
+  'gap_data'
+]);
+
+const EDGE_OVERRIDE_ORDER = Object.freeze([
+  'policygrad>a3cppo:dep',
+  'boltzmann>rbm:dep',
+  'rbm>dbn:dep',
+  'layernorm>transformer:dep',
+  'elmo>bert:dep',
+  'unet>diffusion:dep',
+  'batchnorm>layernorm:dep',
+  'ir>rag:dep',
+  'unet>medicine:dep'
+]);
+
+const PAPER_ROLE_OVERRIDE_ORDER = Object.freeze([
+  'rlhf|https://arxiv.org/abs/2210.10760',
+  'w2s|https://arxiv.org/abs/2305.20050',
+  'constitutional|https://arxiv.org/abs/2501.18837',
+  'jailbreaks|https://arxiv.org/abs/2501.18837',
+  'conformal|https://arxiv.org/abs/1612.01474',
+  'conformal|https://arxiv.org/abs/1706.04599',
+  'conformal|https://arxiv.org/abs/2107.07511',
+  'lora|https://arxiv.org/abs/2305.14314',
+  'diffusion|https://arxiv.org/abs/2010.02502',
+  'diffusion|https://arxiv.org/abs/2011.13456'
+]);
+
+const PAPER_ROLES = Object.freeze(new Set([
+  'origin',
+  'supporting_result',
+  'replication',
+  'benchmark',
+  'critique',
+  'survey',
+  'adjacent_work'
+]));
+
+function replaceExactlyOnce(value, pattern, replacement, label) {
+  const matches = [...value.matchAll(pattern)];
+  assert(matches.length === 1, `Expected exactly one ${label}, found ${matches.length}`);
+  return value.replace(pattern, replacement);
+}
+
+function htmlText(value) {
+  assert(typeof value === 'string', 'Release-shell projection received a non-string value');
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+function htmlAttribute(value) {
+  return htmlText(value)
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function assertExactHtmlFragment(html, fragment, label) {
+  let count = 0;
+  let offset = 0;
+  while ((offset = html.indexOf(fragment, offset)) >= 0) {
+    count += 1;
+    offset += fragment.length;
+  }
+  assert(count === 1, `Canonical release shell ${label} must appear exactly once; found ${count}`);
+}
+
+function validateReleaseShell(html, canonical) {
+  assert(canonical?.catalog?.project && Array.isArray(canonical.nodes), 'Canonical project and node inventory are required');
+  const project = canonical.catalog.project;
+  for (const field of [
+    'version',
+    'edition',
+    'releaseState',
+    'asOf',
+    'canonicalUrl',
+    'repositoryUrl',
+    'citationUrl',
+    'manifestUrl',
+    'license',
+    'correctionsUrl'
+  ]) {
+    assert(typeof project[field] === 'string' && project[field].length > 0, `Canonical project.${field} is required`);
+  }
+  assert(Array.isArray(project.authors) && project.authors.length > 0, 'Canonical project.authors is required');
+
+  const developments = canonical.nodes.filter(node => node.statusProfile.kind === 'development').length;
+  const directions = canonical.nodes.filter(node => node.statusProfile.kind === 'open_direction').length;
+  assert(developments + directions === canonical.nodes.length, 'Canonical node inventory contains an unknown status kind');
+  const rangeStart = Math.min(...canonical.nodes.map(node => node.dateOverride?.start ?? node.year));
+  const rangeEnd = Math.max(...canonical.nodes.map(node => node.dateOverride?.end ?? node.year));
+  assert(Number.isFinite(rangeStart) && Number.isFinite(rangeEnd), 'Canonical node inventory has no finite date range');
+
+  const version = htmlText(project.version);
+  const edition = htmlText(project.edition);
+  const releaseState = htmlText(project.releaseState);
+  const releaseTitle = htmlText(project.releaseState.replace(/\b[a-z]/g, letter => letter.toUpperCase()));
+  const releaseLower = htmlText(project.releaseState.toLowerCase());
+  const releaseDescriptor = project.releaseState === 'Stable' ? 'stable edition' : releaseLower;
+  const releaseShort = project.releaseState === 'Stable' ? 'Stable' : 'Dev';
+  const author = htmlAttribute(project.authors.join(', '));
+  const canonicalUrl = htmlAttribute(project.canonicalUrl);
+  const repositoryUrl = htmlAttribute(project.repositoryUrl);
+  const citationUrl = htmlAttribute(project.citationUrl);
+  const manifestUrl = htmlAttribute(project.manifestUrl);
+  const license = htmlAttribute(project.license);
+  const correctionsUrl = htmlAttribute(project.correctionsUrl);
+  const socialCardUrl = htmlAttribute(new URL('social-card.png', project.canonicalUrl).href);
+  const range = `${rangeStart}&ndash;${rangeEnd}`;
+
+  const fragments = [
+    [`<title>AI Research Tech Tree - v${version} ${releaseTitle}</title>`, 'document title'],
+    [`<meta name="description" content="The v${version} ${releaseDescriptor} of a curated research atlas of ${developments} AI research developments, ${directions} open directions, evidence-coded relationships and selected papers through ${rangeEnd}.">`, 'description metadata'],
+    [`<meta name="author" content="${author}">`, 'author metadata'],
+    [`<meta name="ai-tree-version" content="${htmlAttribute(project.version)}">`, 'version metadata'],
+    [`<meta name="ai-tree-edition" content="${htmlAttribute(project.edition)}">`, 'edition metadata'],
+    [`<meta name="ai-tree-release-state" content="${htmlAttribute(project.releaseState)}">`, 'release-state metadata'],
+    [`<link rel="canonical" href="${canonicalUrl}">`, 'canonical URL'],
+    [`<link rel="license" href="${license}">`, 'license URL'],
+    [`<meta property="og:title" content="AI Research Tech Tree - v${version} ${releaseTitle}">`, 'Open Graph title'],
+    [`<meta property="og:description" content="Explore the v${version} ${releaseDescriptor} of a curated map of AI history, evidence-coded relationships, related research papers and open questions.">`, 'Open Graph description'],
+    [`<meta property="og:url" content="${canonicalUrl}">`, 'Open Graph canonical URL'],
+    [`<meta property="og:image" content="${socialCardUrl}">`, 'Open Graph image URL'],
+    [`<meta name="twitter:title" content="AI Research Tech Tree - v${version} ${releaseTitle}">`, 'Twitter title'],
+    [`<meta name="twitter:description" content="The v${version} ${releaseDescriptor} of a curated AI research atlas with explicit evidence limits and research-direction cards.">`, 'Twitter description'],
+    [`<meta name="twitter:image" content="${socialCardUrl}">`, 'Twitter image URL'],
+    [`<noscript><section id="noscriptIdentity" aria-label="Publication status and contribution links"><div><strong>${releaseState} &middot; v${version}</strong><span>Dataset edition ${edition}; historical review cutoff ${htmlText(project.asOf)}.</span></div><nav aria-label="Repository and publication links"><a id="nsRepositoryLink" href="${repositoryUrl}">Repository</a><a id="nsContributeLink" href="${correctionsUrl}">Contribute</a><a id="nsCitationLink" href="${citationUrl}">Citation</a><a id="nsManifestLink" href="${manifestUrl}">Exact build manifest</a></nav></section></noscript>`, 'no-script publication identity'],
+    [`This no-JavaScript view contains all ${developments} mapped developments and ${directions} open directions.`, 'no-script inventory counts'],
+    [`<caption>All ${canonical.nodes.length} atlas entries, ${range}</caption>`, 'no-script inventory caption'],
+    [`<a id="repositoryLink" href="${repositoryUrl}" target="_blank" rel="noopener noreferrer" aria-label="AI Research Tech Tree repository"><span id="title"><span class="dot" aria-hidden="true"></span><span class="titleLong">AI Research Tech Tree</span><span class="titleShort" aria-hidden="true">AI Tree</span><small>${range}</small></span></a>`, 'toolbar repository identity'],
+    [`<a id="editionBadge" href="${manifestUrl}" aria-label="${releaseState} v${version}. View exact build commit and checksums" title="Dataset edition ${edition}; open the exact build manifest"><span class="editionLong">${releaseState} &middot; v${version}</span><span class="editionShort" aria-hidden="true">${releaseShort}</span></a>`, 'toolbar edition identity'],
+    [`<a class="btn" id="contributeLink" href="${correctionsUrl}" target="_blank" rel="noopener noreferrer" aria-label="Contribute or suggest a correction">Contribute</a>`, 'toolbar correction URL']
+  ];
+  fragments.forEach(([fragment, label]) => assertExactHtmlFragment(html, fragment, label));
+}
+
+function jsString(value) {
+  assert(typeof value === 'string', 'JavaScript string projection received a non-string value');
+  return `'${value
+    .replace(/\\/g, '\\\\')
+    .replace(/'/g, "\\'")
+    .replace(/</g, '\\x3c')
+    .replace(/\r/g, '\\r')
+    .replace(/\n/g, '\\n')
+    .replace(/\u2028/g, '\\u2028')
+    .replace(/\u2029/g, '\\u2029')}'`;
+}
+
+function jsKey(value) {
+  return /^[A-Za-z_$][A-Za-z0-9_$]*$/.test(value) ? value : jsString(value);
+}
+
+function compactJs(value) {
+  if (value === null) return 'null';
+  if (typeof value === 'string') return jsString(value);
+  if (typeof value === 'number' || typeof value === 'boolean') return String(value);
+  if (Array.isArray(value)) return `[${value.map(compactJs).join(',')}]`;
+  assert(value && typeof value === 'object', 'JavaScript projection received an unsupported value');
+  return `{${Object.entries(value).map(([key, item]) => `${jsKey(key)}:${compactJs(item)}`).join(',')}}`;
+}
+
+function renderCatalogBlock(catalog) {
+  const statusEntries = Object.entries(catalog.classifications).map(([code, value], index, entries) => (
+    `  ${jsKey(code)}:{n:${jsString(value.n)}, short:${jsString(value.short)}, c:${jsString(value.c)}, g:${jsString(value.g)}, ds:${jsString(value.ds)}}${index === entries.length - 1 ? '' : ','}`
+  ));
+  const laneEntries = catalog.lanes.map((lane, index) => {
+    const id = jsString(lane.id);
+    return `  {id:${id},${' '.repeat(Math.max(0, 11 - id.length))}n:${jsString(lane.n)}}${index === catalog.lanes.length - 1 ? '' : ','}`;
+  });
+  const eraEntries = catalog.eras.map((era, index) => (
+    `  {n:${jsString(era.n)}, y0:${era.y0}, y1:${era.y1}}${index === catalog.eras.length - 1 ? '' : ','}`
+  ));
+  return `const STATUS = {\n${statusEntries.join('\n')}\n};\nconst LANES = [\n${laneEntries.join('\n')}\n];\nconst ERAS = [\n${eraEntries.join('\n')}\n];`;
+}
+
+function renderProject(project) {
+  const properties = Object.entries(project).map(([key, value]) => {
+    const rendered = Array.isArray(value) ? `Object.freeze(${compactJs(value)})` : compactJs(value);
+    return `${jsKey(key)}:${rendered}`;
+  });
+  return `const PROJECT_META=Object.freeze({${properties.join(',')}});`;
+}
+
+function orderedRecords(records, preferredOrder, idOf) {
+  const byId = new Map(records.map(record => [idOf(record), record]));
+  const ordered = preferredOrder.filter(id => byId.has(id)).map(id => byId.get(id));
+  const seen = new Set(ordered.map(idOf));
+  return [...ordered, ...records.filter(record => !seen.has(idOf(record)))];
+}
+
+function renderDateOverrides(nodes) {
+  const records = nodes.filter(node => node.dateOverride !== null);
+  const ordered = orderedRecords(records, DATE_OVERRIDE_ORDER, node => node.id);
+  return `const DATE_OVERRIDES=Object.freeze({${ordered.map(node => `${jsKey(node.id)}:${compactJs(node.dateOverride)}`).join(',')}});`;
+}
+
+function defaultRelationshipMeta(relationship) {
+  if (relationship.legacyKind === 'gap') {
+    return {
+      type: 'proposed_combination',
+      rationale: 'Editorially proposed research combination; not a claim that the work already exists.',
+      reviewed: true
+    };
+  }
+  if (relationship.legacyKind === 'sup') {
+    return {
+      type: 'legacy_supersession_claim',
+      rationale: 'Legacy supersession claim retained for review; it is not treated as established supersession.',
+      reviewed: false
+    };
+  }
+  return {
+    type: 'editorial_association',
+    rationale: 'Connection retained from the curated map; causal or historical direction has not been individually established.',
+    reviewed: false
+  };
+}
+
+function renderRelationshipCatalog(canonical) {
+  const overrides = canonical.relationships.filter(relationship => {
+    const fallback = defaultRelationshipMeta(relationship);
+    return relationship.relationshipType !== fallback.type ||
+      relationship.rationale !== fallback.rationale ||
+      relationship.reviewed !== fallback.reviewed;
+  });
+  const ordered = orderedRecords(overrides, EDGE_OVERRIDE_ORDER, relationship => relationship.key);
+  const renderedOverrides = ordered.map(relationship => {
+    assert(relationship.reviewed === true, `Relationship ${relationship.key} cannot be represented by the browser override contract`);
+    return `${jsKey(relationship.key)}:{type:${jsString(relationship.relationshipType)},rationale:${jsString(relationship.rationale)}}`;
+  }).join(',');
+  return `const RELATION_TYPES=Object.freeze(${compactJs(canonical.catalog.relationshipTypes)});const EDGE_META_OVERRIDES=Object.freeze({${renderedOverrides}});`;
+}
+
+function renderPaperRoleOverrides(canonical) {
+  const rawResearch = canonical.sidecars.researchGuide.data.nodes;
+  const overridesByKey = new Map();
+  for (const key of PAPER_ROLE_OVERRIDE_ORDER) {
+    const separator = key.indexOf('|');
+    const nodeId = key.slice(0, separator);
+    const url = key.slice(separator + 1);
+    const node = canonical.nodes.find(candidate => candidate.id === nodeId);
+    const source = node?.research.sources.find(candidate => candidate.url === url);
+    assert(source, `Paper-role projection references missing canonical source ${key}`);
+    overridesByKey.set(key, { key, role: source.role });
+  }
+  for (const node of canonical.nodes) {
+    const candidates = [
+      ...(canonical.sidecars.directions.data[node.id]?.literature || []),
+      ...(rawResearch[node.id]?.sources || [])
+    ];
+    const seen = new Set();
+    const normalizedByUrl = new Map(node.research.sources.map(source => [source.url, source]));
+    for (const raw of candidates) {
+      const url = raw?.u;
+      if (typeof url !== 'string' || seen.has(url) || !normalizedByUrl.has(url)) continue;
+      seen.add(url);
+      const normalized = normalizedByUrl.get(url);
+      const explicit = PAPER_ROLES.has(raw.role);
+      const defaultRole = explicit ? raw.role : 'adjacent_work';
+      if (normalized.role !== defaultRole || normalized.roleExplicit !== explicit) {
+        const key = `${node.id}|${url}`;
+        overridesByKey.set(key, { key, role: normalized.role });
+      }
+    }
+  }
+  const overrides = [...overridesByKey.values()];
+  const ordered = orderedRecords(overrides, PAPER_ROLE_OVERRIDE_ORDER, record => record.key);
+  assert(ordered.length === overrides.length, 'Paper-role override ordering lost a canonical record');
+  return `PAPER_ROLE_OVERRIDES=Object.freeze({${ordered.map(record => `${jsKey(record.key)}:${jsString(record.role)}`).join(',')}});`;
+}
+
+function renderCanonicalNodeBlocks(html, canonical) {
+  const incoming = new Map(canonical.nodes.map(node => [node.id, { deps: [], sup: [] }]));
+  for (const relationship of canonical.relationships) {
+    const target = incoming.get(relationship.targetNodeId);
+    assert(target, `Relationship ${relationship.key} targets an unknown canonical node`);
+    if (relationship.legacyKind === 'sup') target.sup.push(relationship.sourceNodeId);
+    else target.deps.push(relationship.sourceNodeId);
+  }
+  const researchNodes = canonical.sidecars.researchGuide.data.nodes;
+  const expansionIds = new Set(canonical.nodes
+    .filter(node => ['core', 'specialist', 'emerging'].includes(researchNodes[node.id]?.tier))
+    .map(node => node.id));
+  assert(expansionIds.size > 0, 'Canonical research expansion projection is empty');
+  function renderBlock(nodes) {
+    const records = nodes.map(node => {
+      const edges = incoming.get(node.id);
+      const raw = {
+        id: node.id,
+        t: node.title,
+        y: node.year,
+        lane: node.laneId,
+        s: node.classificationCode,
+        d: node.description,
+        deps: edges.deps
+      };
+      if (edges.sup.length) raw.sup = edges.sup;
+      return safeJson(raw);
+    });
+    return `P(\n${records.join(',\n')}\n);`;
+  }
+  const blocks = canonical.manifest.laneOrder.map(laneId => renderBlock(
+    canonical.nodes.filter(node => node.laneId === laneId && !expansionIds.has(node.id))
+  ));
+  blocks.push(renderBlock(canonical.nodes.filter(node => expansionIds.has(node.id))));
+  let index = 0;
+  const pattern = /(\/\* ============ [^\r\n]+ ============ \*\/\n)P\(\n[\s\S]*?\n\);/g;
+  const matches = [...html.matchAll(pattern)];
+  assert(matches.length === blocks.length, `Expected exactly 16 canonical data projections, found ${matches.length}`);
+  const rendered = html.replace(pattern, (_match, heading) => `${heading}${blocks[index++]}`);
+  assert(index === blocks.length, 'Canonical lane projection count changed during rendering');
+  return rendered;
+}
+
+function replaceFrozenDataScript(html, id, assignment, value) {
+  const escapedId = id.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const escapedAssignment = assignment.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const pattern = new RegExp(`(<script\\b[^>]*\\bid=["']${escapedId}["'][^>]*>[\\s\\S]*?${escapedAssignment})[^\\r\\n]*(\\);\\n<\\/script>)`, 'g');
+  return replaceExactlyOnce(
+    html,
+    pattern,
+    (_match, opening, closing) => `${opening}${safeJson(value)}${closing}`,
+    `#${id} JSON projection`
+  );
+}
+
+function applyCanonicalAtlas(html, canonical) {
+  assert(canonical && canonical.manifest && canonical.catalog, 'Canonical atlas is required');
+  let result = renderCanonicalNodeBlocks(html, canonical);
+  result = replaceFrozenDataScript(result, 'wiki-audit-data', 'const WIKI_AUDIT = Object.freeze(', canonical.sidecars.wikipediaAudit.data);
+  result = replaceFrozenDataScript(result, 'research-guide-data', 'const RESEARCH_GUIDE=Object.freeze(', canonical.sidecars.researchGuide.data);
+  result = replaceExactlyOnce(
+    result,
+    /(<noscript><style>#bootPending\{display:none!important\}<\/style><section id="noscript"[\s\S]*?<tbody>)[\s\S]*?(<\/tbody><\/table><\/div><\/section><\/noscript>)/g,
+    (_match, opening, closing) => `${opening}${canonical.sidecars.noScript.rows.map(row => row.rowHtml).join('')}${closing}`,
+    'no-script canonical projection'
+  );
+  result = replaceExactlyOnce(
+    result,
+    /const STATUS = \{[\s\S]*?const ERAS = \[[\s\S]*?\];(?=\n\n\/\* ---------- editorial model, chronology and validation ---------- \*\/)/g,
+    () => renderCatalogBlock(canonical.catalog),
+    'catalog status, lane and era projection'
+  );
+  result = replaceExactlyOnce(
+    result,
+    /const PROJECT_META=Object\.freeze\([\s\S]*?\);(?=\nconst DATE_OVERRIDES=)/g,
+    () => renderProject(canonical.catalog.project),
+    'project metadata projection'
+  );
+  result = replaceExactlyOnce(
+    result,
+    /const DATE_OVERRIDES=Object\.freeze\([\s\S]*?\);(?=function formatNodeDate)/g,
+    () => renderDateOverrides(canonical.nodes),
+    'date override projection'
+  );
+  const repairs = Object.fromEntries(DESCRIPTION_REPAIR_ORDER.map(id => {
+    const node = canonical.nodes.find(candidate => candidate.id === id);
+    assert(node, `Description repair projection references missing canonical node ${id}`);
+    return [id, node.description];
+  }));
+  result = replaceExactlyOnce(
+    result,
+    /const DESCRIPTION_REPAIRS=Object\.freeze\([\s\S]*?\);(?=Object\.entries\(DESCRIPTION_REPAIRS\))/g,
+    () => `const DESCRIPTION_REPAIRS=Object.freeze(${safeJson(repairs)});`,
+    'description repair projection'
+  );
+  result = replaceExactlyOnce(
+    result,
+    /const RELATION_TYPES=Object\.freeze\([\s\S]*?\);const EDGE_META_OVERRIDES=Object\.freeze\([\s\S]*?\);(?=function structuralEdgeMeta)/g,
+    () => renderRelationshipCatalog(canonical),
+    'relationship metadata projection'
+  );
+  result = replaceExactlyOnce(
+    result,
+    /(const DIRECTION_CARD_DATA=)[^\r\n]*(;\nfunction frozenList)/g,
+    (_match, prefix, suffix) => `${prefix}${safeJson(canonical.sidecars.directions.data)}${suffix}`,
+    'direction card projection'
+  );
+  result = replaceExactlyOnce(
+    result,
+    /PAPER_ROLE_OVERRIDES=Object\.freeze\([\s\S]*?\);(?=let activeResearchFilter=)/g,
+    () => renderPaperRoleOverrides(canonical),
+    'paper role override projection'
+  );
+  result = replaceExactlyOnce(
+    result,
+    /const AUDIT_NODE_FINGERPRINTS=Object\.freeze\([\s\S]*?\);const AUDIT_EDGE_FINGERPRINTS=Object\.freeze\([\s\S]*?\);(?=const staleNodeFingerprintIds=)/g,
+    () => `const AUDIT_NODE_FINGERPRINTS=Object.freeze(${safeJson(canonical.sidecars.reviewFingerprints.nodes)});const AUDIT_EDGE_FINGERPRINTS=Object.freeze(${safeJson(canonical.sidecars.reviewFingerprints.relationships)});`,
+    'review fingerprint projection'
+  );
+  return result;
 }
 
 function countBy(values, keyFn = value => value) {
@@ -130,7 +564,11 @@ function extractModel(html) {
     ;globalThis.__KG_MODEL__={
       project:PROJECT_META,
       lanes:LANES,
+      eras:ERAS,
       classifications:STATUS,
+      relationshipTypes:RELATION_TYPES,
+      researchGuide:RESEARCH_GUIDE,
+      wikipediaAudit:WIKI_AUDIT,
       nodes:NODES.map(nd=>({
         id:nd.id,title:nd.t,year:nd.y,laneId:nd.lane,classificationCode:nd.s,description:nd.d,
         dateOverride:DATE_OVERRIDES[nd.id]||null,
@@ -315,7 +753,7 @@ function buildExports(model) {
     return {
       id: node.id,
       iri: iri('node', node.id),
-      humanUrl: `./${HTML_NAME}#node=${encodeURIComponent(node.id)}`,
+      humanUrl: `${APPLICATION_HUMAN_URL}#node=${encodeURIComponent(node.id)}`,
       type: node.statusProfile.kind,
       title: node.title,
       description: node.description,
@@ -469,7 +907,7 @@ function buildExports(model) {
     releaseState: model.project.releaseState,
     asOf: model.project.asOf,
     temporalCoverage: '1879/2026',
-    humanUrl: `./${HTML_NAME}`,
+    humanUrl: APPLICATION_HUMAN_URL,
     canonicalUrl: model.project.canonicalUrl,
     authors: model.project.authors,
     license: model.project.license,
@@ -822,26 +1260,66 @@ function applyKnowledgeGraph(html, datasetGraph) {
   return { html, jsonLdBody };
 }
 
-let html = fs.readFileSync(htmlPath, 'utf8').replace(/\r\n/g, '\n');
-const model = extractModel(html);
-const { plain, datasetGraph, ndjsonRecords } = buildExports(model);
-const applied = applyKnowledgeGraph(html, datasetGraph);
-const plainBody = JSON.stringify(plain, null, 2) + '\n';
-const ndjsonBody = ndjsonRecords.map(record => JSON.stringify(record)).join('\n') + '\n';
+function buildCanonicalArtifacts(html, canonical) {
+  assert(canonical && canonical.legacyModel, 'Assembled canonical atlas is required');
+  const projectedHtml = applyCanonicalAtlas(html, canonical);
+  validateReleaseShell(projectedHtml, canonical);
+  const projectedModel = extractModel(projectedHtml);
+  assert(
+    util.isDeepStrictEqual(projectedModel, canonical.legacyModel),
+    'Canonical browser projection does not reproduce the assembled canonical model'
+  );
+  const model = canonical.legacyModel;
+  const { plain, datasetGraph, ndjsonRecords } = buildExports(model);
+  assert(
+    plain.dataset.dataDigest === canonical.manifest.expected.dataDigest,
+    `Canonical data digest changed: expected ${canonical.manifest.expected.dataDigest}, found ${plain.dataset.dataDigest}`
+  );
+  const applied = applyKnowledgeGraph(projectedHtml, datasetGraph);
+  const plainBody = JSON.stringify(plain, null, 2) + '\n';
+  const ndjsonBody = ndjsonRecords.map(record => JSON.stringify(record)).join('\n') + '\n';
 
-fs.writeFileSync(htmlPath, applied.html, 'utf8');
-fs.writeFileSync(jsonLdPath, applied.jsonLdBody, 'utf8');
-fs.writeFileSync(jsonPath, plainBody, 'utf8');
-fs.writeFileSync(ndjsonPath, ndjsonBody, 'utf8');
+  return {
+    html: applied.html,
+    jsonLdBody: applied.jsonLdBody,
+    plain,
+    plainBody,
+    ndjsonBody
+  };
+}
 
-console.log(JSON.stringify({
-  datasetIri: DATASET_IRI,
-  dataDigest: plain.dataset.dataDigest,
-  counts: plain.dataset.counts,
-  bytes: {
-    html: Buffer.byteLength(applied.html),
-    jsonld: Buffer.byteLength(applied.jsonLdBody),
-    json: Buffer.byteLength(plainBody),
-    ndjson: Buffer.byteLength(ndjsonBody)
-  }
-}, null, 2));
+function main() {
+  const canonical = loadCanonicalAtlas();
+  const html = fs.readFileSync(htmlPath, 'utf8').replace(/\r\n/g, '\n');
+  const artifacts = buildCanonicalArtifacts(html, canonical);
+
+  fs.writeFileSync(htmlPath, artifacts.html, 'utf8');
+  fs.writeFileSync(jsonLdPath, artifacts.jsonLdBody, 'utf8');
+  fs.writeFileSync(jsonPath, artifacts.plainBody, 'utf8');
+  fs.writeFileSync(ndjsonPath, artifacts.ndjsonBody, 'utf8');
+
+  console.log(JSON.stringify({
+    datasetIri: DATASET_IRI,
+    dataDigest: artifacts.plain.dataset.dataDigest,
+    counts: artifacts.plain.dataset.counts,
+    bytes: {
+      html: Buffer.byteLength(artifacts.html),
+      jsonld: Buffer.byteLength(artifacts.jsonLdBody),
+      json: Buffer.byteLength(artifacts.plainBody),
+      ndjson: Buffer.byteLength(artifacts.ndjsonBody)
+    }
+  }, null, 2));
+}
+
+if (require.main === module) main();
+
+module.exports = {
+  applyCanonicalAtlas,
+  applyKnowledgeGraph,
+  buildCanonicalArtifacts,
+  buildExports,
+  extractModel,
+  main,
+  safeJson,
+  validateReleaseShell
+};

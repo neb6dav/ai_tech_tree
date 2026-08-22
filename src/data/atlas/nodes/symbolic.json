@@ -1,0 +1,1983 @@
+{
+  "schemaVersion": "1.0.0",
+  "laneId": "symbolic",
+  "nodes": [
+    {
+      "ordinal": 23,
+      "id": "lt56",
+      "title": "Logic Theorist",
+      "year": 1956,
+      "laneId": "symbolic",
+      "classificationCode": "f",
+      "description": "Newell & Simon's first AI program — proved theorems from Principia by heuristic search over symbols. AI's opening move.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "Logic Theorist",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Logic_Theorist",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Logic%20Theorist&oldid=1366443812",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "newell-simon-logic-theory-1956",
+            "title": "The Logic Theory Machine: A Complex Information Processing System",
+            "url": "https://www.rand.org/pubs/papers/P868.html",
+            "year": 1956,
+            "kind": "report",
+            "access": "free_to_read",
+            "role": "origin",
+            "authors": [
+              "Allen Newell",
+              "Herbert A. Simon"
+            ],
+            "note": "RAND product page with an authorized downloadable PDF."
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "f069b437"
+    },
+    {
+      "ordinal": 24,
+      "id": "lisp",
+      "title": "LISP",
+      "year": 1958,
+      "laneId": "symbolic",
+      "classificationCode": "f",
+      "description": "McCarthy's symbolic language: code as data, recursion, garbage collection. AI's native tongue for 30 years.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact language article.",
+          "sources": [
+            {
+              "title": "Lisp (programming language)",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Lisp_(programming_language)",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Lisp%20%28programming%20language%29&oldid=1362273832",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "mccarthy-recursive-functions-1960",
+            "title": "Recursive Functions of Symbolic Expressions and Their Computation by Machine, Part I",
+            "url": "https://www-formal.stanford.edu/jmc/recursive/recursive.html",
+            "year": 1960,
+            "kind": "paper",
+            "access": "author_open",
+            "role": "origin",
+            "authors": [
+              "John McCarthy"
+            ],
+            "note": ""
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "57a5352d"
+    },
+    {
+      "ordinal": 25,
+      "id": "gps",
+      "title": "General Problem Solver",
+      "year": 1959,
+      "laneId": "symbolic",
+      "classificationCode": "f",
+      "description": "Means–ends analysis as a theory of thought. 'General' proved elusive beyond puzzles — but it seeded planning and cognitive architectures.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "General Problem Solver",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/General_Problem_Solver",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=General%20Problem%20Solver&oldid=1339092741",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "3d580ef8"
+    },
+    {
+      "ordinal": 26,
+      "id": "advicetaker",
+      "title": "Advice Taker & the logicist creed",
+      "year": 1959,
+      "laneId": "symbolic",
+      "classificationCode": "f",
+      "description": "McCarthy's program: represent knowledge as logical sentences, act by deduction. The purist wing of symbolic AI.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "Advice taker",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Advice_taker",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Advice%20taker&oldid=1302778978",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "df4b3fc4"
+    },
+    {
+      "ordinal": 27,
+      "id": "resolution",
+      "title": "Resolution theorem proving",
+      "year": 1965,
+      "laneId": "symbolic",
+      "classificationCode": "f",
+      "description": "Robinson's single complete inference rule made automated deduction real — and revealed combinatorial explosion as the enemy.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article for the inference rule.",
+          "sources": [
+            {
+              "title": "Resolution (logic)",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Resolution_(logic)",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Resolution%20%28logic%29&oldid=1366509972",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "14440a29"
+    },
+    {
+      "ordinal": 28,
+      "id": "dendral",
+      "title": "DENDRAL — first expert system",
+      "year": 1965,
+      "laneId": "symbolic",
+      "classificationCode": "f",
+      "description": "Mass-spectrometry chemistry via encoded expertise. Proved domain knowledge beats general search — the knowledge turn begins.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "Dendral",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Dendral",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Dendral&oldid=1365924349",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "653f1f02"
+    },
+    {
+      "ordinal": 29,
+      "id": "semanticnets",
+      "title": "Semantic networks",
+      "year": 1966,
+      "laneId": "symbolic",
+      "classificationCode": "f",
+      "description": "Quillian's concepts-as-graphs. Ancestor of frames, ontologies, knowledge graphs — and, arguably, of embeddings-as-relations.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "Semantic network",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Semantic_network",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Semantic%20network&oldid=1351238699",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "430ff3a3"
+    },
+    {
+      "ordinal": 30,
+      "id": "shrdlu",
+      "title": "SHRDLU & blocks world",
+      "year": 1970,
+      "laneId": "symbolic",
+      "classificationCode": "x",
+      "description": "Winograd's dazzling language-plus-planning demo in a toy world. Famously refused to scale — the archetype of the demo-to-world gap.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "not_assessed",
+        "trajectory": "ambiguous_ended_or_superseded",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "SHRDLU",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/SHRDLU",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=SHRDLU&oldid=1363075922",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "The SHRDLU page documents that its success did not carry over to realistic ambiguity and complexity, but it does not describe a formal project ending or direct supersession.",
+          "sources": [
+            {
+              "title": "SHRDLU",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/SHRDLU",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=SHRDLU&oldid=1363075922",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "9318cfcf"
+    },
+    {
+      "ordinal": 31,
+      "id": "prolog",
+      "title": "Prolog & logic programming",
+      "year": 1972,
+      "laneId": "symbolic",
+      "classificationCode": "d",
+      "description": "Computation as deduction. Once a national strategy (Japan bet on it); now a respected niche in verification, Datalog and answer-set programming.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "dormant",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "Prolog",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Prolog",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Prolog&oldid=1364150107",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Dormant” is an editorial assessment; no encyclopedic fate finding is inferred from article or link presence.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "a922bbd7"
+    },
+    {
+      "ordinal": 32,
+      "id": "lighthill",
+      "title": "Lighthill Report → first AI winter",
+      "year": 1973,
+      "laneId": "symbolic",
+      "classificationCode": "x",
+      "description": "UK review damning AI's unmet promises; with DARPA cuts it froze funding for a decade. The field's first reckoning with its own hype.",
+      "dateOverride": {
+        "start": 1973,
+        "end": 1980,
+        "label": "1973-1980",
+        "milestones": [
+          "Lighthill Report 1973",
+          "First AI winter, mid-1970s-1980"
+        ]
+      },
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "not_assessed",
+        "trajectory": "ambiguous_ended_or_superseded",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "Lighthill report",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Lighthill_report",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Lighthill%20report&oldid=1359900597",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "The page explicitly links the report to UK funding cuts and an AI winter, but does not describe the report itself as a superseded approach.",
+          "sources": [
+            {
+              "title": "Lighthill report",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Lighthill_report",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Lighthill%20report&oldid=1359900597",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "9faeeb3c"
+    },
+    {
+      "ordinal": 33,
+      "id": "mycin",
+      "title": "MYCIN",
+      "year": 1974,
+      "laneId": "symbolic",
+      "classificationCode": "x",
+      "description": "Rule-based infection diagnosis that rivaled experts — and was never deployed (liability, integration, trust). The expert-system template and its fate in one system.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "not_assessed",
+        "trajectory": "ambiguous_ended_or_superseded",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "Mycin",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Mycin",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Mycin&oldid=1323066764",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "The Mycin page explicitly says MYCIN was never used in routine practice and that its approach continued through EMYCIN and later systems; this supports historical nondeployment, not a simple failure claim.",
+          "sources": [
+            {
+              "title": "Mycin",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Mycin",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Mycin&oldid=1323066764",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "6b5fb71c"
+    },
+    {
+      "ordinal": 34,
+      "id": "frames",
+      "title": "Frames (Minsky)",
+      "year": 1974,
+      "laneId": "symbolic",
+      "classificationCode": "f",
+      "description": "Structured slots and defaults for commonsense knowledge. Ancestor of objects, schemas, ontologies — and of every 'context' hack since.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "Frame (artificial intelligence)",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Frame_(artificial_intelligence)",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Frame%20%28artificial%20intelligence%29&oldid=1362282415",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "minsky-frames-1974",
+            "title": "A Framework for Representing Knowledge",
+            "url": "https://web.mit.edu/dxh/www/marvin/web.media.mit.edu/~minsky/papers/Frames/frames.html",
+            "year": 1974,
+            "kind": "report",
+            "access": "author_open",
+            "role": "origin",
+            "authors": [
+              "Marvin Minsky"
+            ],
+            "note": ""
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "f59056c8"
+    },
+    {
+      "ordinal": 35,
+      "id": "ameurisko",
+      "title": "AM & EURISKO",
+      "year": 1976,
+      "laneId": "symbolic",
+      "classificationCode": "d",
+      "description": "Lenat's discovery programs invented concepts, won wargame tournaments — then 'ran out of steam.' Their post-mortem led him to Cyc.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "dormant",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Covers EURISKO and its relationship to AM; the node bundles both systems.",
+          "sources": [
+            {
+              "title": "Eurisko",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Eurisko",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Eurisko&oldid=1320117258",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Dormant” is an editorial assessment; no encyclopedic fate finding is inferred from article or link presence.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "8ac7a24b"
+    },
+    {
+      "ordinal": 36,
+      "id": "blackboard",
+      "title": "Blackboard architectures",
+      "year": 1980,
+      "laneId": "symbolic",
+      "classificationCode": "d",
+      "description": "HEARSAY-II's shared-workspace coordination of specialist modules. Faded — yet echoes in every multi-agent orchestration framework today.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "dormant",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "Blackboard system",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Blackboard_system",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Blackboard%20system&oldid=1355774410",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Dormant” is an editorial assessment; no encyclopedic fate finding is inferred from article or link presence.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "62188f8b"
+    },
+    {
+      "ordinal": 37,
+      "id": "xcon",
+      "title": "XCON at DEC",
+      "year": 1980,
+      "laneId": "symbolic",
+      "classificationCode": "x",
+      "description": "Configured VAX orders with 10,000+ rules, saved ~$40M/yr — then drowned in rule-maintenance. The boom's flagship and its cautionary tale.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "not_assessed",
+        "trajectory": "ambiguous_ended_or_superseded",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "Xcon",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Xcon",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Xcon&oldid=1352356688",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "The page documents XCON's success and related rewrites but does not explicitly say XCON ended or lost its leading role.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "dacc3111"
+    },
+    {
+      "ordinal": 38,
+      "id": "nonmono",
+      "title": "Non-monotonic logic & frame problem",
+      "year": 1980,
+      "laneId": "symbolic",
+      "classificationCode": "d",
+      "description": "Formalizing defeasible commonsense reasoning. Non-monotonic logics provide rigorous tools, while the broader frame problem remains open and many practical systems use learned or domain-specific workarounds.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "dormant",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Directly covers the first bundled topic; the frame problem has a separate article.",
+          "sources": [
+            {
+              "title": "Non-monotonic logic",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Non-monotonic_logic",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Non-monotonic%20logic&oldid=1351956997",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Dormant” is an editorial assessment; no encyclopedic fate finding is inferred from article or link presence.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "e3113820"
+    },
+    {
+      "ordinal": 39,
+      "id": "expertshells",
+      "title": "Expert-systems industry",
+      "year": 1981,
+      "laneId": "symbolic",
+      "classificationCode": "x",
+      "description": "Shells, consultancies, and knowledge engineers turned expert systems into an industry. Lisp-machine workstations helped enable the boom; brittle rules and costly upkeep helped collapse it by 1990.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "not_assessed",
+        "trajectory": "ambiguous_ended_or_superseded",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Best labeled article for the expert-system and shell industry rather than one product.",
+          "sources": [
+            {
+              "title": "Expert system",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Expert_system",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Expert%20system&oldid=1366760871",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "The Expert system page says the standalone expert-system term mostly disappeared and presents both failure and absorption into standard rule-engine tooling as interpretations, so only the standalone industry framing is supported as ended.",
+          "sources": [
+            {
+              "title": "Expert system",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Expert_system",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Expert%20system&oldid=1366760871",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "3a520e15"
+    },
+    {
+      "ordinal": 40,
+      "id": "lispmachines",
+      "title": "Lisp machines",
+      "year": 1980,
+      "laneId": "symbolic",
+      "classificationCode": "x",
+      "description": "A whole hardware industry (Symbolics, LMI) for symbolic AI — wiped out by commodity workstations by 1987. Hardware bet on a software fad.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "not_assessed",
+        "trajectory": "ambiguous_ended_or_superseded",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "Lisp machine",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Lisp_machine",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Lisp%20machine&oldid=1365850900",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "The page records LMI's bankruptcy and the demise of its product effort, but does not explicitly attribute the overall hardware category's end to commodity workstations.",
+          "sources": [
+            {
+              "title": "Lisp machine",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Lisp_machine",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Lisp%20machine&oldid=1365850900",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "13d65b80"
+    },
+    {
+      "ordinal": 41,
+      "id": "fifthgen",
+      "title": "Fifth Generation Project",
+      "year": 1982,
+      "laneId": "symbolic",
+      "classificationCode": "x",
+      "description": "Japan's $850M national bet on massively parallel logic programming. Delivered little; its shadow scared funders worldwide for a decade.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "not_assessed",
+        "trajectory": "ambiguous_ended_or_superseded",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact project article.",
+          "sources": [
+            {
+              "title": "Fifth Generation Computer Systems",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Fifth_Generation_Computer_Systems",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Fifth%20Generation%20Computer%20Systems&oldid=1366337456",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "The Fifth Generation Computer Systems page explicitly says the ten-year project ended in commercial failure and was surpassed by less specialized hardware.",
+          "sources": [
+            {
+              "title": "Fifth Generation Computer Systems",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Fifth_Generation_Computer_Systems",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Fifth%20Generation%20Computer%20Systems&oldid=1366337456",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "1151de28"
+    },
+    {
+      "ordinal": 42,
+      "id": "soar",
+      "title": "SOAR & ACT-R architectures",
+      "year": 1983,
+      "laneId": "symbolic",
+      "classificationCode": "d",
+      "description": "Unified theories of cognition with dedicated labs for decades — marginal to modern AI, but a likely quarry for LLM-agent memory design.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "dormant",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Best common article because the node bundles Soar and ACT-R.",
+          "sources": [
+            {
+              "title": "Cognitive architecture",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Cognitive_architecture",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Cognitive%20architecture&oldid=1347132946",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Dormant” is an editorial assessment; no encyclopedic fate finding is inferred from article or link presence.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "4ff0ff01"
+    },
+    {
+      "ordinal": 43,
+      "id": "cbr",
+      "title": "Case-based reasoning",
+      "year": 1983,
+      "laneId": "symbolic",
+      "classificationCode": "d",
+      "description": "Solve new problems by adapting stored cases. A thriving 90s subfield that faded to niche — conceptually reborn as retrieval-augmented everything.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "dormant",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "Case-based reasoning",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Case-based_reasoning",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Case-based%20reasoning&oldid=1313202726",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Dormant” is an editorial assessment; no encyclopedic fate finding is inferred from article or link presence.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "9a1b5479"
+    },
+    {
+      "ordinal": 44,
+      "id": "cyc",
+      "title": "Cyc — commonsense by hand",
+      "year": 1984,
+      "laneId": "symbolic",
+      "classificationCode": "d",
+      "description": "Lenat's 40-year, million-axiom quest to hand-encode common sense. The grandest knowledge-engineering grind; still no general reasoner emerged.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "dormant",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "Cyc",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Cyc",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Cyc&oldid=1357402731",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Dormant” is an editorial assessment; no encyclopedic fate finding is inferred from article or link presence.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "6ef9ae7e"
+    },
+    {
+      "ordinal": 45,
+      "id": "aiwinter2",
+      "title": "Second AI winter",
+      "year": 1988,
+      "laneId": "symbolic",
+      "classificationCode": "x",
+      "description": "Expert-system market collapse plus Lisp-machine crash. 'AI' became a dirty word; survivors rebranded as 'machine learning.'",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "not_assessed",
+        "trajectory": "ambiguous_ended_or_superseded",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "The article covers both AI winters, including the second.",
+          "sources": [
+            {
+              "title": "AI winter",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/AI_winter",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=AI%20winter&oldid=1367137271",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "The AI winter page dates the second major winter to roughly 1987-2000, documents the associated industry collapse and abandonments, and contrasts it with later renewed interest and the current boom.",
+          "sources": [
+            {
+              "title": "AI winter",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/AI_winter",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=AI%20winter&oldid=1367137271",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "29eafa07"
+    },
+    {
+      "ordinal": 46,
+      "id": "itp",
+      "title": "Interactive theorem provers",
+      "year": 1989,
+      "laneId": "symbolic",
+      "classificationCode": "r",
+      "description": "Coq→Isabelle→Lean: humans and machines formalizing mathematics. A quiet community for 30 years — now the verification substrate for AI mathematicians.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "revived",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Direct article for interactive theorem provers and assistants.",
+          "sources": [
+            {
+              "title": "Proof assistant",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Proof_assistant",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Proof%20assistant&oldid=1365446350",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Revived” is an editorial judgment; no encyclopedic fate finding is inferred from article or link presence.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "43b27ed8"
+    },
+    {
+      "ordinal": 47,
+      "id": "ilp",
+      "title": "Inductive logic programming",
+      "year": 1991,
+      "laneId": "symbolic",
+      "classificationCode": "d",
+      "description": "Learning logic rules from examples. Elegant, interpretable, data-inefficient — sidelined by statistical ML; small revival alongside program synthesis.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "dormant",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "Inductive logic programming",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Inductive_logic_programming",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Inductive%20logic%20programming&oldid=1365605921",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Dormant” is an editorial assessment; no encyclopedic fate finding is inferred from article or link presence.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "2f55f389"
+    },
+    {
+      "ordinal": 48,
+      "id": "dlogic",
+      "title": "Description logics & ontologies",
+      "year": 1991,
+      "laneId": "symbolic",
+      "classificationCode": "d",
+      "description": "Decidable fragments of logic for taxonomies; became OWL. Industrial ontology work persists; the research frontier moved on.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "dormant",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "Description logic",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Description_logic",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Description%20logic&oldid=1325626308",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Dormant” is an editorial assessment; no encyclopedic fate finding is inferred from article or link presence.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "0b62acb1"
+    },
+    {
+      "ordinal": 49,
+      "id": "fuzzy",
+      "title": "Fuzzy logic",
+      "year": 1965,
+      "laneId": "symbolic",
+      "classificationCode": "d",
+      "description": "Zadeh's graded truth. Ran 80s–90s consumer devices (cameras, rice cookers, trains), then drifted out of core AI research entirely.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "dormant",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "Fuzzy logic",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Fuzzy_logic",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Fuzzy%20logic&oldid=1366321071",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Dormant” is an editorial assessment; no encyclopedic fate finding is inferred from article or link presence.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "zadeh-fuzzy-sets-1965",
+            "title": "Fuzzy Sets",
+            "url": "https://people.eecs.berkeley.edu/~pister/publications/FamousPapers/Zadeh65FuzzySets.pdf",
+            "year": 1965,
+            "kind": "paper",
+            "access": "author_open",
+            "role": "origin",
+            "authors": [
+              "Lotfi A. Zadeh"
+            ],
+            "note": ""
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "ada77a91"
+    },
+    {
+      "ordinal": 50,
+      "id": "semweb",
+      "title": "Semantic Web (RDF/OWL)",
+      "year": 2001,
+      "laneId": "symbolic",
+      "classificationCode": "d",
+      "description": "RDF and OWL standardized a machine-readable web of linked facts. The universal Semantic Web vision receded, but the standards persist in knowledge graphs and linked-data systems.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "dormant",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "Semantic Web",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Semantic_Web",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Semantic%20Web&oldid=1365824569",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Dormant” is an editorial assessment; no encyclopedic fate finding is inferred from article or link presence.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "66f67e64"
+    },
+    {
+      "ordinal": 51,
+      "id": "kgraphs",
+      "title": "Knowledge graphs at scale",
+      "year": 2012,
+      "laneId": "symbolic",
+      "classificationCode": "r",
+      "description": "Google KG, Wikidata: semantic networks reborn industrially. Now the structured complement — and grounding source — for LLMs.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "revived",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "Knowledge graph",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Knowledge_graph",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Knowledge%20graph&oldid=1366997604",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Revived” is an editorial judgment; no encyclopedic fate finding is inferred from article or link presence.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "e7efd9e2"
+    },
+    {
+      "ordinal": 52,
+      "id": "neurosymbolic",
+      "title": "Neuro-symbolic AI",
+      "year": 2019,
+      "laneId": "symbolic",
+      "classificationCode": "a",
+      "description": "Marrying networks and symbols: program synthesis, tool use, logic-guided decoding. Perennial hope, real progress, no unified paradigm yet.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "Neuro-symbolic AI",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Neuro-symbolic_AI",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Neuro-symbolic%20AI&oldid=1360565733",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Active” is an editorial assessment of current activity, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "327baf78"
+    },
+    {
+      "ordinal": 53,
+      "id": "gap_neurosym",
+      "title": "Symbolic rigor at LLM scale",
+      "year": 2026,
+      "laneId": "symbolic",
+      "classificationCode": "g",
+      "description": "Research direction: combine broad language-model capabilities with end-to-end formal verification. Current systems demonstrate verified reasoning in bounded mathematics and code settings; broad coverage remains unresolved.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "open_direction",
+        "significance": "not_assessed",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "hypothesis",
+          "confidence": null,
+          "note": "This is a map hypothesis; Wikipedia absence does not establish that the proposed gap is novel.",
+          "sources": []
+        },
+        "mapStatus": {
+          "state": "hypothesis",
+          "confidence": null,
+          "note": "This is explicitly a proposed gap; Wikipedia absence is not evidence that the proposal is novel.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "title": "DeepSeek-Prover-V2: Advancing Formal Mathematical Reasoning via Reinforcement Learning for Subgoal Decomposition",
+            "url": "https://arxiv.org/abs/2504.21801",
+            "year": 2025,
+            "role": "supporting_result",
+            "roleExplicit": true
+          },
+          {
+            "title": "VeriSoftBench: Repository-Scale Formal Verification Benchmarks for Lean",
+            "url": "https://arxiv.org/abs/2602.18307",
+            "year": 2026,
+            "role": "benchmark",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "Can a system retain broad language-model coverage while making its consequential inferences machine-checkable?"
+      ],
+      "direction": {
+        "question": "Can a system retain broad language-model coverage while making its consequential inferences machine-checkable?",
+        "closureCriteria": "On a predeclared suite spanning mathematics, repository-scale software verification, and structured domain rules, report proof coverage, proof-check success, residual unverified claims, abstentions, and capability loss relative to an otherwise matched unconstrained model.",
+        "partialResults": [
+          "DeepSeek-Prover-V2 demonstrates strong formal mathematics performance in Lean 4.",
+          "LeanDojo and ReProver make retrieval-augmented theorem proving reproducible at laboratory scale.",
+          "VeriSoftBench shows that mathematics-specialized provers transfer poorly to dependency-rich software repositories."
+        ],
+        "starters": [
+          "Individual: Build a proof-coverage auditor for a 7B prover on LeanDojo and VeriSoftBench that separates verified conclusions, unsupported premises, failed proofs, and timeouts.",
+          "Small lab: Train and evaluate one prover across mathematics and repository-scale software, explicitly measuring transfer loss and dependency-retrieval failures.",
+          "Well-funded lab: Develop a proof-carrying general assistant whose high-consequence outputs compile into multiple formal backends, with calibrated abstention when formalization is incomplete."
+        ],
+        "claimState": "editorial_hypothesis",
+        "asOf": "2026-08-04",
+        "confidence": "high",
+        "noveltyReview": {
+          "status": "targeted_search",
+          "checkedAt": "2026-08-04",
+          "scope": "arXiv and official repositories for neural theorem proving, Lean, proof-carrying generation, repository-scale software verification, and neuro-symbolic reasoning.",
+          "note": "Formal mathematics is a strong and crowded subfield, but broad cross-domain machine-checkable inference remains incomplete; no priority claim is made."
+        },
+        "counterexamples": [
+          "DeepSeek-Prover-V2-671B reports 88.9 percent on MiniF2F and solves 49 of 658 PutnamBench problems.",
+          "LeanDojo and ReProver provide open data, tooling, retrieval, and a 98,734-theorem benchmark.",
+          "FormalMATH, Leanabell-Prover-V2, and Lean Copilot provide additional narrow formal-reasoning systems."
+        ],
+        "literature": [
+          {
+            "t": "DeepSeek-Prover-V2: Advancing Formal Mathematical Reasoning via Reinforcement Learning for Subgoal Decomposition",
+            "u": "https://arxiv.org/abs/2504.21801",
+            "y": 2025,
+            "role": "supporting_result"
+          },
+          {
+            "t": "VeriSoftBench: Repository-Scale Formal Verification Benchmarks for Lean",
+            "u": "https://arxiv.org/abs/2602.18307",
+            "y": 2026,
+            "role": "benchmark"
+          }
+        ],
+        "resources": {
+          "benchmarks": [
+            "MiniF2F",
+            "PutnamBench",
+            "ProverBench",
+            "FormalMATH",
+            "ProofNet",
+            "TheoremBench",
+            "LeanDojo benchmark",
+            "VeriSoftBench"
+          ],
+          "code": [
+            "https://github.com/deepseek-ai/DeepSeek-Prover-V2",
+            "https://github.com/lean-dojo/LeanDojo",
+            "https://github.com/lean-dojo/ReProver",
+            "https://github.com/utopia-group/VeriSoftBench",
+            "https://github.com/leanprover-community/mathlib4"
+          ],
+          "datasets": [
+            "LeanDojo theorem and premise annotations",
+            "VeriSoftBench repository-context obligations",
+            "FormalMATH and mathlib4"
+          ],
+          "estimated": {
+            "individual": "1 x 24-48 GB GPU plus Lean for inference and auditing",
+            "smallLab": "8 x 80 GB GPUs for verifier training over several weeks",
+            "wellFundedLab": "64-256 accelerators for large proof search and cross-domain training"
+          }
+        },
+        "crowdedness": "High in formal mathematics and medium in cross-domain verification.",
+        "tractability": "High for benchmark and tooling work; low for broad end-to-end verification."
+      },
+      "claimFingerprint": "e14b8ff1"
+    },
+    {
+      "ordinal": 334,
+      "id": "neuralprog",
+      "title": "Neural-guided program synthesis",
+      "year": 2016,
+      "laneId": "symbolic",
+      "classificationCode": "a",
+      "description": "DeepCoder and DreamCoder use learned guidance, search and reusable abstractions to synthesize programs from examples. The lineage links symbolic search to modern code generation.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        },
+        "mapStatus": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": false,
+        "mapStatus": false
+      },
+      "research": {
+        "tier": "specialist",
+        "tags": [
+          "symbolic AI",
+          "program synthesis",
+          "search"
+        ],
+        "questions": [
+          "Can learned guidance accelerate synthesis while preserving executable correctness, abstraction and compositional generalization?"
+        ],
+        "sources": [
+          {
+            "title": "DeepCoder: Learning to Write Programs",
+            "url": "https://arxiv.org/abs/1611.01989",
+            "year": 2016,
+            "role": "supporting_result",
+            "roleExplicit": true
+          },
+          {
+            "title": "DreamCoder",
+            "url": "https://arxiv.org/abs/2006.08381",
+            "year": 2020,
+            "role": "supporting_result",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "Can learned guidance accelerate synthesis while preserving executable correctness, abstraction and compositional generalization?"
+      ],
+      "direction": null,
+      "claimFingerprint": "523b032c"
+    }
+  ]
+}

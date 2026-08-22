@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://neb6dav.github.io/ai_tech_tree/src/data/opportunities/opportunity-map.schema.json",
+  "$id": "https://neb6dav.github.io/ai_tech_tree/data/opportunities/opportunity-map.schema.json",
   "title": "AI Research Tech Tree Opportunity Map",
   "description": "Evidence-aware, time-oriented capability, application, constraint, and opportunity data for one atlas anchor.",
   "type": "object",

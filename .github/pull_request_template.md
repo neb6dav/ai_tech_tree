@@ -1,6 +1,6 @@
 ## Summary
 
-Explain the smallest complete change and why it improves the public-beta atlas.
+Explain the smallest complete change and why it improves the atlas without weakening the frozen v1 public contract.
 
 ## Change type
 
@@ -31,7 +31,7 @@ For relationships, also state source → target direction, relationship meaning,
 ## Generated artifacts
 
 - [ ] I changed maintained source rather than hand-editing generated output.
-- [ ] I ran the build and committed its generated changes to `index.html`, `network-atlas.bundle.js`, `network-layout-v1.json`, and/or the graph sidecars as applicable.
+- [ ] I ran the build and committed its generated changes to `index.html`, `network-atlas.bundle.js`, `opportunity-atlas.bundle.js`, `network-layout-v1.json`, and/or the graph sidecars as applicable.
 - [ ] I inspected the generated diff for unrelated changes.
 
 ## Validation
@@ -41,7 +41,7 @@ For relationships, also state source → target direction, relationship meaning,
 - [ ] `npm test`
 - [ ] `git diff --exit-code` after committing generated artifacts
 - [ ] I tested relevant behavior in light and dark themes.
-- [ ] I tested relevant behavior in Timeline, Network, and List views, or explained why a view is unaffected.
+- [ ] I tested relevant behavior in Timeline, Network, Opportunity, and List views, or explained why a view is unaffected.
 - [ ] I checked keyboard and reduced-motion behavior when the interface changed.
 
 ## Material AI assistance

@@ -17,8 +17,10 @@ concurrency:
 jobs:
   build-and-test:
     name: Build, test, and verify generated files
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
+    env:
+      AI_TREE_REQUIRE_CLEAN: "true"
 
     steps:
       - name: Check out repository
@@ -35,10 +37,13 @@ jobs:
       - name: Install exact dependencies
         run: npm ci
 
+      - name: Install Chromium for the browser gate
+        run: npx playwright install --with-deps chromium
+
       - name: Build generated artifacts
         run: npm run build
 
-      - name: Run validation gates
+      - name: Run validation and staged-site contract gates
         run: npm test
 
       - name: Verify generated artifacts are committed
@@ -50,3 +55,13 @@ jobs:
             git status --short
             exit 1
           fi
+
+      - name: Upload staged-site preview
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-preview-${{ github.sha }}
+          path: _site
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 14

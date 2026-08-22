@@ -1,0 +1,1283 @@
+{
+  "schemaVersion": "1.0.0",
+  "laneId": "alt",
+  "nodes": [
+    {
+      "ordinal": 222,
+      "id": "cellauto",
+      "title": "Self-reproducing automata",
+      "year": 1951,
+      "laneId": "alt",
+      "classificationCode": "f",
+      "description": "Von Neumann's cellular automata: machines that copy themselves. The origin of artificial life and complexity science.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Direct article for von Neumann's self-reproducing cellular automaton.",
+          "sources": [
+            {
+              "title": "Von Neumann universal constructor",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Von_Neumann_universal_constructor",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Von%20Neumann%20universal%20constructor&oldid=1364596106",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "vonneumann-automata-1951",
+            "title": "The General and Logical Theory of Automata",
+            "url": "https://www.dna.caltech.edu/courses/cs191/paperscs191/vonneumann1951.pdf",
+            "year": 1951,
+            "kind": "paper",
+            "access": "free_to_read",
+            "role": "origin",
+            "authors": [
+              "John von Neumann"
+            ],
+            "note": "Academic reading copy; rights are retained."
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "a37d372b"
+    },
+    {
+      "ordinal": 223,
+      "id": "evolstrat",
+      "title": "Evolution strategies",
+      "year": 1965,
+      "laneId": "alt",
+      "classificationCode": "f",
+      "description": "Rechenberg & Schwefel: mutate, select, repeat — optimization borrowed from biology, born in wind-tunnel engineering.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact development article.",
+          "sources": [
+            {
+              "title": "Evolution strategy",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Evolution_strategy",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Evolution%20strategy&oldid=1365944628",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "5e60a0b7"
+    },
+    {
+      "ordinal": 224,
+      "id": "ga",
+      "title": "Genetic algorithms",
+      "year": 1975,
+      "laneId": "alt",
+      "classificationCode": "f",
+      "description": "Holland's crossover + fitness + schema theorem. The adaptationist program in computing; parent of a whole evolutionary lane.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact development article.",
+          "sources": [
+            {
+              "title": "Genetic algorithm",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Genetic_algorithm",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Genetic%20algorithm&oldid=1363289705",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "b98d64aa"
+    },
+    {
+      "ordinal": 225,
+      "id": "alife",
+      "title": "Artificial life",
+      "year": 1987,
+      "laneId": "alt",
+      "classificationCode": "d",
+      "description": "Tierra, Avida: digital ecologies of self-replicators. The open-ended-evolution question remains open — the lane's unfinished business.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "dormant",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact development article.",
+          "sources": [
+            {
+              "title": "Artificial life",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Artificial_life",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Artificial%20life&oldid=1367099923",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Dormant” is an editorial assessment; no encyclopedic fate finding is inferred from article or link presence.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "be191bd9"
+    },
+    {
+      "ordinal": 226,
+      "id": "gp92",
+      "title": "Genetic programming",
+      "year": 1992,
+      "laneId": "alt",
+      "classificationCode": "d",
+      "description": "Koza: evolve the programs themselves. Produced patentable circuits, then was eclipsed by gradient methods — reborn as LLM-guided evolution.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "dormant",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact development article.",
+          "sources": [
+            {
+              "title": "Genetic programming",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Genetic_programming",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Genetic%20programming&oldid=1363159276",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Dormant” is an editorial assessment; no encyclopedic fate finding is inferred from article or link presence.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "1f96753a"
+    },
+    {
+      "ordinal": 227,
+      "id": "swarm",
+      "title": "Swarm intelligence (ACO, PSO)",
+      "year": 1995,
+      "laneId": "alt",
+      "classificationCode": "d",
+      "description": "Bio-inspired ant, particle and flocking methods became established optimization techniques with selected operational and robotics applications; integration with foundation-model robotics remains early.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "dormant",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Direct umbrella article covering the ACO/PSO family named by the node.",
+          "sources": [
+            {
+              "title": "Swarm intelligence",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Swarm_intelligence",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Swarm%20intelligence&oldid=1365857861",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Dormant” is an editorial assessment; no encyclopedic fate finding is inferred from article or link presence.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "5248f290"
+    },
+    {
+      "ordinal": 228,
+      "id": "neat",
+      "title": "Neuroevolution (NEAT)",
+      "year": 2002,
+      "laneId": "alt",
+      "classificationCode": "d",
+      "description": "Evolving network topologies. Charming results, outscaled by gradient descent — brief ES-for-RL revival in 2017, then quiet again.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "dormant",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact NEAT article; more specific than the generic neuroevolution search match.",
+          "sources": [
+            {
+              "title": "Neuroevolution of augmenting topologies",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Neuroevolution_of_augmenting_topologies",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Neuroevolution%20of%20augmenting%20topologies&oldid=1357298452",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Dormant” is an editorial assessment; no encyclopedic fate finding is inferred from article or link presence.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "cc8a6a6f"
+    },
+    {
+      "ordinal": 229,
+      "id": "spiking",
+      "title": "Spiking neural networks",
+      "year": 1997,
+      "laneId": "alt",
+      "classificationCode": "d",
+      "description": "Event-driven, biologically-timed neurons — the 'third generation' that never found its killer app. Persistent hope of the neuromorphic program.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "dormant",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact development article.",
+          "sources": [
+            {
+              "title": "Spiking neural network",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Spiking_neural_network",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Spiking%20neural%20network&oldid=1367641247",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Dormant” is an editorial assessment; no encyclopedic fate finding is inferred from article or link presence.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "edceab2e"
+    },
+    {
+      "ordinal": 230,
+      "id": "mead",
+      "title": "Analog VLSI neural hardware",
+      "year": 1989,
+      "laneId": "alt",
+      "classificationCode": "f",
+      "description": "Carver Mead's silicon retinas and cochleas. Neuromorphic engineering's founding — physics as computation.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Closest article covering Mead's analog-VLSI neural-hardware program; no dedicated development article was found.",
+          "sources": [
+            {
+              "title": "Neuromorphic computing",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Neuromorphic_computing",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Neuromorphic%20computing&oldid=1365496865",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "eaee37b0"
+    },
+    {
+      "ordinal": 231,
+      "id": "reservoir",
+      "title": "Reservoir computing",
+      "year": 2001,
+      "laneId": "alt",
+      "classificationCode": "d",
+      "description": "Fixed random recurrence + trained readout. A clever shortcut that found its ceiling — revived interest wherever physical substrates compute.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "dormant",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact development article.",
+          "sources": [
+            {
+              "title": "Reservoir computing",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Reservoir_computing",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Reservoir%20computing&oldid=1364212842",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Dormant” is an editorial assessment; no encyclopedic fate finding is inferred from article or link presence.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "0b6e1359"
+    },
+    {
+      "ordinal": 232,
+      "id": "htm",
+      "title": "Hierarchical Temporal Memory",
+      "year": 2004,
+      "laneId": "alt",
+      "classificationCode": "x",
+      "description": "Hawkins' cortical theory as product (Numenta). Two decades of conviction, minimal ML impact — a parallel track that never merged with the mainline.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "not_assessed",
+        "trajectory": "ambiguous_ended_or_superseded",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact development article.",
+          "sources": [
+            {
+              "title": "Hierarchical temporal memory",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Hierarchical_temporal_memory",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Hierarchical%20temporal%20memory&oldid=1358202218",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "The Hierarchical temporal memory page says HTM is primarily used today for streaming anomaly detection and describes ongoing development, contradicting an unqualified ended label.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "bbc15aab"
+    },
+    {
+      "ordinal": 233,
+      "id": "dna",
+      "title": "DNA computing",
+      "year": 1994,
+      "laneId": "alt",
+      "classificationCode": "d",
+      "description": "Adleman demonstrated combinatorial computation in DNA. General-purpose molecular computing remains niche, while adjacent DNA data-storage and biosensing research continues.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "dormant",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact development article.",
+          "sources": [
+            {
+              "title": "DNA computing",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/DNA_computing",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=DNA%20computing&oldid=1361283617",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Dormant” is an editorial assessment; no encyclopedic fate finding is inferred from article or link presence.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "2cfa45c3"
+    },
+    {
+      "ordinal": 234,
+      "id": "neuromorphic",
+      "title": "Neuromorphic chips (Loihi)",
+      "year": 2014,
+      "laneId": "alt",
+      "classificationCode": "d",
+      "description": "TrueNorth, Loihi, SpiNNaker: silicon spikes at microwatts. Research platforms in search of a market for a decade and counting.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "dormant",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Direct field article covering Loihi and related chips.",
+          "sources": [
+            {
+              "title": "Neuromorphic computing",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Neuromorphic_computing",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Neuromorphic%20computing&oldid=1365496865",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Dormant” is an editorial assessment; no encyclopedic fate finding is inferred from article or link presence.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "6019c548"
+    },
+    {
+      "ordinal": 235,
+      "id": "quantumml",
+      "title": "Quantum machine learning",
+      "year": 2014,
+      "laneId": "alt",
+      "classificationCode": "d",
+      "description": "HHL and variational circuits promised speedups; barren plateaus and dequantization deflated them. No practical ML advantage demonstrated yet.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "dormant",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact development article.",
+          "sources": [
+            {
+              "title": "Quantum machine learning",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Quantum_machine_learning",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Quantum%20machine%20learning&oldid=1364831630",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Dormant” is an editorial assessment; no encyclopedic fate finding is inferred from article or link presence.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "66277fde"
+    },
+    {
+      "ordinal": 236,
+      "id": "optical",
+      "title": "Optical neural networks",
+      "year": 2017,
+      "laneId": "alt",
+      "classificationCode": "a",
+      "description": "Optical systems perform neural-network operations using light. Photonic interconnects are nearer-term, while optical compute remains an active research program with continuing 2020s demonstrations.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact development article.",
+          "sources": [
+            {
+              "title": "Optical neural network",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Optical_neural_network",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Optical%20neural%20network&oldid=1367240845",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Active” is an editorial assessment of current activity, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "b592f187"
+    },
+    {
+      "ordinal": 237,
+      "id": "analogai",
+      "title": "Analog in-memory computing",
+      "year": 2020,
+      "laneId": "alt",
+      "classificationCode": "a",
+      "description": "Compute inside memory cells to escape the von Neumann bottleneck. Real inference chips exist; training precision remains the wall.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Closest broad article for analog compute-in-memory AI; the automatic ANALOG Computing match was the unrelated magazine.",
+          "sources": [
+            {
+              "title": "Hardware for artificial intelligence",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Hardware_for_artificial_intelligence",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Hardware%20for%20artificial%20intelligence&oldid=1367620458",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Active” is an editorial assessment of current activity, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "c4cf0d79"
+    },
+    {
+      "ordinal": 238,
+      "id": "alphaevolve",
+      "title": "LLM-guided evolution (AlphaEvolve)",
+      "year": 2025,
+      "laneId": "alt",
+      "classificationCode": "h",
+      "description": "Evolutionary search with LLM mutation operators: new matrix-multiplication records, kernel speedups, open math results. Genetic programming's revenge.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "high_activity",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact system article found by a targeted title search.",
+          "sources": [
+            {
+              "title": "AlphaEvolve",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/AlphaEvolve",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=AlphaEvolve&oldid=1352784648",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Hot frontier” is a time-sensitive editorial assessment, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "a647b5c7"
+    },
+    {
+      "ordinal": 239,
+      "id": "gap_biolearn",
+      "title": "Learning without backprop",
+      "year": 2026,
+      "laneId": "alt",
+      "classificationCode": "g",
+      "description": "Research direction: test whether local or biologically plausible learning rules can approach backpropagation at useful scale and map efficiently to neuromorphic or analog hardware.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "open_direction",
+        "significance": "not_assessed",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "hypothesis",
+          "confidence": null,
+          "note": "This is a map hypothesis; Wikipedia absence does not establish that the proposed gap is novel.",
+          "sources": []
+        },
+        "mapStatus": {
+          "state": "hypothesis",
+          "confidence": null,
+          "note": "This is explicitly a proposed gap; Wikipedia absence is not evidence that the proposal is novel.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "title": "The Forward-Forward Algorithm: Some Preliminary Investigations",
+            "url": "https://arxiv.org/abs/2212.13345",
+            "year": 2022,
+            "role": "supporting_result",
+            "roleExplicit": true
+          },
+          {
+            "title": "Can Local Learning Match Self-Supervised Backpropagation?",
+            "url": "https://arxiv.org/abs/2601.21683",
+            "year": 2026,
+            "role": "supporting_result",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "Can local learning approach backpropagation at useful scale while delivering a measured hardware, memory, communication, or energy advantage?"
+      ],
+      "direction": {
+        "question": "Can local learning approach backpropagation at useful scale while delivering a measured hardware, memory, communication, or energy advantage?",
+        "closureCriteria": "On a useful-scale task and matched architecture, a local rule closes most of the accuracy and robustness gap to backpropagation while demonstrating reproducible end-to-end energy, memory, communication, or latency gains that include host and data-movement overhead.",
+        "partialResults": [
+          "Forward-Forward replaces forward and backward passes with positive and negative forward passes but was introduced on small problems.",
+          "CLAPP-like local self-supervised learning matches comparable global objectives on CIFAR-10, STL-10, and Tiny ImageNet.",
+          "Predictive coding can approximate backpropagation on arbitrary computation graphs in theory and small implementations."
+        ],
+        "starters": [
+          "Individual: Compare backpropagation, CLAPP, predictive coding, and Forward-Forward on identical Tiny ImageNet networks while measuring stored activations, communication, memory, and accuracy.",
+          "Small lab: Scale the strongest local self-supervised rule to ImageNet-100 or ImageNet-1k with matched ResNet or ViT baselines and NeuroBench-style operation metrics.",
+          "Well-funded lab: Implement the same local rule on neuromorphic or analog hardware and publish wall-plug energy, latency, robustness, and host-overhead comparisons against a conventional backpropagation system."
+        ],
+        "claimState": "editorial_hypothesis",
+        "asOf": "2026-08-04",
+        "confidence": "high",
+        "noveltyReview": {
+          "status": "targeted_search",
+          "checkedAt": "2026-08-04",
+          "scope": "arXiv and official repositories for Forward-Forward, predictive coding, local self-supervised learning, neuromorphic learning, and hardware-energy measurement.",
+          "note": "Partial algorithmic and hardware results exist, but the search did not find a useful-scale system showing both backpropagation-level performance and end-to-end systems advantage."
+        },
+        "counterexamples": [
+          "Local CLAPP variants match comparable global self-supervised objectives on several small vision datasets.",
+          "Predictive-coding updates can approximate automatic differentiation on arbitrary computation graphs.",
+          "Neuromorphic systems show task-specific energy advantages, although often without matched learning rules and end-to-end accounting."
+        ],
+        "literature": [
+          {
+            "t": "The Forward-Forward Algorithm: Some Preliminary Investigations",
+            "u": "https://arxiv.org/abs/2212.13345",
+            "y": 2022,
+            "role": "supporting_result"
+          },
+          {
+            "t": "Can Local Learning Match Self-Supervised Backpropagation?",
+            "u": "https://arxiv.org/abs/2601.21683",
+            "y": 2026,
+            "role": "supporting_result"
+          }
+        ],
+        "resources": {
+          "benchmarks": [
+            "CIFAR-10",
+            "STL-10",
+            "Tiny ImageNet",
+            "ImageNet-1k",
+            "NeuroBench",
+            "DVS Gesture",
+            "SHD or SSC",
+            "Google Speech Commands"
+          ],
+          "code": [
+            "https://github.com/NeuroBench/neurobench",
+            "https://github.com/liukidar/pcx",
+            "https://github.com/mpezeshki/pytorch_forward_forward",
+            "https://github.com/jeshraghian/snntorch",
+            "https://github.com/lava-nc/lava"
+          ],
+          "datasets": [
+            "CIFAR-10, STL-10, Tiny ImageNet, and ImageNet-1k",
+            "DVS Gesture",
+            "Spiking Heidelberg Digits and Spiking Speech Commands",
+            "Google Speech Commands"
+          ],
+          "estimated": {
+            "individual": "1 x 24 GB GPU for 2-5 days",
+            "smallLab": "4-8 GPUs plus neuromorphic or FPGA access for 2-4 weeks",
+            "wellFundedLab": "32-64 GPUs plus production neuromorphic or analog hardware and calibrated measurement over several months"
+          }
+        },
+        "crowdedness": "Medium across local learning, predictive coding, and neuromorphic computing.",
+        "tractability": "High for small-scale algorithmic work and low for credible useful-scale systems claims."
+      },
+      "claimFingerprint": "4ce852f0"
+    },
+    {
+      "ordinal": 240,
+      "id": "gap_quant",
+      "title": "Quantum advantage for learning",
+      "year": 2026,
+      "laneId": "alt",
+      "classificationCode": "g",
+      "description": "Research direction: establish a practically relevant, independently replicated quantum-learning advantage with classical data or explicitly costed quantum-data access. Provable advantages exist under specified access models; practical end-to-end advantage under full resource accounting remains unresolved.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "open_direction",
+        "significance": "not_assessed",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "hypothesis",
+          "confidence": null,
+          "note": "This is a map hypothesis; Wikipedia absence does not establish that the proposed gap is novel.",
+          "sources": []
+        },
+        "mapStatus": {
+          "state": "hypothesis",
+          "confidence": null,
+          "note": "This is explicitly a proposed gap; Wikipedia absence is not evidence that the proposal is novel.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "title": "Quantum advantage in learning from experiments",
+            "url": "https://arxiv.org/abs/2112.00778",
+            "year": 2021,
+            "role": "supporting_result",
+            "roleExplicit": true
+          },
+          {
+            "title": "Better than classical? The subtle art of benchmarking quantum machine learning models",
+            "url": "https://arxiv.org/abs/2403.07059",
+            "year": 2024,
+            "role": "benchmark",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "Can an end-to-end learning workload show a reproducible quantum advantage over the strongest classical alternative after state preparation, data acquisition, error mitigation, wall-clock time, and energy are all counted?"
+      ],
+      "direction": {
+        "question": "Can an end-to-end learning workload show a reproducible quantum advantage over the strongest classical alternative after state preparation, data acquisition, error mitigation, wall-clock time, and energy are all counted?",
+        "closureCriteria": "Pre-register the access model, task distribution, hardware, classical comparison budget, and success threshold; include state-preparation, shots, calibration, error mitigation, queue and wall-clock costs; red-team the classical baseline; demonstrate scaling beyond feasible classical replication; and reproduce on independent hardware.",
+        "partialResults": [
+          "Provable and experimental learning advantages already exist for carefully specified quantum-data access models, including learning from experiments. Broad empirical benchmarking still finds that ordinary classical models usually outperform tested quantum models on classical-data tasks. The defensible open question is practical end-to-end advantage under full resource accounting, not whether any quantum learning advantage has ever been proved."
+        ],
+        "starters": [
+          "Individual: Reproduce selected qml-benchmarks with stronger classical hyperparameter search, identical data splits, and full training and inference timing; publish null results and sensitivity analyses.",
+          "Small lab: Implement one learning-from-experiments task on cloud quantum hardware, pre-register the best classical red team, and account for shots, calibration, state preparation, mitigation, transfer, queue, and wall-clock costs.",
+          "Well-funded lab: Run the same 30-50-qubit coherent-data learning experiment on two independent hardware stacks, with a separate classical-HPC team and audited time, energy, acquisition, and uncertainty accounting."
+        ],
+        "claimState": "editorial_hypothesis",
+        "asOf": "2026-08-04",
+        "confidence": "high",
+        "noveltyReview": {
+          "status": "targeted_search",
+          "checkedAt": "2026-08-04",
+          "scope": "Targeted arXiv searches for provable quantum learning advantage, learning from experiments, practical QML advantage, QML benchmarking, noisy-qubit separations, data-loading and state-preparation costs, plus reference chaining from the two representative papers.",
+          "note": "High confidence that the practical, fully accounted and independently replicated gap remains open. Existing theory proves advantages under specified access models, so this card makes no blanket no-advantage claim. The review makes no general quantum-supremacy or priority claim."
+        },
+        "counterexamples": [
+          "Quantum Advantage in Learning from Experiments proves exponential sample advantages under specified quantum-data access and demonstrates experiments up to 40 superconducting qubits and roughly 1,300 gates; those assumptions do not automatically establish a practical advantage for ordinary classical data.",
+          "The qml-benchmarks study evaluates 12 quantum models across 160 datasets grouped into 10 benchmarks and generally finds tuned classical models stronger; simulations were limited to modest qubit counts.",
+          "Recent analyses report plausible noisy-qubit separations at tens of qubits, but they are not yet an independently replicated end-to-end hardware advantage with full acquisition and runtime accounting."
+        ],
+        "literature": [
+          {
+            "t": "Quantum advantage in learning from experiments",
+            "u": "https://arxiv.org/abs/2112.00778",
+            "y": 2021,
+            "role": "supporting_result"
+          },
+          {
+            "t": "Better than classical? The subtle art of benchmarking quantum machine learning models",
+            "u": "https://arxiv.org/abs/2403.07059",
+            "y": 2024,
+            "role": "benchmark"
+          }
+        ],
+        "resources": {
+          "benchmarks": [
+            "Xanadu qml-benchmarks",
+            "ReCirq learning-from-experiments tasks",
+            "A preregistered application benchmark with an independently tuned classical red team"
+          ],
+          "code": [
+            "https://github.com/XanaduAI/qml-benchmarks",
+            "https://github.com/quantumlib/ReCirq/tree/master/recirq/qml_lfe",
+            "https://github.com/PennyLaneAI/pennylane",
+            "https://github.com/qiskit-community/qiskit-machine-learning"
+          ],
+          "datasets": [
+            "PennyLane QML benchmark datasets",
+            "Versioned ReCirq state and dynamics experiment records",
+            "Raw shots, calibration snapshots, mitigation settings, and matched classical feature data"
+          ],
+          "estimated": {
+            "individual": "CPU/GPU simulation up to roughly 18-24 qubits, depending on circuit and memory, plus classical tuning compute.",
+            "smallLab": "Cloud-QPU allocation, HPC simulation, and a separate classical-baseline team.",
+            "wellFundedLab": "Reliable access to two 30-50-qubit hardware platforms, low-level experimental support, substantial HPC, and independent replication."
+          }
+        },
+        "crowdedness": "Medium-high; QML is crowded, while transparent end-to-end cost accounting and adversarial classical baselines remain less common.",
+        "tractability": "High for rigorous small-scale benchmarking and valuable negative results; very low for a scalable practical-advantage closure result."
+      },
+      "claimFingerprint": "0c00c4d1"
+    },
+    {
+      "ordinal": 333,
+      "id": "mapelites",
+      "title": "Quality-diversity search (MAP-Elites)",
+      "year": 2015,
+      "laneId": "alt",
+      "classificationCode": "a",
+      "description": "Instead of one optimum, MAP-Elites builds an archive of diverse high-performing solutions across behavioral niches. The archive idea feeds evolutionary design and open-ended exploration.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        },
+        "mapStatus": {
+          "state": "not_assessed",
+          "confidence": null,
+          "note": "",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": false,
+        "mapStatus": false
+      },
+      "research": {
+        "tier": "specialist",
+        "tags": [
+          "evolution",
+          "search",
+          "open-endedness"
+        ],
+        "questions": [
+          "How should behavior descriptors and archives scale when useful novelty cannot be specified in advance?"
+        ],
+        "sources": [
+          {
+            "title": "Illuminating search spaces by mapping elites",
+            "url": "https://arxiv.org/abs/1504.04909",
+            "year": 2015,
+            "role": "origin",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "How should behavior descriptors and archives scale when useful novelty cannot be specified in advance?"
+      ],
+      "direction": null,
+      "claimFingerprint": "ee654533"
+    }
+  ]
+}

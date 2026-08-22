@@ -24,6 +24,8 @@ const FILES = {
   opportunityData: path.join('src', 'data', 'opportunities', 'diffusion-models.alpha.json'),
   opportunityBundle: 'opportunity-atlas.bundle.js',
   generator: 'generate-knowledge-graph.js',
+  canonicalLoader: 'canonical-atlas.js',
+  canonicalData: path.join('src', 'data', 'atlas'),
   layoutGenerator: 'generate-network-layout.js',
   build: 'build.js'
 };
@@ -219,10 +221,14 @@ function assertStableIdentifiers(data) {
   const base = data.namespace.datasetIri;
   assert.match(base, /^urn:uuid:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i);
   assert.equal(data.dataset.identifier, base);
+  assert.equal(data.dataset.humanUrl, './');
   assert.equal(data.namespace.vocabularyIri, `${base}#vocab-`);
   data.lanes.forEach(record => assert.equal(record.iri, stableIri(base, 'lane', record.id)));
   Object.values(data.classifications).forEach(record => assert.equal(record.iri, stableIri(base, 'classification', record.code)));
-  data.nodes.forEach(record => assert.equal(record.iri, stableIri(base, 'node', record.id)));
+  data.nodes.forEach(record => {
+    assert.equal(record.iri, stableIri(base, 'node', record.id));
+    assert.equal(record.humanUrl, `./#node=${encodeURIComponent(record.id)}`);
+  });
   data.relationships.forEach(record => assert.equal(record.iri, stableIri(base, 'relationship', record.id)));
   data.evidenceAssessments.forEach(record => assert.equal(record.iri, stableIri(base, 'assessment', record.id)));
   data.papers.forEach(record => assert.equal(record.iri, stableIri(base, 'paper-arxiv', record.id)));
@@ -325,6 +331,13 @@ function assertGraphParity(data, document) {
     ...data.nodes.map(record => record.iri)
   ];
   assert.deepEqual(definedTerms, expectedTerms);
+  assert.equal(document['schema:url']['@id'], data.dataset.canonicalUrl);
+
+  for (const node of data.nodes) {
+    const entity = byId.get(node.iri);
+    assert.equal(entity['schema:identifier'], node.id);
+    assert.equal(entity['schema:url']['@id'], node.humanUrl);
+  }
 
   for (const work of data.landmarkWorks) {
     const entity = byId.get(work.iri);
@@ -474,10 +487,20 @@ function assertHtmlIntegration(html, jsonldBytes, data, layoutBytes, bundleBytes
     assert(linkTags.some(tag => /\brel=["']alternate["']/i.test(tag) && tag.includes(`type="${type}"`) && tag.includes(`href="${href}"`)), `Missing alternate ${href}`);
   }
   const linkTags = [...html.matchAll(/<link\b[^>]*>/gi)].map(match => match[0]);
-  const opportunityHref = './src/data/opportunities/diffusion-models.alpha.json';
-  assert(linkTags.some(tag => /\brel=["']alternate["']/i.test(tag) && tag.includes('type="application/json"') && tag.includes(`href="${opportunityHref}"`)), `Missing alternate ${opportunityHref}`);
-  const noScript = html.match(/<noscript>([\s\S]*?)<\/noscript>/i)?.[1];
-  assert(noScript, 'Missing no-JavaScript fallback');
+  const opportunityHref = './data/opportunities/diffusion-models.alpha.json';
+  const opportunityAlternates = linkTags.filter(tag => (
+    /\brel=["']alternate["']/i.test(tag) &&
+    tag.includes('type="application/json"') &&
+    tag.includes(`href="${opportunityHref}"`)
+  ));
+  assert.equal(opportunityAlternates.length, 1, `Expected exactly one alternate ${opportunityHref}`);
+  assert(
+    !linkTags.some(tag => tag.includes('href="./src/data/opportunities/diffusion-models.alpha.json"')),
+    'Legacy Opportunity data URL must not be advertised as a discovery alternate.'
+  );
+  const noScriptBlocks = [...html.matchAll(/<noscript>([\s\S]*?)<\/noscript>/gi)].map(match => match[1]);
+  assert(noScriptBlocks.length, 'Missing no-JavaScript fallback');
+  const noScript = noScriptBlocks.join('\n');
   const staticBody = noScript.match(/<tbody>([\s\S]*?)<\/tbody>/i)?.[1];
   assert(staticBody, 'Missing static index table');
   assert.equal((staticBody.match(/<tr\b/gi) || []).length, 339);
@@ -502,6 +525,9 @@ function deterministicRegeneration(current) {
     assert(tempDir.startsWith(path.resolve(os.tmpdir()) + path.sep));
     fs.copyFileSync(path.join(ROOT, FILES.html), path.join(tempDir, FILES.html));
     fs.copyFileSync(path.join(ROOT, FILES.generator), path.join(tempDir, FILES.generator));
+    fs.copyFileSync(path.join(ROOT, FILES.canonicalLoader), path.join(tempDir, FILES.canonicalLoader));
+    fs.mkdirSync(path.join(tempDir, 'src', 'data'), { recursive: true });
+    fs.cpSync(path.join(ROOT, FILES.canonicalData), path.join(tempDir, FILES.canonicalData), { recursive: true });
     execFileSync(process.execPath, [path.join(tempDir, FILES.generator)], {
       cwd: tempDir,
       encoding: 'utf8',
@@ -573,9 +599,9 @@ function main() {
   assert.equal(document['tree:dataDigest'], data.dataset.dataDigest);
   assert.equal(document['@id'], data.namespace.datasetIri);
   assert.equal(data.schemaVersion, 2);
-  assert.equal(data.generatorVersion, '1.3.0');
-  assert.equal(data.dataset.edition, '2026-08-13-public-beta-1');
-  assert.equal(data.dataset.releaseState, 'Public beta');
+  assert.equal(data.generatorVersion, '1.3.1');
+  assert.equal(data.dataset.edition, '2026-08-21-stable-1');
+  assert.equal(data.dataset.releaseState, 'Stable');
   assert.equal(data.dataset.asOf, '2026-08-04');
   assert.equal(data.dataset.canonicalUrl, 'https://neb6dav.github.io/ai_tech_tree/');
   assert.deepEqual(data.dataset.authors, ['@neb6dav']);

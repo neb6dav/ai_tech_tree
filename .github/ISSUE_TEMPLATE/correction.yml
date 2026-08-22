@@ -39,9 +39,9 @@ body:
   - type: input
     id: edition
     attributes:
-      label: Edition, version, or page URL
-      description: Include the tagged version or shared URL, including its node parameter when available.
-      placeholder: v0.1.0 or https://…?view=timeline&node=…
+      label: Edition, version, exact commit, or page URL
+      description: Include v1.0.0, edition 2026-08-21-stable-1, an exact commit, or a shared URL with its node parameter when available.
+      placeholder: v1.0.0 / 2026-08-21-stable-1, an exact commit, or https://…?view=timeline&node=…
     validations:
       required: true
 

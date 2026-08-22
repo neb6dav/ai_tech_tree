@@ -1,0 +1,188 @@
+{
+  "schemaVersion": 3,
+  "purpose": "Enforce deterministic artifact and active-DOM budgets while measuring a pinned mobile Lighthouse profile for v0.2.2 calibration.",
+  "measurement": {
+    "artifactRoot": "_site",
+    "initialDocument": "index.html",
+    "browserProfile": "lighthouse-mobile-v0.2.2",
+    "browserAggregation": "median",
+    "browserRuns": 3,
+    "calibrationRuns": 5,
+    "canonicalPlatform": "ubuntu-24.04",
+    "lighthouseVersion": "13.4.1",
+    "chromeLauncherVersion": "1.2.1",
+    "playwrightVersion": "1.62.1",
+    "chromiumRevision": "1234",
+    "chromiumVersion": "151.0.7922.34",
+    "scoreScale": "0-100",
+    "byteUnit": "bytes",
+    "timeUnit": "milliseconds"
+  },
+  "regressionGuards": {
+    "enforcement": {
+      "artifactMetrics": "blocking",
+      "browserMetrics": "dom_and_lighthouse_blocking"
+    },
+    "initialDocument": {
+      "rawBytes": {
+        "maximum": 4600000
+      },
+      "gzipBytes": {
+        "maximum": 696320,
+        "displayLimit": "680 KiB"
+      }
+    },
+    "activeDomElements": {
+      "maximum": 8000,
+      "reviewedPeaksByPlatform": {
+        "win32": 7724,
+        "linux": 7728
+      }
+    },
+    "mobileLighthouse": {
+      "status": "blocking",
+      "calibration": {
+        "status": "complete",
+        "requiredRuns": 5,
+        "requiredPlatform": "ubuntu-24.04",
+        "sourcePlatform": "win32",
+        "canonicalConfirmation": "confirmed",
+        "profileSha256": "e1e49f07f8a53fa3adff45cb88d23d5c2cedbb4f1fc73bbda1fca067b4852f3a",
+        "toolchain": {
+          "lighthouseVersion": "13.4.1",
+          "chromeLauncherVersion": "1.2.1",
+          "playwrightVersion": "1.62.1",
+          "chromiumRevision": "1234",
+          "chromiumVersion": "151.0.7922.34",
+          "nodeVersion": "v24.14.1",
+          "platform": "win32",
+          "architecture": "x64"
+        },
+        "baseline": {
+          "initialDocumentSha256": "4dbe98de5a46056bd4f9e049b588a5819cb8736878067e75a2a15a561c36bf12",
+          "runCount": 5,
+          "runs": [
+            {
+              "performanceScore": 53,
+              "firstContentfulPaintMs": 22728.84345,
+              "largestContentfulPaintMs": 22900.34345,
+              "totalBlockingTimeMs": 180,
+              "cumulativeLayoutShift": 0.0008271917289853849,
+              "initialDomElements": 6167,
+              "totalByteWeight": 4516491,
+              "networkRequestCount": 1
+            },
+            {
+              "performanceScore": 53,
+              "firstContentfulPaintMs": 22727.801,
+              "largestContentfulPaintMs": 22875.301,
+              "totalBlockingTimeMs": 166,
+              "cumulativeLayoutShift": 0.0008271917289853849,
+              "initialDomElements": 6167,
+              "totalByteWeight": 4516491,
+              "networkRequestCount": 1
+            },
+            {
+              "performanceScore": 52,
+              "firstContentfulPaintMs": 22726.724,
+              "largestContentfulPaintMs": 22885.224,
+              "totalBlockingTimeMs": 206.5,
+              "cumulativeLayoutShift": 0.0008271917289853849,
+              "initialDomElements": 6167,
+              "totalByteWeight": 4516491,
+              "networkRequestCount": 1
+            },
+            {
+              "performanceScore": 55,
+              "firstContentfulPaintMs": 22947.384,
+              "largestContentfulPaintMs": 22962.884,
+              "totalBlockingTimeMs": 1,
+              "cumulativeLayoutShift": 0,
+              "initialDomElements": 6167,
+              "totalByteWeight": 4516491,
+              "networkRequestCount": 1
+            },
+            {
+              "performanceScore": 55,
+              "firstContentfulPaintMs": 22940.494,
+              "largestContentfulPaintMs": 22954.494,
+              "totalBlockingTimeMs": 0.5,
+              "cumulativeLayoutShift": 0,
+              "initialDomElements": 6167,
+              "totalByteWeight": 4516491,
+              "networkRequestCount": 1
+            }
+          ],
+          "medians": {
+            "performanceScore": 53,
+            "firstContentfulPaintMs": 22728.84345,
+            "largestContentfulPaintMs": 22900.34345,
+            "totalBlockingTimeMs": 166,
+            "cumulativeLayoutShift": 0.0008271917289853849
+          }
+        }
+      },
+      "limits": {
+        "performanceScore": {
+          "minimum": 42
+        },
+        "firstContentfulPaintMs": {
+          "maximum": 27500
+        },
+        "largestContentfulPaintMs": {
+          "maximum": 27500
+        },
+        "totalBlockingTimeMs": {
+          "maximum": 550
+        },
+        "cumulativeLayoutShift": {
+          "maximum": 0.02
+        }
+      }
+    },
+    "socialImage": {
+      "path": "social-card.png",
+      "maximumBytes": 1825178,
+      "baseline": {
+        "bytes": 1825178,
+        "sha256": "86ea1b755744c0d066c3aa7cd86bd54d349b8f6a33a637674ba3a95bd1038b28"
+      }
+    }
+  },
+  "futureTargets": {
+    "enforcement": "nonblocking",
+    "notBefore": "v0.2.2",
+    "initialDocument": {
+      "rawBytes": {
+        "maximum": 250000
+      }
+    },
+    "compressedTransferBytes": {
+      "maximum": 307200,
+      "displayLimit": "300 KiB"
+    },
+    "activeDomElements": {
+      "maximum": 3500
+    },
+    "mobileLighthouse": {
+      "performanceScore": {
+        "minimum": 90
+      },
+      "firstContentfulPaintMs": {
+        "maximum": 2500
+      },
+      "largestContentfulPaintMs": {
+        "maximum": 2500
+      },
+      "totalBlockingTimeMs": {
+        "maximum": 150
+      },
+      "cumulativeLayoutShift": {
+        "maximum": 0.02
+      }
+    },
+    "socialImageBytes": {
+      "maximum": 500000
+    }
+  }
+}

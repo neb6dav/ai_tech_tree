@@ -56,7 +56,12 @@ for (const [fragment, label] of [
   ["nodeId=g?.getAttribute('data-id')||started?.nodeId", 'release hit-test fallback'],
   ["role:'button',tabindex:cluster.key===overviewFocusKey?0:-1", 'roving cluster keyboard focus'],
   ["document.getElementById('filterStatus').textContent", 'screen-reader filter result feedback'],
-  ["edition:'2026-08-13-public-beta-1'", 'current edition marker'],
+  ["version:'1.0.0',edition:'2026-08-21-stable-1',releaseState:'Stable'", 'current Stable identity marker'],
+  ['id="editionBadge" href="./release-manifest.json"', 'visible exact-build badge'],
+  ['id="contributeLink" href="https://github.com/neb6dav/ai_tech_tree/issues/new/choose"', 'persistent contribution link'],
+  ['id="controlsBtn" aria-label="Filters and view options"', 'stable responsive controls accessible name'],
+  ['#repositoryLink{color:var(--ink);text-decoration:none;display:flex;align-items:center;justify-content:center;min-width:32px;min-height:32px', 'repository minimum pointer target'],
+  ['@media (max-width:480px){#noscript{inset:104px 8px auto;max-height:calc(100dvh - 112px)}#noscriptIdentity{inset:8px 8px auto}}', 'narrow no-JavaScript cards do not overlap'],
   ['function layoutYear(nd){return DATE_OVERRIDES[nd.id]?.start??nd.y;}', 'composite nodes anchor at first milestone'],
   ['Landmark works and primary sources', 'in-place landmark reading links'],
   ['Linked works or papers', 'generalized linked-work filter'],
@@ -154,7 +159,8 @@ assert.deepEqual(auditCalls, [
 assert(auditRoot.children.some(child => child.tagName === 'strong' && child.textContent === 'Wikipedia cross-check'), 'Evidence renderer omitted its heading');
 assert(auditRoot.children.some(child => child.tagName === 'details' && child.className === 'auditLimits'), 'Evidence renderer omitted its interpretation limits');
 
-assert.equal(data.dataset.edition, '2026-08-13-public-beta-1');
+assert.equal(data.dataset.edition, '2026-08-21-stable-1');
+assert.equal(data.dataset.releaseState, 'Stable');
 assert.equal(data.nodes.length, 339);
 assert.equal(data.lanes.length, 15);
 assert.equal(data.landmarkWorks.length, 76);

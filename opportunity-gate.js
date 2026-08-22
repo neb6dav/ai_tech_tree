@@ -21,13 +21,19 @@ const data = JSON.parse(dataText);
 const schema = JSON.parse(read(SCHEMA_FILE));
 const html = read('ai-research-tech-tree.html');
 const bundle = read(BUNDLE_FILE).trimEnd();
+const source = read('src/opportunity-view.js');
 
 assert.equal(schema.$schema, 'https://json-schema.org/draft/2020-12/schema');
-assert.equal(schema.$id, 'https://neb6dav.github.io/ai_tech_tree/src/data/opportunities/opportunity-map.schema.json');
+assert.equal(schema.$id, 'https://neb6dav.github.io/ai_tech_tree/data/opportunities/opportunity-map.schema.json');
 assert.equal(data.$schema, './opportunity-map.schema.json');
 assert.equal(data.metadata.id, 'diffusion-models-opportunity-map');
 assert.equal(data.metadata.anchorAtlasNodeId, 'diffusion');
+assert.equal(data.metadata.asOf, '2026-08-19', 'Opportunity review date must remain distinct from the historical atlas cutoff');
+assert.equal(data.metadata.status, 'alpha', 'Stable atlas identity must not promote Opportunity data');
+assert.equal(data.metadata.importStatus.state, 'imported_unreviewed', 'Opportunity import must remain unreviewed');
+assert.match(data.metadata.importStatus.notes, /manual bibliography[\s\S]*review before publication-level promotion/iu, 'Opportunity import disclosure drifted');
 assert.equal(data.metadata.pathWidthMode, 'fixed', 'Opportunity paths must never encode a quantitative flow width');
+assert.match(source, /export const VERSION = '1\.0\.0'/u, 'Opportunity source version must match v1.0.0');
 
 const validation = validateOpportunityData(data, { atlasData: atlas });
 assert.deepEqual(validation.errors, [], validation.errors.map(item => `${item.location}: ${item.message}`).join('\n'));
@@ -82,6 +88,8 @@ const embeddedEngines = scripts.filter(script => /\bid=["']opportunity-view-engi
 assert.equal(embeddedEngines.length, 1, 'Expected one embedded Opportunity View engine');
 assert.equal(embeddedEngines[0].body, bundle, 'Embedded Opportunity View engine differs from the reproducible bundle');
 assert.match(bundle, /OpportunityAtlas/);
+assert.match(bundle, /1\.0\.0/u, 'Opportunity bundle version must match v1.0.0');
+assert(!bundle.includes('0.1.1'), 'Opportunity bundle contains the superseded pre-v1 version');
 assert(!/(?:eval\s*\(|new\s+Function\b)/.test(bundle), 'Opportunity bundle requires unsafe evaluation');
 assert(!/\.innerHTML\s*=|\.outerHTML\s*=|insertAdjacentHTML\s*\(|document\.write\s*\(/.test(bundle), 'Opportunity bundle contains an HTML injection sink');
 new vm.Script(bundle, { filename: BUNDLE_FILE });

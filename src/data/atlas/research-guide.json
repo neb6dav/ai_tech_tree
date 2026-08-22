@@ -1,0 +1,3205 @@
+{
+  "schemaVersion": "1.0.0",
+  "data": {
+    "schemaVersion": 3,
+    "edition": "2026-08-06-prepublication-9",
+    "scope": "A curated reading layer of high-consequence primary works, books and reports, plus selected field-shaping ArXiv papers from 2010-2026. Links distinguish public-domain, open, author-hosted, free-to-read and publisher-record access; inclusion does not establish priority, independent replication or a uniquely causal graph edge.",
+    "graphDelta": {
+      "extensionEdges": [
+        "advexamples>backdoors:dep",
+        "advexamples>neuralverify:dep",
+        "agentbench>benchmarkcrisis:dep",
+        "agentbench>frontier26:dep",
+        "agentbench>gap_agents:gap",
+        "agentsllm>agentbench:dep",
+        "agentsllm>aicontrol:dep",
+        "agentsllm>selfgenagents:dep",
+        "aicontrol>gap_agents:gap",
+        "alexnet>backdoors:dep",
+        "alexnet>conformal:dep",
+        "alexnet>modelleak:dep",
+        "alexnet>oodshift:dep",
+        "alife>mapelites:dep",
+        "alphaevolve>selfgenagents:dep",
+        "alvinn>imitation:dep",
+        "autoencoders>vqcodes:dep",
+        "backdoors>evals:dep",
+        "backdoors>gap_agents:gap",
+        "backdoors>govern:dep",
+        "backprop>pinn:dep",
+        "bayesopt>selfdrivinglab:dep",
+        "bert>denseretrieval:dep",
+        "clip>rtfm:dep",
+        "cnn89>equivariance:dep",
+        "concreteproblems>goalmisgen:dep",
+        "continuousrl>deeprlrobot:dep",
+        "continuousrl>offlinerl:dep",
+        "continuousrl>simenv:dep",
+        "deeprlrobot>selfdrivinglab:dep",
+        "deeprlrobot>visuomotor:dep",
+        "dendral>selfdrivinglab:dep",
+        "denseretrieval>agentsllm:dep",
+        "denseretrieval>contexteng:dep",
+        "denseretrieval>rag:dep",
+        "diffusion>flowmatching:dep",
+        "diffusion>visuomotor:dep",
+        "distributed>llmserving:dep",
+        "dlspeech>speechfm:dep",
+        "dp>modelleak:dep",
+        "dp>unlearning:dep",
+        "dqn>continuousrl:dep",
+        "dqn>goalmisgen:dep",
+        "equivariance>alphafold3:dep",
+        "equivariance>alphafold:dep",
+        "equivariance>materials:dep",
+        "evals>agentbench:dep",
+        "evals>aicontrol:dep",
+        "flash>llmserving:dep",
+        "flowmatching>dit:dep",
+        "flowmatching>video:dep",
+        "flows>flowmatching:dep",
+        "frameworks>mixedprecision:dep",
+        "frameworks>mlcompiler:dep",
+        "ga>bayesopt:dep",
+        "ga>mapelites:dep",
+        "gnn>equivariance:dep",
+        "goalmisgen>aicontrol:dep",
+        "goalmisgen>evals:dep",
+        "goalmisgen>gap_agents:gap",
+        "goalmisgen>w2s:dep",
+        "gpgpu>mixedprecision:dep",
+        "gpgpu>mlcompiler:dep",
+        "gpt2>nucleus:dep",
+        "gpt3>instructiontune:dep",
+        "groundedplanning>agentsllm:dep",
+        "groundedplanning>humanoid26:dep",
+        "groundedplanning>rtfm:dep",
+        "hypernet>maml:dep",
+        "ilp>neuralprog:dep",
+        "imitation>deeprlrobot:dep",
+        "imitation>offlinerl:dep",
+        "imitation>rtfm:dep",
+        "imitation>visuomotor:dep",
+        "instructiontune>chatgpt:dep",
+        "instructiontune>frontier26:dep",
+        "instructiontune>instruct:dep",
+        "instructiontune>openweights:dep",
+        "interp>modelediting:dep",
+        "ir>denseretrieval:dep",
+        "llmserving>frontier26:dep",
+        "llmserving>inferecon:dep",
+        "llmserving>longctx:dep",
+        "maml>transfer:dep",
+        "mapelites>alphaevolve:dep",
+        "mapelites>openended:dep",
+        "mixedprecision>distributed:dep",
+        "mixedprecision>flash:dep",
+        "mixedprecision>scalinglaws:dep",
+        "mlcompiler>distributed:dep",
+        "mlcompiler>flash:dep",
+        "mlcompiler>inferecon:dep",
+        "modelediting>gap_interp:gap",
+        "modelediting>w2s:dep",
+        "modelleak>evals:dep",
+        "modelleak>govern:dep",
+        "modelleak>unlearning:dep",
+        "neuralode>flowmatching:dep",
+        "neuralode>neuraloperator:dep",
+        "neuraloperator>fusion:dep",
+        "neuraloperator>weather:dep",
+        "neuralprog>codegen:dep",
+        "neuralprog>neurosymbolic:dep",
+        "neuralverify>provablysafe:dep",
+        "nucleus>chatgpt:dep",
+        "nucleus>openweights:dep",
+        "offlinerl>gato:dep",
+        "oodshift>conformal:dep",
+        "oodshift>evals:dep",
+        "oodshift>goalmisgen:dep",
+        "oodshift>medicine:dep",
+        "oodshift>selfdriving:dep",
+        "openended>selfgenagents:dep",
+        "optimaltransport>flowmatching:dep",
+        "optimaltransport>flows:dep",
+        "optimaltransport>gan:dep",
+        "pinn>fusion:dep",
+        "pinn>neuraloperator:dep",
+        "planningpddl>groundedplanning:dep",
+        "planningpddl>llmsearch:dep",
+        "policygrad>bayesopt:dep",
+        "policygrad>continuousrl:dep",
+        "policygrad>imitation:dep",
+        "rlvr>selfgenagents:dep",
+        "satsolvers>neuralverify:dep",
+        "selfdrivinglab>gap_scilab:gap",
+        "selfdrivinglab>materials:dep",
+        "selfdrivinglab>sciagents:dep",
+        "selfgenagents>gap_openended:gap",
+        "selfsup>denseretrieval:dep",
+        "selfsup>speechfm:dep",
+        "seq2seq>groundedplanning:dep",
+        "seq2seq>neuralprog:dep",
+        "seq2seq>subword:dep",
+        "sgd>maml:dep",
+        "simenv>groundedplanning:dep",
+        "simenv>visuomotor:dep",
+        "speechfm>frontier26:dep",
+        "speechfm>multimodal:dep",
+        "speechfm>musicgen:dep",
+        "stats25>oodshift:dep",
+        "stats25>optimaltransport:dep",
+        "stats25>pinn:dep",
+        "subword>bert:dep",
+        "subword>gpt2:dep",
+        "subword>nmt:dep",
+        "superintbook>goalmisgen:dep",
+        "transfer>instructiontune:dep",
+        "transformer>llmserving:dep",
+        "transformer>modelediting:dep",
+        "transformer>offlinerl:dep",
+        "transformer>rtfm:dep",
+        "transformer>speechfm:dep",
+        "unlearning>datawalls:dep",
+        "unlearning>govern:dep",
+        "vae>vqcodes:dep",
+        "visuomotor>gap_dreamtrain:gap",
+        "visuomotor>humanoid26:dep",
+        "vqcodes>genie:dep",
+        "vqcodes>musicgen:dep",
+        "vqcodes>txt2img:dep",
+        "vqcodes>video:dep",
+        "w2s>aicontrol:dep",
+        "word2vec>subword:dep"
+      ],
+      "retiredEdges": [
+        "multimodal>rtfm:dep"
+      ]
+    },
+    "tiers": {
+      "core": "Distinct, durable development added at the map's normal granularity.",
+      "specialist": "Real development included for completeness; narrower than the map's usual headline nodes.",
+      "emerging": "Recent development whose long-term importance remains provisional.",
+      "integrated": "Important paper lineage represented inside an existing node rather than duplicated."
+    },
+    "nodes": {
+      "subword": {
+        "tier": "core",
+        "tags": [
+          "language",
+          "data",
+          "systems"
+        ],
+        "questions": [
+          "Can learned or token-free representations improve multilingual efficiency without destabilizing training?"
+        ],
+        "sources": [
+          {
+            "t": "Neural Machine Translation of Rare Words with Subword Units",
+            "u": "https://arxiv.org/abs/1508.07909",
+            "y": 2015,
+            "role": "origin"
+          },
+          {
+            "t": "SentencePiece: A simple and language independent subword tokenizer",
+            "u": "https://arxiv.org/abs/1808.06226",
+            "y": 2018,
+            "role": "origin"
+          }
+        ]
+      },
+      "modelleak": {
+        "tier": "core",
+        "tags": [
+          "privacy",
+          "security",
+          "evaluation"
+        ],
+        "questions": [
+          "How can leakage be measured and mitigated under realistic black-box access without hiding behind average-case metrics?"
+        ],
+        "sources": [
+          {
+            "t": "Membership Inference Attacks Against Machine Learning Models",
+            "u": "https://arxiv.org/abs/1610.05820",
+            "y": 2016,
+            "role": "origin"
+          },
+          {
+            "t": "Extracting Training Data from Large Language Models",
+            "u": "https://arxiv.org/abs/2012.07805",
+            "y": 2020,
+            "role": "origin"
+          }
+        ]
+      },
+      "oodshift": {
+        "tier": "core",
+        "tags": [
+          "reliability",
+          "evaluation",
+          "safety"
+        ],
+        "questions": [
+          "Can systems recognize consequential distribution shift without labels and abstain without crippling useful coverage?"
+        ],
+        "sources": [
+          {
+            "t": "A Baseline for Detecting Misclassified and Out-of-Distribution Examples",
+            "u": "https://arxiv.org/abs/1610.02136",
+            "y": 2016,
+            "role": "supporting_result"
+          },
+          {
+            "t": "WILDS: A Benchmark of in-the-Wild Distribution Shifts",
+            "u": "https://arxiv.org/abs/2012.07421",
+            "y": 2020,
+            "role": "benchmark"
+          }
+        ]
+      },
+      "imitation": {
+        "tier": "core",
+        "tags": [
+          "reinforcement learning",
+          "robotics",
+          "data"
+        ],
+        "questions": [
+          "How can demonstration learning remain robust when the deployed policy visits states the demonstrator never covered?"
+        ],
+        "sources": [
+          {
+            "t": "A Reduction of Imitation Learning and Structured Prediction to No-Regret Online Learning",
+            "u": "https://arxiv.org/abs/1011.0686",
+            "y": 2011,
+            "role": "origin"
+          },
+          {
+            "t": "Generative Adversarial Imitation Learning",
+            "u": "https://arxiv.org/abs/1606.03476",
+            "y": 2016,
+            "role": "origin"
+          }
+        ]
+      },
+      "continuousrl": {
+        "tier": "core",
+        "tags": [
+          "reinforcement learning",
+          "robotics",
+          "optimization"
+        ],
+        "questions": [
+          "Which off-policy control methods remain stable under sparse rewards, imperfect simulators and real hardware constraints?"
+        ],
+        "sources": [
+          {
+            "t": "Continuous control with deep reinforcement learning",
+            "u": "https://arxiv.org/abs/1509.02971",
+            "y": 2015,
+            "role": "origin"
+          },
+          {
+            "t": "Soft Actor-Critic",
+            "u": "https://arxiv.org/abs/1801.01290",
+            "y": 2018,
+            "role": "origin"
+          }
+        ]
+      },
+      "mixedprecision": {
+        "tier": "core",
+        "tags": [
+          "systems",
+          "efficiency",
+          "hardware"
+        ],
+        "questions": [
+          "How low can training precision go while retaining predictable convergence and debuggable failure modes?"
+        ],
+        "sources": [
+          {
+            "t": "Mixed Precision Training",
+            "u": "https://arxiv.org/abs/1710.03740",
+            "y": 2017,
+            "role": "origin"
+          }
+        ]
+      },
+      "vqcodes": {
+        "tier": "core",
+        "tags": [
+          "generative models",
+          "multimodal",
+          "compression"
+        ],
+        "questions": [
+          "Can learned discrete representations unify text, audio, images and actions without destructive information bottlenecks?"
+        ],
+        "sources": [
+          {
+            "t": "Neural Discrete Representation Learning",
+            "u": "https://arxiv.org/abs/1711.00937",
+            "y": 2017,
+            "role": "origin"
+          },
+          {
+            "t": "Taming Transformers for High-Resolution Image Synthesis",
+            "u": "https://arxiv.org/abs/2012.09841",
+            "y": 2020,
+            "role": "supporting_result"
+          },
+          {
+            "t": "SoundStream: An End-to-End Neural Audio Codec",
+            "u": "https://arxiv.org/abs/2107.03312",
+            "y": 2021,
+            "role": "supporting_result"
+          }
+        ]
+      },
+      "neuralverify": {
+        "tier": "core",
+        "tags": [
+          "verification",
+          "robustness",
+          "safety"
+        ],
+        "questions": [
+          "How can formal guarantees scale beyond small feed-forward networks to adaptive, tool-using systems?"
+        ],
+        "sources": [
+          {
+            "t": "Reluplex: An Efficient SMT Solver for Verifying Deep Neural Networks",
+            "u": "https://arxiv.org/abs/1702.01135",
+            "y": 2017,
+            "role": "origin"
+          },
+          {
+            "t": "Towards Deep Learning Models Resistant to Adversarial Attacks",
+            "u": "https://arxiv.org/abs/1706.06083",
+            "y": 2017,
+            "role": "supporting_result"
+          },
+          {
+            "t": "Certified Adversarial Robustness via Randomized Smoothing",
+            "u": "https://arxiv.org/abs/1902.02918",
+            "y": 2019,
+            "role": "supporting_result"
+          }
+        ]
+      },
+      "backdoors": {
+        "tier": "core",
+        "tags": [
+          "security",
+          "data",
+          "evaluation"
+        ],
+        "questions": [
+          "Can training-pipeline backdoors be detected before deployment when triggers and attacker objectives are unknown?"
+        ],
+        "sources": [
+          {
+            "t": "BadNets: Identifying Vulnerabilities in the Machine Learning Model Supply Chain",
+            "u": "https://arxiv.org/abs/1708.06733",
+            "y": 2017,
+            "role": "origin"
+          },
+          {
+            "t": "Sleeper Agents: Training Deceptive LLMs that Persist Through Safety Training",
+            "u": "https://arxiv.org/abs/2401.05566",
+            "y": 2024,
+            "role": "supporting_result"
+          }
+        ]
+      },
+      "pinn": {
+        "tier": "core",
+        "tags": [
+          "science",
+          "physics",
+          "optimization"
+        ],
+        "questions": [
+          "When do physical constraints improve extrapolation, and when do PINN optimization pathologies dominate?"
+        ],
+        "sources": [
+          {
+            "t": "Physics Informed Deep Learning",
+            "u": "https://arxiv.org/abs/1711.10561",
+            "y": 2017,
+            "role": "origin"
+          }
+        ]
+      },
+      "equivariance": {
+        "tier": "core",
+        "tags": [
+          "science",
+          "architecture",
+          "geometry"
+        ],
+        "questions": [
+          "Which symmetries should be encoded exactly, approximated, or learned from data in complex physical systems?"
+        ],
+        "sources": [
+          {
+            "t": "SchNet: A continuous-filter convolutional neural network for modeling quantum interactions",
+            "u": "https://arxiv.org/abs/1706.08566",
+            "y": 2017,
+            "role": "supporting_result"
+          },
+          {
+            "t": "Tensor Field Networks",
+            "u": "https://arxiv.org/abs/1802.08219",
+            "y": 2018,
+            "role": "supporting_result"
+          },
+          {
+            "t": "SE(3)-Transformers",
+            "u": "https://arxiv.org/abs/2006.10503",
+            "y": 2020,
+            "role": "supporting_result"
+          },
+          {
+            "t": "E(n) Equivariant Graph Neural Networks",
+            "u": "https://arxiv.org/abs/2102.09844",
+            "y": 2021,
+            "role": "supporting_result"
+          }
+        ]
+      },
+      "goalmisgen": {
+        "tier": "core",
+        "tags": [
+          "alignment",
+          "reinforcement learning",
+          "evaluation"
+        ],
+        "questions": [
+          "Can a learned policy's operative objective be diagnosed before distribution shift reveals it behaviorally?"
+        ],
+        "sources": [
+          {
+            "t": "Risks from Learned Optimization in Advanced Machine Learning Systems",
+            "u": "https://arxiv.org/abs/1906.01820",
+            "y": 2019,
+            "role": "origin"
+          },
+          {
+            "t": "Goal Misgeneralization in Deep Reinforcement Learning",
+            "u": "https://arxiv.org/abs/2105.14111",
+            "y": 2021,
+            "role": "origin"
+          },
+          {
+            "t": "Alignment Faking in Large Language Models",
+            "u": "https://arxiv.org/abs/2412.14093",
+            "y": 2024,
+            "role": "supporting_result"
+          },
+          {
+            "t": "Emergent Misalignment",
+            "u": "https://arxiv.org/abs/2502.17424",
+            "y": 2025,
+            "role": "supporting_result"
+          }
+        ]
+      },
+      "mlcompiler": {
+        "tier": "core",
+        "tags": [
+          "systems",
+          "hardware",
+          "compilers"
+        ],
+        "questions": [
+          "Can automatic scheduling deliver portable performance across rapidly changing accelerators without opaque regressions?"
+        ],
+        "sources": [
+          {
+            "t": "TVM: An Automated End-to-End Optimizing Compiler for Deep Learning",
+            "u": "https://arxiv.org/abs/1802.04799",
+            "y": 2018,
+            "role": "origin"
+          },
+          {
+            "t": "MLIR: A Compiler Infrastructure for the End of Moore's Law",
+            "u": "https://arxiv.org/abs/2002.11054",
+            "y": 2020,
+            "role": "origin"
+          }
+        ]
+      },
+      "selfdrivinglab": {
+        "tier": "core",
+        "tags": [
+          "science",
+          "robotics",
+          "experimentation"
+        ],
+        "questions": [
+          "How can autonomous laboratories transfer across instruments and domains while preserving calibration, safety and reproducibility?"
+        ],
+        "sources": [
+          {
+            "t": "A Mobile Robotic Chemist",
+            "u": "https://arxiv.org/abs/1906.05398",
+            "y": 2019,
+            "role": "supporting_result"
+          },
+          {
+            "t": "Autonomous materials synthesis via hierarchical active learning of nonequilibrium phase diagrams",
+            "u": "https://arxiv.org/abs/2101.07385",
+            "y": 2021,
+            "role": "supporting_result"
+          }
+        ]
+      },
+      "denseretrieval": {
+        "tier": "core",
+        "tags": [
+          "language",
+          "retrieval",
+          "systems"
+        ],
+        "questions": [
+          "How should retrievers manage freshness, provenance, adversarial documents and uncertainty rather than only top-k relevance?"
+        ],
+        "sources": [
+          {
+            "t": "Sentence-BERT: Sentence Embeddings using Siamese BERT-Networks",
+            "u": "https://arxiv.org/abs/1908.10084",
+            "y": 2019,
+            "role": "supporting_result"
+          },
+          {
+            "t": "Dense Passage Retrieval for Open-Domain Question Answering",
+            "u": "https://arxiv.org/abs/2004.04906",
+            "y": 2020,
+            "role": "origin"
+          },
+          {
+            "t": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+            "u": "https://arxiv.org/abs/2005.11401",
+            "y": 2020,
+            "role": "adjacent_work"
+          }
+        ]
+      },
+      "neuraloperator": {
+        "tier": "core",
+        "tags": [
+          "science",
+          "simulation",
+          "architecture"
+        ],
+        "questions": [
+          "Can learned operators preserve conservation laws and generalize across unseen geometries, grids and boundary conditions?"
+        ],
+        "sources": [
+          {
+            "t": "DeepONet: Learning nonlinear operators",
+            "u": "https://arxiv.org/abs/1910.03193",
+            "y": 2019,
+            "role": "origin"
+          },
+          {
+            "t": "Fourier Neural Operator for Parametric Partial Differential Equations",
+            "u": "https://arxiv.org/abs/2010.08895",
+            "y": 2020,
+            "role": "origin"
+          },
+          {
+            "t": "FourCastNet",
+            "u": "https://arxiv.org/abs/2202.11214",
+            "y": 2022,
+            "role": "supporting_result"
+          }
+        ]
+      },
+      "speechfm": {
+        "tier": "core",
+        "tags": [
+          "speech",
+          "multimodal",
+          "data"
+        ],
+        "questions": [
+          "How can speech models serve low-resource languages and noisy real-world audio without erasing dialect and speaker variation?"
+        ],
+        "sources": [
+          {
+            "t": "wav2vec 2.0",
+            "u": "https://arxiv.org/abs/2006.11477",
+            "y": 2020,
+            "role": "origin"
+          },
+          {
+            "t": "Robust Speech Recognition via Large-Scale Weak Supervision",
+            "u": "https://arxiv.org/abs/2212.04356",
+            "y": 2022,
+            "role": "origin"
+          }
+        ]
+      },
+      "instructiontune": {
+        "tier": "core",
+        "tags": [
+          "language",
+          "data",
+          "alignment"
+        ],
+        "questions": [
+          "What task mixtures create genuine instruction generalization rather than benchmark-template recognition?"
+        ],
+        "sources": [
+          {
+            "t": "Finetuned Language Models Are Zero-Shot Learners",
+            "u": "https://arxiv.org/abs/2109.01652",
+            "y": 2021,
+            "role": "supporting_result"
+          },
+          {
+            "t": "Multitask Prompted Training Enables Zero-Shot Task Generalization",
+            "u": "https://arxiv.org/abs/2110.08207",
+            "y": 2021,
+            "role": "supporting_result"
+          },
+          {
+            "t": "Scaling Instruction-Finetuned Language Models",
+            "u": "https://arxiv.org/abs/2210.11416",
+            "y": 2022,
+            "role": "supporting_result"
+          }
+        ]
+      },
+      "flowmatching": {
+        "tier": "core",
+        "tags": [
+          "generative models",
+          "theory",
+          "efficiency"
+        ],
+        "questions": [
+          "Which probability paths yield stable training, few-step generation and trustworthy likelihood or coverage behavior?"
+        ],
+        "sources": [
+          {
+            "t": "Flow Straight and Fast: Learning to Generate and Transfer Data with Rectified Flow",
+            "u": "https://arxiv.org/abs/2209.03003",
+            "y": 2022,
+            "role": "origin"
+          },
+          {
+            "t": "Flow Matching for Generative Modeling",
+            "u": "https://arxiv.org/abs/2210.02747",
+            "y": 2022,
+            "role": "origin"
+          },
+          {
+            "t": "Scaling Rectified Flow Transformers for High-Resolution Image Synthesis",
+            "u": "https://arxiv.org/abs/2403.03206",
+            "y": 2024,
+            "role": "supporting_result"
+          }
+        ]
+      },
+      "llmserving": {
+        "tier": "core",
+        "tags": [
+          "systems",
+          "inference",
+          "efficiency"
+        ],
+        "questions": [
+          "How should serving jointly optimize latency, throughput, memory, energy and tail reliability under heterogeneous workloads?"
+        ],
+        "sources": [
+          {
+            "t": "Fast Inference from Transformers via Speculative Decoding",
+            "u": "https://arxiv.org/abs/2211.17192",
+            "y": 2022,
+            "role": "origin"
+          },
+          {
+            "t": "Accelerating Large Language Model Decoding with Speculative Sampling",
+            "u": "https://arxiv.org/abs/2302.01318",
+            "y": 2023,
+            "role": "origin"
+          },
+          {
+            "t": "Efficient Memory Management for Large Language Model Serving with PagedAttention",
+            "u": "https://arxiv.org/abs/2309.06180",
+            "y": 2023,
+            "role": "origin"
+          }
+        ]
+      },
+      "agentbench": {
+        "tier": "core",
+        "tags": [
+          "agents",
+          "evaluation",
+          "software"
+        ],
+        "questions": [
+          "How can interactive benchmarks remain reproducible, contamination-resistant and representative of costly real-world failures?"
+        ],
+        "sources": [
+          {
+            "t": "WebArena: A Realistic Web Environment for Building Autonomous Agents",
+            "u": "https://arxiv.org/abs/2307.13854",
+            "y": 2023,
+            "role": "benchmark"
+          },
+          {
+            "t": "AgentBench",
+            "u": "https://arxiv.org/abs/2308.03688",
+            "y": 2023,
+            "role": "benchmark"
+          },
+          {
+            "t": "SWE-bench",
+            "u": "https://arxiv.org/abs/2310.06770",
+            "y": 2023,
+            "role": "benchmark"
+          },
+          {
+            "t": "OSWorld",
+            "u": "https://arxiv.org/abs/2404.07972",
+            "y": 2024,
+            "role": "benchmark"
+          }
+        ]
+      },
+      "visuomotor": {
+        "tier": "core",
+        "tags": [
+          "robotics",
+          "imitation learning",
+          "generative models"
+        ],
+        "questions": [
+          "How can generative robot policies handle long horizons, contact-rich recovery and distribution shift outside demonstrations?"
+        ],
+        "sources": [
+          {
+            "t": "Diffusion Policy: Visuomotor Policy Learning via Action Diffusion",
+            "u": "https://arxiv.org/abs/2303.04137",
+            "y": 2023,
+            "role": "origin"
+          },
+          {
+            "t": "Learning Fine-Grained Bimanual Manipulation with Low-Cost Hardware",
+            "u": "https://arxiv.org/abs/2304.13705",
+            "y": 2023,
+            "role": "adjacent_work"
+          }
+        ]
+      },
+      "modelediting": {
+        "tier": "core",
+        "tags": [
+          "interpretability",
+          "control",
+          "safety"
+        ],
+        "questions": [
+          "Can interventions be made predictable, composable and durable without damaging unrelated capabilities?"
+        ],
+        "sources": [
+          {
+            "t": "Locating and Editing Factual Associations in GPT",
+            "u": "https://arxiv.org/abs/2202.05262",
+            "y": 2022,
+            "role": "origin"
+          },
+          {
+            "t": "Steering Language Models With Activation Engineering",
+            "u": "https://arxiv.org/abs/2308.10248",
+            "y": 2023,
+            "role": "origin"
+          },
+          {
+            "t": "Representation Engineering",
+            "u": "https://arxiv.org/abs/2310.01405",
+            "y": 2023,
+            "role": "supporting_result"
+          }
+        ]
+      },
+      "aicontrol": {
+        "tier": "core",
+        "tags": [
+          "safety",
+          "agents",
+          "evaluation"
+        ],
+        "questions": [
+          "Which control protocols survive adaptive attacks when trusted monitoring and human audit capacity are scarce?"
+        ],
+        "sources": [
+          {
+            "t": "AI Control: Improving Safety Despite Intentional Subversion",
+            "u": "https://arxiv.org/abs/2312.06942",
+            "y": 2023,
+            "role": "origin"
+          },
+          {
+            "t": "Adaptive Attacks on Trusted Monitors Subvert AI Control Protocols",
+            "u": "https://arxiv.org/abs/2510.09462",
+            "y": 2025,
+            "role": "critique"
+          },
+          {
+            "t": "Attack Selection in Agentic AI Control Evaluations Meaningfully Decreases Safety",
+            "u": "https://arxiv.org/abs/2606.06529",
+            "y": 2026,
+            "role": "critique"
+          }
+        ]
+      },
+      "selfgenagents": {
+        "tier": "emerging",
+        "tags": [
+          "agents",
+          "open-endedness",
+          "reinforcement learning"
+        ],
+        "questions": [
+          "Can improvement remain general, cumulative and safe without a fixed benchmark, hand-designed verifier or hidden human curriculum?"
+        ],
+        "sources": [
+          {
+            "t": "Voyager: An Open-Ended Embodied Agent with Large Language Models",
+            "u": "https://arxiv.org/abs/2305.16291",
+            "y": 2023,
+            "role": "supporting_result"
+          },
+          {
+            "t": "Absolute Zero: Reinforced Self-play Reasoning with Zero Data",
+            "u": "https://arxiv.org/abs/2505.03335",
+            "y": 2025,
+            "role": "supporting_result"
+          },
+          {
+            "t": "Darwin Gödel Machine",
+            "u": "https://arxiv.org/abs/2505.22954",
+            "y": 2025,
+            "role": "supporting_result"
+          }
+        ]
+      },
+      "maml": {
+        "tier": "specialist",
+        "tags": [
+          "training",
+          "adaptation",
+          "optimization"
+        ],
+        "questions": [
+          "What remains uniquely useful about gradient-based meta-learning once large pretrained models can adapt in context?"
+        ],
+        "sources": [
+          {
+            "t": "Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks",
+            "u": "https://arxiv.org/abs/1703.03400",
+            "y": 2017,
+            "role": "origin"
+          }
+        ]
+      },
+      "mapelites": {
+        "tier": "specialist",
+        "tags": [
+          "evolution",
+          "search",
+          "open-endedness"
+        ],
+        "questions": [
+          "How should behavior descriptors and archives scale when useful novelty cannot be specified in advance?"
+        ],
+        "sources": [
+          {
+            "t": "Illuminating search spaces by mapping elites",
+            "u": "https://arxiv.org/abs/1504.04909",
+            "y": 2015,
+            "role": "origin"
+          }
+        ]
+      },
+      "neuralprog": {
+        "tier": "specialist",
+        "tags": [
+          "symbolic AI",
+          "program synthesis",
+          "search"
+        ],
+        "questions": [
+          "Can learned guidance accelerate synthesis while preserving executable correctness, abstraction and compositional generalization?"
+        ],
+        "sources": [
+          {
+            "t": "DeepCoder: Learning to Write Programs",
+            "u": "https://arxiv.org/abs/1611.01989",
+            "y": 2016,
+            "role": "supporting_result"
+          },
+          {
+            "t": "DreamCoder",
+            "u": "https://arxiv.org/abs/2006.08381",
+            "y": 2020,
+            "role": "supporting_result"
+          }
+        ]
+      },
+      "optimaltransport": {
+        "tier": "specialist",
+        "tags": [
+          "probability",
+          "geometry",
+          "generative models"
+        ],
+        "questions": [
+          "Can transport objectives scale without sacrificing geometry, sample quality or numerical stability?"
+        ],
+        "sources": [
+          {
+            "t": "Sinkhorn Distances",
+            "u": "https://arxiv.org/abs/1306.0895",
+            "y": 2013,
+            "role": "origin"
+          },
+          {
+            "t": "Wasserstein GAN",
+            "u": "https://arxiv.org/abs/1701.07875",
+            "y": 2017,
+            "role": "adjacent_work"
+          }
+        ]
+      },
+      "nucleus": {
+        "tier": "specialist",
+        "tags": [
+          "language",
+          "inference",
+          "evaluation"
+        ],
+        "questions": [
+          "Can decoding adapt to uncertainty and task risk without masking poor model calibration or amplifying bias?"
+        ],
+        "sources": [
+          {
+            "t": "The Curious Case of Neural Text Degeneration",
+            "u": "https://arxiv.org/abs/1904.09751",
+            "y": 2019,
+            "role": "origin"
+          }
+        ]
+      },
+      "unlearning": {
+        "tier": "specialist",
+        "tags": [
+          "privacy",
+          "data",
+          "governance"
+        ],
+        "questions": [
+          "What evidence is sufficient to verify that a record's influence was removed from a large generative model?"
+        ],
+        "sources": [
+          {
+            "t": "Machine Unlearning",
+            "u": "https://arxiv.org/abs/1912.03817",
+            "y": 2019,
+            "role": "origin"
+          }
+        ]
+      },
+      "groundedplanning": {
+        "tier": "specialist",
+        "tags": [
+          "robotics",
+          "planning",
+          "agents"
+        ],
+        "questions": [
+          "How can language plans remain grounded under uncertain perception, changing affordances and execution failures?"
+        ],
+        "sources": [
+          {
+            "t": "Vision-and-Language Navigation",
+            "u": "https://arxiv.org/abs/1711.07280",
+            "y": 2017,
+            "role": "benchmark"
+          },
+          {
+            "t": "Do As I Can, Not As I Say: Grounding Language in Robotic Affordances",
+            "u": "https://arxiv.org/abs/2204.01691",
+            "y": 2022,
+            "role": "supporting_result"
+          },
+          {
+            "t": "Inner Monologue",
+            "u": "https://arxiv.org/abs/2207.05608",
+            "y": 2022,
+            "role": "supporting_result"
+          }
+        ]
+      },
+      "instruct": {
+        "tier": "integrated",
+        "tags": [
+          "language",
+          "alignment"
+        ],
+        "questions": [
+          "How should supervised instruction following and preference optimization be composed without reward-model overfitting?"
+        ],
+        "sources": [
+          {
+            "t": "Training language models to follow instructions with human feedback",
+            "u": "https://arxiv.org/abs/2203.02155",
+            "y": 2022,
+            "role": "origin"
+          }
+        ]
+      },
+      "txt2img": {
+        "tier": "integrated",
+        "tags": [
+          "generative models",
+          "multimodal"
+        ],
+        "questions": [
+          "How can controllability, provenance and creator rights improve without concentrating access to generation tools?"
+        ],
+        "sources": [
+          {
+            "t": "High-Resolution Image Synthesis with Latent Diffusion Models",
+            "u": "https://arxiv.org/abs/2112.10752",
+            "y": 2021,
+            "role": "origin"
+          },
+          {
+            "t": "Classifier-Free Diffusion Guidance",
+            "u": "https://arxiv.org/abs/2207.12598",
+            "y": 2022,
+            "role": "supporting_result"
+          }
+        ]
+      },
+      "gap_openended": {
+        "tier": "integrated",
+        "tags": [
+          "open direction",
+          "agents",
+          "safety"
+        ],
+        "questions": [
+          "What would count as sustained general improvement rather than benchmark-specific optimization or evaluator exploitation?"
+        ],
+        "sources": [
+          {
+            "t": "Absolute Zero: Reinforced Self-play Reasoning with Zero Data",
+            "u": "https://arxiv.org/abs/2505.03335",
+            "y": 2025,
+            "role": "adjacent_work"
+          },
+          {
+            "t": "Darwin Gödel Machine",
+            "u": "https://arxiv.org/abs/2505.22954",
+            "y": 2025,
+            "role": "adjacent_work"
+          }
+        ]
+      },
+      "gap_interp": {
+        "tier": "integrated",
+        "tags": [
+          "open direction",
+          "interpretability",
+          "control"
+        ],
+        "questions": [
+          "Which causal abstractions support interventions that stay reliable across prompts, tasks and model updates?"
+        ],
+        "sources": [
+          {
+            "t": "Locating and Editing Factual Associations in GPT",
+            "u": "https://arxiv.org/abs/2202.05262",
+            "y": 2022,
+            "role": "adjacent_work"
+          },
+          {
+            "t": "Steering Language Models With Activation Engineering",
+            "u": "https://arxiv.org/abs/2308.10248",
+            "y": 2023,
+            "role": "adjacent_work"
+          }
+        ]
+      },
+      "gap_scilab": {
+        "tier": "integrated",
+        "tags": [
+          "open direction",
+          "science",
+          "robotics"
+        ],
+        "questions": [
+          "Which parts of scientific judgment transfer across domains, and how should autonomous labs document uncertainty and failed experiments?"
+        ],
+        "sources": [
+          {
+            "t": "A Mobile Robotic Chemist",
+            "u": "https://arxiv.org/abs/1906.05398",
+            "y": 2019,
+            "role": "adjacent_work"
+          },
+          {
+            "t": "Autonomous materials synthesis via hierarchical active learning of nonequilibrium phase diagrams",
+            "u": "https://arxiv.org/abs/2101.07385",
+            "y": 2021,
+            "role": "adjacent_work"
+          }
+        ]
+      },
+      "selfsup": {
+        "tier": "integrated",
+        "tags": [
+          "training",
+          "vision",
+          "speech",
+          "language"
+        ],
+        "questions": [
+          "Which predictive objectives learn representations that transfer reliably across modalities and distribution shifts?"
+        ],
+        "sources": [
+          {
+            "t": "A Simple Framework for Contrastive Learning of Visual Representations",
+            "u": "https://arxiv.org/abs/2002.05709",
+            "y": 2020,
+            "role": "supporting_result"
+          },
+          {
+            "t": "Masked Autoencoders Are Scalable Vision Learners",
+            "u": "https://arxiv.org/abs/2111.06377",
+            "y": 2021,
+            "role": "supporting_result"
+          }
+        ]
+      },
+      "bayesopt": {
+        "tier": "integrated",
+        "tags": [
+          "AutoML",
+          "optimization",
+          "search"
+        ],
+        "questions": [
+          "When is automatic search more sample-efficient and reproducible than expert-designed architectures and schedules?"
+        ],
+        "sources": [
+          {
+            "t": "Neural Architecture Search with Reinforcement Learning",
+            "u": "https://arxiv.org/abs/1611.01578",
+            "y": 2016,
+            "role": "supporting_result"
+          },
+          {
+            "t": "Population Based Training of Neural Networks",
+            "u": "https://arxiv.org/abs/1711.09846",
+            "y": 2017,
+            "role": "supporting_result"
+          }
+        ]
+      },
+      "adam": {
+        "tier": "integrated",
+        "tags": [
+          "optimization",
+          "training"
+        ],
+        "questions": [
+          "Which optimizer behavior is actually responsible for robust scaling across architectures and data regimes?"
+        ],
+        "sources": [
+          {
+            "t": "Adam: A Method for Stochastic Optimization",
+            "u": "https://arxiv.org/abs/1412.6980",
+            "y": 2014,
+            "role": "origin"
+          },
+          {
+            "t": "Decoupled Weight Decay Regularization",
+            "u": "https://arxiv.org/abs/1711.05101",
+            "y": 2017,
+            "role": "origin"
+          }
+        ]
+      },
+      "quant": {
+        "tier": "integrated",
+        "tags": [
+          "efficiency",
+          "compression",
+          "inference"
+        ],
+        "questions": [
+          "How far can post-training compression go before rare, small or safety-critical behaviors degrade in ways aggregate benchmarks miss?"
+        ],
+        "sources": [
+          {
+            "t": "GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers",
+            "u": "https://arxiv.org/abs/2210.17323",
+            "y": 2022,
+            "role": "supporting_result"
+          },
+          {
+            "t": "SmoothQuant: Accurate and Efficient Post-Training Quantization for Large Language Models",
+            "u": "https://arxiv.org/abs/2211.10438",
+            "y": 2022,
+            "role": "supporting_result"
+          },
+          {
+            "t": "SparseGPT: Massive Language Models Can Be Accurately Pruned in One-Shot",
+            "u": "https://arxiv.org/abs/2301.00774",
+            "y": 2023,
+            "role": "supporting_result"
+          }
+        ]
+      },
+      "conformal": {
+        "tier": "integrated",
+        "tags": [
+          "uncertainty",
+          "reliability",
+          "statistics"
+        ],
+        "questions": [
+          "How should calibration, epistemic uncertainty and coverage guarantees be combined under non-exchangeable deployment data?"
+        ],
+        "sources": [
+          {
+            "t": "Simple and Scalable Predictive Uncertainty Estimation using Deep Ensembles",
+            "u": "https://arxiv.org/abs/1612.01474",
+            "y": 2016,
+            "role": "adjacent_work"
+          },
+          {
+            "t": "On Calibration of Modern Neural Networks",
+            "u": "https://arxiv.org/abs/1706.04599",
+            "y": 2017,
+            "role": "adjacent_work"
+          },
+          {
+            "t": "A Gentle Introduction to Conformal Prediction and Distribution-Free Uncertainty Quantification",
+            "u": "https://arxiv.org/abs/2107.07511",
+            "y": 2021,
+            "role": "survey"
+          }
+        ]
+      },
+      "rtfm": {
+        "tier": "integrated",
+        "tags": [
+          "robotics",
+          "foundation models",
+          "multimodal"
+        ],
+        "questions": [
+          "Which forms of internet-scale pretraining transfer to safe, data-efficient physical generalization?"
+        ],
+        "sources": [
+          {
+            "t": "Do As I Can, Not As I Say: Grounding Language in Robotic Affordances",
+            "u": "https://arxiv.org/abs/2204.01691",
+            "y": 2022,
+            "role": "origin"
+          },
+          {
+            "t": "RT-1: Robotics Transformer for Real-World Control at Scale",
+            "u": "https://arxiv.org/abs/2212.06817",
+            "y": 2022,
+            "role": "origin"
+          },
+          {
+            "t": "RT-2: Vision-Language-Action Models Transfer Web Knowledge to Robotic Control",
+            "u": "https://arxiv.org/abs/2307.15818",
+            "y": 2023,
+            "role": "supporting_result"
+          },
+          {
+            "t": "Open X-Embodiment",
+            "u": "https://arxiv.org/abs/2310.08864",
+            "y": 2023,
+            "role": "supporting_result"
+          },
+          {
+            "t": "OpenVLA",
+            "u": "https://arxiv.org/abs/2406.09246",
+            "y": 2024,
+            "role": "supporting_result"
+          },
+          {
+            "t": "π0: A Vision-Language-Action Flow Model",
+            "u": "https://arxiv.org/abs/2410.24164",
+            "y": 2024,
+            "role": "supporting_result"
+          }
+        ]
+      },
+      "offlinerl": {
+        "tier": "integrated",
+        "tags": [
+          "reinforcement learning",
+          "sequence modeling",
+          "robotics"
+        ],
+        "questions": [
+          "How can offline policies avoid extrapolating beyond dataset support while still improving over the behavior policy?"
+        ],
+        "sources": [
+          {
+            "t": "Conservative Q-Learning for Offline Reinforcement Learning",
+            "u": "https://arxiv.org/abs/2006.04779",
+            "y": 2020,
+            "role": "supporting_result"
+          },
+          {
+            "t": "Decision Transformer",
+            "u": "https://arxiv.org/abs/2106.01345",
+            "y": 2021,
+            "role": "supporting_result"
+          }
+        ]
+      },
+      "llmsearch": {
+        "tier": "integrated",
+        "tags": [
+          "search",
+          "planning",
+          "language"
+        ],
+        "questions": [
+          "When should language models generate heuristics, invoke symbolic planners or defer to explicit verification?"
+        ],
+        "sources": [
+          {
+            "t": "PlanBench",
+            "u": "https://arxiv.org/abs/2206.10498",
+            "y": 2022,
+            "role": "benchmark"
+          },
+          {
+            "t": "LLM+P: Empowering Large Language Models with Optimal Planning Proficiency",
+            "u": "https://arxiv.org/abs/2304.11477",
+            "y": 2023,
+            "role": "supporting_result"
+          },
+          {
+            "t": "Tree of Thoughts",
+            "u": "https://arxiv.org/abs/2305.10601",
+            "y": 2023,
+            "role": "supporting_result"
+          }
+        ]
+      },
+      "rlhf": {
+        "tier": "integrated",
+        "tags": [
+          "alignment",
+          "preferences",
+          "reinforcement learning"
+        ],
+        "questions": [
+          "How can preference optimization resist reward-model overoptimization and evaluator misspecification?"
+        ],
+        "sources": [
+          {
+            "t": "Scaling Laws for Reward Model Overoptimization",
+            "u": "https://arxiv.org/abs/2210.10760",
+            "y": 2022,
+            "role": "critique"
+          },
+          {
+            "t": "Deep Reinforcement Learning from Human Preferences",
+            "u": "https://arxiv.org/abs/1706.03741",
+            "y": 2017,
+            "role": "origin"
+          }
+        ]
+      },
+      "neural3d": {
+        "tier": "integrated",
+        "tags": [
+          "vision",
+          "3D",
+          "graphics"
+        ],
+        "questions": [
+          "How can neural scene representations become editable, physically grounded and useful for embodied agents?"
+        ],
+        "sources": [
+          {
+            "t": "NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis",
+            "u": "https://arxiv.org/abs/2003.08934",
+            "y": 2020,
+            "role": "origin"
+          },
+          {
+            "t": "3D Gaussian Splatting for Real-Time Radiance Field Rendering",
+            "u": "https://arxiv.org/abs/2308.04079",
+            "y": 2023,
+            "role": "origin"
+          }
+        ]
+      },
+      "detection": {
+        "tier": "integrated",
+        "tags": [
+          "vision",
+          "perception"
+        ],
+        "questions": [
+          "How should open-world detectors represent unknown objects and failures rather than forcing closed-set predictions?"
+        ],
+        "sources": [
+          {
+            "t": "Mask R-CNN",
+            "u": "https://arxiv.org/abs/1703.06870",
+            "y": 2017,
+            "role": "supporting_result"
+          },
+          {
+            "t": "End-to-End Object Detection with Transformers",
+            "u": "https://arxiv.org/abs/2005.12872",
+            "y": 2020,
+            "role": "supporting_result"
+          }
+        ]
+      },
+      "lora": {
+        "tier": "integrated",
+        "tags": [
+          "training",
+          "efficiency",
+          "adaptation"
+        ],
+        "questions": [
+          "How should low-rank adaptation interact with quantization, continual updates and model merging?"
+        ],
+        "sources": [
+          {
+            "t": "QLoRA: Efficient Finetuning of Quantized LLMs",
+            "u": "https://arxiv.org/abs/2305.14314",
+            "y": 2023,
+            "role": "supporting_result"
+          },
+          {
+            "t": "LoRA: Low-Rank Adaptation of Large Language Models",
+            "u": "https://arxiv.org/abs/2106.09685",
+            "y": 2021,
+            "role": "origin"
+          }
+        ]
+      },
+      "diffusion": {
+        "tier": "integrated",
+        "tags": [
+          "generative models",
+          "theory"
+        ],
+        "questions": [
+          "Which continuous-time formulations best trade training stability, controllability and sampling cost?"
+        ],
+        "sources": [
+          {
+            "t": "Denoising Diffusion Implicit Models",
+            "u": "https://arxiv.org/abs/2010.02502",
+            "y": 2020,
+            "role": "supporting_result"
+          },
+          {
+            "t": "Score-Based Generative Modeling through Stochastic Differential Equations",
+            "u": "https://arxiv.org/abs/2011.13456",
+            "y": 2020,
+            "role": "supporting_result"
+          },
+          {
+            "t": "Denoising Diffusion Probabilistic Models",
+            "u": "https://arxiv.org/abs/2006.11239",
+            "y": 2020,
+            "role": "origin"
+          }
+        ]
+      },
+      "materials": {
+        "tier": "integrated",
+        "tags": [
+          "science",
+          "materials",
+          "generative models"
+        ],
+        "questions": [
+          "How should predicted novelty and synthesizability be independently validated before claiming discovery?"
+        ],
+        "sources": [
+          {
+            "t": "MatterGen: a generative model for inorganic materials design",
+            "u": "https://arxiv.org/abs/2312.03687",
+            "y": 2023,
+            "role": "adjacent_work"
+          }
+        ]
+      },
+      "evals": {
+        "tier": "integrated",
+        "tags": [
+          "evaluation",
+          "safety",
+          "governance"
+        ],
+        "questions": [
+          "Which evaluations predict costly real-world behavior rather than benchmark-specific competence?"
+        ],
+        "sources": [
+          {
+            "t": "Model Cards for Model Reporting",
+            "u": "https://arxiv.org/abs/1810.03993",
+            "y": 2018,
+            "role": "supporting_result"
+          },
+          {
+            "t": "Datasheets for Datasets",
+            "u": "https://arxiv.org/abs/1803.09010",
+            "y": 2018,
+            "role": "adjacent_work"
+          },
+          {
+            "t": "Evaluating Frontier Models for Dangerous Capabilities",
+            "u": "https://arxiv.org/abs/2403.13793",
+            "y": 2024,
+            "role": "benchmark"
+          }
+        ]
+      },
+      "datacentric": {
+        "tier": "integrated",
+        "tags": [
+          "data",
+          "evaluation"
+        ],
+        "questions": [
+          "How can dataset provenance, quality and representativeness remain auditable at web scale?"
+        ],
+        "sources": [
+          {
+            "t": "Datasheets for Datasets",
+            "u": "https://arxiv.org/abs/1803.09010",
+            "y": 2018,
+            "role": "adjacent_work"
+          }
+        ]
+      },
+      "flows": {
+        "tier": "integrated",
+        "tags": [
+          "probability",
+          "generative models",
+          "science"
+        ],
+        "questions": [
+          "How can invertible models scale while retaining tractable density estimation and useful inductive bias?"
+        ],
+        "sources": [
+          {
+            "t": "The frontier of simulation-based inference",
+            "u": "https://arxiv.org/abs/1911.01429",
+            "y": 2019,
+            "role": "survey"
+          }
+        ]
+      },
+      "simenv": {
+        "tier": "integrated",
+        "tags": [
+          "robotics",
+          "simulation",
+          "evaluation"
+        ],
+        "questions": [
+          "Which simulation variations produce robust transfer rather than hiding reality gaps behind benchmark success?"
+        ],
+        "sources": [
+          {
+            "t": "Domain Randomization for Transferring Deep Neural Networks from Simulation to the Real World",
+            "u": "https://arxiv.org/abs/1703.06907",
+            "y": 2017,
+            "role": "supporting_result"
+          }
+        ]
+      },
+      "agentsllm": {
+        "tier": "integrated",
+        "tags": [
+          "agents",
+          "tools",
+          "language"
+        ],
+        "questions": [
+          "How should agents plan, recover, maintain state and expose uncertainty across long-running tool use?"
+        ],
+        "sources": [
+          {
+            "t": "ReAct: Synergizing Reasoning and Acting in Language Models",
+            "u": "https://arxiv.org/abs/2210.03629",
+            "y": 2022,
+            "role": "supporting_result"
+          },
+          {
+            "t": "Toolformer",
+            "u": "https://arxiv.org/abs/2302.04761",
+            "y": 2023,
+            "role": "supporting_result"
+          },
+          {
+            "t": "Reflexion",
+            "u": "https://arxiv.org/abs/2303.11366",
+            "y": 2023,
+            "role": "supporting_result"
+          }
+        ]
+      },
+      "w2s": {
+        "tier": "integrated",
+        "tags": [
+          "alignment",
+          "oversight",
+          "evaluation"
+        ],
+        "questions": [
+          "What feedback remains trustworthy when the model is more capable than its evaluator?"
+        ],
+        "sources": [
+          {
+            "t": "Let's Verify Step by Step",
+            "u": "https://arxiv.org/abs/2305.20050",
+            "y": 2023,
+            "role": "adjacent_work"
+          }
+        ]
+      },
+      "constitutional": {
+        "tier": "integrated",
+        "tags": [
+          "alignment",
+          "defense"
+        ],
+        "questions": [
+          "How robust are constitutional defenses under adaptive attacks and changing tool access?"
+        ],
+        "sources": [
+          {
+            "t": "Constitutional Classifiers",
+            "u": "https://arxiv.org/abs/2501.18837",
+            "y": 2025,
+            "role": "supporting_result"
+          }
+        ]
+      },
+      "jailbreaks": {
+        "tier": "integrated",
+        "tags": [
+          "security",
+          "agents",
+          "defense"
+        ],
+        "questions": [
+          "Can prompt-injection defenses remain useful under adaptive attackers without blocking legitimate tool use?"
+        ],
+        "sources": [
+          {
+            "t": "Constitutional Classifiers",
+            "u": "https://arxiv.org/abs/2501.18837",
+            "y": 2025,
+            "role": "adjacent_work"
+          }
+        ]
+      },
+      "word2vec": {
+        "tier": "integrated",
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "t": "Efficient Estimation of Word Representations in Vector Space",
+            "u": "https://arxiv.org/abs/1301.3781",
+            "y": 2013,
+            "role": "origin"
+          }
+        ]
+      },
+      "dqn": {
+        "tier": "integrated",
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "t": "Playing Atari with Deep Reinforcement Learning",
+            "u": "https://arxiv.org/abs/1312.5602",
+            "y": 2013,
+            "role": "origin"
+          }
+        ]
+      },
+      "vae": {
+        "tier": "integrated",
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "t": "Auto-Encoding Variational Bayes",
+            "u": "https://arxiv.org/abs/1312.6114",
+            "y": 2013,
+            "role": "origin"
+          }
+        ]
+      },
+      "deepface": {
+        "tier": "integrated",
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "t": "DeepFace: Closing the Gap to Human-Level Performance in Face Verification",
+            "u": "https://arxiv.org/abs/1404.3840",
+            "y": 2014,
+            "role": "origin"
+          }
+        ]
+      },
+      "gan": {
+        "tier": "integrated",
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "t": "Generative Adversarial Nets",
+            "u": "https://arxiv.org/abs/1406.2661",
+            "y": 2014,
+            "role": "origin"
+          }
+        ]
+      },
+      "attention": {
+        "tier": "integrated",
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "t": "Neural Machine Translation by Jointly Learning to Align and Translate",
+            "u": "https://arxiv.org/abs/1409.0473",
+            "y": 2014,
+            "role": "origin"
+          }
+        ]
+      },
+      "seq2seq": {
+        "tier": "integrated",
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "t": "Sequence to Sequence Learning with Neural Networks",
+            "u": "https://arxiv.org/abs/1409.3215",
+            "y": 2014,
+            "role": "origin"
+          }
+        ]
+      },
+      "distillation": {
+        "tier": "integrated",
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "t": "Distilling the Knowledge in a Neural Network",
+            "u": "https://arxiv.org/abs/1503.02531",
+            "y": 2015,
+            "role": "origin"
+          }
+        ]
+      },
+      "unet": {
+        "tier": "integrated",
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "t": "U-Net: Convolutional Networks for Biomedical Image Segmentation",
+            "u": "https://arxiv.org/abs/1505.04597",
+            "y": 2015,
+            "role": "origin"
+          }
+        ]
+      },
+      "resnet": {
+        "tier": "integrated",
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "t": "Deep Residual Learning for Image Recognition",
+            "u": "https://arxiv.org/abs/1512.03385",
+            "y": 2015,
+            "role": "origin"
+          }
+        ]
+      },
+      "batchnorm": {
+        "tier": "integrated",
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "t": "Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift",
+            "u": "https://arxiv.org/abs/1502.03167",
+            "y": 2015,
+            "role": "origin"
+          }
+        ]
+      },
+      "federated": {
+        "tier": "integrated",
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "t": "Communication-Efficient Learning of Deep Networks from Decentralized Data",
+            "u": "https://arxiv.org/abs/1602.05629",
+            "y": 2016,
+            "role": "origin"
+          }
+        ]
+      },
+      "dp": {
+        "tier": "integrated",
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "t": "Deep Learning with Differential Privacy",
+            "u": "https://arxiv.org/abs/1607.00133",
+            "y": 2016,
+            "role": "origin"
+          }
+        ]
+      },
+      "layernorm": {
+        "tier": "integrated",
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "t": "Layer Normalization",
+            "u": "https://arxiv.org/abs/1607.06450",
+            "y": 2016,
+            "role": "origin"
+          }
+        ]
+      },
+      "transformer": {
+        "tier": "integrated",
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "t": "Attention Is All You Need",
+            "u": "https://arxiv.org/abs/1706.03762",
+            "y": 2017,
+            "role": "origin"
+          }
+        ]
+      },
+      "alphazero": {
+        "tier": "integrated",
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "t": "Mastering Chess and Shogi by Self-Play with a General Reinforcement Learning Algorithm",
+            "u": "https://arxiv.org/abs/1712.01815",
+            "y": 2017,
+            "role": "origin"
+          }
+        ]
+      },
+      "elmo": {
+        "tier": "integrated",
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "t": "Deep Contextualized Word Representations",
+            "u": "https://arxiv.org/abs/1802.05365",
+            "y": 2018,
+            "role": "origin"
+          }
+        ]
+      },
+      "bert": {
+        "tier": "integrated",
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "t": "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding",
+            "u": "https://arxiv.org/abs/1810.04805",
+            "y": 2018,
+            "role": "origin"
+          }
+        ]
+      },
+      "scalinglaws": {
+        "tier": "integrated",
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "t": "Scaling Laws for Neural Language Models",
+            "u": "https://arxiv.org/abs/2001.08361",
+            "y": 2020,
+            "role": "origin"
+          },
+          {
+            "t": "Training Compute-Optimal Large Language Models",
+            "u": "https://arxiv.org/abs/2203.15556",
+            "y": 2022,
+            "role": "supporting_result"
+          }
+        ]
+      },
+      "gpt3": {
+        "tier": "integrated",
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "t": "Language Models are Few-Shot Learners",
+            "u": "https://arxiv.org/abs/2005.14165",
+            "y": 2020,
+            "role": "origin"
+          }
+        ]
+      },
+      "vit": {
+        "tier": "integrated",
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "t": "An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale",
+            "u": "https://arxiv.org/abs/2010.11929",
+            "y": 2020,
+            "role": "origin"
+          }
+        ]
+      },
+      "clip": {
+        "tier": "integrated",
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "t": "Learning Transferable Visual Models From Natural Language Supervision",
+            "u": "https://arxiv.org/abs/2103.00020",
+            "y": 2021,
+            "role": "origin"
+          }
+        ]
+      },
+      "flash": {
+        "tier": "integrated",
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "t": "FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness",
+            "u": "https://arxiv.org/abs/2205.14135",
+            "y": 2022,
+            "role": "origin"
+          }
+        ]
+      },
+      "dpo": {
+        "tier": "integrated",
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "t": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+            "u": "https://arxiv.org/abs/2305.18290",
+            "y": 2023,
+            "role": "origin"
+          }
+        ]
+      },
+      "gpt4": {
+        "tier": "integrated",
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "t": "GPT-4 Technical Report",
+            "u": "https://arxiv.org/abs/2303.08774",
+            "y": 2023,
+            "role": "origin"
+          }
+        ]
+      }
+    },
+    "accessVocabulary": {
+      "public_domain": "The linked work is identified as public domain by the hosting record or is an unambiguous historical public-domain original.",
+      "open_access": "The publisher or journal provides open full text.",
+      "author_open": "An author or institution provides a free reading copy; copyright can remain.",
+      "free_to_read": "The linked copy is readable without payment, but reuse rights are not implied and access can change.",
+      "publisher_record": "A stable publisher, DOI or book record; full text may require purchase or institutional access."
+    },
+    "landmarks": {
+      "logicprog": [
+        {
+          "id": "frege-begriffsschrift-1879",
+          "t": "Begriffsschrift",
+          "u": "https://commons.wikimedia.org/wiki/File:Begriffsschrift.djvu",
+          "y": 1879,
+          "kind": "book",
+          "access": "public_domain",
+          "role": "origin",
+          "a": [
+            "Gottlob Frege"
+          ],
+          "n": "Original German scan; the file page records the work as public domain."
+        },
+        {
+          "id": "hilbert-ackermann-logic-1928",
+          "t": "Grundzüge der theoretischen Logik",
+          "u": "https://books.google.com/books?id=DlCP9FtlR4cC",
+          "y": 1928,
+          "kind": "book",
+          "access": "free_to_read",
+          "role": "supporting_result",
+          "a": [
+            "David Hilbert",
+            "Wilhelm Ackermann"
+          ],
+          "n": "Full-view historical scan; reuse rights can vary by jurisdiction."
+        }
+      ],
+      "markov": [
+        {
+          "id": "markov-dependent-trials-1907",
+          "t": "Investigation of a Remarkable Case of Dependent Trials",
+          "u": "https://www.mathnet.ru/eng/im7832",
+          "y": 1907,
+          "kind": "paper",
+          "access": "public_domain",
+          "role": "origin",
+          "a": [
+            "Andrey Markov"
+          ],
+          "n": "Original Russian full text; this is the mathematical chain-dependence work, not the later text example."
+        },
+        {
+          "id": "markov-onegin-1913",
+          "t": "An Example of Statistical Investigation of the Text Eugene Onegin Concerning the Connection of Samples in Chains",
+          "u": "https://doi.org/10.1017/S0269889706001074",
+          "y": 1913,
+          "kind": "paper",
+          "access": "publisher_record",
+          "role": "supporting_result",
+          "a": [
+            "Andrey Markov"
+          ],
+          "n": "The linked English translation was published in 2006; it is not labeled public domain."
+        }
+      ],
+      "stats25": [
+        {
+          "id": "bayes-essay-1763",
+          "t": "An Essay Towards Solving a Problem in the Doctrine of Chances",
+          "u": "https://doi.org/10.1098/rstl.1763.0053",
+          "y": 1763,
+          "kind": "paper",
+          "access": "public_domain",
+          "role": "context",
+          "a": [
+            "Thomas Bayes",
+            "Richard Price"
+          ],
+          "n": "Historical Bayesian background, not a 1925 development."
+        },
+        {
+          "id": "fisher-statistical-methods-1925",
+          "t": "Statistical Methods for Research Workers",
+          "u": "https://books.google.com/books?id=I0NBAAAAIAAJ",
+          "y": 1925,
+          "kind": "book",
+          "access": "free_to_read",
+          "role": "origin",
+          "a": [
+            "R. A. Fisher"
+          ],
+          "n": "Full-view scan; reuse rights can vary by jurisdiction."
+        }
+      ],
+      "godel": [
+        {
+          "id": "godel-incompleteness-1931",
+          "t": "Über formal unentscheidbare Sätze der Principia Mathematica und verwandter Systeme I",
+          "u": "https://doi.org/10.1007/BF01700692",
+          "y": 1931,
+          "kind": "paper",
+          "access": "publisher_record",
+          "role": "origin",
+          "a": [
+            "Kurt Gödel"
+          ]
+        }
+      ],
+      "turing36": [
+        {
+          "id": "turing-computable-numbers-1936",
+          "t": "On Computable Numbers, with an Application to the Entscheidungsproblem",
+          "u": "https://www.cs.ox.ac.uk/activities/ieg/e-library/sources/tp2-ie.pdf",
+          "y": 1936,
+          "kind": "paper",
+          "access": "free_to_read",
+          "role": "origin",
+          "a": [
+            "Alan M. Turing"
+          ],
+          "n": "Authorized reproduction hosted by Oxford; includes the published correction."
+        }
+      ],
+      "shannon37": [
+        {
+          "id": "shannon-switching-thesis-1937",
+          "t": "A Symbolic Analysis of Relay and Switching Circuits",
+          "u": "https://dspace.mit.edu/handle/1721.1/11173",
+          "y": 1937,
+          "kind": "thesis",
+          "access": "author_open",
+          "role": "origin",
+          "a": [
+            "Claude E. Shannon"
+          ],
+          "n": "MIT institutional repository record and full text."
+        }
+      ],
+      "mcculloch43": [
+        {
+          "id": "mcculloch-pitts-1943",
+          "t": "A Logical Calculus of the Ideas Immanent in Nervous Activity",
+          "u": "https://doi.org/10.1007/BF02478259",
+          "y": 1943,
+          "kind": "paper",
+          "access": "publisher_record",
+          "role": "origin",
+          "a": [
+            "Warren S. McCulloch",
+            "Walter Pitts"
+          ]
+        }
+      ],
+      "gametheory": [
+        {
+          "id": "vonneumann-morgenstern-games-1944",
+          "t": "Theory of Games and Economic Behavior",
+          "u": "https://archive.org/details/in.ernet.dli.2015.215284",
+          "y": 1944,
+          "kind": "book",
+          "access": "free_to_read",
+          "role": "origin",
+          "a": [
+            "John von Neumann",
+            "Oskar Morgenstern"
+          ],
+          "n": "Readable archival scan; the item does not establish public-domain status."
+        }
+      ],
+      "vonneumann45": [
+        {
+          "id": "vonneumann-edvac-1945",
+          "t": "First Draft of a Report on the EDVAC",
+          "u": "https://library.si.edu/digital-library/book/firstdraftofrepo00vonn",
+          "y": 1945,
+          "kind": "report",
+          "access": "public_domain",
+          "role": "origin",
+          "a": [
+            "John von Neumann"
+          ],
+          "n": "Smithsonian public-domain/CC0 scan; the broader EDVAC team also shaped the architecture."
+        }
+      ],
+      "wiener48": [
+        {
+          "id": "wiener-cybernetics-1948",
+          "t": "Cybernetics: Or Control and Communication in the Animal and the Machine",
+          "u": "https://mitpress.mit.edu/9780262537841/cybernetics-or-control-and-communication-in-the-animal-and-the-machine/",
+          "y": 1948,
+          "kind": "book",
+          "access": "publisher_record",
+          "role": "origin",
+          "a": [
+            "Norbert Wiener"
+          ]
+        }
+      ],
+      "shannon48": [
+        {
+          "id": "shannon-communication-1948",
+          "t": "A Mathematical Theory of Communication",
+          "u": "https://reach.ieee.org/primary-sources/a-mathematical-theory-of-communication/",
+          "y": 1948,
+          "kind": "paper",
+          "access": "free_to_read",
+          "role": "origin",
+          "a": [
+            "Claude E. Shannon"
+          ],
+          "n": "Authoritative IEEE reading page and scan."
+        },
+        {
+          "id": "mackay-information-theory-2003",
+          "t": "Information Theory, Inference, and Learning Algorithms",
+          "u": "https://www.inference.org.uk/itprnn/book.pdf",
+          "y": 2003,
+          "kind": "book",
+          "access": "author_open",
+          "role": "survey",
+          "a": [
+            "David J. C. MacKay"
+          ],
+          "n": "Author-hosted complete book."
+        }
+      ],
+      "hebb49": [
+        {
+          "id": "hebb-organization-behavior-1949",
+          "t": "The Organization of Behavior",
+          "u": "https://pure.mpg.de/view/item_2346268_3",
+          "y": 1949,
+          "kind": "book",
+          "access": "author_open",
+          "role": "origin",
+          "a": [
+            "Donald O. Hebb"
+          ],
+          "n": "Free institutional copy; copyright is retained."
+        }
+      ],
+      "turingtest": [
+        {
+          "id": "turing-computing-machinery-1950",
+          "t": "Computing Machinery and Intelligence",
+          "u": "https://doi.org/10.1093/mind/LIX.236.433",
+          "y": 1950,
+          "kind": "paper",
+          "access": "publisher_record",
+          "role": "origin",
+          "a": [
+            "Alan M. Turing"
+          ]
+        }
+      ],
+      "shannonchess": [
+        {
+          "id": "shannon-chess-1950",
+          "t": "Programming a Computer for Playing Chess",
+          "u": "https://www.computerhistory.org/chess/doc-431614f453dde/",
+          "y": 1950,
+          "kind": "paper",
+          "access": "free_to_read",
+          "role": "origin",
+          "a": [
+            "Claude E. Shannon"
+          ],
+          "n": "Computer History Museum archival copy; copyright is retained."
+        }
+      ],
+      "cellauto": [
+        {
+          "id": "vonneumann-automata-1951",
+          "t": "The General and Logical Theory of Automata",
+          "u": "https://www.dna.caltech.edu/courses/cs191/paperscs191/vonneumann1951.pdf",
+          "y": 1951,
+          "kind": "paper",
+          "access": "free_to_read",
+          "role": "origin",
+          "a": [
+            "John von Neumann"
+          ],
+          "n": "Academic reading copy; rights are retained."
+        }
+      ],
+      "sgd": [
+        {
+          "id": "robbins-monro-1951",
+          "t": "A Stochastic Approximation Method",
+          "u": "https://doi.org/10.1214/aoms/1177729586",
+          "y": 1951,
+          "kind": "paper",
+          "access": "open_access",
+          "role": "origin",
+          "a": [
+            "Herbert Robbins",
+            "Sutton Monro"
+          ]
+        }
+      ],
+      "bandits": [
+        {
+          "id": "robbins-sequential-design-1952",
+          "t": "Some Aspects of the Sequential Design of Experiments",
+          "u": "https://projecteuclid.org/journals/bulletin-of-the-american-mathematical-society/volume-58/issue-5/Some-aspects-of-the-sequential-design-of-experiments/bams/1183517370.pdf",
+          "y": 1952,
+          "kind": "paper",
+          "access": "open_access",
+          "role": "origin",
+          "a": [
+            "Herbert Robbins"
+          ]
+        }
+      ],
+      "hodgkin52": [
+        {
+          "id": "hodgkin-huxley-1952",
+          "t": "A Quantitative Description of Membrane Current and Its Application to Conduction and Excitation in Nerve",
+          "u": "https://pmc.ncbi.nlm.nih.gov/articles/PMC1392413/",
+          "y": 1952,
+          "kind": "paper",
+          "access": "open_access",
+          "role": "origin",
+          "a": [
+            "A. L. Hodgkin",
+            "A. F. Huxley"
+          ]
+        }
+      ],
+      "mtgeorgetown": [
+        {
+          "id": "ibm-georgetown-mt-1954",
+          "t": "The Georgetown-IBM Experiment",
+          "u": "https://aclanthology.org/www.mt-archive.info/IBM-1954.pdf",
+          "y": 1954,
+          "kind": "report",
+          "access": "free_to_read",
+          "role": "origin",
+          "a": [
+            "IBM",
+            "Georgetown University"
+          ],
+          "n": "Contemporary archival account of the demonstration."
+        },
+        {
+          "id": "alpac-language-machines-1966",
+          "t": "Language and Machines: Computers in Translation and Linguistics",
+          "u": "https://nap.nationalacademies.org/resource/alpac_lm/ARC000005.pdf",
+          "y": 1966,
+          "kind": "report",
+          "access": "open_access",
+          "role": "critique",
+          "a": [
+            "Automatic Language Processing Advisory Committee"
+          ]
+        }
+      ],
+      "dartmouth": [
+        {
+          "id": "dartmouth-ai-proposal-1955",
+          "t": "A Proposal for the Dartmouth Summer Research Project on Artificial Intelligence",
+          "u": "https://www-formal.stanford.edu/jmc/history/dartmouth/dartmouth.html",
+          "y": 1955,
+          "kind": "proposal",
+          "access": "author_open",
+          "role": "origin",
+          "a": [
+            "John McCarthy",
+            "Marvin Minsky",
+            "Nathaniel Rochester",
+            "Claude Shannon"
+          ]
+        }
+      ],
+      "cogrev": [
+        {
+          "id": "miller-magical-seven-1956",
+          "t": "The Magical Number Seven, Plus or Minus Two",
+          "u": "https://pure.mpg.de/view/item_2364276",
+          "y": 1956,
+          "kind": "paper",
+          "access": "author_open",
+          "role": "origin",
+          "a": [
+            "George A. Miller"
+          ]
+        },
+        {
+          "id": "chomsky-three-models-1956",
+          "t": "Three Models for the Description of Language",
+          "u": "https://doi.org/10.1109/TIT.1956.1056813",
+          "y": 1956,
+          "kind": "paper",
+          "access": "publisher_record",
+          "role": "supporting_result",
+          "a": [
+            "Noam Chomsky"
+          ]
+        }
+      ],
+      "lt56": [
+        {
+          "id": "newell-simon-logic-theory-1956",
+          "t": "The Logic Theory Machine: A Complex Information Processing System",
+          "u": "https://www.rand.org/pubs/papers/P868.html",
+          "y": 1956,
+          "kind": "report",
+          "access": "free_to_read",
+          "role": "origin",
+          "a": [
+            "Allen Newell",
+            "Herbert A. Simon"
+          ],
+          "n": "RAND product page with an authorized downloadable PDF."
+        }
+      ],
+      "mdp": [
+        {
+          "id": "bellman-mdp-1957",
+          "t": "A Markovian Decision Process",
+          "u": "https://iumj.org/article/1116/",
+          "y": 1957,
+          "kind": "paper",
+          "access": "open_access",
+          "role": "origin",
+          "a": [
+            "Richard Bellman"
+          ]
+        }
+      ],
+      "perceptron": [
+        {
+          "id": "rosenblatt-perceptron-1958",
+          "t": "The Perceptron: A Probabilistic Model for Information Storage and Organization in the Brain",
+          "u": "https://doi.org/10.1037/h0042519",
+          "y": 1958,
+          "kind": "paper",
+          "access": "publisher_record",
+          "role": "origin",
+          "a": [
+            "Frank Rosenblatt"
+          ]
+        }
+      ],
+      "lisp": [
+        {
+          "id": "mccarthy-recursive-functions-1960",
+          "t": "Recursive Functions of Symbolic Expressions and Their Computation by Machine, Part I",
+          "u": "https://www-formal.stanford.edu/jmc/recursive/recursive.html",
+          "y": 1960,
+          "kind": "paper",
+          "access": "author_open",
+          "role": "origin",
+          "a": [
+            "John McCarthy"
+          ]
+        }
+      ],
+      "kalman": [
+        {
+          "id": "kalman-filter-1960",
+          "t": "A New Approach to Linear Filtering and Prediction Problems",
+          "u": "https://cds.cern.ch/record/434680",
+          "y": 1960,
+          "kind": "paper",
+          "access": "author_open",
+          "role": "origin",
+          "a": [
+            "Rudolf E. Kalman"
+          ]
+        }
+      ],
+      "fuzzy": [
+        {
+          "id": "zadeh-fuzzy-sets-1965",
+          "t": "Fuzzy Sets",
+          "u": "https://people.eecs.berkeley.edu/~pister/publications/FamousPapers/Zadeh65FuzzySets.pdf",
+          "y": 1965,
+          "kind": "paper",
+          "access": "author_open",
+          "role": "origin",
+          "a": [
+            "Lotfi A. Zadeh"
+          ]
+        }
+      ],
+      "eliza": [
+        {
+          "id": "weizenbaum-eliza-1966",
+          "t": "ELIZA—A Computer Program for the Study of Natural Language Communication Between Man and Machine",
+          "u": "https://doi.org/10.1145/365153.365168",
+          "y": 1966,
+          "kind": "paper",
+          "access": "publisher_record",
+          "role": "origin",
+          "a": [
+            "Joseph Weizenbaum"
+          ]
+        }
+      ],
+      "astar": [
+        {
+          "id": "hart-nilsson-raphael-astar-1968",
+          "t": "A Formal Basis for the Heuristic Determination of Minimum Cost Paths",
+          "u": "https://ai.stanford.edu/~nilsson/OnlinePubs-Nils/PublishedPapers/astar.pdf",
+          "y": 1968,
+          "kind": "paper",
+          "access": "author_open",
+          "role": "origin",
+          "a": [
+            "Peter E. Hart",
+            "Nils J. Nilsson",
+            "Bertram Raphael"
+          ]
+        }
+      ],
+      "perceptronsbook": [
+        {
+          "id": "minsky-papert-perceptrons-1969",
+          "t": "Perceptrons",
+          "u": "https://mitpress.mit.edu/9780262534772/perceptrons/",
+          "y": 1969,
+          "kind": "book",
+          "access": "publisher_record",
+          "role": "critique",
+          "a": [
+            "Marvin Minsky",
+            "Seymour Papert"
+          ]
+        }
+      ],
+      "complexity71": [
+        {
+          "id": "cook-complexity-1971",
+          "t": "The Complexity of Theorem-Proving Procedures",
+          "u": "https://www.cs.toronto.edu/~sacook/homepage/1971.pdf",
+          "y": 1971,
+          "kind": "paper",
+          "access": "author_open",
+          "role": "origin",
+          "a": [
+            "Stephen A. Cook"
+          ]
+        }
+      ],
+      "strips": [
+        {
+          "id": "fikes-nilsson-strips-1971",
+          "t": "STRIPS: A New Approach to the Application of Theorem Proving to Problem Solving",
+          "u": "https://ai.stanford.edu/~nilsson/OnlinePubs-Nils/PublishedPapers/strips.pdf",
+          "y": 1971,
+          "kind": "paper",
+          "access": "author_open",
+          "role": "origin",
+          "a": [
+            "Richard E. Fikes",
+            "Nils J. Nilsson"
+          ]
+        }
+      ],
+      "frames": [
+        {
+          "id": "minsky-frames-1974",
+          "t": "A Framework for Representing Knowledge",
+          "u": "https://web.mit.edu/dxh/www/marvin/web.media.mit.edu/~minsky/papers/Frames/frames.html",
+          "y": 1974,
+          "kind": "report",
+          "access": "author_open",
+          "role": "origin",
+          "a": [
+            "Marvin Minsky"
+          ]
+        }
+      ],
+      "em": [
+        {
+          "id": "dempster-laird-rubin-em-1977",
+          "t": "Maximum Likelihood from Incomplete Data via the EM Algorithm",
+          "u": "https://academic.oup.com/jrsssb/article/39/1/1/7027539",
+          "y": 1977,
+          "kind": "paper",
+          "access": "publisher_record",
+          "role": "origin",
+          "a": [
+            "Arthur P. Dempster",
+            "Nan M. Laird",
+            "Donald B. Rubin"
+          ]
+        }
+      ],
+      "chineseroom": [
+        {
+          "id": "searle-minds-brains-programs-1980",
+          "t": "Minds, Brains, and Programs",
+          "u": "https://doi.org/10.1017/S0140525X00005756",
+          "y": 1980,
+          "kind": "paper",
+          "access": "publisher_record",
+          "role": "origin",
+          "a": [
+            "John R. Searle"
+          ]
+        }
+      ],
+      "hopfield": [
+        {
+          "id": "hopfield-networks-1982",
+          "t": "Neural Networks and Physical Systems with Emergent Collective Computational Abilities",
+          "u": "https://pmc.ncbi.nlm.nih.gov/articles/PMC346238/",
+          "y": 1982,
+          "kind": "paper",
+          "access": "open_access",
+          "role": "origin",
+          "a": [
+            "John J. Hopfield"
+          ]
+        }
+      ],
+      "pac": [
+        {
+          "id": "valiant-learnable-1984",
+          "t": "A Theory of the Learnable",
+          "u": "https://doi.org/10.1145/1968.1972",
+          "y": 1984,
+          "kind": "paper",
+          "access": "publisher_record",
+          "role": "origin",
+          "a": [
+            "Leslie G. Valiant"
+          ]
+        }
+      ],
+      "backprop": [
+        {
+          "id": "rumelhart-hinton-williams-1986",
+          "t": "Learning Representations by Back-Propagating Errors",
+          "u": "https://www.nature.com/articles/323533a0",
+          "y": 1986,
+          "kind": "paper",
+          "access": "publisher_record",
+          "role": "supporting_result",
+          "a": [
+            "David E. Rumelhart",
+            "Geoffrey E. Hinton",
+            "Ronald J. Williams"
+          ],
+          "n": "Field-shaping demonstration and popularization, not a claim of sole invention."
+        }
+      ],
+      "pdp86": [
+        {
+          "id": "pdp-volume-one-1986",
+          "t": "Parallel Distributed Processing, Volume 1",
+          "u": "https://mitpress.mit.edu/9780262680530/parallel-distributed-processing-volume-1/",
+          "y": 1986,
+          "kind": "book",
+          "access": "publisher_record",
+          "role": "survey",
+          "a": [
+            "David E. Rumelhart",
+            "James L. McClelland",
+            "PDP Research Group"
+          ]
+        }
+      ],
+      "subsumption": [
+        {
+          "id": "brooks-layered-control-1986",
+          "t": "A Robust Layered Control System for a Mobile Robot",
+          "u": "https://people.csail.mit.edu/brooks/papers/AIM-864.pdf",
+          "y": 1986,
+          "kind": "paper",
+          "access": "author_open",
+          "role": "origin",
+          "a": [
+            "Rodney A. Brooks"
+          ]
+        }
+      ],
+      "tdlearning": [
+        {
+          "id": "sutton-td-1988",
+          "t": "Learning to Predict by the Methods of Temporal Differences",
+          "u": "https://incompleteideas.net/publications.html",
+          "y": 1988,
+          "kind": "paper",
+          "access": "author_open",
+          "role": "origin",
+          "a": [
+            "Richard S. Sutton"
+          ],
+          "n": "Author publication index includes the paper and erratum."
+        }
+      ],
+      "cnn89": [
+        {
+          "id": "lecun-zipcodes-1989",
+          "t": "Backpropagation Applied to Handwritten Zip Code Recognition",
+          "u": "https://yann.lecun.com/exdb/publis/pdf/lecun-89e.pdf",
+          "y": 1989,
+          "kind": "paper",
+          "access": "author_open",
+          "role": "origin",
+          "a": [
+            "Yann LeCun",
+            "Bernhard Boser",
+            "John S. Denker",
+            "Donnie Henderson",
+            "Richard E. Howard",
+            "Wayne Hubbard",
+            "Lawrence D. Jackel"
+          ]
+        }
+      ],
+      "mcmc": [
+        {
+          "id": "metropolis-equation-state-1953",
+          "t": "Equation of State Calculations by Fast Computing Machines",
+          "u": "https://doi.org/10.1063/1.1699114",
+          "y": 1953,
+          "kind": "paper",
+          "access": "publisher_record",
+          "role": "origin",
+          "a": [
+            "Nicholas Metropolis",
+            "Arianna W. Rosenbluth",
+            "Marshall N. Rosenbluth",
+            "Augusta H. Teller",
+            "Edward Teller"
+          ]
+        }
+      ],
+      "qlearning": [
+        {
+          "id": "watkins-dayan-qlearning-1992",
+          "t": "Q-Learning",
+          "u": "https://www.gatsby.ucl.ac.uk/~dayan/papers/wd92.html",
+          "y": 1992,
+          "kind": "paper",
+          "access": "author_open",
+          "role": "origin",
+          "a": [
+            "Christopher J. C. H. Watkins",
+            "Peter Dayan"
+          ]
+        }
+      ],
+      "policygrad": [
+        {
+          "id": "williams-reinforce-1992",
+          "t": "Simple Statistical Gradient-Following Algorithms for Connectionist Reinforcement Learning",
+          "u": "https://doi.org/10.1007/BF00992696",
+          "y": 1992,
+          "kind": "paper",
+          "access": "publisher_record",
+          "role": "origin",
+          "a": [
+            "Ronald J. Williams"
+          ]
+        }
+      ],
+      "svm": [
+        {
+          "id": "cortes-vapnik-svm-1995",
+          "t": "Support-Vector Networks",
+          "u": "https://link.springer.com/article/10.1007/BF00994018",
+          "y": 1995,
+          "kind": "paper",
+          "access": "publisher_record",
+          "role": "origin",
+          "a": [
+            "Corinna Cortes",
+            "Vladimir Vapnik"
+          ]
+        }
+      ],
+      "adaboost": [
+        {
+          "id": "freund-schapire-adaboost-1997",
+          "t": "A Decision-Theoretic Generalization of On-Line Learning and an Application to Boosting",
+          "u": "https://doi.org/10.1006/jcss.1997.1504",
+          "y": 1997,
+          "kind": "paper",
+          "access": "publisher_record",
+          "role": "origin",
+          "a": [
+            "Yoav Freund",
+            "Robert E. Schapire"
+          ]
+        },
+        {
+          "id": "breiman-random-forests-2001",
+          "t": "Random Forests",
+          "u": "https://doi.org/10.1023/A:1010933404324",
+          "y": 2001,
+          "kind": "paper",
+          "access": "publisher_record",
+          "role": "supporting_result",
+          "a": [
+            "Leo Breiman"
+          ]
+        }
+      ],
+      "lstm": [
+        {
+          "id": "hochreiter-schmidhuber-lstm-1997",
+          "t": "Long Short-Term Memory",
+          "u": "https://direct.mit.edu/neco/article/9/8/1735/6109/Long-Short-Term-Memory",
+          "y": 1997,
+          "kind": "paper",
+          "access": "publisher_record",
+          "role": "origin",
+          "a": [
+            "Sepp Hochreiter",
+            "Jürgen Schmidhuber"
+          ]
+        }
+      ],
+      "rlbook": [
+        {
+          "id": "sutton-barto-rl-2018",
+          "t": "Reinforcement Learning: An Introduction, Second Edition",
+          "u": "https://www.incompleteideas.net/book/the-book-2nd.html",
+          "y": 2018,
+          "kind": "book",
+          "access": "author_open",
+          "role": "survey",
+          "a": [
+            "Richard S. Sutton",
+            "Andrew G. Barto"
+          ],
+          "n": "The node marks the 1998 synthesis; this link is the authorized, updated 2018 edition."
+        }
+      ],
+      "causal": [
+        {
+          "id": "pearl-causality-2009",
+          "t": "Causality: Models, Reasoning, and Inference, Second Edition",
+          "u": "https://www.cambridge.org/core/books/causality/B0046844FAE10CBF274D4ACBDAEB5F5B",
+          "y": 2009,
+          "kind": "book",
+          "access": "publisher_record",
+          "role": "survey",
+          "a": [
+            "Judea Pearl"
+          ]
+        }
+      ],
+      "bayesnets": [
+        {
+          "id": "pearl-probabilistic-reasoning-1988",
+          "t": "Probabilistic Reasoning in Intelligent Systems",
+          "u": "https://www.sciencedirect.com/book/9780080514895/probabilistic-reasoning-in-intelligent-systems",
+          "y": 1988,
+          "kind": "book",
+          "access": "publisher_record",
+          "role": "survey",
+          "a": [
+            "Judea Pearl"
+          ]
+        }
+      ],
+      "facedetect": [
+        {
+          "id": "viola-jones-cascade-2001",
+          "t": "Rapid Object Detection Using a Boosted Cascade of Simple Features",
+          "u": "https://doi.org/10.1109/CVPR.2001.990517",
+          "y": 2001,
+          "kind": "paper",
+          "access": "publisher_record",
+          "role": "origin",
+          "a": [
+            "Paul Viola",
+            "Michael Jones"
+          ]
+        }
+      ],
+      "bengio03": [
+        {
+          "id": "bengio-neural-lm-2003",
+          "t": "A Neural Probabilistic Language Model",
+          "u": "https://www.jmlr.org/papers/v3/bengio03a.html",
+          "y": 2003,
+          "kind": "paper",
+          "access": "open_access",
+          "role": "origin",
+          "a": [
+            "Yoshua Bengio",
+            "Réjean Ducharme",
+            "Pascal Vincent",
+            "Christian Jauvin"
+          ]
+        }
+      ],
+      "topicmodels": [
+        {
+          "id": "blei-ng-jordan-lda-2003",
+          "t": "Latent Dirichlet Allocation",
+          "u": "https://www.jmlr.org/papers/v3/blei03a.html",
+          "y": 2003,
+          "kind": "paper",
+          "access": "open_access",
+          "role": "origin",
+          "a": [
+            "David M. Blei",
+            "Andrew Y. Ng",
+            "Michael I. Jordan"
+          ]
+        }
+      ],
+      "sift": [
+        {
+          "id": "lowe-sift-2004",
+          "t": "Distinctive Image Features from Scale-Invariant Keypoints",
+          "u": "https://www.cs.ubc.ca/~lowe/keypoints/",
+          "y": 2004,
+          "kind": "paper",
+          "access": "author_open",
+          "role": "origin",
+          "a": [
+            "David G. Lowe"
+          ]
+        }
+      ],
+      "dbn": [
+        {
+          "id": "hinton-deep-belief-2006",
+          "t": "A Fast Learning Algorithm for Deep Belief Nets",
+          "u": "https://www.cs.toronto.edu/~hinton/absps/fastnc.pdf",
+          "y": 2006,
+          "kind": "paper",
+          "access": "author_open",
+          "role": "origin",
+          "a": [
+            "Geoffrey E. Hinton",
+            "Simon Osindero",
+            "Yee-Whye Teh"
+          ]
+        }
+      ],
+      "mcts": [
+        {
+          "id": "kocsis-szepesvari-uct-2006",
+          "t": "Bandit Based Monte-Carlo Planning",
+          "u": "https://doi.org/10.1007/11871842_29",
+          "y": 2006,
+          "kind": "paper",
+          "access": "publisher_record",
+          "role": "origin",
+          "a": [
+            "Levente Kocsis",
+            "Csaba Szepesvári"
+          ],
+          "n": "Introduced UCT, a central MCTS method; it did not solely invent the full MCTS family."
+        }
+      ],
+      "patternrec": [
+        {
+          "id": "bishop-prml-2006",
+          "t": "Pattern Recognition and Machine Learning",
+          "u": "https://www.microsoft.com/en-us/research/publication/pattern-recognition-machine-learning/",
+          "y": 2006,
+          "kind": "book",
+          "access": "author_open",
+          "role": "survey",
+          "a": [
+            "Christopher M. Bishop"
+          ],
+          "n": "Microsoft Research hosts the author PDF."
+        },
+        {
+          "id": "hastie-tibshirani-friedman-esl-2009",
+          "t": "The Elements of Statistical Learning, Second Edition",
+          "u": "https://hastie.su.domains/ElemStatLearn/",
+          "y": 2009,
+          "kind": "book",
+          "access": "author_open",
+          "role": "survey",
+          "a": [
+            "Trevor Hastie",
+            "Robert Tibshirani",
+            "Jerome Friedman"
+          ]
+        }
+      ],
+      "gp": [
+        {
+          "id": "rasmussen-williams-gpml-2006",
+          "t": "Gaussian Processes for Machine Learning",
+          "u": "https://gaussianprocess.org/gpml/",
+          "y": 2006,
+          "kind": "book",
+          "access": "author_open",
+          "role": "survey",
+          "a": [
+            "Carl Edward Rasmussen",
+            "Christopher K. I. Williams"
+          ]
+        }
+      ],
+      "imagenet": [
+        {
+          "id": "deng-imagenet-2009",
+          "t": "ImageNet: A Large-Scale Hierarchical Image Database",
+          "u": "https://www.image-net.org/static_files/papers/imagenet_cvpr09.pdf",
+          "y": 2009,
+          "kind": "paper",
+          "access": "free_to_read",
+          "role": "origin",
+          "a": [
+            "Jia Deng",
+            "Wei Dong",
+            "Richard Socher",
+            "Li-Jia Li",
+            "Kai Li",
+            "Li Fei-Fei"
+          ],
+          "n": "Official project-hosted paper."
+        }
+      ],
+      "word2vec": [
+        {
+          "id": "pennington-socher-manning-glove-2014",
+          "t": "GloVe: Global Vectors for Word Representation",
+          "u": "https://aclanthology.org/D14-1162/",
+          "y": 2014,
+          "kind": "paper",
+          "access": "open_access",
+          "role": "supporting_result",
+          "a": [
+            "Jeffrey Pennington",
+            "Richard Socher",
+            "Christopher D. Manning"
+          ]
+        }
+      ],
+      "alexnet": [
+        {
+          "id": "goodfellow-bengio-courville-deep-learning-2016",
+          "t": "Deep Learning",
+          "u": "https://www.deeplearningbook.org/",
+          "y": 2016,
+          "kind": "book",
+          "access": "author_open",
+          "role": "survey",
+          "a": [
+            "Ian Goodfellow",
+            "Yoshua Bengio",
+            "Aaron Courville"
+          ]
+        }
+      ],
+      "planningpddl": [
+        {
+          "id": "russell-norvig-aima-2020",
+          "t": "Artificial Intelligence: A Modern Approach, Fourth Edition",
+          "u": "https://aima.cs.berkeley.edu/",
+          "y": 2020,
+          "kind": "book",
+          "access": "publisher_record",
+          "role": "survey",
+          "a": [
+            "Stuart Russell",
+            "Peter Norvig"
+          ]
+        }
+      ],
+      "alphago": [
+        {
+          "id": "silver-alphago-2016",
+          "t": "Mastering the Game of Go with Deep Neural Networks and Tree Search",
+          "u": "https://doi.org/10.1038/nature16961",
+          "y": 2016,
+          "kind": "paper",
+          "access": "publisher_record",
+          "role": "origin",
+          "a": [
+            "David Silver et al."
+          ]
+        }
+      ],
+      "gpt2": [
+        {
+          "id": "radford-gpt2-2019",
+          "t": "Language Models are Unsupervised Multitask Learners",
+          "u": "https://openai.com/index/better-language-models/",
+          "y": 2019,
+          "kind": "report",
+          "access": "author_open",
+          "role": "origin",
+          "a": [
+            "Alec Radford et al."
+          ],
+          "n": "Official OpenAI report page and paper link."
+        }
+      ],
+      "alphafold": [
+        {
+          "id": "jumper-alphafold2-2021",
+          "t": "Highly Accurate Protein Structure Prediction with AlphaFold",
+          "u": "https://www.nature.com/articles/s41586-021-03819-2",
+          "y": 2021,
+          "kind": "paper",
+          "access": "open_access",
+          "role": "origin",
+          "a": [
+            "John Jumper et al."
+          ]
+        }
+      ],
+      "asimov": [
+        {
+          "id": "asimov-i-robot-1950",
+          "t": "I, Robot",
+          "u": "https://www.penguinrandomhouse.com/books/5681/i-robot-by-isaac-asimov/paperback/",
+          "y": 1950,
+          "kind": "literary_work",
+          "access": "publisher_record",
+          "role": "context",
+          "a": [
+            "Isaac Asimov"
+          ],
+          "n": "Literary context for the Three Laws, not technical evidence."
+        }
+      ],
+      "superintbook": [
+        {
+          "id": "bostrom-superintelligence-2014",
+          "t": "Superintelligence: Paths, Dangers, Strategies",
+          "u": "https://global.oup.com/academic/product/superintelligence-9780199678112",
+          "y": 2014,
+          "kind": "book",
+          "access": "publisher_record",
+          "role": "origin",
+          "a": [
+            "Nick Bostrom"
+          ]
+        }
+      ]
+    }
+  }
+}

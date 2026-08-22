@@ -2,7 +2,7 @@
 
 Thank you for helping improve the AI Research Tech Tree. This project welcomes corrections, additional evidence, new developments, open research directions, relationship revisions, accessibility improvements, and reproducibility fixes.
 
-The atlas is a public beta. Contributions should make uncertainty easier to see, not merely make the graph larger.
+The atlas is at the tagged `v1.0.0` Stable release boundary. Contributions should make uncertainty easier to see, not merely make the graph larger. Pull-request previews and untagged builds are not citable releases; public promotion remains a guarded maintainer action from an approved annotated tag.
 
 ## Choose the smallest useful contribution
 
@@ -46,7 +46,7 @@ A search-result snippet, unsourced model output, or citation title alone is not 
 
 1. Fork the repository and create a focused branch.
 2. Change maintained source, not generated files directly.
-3. Preserve stable IDs unless the change specifically corrects an identity collision.
+3. Preserve every existing exported ID. An exceptional identity correction must explain the collision or error, document compatibility impact, and deliberately update the locked inventory test. New records receive new IDs and never reuse retired identities.
 4. Install exact dependencies and rebuild:
 
    ```text
@@ -60,7 +60,18 @@ A search-result snippet, unsourced model output, or citation title alone is not 
 7. From the committed tree, rerun `npm run build`, `npm test`, and `git diff --exit-code` to prove that generation is reproducible and complete.
 8. Complete every applicable section of the pull-request template.
 
-For this beta, maintained source includes `ai-research-tech-tree.html`, `src/network-view.js`, `src/opportunity-view.js`, `src/opportunity-layout.cjs`, `src/data/opportunities/`, and the build, layout, injection, export, and validation scripts. Generated files include `index.html`, `network-atlas.bundle.js`, `opportunity-atlas.bundle.js`, `network-layout-v1.json`, and the JSON, JSON-LD, and NDJSON historical graph exports. See the README for the complete boundary.
+Maintained historical data lives under `src/data/atlas/`: `manifest.json` fixes
+the 15-lane shard paths and sidecars, nodes are authored in
+`nodes/<lane>.json`, and relationships are authored in
+`relationships/<target-lane>.json`. Do not edit the historical records embedded
+in `ai-research-tech-tree.html`; they are generated projections. The HTML file
+remains the maintained application shell. Other maintained source includes
+`src/network-view.js`, `src/opportunity-view.js`,
+`src/opportunity-layout.cjs`, `src/data/opportunities/`, and the build, layout,
+injection, export, and validation scripts. Generated files include `index.html`,
+`network-atlas.bundle.js`, `opportunity-atlas.bundle.js`,
+`network-layout-v1.json`, and the JSON, JSON-LD, and NDJSON historical graph
+exports. See the README for the complete boundary and frozen v1 contract.
 
 ## Pull-request scope
 
@@ -74,6 +85,12 @@ Keep each pull request reviewable. A focused correction with one or several tigh
 - how a reviewer can reproduce the result.
 
 Generated minified files may produce a large diff. Reviewers will assess the maintained source and then verify that the generated files match a clean build.
+
+The diffusion-models Opportunity map remains `alpha` and
+`imported_unreviewed`. A contribution must not upgrade that status merely
+because it passes structural validation or ships in the stable application.
+Promotion requires source-by-source human review and a corresponding evidence
+record.
 
 ## AI-assisted contributions
 

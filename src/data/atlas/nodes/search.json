@@ -1,0 +1,763 @@
+{
+  "schemaVersion": "1.0.0",
+  "laneId": "search",
+  "nodes": [
+    {
+      "ordinal": 54,
+      "id": "shannonchess",
+      "title": "Shannon's chess blueprint",
+      "year": 1950,
+      "laneId": "search",
+      "classificationCode": "f",
+      "description": "'Programming a Computer for Playing Chess': minimax plus evaluation functions. The founding document of game AI.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Best article covering Shannon's 1950 chess-programming blueprint.",
+          "sources": [
+            {
+              "title": "Computer chess",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Computer_chess",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Computer%20chess&oldid=1367533734",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "shannon-chess-1950",
+            "title": "Programming a Computer for Playing Chess",
+            "url": "https://www.computerhistory.org/chess/doc-431614f453dde/",
+            "year": 1950,
+            "kind": "paper",
+            "access": "free_to_read",
+            "role": "origin",
+            "authors": [
+              "Claude E. Shannon"
+            ],
+            "note": "Computer History Museum archival copy; copyright is retained."
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "1215b16a"
+    },
+    {
+      "ordinal": 55,
+      "id": "minimaxab",
+      "title": "Alpha–beta & heuristic search",
+      "year": 1958,
+      "laneId": "search",
+      "classificationCode": "f",
+      "description": "Pruning cut game trees exponentially; heuristic evaluation made search practical. The workhorse of classical AI.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Directly covers the central pruning development; the node also bundles heuristic evaluation.",
+          "sources": [
+            {
+              "title": "Alpha–beta pruning",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Alpha%E2%80%93beta_pruning",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Alpha%E2%80%93beta%20pruning&oldid=1362075007",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "20295f31"
+    },
+    {
+      "ordinal": 56,
+      "id": "astar",
+      "title": "A* search",
+      "year": 1968,
+      "laneId": "search",
+      "classificationCode": "f",
+      "description": "Optimal pathfinding with admissible heuristics, built for Shakey. In every router, game engine and planner since.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "A* search algorithm",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/A*_search_algorithm",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=A%2A%20search%20algorithm&oldid=1363312727",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "hart-nilsson-raphael-astar-1968",
+            "title": "A Formal Basis for the Heuristic Determination of Minimum Cost Paths",
+            "url": "https://ai.stanford.edu/~nilsson/OnlinePubs-Nils/PublishedPapers/astar.pdf",
+            "year": 1968,
+            "kind": "paper",
+            "access": "author_open",
+            "role": "origin",
+            "authors": [
+              "Peter E. Hart",
+              "Nils J. Nilsson",
+              "Bertram Raphael"
+            ],
+            "note": ""
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "81a8cd23"
+    },
+    {
+      "ordinal": 57,
+      "id": "strips",
+      "title": "STRIPS planning",
+      "year": 1971,
+      "laneId": "search",
+      "classificationCode": "f",
+      "description": "Actions as precondition/effect schemas. The planning formalism — and the stage on which the frame problem performed.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article for STRIPS and its planning language.",
+          "sources": [
+            {
+              "title": "Stanford Research Institute Problem Solver",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Stanford_Research_Institute_Problem_Solver",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Stanford%20Research%20Institute%20Problem%20Solver&oldid=1254516245",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "fikes-nilsson-strips-1971",
+            "title": "STRIPS: A New Approach to the Application of Theorem Proving to Problem Solving",
+            "url": "https://ai.stanford.edu/~nilsson/OnlinePubs-Nils/PublishedPapers/strips.pdf",
+            "year": 1971,
+            "kind": "paper",
+            "access": "author_open",
+            "role": "origin",
+            "authors": [
+              "Richard E. Fikes",
+              "Nils J. Nilsson"
+            ],
+            "note": ""
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "7e33dba4"
+    },
+    {
+      "ordinal": 58,
+      "id": "csp",
+      "title": "Constraint satisfaction",
+      "year": 1977,
+      "laneId": "search",
+      "classificationCode": "f",
+      "description": "Waltz line-labeling to Mackworth's arc consistency: propagate constraints instead of searching blindly. Scheduling and layout still run on it.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "Constraint satisfaction problem",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Constraint_satisfaction_problem",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Constraint%20satisfaction%20problem&oldid=1334133666",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "a4a0e957"
+    },
+    {
+      "ordinal": 59,
+      "id": "chinook",
+      "title": "Checkers conquered (Chinook)",
+      "year": 1994,
+      "laneId": "search",
+      "classificationCode": "f",
+      "description": "First program to win a world title from humans; checkers fully solved by 2007. Proof of how far brute search + endgame tables go.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "Chinook (computer program)",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Chinook_(computer_program)",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Chinook%20%28computer%20program%29&oldid=1336043862",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "e9a9067d"
+    },
+    {
+      "ordinal": 60,
+      "id": "deepblue",
+      "title": "Deep Blue beats Kasparov",
+      "year": 1997,
+      "laneId": "search",
+      "classificationCode": "f",
+      "description": "200M positions/sec plus hand-tuned evaluation topples chess. Taught two lessons: search scales, and chess wasn't intelligence after all.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article for the system; the match has a separate article.",
+          "sources": [
+            {
+              "title": "Deep Blue (chess computer)",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Deep_Blue_(chess_computer)",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Deep%20Blue%20%28chess%20computer%29&oldid=1365697052",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "8e2aeec9"
+    },
+    {
+      "ordinal": 61,
+      "id": "planningpddl",
+      "title": "Classical planning & PDDL",
+      "year": 1998,
+      "laneId": "search",
+      "classificationCode": "d",
+      "description": "Mature solvers, annual competitions, logistics benchmarks — then a plateau outside them. Now probed again as scaffolding for LLM agents.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "dormant",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "Planning Domain Definition Language",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Planning_Domain_Definition_Language",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Planning%20Domain%20Definition%20Language&oldid=1361721533",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Dormant” is an editorial assessment; no encyclopedic fate finding is inferred from article or link presence.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "russell-norvig-aima-2020",
+            "title": "Artificial Intelligence: A Modern Approach, Fourth Edition",
+            "url": "https://aima.cs.berkeley.edu/",
+            "year": 2020,
+            "kind": "book",
+            "access": "publisher_record",
+            "role": "survey",
+            "authors": [
+              "Stuart Russell",
+              "Peter Norvig"
+            ],
+            "note": ""
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "a7a0e932"
+    },
+    {
+      "ordinal": 62,
+      "id": "satsolvers",
+      "title": "Modern SAT/SMT solvers",
+      "year": 2001,
+      "laneId": "search",
+      "classificationCode": "a",
+      "description": "CDCL made logical search industrial: chip verification, software analysis. Symbolic AI's quietest, most deployed victory.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Directly covers SAT solvers; the node also bundles SMT solvers.",
+          "sources": [
+            {
+              "title": "SAT solver",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/SAT_solver",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=SAT%20solver&oldid=1365863686",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Active” is an editorial assessment of current activity, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "9e3b7f08"
+    },
+    {
+      "ordinal": 63,
+      "id": "mcts",
+      "title": "Monte Carlo Tree Search",
+      "year": 2006,
+      "laneId": "search",
+      "classificationCode": "f",
+      "description": "Random rollouts + bandit selection cracked Go's branching factor. The bridge from classical search to AlphaGo — and to test-time reasoning.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact article.",
+          "sources": [
+            {
+              "title": "Monte Carlo tree search",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Monte_Carlo_tree_search",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Monte%20Carlo%20tree%20search&oldid=1362074863",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "kocsis-szepesvari-uct-2006",
+            "title": "Bandit Based Monte-Carlo Planning",
+            "url": "https://doi.org/10.1007/11871842_29",
+            "year": 2006,
+            "kind": "paper",
+            "access": "publisher_record",
+            "role": "origin",
+            "authors": [
+              "Levente Kocsis",
+              "Csaba Szepesvári"
+            ],
+            "note": "Introduced UCT, a central MCTS method; it did not solely invent the full MCTS family."
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "0727e8c7"
+    },
+    {
+      "ordinal": 64,
+      "id": "poker",
+      "title": "Imperfect-info games solved",
+      "year": 2017,
+      "laneId": "search",
+      "classificationCode": "f",
+      "description": "Libratus and Pluribus beat top pros via counterfactual regret minimization. Game theory made computational — then the labs moved on.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Best article covering Libratus, Pluribus, CFR, and solved poker variants.",
+          "sources": [
+            {
+              "title": "Computer poker player",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Computer_poker_player",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Computer%20poker%20player&oldid=1363857844",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "86763067"
+    },
+    {
+      "ordinal": 65,
+      "id": "llmsearch",
+      "title": "LLM-guided search",
+      "year": 2023,
+      "laneId": "search",
+      "classificationCode": "h",
+      "description": "Tree-of-Thoughts, planner hybrids, verifier-guided decoding: classical search reborn with learned heuristics. The search lane merges into the LLM lane.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "high_activity",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "not_found",
+          "confidence": "low",
+          "note": "No clear English Wikipedia article directly or cleanly contextually covers the 2023 LLM-guided-search synthesis. No direct article was recorded; this absence is not evidence against the development.",
+          "sources": []
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Hot frontier” is a time-sensitive editorial assessment, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": "integrated",
+        "tags": [
+          "search",
+          "planning",
+          "language"
+        ],
+        "questions": [
+          "When should language models generate heuristics, invoke symbolic planners or defer to explicit verification?"
+        ],
+        "sources": [
+          {
+            "title": "PlanBench",
+            "url": "https://arxiv.org/abs/2206.10498",
+            "year": 2022,
+            "role": "benchmark",
+            "roleExplicit": true
+          },
+          {
+            "title": "LLM+P: Empowering Large Language Models with Optimal Planning Proficiency",
+            "url": "https://arxiv.org/abs/2304.11477",
+            "year": 2023,
+            "role": "supporting_result",
+            "roleExplicit": true
+          },
+          {
+            "title": "Tree of Thoughts",
+            "url": "https://arxiv.org/abs/2305.10601",
+            "year": 2023,
+            "role": "supporting_result",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "When should language models generate heuristics, invoke symbolic planners or defer to explicit verification?"
+      ],
+      "direction": null,
+      "claimFingerprint": "604272bd"
+    }
+  ]
+}

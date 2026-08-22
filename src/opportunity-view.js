@@ -1,6 +1,6 @@
 import { computeOpportunityLayout, opportunityPath } from './opportunity-layout.cjs'
 
-export const VERSION = '0.1.0'
+export const VERSION = '1.0.0'
 
 const SVG_NS = 'http://www.w3.org/2000/svg'
 const STATUS_LABELS = Object.freeze({

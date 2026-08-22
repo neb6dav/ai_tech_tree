@@ -1,0 +1,980 @@
+{
+  "schemaVersion": "1.0.0",
+  "laneId": "vision",
+  "nodes": [
+    {
+      "ordinal": 175,
+      "id": "roberts63",
+      "title": "Blocks-world vision",
+      "year": 1963,
+      "laneId": "vision",
+      "classificationCode": "f",
+      "description": "Roberts' edges and 3D from line drawings — computer vision's first thesis. Minsky assigned vision as a summer project in 1966; it took 50 years.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Biography provides context for Roberts's 1963 machine-perception thesis; no standalone development article exists.",
+          "sources": [
+            {
+              "title": "Larry Roberts (computer scientist)",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Larry_Roberts_(computer_scientist)",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Larry%20Roberts%20%28computer%20scientist%29&oldid=1355633482",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "fbc645a3"
+    },
+    {
+      "ordinal": 176,
+      "id": "marr",
+      "title": "Marr's computational vision",
+      "year": 1979,
+      "laneId": "vision",
+      "classificationCode": "f",
+      "description": "Levels of analysis, primal sketch → 2.5D → 3D. Shaped a generation of vision science; aged into the anti-example for end-to-end learning.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Biography is the closest stable page for Marr's computational-vision framework.",
+          "sources": [
+            {
+              "title": "David Marr (scientist)",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/David_Marr_(scientist)",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=David%20Marr%20%28scientist%29&oldid=1344255556",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "2bb26734"
+    },
+    {
+      "ordinal": 177,
+      "id": "sift",
+      "title": "Hand-crafted features (SIFT, HOG)",
+      "year": 1999,
+      "laneId": "vision",
+      "classificationCode": "x",
+      "description": "Engineered descriptors ruled recognition for a decade of careful pipelines — rendered obsolete in one conference cycle after AlexNet.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "not_assessed",
+        "trajectory": "ambiguous_ended_or_superseded",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Direct for SIFT but only contextual for the node's combined SIFT-and-HOG hand-crafted-feature era.",
+          "sources": [
+            {
+              "title": "Scale-invariant feature transform",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Scale-invariant_feature_transform",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Scale-invariant%20feature%20transform&oldid=1340295495",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "The assigned SIFT page describes current applications and improvements and does not explicitly document the combined SIFT-and-HOG feature era as ended or superseded.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "lowe-sift-2004",
+            "title": "Distinctive Image Features from Scale-Invariant Keypoints",
+            "url": "https://www.cs.ubc.ca/~lowe/keypoints/",
+            "year": 2004,
+            "kind": "paper",
+            "access": "author_open",
+            "role": "origin",
+            "authors": [
+              "David G. Lowe"
+            ],
+            "note": ""
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "56ce6096"
+    },
+    {
+      "ordinal": 178,
+      "id": "facedetect",
+      "title": "Viola–Jones face detection",
+      "year": 2001,
+      "laneId": "vision",
+      "classificationCode": "f",
+      "description": "Viola-Jones cascades enabled real-time face detection and were widely deployed in early cameras and vision products; later learned detectors largely displaced the original pipeline.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact framework article for the real-time face-detection milestone.",
+          "sources": [
+            {
+              "title": "Viola–Jones object detection framework",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Viola%E2%80%93Jones_object_detection_framework",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Viola%E2%80%93Jones%20object%20detection%20framework&oldid=1366907026",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "viola-jones-cascade-2001",
+            "title": "Rapid Object Detection Using a Boosted Cascade of Simple Features",
+            "url": "https://doi.org/10.1109/CVPR.2001.990517",
+            "year": 2001,
+            "kind": "paper",
+            "access": "publisher_record",
+            "role": "origin",
+            "authors": [
+              "Paul Viola",
+              "Michael Jones"
+            ],
+            "note": ""
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "466c46d5"
+    },
+    {
+      "ordinal": 179,
+      "id": "imagenet",
+      "title": "ImageNet & benchmark culture",
+      "year": 2009,
+      "laneId": "vision",
+      "classificationCode": "f",
+      "description": "14M crowd-labeled images and an annual contest. The dataset that made deep learning measurable — and made benchmarks the field's engine.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact dataset and challenge article.",
+          "sources": [
+            {
+              "title": "ImageNet",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/ImageNet",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=ImageNet&oldid=1349178867",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "deng-imagenet-2009",
+            "title": "ImageNet: A Large-Scale Hierarchical Image Database",
+            "url": "https://www.image-net.org/static_files/papers/imagenet_cvpr09.pdf",
+            "year": 2009,
+            "kind": "paper",
+            "access": "free_to_read",
+            "role": "origin",
+            "authors": [
+              "Jia Deng",
+              "Wei Dong",
+              "Richard Socher",
+              "Li-Jia Li",
+              "Kai Li",
+              "Li Fei-Fei"
+            ],
+            "note": "Official project-hosted paper."
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "7d86ce2e"
+    },
+    {
+      "ordinal": 180,
+      "id": "alexnet",
+      "title": "AlexNet — the big bang",
+      "year": 2012,
+      "laneId": "vision",
+      "classificationCode": "f",
+      "description": "GPU-trained CNN dropped ImageNet error from 26% to 16%. The result that flipped the entire field to deep learning within 18 months.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact architecture and ImageNet milestone article.",
+          "sources": [
+            {
+              "title": "AlexNet",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/AlexNet",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=AlexNet&oldid=1366708512",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": [
+          {
+            "id": "goodfellow-bengio-courville-deep-learning-2016",
+            "title": "Deep Learning",
+            "url": "https://www.deeplearningbook.org/",
+            "year": 2016,
+            "kind": "book",
+            "access": "author_open",
+            "role": "survey",
+            "authors": [
+              "Ian Goodfellow",
+              "Yoshua Bengio",
+              "Aaron Courville"
+            ],
+            "note": ""
+          }
+        ]
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "6eaa7dba"
+    },
+    {
+      "ordinal": 181,
+      "id": "detection",
+      "title": "Detection & segmentation",
+      "year": 2015,
+      "laneId": "vision",
+      "classificationCode": "f",
+      "description": "R-CNN→Mask R-CNN→DETR: from labels to boxes to pixels. The perception stack under AVs, robots and medical imaging.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Direct for detection, but the node also combines segmentation and several later architecture families.",
+          "sources": [
+            {
+              "title": "Object detection",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Object_detection",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Object%20detection&oldid=1360417340",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": "integrated",
+        "tags": [
+          "vision",
+          "perception"
+        ],
+        "questions": [
+          "How should open-world detectors represent unknown objects and failures rather than forcing closed-set predictions?"
+        ],
+        "sources": [
+          {
+            "title": "Mask R-CNN",
+            "url": "https://arxiv.org/abs/1703.06870",
+            "year": 2017,
+            "role": "supporting_result",
+            "roleExplicit": true
+          },
+          {
+            "title": "End-to-End Object Detection with Transformers",
+            "url": "https://arxiv.org/abs/2005.12872",
+            "year": 2020,
+            "role": "supporting_result",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "How should open-world detectors represent unknown objects and failures rather than forcing closed-set predictions?"
+      ],
+      "direction": null,
+      "claimFingerprint": "30245460"
+    },
+    {
+      "ordinal": 182,
+      "id": "deepface",
+      "title": "Face recognition surpasses humans",
+      "year": 2014,
+      "laneId": "vision",
+      "classificationCode": "f",
+      "description": "DeepFace/FaceNet crossed human accuracy — and dragged AI into surveillance politics, bias audits and bans. Capability and controversy, together.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Direct for DeepFace but contextual for FaceNet, human-level accuracy, and the wider recognition milestone.",
+          "sources": [
+            {
+              "title": "DeepFace",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/DeepFace",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=DeepFace&oldid=1360646754",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": "integrated",
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "title": "DeepFace: Closing the Gap to Human-Level Performance in Face Verification",
+            "url": "https://arxiv.org/abs/1404.3840",
+            "year": 2014,
+            "role": "origin",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "cbfb2c18"
+    },
+    {
+      "ordinal": 183,
+      "id": "unet",
+      "title": "U-Net",
+      "year": 2015,
+      "laneId": "vision",
+      "classificationCode": "f",
+      "description": "An encoder–decoder with skip connections built for biomedical segmentation. Its multiscale denoising shape later became the workhorse backbone of diffusion models.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Direct article for the architecture and its later diffusion-model use.",
+          "sources": [
+            {
+              "title": "U-Net",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/U-Net",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=U-Net&oldid=1365482926",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": "integrated",
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "title": "U-Net: Convolutional Networks for Biomedical Image Segmentation",
+            "url": "https://arxiv.org/abs/1505.04597",
+            "year": 2015,
+            "role": "origin",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "91341b04"
+    },
+    {
+      "ordinal": 184,
+      "id": "vit",
+      "title": "Vision Transformer",
+      "year": 2020,
+      "laneId": "vision",
+      "classificationCode": "f",
+      "description": "Treating images as patch tokens made pure transformers competitive for image recognition at scale and helped unify vision-language architectures; convolutional networks remain widely used.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact architecture article.",
+          "sources": [
+            {
+              "title": "Vision transformer",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Vision_transformer",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Vision%20transformer&oldid=1359765528",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": "integrated",
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "title": "An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale",
+            "url": "https://arxiv.org/abs/2010.11929",
+            "year": 2020,
+            "role": "origin",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "6ba42dc6"
+    },
+    {
+      "ordinal": 185,
+      "id": "clip",
+      "title": "CLIP — language-supervised vision",
+      "year": 2021,
+      "laneId": "vision",
+      "classificationCode": "f",
+      "description": "400M web image-text pairs; open-vocabulary recognition for free. The bridge into multimodal LLMs and the guidance system of image generation.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "confirmed",
+          "confidence": "high",
+          "note": "Exact CLIP model article under the current canonical punctuation.",
+          "sources": [
+            {
+              "title": "Contrastive Language–Image Pre-training",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Contrastive_Language%E2%80%93Image_Pre-training",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Contrastive%20Language%E2%80%93Image%20Pre-training&oldid=1359776164",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": "integrated",
+        "tags": [],
+        "questions": [],
+        "sources": [
+          {
+            "title": "Learning Transferable Visual Models From Natural Language Supervision",
+            "url": "https://arxiv.org/abs/2103.00020",
+            "year": 2021,
+            "role": "origin",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "f8ae7be5"
+    },
+    {
+      "ordinal": 186,
+      "id": "sam",
+      "title": "Promptable segmentation (SAM)",
+      "year": 2023,
+      "laneId": "vision",
+      "classificationCode": "a",
+      "description": "Segment anything, zero-shot, from a click or a phrase. Foundation-model economics arrive in core vision tooling.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Relevant task article; the current encyclopedia has no standalone canonical Segment Anything article.",
+          "sources": [
+            {
+              "title": "Image segmentation",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Image_segmentation",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Image%20segmentation&oldid=1340320744",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Active” is an editorial assessment of current activity, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "006286dd"
+    },
+    {
+      "ordinal": 187,
+      "id": "neural3d",
+      "title": "Neural 3D (NeRF→Gaussian splatting)",
+      "year": 2020,
+      "laneId": "vision",
+      "classificationCode": "a",
+      "description": "Scenes as learned radiance fields; photoreal 3D from phone photos. Feeding robotics sims, film, and world models.",
+      "dateOverride": {
+        "start": 2020,
+        "end": 2023,
+        "label": "2020-2023",
+        "milestones": [
+          "NeRF 2020",
+          "3D Gaussian Splatting 2023"
+        ]
+      },
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "active",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Direct for NeRF but contextual for the node's combined NeRF-to-Gaussian-splatting development.",
+          "sources": [
+            {
+              "title": "Neural radiance field",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Neural_radiance_field",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Neural%20radiance%20field&oldid=1310707783",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Active” is an editorial assessment of current activity, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": "integrated",
+        "tags": [
+          "vision",
+          "3D",
+          "graphics"
+        ],
+        "questions": [
+          "How can neural scene representations become editable, physically grounded and useful for embodied agents?"
+        ],
+        "sources": [
+          {
+            "title": "NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis",
+            "url": "https://arxiv.org/abs/2003.08934",
+            "year": 2020,
+            "role": "origin",
+            "roleExplicit": true
+          },
+          {
+            "title": "3D Gaussian Splatting for Real-Time Radiance Field Rendering",
+            "url": "https://arxiv.org/abs/2308.04079",
+            "year": 2023,
+            "role": "origin",
+            "roleExplicit": true
+          }
+        ],
+        "works": []
+      },
+      "questions": [
+        "How can neural scene representations become editable, physically grounded and useful for embodied agents?"
+      ],
+      "direction": null,
+      "claimFingerprint": "fdb0e2ce"
+    },
+    {
+      "ordinal": 188,
+      "id": "vjepa",
+      "title": "JEPA world models (V-JEPA 2)",
+      "year": 2024,
+      "laneId": "vision",
+      "classificationCode": "h",
+      "description": "LeCun's anti-autoregressive program: predict in representation space, not pixels. Embodied common sense as the goal; the bet against LLM-only intelligence.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "not_assessed",
+        "activity": "high_activity",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Relevant world-model article; V-JEPA and JEPA lack a standalone canonical article.",
+          "sources": [
+            {
+              "title": "World model (artificial intelligence)",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/World_model_(artificial_intelligence)",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=World%20model%20%28artificial%20intelligence%29&oldid=1366501227",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Hot frontier” is a time-sensitive editorial assessment, not a conclusion established by this Wikipedia mapping.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "2398bcd6"
+    },
+    {
+      "ordinal": 189,
+      "id": "multimodal",
+      "title": "Native multimodal models",
+      "year": 2023,
+      "laneId": "vision",
+      "classificationCode": "f",
+      "description": "GPT-4V→Gemini: see, hear, speak in one model. Vision stopped being a separate field and became an input mode.",
+      "dateOverride": null,
+      "statusProfile": {
+        "kind": "development",
+        "significance": "foundational",
+        "activity": "not_assessed",
+        "trajectory": "not_assessed",
+        "asOf": "2026-08-04",
+        "confidence": "low",
+        "rationale": "Low-confidence editorial migration from the legacy category; unrepresented facets remain unassessed."
+      },
+      "audit": {
+        "development": {
+          "state": "partial",
+          "confidence": "medium",
+          "note": "Broad field article for models integrating multiple modalities natively.",
+          "sources": [
+            {
+              "title": "Multimodal learning",
+              "canonicalUrl": "https://en.wikipedia.org/wiki/Multimodal_learning",
+              "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Multimodal%20learning&oldid=1361482778",
+              "section": "",
+              "checkedAt": "2026-08-04"
+            }
+          ]
+        },
+        "mapStatus": {
+          "state": "editorial_only",
+          "confidence": null,
+          "note": "“Foundational” is the map's editorial ranking; the article confirms the development separately, not that ranking.",
+          "sources": []
+        }
+      },
+      "auditRecordPresent": {
+        "development": true,
+        "mapStatus": true
+      },
+      "research": {
+        "tier": null,
+        "tags": [],
+        "questions": [],
+        "sources": [],
+        "works": []
+      },
+      "questions": [],
+      "direction": null,
+      "claimFingerprint": "960ef812"
+    }
+  ]
+}

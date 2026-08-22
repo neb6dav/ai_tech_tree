@@ -2,7 +2,7 @@
 
 ## Purpose and release status
 
-The AI Research Tech Tree is a public-beta research atlas designed to help readers explore the chronology and recorded relationships of artificial-intelligence research. It is a navigational and synthesis artifact. It is not a substitute for reading the cited literature, an exhaustive bibliography, a systematic review, or a peer-reviewed causal history.
+The AI Research Tech Tree is a public research atlas designed to help readers explore the chronology and recorded relationships of artificial-intelligence research. Version `1.0.0`, release state `Stable`, edition `2026-08-21-stable-1`, is the tagged stable release. The release is promoted only from its approved annotated tag on protected `main`. It is a navigational and synthesis artifact. It is not a substitute for reading the cited literature, an exhaustive bibliography, a systematic review, or a peer-reviewed causal history.
 
 The project favors transparent uncertainty over false completeness. A visible evidence gap or unassessed relationship is part of the published record and an invitation to improve it.
 
@@ -103,9 +103,44 @@ Review should record, where available:
 
 Substantive changes are made through GitHub issues and pull requests. Git history preserves who proposed, reviewed, and merged a change. Tagged releases freeze citable snapshots while stable node and relationship IDs allow records to be compared over time.
 
+## Stable identity and data status
+
+The v1 public contract freezes every existing exported record ID, not only the
+339 node IDs used by application deep links. The frozen inventory includes
+historical lanes, classifications, nodes, relationships, evidence assessments,
+papers and links, landmark works and links, and Wikipedia sources, together
+with the Opportunity map, visual bands, nodes, relationships, sources,
+application branches, constraints, open opportunities, and unresolved claims.
+An identity correction requires explicit compatibility review; ordinary prose,
+date, evidence, or relationship corrections retain their existing IDs. A future
+addition deliberately extends the locked inventory rather than reusing an ID.
+
+Release identity and evidence currency are separate. The v1 edition is dated
+2026-08-21, while the historical-atlas review cutoff remains `2026-08-04`.
+The diffusion Opportunity map is dated `2026-08-19` and remains explicitly
+`alpha` and `imported_unreviewed`. Neither the stable application version nor
+the edition date upgrades an unreviewed record or implies a new source-by-source
+audit.
+
 ## Generation and reproducibility
 
-For this public beta, `ai-research-tech-tree.html` remains the canonical application source and contains the historical atlas records used by the interface. The Opportunity map is maintained separately in `src/data/opportunities/diffusion-models.alpha.json` and validated against `src/data/opportunities/opportunity-map.schema.json` plus cross-view integrity rules. Source code under `src/` and the build, layout, injection, export, and validation scripts are maintained source.
+Historical-atlas authoring is canonical only under `src/data/atlas/`. Its
+schema-`1.0.0` `manifest.json` fixes the 15-lane order, one node shard and one
+relationship shard per lane, and six sidecar paths. Nodes are sharded by their
+own lane. Relationships are sharded by the target node's lane. Dense ordinals
+preserve deterministic cross-shard ordering. `catalog.json` carries project,
+lane, era, classification, and relationship registries; the remaining sidecars
+carry directions, research guidance, Wikipedia audit data, review fingerprints,
+and the no-JavaScript projection.
+
+`ai-research-tech-tree.html` is the maintained application shell, but its
+embedded historical records and data constants are generated projections of
+that canonical atlas and are not a second authoring source. The Opportunity map
+is maintained separately in
+`src/data/opportunities/diffusion-models.alpha.json` and validated against
+`src/data/opportunities/opportunity-map.schema.json` plus cross-view integrity
+rules. Source code under `src/` and the build, layout, injection, export, and
+validation scripts are maintained source.
 
 The following are reproducible generated artifacts and must not be edited directly:
 
@@ -115,7 +150,11 @@ The following are reproducible generated artifacts and must not be edited direct
 - `network-layout-v1.json`; and
 - the JSON, JSON-LD, and NDJSON graph exports.
 
-The deterministic build and test sequence is documented in the README and enforced in continuous integration. Generated outputs are committed so reviewers can inspect what a source change will publish.
+The deterministic build and test sequence is documented in the README and
+enforced in continuous integration. Generated outputs remain committed through
+`v1.0.0` so reviewers can inspect what a source change will publish. The
+publication-compatibility test locks the stable endpoints, schema and layout
+identities, canonical authoring paths, and ordered exported-ID inventories.
 
 ## AI assistance
 

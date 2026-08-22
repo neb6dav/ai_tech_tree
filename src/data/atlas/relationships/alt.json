@@ -1,0 +1,971 @@
+{
+  "schemaVersion": "1.0.0",
+  "laneId": "alt",
+  "relationships": [
+    {
+      "ordinal": 446,
+      "key": "vonneumann45>cellauto:dep",
+      "sourceNodeId": "vonneumann45",
+      "targetNodeId": "cellauto",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "No cross-link was found between the reviewed endpoint pages; link absence does not disprove this map relationship.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "4e9a70c7",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 447,
+      "key": "evolstrat>ga:dep",
+      "sourceNodeId": "evolstrat",
+      "targetNodeId": "ga",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed endpoint articles cross-link; this is contextual evidence, not causal confirmation.",
+        "sources": [
+          {
+            "title": "Evolution strategy",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Evolution_strategy",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Evolution%20strategy&oldid=1365944628",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          },
+          {
+            "title": "Genetic algorithm",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Genetic_algorithm",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Genetic%20algorithm&oldid=1363289705",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "fa869a4a",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 448,
+      "key": "cellauto>ga:dep",
+      "sourceNodeId": "cellauto",
+      "targetNodeId": "ga",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "No cross-link was found between the reviewed endpoint pages; link absence does not disprove this map relationship.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "a959c599",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 449,
+      "key": "cellauto>alife:dep",
+      "sourceNodeId": "cellauto",
+      "targetNodeId": "alife",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed “Von Neumann universal constructor” article links to “Artificial life”; this is contextual, not causal, evidence.",
+        "sources": [
+          {
+            "title": "Von Neumann universal constructor",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Von_Neumann_universal_constructor",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Von%20Neumann%20universal%20constructor&oldid=1364596106",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "2671f00e",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 450,
+      "key": "ga>alife:dep",
+      "sourceNodeId": "ga",
+      "targetNodeId": "alife",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed endpoint articles cross-link; this is contextual evidence, not causal confirmation.",
+        "sources": [
+          {
+            "title": "Genetic algorithm",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Genetic_algorithm",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Genetic%20algorithm&oldid=1363289705",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          },
+          {
+            "title": "Artificial life",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Artificial_life",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Artificial%20life&oldid=1367099923",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "6ffc36f5",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 451,
+      "key": "ga>gp92:dep",
+      "sourceNodeId": "ga",
+      "targetNodeId": "gp92",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed endpoint articles cross-link; this is contextual evidence, not causal confirmation.",
+        "sources": [
+          {
+            "title": "Genetic algorithm",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Genetic_algorithm",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Genetic%20algorithm&oldid=1363289705",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          },
+          {
+            "title": "Genetic programming",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Genetic_programming",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Genetic%20programming&oldid=1363159276",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "cf3bb1b0",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 452,
+      "key": "alife>swarm:dep",
+      "sourceNodeId": "alife",
+      "targetNodeId": "swarm",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed endpoint articles cross-link; this is contextual evidence, not causal confirmation.",
+        "sources": [
+          {
+            "title": "Artificial life",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Artificial_life",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Artificial%20life&oldid=1367099923",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          },
+          {
+            "title": "Swarm intelligence",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Swarm_intelligence",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Swarm%20intelligence&oldid=1365857861",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "b1303ca5",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 453,
+      "key": "ga>neat:dep",
+      "sourceNodeId": "ga",
+      "targetNodeId": "neat",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed “Neuroevolution of augmenting topologies” article links to “Genetic algorithm”; this is contextual, not causal, evidence.",
+        "sources": [
+          {
+            "title": "Neuroevolution of augmenting topologies",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Neuroevolution_of_augmenting_topologies",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Neuroevolution%20of%20augmenting%20topologies&oldid=1357298452",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "e2e0b4e0",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 454,
+      "key": "hebb49>spiking:dep",
+      "sourceNodeId": "hebb49",
+      "targetNodeId": "spiking",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed “Spiking neural network” article links to “Hebbian theory”; this is contextual, not causal, evidence.",
+        "sources": [
+          {
+            "title": "Spiking neural network",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Spiking_neural_network",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Spiking%20neural%20network&oldid=1367641247",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "3f344be1",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 455,
+      "key": "hodgkin52>spiking:dep",
+      "sourceNodeId": "hodgkin52",
+      "targetNodeId": "spiking",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed “Spiking neural network” article links to “Hodgkin–Huxley model”; this is contextual, not causal, evidence.",
+        "sources": [
+          {
+            "title": "Spiking neural network",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Spiking_neural_network",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Spiking%20neural%20network&oldid=1367641247",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "c685250c",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 456,
+      "key": "hubel59>mead:dep",
+      "sourceNodeId": "hubel59",
+      "targetNodeId": "mead",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "No cross-link was found between the reviewed endpoint pages; link absence does not disprove this map relationship.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "6e346af3",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 457,
+      "key": "shannon37>mead:dep",
+      "sourceNodeId": "shannon37",
+      "targetNodeId": "mead",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "No cross-link was found between the reviewed endpoint pages; link absence does not disprove this map relationship.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "af220750",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 458,
+      "key": "rnn>reservoir:dep",
+      "sourceNodeId": "rnn",
+      "targetNodeId": "reservoir",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed endpoint articles cross-link; this is contextual evidence, not causal confirmation.",
+        "sources": [
+          {
+            "title": "Recurrent neural network",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Recurrent_neural_network",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Recurrent%20neural%20network&oldid=1363820365",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          },
+          {
+            "title": "Reservoir computing",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Reservoir_computing",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Reservoir%20computing&oldid=1364212842",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "413d39df",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 459,
+      "key": "hubel59>htm:dep",
+      "sourceNodeId": "hubel59",
+      "targetNodeId": "htm",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed “Hierarchical temporal memory” article links to “Visual cortex”; this is contextual, not causal, evidence.",
+        "sources": [
+          {
+            "title": "Hierarchical temporal memory",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Hierarchical_temporal_memory",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Hierarchical%20temporal%20memory&oldid=1358202218",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "6539255b",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 460,
+      "key": "complexity71>dna:dep",
+      "sourceNodeId": "complexity71",
+      "targetNodeId": "dna",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "No cross-link was found between the reviewed endpoint pages; link absence does not disprove this map relationship.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "d1014661",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 461,
+      "key": "spiking>neuromorphic:dep",
+      "sourceNodeId": "spiking",
+      "targetNodeId": "neuromorphic",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed “Neuromorphic computing” article links to “Spiking neural network”; this is contextual, not causal, evidence.",
+        "sources": [
+          {
+            "title": "Neuromorphic computing",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Neuromorphic_computing",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Neuromorphic%20computing&oldid=1365496865",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "3684e5e8",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 462,
+      "key": "mead>neuromorphic:dep",
+      "sourceNodeId": "mead",
+      "targetNodeId": "neuromorphic",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "Both developments map to one article, so no distinct article cross-link supports this relationship; this is not disproof.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "9c29e1ae",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 463,
+      "key": "complexity71>quantumml:dep",
+      "sourceNodeId": "complexity71",
+      "targetNodeId": "quantumml",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "No cross-link was found between the reviewed endpoint pages; link absence does not disprove this map relationship.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "15af7e3c",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 464,
+      "key": "mead>optical:dep",
+      "sourceNodeId": "mead",
+      "targetNodeId": "optical",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed “Optical neural network” article links to “Neuromorphic computing”; this is contextual, not causal, evidence.",
+        "sources": [
+          {
+            "title": "Optical neural network",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Optical_neural_network",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Optical%20neural%20network&oldid=1367240845",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "9265f53f",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 465,
+      "key": "mead>analogai:dep",
+      "sourceNodeId": "mead",
+      "targetNodeId": "analogai",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed “Neuromorphic computing” article links to “Hardware for artificial intelligence”; this is contextual, not causal, evidence.",
+        "sources": [
+          {
+            "title": "Neuromorphic computing",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Neuromorphic_computing",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Neuromorphic%20computing&oldid=1365496865",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "e212bcd7",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 466,
+      "key": "neuromorphic>analogai:dep",
+      "sourceNodeId": "neuromorphic",
+      "targetNodeId": "analogai",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed “Neuromorphic computing” article links to “Hardware for artificial intelligence”; this is contextual, not causal, evidence.",
+        "sources": [
+          {
+            "title": "Neuromorphic computing",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/Neuromorphic_computing",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Neuromorphic%20computing&oldid=1365496865",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "da658b6f",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 467,
+      "key": "gp92>alphaevolve:dep",
+      "sourceNodeId": "gp92",
+      "targetNodeId": "alphaevolve",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "contextual",
+      "audit": {
+        "state": "indirect",
+        "confidence": "medium",
+        "note": "The reviewed “AlphaEvolve” article links to “Genetic programming”; this is contextual, not causal, evidence.",
+        "sources": [
+          {
+            "title": "AlphaEvolve",
+            "canonicalUrl": "https://en.wikipedia.org/wiki/AlphaEvolve",
+            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=AlphaEvolve&oldid=1352784648",
+            "section": "",
+            "checkedAt": "2026-08-04"
+          }
+        ]
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "906d3a81",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 468,
+      "key": "gpt4>alphaevolve:dep",
+      "sourceNodeId": "gpt4",
+      "targetNodeId": "alphaevolve",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "editorial",
+      "audit": {
+        "state": "not_found",
+        "confidence": "low",
+        "note": "No cross-link was found between the reviewed endpoint pages; link absence does not disprove this map relationship.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "fae0f06e",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 469,
+      "key": "mapelites>alphaevolve:dep",
+      "sourceNodeId": "mapelites",
+      "targetNodeId": "alphaevolve",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "unassessed",
+      "audit": {
+        "state": "not_assessed",
+        "confidence": null,
+        "note": "",
+        "sources": []
+      },
+      "auditRecordPresent": false,
+      "claimFingerprint": "b2d5dacf",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "research_extension",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 470,
+      "key": "hebb49>gap_biolearn:gap",
+      "sourceNodeId": "hebb49",
+      "targetNodeId": "gap_biolearn",
+      "legacyKind": "gap",
+      "relationshipType": "proposed_combination",
+      "rationale": "Editorially proposed research combination; not a claim that the work already exists.",
+      "reviewed": true,
+      "evidenceGrade": "hypothesis",
+      "audit": {
+        "state": "hypothesis",
+        "confidence": null,
+        "note": "This proposed combination is a map hypothesis; Wikipedia absence does not establish novelty.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "a7626144",
+      "reviewState": "reviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 471,
+      "key": "spiking>gap_biolearn:gap",
+      "sourceNodeId": "spiking",
+      "targetNodeId": "gap_biolearn",
+      "legacyKind": "gap",
+      "relationshipType": "proposed_combination",
+      "rationale": "Editorially proposed research combination; not a claim that the work already exists.",
+      "reviewed": true,
+      "evidenceGrade": "hypothesis",
+      "audit": {
+        "state": "hypothesis",
+        "confidence": null,
+        "note": "This proposed combination is a map hypothesis; Wikipedia absence does not establish novelty.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "935a0685",
+      "reviewState": "reviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 472,
+      "key": "analogai>gap_biolearn:gap",
+      "sourceNodeId": "analogai",
+      "targetNodeId": "gap_biolearn",
+      "legacyKind": "gap",
+      "relationshipType": "proposed_combination",
+      "rationale": "Editorially proposed research combination; not a claim that the work already exists.",
+      "reviewed": true,
+      "evidenceGrade": "hypothesis",
+      "audit": {
+        "state": "hypothesis",
+        "confidence": null,
+        "note": "This proposed combination is a map hypothesis; Wikipedia absence does not establish novelty.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "fac46b22",
+      "reviewState": "reviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 473,
+      "key": "quantumml>gap_quant:gap",
+      "sourceNodeId": "quantumml",
+      "targetNodeId": "gap_quant",
+      "legacyKind": "gap",
+      "relationshipType": "proposed_combination",
+      "rationale": "Editorially proposed research combination; not a claim that the work already exists.",
+      "reviewed": true,
+      "evidenceGrade": "hypothesis",
+      "audit": {
+        "state": "hypothesis",
+        "confidence": null,
+        "note": "This proposed combination is a map hypothesis; Wikipedia absence does not establish novelty.",
+        "sources": []
+      },
+      "auditRecordPresent": true,
+      "claimFingerprint": "f47e7b4f",
+      "reviewState": "reviewed",
+      "lifecycle": "active",
+      "origin": "curated_map",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 700,
+      "key": "ga>mapelites:dep",
+      "sourceNodeId": "ga",
+      "targetNodeId": "mapelites",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "unassessed",
+      "audit": {
+        "state": "not_assessed",
+        "confidence": null,
+        "note": "",
+        "sources": []
+      },
+      "auditRecordPresent": false,
+      "claimFingerprint": "5abc650a",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "research_extension",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    },
+    {
+      "ordinal": 701,
+      "key": "alife>mapelites:dep",
+      "sourceNodeId": "alife",
+      "targetNodeId": "mapelites",
+      "legacyKind": "dep",
+      "relationshipType": "editorial_association",
+      "rationale": "Connection retained from the curated map; causal or historical direction has not been individually established.",
+      "reviewed": false,
+      "evidenceGrade": "unassessed",
+      "audit": {
+        "state": "not_assessed",
+        "confidence": null,
+        "note": "",
+        "sources": []
+      },
+      "auditRecordPresent": false,
+      "claimFingerprint": "e0159a97",
+      "reviewState": "unreviewed",
+      "lifecycle": "active",
+      "origin": "research_extension",
+      "direction": "source_to_target",
+      "displayScope": [
+        "timeline",
+        "network"
+      ]
+    }
+  ]
+}

@@ -1,16 +1,14 @@
-name: Deploy GitHub Pages
+name: Prepare GitHub Pages release
 
+# RD-006/RD-007 release path: an authorized manual run starts on protected
+# main, then checks out and verifies the exact annotated v1.0.0 tag. This keeps
+# the github-pages environment's main-only policy while deploying tagged bytes.
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
 
 permissions:
   contents: read
   actions: read
-  pages: write
-  id-token: write
 
 concurrency:
   group: pages
@@ -18,13 +16,19 @@ concurrency:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
+    env:
+      AI_TREE_REQUIRE_CLEAN: "true"
+      AI_TREE_AUTHORIZED_TAG: "v1.0.0"
 
     steps:
-      - name: Check out repository
+      - name: Check out authorized release tag
         uses: actions/checkout@v7
         with:
+          ref: refs/tags/v1.0.0
+          fetch-depth: 0
+          fetch-tags: true
           persist-credentials: false
 
       - name: Set up Node.js
@@ -33,24 +37,37 @@ jobs:
           node-version: 24
           cache: npm
 
+      - name: Verify annotated tag and protected-main ancestry
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_REF" = "refs/heads/main"
+          tag_ref="refs/tags/${AI_TREE_AUTHORIZED_TAG}"
+          test "$(git cat-file -t "$tag_ref")" = "tag"
+          tag_commit="$(git rev-parse "${tag_ref}^{commit}")"
+          test "$tag_commit" = "$(git rev-parse HEAD)"
+          git show-ref --verify --quiet refs/remotes/origin/main
+          test "$tag_commit" = "$GITHUB_SHA"
+          test "$tag_commit" = "$(git rev-parse refs/remotes/origin/main)"
+          package_version="$(node -p "require('./package.json').version")"
+          test "v${package_version}" = "$AI_TREE_AUTHORIZED_TAG"
+          echo "AI_TREE_COMMIT_SHA=$tag_commit" >> "$GITHUB_ENV"
+          echo "AI_TREE_RELEASE_TAG=$AI_TREE_AUTHORIZED_TAG" >> "$GITHUB_ENV"
+          echo "AI_TREE_EXPECT_RELEASE_TAG=$AI_TREE_AUTHORIZED_TAG" >> "$GITHUB_ENV"
+
       - name: Install exact dependencies
         run: npm ci
 
-      - name: Build and validate the public artifact
+      - name: Build, validate, and stage the public artifact
         run: |
           npm run build
           npm test
           git diff --exit-code -- .
-
-      - name: Prepare the Pages artifact
-        shell: bash
-        run: |
-          mkdir _site
-          cp index.html ai-research-tech-tree.json ai-research-tech-tree.jsonld ai-research-tech-tree.ndjson social-card.png robots.txt sitemap.xml _site/
-          touch _site/.nojekyll
-
-      - name: Configure GitHub Pages
-        uses: actions/configure-pages@v5
+          if [ -n "$(git status --porcelain --untracked-files=all)" ]; then
+            echo "The build produced untracked files. Refusing to publish an untracked source state."
+            git status --short
+            exit 1
+          fi
 
       - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v5
@@ -58,6 +75,11 @@ jobs:
           path: _site
 
   deploy:
+    permissions:
+      actions: read
+      contents: read
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -65,6 +87,9 @@ jobs:
     needs: build
 
     steps:
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5

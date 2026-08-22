@@ -106,7 +106,7 @@ assert(html.includes('The Opportunity View is unavailable.'), 'Opportunity rende
 
 console.log(JSON.stringify({
   status: 'PASS',
-  edition: '2026-08-13-public-beta-1',
+  edition: '2026-08-21-stable-1',
   wcagTargets: { normalText: 4.5, controlsAndGraphics: 3 },
   contrast: report,
   staticContracts: 'PASS',

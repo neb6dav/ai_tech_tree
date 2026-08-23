@@ -58,6 +58,7 @@ test('URL camera restoration requires a complete finite cx/cy/z tuple', () => {
   assert.match(html, /function parseRestoreCamera\(params\)/);
   assert.match(html, /present\.every\(Boolean\)/);
   assert.match(html, /values\.every\(value=>Number\.isFinite\(value\)\)/);
+  assert.match(html, /values\[2\]>0/);
   assert.match(html, /camera\.valid/);
   assert.match(html, /hasFilter=params\.has\('status'\)\|\|params\.has\('audit'\)\|\|params\.has\('research'\)/);
   assert.match(html, /else fitAll\(\)/);
@@ -70,6 +71,36 @@ test('URL camera restoration requires a complete finite cx/cy/z tuple', () => {
   assert.match(html, /function reapplyRestoredCamera\(\)/);
   assert.match(html, /applyT\(true\)/);
   assert.match(html, /requestAnimationFrame\(\(\)=>\{syncControlsForViewport\(\);syncDockLayout\(\);requestAnimationFrame/);
+});
+
+test('v1.2.1 preserves the URL hash contract and adds only trace', () => {
+  const preV121Keys = [
+    'audit', 'cx', 'cy', 'z', 'mode', 'node', 'opp', 'oppBand', 'oppPanel',
+    'opportunity', 'research', 'scale', 'status', 'step', 'theme', 'tour', 'view'
+  ];
+  const inventory = html.match(/const RESTORE_HASH_KEYS=new Set\(\[([^\]]+)\]\)/u);
+  assert.ok(inventory, 'recognized URL hash key inventory is present');
+  const actualKeys = [...inventory[1].matchAll(/'([^']+)'/gu)].map(match => match[1]);
+  assert.equal(actualKeys.length, preV121Keys.length + 1, 'v1.2.1 adds exactly one recognized key');
+  assert.deepEqual(new Set(actualKeys), new Set([...preV121Keys, 'trace']));
+  assert.match(html, /recognizedIntent=\[\.\.\.params\.keys\(\)\]\.some\(key=>RESTORE_HASH_KEYS\.has\(key\)\)/);
+
+  // Existing URL meanings remain stable, including the default hover mode.
+  assert.match(html, /if\(mode!==\'hover\'\)params\.set\(\'mode\',mode\)/);
+  assert.match(html, /params\.set\(\'research\',activeResearchFilter\)/);
+  assert.match(html, /params\.set\(\'scale\',timeScale\)/);
+  assert.match(html, /params\.set\(\'view\',viewMode\)/);
+  assert.match(html, /params\.set\(\'tour\',activeTourSlug\);params\.set\(\'step\',String\(activeTourStep\|\|1\)\)/);
+  assert.match(html, /params\.set\(\'status\',activeStatus\.size\?\[\.\.\.activeStatus\]\.sort\(\)\.join\(\',\'\):\'none\'\)/);
+  assert.match(html, /params\.set\(\'audit\',activeAuditFilter\)/);
+  assert.match(html, /params\.set\(\'cx\',\(\(viewCenterX\(\)-tx\)\/k\)\.toFixed\(1\)\)/);
+  assert.match(html, /params\.set\(\'cy\',\(\(viewCenterY\(\)-ty\)\/k\)\.toFixed\(1\)\)/);
+  assert.match(html, /params\.set\(\'z\',k\.toFixed\(3\)\)/);
+
+  // A valid trace is authoritative over a conflicting node and is atlas-only.
+  assert.match(html, /const trace=params\.get\(\'trace\'\),validTrace=trace&&byId\.has\(trace\)&&viewMode!==\'list\'&&viewMode!==\'opportunity\'/);
+  assert.match(html, /if\(validTrace\)\{focusedTarget=trace;activateTrace\(trace\);restored=true;\}else if\(node&&byId\.has\(node\)\)/);
+  assert.match(html, /if\(traced&&traceRootId&&viewMode!==\'list\'&&viewMode!==\'opportunity\'\)params\.set\(\'trace\',traceRootId\)/);
 });
 
 test('fit and serialized camera centers use shell-aware vertical insets', () => {

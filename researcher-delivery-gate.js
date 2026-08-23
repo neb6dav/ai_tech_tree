@@ -385,8 +385,15 @@ function verifyEmbedSourceContract(html, css, applicationScript) {
   const restoreState = functionSource(applicationScript, 'restoreState');
   for (const key of ['status', 'audit', 'research', 'mode', 'view', 'opportunity', 'opp', 'oppPanel', 'oppBand', 'node', 'cx', 'cy', 'z', 'theme', 'scale', 'tour', 'step']) {
     requirePattern(new RegExp(`["']${key}["']`, 'u'), `${key} remains in hash serialization`, currentParams);
+  }
+  for (const key of ['status', 'audit', 'research', 'mode', 'view', 'opportunity', 'opp', 'oppPanel', 'oppBand', 'node', 'theme', 'scale', 'tour', 'step']) {
     requirePattern(new RegExp(`\\.(?:get|has)\\s*\\(\\s*["']${key}["']\\s*\\)`, 'u'), `${key} remains in hash restoration`, restoreState);
   }
+  const restoreCamera = functionSource(applicationScript, 'parseRestoreCamera');
+  requirePattern(/\[\s*["']cx["']\s*,\s*["']cy["']\s*,\s*["']z["']\s*\]/u, 'camera restoration checks the complete cx/cy/z tuple', restoreCamera);
+  requirePattern(/present\.every\(Boolean\)/u, 'camera restoration rejects incomplete cx/cy/z tuples', restoreCamera);
+  requirePattern(/values\.every\(value\s*=>\s*Number\.isFinite\(value\)\)/u, 'camera restoration rejects non-finite camera values', restoreCamera);
+  requirePattern(/values\[2\]\s*>\s*0/u, 'camera restoration requires a positive zoom value', restoreCamera);
   requirePattern(/location\.hash|hash\.slice/u, 'state restoration remains hash-based', restoreState);
   forbidPattern(/\.set\s*\(\s*["']embed["']/u, 'embed is incorrectly serialized into the state hash', currentParams);
   requirePattern(/history\.replaceState\s*\([^)]*,\s*["']#["']\s*\+|history\.replaceState\s*\([^)]*,\s*`#/u, 'state serialization preserves the embed query while replacing only the fragment', applicationScript);
@@ -406,9 +413,10 @@ function verifyEmbedSourceContract(html, css, applicationScript) {
 
   const exposedGlobals = [...applicationScript.matchAll(/\b(?:window|globalThis)\.([A-Za-z_$][\w$]*)\s*=/gu)]
     .map(match => match[1])
-    .filter(name => name !== '__AI_TREE_DIAGNOSTICS__');
+    .filter(name => !['__AI_TREE_DIAGNOSTICS__', '__AI_TREE_RESTORE_STATE__'].includes(name));
   assert.deepEqual(exposedGlobals, [], 'Embed must not expose a new global control API.');
   requirePattern(/window\.__AI_TREE_DIAGNOSTICS__\s*=\s*Object\.freeze\s*\(/u, 'the only allowed global remains frozen diagnostics', applicationScript);
+  requirePattern(/window\.__AI_TREE_RESTORE_STATE__\s*=\s*Object\.freeze\s*\(/u, 'camera restoration diagnostics remain frozen and read-only', applicationScript);
 }
 
 function runResearcherDeliveryGate() {

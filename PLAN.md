@@ -1,28 +1,25 @@
 ---
-roadmap_version: 9
+roadmap_version: 10
 active_release: "v1.2.1"
-release_mode: "source_checkpoint_v1.2.1_docs_first"
-active_work_package: "roadmap_decision_checkpoint"
-base_sha: "85108c78fa86c86634d4c0944839696369e687cd"
+release_mode: "stable_candidate_complete_cross_platform_verified"
+active_work_package: "v1.2.1_stable_candidate_review"
+base_sha: "f03b9c9851f786b5181e7d18adbb12a548838fbf"
 product_boundary_sha: "53e3a4f9c0624096aede63e0345390a3c021bac0"
 working_branch: "codex/ui-v1.2.1"
 expanded_archive_branch: "archive/v0.1.1-expanded-release-safety-0870d47"
-verified_implementation_head: "9b2d33d249704a92719df74f8d3900e1998a4cf2"
-pull_request: 11
-pull_request_status: "open_mergeable_blocked_review_required_not_merged"
+verified_implementation_head: "2bb999e66a132b98dad7fd7df476155f68e57973"
+pull_request: null
+pull_request_status: "not_open"
 public_live_release: "v1.0.0"
 v1_2_tag_and_deployment: "none"
-verification_merge_tree: "8bca644f2160bfbfc0574ae150fb92fa9fd49c6b"
+verification_merge_tree: null
 last_completed_checkpoint: "v1.0.0"
-last_completed_local_checkpoint: "v1.2.0"
-active_release_status: "v1.2.1_docs_only_roadmap_decision_checkpoint_implementation_not_started"
+last_completed_local_checkpoint: "v1.2.1_stable_candidate_verified"
+active_release_status: "v1.2.1_stable_candidate_complete_cross_platform_verified"
 next_exact_action: >-
-  Implement the approved v1.2.1 presentation-only orientation and research
-  navigation scope from this checkpoint, then run the complete Windows and
-  hosted-Ubuntu verification suite. Hold the resulting Stable release
-  candidate for separate merge, annotated-tag, and deployment authorization.
-  The public/live release remains v1.0.0 and the dataset citation remains
-  v1.0.0.
+  Owner review and separate authorization for merge, annotated tagging, and
+  deployment. Do not merge, tag, deploy, or change the public/live v1.0.0
+  release.
 presentation_inventory_owner_review: "owner_approved_2026-08-22_exact_24_anchors_72_spine_edges_and_six_tours_44_narratives_digest_ca4240fdaf5a3e6ac4484fafac28e0311ea5cbb4dff725dfb5894c1265001722_caveated_supersession_ids_contextual_reviewed_false_not_established"
 potential_future_editions:
   - version: "v1.3.0"
@@ -32,6 +29,14 @@ potential_future_editions:
     status: "roadmap_candidate_not_authorized"
     purpose: "Curator-reviewed hypothesis workbench with structured tests, provenance, deduplication, and explicit promotion into canonical Opportunity data"
 last_verified_commands:
+  - command: "PowerShell: npm run test:core; npm run test:publication; npm run test:browser"
+    status: "PASS"
+    runtime: "Windows x64; Node v24.14.1; exact implementation head 2bb999e66a132b98dad7fd7df476155f68e57973"
+    scope: "v1.2.1 post-fix Stable-candidate verification: 27/27 browser tests, reviewed active DOM peak 7090/8000, HTML 4,591,976 bytes, gzip 664,844 bytes, SHA256 41176a71ccf98aec2e5a2464055add425358e9a1436f3b47f40b09e1b282c44a, semantic digest 865174514ba64e20d6f2a90471a6766b6d5fa18f5b0e62c85d9601de077a50f2, 339 nodes/711 relationships/339 sitemap node URLs/0 semantic changes, all 355 staged release inputs matched the exact head while only documentation files were dirty, Lighthouse medians score 52/FCP 23185.883/LCP 23391.883/TBT 186/CLS 0"
+  - command: "GitHub Actions run 32616802586, job 97138752718 (https://github.com/neb6dav/ai_tech_tree/actions/runs/32616802586)"
+    status: "PASS"
+    runtime: "ubuntu-24.04; exact implementation head 2bb999e66a132b98dad7fd7df476155f68e57973"
+    scope: "v1.2.1 hosted cross-platform Stable-candidate verification: 27/27 browser tests, active DOM peak 7090/8000, HTML 4,591,976 bytes, gzip 664,844 bytes, unchanged semantic digest, 339 nodes/711 relationships, zero semantic changes, generated files committed, Lighthouse medians score 43/FCP 23182.7173/LCP 23403.8253/TBT 479.5/CLS 0"
   - command: "PowerShell: $env:AI_TREE_REQUIRE_CLEAN='true'; npm test"
     status: "PASS"
     runtime: "Windows x64; Node v24.14.1; exact clean head 9b2d33d249704a92719df74f8d3900e1998a4cf2"
@@ -113,14 +118,14 @@ source_checkpoints:
     product_version: "1.2.0"
     release_state: "Stable candidate"
     checkpoint_commit: "9b2d33d249704a92719df74f8d3900e1998a4cf2"
-    tag_and_deployment: "not_authorized_not_merged_tagged_or_deployed"
+    tag_and_deployment: "merged_not_authorized_not_tagged_or_deployed"
     purpose: "Researcher delivery with static node pages and read-only comparison/embed"
   - version: "v1.2.1"
-    status: "roadmap_decision_checkpoint_complete_implementation_not_started"
-    verification_state: "docs_only_not_yet_verified"
+    status: "stable_candidate_complete_cross_platform_verified"
+    verification_state: "windows_and_hosted_ubuntu_verified"
     product_version: "1.2.1"
     release_state: "Stable candidate"
-    checkpoint_commit: "pending_docs_checkpoint_commit"
+    checkpoint_commit: "2bb999e66a132b98dad7fd7df476155f68e57973"
     tag_and_deployment: "not_authorized_not_merged_tagged_or_deployed"
     purpose: "Presentation-only orientation, lineage trace, era lens, and research navigation"
 authorization:

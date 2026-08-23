@@ -268,9 +268,37 @@ must exercise the complete hash, filter, trace, era, question, responsive,
 theme, embed, accessibility, hostile-sequence, DOM, HTML, gzip, and
 cross-platform Lighthouse checks in the implementation plan. This branch
 starts with this docs-only roadmap/decision checkpoint. A Stable `v1.2.1`
-release candidate may be prepared after implementation and verification, but
-merge, annotated tagging, deployment, and any change to the v1.0.0 citation
-remain separately unauthorized.
+release candidate is prepared after implementation and cross-platform
+verification, but merge, annotated tagging, deployment, and any change to the
+v1.0.0 citation remain separately unauthorized.
+
+### RD-013 implementation evidence
+
+The implementation checkpoint is complete at exact head
+`2bb999e66a132b98dad7fd7df476155f68e57973`, based on `main`/
+`f03b9c9851f786b5181e7d18adbb12a548838fbf`. Post-fix Windows verification with
+`npm run test:core`, `npm run test:publication`, and `npm run test:browser` passed
+the complete release suite and 27/27 browser tests; hosted Ubuntu ran clean
+`npm test` at the same exact head and also passed 27/27. The first hosted run
+exposed the 1280px boundary overflow and focus-versus-hover relationship
+preview race; the final head contains those narrow fixes.
+
+The reviewed active-DOM peak is 7,090 on both Windows and Ubuntu against the
+unchanged 8,000 ceiling; the generated HTML is 4,591,976 bytes and gzip is
+664,844 bytes. Publication remains 339 nodes, 711 relationships, and 339 node
+URLs with zero semantic changes; the semantic digest remains
+`865174514ba64e20d6f2a90471a6766b6d5fa18f5b0e62c85d9601de077a50f2`, and all
+355 staged release inputs match the exact head while only documentation files
+were dirty during the Windows post-fix checks. The artifact SHA-256 is
+`41176a71ccf98aec2e5a2464055add425358e9a1436f3b47f40b09e1b282c44a`.
+
+Windows Lighthouse medians are score 52, FCP 23,185.883 ms, LCP 23,391.883
+ms, TBT 186 ms, and CLS 0. Hosted Ubuntu Lighthouse medians are score 43, FCP
+23,182.7173 ms, LCP 23,403.8253 ms, TBT 479.5 ms, and CLS 0. The hosted result
+is [Actions run 32616802586](https://github.com/neb6dav/ai_tech_tree/actions/runs/32616802586),
+job 97138752718. The public/live release remains v1.0.0; there is no pull
+request, and merge, annotated tagging, deployment, and citation changes remain
+separately unauthorized.
 
 ## Explicit deferrals
 

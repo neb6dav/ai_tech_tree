@@ -6,12 +6,18 @@ All notable public changes to the AI Research Tech Tree will be documented here.
 
 ### v1.2.1 Stable release candidate
 
-**Not merged, released, tagged, or deployed.** This orientation and research-navigation patch repairs camera restoration, responsive controls, pinned map orientation, lineage tracing, era lenses, the Unfinished Business question deck, and relationship-rationale previews while preserving the canonical dataset identity. The public/live release remains v1.0.0, and `main` contains the merged v1.2.0 source checkpoint. Pages is configured to require the exact annotated v1.2.0 tag, but that tag has not been created and the workflow has not been run; changing the pin or promoting v1.2.1 requires separate authorization.
+**Stable candidate complete and cross-platform verified; not merged, tagged, or deployed.** The exact implementation head is `2bb999e66a132b98dad7fd7df476155f68e57973`. Windows and hosted Ubuntu both pass the complete 27/27 browser suite and all release gates. The public/live release remains v1.0.0, `main` remains the merged v1.2.0 source checkpoint, and there is no pull request. Owner review and separate authorization are still required for promotion.
 
 #### Added
 
 - A v1.2.1 presentation-only candidate that preserves 339 nodes, 711 relationships, stable IDs, the v1.0.0 dataset citation, and the 2026-08-21-stable-1 edition.
 - Readable lineage tracing, pinned date and lane orientation, transient era cards, and the 74-question Unfinished Business deck without adding semantic records.
+
+#### Verification evidence
+
+- Active-DOM peak is 7,090 on both Windows and hosted Ubuntu against the unchanged 8,000 ceiling; the built HTML is 4,591,976 bytes and gzip is 664,844 bytes. All generated files are committed at the exact candidate head.
+- The semantic digest remains `865174514ba64e20d6f2a90471a6766b6d5fa18f5b0e62c85d9601de077a50f2`; publication remains 339 nodes, 711 relationships, 339 node URLs, and zero semantic changes. The clean manifest matches the exact head across 355 inputs.
+- Windows Lighthouse medians are score 52, FCP 23,185.883 ms, LCP 23,391.883 ms, TBT 186 ms, and CLS 0. Hosted Ubuntu Lighthouse medians are score 43, FCP 23,182.7173 ms, LCP 23,403.8253 ms, TBT 479.5 ms, and CLS 0. The hosted verification is recorded in [Actions run 32616802586](https://github.com/neb6dav/ai_tech_tree/actions/runs/32616802586), job 97138752718.
 
 ### v1.2.0 Stable source checkpoint
 

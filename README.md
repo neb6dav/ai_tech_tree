@@ -2,7 +2,7 @@
 
 The AI Research Tech Tree is a public, evidence-linked atlas of artificial-intelligence research developments, open directions, landmark works, and recorded relationships. It combines a chronological Timeline, a structural Network, a capability-oriented Opportunity View, and an accessible List.
 
-**Public/live release: `v1.0.0` Stable.** The public site remains unchanged until a separately authorized promotion. `main` contains the merged `v1.2.0` Stable source checkpoint, which is not tagged or deployed; this branch prepares an unmerged, untagged, undeployed `v1.2.1` Stable release candidate carrying the unchanged dataset edition `2026-08-21-stable-1`. The citable dataset identity remains `v1.0.0` in [`CITATION.cff`](CITATION.cff) because these UI releases make no semantic dataset changes. Each staged build records its exact commit, tag state, and checksums in `release-manifest.json`; pull-request previews and untagged builds remain non-release artifacts. The atlas remains a curated research aid, not a complete literature review, a peer-reviewed historical account, or a claim that every displayed relationship is causal. Records expose their available sources and review state so that gaps can be inspected and improved in public.
+**Public/live release: `v1.0.0` Stable.** The public site remains unchanged until a separately authorized promotion. `main` remains the merged `v1.2.0` source checkpoint; this branch contains the cross-platform-verified Stable `v1.2.1` candidate at `2bb999e66a132b98dad7fd7df476155f68e57973`. The candidate has no pull request and remains unmerged, untagged, and undeployed pending owner review and separate authorization. The unchanged dataset edition is `2026-08-21-stable-1`, and the citable dataset identity remains `v1.0.0` in [`CITATION.cff`](CITATION.cff) because these UI releases make no semantic dataset changes. Each staged build records its exact commit, tag state, and checksums in `release-manifest.json`; previews and untagged builds remain non-release artifacts. The atlas remains a curated research aid, not a complete literature review, a peer-reviewed historical account, or a claim that every displayed relationship is causal. Records expose their available sources and review state so that gaps can be inspected and improved in public.
 
 The bounded `v0.1.1`, `v0.2.0`, and `v0.2.2` source checkpoints are preserved
 in [`PLAN.md`](PLAN.md). The authorized `v1.0.0` release freezes the public
@@ -42,7 +42,7 @@ See [METHODOLOGY.md](METHODOLOGY.md) for the inclusion, sourcing, relationship, 
 
 ## Repository map
 
-The `v1.0.0` public release, merged `v1.2.0` source checkpoint, and pending `v1.2.1` candidate keep a single-file application shell while the historical atlas is authored in a strict 15-lane canonical dataset. The build projects that canonical data into the application and the machine-readable publication artifacts.
+The `v1.0.0` public release, merged `v1.2.0` source checkpoint, and cross-platform-verified `v1.2.1` candidate keep a single-file application shell while the historical atlas is authored in a strict 15-lane canonical dataset. The build projects that canonical data into the application and the machine-readable publication artifacts.
 
 ### Maintained source
 
@@ -148,7 +148,7 @@ npm test
 git diff --exit-code
 ```
 
-`npm test` runs the data, accessibility, layout, Network, Opportunity, canonical-data, staging, contract, and deterministic artifact-budget gates; assembles `_site`; and exercises all four views in headless Chromium at desktop and mobile sizes. The browser gate blocks external requests, console errors and warnings, missing runtime fragments, broken deep links or focus restoration, and active-DOM drift from the reviewed platform peaks (`7,724` on Windows and `7,728` on Linux, reflecting platform font metrics) as well as any breach of the unchanged `8,000` ceiling.
+`npm test` runs the data, accessibility, layout, Network, Opportunity, canonical-data, staging, contract, and deterministic artifact-budget gates; assembles `_site`; and exercises all four views in headless Chromium at desktop and mobile sizes. The browser gate blocks external requests, console errors and warnings, missing runtime fragments, broken deep links or focus restoration, and active-DOM drift from the reviewed v1.2.1 peak (`7,090` on both Windows and hosted Ubuntu) as well as any breach of the unchanged `8,000` ceiling.
 
 At the `v0.2.2` checkpoint, Lighthouse is a blocking regression signal against the staged application on a controlled, uncompressed, `no-store` local origin. The source calibration used five independent mobile-profile runs on Windows x64 with Node.js v24.14.1, Lighthouse 13.4.1, Playwright 1.62.1, and Playwright Chromium 151.0.7922.34 revision 1234. Each gate uses the independent median of three runs.
 
@@ -160,6 +160,8 @@ At the `v0.2.2` checkpoint, Lighthouse is a blocking regression signal against t
 | Total Blocking Time | 166 ms | at most 550 ms | 248 ms |
 | Cumulative Layout Shift | 0.00082719 | at most 0.02 | 0.00082719 |
 
+The post-fix v1.2.1 Stable candidate was verified on both platforms. Windows medians were score `52`, FCP `23,185.883 ms`, LCP `23,391.883 ms`, TBT `186 ms`, and CLS `0`; hosted Ubuntu medians were score `43`, FCP `23,182.7173 ms`, LCP `23,403.8253 ms`, TBT `479.5 ms`, and CLS `0`. The hosted result is recorded in [Actions run 32616802586](https://github.com/neb6dav/ai_tech_tree/actions/runs/32616802586), job `97138752718`.
+
 The original Windows-only score and TBT limits proved too narrow on the configured Ubuntu runner. Two independent hosted attempts against the exact same application bytes both produced score medians of `47`, with TBT medians of `362.5` and `362` ms; the six raw samples ranged from score `44` to `48` and TBT `325` to `440.5` ms, with no audit warnings. The cross-platform score floor is therefore five points below the hosted median, while the TBT ceiling rounds to about 25% above the hosted maximum. The paint ceilings and CLS ceiling are unchanged. The normal hosted gate then passed all five revised limits on `ubuntu-24.04` in Actions run `32489666292`, completing the `v0.2.2` source checkpoint. These measurements do not represent live GitHub Pages delivery or real-user field performance.
 
 The release manifest records the target package version, dataset edition, publication state, exact full commit, observed Node and npm versions, and every payload file's media type, byte count, and SHA-256. In clean-source mode, staging also proves that the configuration, metadata, individual artifacts, and complete directory inputs are regular committed blobs from the advertised `HEAD`; symlinks, gitlinks, Git LFS pointers, replacement objects, index concealment flags, dirty submodules, and generated or Git-administration input paths fail closed. The manifest cannot contain its own digest without a cryptographic self-reference, so it explicitly excludes itself. Local dirty-tree staging remains available for pre-commit review but is labeled non-clean and cannot be deployed.
@@ -168,7 +170,7 @@ The static contract uses a pinned browser-compatible HTML attribute decoder, rej
 
 The stable Opportunity endpoints are `./data/opportunities/diffusion-models.alpha.json` and `./data/opportunities/opportunity-map.schema.json`. The former `./src/data/opportunities/...` endpoints remain available for compatibility: the data is an exact second publication of the maintained JSON, while the old schema URL is a small schema with its own truthful `$id` that delegates to the stable canonical schema. The public `./ai-research-tech-tree.html` alias likewise redirects to `./` and preserves query and hash state when JavaScript is available; its no-JavaScript fallback redirects to the root application.
 
-The same sequence is configured to run in GitHub Actions on the `ubuntu-24.04` runner label; the label is fixed in the workflow, while the hosted image behind it can change. Pull requests receive a downloadable staged-site preview artifact. A pull request is not ready to merge if a build changes generated files or leaves untracked source files. Under RD-006 and RD-007, Pages deployment is a manual protected-`main` workflow configured to require the exact annotated `v1.2.0` tag. That tag has not been created and the workflow has not been run; changing the pin or promoting this `v1.2.1` candidate requires separate authorization. The candidate is not yet authorized for merge, tagging, or deployment; the live site remains the `v1.0.0` release.
+The same sequence is configured to run in GitHub Actions on the `ubuntu-24.04` runner label; the label is fixed in the workflow, while the hosted image behind it can change. Pull requests receive a downloadable staged-site preview artifact. A pull request is not ready to merge if a build changes generated files or leaves untracked source files. Under RD-006 and RD-007, Pages deployment is a manual protected-`main` workflow configured to require the exact annotated `v1.2.0` tag. That tag has not been created and the workflow has not been run; changing the pin or promoting this cross-platform-verified `v1.2.1` candidate requires separate authorization. The candidate is not yet authorized for merge, tagging, or deployment; the live site remains the `v1.0.0` release.
 
 ## Contributing
 
@@ -186,7 +188,7 @@ GitHub issues and pull requests are the project's track-changes system. The main
 
 ## Citation
 
-Use the repository's **Cite this repository** control or [CITATION.cff](CITATION.cff). The file remains synchronized to the tagged `v1.0.0` dataset release and edition `2026-08-21-stable-1`; the merged `v1.2.0` source checkpoint and pending `v1.2.1` UI candidate do not change it. A future archive may add a DOI without changing stable atlas IDs.
+Use the repository's **Cite this repository** control or [CITATION.cff](CITATION.cff). The file remains synchronized to the tagged `v1.0.0` dataset release and edition `2026-08-21-stable-1`; the merged `v1.2.0` source checkpoint and cross-platform-verified `v1.2.1` UI candidate do not change it. A future archive may add a DOI without changing stable atlas IDs.
 
 ## Licensing
 

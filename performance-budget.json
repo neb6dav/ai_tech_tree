@@ -35,8 +35,8 @@
     "activeDomElements": {
       "maximum": 8000,
       "reviewedPeaksByPlatform": {
-        "win32": 7244,
-        "linux": 7244
+        "win32": 7090,
+        "linux": 7090
       }
     },
     "mobileLighthouse": {

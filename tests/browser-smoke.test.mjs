@@ -21,7 +21,11 @@ const APPROVED_TOUR_SLUGS = Object.freeze([
 const RESPONSIVE_MATRIX = Object.freeze([
   Object.freeze({ width: 1920, height: 1080 }),
   Object.freeze({ width: 1366, height: 768 }),
+  Object.freeze({ width: 1280, height: 768 }),
+  Object.freeze({ width: 1109, height: 768 }),
   Object.freeze({ width: 1024, height: 768 }),
+  Object.freeze({ width: 1023, height: 768 }),
+  Object.freeze({ width: 960, height: 768 }),
   Object.freeze({ width: 741, height: 800 }),
   Object.freeze({ width: 740, height: 480 }),
   Object.freeze({ width: 375, height: 812 })
@@ -277,6 +281,31 @@ async function zoomToSemanticLevel(page, level) {
   await waitForSemanticZoom(page, level);
 }
 
+async function findRelationshipPointerPoint(page, relationshipId) {
+  return page.evaluate(({ relationshipId }) => {
+    const entry = relationshipPointerIndex.entries.find(candidate => candidate.id === relationshipId);
+    const stage = document.querySelector('#stage');
+    if (!entry || !stage) return null;
+    const stageRect = stage.getBoundingClientRect();
+    const tolerance = RELATIONSHIP_POINTER_TOLERANCE;
+    for (const segment of entry.segments) {
+      const dx = segment.b.x - segment.a.x, dy = segment.b.y - segment.a.y, length = Math.hypot(dx, dy);
+      if (!length) continue;
+      const nx = -dy / length, ny = dx / length;
+      for (const fraction of [0.1, 0.25, 0.5, 0.75, 0.9]) {
+        for (const offset of [0, tolerance * 0.45, -tolerance * 0.45, tolerance * 0.9, -tolerance * 0.9]) {
+          const x = Math.round(segment.a.x + dx * fraction + nx * offset), y = Math.round(segment.a.y + dy * fraction + ny * offset);
+          if (x < Math.max(0, stageRect.left) || x > Math.min(innerWidth, stageRect.right) || y < Math.max(0, stageRect.top) || y > Math.min(innerHeight, stageRect.bottom)) continue;
+          const hitElement = document.elementFromPoint(x, y);
+          if (!hitElement?.closest('#stage') || hitElement.closest('g.node,g.semanticCluster,g.anchorLabel,g.traceLabel')) continue;
+          if (relationshipAtPointer(x, y)?.id === relationshipId) return { x, y };
+        }
+      }
+    }
+    return null;
+  }, { relationshipId });
+}
+
 async function readOverviewAnchorLabelLayout(page) {
   return page.evaluate(() => {
     const stage = document.querySelector('#stage')?.getBoundingClientRect();
@@ -497,13 +526,147 @@ describe('staged browser smoke', { concurrency: false }, () => {
     restored.assertClean();
   });
 
+  test('startup hash matrix restores intent, precedence, and camera validity deterministically', async testContext => {
+    const session = await makeSession(testContext);
+    const { page } = session;
+    const cases = [
+      { name: 'empty', hash: '', recognized: false, view: 'map', camera: false },
+      { name: 'legacy unknown', hash: '#legacy=1', recognized: false, view: 'map', camera: false },
+      { name: 'theme-only', hash: '#theme=light', recognized: true, view: 'map', camera: false, theme: 'light' },
+      { name: 'scale-only', hash: '#scale=linear', recognized: true, view: 'map', camera: false, scale: 'linear' },
+      { name: 'hover mode', hash: '#mode=hover', recognized: true, view: 'map', camera: false, mode: 'hover' },
+      { name: 'view-only', hash: '#view=list', recognized: true, view: 'list', camera: false },
+      { name: 'filter', hash: '#status=d', recognized: true, view: 'map', camera: false, status: 'd' },
+      { name: 'zero-result filter', hash: '#status=none', recognized: true, view: 'map', camera: false, status: 'none' },
+      { name: 'incomplete camera', hash: '#cx=10&cy=20', recognized: true, view: 'map', camera: false },
+      { name: 'invalid camera', hash: '#cx=10&cy=20&z=not-a-number', recognized: true, view: 'map', camera: false },
+      { name: 'nonpositive camera', hash: '#cx=10&cy=20&z=0', recognized: true, view: 'map', camera: false },
+      { name: 'node', hash: '#node=transformer', recognized: true, view: 'map', camera: false, focus: 'transformer' },
+      { name: 'tour', hash: '#tour=foundations-to-transformers&step=3', recognized: true, view: 'map', camera: false, focus: 'perceptron' },
+      { name: 'trace', hash: '#trace=transformer', recognized: true, view: 'map', camera: false, trace: true },
+      { name: 'complete camera', hash: '#cx=10&cy=20&z=0.75', recognized: true, view: 'map', camera: true },
+      { name: 'precedence', hash: '#view=list&trace=transformer&node=transformer&cx=0&cy=0&z=1', recognized: true, view: 'list', camera: true, focus: 'transformer' }
+    ];
+
+    for (const item of cases) {
+      await navigate(page, item.hash, `?smoke=startup-hash-${item.name.replaceAll(' ', '-')}`);
+      await waitForApp(page);
+      await page.waitForFunction(() => Boolean(window.__AI_TREE_RESTORE_STATE__));
+      const state = await page.evaluate(() => {
+        const params = new URLSearchParams(window.location.hash.slice(1));
+        return {
+          recognized: window.__AI_TREE_RESTORE_STATE__?.recognizedIntent,
+          view: document.body.dataset.view,
+          theme: document.body.dataset.theme,
+          scale: document.querySelector('#scaleSeg [aria-pressed="true"]')?.dataset.scale || 'density',
+          mode: document.querySelector('#modeSeg [aria-pressed="true"]')?.dataset.m,
+          camera: window.__AI_TREE_RESTORE_STATE__?.camera,
+          trace: document.querySelector('#inspector')?.dataset.mode === 'trace',
+          tour: document.querySelector('#tourDialog')?.dataset.tourActive || null,
+          focusedTarget: window.__AI_TREE_RESTORE_STATE__?.focusedTarget,
+          filter: params.get('status'),
+          transform: document.querySelector('#world')?.getAttribute('transform') || '',
+          lod: ['overview', 'mid', 'detail'].find(level => document.querySelector(`#svg.${level}`)) || null,
+          emptyVisible: document.querySelector('#emptyState')?.hidden === false,
+          emptyResetVisible: Boolean(document.querySelector('#emptyResetBtn')?.getClientRects().length)
+        };
+      });
+      assert.equal(state.recognized, item.recognized, `${item.name} recognized-intent mismatch`);
+      assert.equal(state.view, item.view, `${item.name} view mismatch`);
+      assert.equal(state.camera.valid, item.camera, `${item.name} camera validity mismatch`);
+      if (item.theme) assert.equal(state.theme, item.theme);
+      if (item.scale) assert.equal(state.scale, item.scale);
+      if (item.mode) assert.equal(state.mode, item.mode);
+      if (item.status) assert.equal(state.filter, item.status);
+      if (item.focus) assert.equal(state.focusedTarget, item.focus, `${item.name} focus precedence mismatch`);
+      if (item.trace) assert.equal(state.trace, true, 'trace intent did not win startup restoration');
+      if (item.view === 'map' && !item.camera && ['empty', 'legacy unknown', 'theme-only', 'scale-only', 'hover mode', 'filter', 'zero-result filter', 'incomplete camera', 'invalid camera', 'nonpositive camera'].includes(item.name)) {
+        const scale = Number(state.transform.match(/scale\(([-+]?\d*\.?\d+)/u)?.[1]);
+        assert.ok(Number.isFinite(scale) && Math.abs(scale - 1) > 0.0001, `${item.name} remained at the un-fitted scale: ${state.transform}`);
+        assert.ok(state.lod, `${item.name} did not establish a semantic zoom level`);
+      }
+      if (item.name === 'zero-result filter') {
+        assert.equal(state.emptyVisible, true, 'zero-result filter must expose the recovery empty state');
+        assert.equal(state.emptyResetVisible, true, 'zero-result filter must expose a visible Reset filters recovery control');
+      }
+      if (item.name === 'tour') {
+        assert.equal(state.tour, 'foundations-to-transformers');
+        assert.match(await page.locator('#tourStepNarration').textContent(), /perceptron|examples/u);
+      }
+    }
+    session.assertClean();
+  });
+
+  test('Share preserves camera while trace-summary Copy link intentionally omits it', async testContext => {
+    const session = await makeSession(testContext);
+    const { page } = session;
+    await session.context.addInitScript(() => {
+      const writes = [];
+      Object.defineProperty(window, '__AI_TREE_CLIPBOARD__', { configurable: true, value: writes });
+      Object.defineProperty(navigator, 'clipboard', {
+        configurable: true,
+        value: { writeText: value => { writes.push(String(value)); return Promise.resolve(); } }
+      });
+    });
+
+    await navigate(page, '#cx=10&cy=20&z=0.75&theme=dark', '?smoke=share-camera');
+    await waitForApp(page);
+    await page.locator('#shareBtn').click();
+    const shared = await page.evaluate(() => window.__AI_TREE_CLIPBOARD__?.at(-1));
+    assert.match(shared || '', /https:\/\/neb6dav\.github\.io\/ai_tech_tree\//u);
+    const sharedParams = new URL(shared).hash.slice(1).split('&').reduce((params, pair) => {
+      const [key, value] = pair.split('=');
+      params.set(key, decodeURIComponent(value || ''));
+      return params;
+    }, new Map());
+    assert.equal(sharedParams.get('cx'), '10.0');
+    assert.equal(sharedParams.get('cy'), '20.0');
+    assert.equal(sharedParams.get('z'), '0.750');
+
+    await navigate(page, '#trace=transformer&cx=10&cy=20&z=0.75', '?smoke=trace-copy-camera');
+    await waitForApp(page);
+    await page.waitForFunction(() => document.querySelector('#inspector')?.dataset.mode === 'trace');
+    await page.locator('#shareBtn').click();
+    const generalTraceLink = await page.evaluate(() => window.__AI_TREE_CLIPBOARD__?.at(-1));
+    assert.match(generalTraceLink || '', /(?:^|[&#])cx=10\.0(?:&|$)/u);
+    await page.locator('#inspector .traceSummary .btn', { hasText: 'Copy link' }).click();
+    const traceSummaryLink = await page.evaluate(() => window.__AI_TREE_CLIPBOARD__?.at(-1));
+    const traceParams = new URL(traceSummaryLink).hash.slice(1);
+    assert.match(traceParams, /(?:^|&)trace=transformer(?:&|$)/u);
+    assert.doesNotMatch(traceParams, /(?:^|&)(?:cx|cy|z)=/u, 'trace-summary Copy link must not leak transient camera coordinates');
+    session.assertClean();
+  });
+
+  test('light, reduced-motion, and forced-colors browser modes remain usable', async testContext => {
+    const cases = [
+      { name: 'light', options: { colorScheme: 'light' }, media: '(prefers-color-scheme: light)' },
+      { name: 'reduced', options: { reducedMotion: 'reduce' }, media: '(prefers-reduced-motion: reduce)' },
+      { name: 'forced', options: { forcedColors: 'active' }, media: '(forced-colors: active)' }
+    ];
+    for (const item of cases) {
+      const session = await makeSession(testContext, item.options);
+      const { page } = session;
+      await navigate(page, '#view=map', `?smoke=browser-mode-${item.name}`);
+      await waitForApp(page);
+      assert.equal(await page.evaluate(query => matchMedia(query).matches, item.media), true, `${item.name} media query was not exposed by the browser context`);
+      assert.equal(await page.locator('#bootPending').isHidden(), true, `${item.name} mode did not complete startup`);
+      assert.equal(await page.locator('#nodes .node').count(), EXPECTED.atlasNodes, `${item.name} mode did not render the atlas`);
+      if (item.name === 'light') {
+        assert.equal(await page.locator('body').getAttribute('data-theme'), 'light');
+        await page.locator('#themeBtn').click();
+        await page.waitForFunction(() => document.body.dataset.theme === 'dark');
+      }
+      session.assertClean();
+    }
+  });
+
   test('fresh orientation reveal completes, cancels, skips, and honors bypasses', async testContext => {
     const complete = await makeSession(testContext, { dismissWelcome: false, reducedMotion: 'no-preference' });
     await navigate(complete.page, '', '?smoke=intro-complete');
     await waitForApp(complete.page);
     await complete.page.locator('#legendDismiss').click();
     await complete.page.waitForFunction(() => document.body.dataset.introReveal === 'complete', undefined, { timeout: APP_TIMEOUT });
-    assert.equal(await complete.page.locator('#introRevealSkip').count(), 0);
+    assert.equal(await complete.page.locator('.introRevealSkip').count(), 0);
     assert.deepEqual(await complete.page.evaluate(() => ({ paths: document.body.dataset.introRevealPaths, labels: document.body.dataset.introRevealLabels })), { paths: '72', labels: '24' });
     complete.assertClean();
 
@@ -521,11 +684,48 @@ describe('staged browser smoke', { concurrency: false }, () => {
     const skipped = await makeSession(testContext, { dismissWelcome: false, reducedMotion: 'no-preference' });
     await navigate(skipped.page, '', '?smoke=intro-skip');
     await waitForApp(skipped.page);
-    await skipped.page.locator('#legendDismiss').click();
-    await skipped.page.waitForFunction(() => document.body.dataset.introReveal === 'running', undefined, { timeout: APP_TIMEOUT });
-    await skipped.page.getByRole('button', { name: 'Skip animation' }).click();
-    await skipped.page.waitForFunction(() => document.body.dataset.introReveal === 'skipped', undefined, { timeout: APP_TIMEOUT });
-    assert.equal(await skipped.page.locator('#introRevealSkip').count(), 0);
+    await skipped.page.evaluate(() => {
+      const nativeRequestAnimationFrame = window.requestAnimationFrame;
+      const nativeBodyAppendChild = document.body.appendChild;
+      let safetyTimer;
+      let observer;
+      const maybeSkip = () => {
+        const skip = document.querySelector('.introRevealSkip');
+        if (document.body?.dataset.introReveal !== 'running' || !skip) return;
+        restoreNativeRequestAnimationFrame();
+        skip.click();
+      };
+      const restoreNativeRequestAnimationFrame = () => {
+        window.requestAnimationFrame = nativeRequestAnimationFrame;
+        document.body.appendChild = nativeBodyAppendChild;
+        observer?.disconnect();
+        window.clearTimeout(safetyTimer);
+      };
+      const wrappedRequestAnimationFrame = callback => nativeRequestAnimationFrame.call(window, timestamp => {
+        callback(timestamp);
+        maybeSkip();
+      });
+      observer = new MutationObserver(maybeSkip);
+      observer.observe(document.documentElement, { attributes: true, childList: true, subtree: true });
+      window.requestAnimationFrame = wrappedRequestAnimationFrame;
+      document.body.appendChild = function appendChildWithSkipProbe(node) {
+        const result = nativeBodyAppendChild.call(this, node);
+        maybeSkip();
+        return result;
+      };
+      safetyTimer = window.setTimeout(restoreNativeRequestAnimationFrame, 5000);
+      document.querySelector('#legendDismiss').click();
+    });
+    try {
+      await skipped.page.waitForFunction(() => document.body.dataset.introReveal === 'skipped', undefined, { timeout: APP_TIMEOUT });
+    } catch (error) {
+      const diagnostic = await skipped.page.evaluate(() => ({
+        introReveal: document.body?.dataset.introReveal || null,
+        introRevealSkipPresent: Boolean(document.querySelector('.introRevealSkip'))
+      }));
+      assert.fail(`${error instanceof Error ? error.message : String(error)}; introReveal=${diagnostic.introReveal}; introRevealSkipPresent=${diagnostic.introRevealSkipPresent}`);
+    }
+    assert.equal(await skipped.page.locator('.introRevealSkip').count(), 0);
     skipped.assertClean();
 
     const bypassCases = [
@@ -543,12 +743,12 @@ describe('staged browser smoke', { concurrency: false }, () => {
       await waitForApp(session.page);
       if (item.targeted) {
         await session.page.locator('#legend [data-start="transformer"]').click();
-      } else if (await session.page.locator('#legendDismiss').count()) {
+      } else if (await session.page.locator('#legendDismiss').isVisible()) {
         await session.page.locator('#legendDismiss').click();
       }
       await session.page.waitForFunction(() => ['bypassed', 'complete', 'cancelled', 'skipped'].includes(document.body.dataset.introReveal));
       assert.equal(await session.page.evaluate(() => document.body.dataset.introReveal), 'bypassed', `${item.label} did not bypass orientation reveal`);
-      assert.equal(await session.page.locator('#introRevealSkip').count(), 0, `${item.label} exposed the skip control`);
+      assert.equal(await session.page.locator('.introRevealSkip').count(), 0, `${item.label} exposed the skip control`);
       session.assertClean();
     }
   });
@@ -697,7 +897,17 @@ describe('staged browser smoke', { concurrency: false }, () => {
       { timeout: APP_TIMEOUT }
     );
 
+    const tourData = await page.evaluate(() => JSON.parse(document.querySelector('#atlas-presentation-data')?.textContent || '{}').tours || []);
+
     for (const slug of APPROVED_TOUR_SLUGS) {
+      if (await page.locator('#tourDialog').isHidden()) {
+        await page.locator('#tourBtn').click();
+        await page.waitForFunction(
+          expected => !document.querySelector('#tourDialog')?.hidden && document.querySelectorAll('[data-tour-slug]').length === expected,
+          APPROVED_TOUR_SLUGS.length,
+          { timeout: APP_TIMEOUT }
+        );
+      }
       const item = page.locator(`[data-tour-slug="${slug}"]`).first();
       assert.equal(await item.count(), 1, `curated tours runtime is missing approved slug ${slug}`);
       assert.equal(await item.isVisible(), true, `curated tour ${slug} is not visible after opening the tour runtime`);
@@ -715,6 +925,23 @@ describe('staged browser smoke', { concurrency: false }, () => {
         { timeout: APP_TIMEOUT }
       );
       assert.equal(await page.locator('#tourDialog').getAttribute('data-tour-active'), slug, `explicit tour card click did not start ${slug}`);
+      const tour = tourData.find(candidate => candidate.slug === slug);
+      assert.ok(tour?.steps?.length >= 2, `${slug} has too few steps to exercise restoration`);
+      for (const [index, step] of tour.steps.entries()) {
+        await page.waitForFunction(({ expectedSlug, expectedStep }) => {
+          const meta = document.querySelector('#tourStepMeta')?.textContent || '';
+          return document.querySelector('#tourDialog')?.dataset.tourActive === expectedSlug && meta.includes(`step ${expectedStep} of`);
+        }, { expectedSlug: slug, expectedStep: index + 1 });
+        assert.equal(await page.locator('#tourStepNarration').textContent(), step.narration, `${slug} step ${index + 1} narration drifted`);
+        assert.match(await page.locator('#tourAnnouncement').textContent(), new RegExp(`step ${index + 1} of ${tour.steps.length}`, 'u'));
+        if (index < tour.steps.length - 1) {
+          await page.locator('#tourNext').click();
+        } else {
+          await page.locator('#tourNext').click();
+          await page.waitForFunction(() => document.querySelector('#tourDialog')?.hidden === true);
+          await waitForFocus(page, '#tourBtn');
+        }
+      }
     }
     session.assertClean();
   });
@@ -750,7 +977,7 @@ describe('staged browser smoke', { concurrency: false }, () => {
     session.assertClean();
   });
 
-  test('hostile Map -> All -> Opportunity -> Network -> List -> Map sequence stays below 8000 active DOM elements', async testContext => {
+  test('extended hostile Map -> All -> trace -> overview -> filters -> era -> questions -> views sequence stays below 8000', async testContext => {
     const session = await makeSession(testContext);
     const { page } = session;
     const samples = [];
@@ -765,6 +992,56 @@ describe('staged browser smoke', { concurrency: false }, () => {
     await page.waitForFunction(() => document.querySelector('#modeSeg button[data-m="all"]')?.getAttribute('aria-pressed') === 'true');
     await assertCurrentView(page, 'map');
     await recordDomCount(page, samples, 'hostile All');
+
+    await navigate(page, '#trace=transformer&mode=all', '?smoke=hostile-transformer-trace');
+    await waitForApp(page);
+    await zoomToSemanticLevel(page, 'detail');
+    assert.equal(await page.locator('#svg').evaluate(element => element.classList.contains('detail')), true, 'Transformer trace did not reach detail semantic zoom');
+    const pooled = await page.evaluate(() => {
+      const ids = [...document.querySelectorAll('#edgesBackbone path[data-relationship-id],#edgesAll path[data-relationship-id],#edgesHi path[data-relationship-id]')].map(path => path.dataset.relationshipId);
+      return { count: ids.length, unique: new Set(ids).size };
+    });
+    assert.deepEqual(pooled, { count: 711, unique: 711 }, 'Transformer trace All mode must pool each canonical relationship exactly once');
+    await recordDomCount(page, samples, 'hostile Transformer trace');
+
+    await page.locator('#fitAllBtn').click();
+    await waitForSemanticZoom(page, 'overview');
+    assert.equal(await page.locator('#svg').evaluate(element => element.classList.contains('trace-active')), true, 'semantic zoom must preserve the active Transformer trace');
+    assert.equal(await page.locator('#edgesAll path').count(), 0, 'overview must not render contextual relationship paths');
+    assert.ok(await page.locator('#edgesHi path').count() > 0, 'overview must retain highlighted lineage relationships');
+    await recordDomCount(page, samples, 'hostile trace overview');
+
+    await openControls(page);
+    await page.locator('#chips .chip[data-s="d"]').click();
+    await page.waitForFunction(() => document.querySelector('#filterChip')?.textContent.includes('shown'));
+    await recordDomCount(page, samples, 'hostile filtered trace');
+    await page.locator('#resetFiltersBtn').click();
+    await page.waitForFunction(() => document.querySelector('#chips .chip[data-s="d"]')?.getAttribute('aria-pressed') === 'true');
+    await recordDomCount(page, samples, 'hostile reset filters');
+
+    await page.locator('#controlsBtn').click();
+    await page.waitForFunction(() => document.querySelector('#controlsBtn')?.getAttribute('aria-expanded') === 'false');
+    await page.keyboard.press('Escape');
+    await page.waitForFunction(() => !document.querySelector('#svg')?.classList.contains('trace-active'));
+    assert.deepEqual(await page.evaluate(() => ({
+      backbone: document.querySelectorAll('#edgesBackbone path[data-relationship-id]').length,
+      all: document.querySelectorAll('#edgesAll path[data-relationship-id]').length,
+      active: document.querySelectorAll('#edgesHi path[data-relationship-id]').length
+    })), { backbone: 72, all: 0, active: 0 }, 'clearing the trace must restore only the 72-path orientation spine');
+
+    await page.locator('#eraSelect').selectOption('0');
+    await page.waitForFunction(() => document.querySelector('#inspector')?.dataset.mode === 'era');
+    assert.ok(await page.locator('.eraCard').count() > 0, 'era lens did not render cards in hostile sequence');
+    await recordDomCount(page, samples, 'hostile era lens');
+    await page.keyboard.press('Escape');
+    await page.waitForFunction(() => document.querySelector('#inspector')?.getAttribute('data-mode') !== 'era');
+
+    await page.locator('#unfinishedBtn').click({ force: true });
+    await page.waitForFunction(() => document.body.dataset.view === 'list' && !document.querySelector('#questionDeck')?.hidden);
+    assert.equal(await page.locator('.questionCard').count(), 12);
+    await recordDomCount(page, samples, 'hostile question deck');
+    await page.locator('#questionDeckClose').click();
+    await page.waitForFunction(() => document.querySelector('#questionDeck')?.hidden);
 
     await switchView(page, 'opportunity');
     await assertCurrentView(page, 'opportunity');
@@ -781,6 +1058,11 @@ describe('staged browser smoke', { concurrency: false }, () => {
     await switchView(page, 'map');
     await assertCurrentView(page, 'map');
     await recordDomCount(page, samples, 'hostile Map final');
+    assert.deepEqual(await page.evaluate(() => ({
+      backbone: document.querySelectorAll('#edgesBackbone path[data-relationship-id]').length,
+      all: document.querySelectorAll('#edgesAll path[data-relationship-id]').length,
+      active: document.querySelectorAll('#edgesHi path[data-relationship-id]').length
+    })), { backbone: 72, all: 0, active: 0 }, 'final Map must teardown trace and restore the 72-path orientation spine');
     assert.ok(samples.every(sample => sample.count <= 8000), `hostile sequence exceeded 8000 active DOM elements: ${JSON.stringify(samples)}`);
     session.assertClean();
   });
@@ -814,6 +1096,8 @@ describe('staged browser smoke', { concurrency: false }, () => {
           primaryVisible: visible(document.querySelector('#viewSeg')),
           quickPrimaryVisible: visible(document.querySelector('#quickPrimary')),
           quickPrimaryParent: document.querySelector('#quickPrimary')?.parentElement?.id || null,
+          quickPrimaryButtons: [...document.querySelectorAll('#quickPrimary > button')].filter(visible).map(button => button.id),
+          quickButtonParents: Object.fromEntries(['themeBtn', 'shareBtn', 'diffBtn', 'helpBtn', 'tourBtn', 'unfinishedBtn'].map(id => [id, document.getElementById(id)?.parentElement?.id || null])),
           compactLongTitle: getComputedStyle(document.querySelector('#title .titleLong')).display,
           compactShortEdition: getComputedStyle(document.querySelector('#editionBadge .editionShort')).display,
           compactShortControls: getComputedStyle(document.querySelector('#controlsBtn .controlsShort')).display,
@@ -828,11 +1112,21 @@ describe('staged browser smoke', { concurrency: false }, () => {
       if (viewport.width >= 741) {
         assert.notEqual(initial.controlsDisplay, 'none', `${label} desktop/tablet controls were hidden`);
         assert.equal(initial.secondaryVisible, false, `${label} secondary controls should start closed`);
-        if (viewport.width >= 1024) {
-          assert.equal(initial.quickPrimaryVisible, true, `${label} quick primary controls should remain visible`);
-        } else {
-          assert.equal(initial.quickPrimaryVisible, false, `${label} quick primary controls should wait behind More`);
-          assert.equal(initial.quickPrimaryParent, 'secondaryControls', `${label} quick primary controls were not moved into secondary controls`);
+        assert.equal(initial.quickPrimaryVisible, true, `${label} quick primary controls should remain visible`);
+        assert.equal(initial.quickPrimaryParent, 'primaryControls', `${label} quick primary controls left the primary controls group`);
+        const expectedQuickButtons = viewport.width >= 1280
+          ? ['themeBtn', 'shareBtn', 'diffBtn', 'helpBtn', 'tourBtn', 'unfinishedBtn']
+          : viewport.width >= 1024
+            ? ['themeBtn', 'shareBtn', 'helpBtn']
+            : ['themeBtn'];
+        assert.deepEqual(initial.quickPrimaryButtons, expectedQuickButtons, `${label} quick-primary buttons drifted from the approved breakpoint contract`);
+        const expectedQuickButtonParents = viewport.width >= 1280
+          ? Object.fromEntries(expectedQuickButtons.map(id => [id, 'quickPrimary']))
+          : viewport.width >= 1024
+            ? { themeBtn: 'quickPrimary', shareBtn: 'quickPrimary', helpBtn: 'quickPrimary', diffBtn: 'secondaryControls', tourBtn: 'secondaryControls', unfinishedBtn: 'secondaryControls' }
+            : { themeBtn: 'quickPrimary', shareBtn: 'secondaryControls', diffBtn: 'secondaryControls', helpBtn: 'secondaryControls', tourBtn: 'secondaryControls', unfinishedBtn: 'secondaryControls' };
+        for (const [id, parent] of Object.entries(expectedQuickButtonParents)) {
+          assert.equal(initial.quickButtonParents[id], parent, `${label} ${id} is not in the approved More/quick-primary slot`);
         }
       } else {
         assert.equal(initial.controlsDisplay, 'none', `${label} compact controls should start behind the menu`);
@@ -846,11 +1140,9 @@ describe('staged browser smoke', { concurrency: false }, () => {
       await page.waitForFunction(() => document.querySelector('#controls')?.classList.contains('open'));
       await page.waitForFunction(() => document.querySelector('#secondaryControls')?.getAttribute('aria-hidden') === 'false');
       assert.equal(await page.locator('#secondaryControls').isVisible(), true, `${label} secondary controls did not open`);
-      if (viewport.width >= 1024) {
+      if (viewport.width >= 741) {
         assert.equal(await page.locator('#quickPrimary').isVisible(), true, `${label} quick primary controls disappeared after More opened`);
-      } else if (viewport.width >= 741) {
-        assert.equal(await page.locator('#quickPrimary').evaluate(element => element.parentElement?.id), 'secondaryControls', `${label} quick primary controls are not inside secondary controls`);
-        assert.equal(await page.locator('#quickPrimary').isVisible(), true, `${label} quick primary controls did not become visible after More opened`);
+        assert.equal(await page.locator('#quickPrimary').evaluate(element => element.parentElement?.id), 'primaryControls', `${label} quick primary controls left the primary controls group after More opened`);
       }
 
       if (viewport.width <= 740) {
@@ -1044,6 +1336,73 @@ describe('staged browser smoke', { concurrency: false }, () => {
       assert.ok(metrics.overflow <= 1, `${width}px orientation surfaces create horizontal overflow`);
       session.assertClean();
     }
+  });
+
+  test('date, lane, and compact orientation surfaces stay pinned through map state changes', async testContext => {
+    const readPinnedSurfaces = page => page.evaluate(() => {
+      const read = selector => {
+        const element = document.querySelector(selector);
+        if (!element) return null;
+        const rect = element.getBoundingClientRect();
+        return { position: getComputedStyle(element).position, left: rect.left, right: rect.right, top: rect.top, bottom: rect.bottom, width: rect.width, height: rect.height };
+      };
+      return { era: read('#eraHud'), lane: read('#laneHud'), mobile: read('#mobileOrientation'), overflow: document.documentElement.scrollWidth - innerWidth, viewportWidth: innerWidth };
+    });
+    const assertPinned = (surfaces, label) => {
+      for (const [name, surface] of Object.entries(surfaces)) {
+        if (name === 'overflow' || name === 'viewportWidth' || !surface || surface.width === 0) continue;
+        assert.equal(surface.position, 'fixed', `${label} ${name} surface is no longer viewport-pinned`);
+        assert.ok(surface.left >= -1 && surface.right <= surfaces.viewportWidth + 1, `${label} ${name} surface escaped its viewport`);
+      }
+      assert.ok(surfaces.overflow <= 1, `${label} pinned surfaces created horizontal overflow`);
+    };
+
+    const desktop = await makeSession(testContext, { viewport: { width: 1024, height: 768 } });
+    const page = desktop.page;
+    await navigate(page, '#view=map', '?smoke=pinned-map-surfaces');
+    await waitForApp(page);
+    assertPinned(await readPinnedSurfaces(page), 'initial desktop');
+    const stage = await page.locator('#stage').boundingBox();
+    assert.ok(stage, 'desktop stage missing for pinned-surface pan');
+    await page.mouse.move(stage.x + stage.width / 2, stage.y + stage.height / 2);
+    await page.mouse.down();
+    await page.mouse.move(stage.x + 32, stage.y + stage.height / 2, { steps: 5 });
+    await page.mouse.up();
+    await page.mouse.wheel(0, -100);
+    await page.waitForTimeout(80);
+    assertPinned(await readPinnedSurfaces(page), 'after pan and scale');
+    await page.locator('#eraSelect').focus();
+    await page.locator('#eraSelect').selectOption('0');
+    await page.waitForFunction(() => document.querySelector('#inspector')?.dataset.mode === 'era');
+    assertPinned(await readPinnedSurfaces(page), 'era lens');
+    await page.keyboard.press('Escape');
+    await page.locator('#helpBtn').click();
+    await page.waitForFunction(() => document.querySelector('#legend')?.classList.contains('open'));
+    assertPinned(await readPinnedSurfaces(page), 'guide');
+    await page.keyboard.press('Escape');
+    desktop.assertClean();
+
+    const mobile = await makeSession(testContext, { viewport: { width: 375, height: 812 }, hasTouch: true, isMobile: true });
+    const mobilePage = mobile.page;
+    await navigate(mobilePage, '#view=map', '?smoke=pinned-mobile-orientation');
+    await waitForApp(mobilePage);
+    const initialMobile = await readPinnedSurfaces(mobilePage);
+    assert.equal(initialMobile.mobile?.position, 'fixed');
+    assert.ok(initialMobile.mobile?.height >= 44, 'mobile orientation row is below its 44px target');
+    assert.match(await mobilePage.locator('#mobileEraOrientation').textContent(), /.+/u);
+    assert.match(await mobilePage.locator('#mobileLaneOrientation').textContent(), /.+/u);
+    await mobilePage.locator('#controlsBtn').click();
+    await mobilePage.locator('#zin').click();
+    await mobilePage.keyboard.press('Escape');
+    await mobilePage.waitForFunction(() => !document.querySelector('#controls')?.classList.contains('open'));
+    await waitForFocus(mobilePage, '#controlsBtn');
+    await mobilePage.mouse.wheel(0, -80);
+    await mobilePage.waitForTimeout(80);
+    const afterMobileScale = await readPinnedSurfaces(mobilePage);
+    assert.equal(afterMobileScale.mobile?.position, 'fixed');
+    assert.ok(afterMobileScale.mobile?.top >= 55 && afterMobileScale.mobile?.bottom <= 150, 'mobile orientation row moved out of its pinned header slot');
+    assert.ok(afterMobileScale.overflow <= 1, 'mobile orientation row created horizontal overflow');
+    mobile.assertClean();
   });
 
   test('narrow detail and compact filter surfaces avoid horizontal overflow', async testContext => {
@@ -1341,7 +1700,7 @@ describe('staged browser smoke', { concurrency: false }, () => {
     const session = await makeSession(testContext);
     const { page } = session;
 
-    await navigate(page, '#trace=transformer&node=gpt3');
+    await navigate(page, '#trace=transformer&node=gpt3', '?smoke=trace-no-camera');
     await waitForApp(page);
     await page.waitForFunction(() => document.querySelector('#inspector')?.dataset.mode === 'trace');
     const noCamera = await page.evaluate(() => ({
@@ -1355,7 +1714,7 @@ describe('staged browser smoke', { concurrency: false }, () => {
     assert.match(noCamera.summary, /196 total relationships/);
     assert.doesNotMatch(noCamera.transform || '', /scale\(1\)$/u);
 
-    await navigate(page, '#trace=transformer&cx=0&cy=0&z=1');
+    await navigate(page, '#trace=transformer&cx=0&cy=0&z=1', '?smoke=trace-complete-camera');
     await waitForApp(page);
     const completeCamera = await page.evaluate(() => ({
       camera: window.__AI_TREE_RESTORE_STATE__?.camera,
@@ -1364,7 +1723,7 @@ describe('staged browser smoke', { concurrency: false }, () => {
     assert.equal(completeCamera.camera.valid, true);
     assert.match(completeCamera.transform || '', /scale\(1\)$/u);
 
-    await navigate(page, '#trace=transformer&mode=off&cx=1000&cy=500&z=0.250');
+    await navigate(page, '#trace=transformer&mode=off&cx=1000&cy=500&z=0.250', '?smoke=trace-roundtrip-camera');
     await waitForApp(page);
     await page.waitForFunction(() => {
       const params = new URLSearchParams(window.location.hash.slice(1));
@@ -1378,7 +1737,7 @@ describe('staged browser smoke', { concurrency: false }, () => {
     assert.ok(Math.abs(roundTripCamera.cy - 500) <= 0.2, `camera cy drifted to ${roundTripCamera.cy}`);
     assert.ok(Math.abs(roundTripCamera.z - 0.25) <= 0.002, `camera z drifted to ${roundTripCamera.z}`);
 
-    await navigate(page, '#trace=transformer&mode=off');
+    await navigate(page, '#trace=transformer&mode=off', '?smoke=trace-connections-off');
     await waitForApp(page);
     assert.ok(await page.locator('#edgesHi path').count() > 0, 'explicit trace must render with Connections Off');
     await openControls(page);
@@ -1390,6 +1749,7 @@ describe('staged browser smoke', { concurrency: false }, () => {
     await page.keyboard.press('Escape');
     await page.locator('#fitAllBtn').click();
     await waitForSemanticZoom(page, 'overview');
+    await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(() => requestAnimationFrame(resolve)))));
     const lowLod = await page.evaluate(() => ({
       dots: document.querySelectorAll('#nodes .node.lit .ndot').length,
       labels: document.querySelectorAll('#traceLabels .traceLabel:not([aria-hidden="true"])').length,
@@ -1398,9 +1758,41 @@ describe('staged browser smoke', { concurrency: false }, () => {
     assert.ok(lowLod.dots > 0 && lowLod.labels > 0);
     assert.equal(lowLod.unlitCards, 0);
 
-    const previewNode = page.locator('#nodes .node.lit[data-id]:not([data-id="transformer"])').first();
-    await previewNode.hover({ force: true });
-    await page.waitForFunction(() => document.querySelector('#inspector')?.dataset.mode === 'preview');
+    const previewPoint = await page.evaluate(() => {
+      const labels = [...document.querySelectorAll('#traceLabels .traceLabel[data-node-id]')].filter(candidate => {
+        if (candidate.dataset.nodeId === 'transformer' || candidate.getAttribute('aria-hidden') === 'true' || getComputedStyle(candidate).display === 'none') return false;
+        const rect = candidate.getBoundingClientRect();
+        return rect.width > 0 && rect.height > 0 && rect.right > 0 && rect.left < innerWidth && rect.bottom > 0 && rect.top < innerHeight;
+      });
+      for (const label of labels) {
+        const nodeId = label.dataset.nodeId;
+        const dot = document.querySelector(`#nodes .node[data-id="${CSS.escape(nodeId)}"] .ndot`);
+        if (!dot) continue;
+        const matrix = dot.getScreenCTM();
+        const cx = Number(dot.getAttribute('cx')), cy = Number(dot.getAttribute('cy'));
+        if (!matrix || !Number.isFinite(cx) || !Number.isFinite(cy)) continue;
+        const dotPoint = new DOMPoint(cx, cy).matrixTransform(matrix);
+        if (dotPoint.x <= 0 || dotPoint.x >= innerWidth || dotPoint.y <= 0 || dotPoint.y >= innerHeight) continue;
+        if (document.elementFromPoint(dotPoint.x, dotPoint.y)?.closest('g.node')?.dataset.id !== nodeId) continue;
+        return { nodeId, x: dotPoint.x, y: dotPoint.y };
+      }
+      return null;
+    });
+    assert.ok(previewPoint, 'overview trace did not expose an in-viewport non-root lineage marker');
+    const previewNode = page.locator(`#nodes .node.lit[data-id="${previewPoint.nodeId}"]`);
+    const livePreviewPoint = await page.evaluate(nodeId => {
+      const dot = document.querySelector(`#nodes .node[data-id="${CSS.escape(nodeId)}"] .ndot`);
+      const matrix = dot?.getScreenCTM(), cx = Number(dot?.getAttribute('cx')), cy = Number(dot?.getAttribute('cy'));
+      if (!matrix || !Number.isFinite(cx) || !Number.isFinite(cy)) return null;
+      const point = new DOMPoint(cx, cy).matrixTransform(matrix);
+      return point.x > 0 && point.x < innerWidth && point.y > 0 && point.y < innerHeight && document.elementFromPoint(point.x, point.y)?.closest('g.node')?.dataset.id === nodeId
+        ? { x: point.x, y: point.y }
+        : null;
+    }, previewPoint.nodeId);
+    assert.ok(livePreviewPoint, 'overview trace marker moved before pointer activation');
+    await page.mouse.move(0, 0);
+    await page.mouse.move(livePreviewPoint.x, livePreviewPoint.y);
+    await page.waitForFunction(() => document.querySelector('#inspector')?.dataset.mode === 'preview', undefined, { timeout: APP_TIMEOUT });
     const hoverText = await page.locator('#inspector').textContent();
     await previewNode.focus({ force: true });
     await page.waitForFunction(() => document.querySelector('#inspector')?.dataset.mode === 'preview');
@@ -1412,14 +1804,43 @@ describe('staged browser smoke', { concurrency: false }, () => {
     assert.equal(await page.locator('#traceBtn').getAttribute('aria-pressed'), 'true', 'opening a lineage node must preserve the active trace');
     await page.keyboard.press('Escape');
     await page.waitForFunction(() => document.querySelector('#inspector')?.dataset.mode === 'trace');
-    const lstmTraceLabel = page.locator('#traceLabels .traceLabel[data-node-id="lstm"]');
-    assert.equal(await lstmTraceLabel.count(), 1, 'overview trace must expose the LSTM lineage marker');
-    await lstmTraceLabel.click({ force: true });
+    await openControls(page);
+    await page.locator('#fitAllBtn').click();
+    await waitForSemanticZoom(page, 'overview');
+    await page.keyboard.press('Escape');
+    await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(() => requestAnimationFrame(resolve)))));
+    const lstmMarker = page.locator('#nodes .node.lit[data-id="lstm"] .ndot');
+    assert.equal(await lstmMarker.count(), 1, 'overview trace must expose the LSTM lineage marker');
+    const lstmMarkerState = await lstmMarker.evaluate(element => ({
+      litAncestor: Boolean(element.closest('.node.lit')),
+      ancestorDisplay: getComputedStyle(element.closest('.node')).display,
+      visibility: getComputedStyle(element).visibility,
+      radius: Number(element.getAttribute('r') || 0)
+    }));
+    assert.equal(lstmMarkerState.litAncestor, true, 'LSTM lineage marker lost its lit lineage state');
+    assert.notEqual(lstmMarkerState.ancestorDisplay, 'none', 'LSTM lineage marker ancestor is display-hidden');
+    assert.notEqual(lstmMarkerState.visibility, 'hidden', 'LSTM lineage marker is visibility-hidden');
+    assert.ok(lstmMarkerState.radius > 0, 'LSTM lineage marker has no rendered circle radius');
+    const placedTraceNodeId = await page.evaluate(() => {
+      for (const label of document.querySelectorAll('#traceLabels .traceLabel[data-node-id]')) {
+        const nodeId = label.dataset.nodeId;
+        if (!nodeId || nodeId === 'transformer' || label.getAttribute('aria-hidden') === 'true' || getComputedStyle(label).display === 'none') continue;
+        const rect = label.getBoundingClientRect();
+        if (rect.width > 0 && rect.height > 0 && rect.right > 0 && rect.left < innerWidth && rect.bottom > 0 && rect.top < innerHeight) return nodeId;
+      }
+      return null;
+    });
+    assert.ok(placedTraceNodeId, 'overview trace did not place a non-root lineage label for activation');
+    const placedTraceLabel = page.locator(`#traceLabels .traceLabel[data-node-id="${placedTraceNodeId}"]`);
+    await placedTraceLabel.focus();
+    await waitForFocus(page, `#traceLabels .traceLabel[data-node-id="${placedTraceNodeId}"]`);
+    await placedTraceLabel.press('Enter');
     await page.waitForFunction(() => document.querySelector('#panel')?.classList.contains('open'));
     assert.match(await page.evaluate(() => window.location.hash), /trace=transformer/);
     assert.ok(await page.locator('#edgesHi path').count() > 0, 'trace-label activation must retain lineage paths');
     await page.keyboard.press('Escape');
     await page.waitForFunction(() => document.querySelector('#inspector')?.dataset.mode === 'trace');
+    await waitForFocus(page, '#inspector .traceSummary h3');
     assert.equal(await page.evaluate(() => document.activeElement?.matches('#inspector .traceSummary h3')), true, 'Escape from lineage details must focus the trace summary');
     await page.locator('#controlsBtn').focus();
     await page.waitForFunction(() => document.querySelector('#inspector')?.dataset.mode === 'trace');
@@ -1432,18 +1853,26 @@ describe('staged browser smoke', { concurrency: false }, () => {
     assert.equal(await page.locator('#inspector').getAttribute('data-mode'), null);
     await switchView(page, 'map');
     await page.waitForFunction(() => document.querySelector('#inspector')?.dataset.mode !== 'trace' && !document.querySelector('#svg')?.classList.contains('trace-active'));
+    await page.waitForFunction(() => {
+      const params = new URLSearchParams(window.location.hash.slice(1));
+      return (params.get('view') === 'map' || params.get('view') === null) && document.body.dataset.view === 'map' && !params.has('trace');
+    }, undefined, { timeout: APP_TIMEOUT });
     assert.doesNotMatch(await page.evaluate(() => window.location.hash), /trace=/, 'returning from List must not resurrect the trace hash');
     assert.equal(await page.locator('#traceLabels .traceLabel').count(), 0, 'returning from List must not resurrect trace labels');
-    await navigate(page, '#trace=transformer');
+    await navigate(page, '#trace=transformer', '?smoke=trace-opportunity-teardown');
     await waitForApp(page);
     await page.waitForFunction(() => document.querySelector('#inspector')?.dataset.mode === 'trace');
     await switchView(page, 'opportunity');
     assert.equal(await page.locator('#inspector').getAttribute('data-mode'), null, 'Opportunity view must clear an active trace');
     await switchView(page, 'map');
     await page.waitForFunction(() => document.querySelector('#inspector')?.dataset.mode !== 'trace' && !document.querySelector('#svg')?.classList.contains('trace-active'));
+    await page.waitForFunction(() => {
+      const params = new URLSearchParams(window.location.hash.slice(1));
+      return (params.get('view') === 'map' || params.get('view') === null) && document.body.dataset.view === 'map' && !params.has('trace');
+    }, undefined, { timeout: APP_TIMEOUT });
     assert.doesNotMatch(await page.evaluate(() => window.location.hash), /trace=/, 'returning from Opportunity must not resurrect the trace hash');
     assert.equal(await page.locator('#traceLabels .traceLabel').count(), 0, 'returning from Opportunity must not resurrect trace labels');
-    await navigate(page, '#trace=transformer&mode=all');
+    await navigate(page, '#trace=transformer&mode=all', '?smoke=trace-pooled-all');
     await waitForApp(page);
     await zoomToSemanticLevel(page, 'detail');
     const allPool = await page.evaluate(() => {
@@ -1455,7 +1884,10 @@ describe('staged browser smoke', { concurrency: false }, () => {
     await page.locator('#fitAllBtn').click();
     await waitForSemanticZoom(page, 'overview');
     await page.locator('#traceBtn').count();
+    if (await page.locator('#controls').evaluate(element => element.classList.contains('open'))) await page.keyboard.press('Escape');
+    await page.waitForFunction(() => document.querySelector('#controls')?.classList.contains('open') !== true);
     await page.keyboard.press('Escape');
+    await page.waitForFunction(() => !document.querySelector('#svg')?.classList.contains('trace-active'));
     const clearedPaths = await page.evaluate(() => ({
       backbone: document.querySelectorAll('#edgesBackbone path[data-relationship-id]').length,
       all: document.querySelectorAll('#edgesAll path[data-relationship-id]').length,
@@ -1463,7 +1895,12 @@ describe('staged browser smoke', { concurrency: false }, () => {
     }));
     assert.deepEqual(clearedPaths, { backbone: 72, all: 0, active: 0 }, 'clearing an overview trace must restore only the 72-path spine');
 
-    await page.locator('#eraSelect').selectOption('0');
+    const paginatedEra = await page.evaluate(() => ERAS.findIndex(era => NODES.filter(node => {
+      const year = layoutYear(node);
+      return year >= era.y0 && year <= era.y1;
+    }).length > 24));
+    assert.ok(paginatedEra >= 0, 'no canonical era contains enough records to exercise pagination');
+    await page.locator('#eraSelect').selectOption(String(paginatedEra));
     await page.waitForFunction(() => document.querySelector('#inspector')?.dataset.mode === 'era' && document.querySelectorAll('.eraCard').length > 0);
     assert.ok(await page.locator('.eraLaneGroup h4').count() > 0);
     assert.ok(await page.locator('.eraCard').count() <= 24);
@@ -1483,46 +1920,53 @@ describe('staged browser smoke', { concurrency: false }, () => {
   });
 
   test('relationship rationale previews stay identical across grades, filters, and row-only access', async testContext => {
-    const grades = Object.freeze([
-      Object.freeze({ id: 'logicprog>godel:dep', grade: 'contextual' }),
-      Object.freeze({ id: 'logicprog>turing36:dep', grade: 'editorial' }),
-      Object.freeze({ id: 'freeenergy>gap_activeinf:gap', grade: 'hypothesis' }),
-      Object.freeze({ id: 'neuralprog>neurosymbolic:dep', grade: 'unassessed' }),
-      Object.freeze({ id: 'policygrad>a3cppo:dep', grade: 'direct' }),
-      Object.freeze({ id: 'batchnorm>layernorm:dep', grade: 'partial' })
-    ]);
+    const grades = Object.freeze(['contextual', 'editorial', 'hypothesis', 'unassessed', 'direct', 'partial']);
     const session = await makeSession(testContext, { dismissWelcome: true });
     const { page } = session;
+    await navigate(page, '#mode=all', '?smoke=rationale-candidates');
+    await waitForApp(page);
 
-    for (const { id } of grades) {
-      const sourceId = id.split('>')[0];
-      const target = id.split('>')[1].split(':')[0];
-      await navigate(page, `#trace=${target}&mode=all`);
-      await waitForApp(page);
-      await page.getByRole('button', { name: 'Open details', exact: true }).click();
-      await page.waitForFunction(() => document.querySelector('#panel')?.classList.contains('open'));
-      await zoomToSemanticLevel(page, 'overview');
-      assert.equal(await page.evaluate(({ sourceId: source, targetId }) => {
-        const sourceNode = byId.get(source), targetNode = byId.get(targetId);
-        if (!sourceNode || !targetNode) return false;
-        fitRect(
-          Math.min(sourceNode.px, targetNode.px),
-          Math.min(sourceNode.py, targetNode.py),
-          Math.max(sourceNode.px + sourceNode.w, targetNode.px + targetNode.w),
-          Math.max(sourceNode.py + NODE_H, targetNode.py + NODE_H),
-          80
-        );
-        return true;
-      }, { sourceId, targetId: target }), true, `${id} canonical endpoints could not be fitted`);
-      await page.waitForFunction(relationshipId => {
-        const path = [...document.querySelectorAll('#edgesBackbone path[data-relationship-id],#edgesAll path[data-relationship-id],#edgesHi path[data-relationship-id]')]
-          .find(candidate => candidate.dataset.relationshipId === relationshipId);
-        return Boolean(path?.getClientRects().length) && relationshipPointerIndex.entries.some(entry => entry.id === relationshipId);
-      }, id);
+    for (const requestedGrade of grades) {
+      const candidates = await page.evaluate(grade => EDGES
+        .filter(edge => edgeEvidenceGrade(edge) === grade)
+        .map(edge => ({ id: edgeAuditKey(edge), sourceId: edge.a, targetId: edge.b }))
+        .sort((left, right) => left.id.localeCompare(right.id)), requestedGrade);
+      assert.ok(candidates.length, `no relationship candidates exist for requested ${requestedGrade} grade`);
+      let selected = null;
+      for (const candidate of candidates.slice(0, 24)) {
+        const activated = await page.evaluate(targetId => {
+          if (typeof clearTrace === 'function') clearTrace({ restoreFocus: false });
+          return typeof activateTrace === 'function' && activateTrace(targetId);
+        }, candidate.targetId);
+        if (!activated) continue;
+        await page.waitForFunction(() => document.querySelector('#inspector')?.dataset.mode === 'trace');
+        const fitted = await page.evaluate(({ sourceId, targetId }) => {
+          const sourceNode = byId.get(sourceId), targetNode = byId.get(targetId);
+          if (!sourceNode || !targetNode) return false;
+          fitRect(
+            Math.min(sourceNode.px, targetNode.px),
+            Math.min(sourceNode.py, targetNode.py),
+            Math.max(sourceNode.px + sourceNode.w, targetNode.px + targetNode.w),
+            Math.max(sourceNode.py + NODE_H, targetNode.py + NODE_H),
+            80
+          );
+          return true;
+        }, candidate);
+        if (!fitted) continue;
+        await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(() => requestAnimationFrame(resolve)))));
+        const pointerPoint = await findRelationshipPointerPoint(page, candidate.id);
+        if (pointerPoint) {
+          selected = { ...candidate };
+          break;
+        }
+        await page.evaluate(() => { if (typeof clearTrace === 'function') clearTrace({ restoreFocus: false }); });
+      }
+      assert.ok(selected, `no real stage-visible pointer coordinate was found for requested ${requestedGrade} grade`);
+      const { id, sourceId, targetId } = selected;
+      assert.equal(await page.evaluate(({ relationshipId, grade }) => edgeEvidenceGrade(relationshipById.get(relationshipId)) === grade, { relationshipId: id, grade: requestedGrade }), true, `${id} did not retain the requested ${requestedGrade} evidence grade`);
       assert.equal(await page.evaluate(() => {
         const candidate = relationshipPaths().find(path => path.isConnected && path.getClientRects().length);
         if (!candidate) return false;
-        const original = candidate.getBoundingClientRect;
         Object.defineProperty(candidate, 'getBoundingClientRect', {
           configurable: true,
           value: () => ({ left: -100000, right: -99900, top: -100000, bottom: -99900 })
@@ -1533,51 +1977,41 @@ describe('staged browser smoke', { concurrency: false }, () => {
         rebuildRelationshipPointerIndex();
         return excluded;
       }), true, `${id} offscreen path was not excluded from the pointer index`);
-
+      const expectedTitle = await page.evaluate(({ sourceId: source, targetId: target }) => `${byId.get(source)?.t || ''} → ${byId.get(target)?.t || ''}`, { sourceId, targetId });
+      assert.match(expectedTitle, /.+ → .+/u, `${id} has no stable relationship title`);
+      await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(() => requestAnimationFrame(resolve)))));
+      const pointerPoint = await findRelationshipPointerPoint(page, id);
+      assert.ok(pointerPoint, `${id} lost its stage-visible pointer coordinate after index rebuild`);
+      await page.mouse.move(0, 0);
+      await page.mouse.move(pointerPoint.x, pointerPoint.y);
+      await page.waitForFunction(({ relationshipId, expectedRelationshipTitle }) =>
+        relationshipPointerPreviewId === relationshipId &&
+        document.querySelector('#inspector')?.dataset.mode === 'relationship' &&
+        document.querySelector('#inspector .tt')?.textContent?.trim() === expectedRelationshipTitle,
+      { relationshipId: id, expectedRelationshipTitle: expectedTitle }, { timeout: APP_TIMEOUT });
+      assert.equal(await page.evaluate(() => relationshipPointerPreviewId), id, `${id} pointer preview selected a different relationship`);
+      const pointerText = await page.locator('#inspector').textContent();
+      await page.mouse.move(0, 0);
+      await page.waitForFunction(() => document.querySelector('#inspector')?.dataset.mode === 'trace');
+      await page.getByRole('button', { name: 'Open details', exact: true }).click();
+      await page.waitForFunction(() => document.querySelector('#panel')?.classList.contains('open'));
       await page.locator('#pRelationsDetails summary').click();
       await page.waitForFunction(() => document.querySelector('#pRelationsDetails')?.open === true);
-      const rowIndex = await page.locator('#pRel .relWrap').evaluateAll((rows, source) =>
-        rows.findIndex(row => row.querySelector('.rel')?.dataset.go === source), sourceId);
+      const rowIndex = await page.locator('#pRel .relWrap').evaluateAll((rows, source) => rows.findIndex(row => row.querySelector('.rel')?.dataset.go === source), sourceId);
       assert.ok(rowIndex >= 0, `${id} is not represented in the target relationship dock`);
       const row = page.locator('#pRel .relWrap').nth(rowIndex);
-      const expectedTitle = await row.evaluate((element, relationshipId) => {
-        const [sourceId, targetAndType] = relationshipId.split('>');
-        const targetId = targetAndType.split(':')[0];
-        const title = id => document.querySelector(`#nodes .node[data-id="${CSS.escape(id)}"] .nlabel`)?.textContent?.trim();
-        return `${title(sourceId)} → ${title(targetId)}`;
-      }, id);
-      assert.match(expectedTitle, /.+ → .+/u, `${id} has no stable relationship title`);
-
-      const pointerText = await page.waitForFunction(({ relationshipId, expectedTitle: expectedRelationshipTitle }) => {
-        const path = [...document.querySelectorAll('#edgesBackbone path[data-relationship-id],#edgesAll path[data-relationship-id],#edgesHi path[data-relationship-id]')]
-          .find(candidate => candidate.dataset.relationshipId === relationshipId);
-        if (!path || !path.getTotalLength() || !path.getScreenCTM()) return null;
-        const matrix = path.getScreenCTM();
-        const length = path.getTotalLength();
-        for (const ratio of [0.25, 0.5, 0.75]) {
-          const point = path.getPointAtLength(length * ratio);
-          const screen = new DOMPoint(point.x, point.y).matrixTransform(matrix);
-          document.querySelector('#stage').dispatchEvent(new PointerEvent('pointermove', {
-            bubbles: true,
-            clientX: screen.x,
-            clientY: screen.y,
-            pointerType: 'mouse'
-          }));
-          const title = document.querySelector('#inspector .tt')?.textContent?.trim();
-          if (relationshipPointerPreviewId === relationshipId && document.querySelector('#inspector')?.dataset.mode === 'relationship' && title === expectedRelationshipTitle) return relationshipPointerPreviewId;
-        }
-        return null;
-      }, { relationshipId: id, expectedTitle });
-      assert.equal(pointerText, id, `${id} pointer preview selected a different relationship`);
-
       await row.locator('.rel').focus();
       assert.equal(await page.evaluate(expectedSource => document.activeElement?.matches('.rel') && document.activeElement.dataset.go === expectedSource, sourceId), true, `${id} row focus did not land on the expected relationship control`);
       await page.waitForFunction(() => document.querySelector('#inspector')?.dataset.mode === 'relationship');
+      assert.equal(await page.locator('#inspector').textContent(), pointerText, `${id} row focus preview differs from pointer preview`);
       assert.equal(await page.locator('#inspector .tt').textContent(), expectedTitle, `${id} row focus preview differs from pointer preview`);
       assert.match(await page.locator('#inspector').textContent(), /Canonical relationship rationale/u);
+      await page.keyboard.press('Escape');
+      await page.waitForFunction(() => document.querySelector('#panel')?.classList.contains('open') !== true);
+      await page.evaluate(() => { if (typeof clearTrace === 'function') clearTrace({ restoreFocus: false }); });
     }
 
-    await navigate(page, '#node=policygrad&mode=all');
+    await navigate(page, '#mode=all', '?smoke=rationale-buckets');
     await waitForApp(page);
     await zoomToSemanticLevel(page, 'detail');
     const bucketCounts = await page.evaluate(() => {
@@ -1619,6 +2053,8 @@ describe('staged browser smoke', { concurrency: false }, () => {
     assert.deepEqual(pooled, { count: 711, unique: 711 }, 'trace detail must preserve one pooled path per relationship');
     await page.locator('#fitAllBtn').click();
     await waitForSemanticZoom(page, 'overview');
+    if (await page.locator('#controls').evaluate(element => element.classList.contains('open'))) await page.keyboard.press('Escape');
+    await page.waitForFunction(() => document.querySelector('#controls')?.classList.contains('open') !== true);
     await page.keyboard.press('Escape');
     await page.waitForFunction(() => document.querySelector('#inspector')?.dataset.mode !== 'trace' && !document.querySelector('#svg')?.classList.contains('trace-active'));
     assert.equal(await page.locator('#inspector').getAttribute('data-mode'), null, 'clearing an overview trace must hide the trace dock');
@@ -1627,10 +2063,59 @@ describe('staged browser smoke', { concurrency: false }, () => {
       all: document.querySelectorAll('#edgesAll path[data-relationship-id]').length,
       active: document.querySelectorAll('#edgesHi path[data-relationship-id]').length
     })), { backbone: 72, all: 0, active: 0 }, 'trace restore must return to the 72-path orientation spine');
+    await page.locator('#eraSelect').focus();
     await page.locator('#eraSelect').selectOption('0');
     await page.waitForFunction(() => document.querySelector('#inspector')?.dataset.mode === 'era');
+    const eraCard = page.locator('.eraCard').first();
+    assert.match(await eraCard.getAttribute('data-era-node'), /^[a-z0-9_]+$/u);
+    assert.ok((await eraCard.locator('strong').textContent())?.trim(), 'era card is missing its title field');
+    assert.match((await eraCard.locator('span').textContent()) || '', / · /u, 'era card is missing its date/status field');
+    assert.doesNotMatch(await page.evaluate(() => window.location.hash), /(?:^|[#&])era=/u, 'era lens state must remain transient and not enter the share hash');
     await page.keyboard.press('Escape');
     assert.equal(await page.locator('#inspector').getAttribute('data-mode'), null, 'era dock must restore without stale relationship content');
+    await waitForFocus(page, '#eraSelect');
+    assert.doesNotMatch(await page.evaluate(() => window.location.hash), /(?:^|[#&])era=/u, 'closing era lens must not leave an era hash behind');
+
+    await navigate(page, '#trace=transformer', '?smoke=rationale-era-teardown-trace');
+    await waitForApp(page);
+    await page.waitForFunction(() => document.querySelector('#inspector')?.dataset.mode === 'trace');
+    await page.locator('#eraSelect').focus();
+    await page.locator('#eraSelect').selectOption('0');
+    await page.waitForFunction(() => document.querySelector('#inspector')?.dataset.mode === 'era');
+    await switchView(page, 'network');
+    await page.waitForFunction(() => document.querySelector('#inspector')?.dataset.mode === 'trace' && document.body.dataset.view === 'network' && !eraLensState && document.querySelectorAll('.eraCard').length === 0 && document.querySelector('#networkView')?.dataset.networkState === 'ready');
+    assert.equal(await page.locator('#inspector').getAttribute('data-mode'), 'trace', 'Network view must restore the active trace summary after disposing the era lens');
+    assert.equal(await page.evaluate(() => traced && Boolean(traceRootId)), true, 'Network view must preserve the active trace state');
+    assert.match(await page.locator('#inspector .traceCounts').textContent(), /^117 total nodes · \d+ visible · \d+ filter-hidden · 196 total relationships ·/u, 'Network trace summary totals drifted');
+    await page.waitForFunction(() => document.querySelectorAll('#networkLabelLayer .networkLabel.selected').length > 0);
+    assert.ok(await page.locator('#networkLabelLayer .networkLabel.selected').count() > 0, 'Network view must retain highlighted trace labels');
+    await switchView(page, 'list');
+    await page.waitForFunction(() => {
+      const params = new URLSearchParams(window.location.hash.slice(1));
+      return document.body.dataset.view === 'list' && !params.has('trace');
+    }, undefined, { timeout: APP_TIMEOUT });
+    assert.doesNotMatch(await page.evaluate(() => window.location.hash), /(?:^|[#&])trace=/u, 'List teardown must clear a trace that was behind the era lens');
+    await switchView(page, 'map');
+    await navigate(page, '#trace=transformer', '?smoke=rationale-trace-escape');
+    await waitForApp(page);
+    await page.waitForFunction(() => document.querySelector('#inspector')?.dataset.mode === 'trace');
+    await page.keyboard.press('Escape');
+    await page.waitForFunction(() => document.querySelector('#inspector')?.getAttribute('data-mode') == null && !document.querySelector('#svg')?.classList.contains('trace-active'));
+    await page.waitForFunction(() => {
+      const visible = element => Boolean(element && element.getClientRects().length && getComputedStyle(element).display !== 'none' && getComputedStyle(element).visibility !== 'hidden');
+      const active = document.activeElement;
+      return visible(active) && (active.matches('#anchorLabels .anchorLabel[data-node-id="transformer"]') || active.matches('#nodes .node[data-id="transformer"]') || active.id === 'controlsBtn');
+    }, undefined, { timeout: APP_TIMEOUT });
+    const restoredFocus = await page.evaluate(() => ({
+      id: document.activeElement?.id || null,
+      node: document.activeElement?.matches('#nodes .node[data-id="transformer"]') || false,
+      anchor: document.activeElement?.matches('#anchorLabels .anchorLabel[data-node-id="transformer"]') || false,
+      visible: Boolean(document.activeElement?.getClientRects().length)
+    }));
+    assert.equal(restoredFocus.visible, true, `Escape from a trace summary restored focus to a non-visible target: ${JSON.stringify(restoredFocus)}`);
+    assert.equal(restoredFocus.node || restoredFocus.anchor || restoredFocus.id === 'controlsBtn', true, `Escape from a trace summary restored focus to an unexpected target: ${JSON.stringify(restoredFocus)}`);
+    await page.waitForFunction(() => !new URLSearchParams(window.location.hash.slice(1)).has('trace'), undefined, { timeout: APP_TIMEOUT });
+    assert.doesNotMatch(await page.evaluate(() => window.location.hash), /(?:^|[#&])trace=/u, 'Escape from a trace summary must clear the trace hash');
     session.assertClean();
 
     const mobileSession = await makeSession(testContext, {
@@ -1681,6 +2166,12 @@ describe('staged browser smoke', { concurrency: false }, () => {
     assert.equal(initial.first, 'gap_activeinf');
     assert.equal(initial.tableHidden, true);
     assert.match(initial.hash, /research=questions/);
+    const canonicalCardFields = await page.locator('.questionCard').first().locator('.questionCardMeta span').evaluateAll(elements => elements.map(element => element.textContent));
+    assert.equal(canonicalCardFields.length, 4, 'question cards must expose title, date, lane, and status fields');
+    assert.match(canonicalCardFields[0] || '', /^Title: .+/u);
+    assert.match(canonicalCardFields[1] || '', /^Date: .+/u);
+    assert.match(canonicalCardFields[2] || '', /^Lane: .+/u);
+    assert.match(canonicalCardFields[3] || '', /^Status: .+/u);
     assert.equal(await page.locator('#listView').getAttribute('aria-labelledby'), 'questionDeckTitle');
     const desktopRects = await page.evaluate(() => {
       const rect = selector => { const value = document.querySelector(selector)?.getBoundingClientRect(); return value ? { left: value.left, right: value.right, top: value.top, bottom: value.bottom, width: value.width, height: value.height } : null; };
@@ -1739,6 +2230,7 @@ describe('staged browser smoke', { concurrency: false }, () => {
     assert.equal(await page.locator('#pTitle').textContent(), (evidenceTitle || '').replace(/^Title: /, ''));
     await page.keyboard.press('Escape');
     await page.waitForFunction(() => !document.querySelector('#panel')?.classList.contains('open'));
+    await page.waitForFunction(() => document.activeElement?.getAttribute('data-question-action') === 'evidence', undefined, { timeout: APP_TIMEOUT });
     assert.equal(await page.evaluate(() => document.activeElement?.getAttribute('data-question-action')), 'evidence');
 
     await page.locator('.questionCard').first().locator('[data-question-action="timeline"]').click();
@@ -1754,6 +2246,7 @@ describe('staged browser smoke', { concurrency: false }, () => {
     await page.locator('#questionDeckClose').click();
     await page.waitForFunction(() => document.querySelector('#questionDeck')?.hidden);
     assert.equal(await page.locator('#listView').getAttribute('aria-labelledby'), 'listTitle');
+    await waitForFocus(page, '#listView');
     await page.locator('#unfinishedBtn').click({ force: true });
     await page.waitForFunction(() => !document.querySelector('#questionDeck')?.hidden);
 

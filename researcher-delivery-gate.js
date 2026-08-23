@@ -2,7 +2,7 @@
 'use strict';
 
 /*
- * v1.2.0 researcher-delivery release gate.
+ * v1.2.1 researcher-delivery release gate.
  *
  * This gate is intentionally fail-closed. It audits the maintained application
  * source and the completed `_site` staging tree together: a source-only feature
@@ -450,7 +450,7 @@ function runResearcherDeliveryGate() {
 
   const result = {
     status: 'PASS',
-    gate: 'researcher-delivery-v1.2.0',
+    gate: 'researcher-delivery-v1.2.1',
     nodes: pages.length,
     relationships: stagedData.relationships.length,
     sitemapNodeUrls: stagedData.nodes.length,

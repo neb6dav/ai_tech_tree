@@ -284,8 +284,8 @@ requirePattern(/['"]map['"][\s\S]{0,180}['"]opportunity['"][\s\S]{0,180}['"]netw
 
 console.log(JSON.stringify({
   status: 'PASS',
-  release: 'v1.2.0',
-  candidate: 'v1.2.1',
+  release: 'v1.2.1',
+  candidate: 'Stable RC',
   tours: presentation.tours.length,
   tourSteps: tourStepCount,
   semanticAltitudes: ['overview', 'mid', 'detail'],

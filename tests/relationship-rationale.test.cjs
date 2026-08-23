@@ -12,6 +12,12 @@ test('relationship rationale preview uses the bounded pooled-path pointer contra
   assert.match(html, /const RELATIONSHIP_POINTER_TOLERANCE=12/);
   assert.match(html, /RELATIONSHIP_POINTER_CELL=24/);
   assert.match(html, /RELATIONSHIP_POINTER_LAYER_PRIORITY=Object\.freeze\(\{edgesBackbone:0,edgesAll:1,edgesHi:2\}\)/);
+  assert.match(html, /RELATIONSHIP_POINTER_SAMPLE_SPACING=18/);
+  assert.match(html, /RELATIONSHIP_POINTER_SAMPLE_CAP=256/);
+  assert.match(html, /const scale=Math\.max\(Math\.hypot\(matrix\.a,matrix\.b\),Math\.hypot\(matrix\.c,matrix\.d\)\)/);
+  assert.match(html, /Math\.min\(RELATIONSHIP_POINTER_SAMPLE_CAP,Math\.ceil\(screenLength\/RELATIONSHIP_POINTER_SAMPLE_SPACING\)\)/);
+  assert.match(html, /stageRect=stage\.getBoundingClientRect\(\),viewport=\{left:stageRect\.left-tolerance,right:stageRect\.right\+tolerance,top:stageRect\.top-tolerance,bottom:stageRect\.bottom\+tolerance\}/);
+  assert.match(html, /const rect=path\.getBoundingClientRect\(\);\s*if\(!rect\|\|rect\.right<viewport\.left\|\|rect\.left>viewport\.right\|\|rect\.bottom<viewport\.top\|\|rect\.top>viewport\.bottom\)return;\s*const points=relationshipPathScreenPoints\(path\)/);
   assert.match(html, /svg\.mid\.trace-active #edgesHi,svg\.overview\.trace-active #edgesHi\{display:block!important\}/);
   assert.match(html, /layerPriority:relationshipPointerLayerPriority\(path\)/);
   assert.match(html, /entry\.layerPriority>bestLayerPriority/);

@@ -1519,6 +1519,20 @@ describe('staged browser smoke', { concurrency: false }, () => {
           .find(candidate => candidate.dataset.relationshipId === relationshipId);
         return Boolean(path?.getClientRects().length) && relationshipPointerIndex.entries.some(entry => entry.id === relationshipId);
       }, id);
+      assert.equal(await page.evaluate(() => {
+        const candidate = relationshipPaths().find(path => path.isConnected && path.getClientRects().length);
+        if (!candidate) return false;
+        const original = candidate.getBoundingClientRect;
+        Object.defineProperty(candidate, 'getBoundingClientRect', {
+          configurable: true,
+          value: () => ({ left: -100000, right: -99900, top: -100000, bottom: -99900 })
+        });
+        rebuildRelationshipPointerIndex();
+        const excluded = !relationshipPointerIndex.entries.some(entry => entry.path === candidate);
+        delete candidate.getBoundingClientRect;
+        rebuildRelationshipPointerIndex();
+        return excluded;
+      }), true, `${id} offscreen path was not excluded from the pointer index`);
 
       await page.locator('#pRelationsDetails summary').click();
       await page.waitForFunction(() => document.querySelector('#pRelationsDetails')?.open === true);

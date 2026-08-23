@@ -2,7 +2,7 @@
 <html lang="en" class="no-js">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-qxG84glRjxcRJ2e2y9X3wOJ85K+Mzh/8OS4GDUC0tlc=' 'sha256-HJKU4ytgzAICo98r+zjKSL02GGlSraOjVQELgS5pHIg=' 'sha256-C0Unf7k+e1dYY1s7UXlE2UcpOmigNicOr1in1ILhAdQ=' 'sha256-Lsi8GvNXqT8uZjew4XkbrW9eBzxkeEPcBT44aQrEgmc=' 'sha256-rBbOjsv1KBUuws+dLq0Yp7FQcU9WTxe92ThEyFIUFQ4=' 'sha256-Kmnd4YIE3yo/KmdoThnP+tKcBvjaoyM/gy/Hni6zz7k=' 'sha256-ykJA/a9aPmrESE+vrCjgMR6ly7Tf9yXftYlMEmUAFyI=' 'sha256-RLS99Pw6kuLV2Vq5mi0FKALNRBWdusTCfcZYQ1aaPEs=' 'sha256-pxzde38gSPDWztBewG3WULK4Nzz8VR2zxRI+Y7nOHbs=' 'sha256-jDcv+mNOXD4DbXx+Eg7E2iBRwy/lvNWv/0kA2i+DzHY=' 'sha256-xeg96BOoihkJOxyCmua8GMYArw/Sv8AKgA8Lw09IVJw='; script-src-attr 'none'; style-src 'none'; style-src-elem 'sha256-7ygRT9klc/w5jT8dCerWl0+2JkDlPW74JtReuPT6yAU=' 'sha256-+B2nBjRyXsMKwUg+IhXOjIEyjzr3HstEQ9vwNGlM68I='; style-src-attr 'unsafe-inline'; img-src data:; connect-src 'self'; font-src 'none'; media-src 'none'; worker-src 'none'; frame-src 'none'; child-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-qxG84glRjxcRJ2e2y9X3wOJ85K+Mzh/8OS4GDUC0tlc=' 'sha256-HJKU4ytgzAICo98r+zjKSL02GGlSraOjVQELgS5pHIg=' 'sha256-C0Unf7k+e1dYY1s7UXlE2UcpOmigNicOr1in1ILhAdQ=' 'sha256-Lsi8GvNXqT8uZjew4XkbrW9eBzxkeEPcBT44aQrEgmc=' 'sha256-rBbOjsv1KBUuws+dLq0Yp7FQcU9WTxe92ThEyFIUFQ4=' 'sha256-Kmnd4YIE3yo/KmdoThnP+tKcBvjaoyM/gy/Hni6zz7k=' 'sha256-ykJA/a9aPmrESE+vrCjgMR6ly7Tf9yXftYlMEmUAFyI=' 'sha256-RLS99Pw6kuLV2Vq5mi0FKALNRBWdusTCfcZYQ1aaPEs=' 'sha256-pxzde38gSPDWztBewG3WULK4Nzz8VR2zxRI+Y7nOHbs=' 'sha256-XILMzcsfnAqbuRIUvm7FiBeKhl+/hD1tbHJRvpi9mQc=' 'sha256-xeg96BOoihkJOxyCmua8GMYArw/Sv8AKgA8Lw09IVJw='; script-src-attr 'none'; style-src 'none'; style-src-elem 'sha256-7ygRT9klc/w5jT8dCerWl0+2JkDlPW74JtReuPT6yAU=' 'sha256-+B2nBjRyXsMKwUg+IhXOjIEyjzr3HstEQ9vwNGlM68I='; style-src-attr 'unsafe-inline'; img-src data:; connect-src 'self'; font-src 'none'; media-src 'none'; worker-src 'none'; frame-src 'none'; child-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="color-scheme" content="dark light">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -5018,7 +5018,7 @@ function edgePath(a, b){
 const relationshipById=new Map(EDGES.map(edge=>[edgeAuditKey(edge),edge]));
 const relationshipPathPool=new Map();
 const relationshipPathHomeLayer=new Map();
-const RELATIONSHIP_POINTER_TOLERANCE=12,RELATIONSHIP_POINTER_CELL=24,RELATIONSHIP_POINTER_TIE_EPSILON=.5;
+const RELATIONSHIP_POINTER_TOLERANCE=12,RELATIONSHIP_POINTER_CELL=24,RELATIONSHIP_POINTER_TIE_EPSILON=.5,RELATIONSHIP_POINTER_SAMPLE_SPACING=18,RELATIONSHIP_POINTER_SAMPLE_CAP=256;
 const RELATIONSHIP_POINTER_LAYER_PRIORITY=Object.freeze({edgesBackbone:0,edgesAll:1,edgesHi:2});
 let relationshipPointerIndex={grid:new Map(),entries:[]},relationshipPointerIndexRaf=null,relationshipPointerPreviewId=null,relationshipRowHoverId=null,relationshipRowFocusId=null;
 function relationshipPointerEnabled(event){return viewMode==='map'&&window.innerWidth>740&&event?.pointerType!=='touch'&&!(window.matchMedia?.('(pointer: coarse)')?.matches);}
@@ -5028,7 +5028,7 @@ function relationshipPathScreenPoints(path){
   try{
     const matrix=path.getScreenCTM(),length=path.getTotalLength();
     if(!matrix||!Number.isFinite(length)||length<=0)return [];
-    const count=Math.max(2,Math.ceil(length/36)),points=[];
+    const scale=Math.max(Math.hypot(matrix.a,matrix.b),Math.hypot(matrix.c,matrix.d)),screenLength=length*(Number.isFinite(scale)&&scale>0?scale:1),count=Math.max(2,Math.min(RELATIONSHIP_POINTER_SAMPLE_CAP,Math.ceil(screenLength/RELATIONSHIP_POINTER_SAMPLE_SPACING))),points=[];
     for(let index=0;index<=count;index++)points.push(relationshipPointerPoint(path.getPointAtLength(length*index/count),matrix));
     return points;
   }catch(_){return [];}
@@ -5042,9 +5042,11 @@ function relationshipPointerIndexPath(entry){
   });
 }
 function rebuildRelationshipPointerIndex(){
-  relationshipPointerIndexRaf=null;const grid=new Map(),entries=[];
+  relationshipPointerIndexRaf=null;const grid=new Map(),entries=[],tolerance=RELATIONSHIP_POINTER_TOLERANCE,stageRect=stage.getBoundingClientRect(),viewport={left:stageRect.left-tolerance,right:stageRect.right+tolerance,top:stageRect.top-tolerance,bottom:stageRect.bottom+tolerance};
   relationshipPaths().forEach(path=>{
     if(!path.isConnected||!path.getClientRects().length)return;
+    const rect=path.getBoundingClientRect();
+    if(!rect||rect.right<viewport.left||rect.left>viewport.right||rect.bottom<viewport.top||rect.top>viewport.bottom)return;
     const points=relationshipPathScreenPoints(path);if(points.length<2)return;
     const entry={path,id:path.dataset.relationshipId,layerPriority:relationshipPointerLayerPriority(path),order:entries.length,segments:points.slice(1).map((point,index)=>({a:points[index],b:point}))};entries.push(entry);
     relationshipPointerIndex={grid,entries};relationshipPointerIndexPath(entry);

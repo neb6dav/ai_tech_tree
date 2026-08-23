@@ -1418,6 +1418,172 @@ describe('staged browser smoke', { concurrency: false }, () => {
     session.assertClean();
   });
 
+  test('relationship rationale previews stay identical across grades, filters, and row-only access', async testContext => {
+    const grades = Object.freeze([
+      Object.freeze({ id: 'logicprog>godel:dep', grade: 'contextual' }),
+      Object.freeze({ id: 'logicprog>turing36:dep', grade: 'editorial' }),
+      Object.freeze({ id: 'freeenergy>gap_activeinf:gap', grade: 'hypothesis' }),
+      Object.freeze({ id: 'neuralprog>neurosymbolic:dep', grade: 'unassessed' }),
+      Object.freeze({ id: 'policygrad>a3cppo:dep', grade: 'direct' }),
+      Object.freeze({ id: 'batchnorm>layernorm:dep', grade: 'partial' })
+    ]);
+    const session = await makeSession(testContext, { dismissWelcome: true });
+    const { page } = session;
+
+    for (const { id } of grades) {
+      const sourceId = id.split('>')[0];
+      const target = id.split('>')[1].split(':')[0];
+      await navigate(page, `#trace=${target}&mode=all`);
+      await waitForApp(page);
+      await page.getByRole('button', { name: 'Open details', exact: true }).click();
+      await page.waitForFunction(() => document.querySelector('#panel')?.classList.contains('open'));
+      await zoomToSemanticLevel(page, 'overview');
+      assert.equal(await page.evaluate(({ sourceId: source, targetId }) => {
+        const sourceNode = byId.get(source), targetNode = byId.get(targetId);
+        if (!sourceNode || !targetNode) return false;
+        fitRect(
+          Math.min(sourceNode.px, targetNode.px),
+          Math.min(sourceNode.py, targetNode.py),
+          Math.max(sourceNode.px + sourceNode.w, targetNode.px + targetNode.w),
+          Math.max(sourceNode.py + NODE_H, targetNode.py + NODE_H),
+          80
+        );
+        return true;
+      }, { sourceId, targetId: target }), true, `${id} canonical endpoints could not be fitted`);
+      await page.waitForFunction(relationshipId => {
+        const path = [...document.querySelectorAll('#edgesBackbone path[data-relationship-id],#edgesAll path[data-relationship-id],#edgesHi path[data-relationship-id]')]
+          .find(candidate => candidate.dataset.relationshipId === relationshipId);
+        return Boolean(path?.getClientRects().length) && relationshipPointerIndex.entries.some(entry => entry.id === relationshipId);
+      }, id);
+
+      await page.locator('#pRelationsDetails summary').click();
+      await page.waitForFunction(() => document.querySelector('#pRelationsDetails')?.open === true);
+      const rowIndex = await page.locator('#pRel .relWrap').evaluateAll((rows, source) =>
+        rows.findIndex(row => row.querySelector('.rel')?.dataset.go === source), sourceId);
+      assert.ok(rowIndex >= 0, `${id} is not represented in the target relationship dock`);
+      const row = page.locator('#pRel .relWrap').nth(rowIndex);
+      const expectedTitle = await row.evaluate((element, relationshipId) => {
+        const [sourceId, targetAndType] = relationshipId.split('>');
+        const targetId = targetAndType.split(':')[0];
+        const title = id => document.querySelector(`#nodes .node[data-id="${CSS.escape(id)}"] .nlabel`)?.textContent?.trim();
+        return `${title(sourceId)} → ${title(targetId)}`;
+      }, id);
+      assert.match(expectedTitle, /.+ → .+/u, `${id} has no stable relationship title`);
+
+      const pointerText = await page.waitForFunction(({ relationshipId, expectedTitle: expectedRelationshipTitle }) => {
+        const path = [...document.querySelectorAll('#edgesBackbone path[data-relationship-id],#edgesAll path[data-relationship-id],#edgesHi path[data-relationship-id]')]
+          .find(candidate => candidate.dataset.relationshipId === relationshipId);
+        if (!path || !path.getTotalLength() || !path.getScreenCTM()) return null;
+        const matrix = path.getScreenCTM();
+        const length = path.getTotalLength();
+        for (const ratio of [0.25, 0.5, 0.75]) {
+          const point = path.getPointAtLength(length * ratio);
+          const screen = new DOMPoint(point.x, point.y).matrixTransform(matrix);
+          document.querySelector('#stage').dispatchEvent(new PointerEvent('pointermove', {
+            bubbles: true,
+            clientX: screen.x,
+            clientY: screen.y,
+            pointerType: 'mouse'
+          }));
+          const title = document.querySelector('#inspector .tt')?.textContent?.trim();
+          if (relationshipPointerPreviewId === relationshipId && document.querySelector('#inspector')?.dataset.mode === 'relationship' && title === expectedRelationshipTitle) return relationshipPointerPreviewId;
+        }
+        return null;
+      }, { relationshipId: id, expectedTitle });
+      assert.equal(pointerText, id, `${id} pointer preview selected a different relationship`);
+
+      await row.locator('.rel').focus();
+      assert.equal(await page.evaluate(expectedSource => document.activeElement?.matches('.rel') && document.activeElement.dataset.go === expectedSource, sourceId), true, `${id} row focus did not land on the expected relationship control`);
+      await page.waitForFunction(() => document.querySelector('#inspector')?.dataset.mode === 'relationship');
+      assert.equal(await page.locator('#inspector .tt').textContent(), expectedTitle, `${id} row focus preview differs from pointer preview`);
+      assert.match(await page.locator('#inspector').textContent(), /Canonical relationship rationale/u);
+    }
+
+    await navigate(page, '#node=policygrad&mode=all');
+    await waitForApp(page);
+    await zoomToSemanticLevel(page, 'detail');
+    const bucketCounts = await page.evaluate(() => {
+      const counts = { evidence: 0, contextual: 0, hypothesis: 0 };
+      for (const path of document.querySelectorAll('#edgesBackbone path[data-relationship-id],#edgesAll path[data-relationship-id],#edgesHi path[data-relationship-id]')) {
+        if (path.classList.contains('bucket-evidence-backed')) counts.evidence += 1;
+        else if (path.classList.contains('bucket-hypothesis')) counts.hypothesis += 1;
+        else if (path.classList.contains('bucket-contextual-editorial-or-unassessed')) counts.contextual += 1;
+      }
+      return counts;
+    });
+    assert.deepEqual(bucketCounts, { evidence: 9, contextual: 658, hypothesis: 44 }, 'runtime display buckets drifted');
+
+    const filterTarget = await page.evaluate(() => {
+      const path = [...document.querySelectorAll('#edgesBackbone path[data-relationship-id],#edgesAll path[data-relationship-id],#edgesHi path[data-relationship-id]')]
+        .find(candidate => {
+          const [source, targetAndType] = candidate.dataset.relationshipId.split('>');
+          const target = targetAndType.split(':')[0];
+          return [source, target].some(id => document.querySelector(`#nodes .node[data-id="${CSS.escape(id)}"]`)?.classList.contains('status-d'));
+        });
+      return path?.dataset.relationshipId || null;
+    });
+    assert.ok(filterTarget, 'no relationship available for filter visibility check');
+    await openControls(page);
+    await page.locator('#chips .chip[data-s="d"]').click();
+    await page.waitForFunction(id => document.querySelector(`path[data-relationship-id="${CSS.escape(id)}"]`)?.style.display === 'none', filterTarget);
+    await page.locator('#resetFiltersBtn').click();
+    await page.waitForFunction(id => document.querySelector(`path[data-relationship-id="${CSS.escape(id)}"]`)?.style.display !== 'none', filterTarget);
+
+    await navigate(page, '#trace=transformer&mode=all');
+    await waitForApp(page);
+    await zoomToSemanticLevel(page, 'detail');
+    await page.waitForFunction(() => document.querySelector('#inspector')?.dataset.mode === 'trace');
+    const pooled = await page.evaluate(() => {
+      const ids = [...document.querySelectorAll('#edgesBackbone path[data-relationship-id],#edgesAll path[data-relationship-id],#edgesHi path[data-relationship-id]')]
+        .map(path => path.dataset.relationshipId);
+      return { count: ids.length, unique: new Set(ids).size };
+    });
+    assert.deepEqual(pooled, { count: 711, unique: 711 }, 'trace detail must preserve one pooled path per relationship');
+    await page.locator('#fitAllBtn').click();
+    await waitForSemanticZoom(page, 'overview');
+    await page.keyboard.press('Escape');
+    await page.waitForFunction(() => document.querySelector('#inspector')?.dataset.mode !== 'trace' && !document.querySelector('#svg')?.classList.contains('trace-active'));
+    assert.equal(await page.locator('#inspector').getAttribute('data-mode'), null, 'clearing an overview trace must hide the trace dock');
+    assert.deepEqual(await page.evaluate(() => ({
+      backbone: document.querySelectorAll('#edgesBackbone path[data-relationship-id]').length,
+      all: document.querySelectorAll('#edgesAll path[data-relationship-id]').length,
+      active: document.querySelectorAll('#edgesHi path[data-relationship-id]').length
+    })), { backbone: 72, all: 0, active: 0 }, 'trace restore must return to the 72-path orientation spine');
+    await page.locator('#eraSelect').selectOption('0');
+    await page.waitForFunction(() => document.querySelector('#inspector')?.dataset.mode === 'era');
+    await page.keyboard.press('Escape');
+    assert.equal(await page.locator('#inspector').getAttribute('data-mode'), null, 'era dock must restore without stale relationship content');
+    session.assertClean();
+
+    const mobileSession = await makeSession(testContext, {
+      viewport: { width: 375, height: 812 },
+      hasTouch: true,
+      isMobile: true
+    });
+    const mobilePage = mobileSession.page;
+    await navigate(mobilePage, '#node=a3cppo&mode=all');
+    await waitForApp(mobilePage);
+    await mobilePage.waitForFunction(() => window.innerWidth <= 740 && window.matchMedia('(pointer: coarse)').matches);
+    await mobilePage.locator('#pRelationsDetails summary').click();
+    await mobilePage.waitForFunction(() => document.querySelector('#pRelationsDetails')?.open === true);
+    const mobileRowIndex = await mobilePage.locator('#pRel .relWrap').evaluateAll((rows, source) =>
+      rows.findIndex(row => row.querySelector('.rel')?.dataset.go === source), 'policygrad');
+    assert.ok(mobileRowIndex >= 0, 'mobile relationship dock lost the representative row');
+    const mobileRow = mobilePage.locator('#pRel .relWrap').nth(mobileRowIndex);
+    await mobileRow.locator('.rel').focus();
+    assert.equal(await mobilePage.evaluate(expectedSource => document.activeElement?.matches('.rel') && document.activeElement.dataset.go === expectedSource, 'policygrad'), true, 'mobile row focus did not land on the expected relationship control');
+    await mobilePage.waitForFunction(() => document.querySelector('#inspector')?.dataset.mode === 'relationship');
+    assert.match(await mobilePage.locator('#inspector').textContent(), /Canonical relationship rationale/u);
+    await mobilePage.evaluate(() => document.querySelector('#stage').dispatchEvent(new PointerEvent('pointermove', {
+      bubbles: true,
+      clientX: 180,
+      clientY: 320,
+      pointerType: 'mouse'
+    })));
+    assert.equal(await mobilePage.locator('#inspector').getAttribute('data-mode'), 'relationship', 'mobile pointer movement must not displace row-only access');
+    mobileSession.assertClean();
+  });
+
   test('Unfinished Business deck preserves canonical question inventory and actions', async testContext => {
     const session = await makeSession(testContext);
     const { page } = session;

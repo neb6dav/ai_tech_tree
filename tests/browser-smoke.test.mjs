@@ -64,18 +64,26 @@ async function makeSession(testContext, options = {}) {
   const {
     javaScriptEnabled = true,
     dismissWelcome = true,
+    reducedMotion = 'reduce',
+    disableAnimationSupport = false,
     viewport = { width: 1366, height: 768 },
     ...contextOptions
   } = options;
   const context = await browser.newContext({
     colorScheme: 'dark',
     javaScriptEnabled,
-    reducedMotion: 'reduce',
+    reducedMotion,
     serviceWorkers: 'block',
     viewport,
     ...contextOptions
   });
   testContext.after(async () => context.close());
+
+  if (disableAnimationSupport) {
+    await context.addInitScript(() => {
+      try { Element.prototype.animate = undefined; } catch { /* unsupported DOM */ }
+    });
+  }
 
   if (javaScriptEnabled && dismissWelcome) {
     await context.addInitScript(revision => {
@@ -487,6 +495,62 @@ describe('staged browser smoke', { concurrency: false }, () => {
     assert.equal(await restored.page.locator('#legend').evaluate(element => element.classList.contains('welcome')), false);
     assert.equal(await restored.page.locator('#panel').getAttribute('aria-hidden'), 'false');
     restored.assertClean();
+  });
+
+  test('fresh orientation reveal completes, cancels, skips, and honors bypasses', async testContext => {
+    const complete = await makeSession(testContext, { dismissWelcome: false, reducedMotion: 'no-preference' });
+    await navigate(complete.page, '', '?smoke=intro-complete');
+    await waitForApp(complete.page);
+    await complete.page.locator('#legendDismiss').click();
+    await complete.page.waitForFunction(() => document.body.dataset.introReveal === 'complete', undefined, { timeout: APP_TIMEOUT });
+    assert.equal(await complete.page.locator('#introRevealSkip').count(), 0);
+    assert.deepEqual(await complete.page.evaluate(() => ({ paths: document.body.dataset.introRevealPaths, labels: document.body.dataset.introRevealLabels })), { paths: '72', labels: '24' });
+    complete.assertClean();
+
+    const cancelled = await makeSession(testContext, { dismissWelcome: false, reducedMotion: 'no-preference' });
+    await navigate(cancelled.page, '', '?smoke=intro-cancel');
+    await waitForApp(cancelled.page);
+    await cancelled.page.locator('#legendDismiss').click();
+    await cancelled.page.waitForFunction(() => document.body.dataset.introReveal === 'running', undefined, { timeout: APP_TIMEOUT });
+    await cancelled.page.mouse.move(8, 8);
+    await cancelled.page.mouse.down();
+    await cancelled.page.mouse.up();
+    await cancelled.page.waitForFunction(() => document.body.dataset.introReveal === 'cancelled', undefined, { timeout: APP_TIMEOUT });
+    cancelled.assertClean();
+
+    const skipped = await makeSession(testContext, { dismissWelcome: false, reducedMotion: 'no-preference' });
+    await navigate(skipped.page, '', '?smoke=intro-skip');
+    await waitForApp(skipped.page);
+    await skipped.page.locator('#legendDismiss').click();
+    await skipped.page.waitForFunction(() => document.body.dataset.introReveal === 'running', undefined, { timeout: APP_TIMEOUT });
+    await skipped.page.getByRole('button', { name: 'Skip animation' }).click();
+    await skipped.page.waitForFunction(() => document.body.dataset.introReveal === 'skipped', undefined, { timeout: APP_TIMEOUT });
+    assert.equal(await skipped.page.locator('#introRevealSkip').count(), 0);
+    skipped.assertClean();
+
+    const bypassCases = [
+      { label: 'deep link', options: { dismissWelcome: false, reducedMotion: 'no-preference' }, hash: '#view=list&node=transformer' },
+      { label: 'prior dismissal', options: { reducedMotion: 'no-preference' }, hash: '' },
+      { label: 'embed', options: { dismissWelcome: false, reducedMotion: 'no-preference' }, query: '?embed=1', hash: '' },
+      { label: 'reduced motion', options: { dismissWelcome: false, reducedMotion: 'reduce' }, hash: '' },
+      { label: 'forced colors', options: { dismissWelcome: false, reducedMotion: 'no-preference', forcedColors: 'active' }, hash: '' },
+      { label: 'missing animation support', options: { dismissWelcome: false, reducedMotion: 'no-preference', disableAnimationSupport: true }, hash: '' },
+      { label: 'targeted start', options: { dismissWelcome: false, reducedMotion: 'no-preference' }, hash: '', targeted: true }
+    ];
+    for (const item of bypassCases) {
+      const session = await makeSession(testContext, item.options);
+      await navigate(session.page, item.hash || '', item.query || `?smoke=intro-bypass-${item.label.replaceAll(' ', '-')}`);
+      await waitForApp(session.page);
+      if (item.targeted) {
+        await session.page.locator('#legend [data-start="transformer"]').click();
+      } else if (await session.page.locator('#legendDismiss').count()) {
+        await session.page.locator('#legendDismiss').click();
+      }
+      await session.page.waitForFunction(() => ['bypassed', 'complete', 'cancelled', 'skipped'].includes(document.body.dataset.introReveal));
+      assert.equal(await session.page.evaluate(() => document.body.dataset.introReveal), 'bypassed', `${item.label} did not bypass orientation reveal`);
+      assert.equal(await session.page.locator('#introRevealSkip').count(), 0, `${item.label} exposed the skip control`);
+      session.assertClean();
+    }
   });
 
   test('timeline semantic zoom, time scale, and hash state round-trip', async testContext => {

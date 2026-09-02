@@ -11705,19 +11705,6 @@
           }
         ]
       },
-      "multimodal>rtfm:dep": {
-        "state": "indirect",
-        "confidence": "medium",
-        "note": "The reviewed “Vision–language–action model” article links to “Multimodal learning”; this is contextual, not causal, evidence.",
-        "sources": [
-          {
-            "title": "Vision–language–action model",
-            "canonicalUrl": "https://en.wikipedia.org/wiki/Vision%E2%80%93language%E2%80%93action_model",
-            "revisionUrl": "https://en.wikipedia.org/w/index.php?title=Vision%E2%80%93language%E2%80%93action%20model&oldid=1359788720",
-            "checkedAt": "2026-08-04"
-          }
-        ]
-      },
       "deeprlrobot>rtfm:dep": {
         "state": "indirect",
         "confidence": "medium",

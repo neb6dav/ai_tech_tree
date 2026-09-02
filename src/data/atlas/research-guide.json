@@ -171,9 +171,7 @@
         "w2s>aicontrol:dep",
         "word2vec>subword:dep"
       ],
-      "retiredEdges": [
-        "multimodal>rtfm:dep"
-      ]
+      "retiredEdges": []
     },
     "tiers": {
       "core": "Distinct, durable development added at the map's normal granularity.",

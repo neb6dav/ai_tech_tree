@@ -977,6 +977,65 @@ describe('staged browser smoke', { concurrency: false }, () => {
     session.assertClean();
   });
 
+  test('0 fits the active view while physical Shift+0 fits the whole map', async testContext => {
+    const session = await makeSession(testContext);
+    const { page } = session;
+
+    await navigate(page, '#status=f', '?smoke=fit-shortcuts');
+    await waitForApp(page);
+    const readTransform = () => page.locator('#world').getAttribute('transform');
+    const waitForTransformChange = previous => page.waitForFunction(
+      previousTransform => document.querySelector('#world')?.getAttribute('transform') !== previousTransform,
+      previous,
+      { timeout: APP_TIMEOUT }
+    );
+    const focusMapNode = async () => {
+      const target = page.locator('#anchorLabels .anchorLabel[tabindex="0"]').first();
+      assert.equal(await target.count(), 1, 'fit shortcut test requires a focusable visible map anchor');
+      await target.focus();
+      assert.equal(await target.evaluate(element => element === document.activeElement), true, 'map anchor did not receive focus before shortcut');
+    };
+
+    const initial = await readTransform();
+    await page.locator('#zin').click();
+    await waitForTransformChange(initial);
+    const zoomed = await readTransform();
+    assert.notEqual(zoomed, initial, 'zoom control must change the camera before testing ordinary 0');
+    await focusMapNode();
+    await page.keyboard.press('0');
+    await waitForTransformChange(zoomed);
+    const visibleFit = await readTransform();
+    assert.notEqual(visibleFit, zoomed, 'ordinary 0 must fit the active filtered view');
+
+    await page.locator('#zin').click();
+    await waitForTransformChange(visibleFit);
+    const shiftedZoomed = await readTransform();
+    await focusMapNode();
+    await page.keyboard.press('Shift+0');
+    await waitForTransformChange(shiftedZoomed);
+    const wholeFit = await readTransform();
+    assert.notEqual(wholeFit, shiftedZoomed, 'Shift+0 must change a zoomed camera');
+    assert.notEqual(wholeFit, visibleFit, 'Shift+0 must fit the whole map instead of the active filter');
+
+    await page.locator('#zin').click();
+    await waitForTransformChange(wholeFit);
+    const layoutShiftedZoomed = await readTransform();
+    await focusMapNode();
+    await page.evaluate(() => {
+      document.dispatchEvent(new KeyboardEvent('keydown', {
+        bubbles: true,
+        code: 'Digit0',
+        key: ')',
+        shiftKey: true
+      }));
+    });
+    await waitForTransformChange(layoutShiftedZoomed);
+    const layoutShiftedWholeFit = await readTransform();
+    assert.notEqual(layoutShiftedWholeFit, layoutShiftedZoomed, 'layout-shifted Shift+0 must change a zoomed camera');
+    assert.equal(layoutShiftedWholeFit, wholeFit, 'Shift+0 must use the physical Digit0 code when the layout changes its key value');
+    session.assertClean();
+  });
+
   test('extended hostile Map -> All -> trace -> overview -> filters -> era -> questions -> views sequence stays below 8000', async testContext => {
     const session = await makeSession(testContext);
     const { page } = session;

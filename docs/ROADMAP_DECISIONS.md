@@ -44,8 +44,10 @@ first `v1.0.0` deployment may use one direct-child recovery commit on `main`
 only when its exact diff is limited to the Pages runner definition, the
 release-identity source lock, and this decision record; those files are not
 public payload inputs and the annotated tag remains immutable. Pull requests
-receive downloadable preview artifacts and there is no public `/dev` lane. The
-v0.2.0 Chromium smoke gate verifies
+run the fast data, generation, and HTML integrity tier without Chromium or a
+preview upload; maintainers can manually dispatch the release-candidate tier
+for full browser/Lighthouse validation and a downloadable preview. There is no
+public `/dev` lane. The v0.2.0 Chromium smoke gate verifies
 representative desktop, mobile, deep-link, focus, and no-JavaScript behavior.
 Screenshots remain optional review artifacts rather than brittle golden-image
 assertions.

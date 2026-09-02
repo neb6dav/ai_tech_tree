@@ -91,6 +91,37 @@ test('canonical shadow assembles the exact legacy semantic model', () => {
   }
 });
 
+test('Wikipedia audit edges are a canonical-only projection', () => {
+  const canonical = loadCanonicalAtlas();
+  const canonicalRelationshipKeys = new Set(canonical.relationships.map(edge => edge.key));
+  const auditEdges = canonical.sidecars.wikipediaAudit.data.edges;
+
+  assert.equal(Object.hasOwn(auditEdges, 'multimodal>rtfm:dep'), false);
+  for (const key of Object.keys(auditEdges)) {
+    assert.equal(canonicalRelationshipKeys.has(key), true, `orphan Wikipedia audit edge: ${key}`);
+  }
+});
+
+test('loader fails closed when a Wikipedia audit edge is not canonical', () => {
+  withFixture(
+    fixture => {
+      const file = path.join(fixture, 'wikipedia-audit.json');
+      const sidecar = readJson(file);
+      sidecar.data.edges['multimodal>rtfm:dep'] = {
+        state: 'indirect',
+        confidence: 'medium',
+        note: 'fixture orphan',
+        sources: []
+      };
+      writeJson(file, sidecar);
+    },
+    fixture => assert.throws(
+      () => loadCanonicalAtlas({ dataRoot: fixture }),
+      /wikipedia audit edge multimodal>rtfm:dep does not reference a canonical relationship/u
+    )
+  );
+});
+
 test('canonical shadow reproduces every generated dataset byte and layout byte', () => {
   const canonical = loadCanonicalAtlas();
   const { plain, datasetGraph, ndjsonRecords } = buildExports(canonical.legacyModel);

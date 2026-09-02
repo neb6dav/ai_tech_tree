@@ -38,11 +38,15 @@ For relationships, also state source → target direction, relationship meaning,
 
 - [ ] `npm ci`
 - [ ] `npm run build`
-- [ ] `npm test`
+- [ ] `npm run test:fast` (ordinary pull-request validation)
 - [ ] `git diff --exit-code` after committing generated artifacts
 - [ ] I tested relevant behavior in light and dark themes.
 - [ ] I tested relevant behavior in Timeline, Network, Opportunity, and List views, or explained why a view is unaffected.
 - [ ] I checked keyboard and reduced-motion behavior when the interface changed.
+
+Maintainers preparing a release candidate additionally install Chromium and
+run `npm test`; that manually dispatched tier adds the full browser and
+Lighthouse checks.
 
 ## Material AI assistance
 

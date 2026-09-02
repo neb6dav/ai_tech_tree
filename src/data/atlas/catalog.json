@@ -704,9 +704,7 @@
         "planningpddl>groundedplanning:dep",
         "simenv>groundedplanning:dep"
       ],
-      "retiredResearchEdgeKeys": [
-        "multimodal>rtfm:dep"
-      ],
+      "retiredResearchEdgeKeys": [],
       "staleResearchExtensionEdgeKeys": [],
       "staleRetiredResearchEdgeKeys": [],
       "staleNodeFingerprintIds": [],

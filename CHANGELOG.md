@@ -6,7 +6,7 @@ All notable public changes to the AI Research Tech Tree will be documented here.
 
 ### v1.2.1 Stable release candidate
 
-**Stable candidate complete and cross-platform verified; not merged, tagged, or deployed.** The exact implementation head is `2bb999e66a132b98dad7fd7df476155f68e57973`. Windows and hosted Ubuntu both pass the complete 27/27 browser suite and all release gates. The public/live release remains v1.0.0, `main` remains the merged v1.2.0 source checkpoint, and there is no pull request. Owner review and separate authorization are still required for promotion.
+**Post-review implementation complete and locally/Windows verified; hosted-Ubuntu RC rerun pending; not merged, tagged, or deployed.** The exact post-review-fix implementation head is `98d0c4a7bda01cc15303bd0a4939bc0829b98181`. Windows passes the complete 28/28 browser suite and all local release gates. The public/live release remains v1.0.0, `main` remains the merged v1.2.0 source checkpoint, and there is no pull request. Owner review and separate authorization are still required for promotion.
 
 #### Added
 
@@ -15,9 +15,16 @@ All notable public changes to the AI Research Tech Tree will be documented here.
 
 #### Verification evidence
 
-- Active-DOM peak is 7,090 on both Windows and hosted Ubuntu against the unchanged 8,000 ceiling; the built HTML is 4,591,976 bytes and gzip is 664,844 bytes. All generated files are committed at the exact candidate head.
-- The semantic digest remains `865174514ba64e20d6f2a90471a6766b6d5fa18f5b0e62c85d9601de077a50f2`; publication remains 339 nodes, 711 relationships, 339 node URLs, and zero semantic changes. The clean manifest matches the exact head across 355 inputs.
-- Windows Lighthouse medians are score 52, FCP 23,185.883 ms, LCP 23,391.883 ms, TBT 186 ms, and CLS 0. Hosted Ubuntu Lighthouse medians are score 43, FCP 23,182.7173 ms, LCP 23,403.8253 ms, TBT 479.5 ms, and CLS 0. The hosted verification is recorded in [Actions run 32616802586](https://github.com/neb6dav/ai_tech_tree/actions/runs/32616802586), job 97138752718.
+- Active-DOM peak is 7,090 on Windows against the unchanged 8,000 ceiling; the built HTML is 4,591,487 bytes and gzip is 664,842 bytes. The artifact SHA-256 is `a8365ca06bf53d74457c540e906b436e0b38e2a0d3386eff2fd2866713e90691`.
+- The semantic digest remains `865174514ba64e20d6f2a90471a6766b6d5fa18f5b0e62c85d9601de077a50f2`; publication remains 339 nodes, 711 relationships, 339 node URLs, and zero semantic changes. The implementation head is locally/Windows verified; the manually dispatched hosted-Ubuntu RC rerun for the pushed candidate branch remains pending.
+- Windows Lighthouse medians are score 53, FCP 23,188.613 ms, LCP 23,361.613 ms, TBT 157 ms, and CLS 0.
+
+#### Post-review fixes
+
+- Corrected the `Shift+0` shortcut and added audit referential-integrity enforcement.
+- Streamlined PR validation into a fast non-browser integrity tier, reserved full browser/Lighthouse validation for manual release-candidate runs, and consolidated Pages into one guarded build/stage/upload/deploy job.
+
+Historical prior-head evidence: the hosted-Ubuntu result at `2bb999e66a132b98dad7fd7df476155f68e57973` (27/27 browser tests; score 43; FCP 23,182.7173 ms; LCP 23,403.8253 ms; TBT 479.5 ms; CLS 0) remains preserved as historical evidence only and is not a verification claim for the current `98d0c4a` implementation.
 
 ### v1.2.0 Stable source checkpoint
 

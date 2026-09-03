@@ -129,6 +129,14 @@ source_checkpoints:
     merged_commit: "f03b9c9851f786b5181e7d18adbb12a548838fbf"
     tag_and_deployment: "not_authorized_not_tagged_or_deployed"
     purpose: "Researcher delivery with static node pages and read-only comparison/embed"
+  - version: "v1.2.1"
+    status: "stable_candidate_windows_verified_hosted_rerun_pending"
+    verification_state: "local_windows_verified_hosted_ubuntu_pending"
+    product_version: "1.2.1"
+    release_state: "Stable candidate"
+    checkpoint_commit: "98d0c4a7bda01cc15303bd0a4939bc0829b98181"
+    tag_and_deployment: "not_authorized_not_merged_tagged_or_deployed"
+    purpose: "Presentation-only orientation, lineage trace, era lens, and research navigation"
 authorization:
   source_checkpoint_implementation: "authorized"
   source_checkpoint_commits: "authorized"
@@ -136,7 +144,8 @@ authorization:
   intermediate_public_tags: "not_planned"
   intermediate_public_deployments: "not_planned"
   v1_public_tag_and_deployment: "completed_2026-08-21"
-  post_v1_ui_repair_program: "implementation_authorized_merged_to_main_release_promotion_not_authorized"
+  post_v1_ui_repair_program: "implementation_authorized_release_promotion_not_authorized"
+  v1_2_1_orientation_research_navigation: "implementation_authorized_release_promotion_not_authorized"
   post_v1_combinatorial_editions: "roadmap_only_not_authorized"
 ---
 
@@ -301,7 +310,7 @@ Acceptance gate:
 - The final diff contains only product, data, documentation, and proportionate
   test changes required by this roadmap.
 
-## v1.0.1 through v1.2.0 — UI, navigation, and researcher delivery
+## v1.0.1 through v1.2.1 — UI, navigation, and researcher delivery
 
 Status: implementation authorized as source checkpoints. Each checkpoint must
 preserve the v1 semantic inventory and pass the existing publication contract.
@@ -333,10 +342,52 @@ Merge, public tag, and deployment remain separate promotion decisions.
 - Keep the default interactive shell single-file and free of external runtime
   dependencies.
 
-Acceptance for all three editions includes unchanged 339-node and
+Acceptance for all four editions includes unchanged 339-node and
 711-relationship identities, both themes, responsive and keyboard behavior,
 URL round trips, generated-artifact parity, publication tests, the calibrated
 DOM/HTML/gzip budgets, and the current Lighthouse limits.
+
+### v1.2.1 — orientation and research navigation
+
+Status: approved as a presentation-only source checkpoint; this branch begins
+with the docs-only roadmap/decision checkpoint. Implementation is authorized,
+but merge, annotated tagging, deployment, and citation changes are not.
+
+- Separate URL intent, camera restoration, and focus during startup. Require a
+  complete valid `cx/cy/z` tuple; otherwise frame targets, fit filtered or
+  whole-map records, and recover safely from empty, partial, legacy, and
+  zero-result states.
+- Keep the responsive header contained, add the pinned date ruler and
+  canonical 15-lane orientation rail, use compact era/lane orientation on
+  mobile, and include the full shell in fit calculations.
+- Share a cycle-safe relationship neighborhood and pooled canonical paths
+  between Timeline and Network. Add only `trace=<canonical-node-id>`, with
+  trace selection, fitting, summary counts/actions, persistence, and
+  copy-link behavior exactly as recorded in RD-013.
+- Generalize the context dock for previews, trace summaries, and transient
+  era cards. Deliver the existing 74 questions on 71 nodes as the
+  `view=list&research=questions` “Unfinished Business” deck with deterministic
+  segments, 12-card pages, search, keyboard navigation, and focus restoration.
+- Add equivalent pointer/keyboard rationale previews and three presentation
+  evidence buckets without changing any of the six canonical grades or the
+  expected presentation counts (9 direct/partial, 658 contextual/editorial/
+  unassessed, and 44 hypothesis relationships). Keep filters visibly
+  resettable and preserve Connections preference.
+- Limit fresh intro motion to the existing 72 spine paths and 24 anchors with
+  the approved cancellation and bypass rules. Replace the social card only
+  with the owner-reviewed, under-500KB 1200x630 caveated asset and keep static
+  Open Graph metadata fragment-safe.
+- Recover headroom through links to existing static node pages and the
+  maintained changelog note, without adding dependencies, services, a second
+  graph, semantic fields, URL state for eras/questions, or budget.
+
+Acceptance requires unchanged IDs/fingerprints and zero semantic edition diff;
+Transformer remains exactly 117 nodes and 196 unique relationships; All-mode
+pooling remains exactly 711 relationships and overview clearing returns exactly
+72 spine paths. The implementation must cover the full hash, trace/filter,
+era/question, responsive, theme, embed, accessibility, hostile-sequence,
+DOM/HTML/gzip, and Windows/hosted-Ubuntu Lighthouse suite before a candidate
+is presented.
 
 ## Potential later editions — combinatorial exploration
 

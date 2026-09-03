@@ -195,6 +195,16 @@ function validateSidecarEnvelope(value, label) {
   assertPlainObject(value.data, `${label}.data`);
 }
 
+function validateWikipediaAuditReferences(sidecar, relationshipByKey) {
+  assertPlainObject(sidecar.data.edges, 'wikipediaAudit.data.edges');
+  for (const key of Object.keys(sidecar.data.edges)) {
+    assert(
+      relationshipByKey.has(key),
+      `wikipedia audit edge ${key} does not reference a canonical relationship`
+    );
+  }
+}
+
 function validateNode(record, shardLane, label) {
   assertOnlyKeys(record, NODE_KEYS, label);
   assert(Number.isInteger(record.ordinal) && record.ordinal >= 0, `${label}.ordinal must be non-negative`);
@@ -336,6 +346,7 @@ function loadCanonicalAtlas(options = {}) {
     assert(!relationshipByKey.has(relationship.key), `duplicate canonical relationship key ${relationship.key}`);
     relationshipByKey.set(relationship.key, relationship);
   }
+  validateWikipediaAuditReferences(sidecars.wikipediaAudit, relationshipByKey);
 
   const extensionKeys = new Set(catalog.legacyModelState.researchExtensionEdgeKeys);
   assert.equal(extensionKeys.size, catalog.legacyModelState.researchExtensionEdgeKeys.length, 'research extension keys are duplicated');

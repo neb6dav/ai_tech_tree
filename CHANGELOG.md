@@ -4,26 +4,48 @@ All notable public changes to the AI Research Tech Tree will be documented here.
 
 ## [Unreleased]
 
-**v1.2.0 Stable UI release candidate (merged into `main`, untagged, and undeployed).** PR #11 was squash-merged by neb6dav on 2026-08-22 as `f03b9c9851f786b5181e7d18adbb12a548838fbf`; main validation passed on that exact commit. This researcher-delivery checkpoint generates 339 static node pages, sitemap discovery, a semantic edition diff, and a read-only embed while preserving the canonical dataset identity. The public/live release remains v1.0.0 and the dataset citation remains v1.0.0.
+### v1.2.1 Stable release candidate
 
-### Added
+**Post-review implementation complete and locally/Windows verified; hosted-Ubuntu RC rerun pending; not merged, tagged, or deployed.** The exact post-review-fix implementation head is `98d0c4a7bda01cc15303bd0a4939bc0829b98181`. Windows passes the complete 28/28 browser suite and all local release gates. The public/live release remains v1.0.0, `main` remains the merged v1.2.0 source checkpoint, and there is no pull request. Owner review and separate authorization are still required for promotion.
+
+#### Added
+
+- A v1.2.1 presentation-only candidate that preserves 339 nodes, 711 relationships, stable IDs, the v1.0.0 dataset citation, and the 2026-08-21-stable-1 edition.
+- Readable lineage tracing, pinned date and lane orientation, transient era cards, and the 74-question Unfinished Business deck without adding semantic records.
+
+#### Verification evidence
+
+- Active-DOM peak is 7,090 on Windows against the unchanged 8,000 ceiling; the built HTML is 4,591,487 bytes and gzip is 664,842 bytes. The artifact SHA-256 is `a8365ca06bf53d74457c540e906b436e0b38e2a0d3386eff2fd2866713e90691`.
+- The semantic digest remains `865174514ba64e20d6f2a90471a6766b6d5fa18f5b0e62c85d9601de077a50f2`; publication remains 339 nodes, 711 relationships, 339 node URLs, and zero semantic changes. The implementation head is locally/Windows verified; the manually dispatched hosted-Ubuntu RC rerun for the pushed candidate branch remains pending.
+- Windows Lighthouse medians are score 53, FCP 23,188.613 ms, LCP 23,361.613 ms, TBT 157 ms, and CLS 0.
+
+#### Post-review fixes
+
+- Corrected the `Shift+0` shortcut and added audit referential-integrity enforcement.
+- Streamlined PR validation into a fast non-browser integrity tier, reserved full browser/Lighthouse validation for manual release-candidate runs, and consolidated Pages into one guarded build/stage/upload/deploy job.
+
+Historical prior-head evidence: the hosted-Ubuntu result at `2bb999e66a132b98dad7fd7df476155f68e57973` (27/27 browser tests; score 43; FCP 23,182.7173 ms; LCP 23,403.8253 ms; TBT 479.5 ms; CLS 0) remains preserved as historical evidence only and is not a verification claim for the current `98d0c4a` implementation.
+
+### v1.2.0 Stable source checkpoint
+
+**Merged to `main`; not tagged or deployed.** This researcher-delivery checkpoint generates 339 static node pages, sitemap discovery, a semantic edition diff, and a read-only embed while preserving the canonical dataset identity. The public/live release remains v1.0.0 and the dataset citation remains v1.0.0. Pages is configured to require the exact annotated v1.2.0 tag, but that tag has not been created and the workflow has not been run.
+
+#### Added
 
 - One static, source-backed page for each of the 339 canonical nodes, with crawlable metadata and citation conveniences.
 - Sitemap entries for the node pages and a read-only same-origin edition comparison and embed surface.
 - Repository-owner approval of the exact 24-anchor, 72-relationship orientation inventory and all six tour narratives. The two legacy supersession links remain explicitly contextual, unreviewed, and not established by this display approval.
 
-### Changed
+### v1.1.0 Preview checkpoint
 
-- Tiered validation now keeps ordinary pull requests fast and non-browser, while manual release candidates run the full browser/Lighthouse suite; Pages uses one manual single-pass build/stage/deploy job.
+**Not released, tagged, or deployed.** This interface checkpoint adds semantic zoom altitudes, the evidence inspector, a readable linear scale, guided tours and palette controls, relationship pooling, and DOM disposal; it makes no semantic dataset changes.
 
-**v1.1.0 Preview checkpoint (not released, tagged, or deployed).** This interface checkpoint adds semantic zoom altitudes, the evidence inspector, a readable linear scale, guided tours and palette controls, relationship pooling, and DOM disposal; it makes no semantic dataset changes.
-
-### Added
+#### Added
 
 - A display-only inventory of 24 canonical anchor nodes, 72 existing orientation relationships, and six guided tours. Membership does not alter canonical relationship type, direction, rationale, evidence grade, or review state.
 - A compact mobile start chooser with routes to Transformers, current frontiers, research directions, and the whole map.
 
-### Changed
+#### Changed
 
 - Repaired the default desktop landing with an always-visible orientation spine and canonical anchor labels.
 - Exposed Timeline, Network, Opportunity, List, Connections, theme, Share, and Help in responsive navigation appropriate to each breakpoint.
@@ -31,7 +53,7 @@ All notable public changes to the AI Research Tech Tree will be documented here.
 - Simplified first-run help, node previews, List cards, Opportunity guidance, and the nonlinear-time explanation without removing methodology or evidence warnings.
 - Reused the 72 orientation relationship paths when expanding to All connections, avoiding a duplicate edge layer.
 
-### Verification
+#### Verification
 
 - Preserved 339 canonical nodes, 711 canonical relationships, stable IDs, the no-JavaScript index, and the single-file offline runtime.
 - Kept active relationship and orientation-spine contrast above 3:1 in dark and light themes without adding universal arrowheads.

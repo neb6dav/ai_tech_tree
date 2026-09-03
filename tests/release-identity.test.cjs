@@ -8,11 +8,11 @@ const test = require('node:test');
 const ROOT = path.resolve(__dirname, '..');
 const EXPECTED_RELEASE_TAG = process.env.AI_TREE_EXPECT_RELEASE_TAG || null;
 assert(
-  EXPECTED_RELEASE_TAG === null || EXPECTED_RELEASE_TAG === 'v1.2.0',
-  'Stable candidates may only be staged without a tag or with the exact v1.2.0 release tag'
+  EXPECTED_RELEASE_TAG === null || EXPECTED_RELEASE_TAG === 'v1.2.1',
+  'Stable candidates may only be staged without a tag or with the exact v1.2.1 release tag'
 );
 const EXPECTED = Object.freeze({
-  version: '1.2.0',
+  version: '1.2.1',
   citationVersion: '1.0.0',
   edition: '2026-08-21-stable-1',
   releaseState: 'Stable',
@@ -26,6 +26,7 @@ const EXPECTED = Object.freeze({
   contributionGuideUrl: 'https://github.com/neb6dav/ai_tech_tree/blob/main/CONTRIBUTING.md',
   license: 'https://creativecommons.org/licenses/by-sa/4.0/'
 });
+const EXPECTED_SOCIAL_ALT = 'Transformer lineage map showing 117 nodes and 196 connections; evidence varies by relationship; not exhaustive causality.';
 
 const EXPECTED_DISTRIBUTIONS = Object.freeze([
   Object.freeze({
@@ -177,16 +178,20 @@ function loadSnapshot() {
 }
 
 function assertHtmlIdentity(html, label) {
-  assert(html.includes('<title>AI Research Tech Tree - v1.2.0 Stable</title>'), `${label} title`);
+  assert(html.includes('<title>AI Research Tech Tree - v1.2.1 Stable</title>'), `${label} title`);
   for (const fragment of [
-    '<meta name="description" content="The v1.2.0 stable edition',
-    '<meta property="og:title" content="AI Research Tech Tree - v1.2.0 Stable">',
-    '<meta property="og:description" content="Explore the v1.2.0 stable edition',
-    '<meta name="twitter:title" content="AI Research Tech Tree - v1.2.0 Stable">',
-    '<meta name="twitter:description" content="The v1.2.0 stable edition',
-    '<meta name="ai-tree-version" content="1.2.0">',
+    '<meta name="description" content="The v1.2.1 stable edition',
+    '<meta property="og:title" content="AI Research Tech Tree - v1.2.1 Stable">',
+    '<meta property="og:description" content="Explore the v1.2.1 stable edition',
+    '<meta name="twitter:title" content="AI Research Tech Tree - v1.2.1 Stable">',
+    '<meta name="twitter:description" content="The v1.2.1 stable edition',
+    '<meta name="ai-tree-version" content="1.2.1">',
     '<meta name="ai-tree-edition" content="2026-08-21-stable-1">',
-    '<meta name="ai-tree-release-state" content="Stable">'
+    '<meta name="ai-tree-release-state" content="Stable">',
+    `<meta property="og:image:alt" content="${EXPECTED_SOCIAL_ALT}">`,
+    '<meta property="og:image:width" content="1200">',
+    '<meta property="og:image:height" content="630">',
+    `<meta name="twitter:image:alt" content="${EXPECTED_SOCIAL_ALT}">`
   ]) assert(html.includes(fragment), `${label} missing ${fragment}`);
 
   const head = html.slice(0, html.indexOf('</head>'));
@@ -194,7 +199,7 @@ function assertHtmlIdentity(html, label) {
 
   assert.equal(occurrenceCount(html, 'id="editionBadge"'), 1, `${label} edition badge count`);
   assert(html.includes('id="editionBadge" href="./release-manifest.json"'), `${label} manifest badge target`);
-  assert(html.includes('Stable &middot; v1.2.0'), `${label} visible Stable label`);
+  assert(html.includes('Stable &middot; v1.2.1'), `${label} visible Stable label`);
   assert(html.includes('<span class="editionShort" aria-hidden="true">Stable</span>'), `${label} compact Stable label`);
   assert(html.includes(`id="repositoryLink" href="${EXPECTED.repositoryUrl}" target="_blank" rel="noopener noreferrer"`), `${label} repository link`);
   assert(html.includes(`id="contributeLink" href="${EXPECTED.correctionsUrl}" target="_blank" rel="noopener noreferrer"`), `${label} contribution link`);
@@ -213,7 +218,8 @@ function assertHtmlIdentity(html, label) {
     "addExternalLink(links,PROJECT_META.repositoryUrl,'Repository')",
     "addExternalLink(links,PROJECT_META.correctionsUrl,'Contribute or correct')",
     "[PROJECT_META.citationUrl,'Citation metadata']",
-    "[PROJECT_META.manifestUrl,'Exact build manifest']"
+    "[PROJECT_META.manifestUrl,'Exact build manifest']",
+    "const interfaceLabel='v'+String(PROJECT_META.version||'not specified')+' '+String(PROJECT_META.releaseState||'not specified')"
   ]) assert(html.includes(fragment), `${label} publication surface missing ${fragment}`);
 }
 
@@ -257,8 +263,8 @@ function assertIdentity(snapshot) {
   assert(snapshot.sitemap.includes(`<lastmod>${EXPECTED.date}</lastmod>`), 'sitemap lastmod');
   assert.equal(EXPECTED.edition.slice(0, 10), EXPECTED.date, 'edition date and sitemap date contract');
 
-  assert.match(snapshot.networkSource, /export const VERSION = '1\.2\.0'/u, 'Network source version');
-  assert.match(snapshot.opportunitySource, /export const VERSION = '1\.2\.0'/u, 'Opportunity renderer source version');
+  assert.match(snapshot.networkSource, /export const VERSION = '1\.2\.1'/u, 'Network source version');
+  assert.match(snapshot.opportunitySource, /export const VERSION = '1\.2\.1'/u, 'Opportunity renderer source version');
   assert.equal(snapshot.opportunityData.metadata.asOf, EXPECTED.opportunityAsOf, 'Opportunity review date remains distinct');
   assert.equal(snapshot.opportunityData.metadata.status, EXPECTED.opportunityStatus, 'Opportunity data status remains alpha');
   assert.equal(snapshot.opportunityData.metadata.importStatus.state, EXPECTED.opportunityImportStatus, 'Opportunity import remains unreviewed');
@@ -316,7 +322,7 @@ function assertIdentity(snapshot) {
   ]) assert(snapshot.pagesWorkflow.includes(fragment), `Pages release guard missing ${fragment}`);
 }
 
-test('v1.2.0 Stable candidate identity is synchronized without requiring a release tag', () => {
+test('v1.2.1 Stable candidate identity is synchronized without requiring a release tag', () => {
   assertIdentity(loadSnapshot());
 });
 
@@ -325,7 +331,7 @@ test('identity contract fails closed on representative release-drift mutations',
     ['stale lockfile', (copy) => { copy.packageLock.version = '0.1.0'; }],
     ['stale export', (copy) => { copy.normalized.dataset.edition = '2026-08-20-public-beta-2'; }],
     ['stale citation date', (copy) => { copy.citation = copy.citation.replace('date-released: "2026-08-21"', 'date-released: "2026-08-20"'); }],
-    ['missing social identity', (copy) => { copy.indexHtml = copy.indexHtml.replace('AI Research Tech Tree - v1.2.0 Stable', 'AI Research Tech Tree'); }],
+    ['missing social identity', (copy) => { copy.indexHtml = copy.indexHtml.replace('AI Research Tech Tree - v1.2.1 Stable', 'AI Research Tech Tree'); }],
     ['misdirected badge', (copy) => { copy.canonicalHtml = copy.canonicalHtml.replace('id="editionBadge" href="./release-manifest.json"', 'id="editionBadge" href="./"'); }],
     ['unexpected tag', (copy) => { copy.manifest.tag = 'v1.0.0'; }],
     ['stale manifest release state', (copy) => { copy.manifest.releaseState = 'Development edition'; }],
@@ -334,7 +340,7 @@ test('identity contract fails closed on representative release-drift mutations',
     ['promoted Opportunity data', (copy) => { copy.opportunityData.metadata.importStatus.state = 'validated'; }],
     ['unapproved presentation inventory', (copy) => { copy.presentationData.reviewStatus = 'candidate_pending_owner_review'; }],
     ['removed caveated spine link', (copy) => { copy.presentationData.backboneRelationshipIds = copy.presentationData.backboneRelationshipIds.filter((id) => id !== 'gan>diffusion:sup'); }],
-    ['stale Network source version', (copy) => { copy.networkSource = copy.networkSource.replace("VERSION = '1.2.0'", "VERSION = '0.1.1'"); }],
+    ['stale Network source version', (copy) => { copy.networkSource = copy.networkSource.replace("VERSION = '1.2.1'", "VERSION = '0.1.1'"); }],
     ['missing citation payload', (copy) => { copy.manifest.files = copy.manifest.files.filter((file) => file.path !== 'CITATION.cff'); }],
     ['wrong authorized release tag', (copy) => { copy.pagesWorkflow = copy.pagesWorkflow.replace('AI_TREE_AUTHORIZED_TAG: "v1.2.0"', 'AI_TREE_AUTHORIZED_TAG: "v1.1.0"'); }],
     ['mismatched release checkout', (copy) => { copy.pagesWorkflow = copy.pagesWorkflow.replace('ref: refs/tags/v1.2.0', 'ref: refs/tags/v1.1.0'); }],

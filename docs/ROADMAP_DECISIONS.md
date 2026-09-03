@@ -44,8 +44,10 @@ first `v1.0.0` deployment may use one direct-child recovery commit on `main`
 only when its exact diff is limited to the Pages runner definition, the
 release-identity source lock, and this decision record; those files are not
 public payload inputs and the annotated tag remains immutable. Pull requests
-receive downloadable preview artifacts and there is no public `/dev` lane. The
-v0.2.0 Chromium smoke gate verifies
+run the fast data, generation, and HTML integrity tier without Chromium or a
+preview upload; maintainers can manually dispatch the release-candidate tier
+for full browser/Lighthouse validation and a downloadable preview. There is no
+public `/dev` lane. The v0.2.0 Chromium smoke gate verifies
 representative desktop, mobile, deep-link, focus, and no-JavaScript behavior.
 Screenshots remain optional review artifacts rather than brittle golden-image
 assertions.
@@ -234,6 +236,111 @@ one job. Pages does not rerun the full browser suite. This is a bounded
 workflow policy decision only: it records no hosted run result, tag creation,
 or deployment authorization, and preserves the v1.0.0 public/citation
 boundary.
+
+## RD-013 — Approve the v1.2.1 orientation and research-navigation patch
+
+The approved `v1.2.1` program is a presentation-only UI/UX source checkpoint
+for orientation and research navigation. It may refine the existing Timeline,
+Network, Opportunity, and List surfaces, but it must preserve all 339 canonical
+nodes, 711 canonical relationships, stable IDs, canonical evidence and review
+state, the v1.0.0 dataset citation, offline/single-file operation, static node
+pages, and the `v1.3.0` Combinatorial Lens and `v1.4.0` Hypothesis Workbench
+roadmap slots. It does not rebuild the already-reviewed anchors, orientation
+spine, semantic zoom, tours, inspector foundation, light-theme edge treatment,
+compact onboarding, or edition-diff surfaces.
+
+Startup must keep URL intent, restored camera, and focused target separate. A
+camera is restored only from a complete valid `cx`, `cy`, and `z` tuple. Trace,
+node, and tour intents frame their target without a camera; filtered intents fit
+visible records; empty, partial, legacy, and zero-result states receive a safe
+whole-map transform and recovery controls. The header must remain contained at
+all specified widths, with measured lower-priority overflow in `More`, 44px
+mobile targets, a map-only pinned 48px date ruler (at most 32 deterministic
+labels and all 13 eras reachable), and a canonical 15-lane rail that becomes a
+compact current-era/current-lane row on mobile. Fit calculations include every
+visible shell element, including panels, docks, guides, and embeds.
+
+Timeline and Network share one cycle-safe relationship-neighborhood function
+and one pooled SVG path per canonical relationship. The only new URL key is
+`trace=<canonical-node-id>`: it implies selection and full lineage, is valid in
+Timeline and Network, is ignored in List and Opportunity, and wins over a
+conflicting `node`. Existing keys and meanings remain unchanged. A valid camera
+overrides trace fitting; general Share preserves trace and camera, while trace
+summary Copy link omits the camera. Trace survives semantic zoom, filters, All
+mode, detail-panel transitions, and view changes between Timeline and Network;
+it is cleared by Opportunity/List. The trace summary reports total, visible,
+and filter-hidden node/relationship counts and provides the bounded recovery
+actions specified by the interface contract without changing the saved
+Connections preference.
+
+The shared context dock may host ordinary previews, trace summaries, and
+transient era cards, with a separate polite announcement node. Era selection
+is a map-plus-card-strip lens with canonical lane-grouped titles and at most 24
+cards per page; cards add no URL state. The existing 74 questions on 71 nodes
+become the `view=list&research=questions` “Unfinished Business” deck: segments,
+12-card paging, deterministic ordering, canonical-title/question/tag search,
+keyboard navigation, and focus restoration are required while retaining the
+hash meaning. Non-default status/evidence/research filters expose a reset chip.
+Pointer and keyboard relationship-rationale previews must match for all six
+canonical evidence grades, while canvas styling alone groups them into the
+three approved presentation buckets (9 direct/partial, 658 contextual/
+editorial/unassessed, and 44 hypothesis relationships); the canonical grades
+remain intact in panels, methodology, exports, fingerprints, and static pages.
+
+The fresh, state-free, non-embed landing may animate only the existing 72 spine
+paths and 24 anchors after guide dismissal, with cancellation, Skip animation,
+reduced-motion/forced-colors/deep-link/embed bypasses, and no focus theft. The
+social card is an owner-reviewed 1200x630 asset under 500KB with the approved
+recorded-lineage caveat; root and static-node Open Graph metadata must not
+promise fragment-specific trace previews. Headroom work may remove duplicated
+no-JavaScript descriptions in favor of existing static-page links and replace
+the duplicated runtime release-history array with the maintained changelog
+note, without adding dependencies, services, duplicate graphs, or budget.
+
+The implementation checkpoint must verify unchanged IDs/fingerprints and zero
+semantic edition diff; Transformer lineage remains exactly 117 nodes and 196
+unique relationships in Timeline and Network; pooled All-mode relationships
+remain exactly 711 and clearing overview returns exactly 72 spine paths. It
+must exercise the complete hash, filter, trace, era, question, responsive,
+theme, embed, accessibility, hostile-sequence, DOM, HTML, gzip, and
+cross-platform Lighthouse checks in the implementation plan. This branch
+starts with this docs-only roadmap/decision checkpoint. A Stable `v1.2.1`
+release candidate is prepared after implementation; local/Windows verification
+is recorded below, while the manually dispatched hosted-Ubuntu rerun remains
+pending. Merge, annotated tagging, deployment, and any change to the v1.0.0
+citation remain separately unauthorized.
+
+### RD-013 implementation evidence
+
+The post-review-fix implementation checkpoint is complete at exact head
+`98d0c4a7bda01cc15303bd0a4939bc0829b98181`, based on `main`/
+`f03b9c9851f786b5181e7d18adbb12a548838fbf`. Local/Windows verification of the
+tree subsequently committed byte-for-byte at that head passed the full suite
+and 28/28 browser tests; a clean rebuild at the commit produced no diff. The
+reviewed active-DOM peak is
+7,090/8,000; generated HTML is 4,591,487 bytes and gzip is 664,842 bytes. The
+artifact SHA-256 is
+`a8365ca06bf53d74457c540e906b436e0b38e2a0d3386eff2fd2866713e90691`.
+
+Publication remains 339 nodes, 711 relationships, and 339 node URLs with zero
+semantic changes; the semantic digest remains
+`865174514ba64e20d6f2a90471a6766b6d5fa18f5b0e62c85d9601de077a50f2`. Windows
+Lighthouse medians are score 53, FCP 23,188.613 ms, LCP 23,361.613 ms, TBT
+157 ms, and CLS 0. The post-review fixes correct `Shift+0`, enforce audit
+referential integrity, and streamline the PR and Pages workflows. The
+manually dispatched hosted-Ubuntu RC rerun for the pushed candidate branch,
+including any docs-only descendant carrying this implementation tree, remains pending;
+the public/live release remains v1.0.0, `main` remains the merged v1.2.0 source
+checkpoint, there is no pull request, and merge, annotated tagging, deployment,
+and citation changes remain separately unauthorized.
+
+Historical prior-head evidence is retained separately: hosted-Ubuntu Actions
+run [32616802586](https://github.com/neb6dav/ai_tech_tree/actions/runs/32616802586),
+job 97138752718, passed against prior head
+`2bb999e66a132b98dad7fd7df476155f68e57973` with 27/27 browser tests and
+Lighthouse medians score 43, FCP 23,182.7173 ms, LCP 23,403.8253 ms, TBT
+479.5 ms, and CLS 0. It is not evidence for the current `98d0c4a`
+implementation.
 
 ## Explicit deferrals
 

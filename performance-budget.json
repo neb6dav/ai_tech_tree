@@ -35,8 +35,8 @@
     "activeDomElements": {
       "maximum": 8000,
       "reviewedPeaksByPlatform": {
-        "win32": 7244,
-        "linux": 7244
+        "win32": 7090,
+        "linux": 7090
       }
     },
     "mobileLighthouse": {
@@ -142,10 +142,10 @@
     },
     "socialImage": {
       "path": "social-card.png",
-      "maximumBytes": 1825178,
+      "maximumBytes": 500000,
       "baseline": {
-        "bytes": 1825178,
-        "sha256": "86ea1b755744c0d066c3aa7cd86bd54d349b8f6a33a637674ba3a95bd1038b28"
+        "bytes": 62865,
+        "sha256": "c9f1368803aa33f3a461a96d1267b3253c9a5316dc3db26e66184cd151ede28c"
       }
     }
   },

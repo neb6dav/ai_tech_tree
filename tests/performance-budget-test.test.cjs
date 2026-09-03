@@ -62,7 +62,7 @@ async function fixture(overrides = {}) {
       },
       activeDomElements: {
         maximum: 8000,
-        reviewedPeaksByPlatform: { win32: 7724, linux: 7728 }
+        reviewedPeaksByPlatform: { win32: 7090, linux: 7090 }
       },
       mobileLighthouse: {
         status: 'calibration_pending',
@@ -122,7 +122,7 @@ test('passes deterministic artifact budgets and records pending Lighthouse calib
   assert.equal(report.failures.length, 0);
   assert.equal(report.browserMetrics.status, 'DOM_BLOCKING_LIGHTHOUSE_CALIBRATION_PENDING');
   assert.deepEqual(report.browserMetrics.activeDomElements, {
-    reviewedPeaksByPlatform: { linux: 7728, win32: 7724 },
+    reviewedPeaksByPlatform: { linux: 7090, win32: 7090 },
     maximum: 8000
   });
   assert.equal(report.browserMetrics.mobileLighthouse.status, 'calibration_pending');
@@ -255,7 +255,7 @@ test('rejects incomplete reviewed platform DOM peaks', async t => {
 test('rejects invalid or over-budget reviewed platform DOM peaks', async t => {
   const fractional = await fixture({
     mutateBudget(budget) {
-      budget.regressionGuards.activeDomElements.reviewedPeaksByPlatform.win32 = 7724.5;
+      budget.regressionGuards.activeDomElements.reviewedPeaksByPlatform.win32 = 7090.5;
     }
   });
   const excessive = await fixture({

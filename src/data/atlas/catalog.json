@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
   "project": {
-    "version": "1.2.0",
+    "version": "1.2.1",
     "edition": "2026-08-21-stable-1",
     "releaseState": "Stable",
     "asOf": "2026-08-04",
@@ -704,9 +704,7 @@
         "planningpddl>groundedplanning:dep",
         "simenv>groundedplanning:dep"
       ],
-      "retiredResearchEdgeKeys": [
-        "multimodal>rtfm:dep"
-      ],
+      "retiredResearchEdgeKeys": [],
       "staleResearchExtensionEdgeKeys": [],
       "staleRetiredResearchEdgeKeys": [],
       "staleNodeFingerprintIds": [],

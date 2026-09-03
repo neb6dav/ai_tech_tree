@@ -84,7 +84,7 @@ for (const [fragment, label] of [
   ['function rebuildSemanticClusters(){', 'deterministic semantic cluster rebuild'],
   ["const visible=NODES.filter(isNodeVisible),signature=timeScale+'|'+visible.map(nd=>nd.id).join('|');", 'semantic cluster rebuild signature'],
   ["document.getElementById('filterStatus').textContent", 'screen-reader filter result feedback'],
-  ["version:'1.2.0',edition:'2026-08-21-stable-1',releaseState:'Stable'", 'v1.2.0 Stable identity over the unchanged dataset'],
+  ["version:'1.2.1',edition:'2026-08-21-stable-1',releaseState:'Stable'", 'v1.2.1 Stable candidate identity over the unchanged dataset'],
   ['id="editionBadge" href="./release-manifest.json"', 'visible exact-build badge'],
   ['id="contributeLink" href="https://github.com/neb6dav/ai_tech_tree/issues/new/choose"', 'persistent contribution link'],
   ['#repositoryLink{color:var(--ink);text-decoration:none;display:flex;align-items:center;justify-content:center;min-width:32px;min-height:32px', 'repository minimum pointer target'],
@@ -199,7 +199,12 @@ for (const helper of ['appendStatusProfile', 'renderResearchGuide', 'renderNodeA
 }
 
 const firstRunSource = sourceForFunction(applicationScript, 'shouldShowFirstRun');
-assert(/return\s+!embedMode\s*&&\s*!restored\s*&&\s*shouldShowWelcome\(\)/.test(firstRunSource), 'Embed mode and restored deep links must bypass first-run onboarding');
+assert(/const\s+fresh\s*=\s*!embedMode\s*&&\s*!restored\s*&&\s*shouldShowWelcome\(\)/.test(firstRunSource), 'Fresh state must be derived from embed, restored-state, and welcome-dismissal checks');
+assert(/introRevealEligible\s*=\s*fresh\s*&&\s*supported/.test(firstRunSource), 'Orientation reveal must remain eligible only for fresh state and supported media');
+assert(/typeof\s+Element[^;]*Element\.prototype\.animate/.test(firstRunSource), 'Orientation reveal must require Web Animations support');
+assert(/prefers-reduced-motion\s*:\s*reduce/.test(firstRunSource), 'Orientation reveal must bypass reduced-motion preferences');
+assert(/forced-colors\s*:\s*active/.test(firstRunSource), 'Orientation reveal must bypass forced-colors mode');
+assert(/return\s+fresh\s*;/.test(firstRunSource), 'Onboarding behavior must remain fresh-state-only');
 assert((applicationScript.match(/shouldShowFirstRun\(/g) || []).length >= 2, 'Startup must consult shouldShowFirstRun() after restoring state');
 const activeOverlaySource = sourceForFunction(applicationScript, 'activeOverlayModal');
 assert(/legend[^;\n]*classList\.contains\(['"]welcome['"]\)/.test(activeOverlaySource), 'First-run side sheet must retain modal focus containment');

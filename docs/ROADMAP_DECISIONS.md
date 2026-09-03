@@ -158,7 +158,7 @@ separate canonical authority of the historical atlas and Opportunity data.
 
 ## RD-011 — Repair orientation before adding new semantic product surface
 
-The approved post-v1 UI program occupies `v1.0.1` through `v1.2.0` and is
+The approved post-v1 UI program occupies `v1.0.1` through `v1.2.1` and is
 implemented as sequential source checkpoints. `v1.0.1` repairs first-minute
 readability, `v1.1.0` adds semantic navigation and curated tours, and `v1.2.0`
 adds generated researcher pages, edition comparison, and read-only embedding.
@@ -214,12 +214,13 @@ job `97083295633`, passed on the exact squash commit, including the build,
 full tests, and generated-file cleanliness. Main validation does not upload a
 Pages preview.
 
-This records integration, not public release promotion. The v1.2.0 Stable UI
-release candidate is now in `main` but has no v1.2.0 tag, GitHub Pages dispatch, or
-deployment. The public/live release remains v1.0.0; `CITATION.cff` and the
+This records integration, not public release promotion. At that checkpoint, the
+v1.2.0 Stable UI release candidate was in `main` but had no v1.2.0 tag, GitHub
+Pages dispatch, or deployment. The public/live release remains v1.0.0;
+`CITATION.cff` and the
 citable dataset identity remain v1.0.0; edition `2026-08-21-stable-1`, the
 339-node/711-relationship inventory, and the semantic digest are unchanged.
-Tagging and deployment remain separately unauthorized.
+tagging and deployment decision was separately unauthorized at that checkpoint.
 
 ## RD-014 — Bound validation tiers and single-pass Pages publication
 
@@ -229,15 +230,15 @@ Lighthouse, or a preview upload. A maintainer may manually dispatch the
 release-candidate mode for the full browser and Lighthouse suite and a preview
 artifact. There is no automatic post-merge `main` repetition of those checks.
 
-The manual Pages workflow remains protected by the exact annotated `v1.2.0`
-tag and `main` guards, but its build, source-cleanliness check, staging,
+The manual Pages workflow remains protected by an exact annotated release tag
+and `main` guards, but its build, source-cleanliness check, staging,
 release-identity check, Pages upload, and deployment now run sequentially in
 one job. Pages does not rerun the full browser suite. This is a bounded
 workflow policy decision only: it records no hosted run result, tag creation,
 or deployment authorization, and preserves the v1.0.0 public/citation
 boundary.
 
-## RD-013 — Approve the v1.2.1 orientation and research-navigation patch
+## RD-015 — Approve the v1.2.1 orientation and research-navigation patch
 
 The approved `v1.2.1` program is a presentation-only UI/UX source checkpoint
 for orientation and research navigation. It may refine the existing Timeline,
@@ -306,18 +307,24 @@ theme, embed, accessibility, hostile-sequence, DOM, HTML, gzip, and
 cross-platform Lighthouse checks in the implementation plan. This branch
 starts with this docs-only roadmap/decision checkpoint. A Stable `v1.2.1`
 release candidate is prepared after implementation; local/Windows verification
-is recorded below, while the manually dispatched hosted-Ubuntu rerun remains
-pending. Merge, annotated tagging, deployment, and any change to the v1.0.0
-citation remain separately unauthorized.
+is recorded below, while the full hosted browser/Lighthouse rerun was skipped
+and remains pending. Release promotion is authorized pending execution,
+including tag and deployment; those actions have not yet occurred, and the
+v1.0.0 citation remains unchanged.
 
-### RD-013 implementation evidence
+### RD-015 implementation evidence
 
-The post-review-fix implementation checkpoint is complete at exact head
-`98d0c4a7bda01cc15303bd0a4939bc0829b98181`, based on `main`/
-`f03b9c9851f786b5181e7d18adbb12a548838fbf`. Local/Windows verification of the
-tree subsequently committed byte-for-byte at that head passed the full suite
-and 28/28 browser tests; a clean rebuild at the commit produced no diff. The
-reviewed active-DOM peak is
+The post-review-fix implementation evidence is complete. Implementation commit
+`98d0c4a7bda01cc15303bd0a4939bc0829b98181` has source tree
+`24649c0d5744df17d97322424662ad0e671a22c5`; it was submitted as PR #13 at
+head `217d55c055c27641f20aa1dcefae267b9ae9990d`. Squash merge
+`bf83aad0b8eed6a707fba3f36db3ac179675ead0` and that PR head share merged tree
+`6fb4988f7e746f5793d056e66410bcd794ec0088`. The full Windows suite and
+Lighthouse verification ran at the implementation commit and source tree; the
+merged tree has the fast Actions check only. Intervening differences were
+documentation, workflow, and test changes only, while application, data, and
+generated artifacts remained byte-identical. A clean rebuild at the
+implementation commit produced no diff. The reviewed active-DOM peak is
 7,090/8,000; generated HTML is 4,591,487 bytes and gzip is 664,842 bytes. The
 artifact SHA-256 is
 `a8365ca06bf53d74457c540e906b436e0b38e2a0d3386eff2fd2866713e90691`.
@@ -327,20 +334,35 @@ semantic changes; the semantic digest remains
 `865174514ba64e20d6f2a90471a6766b6d5fa18f5b0e62c85d9601de077a50f2`. Windows
 Lighthouse medians are score 53, FCP 23,188.613 ms, LCP 23,361.613 ms, TBT
 157 ms, and CLS 0. The post-review fixes correct `Shift+0`, enforce audit
-referential integrity, and streamline the PR and Pages workflows. The
-manually dispatched hosted-Ubuntu RC rerun for the pushed candidate branch,
-including any docs-only descendant carrying this implementation tree, remains pending;
-the public/live release remains v1.0.0, `main` remains the merged v1.2.0 source
-checkpoint, there is no pull request, and merge, annotated tagging, deployment,
-and citation changes remain separately unauthorized.
+referential integrity, and streamline the PR and Pages workflows. The full
+hosted browser/Lighthouse RC rerun against the merged tree was skipped and
+remains pending; the public/live release remains v1.0.0, `main` contains the
+merged v1.2.1 source checkpoint, and the v1.0.0 citation remains unchanged.
+The source branch and pull request are closed; release promotion is authorized
+pending execution, but no tag or deployment exists yet.
 
 Historical prior-head evidence is retained separately: hosted-Ubuntu Actions
 run [32616802586](https://github.com/neb6dav/ai_tech_tree/actions/runs/32616802586),
 job 97138752718, passed against prior head
 `2bb999e66a132b98dad7fd7df476155f68e57973` with 27/27 browser tests and
 Lighthouse medians score 43, FCP 23,182.7173 ms, LCP 23,403.8253 ms, TBT
-479.5 ms, and CLS 0. It is not evidence for the current `98d0c4a`
-implementation.
+479.5 ms, and CLS 0. It is not evidence for the current merged tree's full
+browser/Lighthouse verification.
+
+## RD-016 — Authorize v1.2.1 release promotion
+
+On 2026-09-03, the repository owner authorized release promotion: creation of
+the annotated `v1.2.1` tag and the guarded GitHub Pages deployment for the
+merged v1.2.1 source checkpoint. This authorizes the release-promotion actions
+but does not record that a tag was created, that Pages was dispatched, or that
+deployment succeeded. The full hosted browser/Lighthouse check against the
+merged tree was skipped and remains pending.
+
+Until a successful deployment is verified, the public/live release remains
+`v1.0.0`. The 339-node/711-relationship dataset, stable IDs, semantic digest,
+and v1.0.0 `CITATION.cff` remain unchanged. The Pages workflow is now locked to
+the exact annotated `v1.2.1` tag and still requires protected-`main` ancestry,
+clean generated artifacts, and the release-identity checks before upload.
 
 ## Explicit deferrals
 

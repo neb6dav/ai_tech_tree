@@ -302,15 +302,15 @@ function assertIdentity(snapshot) {
   assert.equal(citationFile.mediaType, 'text/yaml; charset=utf-8', 'staged CITATION payload media type');
   assert.match(citationFile.sha256, /^[0-9a-f]{64}$/u, 'staged CITATION payload digest');
 
-  assert(snapshot.pagesWorkflow.includes('AI_TREE_AUTHORIZED_TAG: "v1.2.0"'), 'Pages workflow exact authorized v1.2.0 tag');
-  assert(snapshot.pagesWorkflow.includes('ref: refs/tags/v1.2.0'), 'Pages workflow exact v1.2.0 checkout');
+  assert(snapshot.pagesWorkflow.includes('AI_TREE_AUTHORIZED_TAG: "v1.2.1"'), 'Pages workflow exact authorized v1.2.1 tag');
+  assert(snapshot.pagesWorkflow.includes('ref: refs/tags/v1.2.1'), 'Pages workflow exact v1.2.1 checkout');
   assert(!/^\s+inputs:/mu.test(snapshot.pagesWorkflow), 'Pages workflow must not accept arbitrary tag inputs');
   assert(!/^\s+(?:push|pull_request):/mu.test(snapshot.pagesWorkflow), 'Pages workflow must remain manual-only');
   assertPagesWorkflow(snapshot.pagesWorkflow);
 
   for (const fragment of [
     'workflow_dispatch:',
-    'ref: refs/tags/v1.2.0',
+    'ref: refs/tags/v1.2.1',
     'test "$GITHUB_REF" = "refs/heads/main"',
     'test "$GITHUB_WORKFLOW_SHA" = "$GITHUB_SHA"',
     'pages.yml@refs/heads/main',
@@ -342,8 +342,8 @@ test('identity contract fails closed on representative release-drift mutations',
     ['removed caveated spine link', (copy) => { copy.presentationData.backboneRelationshipIds = copy.presentationData.backboneRelationshipIds.filter((id) => id !== 'gan>diffusion:sup'); }],
     ['stale Network source version', (copy) => { copy.networkSource = copy.networkSource.replace("VERSION = '1.2.1'", "VERSION = '0.1.1'"); }],
     ['missing citation payload', (copy) => { copy.manifest.files = copy.manifest.files.filter((file) => file.path !== 'CITATION.cff'); }],
-    ['wrong authorized release tag', (copy) => { copy.pagesWorkflow = copy.pagesWorkflow.replace('AI_TREE_AUTHORIZED_TAG: "v1.2.0"', 'AI_TREE_AUTHORIZED_TAG: "v1.1.0"'); }],
-    ['mismatched release checkout', (copy) => { copy.pagesWorkflow = copy.pagesWorkflow.replace('ref: refs/tags/v1.2.0', 'ref: refs/tags/v1.1.0'); }],
+    ['wrong authorized release tag', (copy) => { copy.pagesWorkflow = copy.pagesWorkflow.replace('AI_TREE_AUTHORIZED_TAG: "v1.2.1"', 'AI_TREE_AUTHORIZED_TAG: "v1.1.0"'); }],
+    ['mismatched release checkout', (copy) => { copy.pagesWorkflow = copy.pagesWorkflow.replace('ref: refs/tags/v1.2.1', 'ref: refs/tags/v1.1.0'); }],
     ['tag not pinned to checked-out HEAD', (copy) => { copy.pagesWorkflow = copy.pagesWorkflow.replace('test "$tag_commit" = "$(git rev-parse HEAD)"', 'git merge-base --is-ancestor "$tag_commit" HEAD'); }],
     ['arbitrary release tag input', (copy) => { copy.pagesWorkflow = copy.pagesWorkflow.replace('  workflow_dispatch:', '  workflow_dispatch:\n    inputs:\n      tag:\n        required: true'); }],
     ['automatic release trigger', (copy) => { copy.pagesWorkflow += '\n  push:\n'; }],

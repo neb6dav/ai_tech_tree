@@ -1,7 +1,7 @@
 name: Prepare GitHub Pages release
 
-# RD-006/RD-007 release path: an authorized manual run starts on protected
-# main, then checks out and verifies the exact annotated v1.2.0 tag. The
+# RD-006/RD-007/RD-016 release path: an authorized manual run starts on protected
+# main, then checks out and verifies the exact annotated v1.2.1 tag. The
 # workflow is intentionally manual and has no arbitrary tag input.
 on:
   workflow_dispatch:
@@ -28,13 +28,13 @@ jobs:
     timeout-minutes: 20
     env:
       AI_TREE_REQUIRE_CLEAN: "true"
-      AI_TREE_AUTHORIZED_TAG: "v1.2.0"
+      AI_TREE_AUTHORIZED_TAG: "v1.2.1"
 
     steps:
       - name: Check out authorized release tag
         uses: actions/checkout@v7
         with:
-          ref: refs/tags/v1.2.0
+          ref: refs/tags/v1.2.1
           fetch-depth: 0
           fetch-tags: true
           persist-credentials: false

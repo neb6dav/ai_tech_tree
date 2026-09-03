@@ -1,27 +1,31 @@
 ---
-roadmap_version: 10
-active_release: "v1.2.0"
-release_mode: "source_checkpoints_v1.0.1_through_v1.2.0"
-active_work_package: "release_promotion_hold"
-base_sha: "85108c78fa86c86634d4c0944839696369e687cd"
+roadmap_version: 12
+active_release: "v1.2.1"
+release_mode: "stable_candidate_release_preparation"
+active_work_package: "v1.2.1_release_preparation"
+base_sha: "bf83aad0b8eed6a707fba3f36db3ac179675ead0"
 product_boundary_sha: "53e3a4f9c0624096aede63e0345390a3c021bac0"
 working_branch: "main"
 expanded_archive_branch: "archive/v0.1.1-expanded-release-safety-0870d47"
-verified_implementation_head: "9b2d33d249704a92719df74f8d3900e1998a4cf2"
+verified_implementation_head: "98d0c4a7bda01cc15303bd0a4939bc0829b98181"
+verified_implementation_tree: "24649c0d5744df17d97322424662ad0e671a22c5"
 final_candidate_ledger_head: "16e15efc7cd69de9168087ab267b0b15abf916e7"
-pull_request: 11
-pull_request_status: "merged_squash_2026-08-22_branch_deleted"
+pull_request: 13
+pull_request_status: "merged_squash_branch_deleted"
 merged_by: "neb6dav"
-merged_squash_commit: "f03b9c9851f786b5181e7d18adbb12a548838fbf"
-merged_source_branch: "codex/ui-v1.2.0"
+merged_squash_commit: "bf83aad0b8eed6a707fba3f36db3ac179675ead0"
+tested_identical_tree: "6fb4988f7e746f5793d056e66410bcd794ec0088"
+pull_request_head: "217d55c055c27641f20aa1dcefae267b9ae9990d"
+merged_source_branch: "codex/ui-v1.2.1"
 merged_source_branch_status: "deleted"
 public_live_release: "v1.0.0"
-v1_2_tag_and_deployment: "not_authorized_not_created_not_deployed"
-verified_implementation_merge_tree: "8bca644f2160bfbfc0574ae150fb92fa9fd49c6b"
-main_validation_commit: "f03b9c9851f786b5181e7d18adbb12a548838fbf"
+v1_2_1_tag_and_deployment: "authorized_not_created_not_deployed"
+verified_implementation_merge_tree: "6fb4988f7e746f5793d056e66410bcd794ec0088"
+fast_validation_tree: "6fb4988f7e746f5793d056e66410bcd794ec0088"
+fast_validation_run: "33713244320"
 last_completed_checkpoint: "v1.0.0"
-last_completed_local_checkpoint: "v1.2.0"
-active_release_status: "v1.2.0_stable_ui_release_candidate_merged_main_validated_untagged_undeployed"
+last_completed_local_checkpoint: "v1.2.1"
+active_release_status: "v1.2.1_stable_candidate_merged_main_release_promotion_authorized_untagged_undeployed"
 workflow_policy_status: "implemented_tiered_validation_single_pass_pages"
 workflow_policy:
   pull_request: "fast_data_generation_html_integrity_no_browser_no_preview"
@@ -29,9 +33,11 @@ workflow_policy:
   pages: "manual_single_job_build_stage_upload_deploy_release_identity_only"
   post_merge_main: "no_automatic_repetition"
 next_exact_action: >-
-  Hold for separate v1.2.0 annotated-tag and deployment authorization. The
-  public/live release remains v1.0.0; no v1.2.0 tag, GitHub Pages dispatch, or
-  deployment exists.
+  The full hosted browser/Lighthouse run against the merged tree was skipped
+  and remains pending. After this release-preparation change merges,
+  create the authorized annotated v1.2.1 tag on protected main and manually dispatch the
+  guarded Pages workflow. The public/live release remains v1.0.0 until that
+  deployment succeeds.
 presentation_inventory_owner_review: "owner_approved_2026-08-22_exact_24_anchors_72_spine_edges_and_six_tours_44_narratives_digest_ca4240fdaf5a3e6ac4484fafac28e0311ea5cbb4dff725dfb5894c1265001722_caveated_supersession_ids_contextual_reviewed_false_not_established"
 potential_future_editions:
   - version: "v1.3.0"
@@ -45,6 +51,14 @@ last_verified_commands:
     status: "PASS"
     runtime: "ubuntu-24.04; exact main commit f03b9c9851f786b5181e7d18adbb12a548838fbf"
     scope: "Main validation after PR #11 squash merge: build, full test suite, and generated-file cleanliness passed; no Pages preview upload occurs on main"
+  - command: "GitHub Actions PR #13 fast check 33713244320"
+    status: "PASS"
+    runtime: "GitHub-hosted runner; tested identical tree 6fb4988f7e746f5793d056e66410bcd794ec0088"
+    scope: "Fast data-integrity, generation, and basic HTML validation passed; full hosted browser/Lighthouse validation was skipped and remains pending"
+  - command: "PowerShell: npm run test:browser:staged; npm run test:fast; npm run build; git diff --exit-code"
+    status: "PASS"
+    runtime: "Windows x64; Node v24.14.1; implementation commit 98d0c4a7bda01cc15303bd0a4939bc0829b98181; source tree 24649c0d5744df17d97322424662ad0e671a22c5"
+    scope: "Full local v1.2.1 verification passed at the implementation commit: 28/28 browser tests, Lighthouse medians score 53/FCP 23188.613/LCP 23361.613/TBT 157/CLS 0, plus fast checks and clean regeneration. The later merged tree 6fb4988f7e746f5793d056e66410bcd794ec0088 has the hosted fast check only."
   - command: "PowerShell: $env:AI_TREE_REQUIRE_CLEAN='true'; npm test"
     status: "PASS"
     runtime: "Windows x64; Node v24.14.1; exact clean head 9b2d33d249704a92719df74f8d3900e1998a4cf2"
@@ -130,12 +144,15 @@ source_checkpoints:
     tag_and_deployment: "not_authorized_not_tagged_or_deployed"
     purpose: "Researcher delivery with static node pages and read-only comparison/embed"
   - version: "v1.2.1"
-    status: "stable_candidate_windows_verified_hosted_rerun_pending"
-    verification_state: "local_windows_verified_hosted_ubuntu_pending"
+    status: "stable_candidate_merged_release_promotion_authorized_hosted_pending"
+    verification_state: "local_windows_verified_hosted_ubuntu_skipped_pending"
     product_version: "1.2.1"
     release_state: "Stable candidate"
     checkpoint_commit: "98d0c4a7bda01cc15303bd0a4939bc0829b98181"
-    tag_and_deployment: "not_authorized_not_merged_tagged_or_deployed"
+    implementation_tree: "24649c0d5744df17d97322424662ad0e671a22c5"
+    tested_tree: "6fb4988f7e746f5793d056e66410bcd794ec0088"
+    merged_commit: "bf83aad0b8eed6a707fba3f36db3ac179675ead0"
+    tag_and_deployment: "authorized_not_created_not_deployed"
     purpose: "Presentation-only orientation, lineage trace, era lens, and research navigation"
 authorization:
   source_checkpoint_implementation: "authorized"
@@ -144,8 +161,8 @@ authorization:
   intermediate_public_tags: "not_planned"
   intermediate_public_deployments: "not_planned"
   v1_public_tag_and_deployment: "completed_2026-08-21"
-  post_v1_ui_repair_program: "implementation_authorized_release_promotion_not_authorized"
-  v1_2_1_orientation_research_navigation: "implementation_authorized_release_promotion_not_authorized"
+  post_v1_ui_repair_program: "implementation_and_release_promotion_authorized_pending_execution"
+  v1_2_1_orientation_research_navigation: "implementation_and_release_promotion_authorized_pending_execution"
   post_v1_combinatorial_editions: "roadmap_only_not_authorized"
 ---
 
@@ -349,9 +366,10 @@ DOM/HTML/gzip budgets, and the current Lighthouse limits.
 
 ### v1.2.1 — orientation and research navigation
 
-Status: approved as a presentation-only source checkpoint; this branch begins
-with the docs-only roadmap/decision checkpoint. Implementation is authorized,
-but merge, annotated tagging, deployment, and citation changes are not.
+Status: approved as a presentation-only source checkpoint; the implementation
+is merged into `main` and release promotion is authorized pending execution. The
+annotated tag and deployment have not yet occurred, and the v1.0.0 citation
+remains unchanged.
 
 - Separate URL intent, camera restoration, and focus during startup. Require a
   complete valid `cx/cy/z` tuple; otherwise frame targets, fit filtered or
@@ -363,7 +381,7 @@ but merge, annotated tagging, deployment, and citation changes are not.
 - Share a cycle-safe relationship neighborhood and pooled canonical paths
   between Timeline and Network. Add only `trace=<canonical-node-id>`, with
   trace selection, fitting, summary counts/actions, persistence, and
-  copy-link behavior exactly as recorded in RD-013.
+  copy-link behavior exactly as recorded in RD-015.
 - Generalize the context dock for previews, trace summaries, and transient
   era cards. Deliver the existing 74 questions on 71 nodes as the
   `view=list&research=questions` “Unfinished Business” deck with deterministic

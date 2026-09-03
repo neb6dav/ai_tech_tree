@@ -216,7 +216,7 @@ Pages preview.
 
 This records integration, not public release promotion. At that checkpoint, the
 v1.2.0 Stable UI release candidate was in `main` but had no v1.2.0 tag, GitHub
-Pages dispatch, or deployment. The public/live release remains v1.0.0;
+Pages dispatch, or deployment. The public/live release remained v1.0.0;
 `CITATION.cff` and the
 citable dataset identity remain v1.0.0; edition `2026-08-21-stable-1`, the
 339-node/711-relationship inventory, and the semantic digest are unchanged.
@@ -305,12 +305,11 @@ remain exactly 711 and clearing overview returns exactly 72 spine paths. It
 must exercise the complete hash, filter, trace, era, question, responsive,
 theme, embed, accessibility, hostile-sequence, DOM, HTML, gzip, and
 cross-platform Lighthouse checks in the implementation plan. This branch
-starts with this docs-only roadmap/decision checkpoint. A Stable `v1.2.1`
-release candidate is prepared after implementation; local/Windows verification
-is recorded below, while the full hosted browser/Lighthouse rerun was skipped
-and remains pending. Release promotion is authorized pending execution,
-including tag and deployment; those actions have not yet occurred, and the
-v1.0.0 citation remains unchanged.
+started with this docs-only roadmap/decision checkpoint. The Stable `v1.2.1`
+release candidate was prepared after implementation; local/Windows
+verification is recorded below, while the full exact merged-tree hosted
+browser/Lighthouse rerun was not performed. Release promotion was authorized
+under RD-016 and completed under RD-017; the v1.0.0 citation remains unchanged.
 
 ### RD-015 implementation evidence
 
@@ -319,7 +318,7 @@ The post-review-fix implementation evidence is complete. Implementation commit
 `24649c0d5744df17d97322424662ad0e671a22c5`; it was submitted as PR #13 at
 head `217d55c055c27641f20aa1dcefae267b9ae9990d`. Squash merge
 `bf83aad0b8eed6a707fba3f36db3ac179675ead0` and that PR head share merged tree
-`6fb4988f7e746f5793d056e66410bcd794ec0088`. The full Windows suite and
+`6fb4988f7e746f5793d056e66410bcd794ec0088` (the candidate PR13 tree). The full Windows suite and
 Lighthouse verification ran at the implementation commit and source tree; the
 merged tree has the fast Actions check only. Intervening differences were
 documentation, workflow, and test changes only, while application, data, and
@@ -335,11 +334,9 @@ semantic changes; the semantic digest remains
 Lighthouse medians are score 53, FCP 23,188.613 ms, LCP 23,361.613 ms, TBT
 157 ms, and CLS 0. The post-review fixes correct `Shift+0`, enforce audit
 referential integrity, and streamline the PR and Pages workflows. The full
-hosted browser/Lighthouse RC rerun against the merged tree was skipped and
-remains pending; the public/live release remains v1.0.0, `main` contains the
-merged v1.2.1 source checkpoint, and the v1.0.0 citation remains unchanged.
-The source branch and pull request are closed; release promotion is authorized
-pending execution, but no tag or deployment exists yet.
+exact merged-tree hosted browser/Lighthouse RC rerun was not performed; the
+source branch and pull request are closed, and the public release promotion is
+recorded as complete under RD-017. The v1.0.0 citation remains unchanged.
 
 Historical prior-head evidence is retained separately: hosted-Ubuntu Actions
 run [32616802586](https://github.com/neb6dav/ai_tech_tree/actions/runs/32616802586),
@@ -355,14 +352,39 @@ On 2026-09-03, the repository owner authorized release promotion: creation of
 the annotated `v1.2.1` tag and the guarded GitHub Pages deployment for the
 merged v1.2.1 source checkpoint. This authorizes the release-promotion actions
 but does not record that a tag was created, that Pages was dispatched, or that
-deployment succeeded. The full hosted browser/Lighthouse check against the
-merged tree was skipped and remains pending.
+deployment succeeded. The full exact merged-tree hosted browser/Lighthouse
+check was not performed.
 
-Until a successful deployment is verified, the public/live release remains
-`v1.0.0`. The 339-node/711-relationship dataset, stable IDs, semantic digest,
-and v1.0.0 `CITATION.cff` remain unchanged. The Pages workflow is now locked to
-the exact annotated `v1.2.1` tag and still requires protected-`main` ancestry,
-clean generated artifacts, and the release-identity checks before upload.
+At authorization time, the public/live release remained `v1.0.0`. The
+339-node/711-relationship dataset, stable IDs, semantic digest, and v1.0.0
+`CITATION.cff` remain unchanged. The Pages workflow was locked to the exact
+annotated `v1.2.1` tag and required protected-`main` ancestry, clean generated
+artifacts, and release-identity checks before upload. Execution and successful
+deployment are recorded in RD-017.
+
+## RD-017 — Record the v1.2.1 public Stable UI release
+
+On 2026-09-03, release-prep PR #14 was squash-merged into protected `main` as
+`59d4d90ebcb8bb8b230d9cea2286214a3d2011a5`. Its head was
+`9ad3e2e93712d53b73a7ebaef7f45d54c96acc82` on branch `codex/v1.2.1-release`,
+which was deleted after merge. The exact release tree was
+`ab5bd6321c2a48de70e6695ed713643f45fd6eac`; PR #14 fast validation run
+`33715232760` passed against that tree. Annotated tag `v1.2.1`, object
+`49ddf1d74def95a4582cf2c3f9a391b4d5e99619`, targets that commit. GitHub Pages
+run `33715374446`, job `100523342659`, passed and deployed the tagged artifact.
+The live manifest reports version `1.2.1`, tag `v1.2.1`, commit `59d4d90`,
+Stable state, `fileCount` 354, clean source, required-clean source, and
+`inputsMatchCommit: true`. The deployed `index.html` is 4,591,487 bytes with
+SHA-256 `a8365ca06bf53d74457c540e906b436e0b38e2a0d3386eff2fd2866713e90691`.
+
+The live data digest remains
+`865174514ba64e20d6f2a90471a6766b6d5fa18f5b0e62c85d9601de077a50f2`, with 339
+nodes and 711 relationships. This is a public/live Stable UI release, not a
+new dataset edition: the v1.0.0 `CITATION.cff` identity and dataset edition
+`2026-08-21-stable-1` remain unchanged. The exact merged-tree hosted
+browser/Lighthouse suite was not rerun; that is an explicit verification
+limitation and does not contradict the successful guarded deployment and live
+byte reconciliation.
 
 ## Explicit deferrals
 
@@ -379,8 +401,9 @@ re-authorized:
 
 ### v0.2.2 decisions
 
-Generated publication artifacts remain committed through `v1.0.0`. The
-Windows source calibration plus the two reviewed Ubuntu observations establish
+Generated publication artifacts remain committed through the public `v1.2.1`
+UI release; the citable dataset identity remains `v1.0.0`. The Windows source
+calibration plus the two reviewed Ubuntu observations establish
 the cross-platform limits recorded in RD-008. Actions run `32489666292`
 provided the normal configured `ubuntu-24.04` confirmation.
 

@@ -1,8 +1,8 @@
 ---
-roadmap_version: 12
+roadmap_version: 13
 active_release: "v1.2.1"
-release_mode: "stable_candidate_release_preparation"
-active_work_package: "v1.2.1_release_preparation"
+release_mode: "public_stable_release"
+active_work_package: "post_release_closure"
 base_sha: "bf83aad0b8eed6a707fba3f36db3ac179675ead0"
 product_boundary_sha: "53e3a4f9c0624096aede63e0345390a3c021bac0"
 working_branch: "main"
@@ -10,22 +10,27 @@ expanded_archive_branch: "archive/v0.1.1-expanded-release-safety-0870d47"
 verified_implementation_head: "98d0c4a7bda01cc15303bd0a4939bc0829b98181"
 verified_implementation_tree: "24649c0d5744df17d97322424662ad0e671a22c5"
 final_candidate_ledger_head: "16e15efc7cd69de9168087ab267b0b15abf916e7"
-pull_request: 13
+pull_request: 14
 pull_request_status: "merged_squash_branch_deleted"
 merged_by: "neb6dav"
-merged_squash_commit: "bf83aad0b8eed6a707fba3f36db3ac179675ead0"
-tested_identical_tree: "6fb4988f7e746f5793d056e66410bcd794ec0088"
-pull_request_head: "217d55c055c27641f20aa1dcefae267b9ae9990d"
-merged_source_branch: "codex/ui-v1.2.1"
+merged_squash_commit: "59d4d90ebcb8bb8b230d9cea2286214a3d2011a5"
+candidate_pr13_tree: "6fb4988f7e746f5793d056e66410bcd794ec0088"
+pull_request_head: "9ad3e2e93712d53b73a7ebaef7f45d54c96acc82"
+merged_source_branch: "codex/v1.2.1-release"
 merged_source_branch_status: "deleted"
-public_live_release: "v1.0.0"
-v1_2_1_tag_and_deployment: "authorized_not_created_not_deployed"
-verified_implementation_merge_tree: "6fb4988f7e746f5793d056e66410bcd794ec0088"
-fast_validation_tree: "6fb4988f7e746f5793d056e66410bcd794ec0088"
-fast_validation_run: "33713244320"
-last_completed_checkpoint: "v1.0.0"
+public_live_release: "v1.2.1"
+v1_2_1_tag_and_deployment: "completed_2026-09-03"
+candidate_pr13_merge_tree: "6fb4988f7e746f5793d056e66410bcd794ec0088"
+release_tree: "ab5bd6321c2a48de70e6695ed713643f45fd6eac"
+fast_validation_tree: "ab5bd6321c2a48de70e6695ed713643f45fd6eac"
+fast_validation_run: "33715232760"
+release_tag: "v1.2.1"
+release_tag_object: "49ddf1d74def95a4582cf2c3f9a391b4d5e99619"
+release_pages_run: "33715374446"
+release_pages_job: "100523342659"
+last_completed_checkpoint: "v1.2.1"
 last_completed_local_checkpoint: "v1.2.1"
-active_release_status: "v1.2.1_stable_candidate_merged_main_release_promotion_authorized_untagged_undeployed"
+active_release_status: "v1.2.1_public_stable_release_verified"
 workflow_policy_status: "implemented_tiered_validation_single_pass_pages"
 workflow_policy:
   pull_request: "fast_data_generation_html_integrity_no_browser_no_preview"
@@ -33,11 +38,9 @@ workflow_policy:
   pages: "manual_single_job_build_stage_upload_deploy_release_identity_only"
   post_merge_main: "no_automatic_repetition"
 next_exact_action: >-
-  The full hosted browser/Lighthouse run against the merged tree was skipped
-  and remains pending. After this release-preparation change merges,
-  create the authorized annotated v1.2.1 tag on protected main and manually dispatch the
-  guarded Pages workflow. The public/live release remains v1.0.0 until that
-  deployment succeeds.
+  Maintain the public v1.2.1 UI release and preserve the v1.0.0 dataset citation.
+  Future v1.3.0 and v1.4.0 work remains separately authorized only when explicitly
+  approved; no additional release action is pending.
 presentation_inventory_owner_review: "owner_approved_2026-08-22_exact_24_anchors_72_spine_edges_and_six_tours_44_narratives_digest_ca4240fdaf5a3e6ac4484fafac28e0311ea5cbb4dff725dfb5894c1265001722_caveated_supersession_ids_contextual_reviewed_false_not_established"
 potential_future_editions:
   - version: "v1.3.0"
@@ -53,12 +56,20 @@ last_verified_commands:
     scope: "Main validation after PR #11 squash merge: build, full test suite, and generated-file cleanliness passed; no Pages preview upload occurs on main"
   - command: "GitHub Actions PR #13 fast check 33713244320"
     status: "PASS"
-    runtime: "GitHub-hosted runner; tested identical tree 6fb4988f7e746f5793d056e66410bcd794ec0088"
-    scope: "Fast data-integrity, generation, and basic HTML validation passed; full hosted browser/Lighthouse validation was skipped and remains pending"
+    runtime: "GitHub-hosted runner; exact candidate PR13 tree 6fb4988f7e746f5793d056e66410bcd794ec0088"
+    scope: "Fast data-integrity, generation, and basic HTML validation passed; the full hosted browser/Lighthouse validation was not performed for this PR13 candidate tree"
+  - command: "GitHub Actions PR #14 fast check 33715232760"
+    status: "PASS"
+    runtime: "GitHub-hosted runner; exact release tree ab5bd6321c2a48de70e6695ed713643f45fd6eac"
+    scope: "Fast data-integrity, generation, and basic HTML validation passed for the exact release tree later deployed as v1.2.1"
+  - command: "GitHub Actions Pages run 33715374446, job 100523342659, and live payload reconciliation"
+    status: "PASS"
+    runtime: "GitHub-hosted ubuntu runner; annotated tag v1.2.1 targeting 59d4d90ebcb8bb8b230d9cea2286214a3d2011a5"
+    scope: "Release-prep PR #14 merged as 59d4d90; annotated tag object 49ddf1d74def95a4582cf2c3f9a391b4d5e99619; Pages deployed 2026-09-03; live reports v1.2.1 Stable, fileCount 354, clean/requiredClean/inputsMatchCommit true, unchanged data digest, and 4,591,487-byte artifact SHA-256 a8365ca06bf53d74457c540e906b436e0b38e2a0d3386eff2fd2866713e90691. This verifies deployment and live byte identity; the exact merged-tree hosted browser/Lighthouse suite was not rerun."
   - command: "PowerShell: npm run test:browser:staged; npm run test:fast; npm run build; git diff --exit-code"
     status: "PASS"
     runtime: "Windows x64; Node v24.14.1; implementation commit 98d0c4a7bda01cc15303bd0a4939bc0829b98181; source tree 24649c0d5744df17d97322424662ad0e671a22c5"
-    scope: "Full local v1.2.1 verification passed at the implementation commit: 28/28 browser tests, Lighthouse medians score 53/FCP 23188.613/LCP 23361.613/TBT 157/CLS 0, plus fast checks and clean regeneration. The later merged tree 6fb4988f7e746f5793d056e66410bcd794ec0088 has the hosted fast check only."
+    scope: "Full local v1.2.1 verification passed at the implementation commit: 28/28 browser tests, Lighthouse medians score 53/FCP 23188.613/LCP 23361.613/TBT 157/CLS 0, plus fast checks and clean regeneration. The later candidate PR13 tree 6fb4988f7e746f5793d056e66410bcd794ec0088 has the hosted fast check only."
   - command: "PowerShell: $env:AI_TREE_REQUIRE_CLEAN='true'; npm test"
     status: "PASS"
     runtime: "Windows x64; Node v24.14.1; exact clean head 9b2d33d249704a92719df74f8d3900e1998a4cf2"
@@ -144,15 +155,20 @@ source_checkpoints:
     tag_and_deployment: "not_authorized_not_tagged_or_deployed"
     purpose: "Researcher delivery with static node pages and read-only comparison/embed"
   - version: "v1.2.1"
-    status: "stable_candidate_merged_release_promotion_authorized_hosted_pending"
-    verification_state: "local_windows_verified_hosted_ubuntu_skipped_pending"
+    status: "complete"
+    verification_state: "public_release_verified"
     product_version: "1.2.1"
-    release_state: "Stable candidate"
+    release_state: "Stable"
     checkpoint_commit: "98d0c4a7bda01cc15303bd0a4939bc0829b98181"
     implementation_tree: "24649c0d5744df17d97322424662ad0e671a22c5"
-    tested_tree: "6fb4988f7e746f5793d056e66410bcd794ec0088"
-    merged_commit: "bf83aad0b8eed6a707fba3f36db3ac179675ead0"
-    tag_and_deployment: "authorized_not_created_not_deployed"
+    candidate_pr13_tree: "6fb4988f7e746f5793d056e66410bcd794ec0088"
+    release_tree: "ab5bd6321c2a48de70e6695ed713643f45fd6eac"
+    merged_commit: "59d4d90ebcb8bb8b230d9cea2286214a3d2011a5"
+    tag: "v1.2.1"
+    tag_object: "49ddf1d74def95a4582cf2c3f9a391b4d5e99619"
+    pages_run: "33715374446"
+    pages_job: "100523342659"
+    tag_and_deployment: "completed_2026-09-03"
     purpose: "Presentation-only orientation, lineage trace, era lens, and research navigation"
 authorization:
   source_checkpoint_implementation: "authorized"
@@ -161,8 +177,8 @@ authorization:
   intermediate_public_tags: "not_planned"
   intermediate_public_deployments: "not_planned"
   v1_public_tag_and_deployment: "completed_2026-08-21"
-  post_v1_ui_repair_program: "implementation_and_release_promotion_authorized_pending_execution"
-  v1_2_1_orientation_research_navigation: "implementation_and_release_promotion_authorized_pending_execution"
+  post_v1_ui_repair_program: "completed_public_v1.2.1_release_2026-09-03"
+  v1_2_1_orientation_research_navigation: "public_release_verified_2026-09-03"
   post_v1_combinatorial_editions: "roadmap_only_not_authorized"
 ---
 
@@ -170,13 +186,15 @@ authorization:
 
 ## Operating rule
 
-`v0.1.1`, `v0.2.0`, and `v0.2.2` are source checkpoints, not public
-releases. Only `v1.0.0` is the public release target. Each checkpoint must be a
-bounded product change with its own build, focused tests, generated-file check,
-and short review. Do not add a new promotion, receipt, rollback, provenance, or
+`v0.1.1`, `v0.2.0`, and `v0.2.2` are source checkpoints, not public releases.
+The citable dataset release remains `v1.0.0`; `v1.2.1` is the current public
+presentation/UI release. Each checkpoint or UI release must be a bounded
+product change with its own build, focused tests, generated-file check, and
+short review. Do not add a new promotion, receipt, rollback, provenance, or
 policy subsystem.
 
-Generated publication artifacts remain committed through `v1.0.0`.
+Generated publication artifacts remain committed through the public `v1.2.1`
+UI release; the citable dataset identity remains `v1.0.0`.
 
 The expanded release-safety experiment remains preserved separately at
 `0870d4773249db9f81a491f0305c29a75fcb53a1`. It is not part of this branch.
@@ -329,7 +347,7 @@ Acceptance gate:
 
 ## v1.0.1 through v1.2.1 — UI, navigation, and researcher delivery
 
-Status: implementation authorized as source checkpoints. Each checkpoint must
+Status: v1.2.1 is the current public Stable UI release. Each checkpoint must
 preserve the v1 semantic inventory and pass the existing publication contract.
 Merge, public tag, and deployment remain separate promotion decisions.
 
@@ -366,10 +384,10 @@ DOM/HTML/gzip budgets, and the current Lighthouse limits.
 
 ### v1.2.1 — orientation and research navigation
 
-Status: approved as a presentation-only source checkpoint; the implementation
-is merged into `main` and release promotion is authorized pending execution. The
-annotated tag and deployment have not yet occurred, and the v1.0.0 citation
-remains unchanged.
+Status: public Stable presentation-only release. Release-prep PR #14 was merged
+into `main` as `59d4d90ebcb8bb8b230d9cea2286214a3d2011a5`; annotated tag
+`v1.2.1` targets that commit and GitHub Pages deployed it successfully on
+2026-09-03. The v1.0.0 dataset citation and semantic inventory remain unchanged.
 
 - Separate URL intent, camera restoration, and focus during startup. Require a
   complete valid `cx/cy/z` tuple; otherwise frame targets, fit filtered or
@@ -405,7 +423,10 @@ pooling remains exactly 711 relationships and overview clearing returns exactly
 72 spine paths. The implementation must cover the full hash, trace/filter,
 era/question, responsive, theme, embed, accessibility, hostile-sequence,
 DOM/HTML/gzip, and Windows/hosted-Ubuntu Lighthouse suite before a candidate
-is presented.
+is presented. Those implementation checks passed locally; the release was
+deployed after the guarded Pages identity and live-byte checks passed. The full
+exact merged-tree hosted browser/Lighthouse suite was not rerun and remains an
+explicitly unperformed additional check.
 
 ## Potential later editions — combinatorial exploration
 

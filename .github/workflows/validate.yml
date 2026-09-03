@@ -1,10 +1,7 @@
-name: Validate public artifact
+name: Validate pull requests and release candidates
 
 on:
   pull_request:
-  push:
-    branches:
-      - main
   workflow_dispatch:
 
 permissions:
@@ -15,10 +12,50 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build-and-test:
-    name: Build, test, and verify generated files
+  pr-integrity:
+    name: Fast data, generation, and HTML integrity
+    if: ${{ github.event_name == 'pull_request' }}
     runs-on: ubuntu-24.04
     timeout-minutes: 20
+    env:
+      AI_TREE_REQUIRE_CLEAN: "true"
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install exact dependencies
+        run: npm ci
+
+      - name: Build generated artifacts
+        run: npm run build
+
+      - name: Run fast data, generation, and HTML integrity gates
+        run: npm run test:fast
+
+      - name: Verify generated artifacts are committed
+        shell: bash
+        run: |
+          git diff --exit-code -- .
+          if [ -n "$(git status --porcelain --untracked-files=all)" ]; then
+            echo "The build produced untracked files. Commit all intended generated artifacts."
+            git status --short
+            exit 1
+          fi
+
+  release-candidate:
+    name: Full browser and Lighthouse validation
+    if: ${{ github.event_name == 'workflow_dispatch' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
     env:
       AI_TREE_REQUIRE_CLEAN: "true"
 
@@ -43,7 +80,7 @@ jobs:
       - name: Build generated artifacts
         run: npm run build
 
-      - name: Run validation and staged-site contract gates
+      - name: Run full validation suite
         run: npm test
 
       - name: Verify generated artifacts are committed
@@ -56,11 +93,10 @@ jobs:
             exit 1
           fi
 
-      - name: Upload staged-site preview
-        if: github.event_name == 'pull_request'
+      - name: Upload staged-site release-candidate preview
         uses: actions/upload-artifact@v4
         with:
-          name: site-preview-${{ github.sha }}
+          name: release-candidate-preview-${{ github.sha }}
           path: _site
           include-hidden-files: true
           if-no-files-found: error

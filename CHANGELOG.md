@@ -4,13 +4,17 @@ All notable public changes to the AI Research Tech Tree will be documented here.
 
 ## [Unreleased]
 
-**v1.2.0 Stable release candidate (not merged, released, tagged, or deployed).** This researcher-delivery checkpoint generates 339 static node pages, sitemap discovery, a semantic edition diff, and a read-only embed while preserving the canonical dataset identity. The public/live release remains v1.0.0 and the dataset citation remains v1.0.0.
+**v1.2.0 Stable UI release candidate (merged into `main`, untagged, and undeployed).** PR #11 was squash-merged by neb6dav on 2026-08-22 as `f03b9c9851f786b5181e7d18adbb12a548838fbf`; main validation passed on that exact commit. This researcher-delivery checkpoint generates 339 static node pages, sitemap discovery, a semantic edition diff, and a read-only embed while preserving the canonical dataset identity. The public/live release remains v1.0.0 and the dataset citation remains v1.0.0.
 
 ### Added
 
 - One static, source-backed page for each of the 339 canonical nodes, with crawlable metadata and citation conveniences.
 - Sitemap entries for the node pages and a read-only same-origin edition comparison and embed surface.
 - Repository-owner approval of the exact 24-anchor, 72-relationship orientation inventory and all six tour narratives. The two legacy supersession links remain explicitly contextual, unreviewed, and not established by this display approval.
+
+### Changed
+
+- Tiered validation now keeps ordinary pull requests fast and non-browser, while manual release candidates run the full browser/Lighthouse suite; Pages uses one manual single-pass build/stage/deploy job.
 
 **v1.1.0 Preview checkpoint (not released, tagged, or deployed).** This interface checkpoint adds semantic zoom altitudes, the evidence inspector, a readable linear scale, guided tours and palette controls, relationship pooling, and DOM disposal; it makes no semantic dataset changes.
 

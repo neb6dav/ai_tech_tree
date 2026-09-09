@@ -28,7 +28,7 @@ const {
 
 const ROOT = __dirname;
 const STAGE_ROOT = path.join(ROOT, '_site');
-const SOURCE_HTML_PATH = path.join(ROOT, 'ai-research-tech-tree.html');
+const SOURCE_HTML_PATH = path.join(ROOT, 'index.html');
 const SOURCE_DATA_PATH = path.join(ROOT, 'ai-research-tech-tree.json');
 const STAGED_DATA_PATH = path.join(STAGE_ROOT, 'ai-research-tech-tree.json');
 const STAGED_HTML_PATH = path.join(STAGE_ROOT, 'index.html');
@@ -446,15 +446,19 @@ function runResearcherDeliveryGate() {
   assert(cssMatch, 'Inline application stylesheet is missing.');
   const scripts = executableScripts(sourceHtml);
   scripts.forEach((script, index) => new vm.Script(script, { filename: `researcher-delivery-inline-${index + 1}.js` }));
-  const applicationScript = scripts.find(script => script.includes('function openPanel('));
+  const applicationScript = scripts.at(-1);
   assert(applicationScript, 'Main application script is missing.');
-  const functions = namedFunctions(applicationScript);
+  const payloadMatch = sourceHtml.match(/id="atlas-data"[^>]*>([\s\S]*?)<\/script>/iu);
+  assert(payloadMatch, 'Workspace atlas payload is missing.');
+  const payload = JSON.parse(payloadMatch[1]);
+  assert.equal(payload.nodes.length, EXPECTED_NODE_COUNT, 'Workspace payload must retain exactly 339 nodes.');
+  assert.equal(payload.relationships.length, EXPECTED_RELATIONSHIP_COUNT, 'Workspace payload must retain exactly 711 relationships.');
 
   const pages = verifyNodePages(stagedData, manifestByPath);
   verifySitemap(stagedData, manifestByPath);
   verifyFingerprintDelivery(sourceData, stagedData, manifestByPath);
-  verifyDiffSourceContract(sourceHtml, applicationScript, functions);
-  verifyEmbedSourceContract(sourceHtml, cssMatch[1], applicationScript);
+  assert(!/COSMOS_GRAPH_VERSION|@cosmos\.gl|cosmos\.gl/iu.test(sourceHtml), 'Retired Cosmos runtime remains in maintained application source.');
+  assert(!/<script\s+src=|<link[^>]+stylesheet/iu.test(sourceHtml), 'Workspace source must remain single-file.');
 
   const result = {
     status: 'PASS',

@@ -1,0 +1,31 @@
+'use strict';
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
+const test = require('node:test');
+const ROOT = path.resolve(__dirname, '..');
+const html = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
+const pkg = JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8'));
+const lock = JSON.parse(fs.readFileSync(path.join(ROOT, 'package-lock.json'), 'utf8'));
+test('preview application identity stays separate from frozen dataset identity', () => {
+  assert.equal(pkg.version, '2.0.0-rc.1');
+  assert.equal(lock.version, pkg.version);
+  assert.equal(lock.packages[''].version, pkg.version);
+  assert.match(html, /meta name="ai-tree-version" content="2\.0\.0-rc\.1"/);
+  assert.match(html, /meta name="ai-tree-release-state" content="Preview"/);
+  const data = JSON.parse(fs.readFileSync(path.join(ROOT, 'ai-research-tech-tree.json'), 'utf8'));
+  assert.equal(data.dataset.edition, '2026-08-21-stable-1');
+  assert.equal(data.dataset.releaseState, 'Stable');
+  assert.equal(data.dataset.identifier, 'urn:uuid:7d0547f2-6239-5a56-82a3-1c846701c866');
+  assert.equal(data.dataset.dataDigest, '865174514ba64e20d6f2a90471a6766b6d5fa18f5b0e62c85d9601de077a50f2');
+  assert.equal(data.dataset.canonicalUrl, 'https://neb6dav.github.io/ai_tech_tree/');
+  assert.equal(data.dataset.license, 'https://creativecommons.org/licenses/by-sa/4.0/');
+  assert.equal(data.dataset.authors[0], '@neb6dav');
+  assert.match(fs.readFileSync(path.join(ROOT, 'CITATION.cff'), 'utf8'), /^version: 1\.0\.0$/m);
+  const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, '_site/release-manifest.json'), 'utf8'));
+  assert.equal(manifest.version, pkg.version);
+  assert.equal(manifest.edition, data.dataset.edition);
+  assert.equal(manifest.dataDigest, data.dataset.dataDigest);
+  // Manifest releaseState belongs to the frozen dataset; HTML identifies the UI candidate.
+  assert.equal(manifest.releaseState, data.dataset.releaseState);
+});

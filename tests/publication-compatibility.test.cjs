@@ -212,7 +212,7 @@ test('stages stable Opportunity paths and legacy compatibility endpoints', () =>
 });
 
 test('advertises only the stable Opportunity discovery endpoint', () => {
-  for (const relative of ['ai-research-tech-tree.html', 'index.html']) {
+  for (const relative of ['index.html']) {
     const html = fs.readFileSync(path.join(ROOT, relative), 'utf8');
     const linkTags = [...html.matchAll(/<link\b[^>]*>/giu)].map(match => match[0]);
     const stableAlternates = linkTags.filter(tag => (

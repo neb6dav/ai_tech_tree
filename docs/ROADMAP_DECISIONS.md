@@ -386,6 +386,64 @@ browser/Lighthouse suite was not rerun; that is an explicit verification
 limitation and does not contradict the successful guarded deployment and live
 byte reconciliation.
 
+## RD-018 — Build a desktop research workspace and preserve combinatorial exploration
+
+On 2026-09-09, the owner authorized proceeding with the revised UI plan after
+confirming that combinatorial research remains part of this repository's roadmap.
+This decision supersedes the presentation restrictions of RD-011 and RD-015
+where necessary for the replacement interface. The discussion history remains
+in `ui_discussion.md`; implementation decisions and acceptance are recorded in
+`docs/DESKTOP_REDESIGN.md`.
+
+- Build a focused SVG map and persistent evidence pane in the existing repo.
+  Use native HTML/CSS/JavaScript, system fonts, and one default application.
+- Keep complete canonical records behind the bounded map. Preserve stable IDs,
+  evidence vocabulary, review states, dataset citation, machine exports, source
+  provenance, publication URLs, and separate historical/Opportunity authority.
+- Keep single-file offline operation and zero external runtime requests. Embed
+  a small Dataset description; publish the complete JSON-LD graph separately.
+- Prioritize desktop at 1280x720 and 1366x768. A readable List and static record
+  pages provide the mobile floor; retain keyboard access and 44px controls.
+- Preserve readable Opportunity records, sources, constraints, and hypotheses.
+  The previous visualization is not required to preserve those capabilities.
+- Preserve the Combinatorial Lens and Hypothesis Workbench described in RD-010.
+  Their earlier candidate version numbers are planning labels, not a requirement
+  to ship those capabilities before this UI. Their implementation remains future
+  work. Graph selection and comparison must not be limited to adjacent records.
+- Add a bounded primary-source evidence pilot and an actual-data learning path.
+  AI-assisted source notes stay visibly pending curator review and cannot silently
+  change canonical grades, reviewed status, inventories, or the dataset edition.
+- Replace obsolete implementation-literal gates with behavior and publication
+  contracts. Preserve deterministic builds, data parity, CSP, accessibility,
+  browser navigation, offline use, and bounded payload/DOM checks.
+- Validate the replacement before removing the old runtime. Record actual test
+  results and remaining human/browser checks without treating a preview as a
+  public release or an automated check as independent reader validation.
+
+## RD-019 — Restore the full chronological tree
+
+Authorized by the owner on 2026-09-09 after reviewing the desktop candidate.
+The local-neighborhood-only implementation omitted an essential part of the
+atlas. This decision supersedes that default in RD-018.
+
+- Explore opens the full historical tree, retaining all 339 records and 711
+  recorded relationships, chronological orientation, field lanes and the
+  original distinctions between dormancy, ended/superseded work and revival.
+- Full tree and Focus are scopes of the same map. Selection keeps the overview
+  available; Fit returns to the whole current scope. Search, shared URLs and
+  browser history preserve understandable scope and selection.
+- Highlighting a historical classification keeps the surrounding records
+  visible. Sparse labels at overview scale become more detailed when zoomed.
+- The legacy ended/superseded bucket is not proof of failure. Revival is a node
+  trajectory, not an invented relationship. A terminal in this edition only
+  means it has no recorded downstream connection. Show status audit notes and
+  uncertainty beside the selected record.
+- Keep native SVG, a deterministic local layout and the existing inspector.
+  Canonical records, exports, evidence grades and dataset identity are unchanged.
+- The candidate's PR checks include Chromium behavior and axe; the full manual
+  gate additionally runs Firefox, WebKit and Lighthouse. Publication continues
+  to require a separate approved promotion.
+
 ## Explicit deferrals
 
 ### Through v0.2.0

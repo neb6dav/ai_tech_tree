@@ -1,0 +1,453 @@
+{
+  "schemaVersion": "1.0.0",
+  "title": "Transformer connections: primary-source review pilot",
+  "asOf": "2026-09-09",
+  "sourceEdition": "2026-08-21-stable-1",
+  "reviewState": "pending_curator_review",
+  "aiAssisted": true,
+  "scope": "All 22 canonical relationships incident to transformer. These supplemental reading notes are AI-assisted drafts, separate from the frozen canonical dataset and its evidence grades. Locators identify the portions actually inspected; abstract-only checks are not full-paper reviews. This is a bounded source pass, not a systematic literature or novelty search.",
+  "sources": [
+    {
+      "id": "vaswani2017",
+      "title": "Attention Is All You Need",
+      "url": "https://arxiv.org/html/1706.03762v7",
+      "locator": "Sections 1, 3.1, 3.2.3, and 6.1; HTML full text",
+      "accessedAt": "2026-09-09",
+      "kind": "primary_research"
+    },
+    {
+      "id": "bahdanau2014",
+      "title": "Neural Machine Translation by Jointly Learning to Align and Translate",
+      "url": "https://arxiv.org/abs/1409.0473v7",
+      "locator": "Abstract",
+      "accessedAt": "2026-09-09",
+      "kind": "primary_research"
+    },
+    {
+      "id": "ba2016",
+      "title": "Layer Normalization",
+      "url": "https://arxiv.org/abs/1607.06450v1",
+      "locator": "Abstract",
+      "accessedAt": "2026-09-09",
+      "kind": "primary_research"
+    },
+    {
+      "id": "devlin2018",
+      "title": "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding",
+      "url": "https://arxiv.org/abs/1810.04805",
+      "locator": "Abstract",
+      "accessedAt": "2026-09-09",
+      "kind": "primary_research"
+    },
+    {
+      "id": "radford2019",
+      "title": "Language Models are Unsupervised Multitask Learners",
+      "url": "https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf",
+      "locator": "Section 2.3, Model; PDF page 4",
+      "accessedAt": "2026-09-09",
+      "kind": "primary_research"
+    },
+    {
+      "id": "dosovitskiy2020",
+      "title": "An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale",
+      "url": "https://arxiv.org/abs/2010.11929v2",
+      "locator": "Abstract",
+      "accessedAt": "2026-09-09",
+      "kind": "primary_research"
+    },
+    {
+      "id": "dao2022",
+      "title": "FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness",
+      "url": "https://arxiv.org/abs/2205.14135",
+      "locator": "Abstract",
+      "accessedAt": "2026-09-09",
+      "kind": "primary_research"
+    },
+    {
+      "id": "chen2021",
+      "title": "Decision Transformer: Reinforcement Learning via Sequence Modeling",
+      "url": "https://arxiv.org/abs/2106.01345v2",
+      "locator": "Abstract",
+      "accessedAt": "2026-09-09",
+      "kind": "primary_research"
+    },
+    {
+      "id": "reed2022",
+      "title": "A Generalist Agent",
+      "url": "https://arxiv.org/html/2205.06175v3",
+      "locator": "Sections 1 and 2.3; HTML full text",
+      "accessedAt": "2026-09-09",
+      "kind": "primary_research"
+    },
+    {
+      "id": "fedus2021",
+      "title": "Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity",
+      "url": "https://arxiv.org/abs/2101.03961v3",
+      "locator": "Abstract",
+      "accessedAt": "2026-09-09",
+      "kind": "primary_research"
+    },
+    {
+      "id": "choromanski2020",
+      "title": "Rethinking Attention with Performers",
+      "url": "https://arxiv.org/abs/2009.14794v4",
+      "locator": "Abstract",
+      "accessedAt": "2026-09-09",
+      "kind": "primary_research"
+    },
+    {
+      "id": "gu2023",
+      "title": "Mamba: Linear-Time Sequence Modeling with Selective State Spaces",
+      "url": "https://arxiv.org/abs/2312.00752v2",
+      "locator": "Abstract",
+      "accessedAt": "2026-09-09",
+      "kind": "primary_research"
+    },
+    {
+      "id": "behrouz2024",
+      "title": "Titans: Learning to Memorize at Test Time",
+      "url": "https://arxiv.org/abs/2501.00663v1",
+      "locator": "Abstract; arXiv records first submission on 2024-12-31",
+      "accessedAt": "2026-09-09",
+      "kind": "primary_research"
+    },
+    {
+      "id": "radford2022",
+      "title": "Robust Speech Recognition via Large-Scale Weak Supervision",
+      "url": "https://arxiv.org/html/2212.04356v1",
+      "locator": "Section 2.2, Model; HTML full text",
+      "accessedAt": "2026-09-09",
+      "kind": "primary_research"
+    },
+    {
+      "id": "brohan2022",
+      "title": "RT-1: Robotics Transformer for Real-World Control at Scale",
+      "url": "https://arxiv.org/abs/2212.06817v2",
+      "locator": "Abstract",
+      "accessedAt": "2026-09-09",
+      "kind": "primary_research"
+    },
+    {
+      "id": "meng2022",
+      "title": "Locating and Editing Factual Associations in GPT",
+      "url": "https://arxiv.org/abs/2202.05262v5",
+      "locator": "Abstract",
+      "accessedAt": "2026-09-09",
+      "kind": "primary_research"
+    },
+    {
+      "id": "kwon2023",
+      "title": "Efficient Memory Management for Large Language Model Serving with PagedAttention",
+      "url": "https://arxiv.org/abs/2309.06180v1",
+      "locator": "Abstract",
+      "accessedAt": "2026-09-09",
+      "kind": "primary_research"
+    },
+    {
+      "id": "kaplan2020",
+      "title": "Scaling Laws for Neural Language Models",
+      "url": "https://arxiv.org/html/2001.08361v1",
+      "locator": "Sections 1 and 2, Background and Methods; HTML full text",
+      "accessedAt": "2026-09-09",
+      "kind": "primary_research"
+    },
+    {
+      "id": "grinsztajn2022",
+      "title": "Why do tree-based models still outperform deep learning on tabular data?",
+      "url": "https://arxiv.org/abs/2207.08815v1",
+      "locator": "Abstract",
+      "accessedAt": "2026-09-09",
+      "kind": "primary_research"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipKey": "attention>transformer:dep",
+      "claim": "The Transformer uses attention without recurrent sequence processing and explicitly relates its encoder-decoder attention to earlier translation attention.",
+      "limitation": "This supports a specific architectural connection, not a complete history of attention.",
+      "sourceIds": [
+        "vaswani2017",
+        "bahdanau2014"
+      ],
+      "disposition": "narrow_claim_supported",
+      "reviewState": "pending_curator_review"
+    },
+    {
+      "relationshipKey": "layernorm>transformer:dep",
+      "claim": "The original Transformer places layer normalization after residual connections around its sublayers.",
+      "limitation": "This describes the 2017 architecture; later variants may place normalization differently.",
+      "sourceIds": [
+        "vaswani2017",
+        "ba2016"
+      ],
+      "disposition": "narrow_claim_supported",
+      "reviewState": "pending_curator_review"
+    },
+    {
+      "relationshipKey": "lstm>transformer:sup",
+      "claim": "The Transformer paper compares its translation architecture against recurrent approaches and reports task-specific improvements.",
+      "limitation": "These experiments do not establish universal supersession of LSTMs. Retain the legacy claim's limitation.",
+      "sourceIds": [
+        "vaswani2017"
+      ],
+      "disposition": "requires_narrower_claim",
+      "reviewState": "pending_curator_review"
+    },
+    {
+      "relationshipKey": "transformer>bert:dep",
+      "claim": "BERT pretrains bidirectional Transformer representations and adapts them to language-understanding tasks.",
+      "limitation": "Architecture reuse is supported; broader claims about priority or universal superiority are outside this note.",
+      "sourceIds": [
+        "devlin2018"
+      ],
+      "disposition": "narrow_claim_supported",
+      "reviewState": "pending_curator_review"
+    },
+    {
+      "relationshipKey": "transformer>gpt2:dep",
+      "claim": "GPT-2 uses a Transformer-based language-model architecture, with changes including normalization placement.",
+      "limitation": "The source identifies reuse and modifications; it does not support every claim in the record's historical summary.",
+      "sourceIds": [
+        "radford2019"
+      ],
+      "disposition": "narrow_claim_supported",
+      "reviewState": "pending_curator_review"
+    },
+    {
+      "relationshipKey": "transformer>speechfm:dep",
+      "claim": "Whisper uses an encoder-decoder Transformer for speech processing.",
+      "limitation": "This checks the Whisper example only. The composite wav2vec-to-Whisper record needs separate evidence for each architecture.",
+      "sourceIds": [
+        "radford2022"
+      ],
+      "disposition": "requires_narrower_claim",
+      "reviewState": "pending_curator_review"
+    },
+    {
+      "relationshipKey": "transformer>moe:dep",
+      "claim": "Switch Transformers combine sparse expert routing with Transformer language models based on T5.",
+      "limitation": "This supports combining two traditions, not the claim that Transformers originated mixture-of-experts.",
+      "sourceIds": [
+        "fedus2021"
+      ],
+      "disposition": "requires_narrower_claim",
+      "reviewState": "pending_curator_review"
+    },
+    {
+      "relationshipKey": "transformer>linattn:dep",
+      "claim": "Performers approximate Transformer attention using random-feature methods with linear sequence-length complexity.",
+      "limitation": "This checks Performer, not every method grouped under the linear-attention record.",
+      "sourceIds": [
+        "choromanski2020"
+      ],
+      "disposition": "requires_narrower_claim",
+      "reviewState": "pending_curator_review"
+    },
+    {
+      "relationshipKey": "transformer>ssm:dep",
+      "claim": "Mamba evaluates selective state-space sequence models as an alternative to attention-based Transformer architectures.",
+      "limitation": "Comparative motivation is not evidence that state-space models descend from Transformers or supersede them generally.",
+      "sourceIds": [
+        "gu2023"
+      ],
+      "disposition": "requires_narrower_claim",
+      "reviewState": "pending_curator_review"
+    },
+    {
+      "relationshipKey": "transformer>titans:dep",
+      "claim": "Titans combines attention with a neural memory module intended to retain information beyond the immediate context.",
+      "limitation": "This describes the paper's proposed architecture, not established general superiority or the entire test-time-learning field.",
+      "sourceIds": [
+        "behrouz2024"
+      ],
+      "disposition": "requires_narrower_claim",
+      "reviewState": "pending_curator_review"
+    },
+    {
+      "relationshipKey": "transformer>gap_tabular:gap",
+      "claim": "The recorded research question concerns which data regimes and budgets favor deep tabular models over strong tree baselines.",
+      "limitation": "A tabular benchmark supplies evaluation context, not evidence that this proposed combination is novel or solves the question.",
+      "sourceIds": [
+        "grinsztajn2022"
+      ],
+      "disposition": "hypothesis_context_only",
+      "reviewState": "pending_curator_review"
+    },
+    {
+      "relationshipKey": "transformer>offlinerl:dep",
+      "claim": "Decision Transformer frames offline reinforcement learning as conditional sequence modeling using a causally masked Transformer.",
+      "limitation": "This supports one sequence-policy method, not an origin claim for offline reinforcement learning as a whole.",
+      "sourceIds": [
+        "chen2021"
+      ],
+      "disposition": "requires_narrower_claim",
+      "reviewState": "pending_curator_review"
+    },
+    {
+      "relationshipKey": "transformer>gato:dep",
+      "claim": "Gato uses a decoder-only Transformer to model tokens from multiple tasks and modalities.",
+      "limitation": "This architectural statement does not validate broad claims about mastery, abandonment, or general intelligence.",
+      "sourceIds": [
+        "reed2022"
+      ],
+      "disposition": "narrow_claim_supported",
+      "reviewState": "pending_curator_review"
+    },
+    {
+      "relationshipKey": "transformer>rtfm:dep",
+      "claim": "RT-1 is a Robotics Transformer model trained on diverse real-robot data.",
+      "limitation": "RT-1 is one example. Other systems grouped in the robot-foundation-model record need their own architecture and capability checks.",
+      "sourceIds": [
+        "brohan2022"
+      ],
+      "disposition": "requires_narrower_claim",
+      "reviewState": "pending_curator_review"
+    },
+    {
+      "relationshipKey": "transformer>mechinterp:dep",
+      "claim": "The ROME study uses causal interventions to investigate factual associations inside autoregressive Transformer models.",
+      "limitation": "This is a bounded example of model analysis, not a history or validation of all mechanistic interpretability.",
+      "sourceIds": [
+        "meng2022"
+      ],
+      "disposition": "requires_narrower_claim",
+      "reviewState": "pending_curator_review"
+    },
+    {
+      "relationshipKey": "transformer>modelediting:dep",
+      "claim": "ROME modifies feed-forward weights to change selected factual associations in autoregressive Transformer language models.",
+      "limitation": "The paper does not establish reliable editing for every model, claim, or activation-steering method.",
+      "sourceIds": [
+        "meng2022"
+      ],
+      "disposition": "requires_narrower_claim",
+      "reviewState": "pending_curator_review"
+    },
+    {
+      "relationshipKey": "transformer>alphafold:dep",
+      "claim": "The exact relationship between the atlas's Transformer record and AlphaFold 2 requires a claim-specific architecture review.",
+      "limitation": "The primary Nature article could not be retrieved during this pilot. No stronger claim or evidence upgrade is proposed.",
+      "sourceIds": [],
+      "disposition": "unresolved",
+      "reviewState": "pending_curator_review"
+    },
+    {
+      "relationshipKey": "transformer>neurosymbolic:dep",
+      "claim": "The broad Transformer-to-neuro-symbolic association needs a named method and a precise mechanism before it can be evaluated.",
+      "limitation": "No claim-specific primary source was established in this bounded pilot. Keep the existing association visibly contextual.",
+      "sourceIds": [],
+      "disposition": "unresolved",
+      "reviewState": "pending_curator_review"
+    },
+    {
+      "relationshipKey": "transformer>llmserving:dep",
+      "claim": "PagedAttention and vLLM address attention key-value-cache memory management during language-model serving.",
+      "limitation": "This checks one serving technique, not every system or optimization grouped in the record.",
+      "sourceIds": [
+        "kwon2023"
+      ],
+      "disposition": "requires_narrower_claim",
+      "reviewState": "pending_curator_review"
+    },
+    {
+      "relationshipKey": "transformer>scalinglaws:dep",
+      "claim": "Kaplan and colleagues study empirical loss scaling, primarily in decoder-only Transformer language models.",
+      "limitation": "These results are tied to the studied models and data; the composite Chinchilla record requires separate coverage.",
+      "sourceIds": [
+        "kaplan2020"
+      ],
+      "disposition": "requires_narrower_claim",
+      "reviewState": "pending_curator_review"
+    },
+    {
+      "relationshipKey": "transformer>flash:dep",
+      "claim": "FlashAttention computes exact attention while reducing transfers between GPU memory levels.",
+      "limitation": "The source supports an implementation improvement; it does not establish that approximate or linear-attention research became obsolete.",
+      "sourceIds": [
+        "dao2022"
+      ],
+      "disposition": "narrow_claim_supported",
+      "reviewState": "pending_curator_review"
+    },
+    {
+      "relationshipKey": "transformer>vit:dep",
+      "claim": "Vision Transformer applies a Transformer to sequences of image patches for image classification.",
+      "limitation": "The reported results depend on the paper's pretraining and evaluation setup; they do not establish that convolution is universally inferior.",
+      "sourceIds": [
+        "dosovitskiy2020"
+      ],
+      "disposition": "narrow_claim_supported",
+      "reviewState": "pending_curator_review"
+    }
+  ],
+  "tour": {
+    "id": "transformer-connections",
+    "title": "One architecture, different questions",
+    "steps": [
+      {
+        "nodeId": "attention",
+        "relationshipKey": "attention>transformer:dep",
+        "title": "Start with alignment",
+        "explanation": "Translation attention lets a model use relevant parts of an input sentence. The Transformer changes how attention fits into the architecture.",
+        "sourceIds": [
+          "bahdanau2014",
+          "vaswani2017"
+        ]
+      },
+      {
+        "nodeId": "layernorm",
+        "relationshipKey": "layernorm>transformer:dep",
+        "title": "Inspect a component",
+        "explanation": "Layer normalization is explicitly named in the original Transformer. This is a concrete component relationship you can check in the paper.",
+        "sourceIds": [
+          "ba2016",
+          "vaswani2017"
+        ]
+      },
+      {
+        "nodeId": "transformer",
+        "title": "Read the architecture",
+        "explanation": "The 2017 model combines attention, feed-forward layers, residual connections, and normalization. Follow the source before generalizing from the map.",
+        "sourceIds": [
+          "vaswani2017"
+        ]
+      },
+      {
+        "nodeId": "bert",
+        "relationshipKey": "transformer>bert:dep",
+        "title": "Change the learning objective",
+        "explanation": "BERT uses bidirectional Transformer representations for language understanding. Reusing an architecture and changing its training objective are distinct choices.",
+        "sourceIds": [
+          "devlin2018"
+        ]
+      },
+      {
+        "nodeId": "vit",
+        "relationshipKey": "transformer>vit:dep",
+        "title": "Change the input",
+        "explanation": "Vision Transformer represents an image as a sequence of patches. The source reports where that adaptation worked and under what training conditions.",
+        "sourceIds": [
+          "dosovitskiy2020"
+        ]
+      },
+      {
+        "nodeId": "flash",
+        "relationshipKey": "transformer>flash:dep",
+        "title": "Change the implementation",
+        "explanation": "FlashAttention reorganizes exact attention around GPU memory traffic. An implementation improvement is a different kind of connection from a new architecture.",
+        "sourceIds": [
+          "dao2022"
+        ]
+      },
+      {
+        "nodeId": "gap_tabular",
+        "relationshipKey": "transformer>gap_tabular:gap",
+        "title": "End with an open question",
+        "explanation": "Which data regimes favor deep tabular models over trees? The map records a research question. A nearby paper or missing edge cannot prove a new combination will work.",
+        "sourceIds": [
+          "grinsztajn2022"
+        ]
+      }
+    ]
+  }
+}

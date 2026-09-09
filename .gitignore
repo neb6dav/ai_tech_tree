@@ -39,4 +39,4 @@ temp/
 *.tmp
 
 # Generated publication artifacts are intentionally tracked. Do not ignore:
-# index.html, network-atlas.bundle.js, network-layout-v1.json, or graph exports.
+# index.html, network-layout-v1.json, or graph exports.

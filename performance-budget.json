@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "purpose": "Enforce deterministic artifact and active-DOM budgets while measuring a pinned mobile Lighthouse profile for v0.2.2 calibration.",
+  "purpose": "Enforce deterministic artifact and active-DOM budgets while retaining the historical Lighthouse profile for comparison during the workspace UI candidate.",
   "measurement": {
     "artifactRoot": "_site",
     "initialDocument": "index.html",
@@ -25,18 +25,17 @@
     },
     "initialDocument": {
       "rawBytes": {
-        "maximum": 4600000
+        "maximum": 1700000
       },
       "gzipBytes": {
-        "maximum": 696320,
-        "displayLimit": "680 KiB"
+        "maximum": 245760,
+        "displayLimit": "240 KiB"
       }
     },
     "activeDomElements": {
-      "maximum": 8000,
+      "maximum": 3500,
       "reviewedPeaksByPlatform": {
-        "win32": 7090,
-        "linux": 7090
+        "win32": 2516
       }
     },
     "mobileLighthouse": {
@@ -144,8 +143,8 @@
       "path": "social-card.png",
       "maximumBytes": 500000,
       "baseline": {
-        "bytes": 62865,
-        "sha256": "c9f1368803aa33f3a461a96d1267b3253c9a5316dc3db26e66184cd151ede28c"
+        "bytes": 174565,
+        "sha256": "034ed3f0011f1f5e3305529c8495073126a8c406c8f8197236e3f683689032c8"
       }
     }
   },

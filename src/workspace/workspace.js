@@ -367,7 +367,7 @@
         var focusTarget = Array.from(content.querySelectorAll(".node, .edge-hit")).find(function(item) { return focusId && item.dataset.id === focusId || focusEdge && item.dataset.edgeId === focusEdge; });
         (focusTarget || svg).focus({ preventScroll: true });
       }
-      document.getElementById("map-title").textContent = "Full tree · 1879–2026";
+      document.getElementById("map-title").textContent = "Full tree · " + positions.bounds.minYear + "–" + positions.bounds.maxYear;
       document.getElementById("map-count").textContent = data.nodes.length + " records · " + data.relationships.length + " relationships";
     }
     function renderMap() {

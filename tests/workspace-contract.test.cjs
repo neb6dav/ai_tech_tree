@@ -48,6 +48,10 @@ test('workspace payload preserves canonical identity and complete graph', () => 
   const payload = JSON.parse(match[1]);
   assert.equal(payload.nodes.length, 339);
   assert.equal(payload.relationships.length, 711);
+  assert.match(html, /id="dataset-status">339 records · 711 relationships</);
+  assert.match(html, /id="map-count">339 records · 711 relationships</);
+  assert.match(html, /id="map-title">Full tree · 1879–2026</);
+  assert(!/\{\{(?:RECORD_COUNT|RELATIONSHIP_COUNT|FIRST_YEAR|LAST_YEAR)\}\}/.test(html), 'initial labels must be resolved at build time');
   assert.deepEqual(payload.nodes, atlas.nodes);
   assert.deepEqual(payload.relationships, atlas.relationships);
   const exported = JSON.parse(fs.readFileSync(path.join(ROOT, 'ai-research-tech-tree.json'), 'utf8'));

@@ -13,8 +13,8 @@ parity, generated reading pages, compatibility URLs and staged resource closure.
 
 | Measurement | Candidate | Comparison or limit |
 | --- | ---: | ---: |
-| Initial HTML, raw bytes | 1,522,112 | Published v1.2.1: 4,591,487 |
-| Initial HTML, gzip level 9 | 210,114 bytes | Limit: 245,760 bytes |
+| Initial HTML, raw bytes | 1,522,223 | Published v1.2.1: 4,591,487 |
+| Initial HTML, gzip level 9 | 210,124 bytes | Limit: 245,760 bytes |
 | Observed active DOM peak | 2,516 elements | Limit: 3,500 |
 | Canonical records / relationships | 339 / 711 | Unchanged |
 | Static record pages / sitemap URLs | 339 / 340 | Unchanged |
@@ -56,15 +56,18 @@ page errors remain failures on every engine. WebKit testing does not constitute
 testing Safari on macOS.
 
 Lighthouse 13.4.1 passed the existing budget with three Windows localhost runs:
-median score 57, first and largest contentful paint 8,255.486 ms, total blocking
+median score 57, first and largest contentful paint 8,261.318 ms, total blocking
 time 0 ms and cumulative layout shift 0. The model transferred the uncompressed
 1.52 MB document. Its score remains below the future 90-point target.
 The measured initial HTML SHA-256 is
-`f5c78e6b5dad194f76853c191acc48d82abc0c718db784aed939f5ec75e7bd9a`.
+`3fa92ef5dc916f427844f584bf1cdb1e5964654b827cbc201a381213f820c028`.
 
-The first neighborhood candidate exposed a mobile caption layout shift. The
-restored overview reserves space for its scope controls and caption; its three
-Windows runs measured zero layout shift. The 0.02 budget is unchanged.
+The first full-tree Ubuntu run passed all 13 browser tests in each engine but
+found CLS 0.02325. A delayed-start check with all 339 records reproduced the
+caption growing from 150 to 163.58 px and shifting the map down 13.58 px. The
+build now emits the real dataset counts, chronology title and map hint before
+JavaScript starts. The same controlled check measured zero movement and zero
+CLS after this correction. The 0.02 budget is unchanged.
 
 Lighthouse retains the historical simulated mobile profile for comparison.
 These localhost results describe that model and environment; they are not

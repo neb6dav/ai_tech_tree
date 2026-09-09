@@ -39,6 +39,16 @@ function assembleDocument(shell, payload) {
   const namespace = payload.namespace || {};
   const catalog = payload.catalog || {};
   const project = catalog.project || {};
+  // The inline dataset is already available at build time. Paint its initial
+  // labels immediately so initialization cannot move the header or map controls.
+  const years = payload.nodes.map(node => node.dateOverride?.start || node.year).filter(Number.isFinite);
+  const initialLabels = {
+    RECORD_COUNT: payload.nodes.length,
+    RELATIONSHIP_COUNT: payload.relationships.length,
+    FIRST_YEAR: years.length ? Math.min(...years) : '',
+    LAST_YEAR: years.length ? Math.max(...years) : ''
+  };
+  shell = shell.replace(/\{\{(RECORD_COUNT|RELATIONSHIP_COUNT|FIRST_YEAR|LAST_YEAR)\}\}/g, (_, key) => escapeHtml(initialLabels[key]));
   const noScript = '<style>.workspace{display:none!important}body{overflow:auto!important;background:#fff!important;color:#111!important}noscript{display:block!important}noscript section{max-width:72rem;margin:1rem auto;padding:1rem;font:16px/1.5 system-ui,sans-serif}noscript ul{columns:18rem;column-gap:2rem}noscript li{break-inside:avoid;margin:.2rem 0}noscript a{color:#0645ad}</style><section><h2>AI Research Tech Tree</h2><p>JavaScript is disabled. Browse the canonical node pages:</p><ul>' +
     payload.nodes.map(node => `<li><a href="./nodes/${encodeURIComponent(node.id)}/">${escapeHtml(node.title || node.id)}</a></li>`).join('') +
     '</ul></section>';

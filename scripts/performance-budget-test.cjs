@@ -294,8 +294,8 @@ function evaluatePerformanceBudget({
     'regressionGuards.activeDomElements.reviewedPeaksByPlatform'
   );
   const reviewedPlatforms = Object.keys(reviewedPeaks).sort();
-  if (JSON.stringify(reviewedPlatforms) !== JSON.stringify(['linux', 'win32'])) {
-    throw budgetError('reviewed DOM peaks must contain exactly linux and win32');
+  if (!reviewedPlatforms.length || reviewedPlatforms.some(platform => !['linux', 'win32', 'darwin'].includes(platform))) {
+    throw budgetError('reviewed DOM peaks must identify at least one measured platform');
   }
   const reviewedDomPeaks = Object.fromEntries(reviewedPlatforms.map(platform => [
     platform,

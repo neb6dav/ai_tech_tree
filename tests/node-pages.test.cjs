@@ -166,7 +166,39 @@ test('root links follow the canonical project pathname for alternate mounts', ()
   ).contents;
   assert(html.includes('href="/research/deck/#node=transformer"'));
   assert(html.includes('<link rel="alternate" type="application/json" href="/research/deck/ai-research-tech-tree.json"'));
-  assert(html.includes('<footer><a href="/research/deck/ai-research-tech-tree.json">'));
+  assert(html.includes('<footer><p><a href="/research/deck/#node=transformer">Open this record in the primary atlas</a>'));
+  assert(html.includes('<a href="/research/deck/ai-research-tech-tree.json">Download the canonical JSON dataset</a>'));
+});
+
+test('pages link related records with relationship evidence and expose recorded research fields', () => {
+  const atlas = readAtlas();
+  const artifacts = buildNodePageArtifacts(atlas);
+  const transformer = artifactFor(artifacts, 'transformer').contents;
+  assert.match(transformer, /<h2 id="related-title">Related records<\/h2>/u);
+  assert.match(transformer, /href="\/ai_tech_tree\/nodes\/neurosymbolic\/"/u);
+  assert.match(transformer, /Evidence: Contextual · Review pending/u);
+  assert.match(transformer, /do not establish causality\.<\/p>/u);
+
+  const openDirection = atlas.nodes.find(node => node.direction);
+  assert(openDirection);
+  const page = artifactFor(artifacts, openDirection.id).contents;
+  assert.match(page, /<h2 id="research-title">Research questions and open direction<\/h2>/u);
+  assert(page.includes(openDirection.direction.question));
+  assert(page.includes(openDirection.direction.closureCriteria));
+  assert.match(page, /Edition: 2026-08-21-stable-1/u);
+  assert.match(page, /Canonical data digest: <code>[a-f0-9]{64}<\/code>/u);
+});
+
+test('open direction pages preserve closure evidence, limits, novelty review, and safe resource links', () => {
+  const atlas = readAtlas();
+  const page = artifactFor(buildNodePageArtifacts(atlas), 'gap_tabular').contents;
+  const direction = atlas.nodes.find(node => node.id === 'gap_tabular').direction;
+  assert.match(page, /Closure criteria/u);
+  assert(page.includes(direction.partialResults[0]));
+  assert(page.includes(direction.counterexamples[0]));
+  assert(page.includes(direction.noveltyReview.note));
+  assert.match(page, /https:\/\/github\.com\/autogluon\/tabarena/u);
+  assert.match(page, /<nav aria-label="Breadcrumb">/u);
 });
 
 test('pages expose recorded works, sources, assessments, and BibTeX only for eligible linked metadata', () => {

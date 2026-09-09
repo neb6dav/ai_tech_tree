@@ -22,9 +22,7 @@ const FILES = {
   json: 'ai-research-tech-tree.json',
   ndjson: 'ai-research-tech-tree.ndjson',
   layout: 'network-layout-v1.json',
-  bundle: 'network-atlas.bundle.js',
   opportunityData: path.join('src', 'data', 'opportunities', 'diffusion-models.alpha.json'),
-  opportunityBundle: 'opportunity-atlas.bundle.js',
   presentationData: path.join('src', 'ui', 'atlas-presentation.v1.json'),
   generator: 'generate-knowledge-graph.js',
   canonicalLoader: 'canonical-atlas.js',
@@ -412,133 +410,45 @@ function parseCsp(value) {
   }));
 }
 
-function assertHtmlIntegration(html, jsonldBytes, data, layoutBytes, bundleBytes, opportunityDataBytes, opportunityBundleBytes, presentationDataBytes) {
-  const scripts = extractBodies(html, 'script');
-  const styles = extractBodies(html, 'style');
-  assert.equal(scripts.length, 11);
-  assert.equal(styles.length, 2);
-  const graphScripts = scripts.filter(script => /\btype=["']application\/ld\+json["']/i.test(script.attributes));
-  assert.equal(graphScripts.length, 1);
-  assert.match(graphScripts[0].attributes, /\bid=["']knowledge-graph["']/i);
-  assert.equal(Buffer.compare(Buffer.from(graphScripts[0].body, 'utf8'), jsonldBytes), 0, 'Embedded and sidecar JSON-LD differ');
-  assert(graphScripts[0].index > html.lastIndexOf('</main>'), 'JSON-LD should follow primary page content');
-  assert(graphScripts[0].index > html.lastIndexOf('<style'), 'JSON-LD must not delay stylesheet discovery');
-  assert(!graphScripts[0].body.includes('<'));
-  assert(!/[\u2028\u2029]/u.test(graphScripts[0].body));
-
-  const networkLayouts = scripts.filter(script => /\bid=["']network-layout-data["']/i.test(script.attributes));
-  assert.equal(networkLayouts.length, 1, 'Expected one embedded network layout');
-  assert.match(networkLayouts[0].attributes, /\btype=["']application\/json["']/i);
-  const parsedNetworkLayout = JSON.parse(networkLayouts[0].body);
-  assert.deepEqual(parsedNetworkLayout, JSON.parse(layoutBytes.toString('utf8')), 'Embedded and sidecar network layouts differ');
-  assert.equal(parsedNetworkLayout.layoutVersion, 'network-v1');
-  assert.equal(parsedNetworkLayout.nodeCount, data.nodes.length);
-  assert.equal(parsedNetworkLayout.relationshipCount, data.relationships.length);
-  const networkEngines = scripts.filter(script => /\bid=["']network-view-engine["']/i.test(script.attributes));
-  assert.equal(networkEngines.length, 1, 'Expected one embedded network engine');
-  assert.equal(networkEngines[0].body, bundleBytes.toString('utf8').replace(/\r\n/g, '\n').trimEnd(), 'Embedded and sidecar network engines differ');
-  assert.match(networkEngines[0].body, /COSMOS_GRAPH_VERSION/);
-  assert.match(networkEngines[0].body, /3\.4\.0/);
-  const opportunityData = scripts.filter(script => /\bid=["']opportunity-data["']/i.test(script.attributes));
-  assert.equal(opportunityData.length, 1, 'Expected one embedded Opportunity View payload');
-  assert.match(opportunityData[0].attributes, /\btype=["']application\/json["']/i);
-  const parsedOpportunityData = JSON.parse(opportunityData[0].body);
-  assert.equal(parsedOpportunityData.metadata?.id, 'diffusion-models-opportunity-map');
-  assert.equal(parsedOpportunityData.metadata?.anchorAtlasNodeId, 'diffusion');
-  assert.deepEqual(parsedOpportunityData, JSON.parse(opportunityDataBytes.toString('utf8')), 'Embedded and maintained Opportunity View data differ');
-  const opportunityEngines = scripts.filter(script => /\bid=["']opportunity-view-engine["']/i.test(script.attributes));
-  assert.equal(opportunityEngines.length, 1, 'Expected one embedded Opportunity View engine');
-  assert.match(opportunityEngines[0].body, /OpportunityAtlas/);
-  assert.equal(opportunityEngines[0].body, opportunityBundleBytes.toString('utf8').replace(/\r\n/g, '\n').trimEnd(), 'Embedded and sidecar Opportunity View engines differ');
-
-  const presentationScripts=scripts.filter(script=>/\bid=["']atlas-presentation-data["']/i.test(script.attributes));
-  assert.equal(presentationScripts.length,1,'Expected one embedded atlas presentation payload');
-  assert.match(presentationScripts[0].attributes,/\btype=["']application\/json["']/i);
-  const parsedPresentation=JSON.parse(presentationScripts[0].body);
-  assert.deepEqual(parsedPresentation,JSON.parse(presentationDataBytes.toString('utf8')),'Embedded and maintained presentation data differ');
-  assert.equal(parsedPresentation.anchors.length,24);
-  assert.equal(parsedPresentation.backboneRelationshipIds.length,72);
-
+function assertHtmlIntegration(html, data) {
+  const payloadMatch = html.match(/<script\b[^>]*\bid=["']atlas-data["'][^>]*>([\s\S]*?)<\/script>/i);
+  assert(payloadMatch, 'Workspace shell is missing its atlas payload');
+  const payload = JSON.parse(payloadMatch[1]);
+  const canonical = require('./canonical-atlas.js').loadCanonicalAtlas();
+  assert.deepEqual(payload.dataset, data.dataset);
+  assert.deepEqual(payload.nodes, canonical.nodes);
+  assert.deepEqual(payload.relationships, canonical.relationships);
+  assert.deepEqual(payload.opportunity, JSON.parse(read(FILES.opportunityData)));
+  assert.deepEqual(payload.presentation, JSON.parse(read(FILES.presentationData)));
+  assert(!/COSMOS_GRAPH_VERSION|@cosmos\.gl|cosmos\.gl/i.test(html), 'Retired runtime remains');
   const cspMatch = html.match(/<meta\s+http-equiv="Content-Security-Policy"\s+content="([^"]+)"/i);
-  assert(cspMatch, 'Missing Content-Security-Policy meta tag');
+  assert(cspMatch, 'Missing CSP');
   const csp = parseCsp(cspMatch[1]);
-  const scriptHashes = scripts.map(script => `'sha256-${hash(Buffer.from(script.body), 'base64')}'`).sort();
-  const styleHashes = styles.map(style => `'sha256-${hash(Buffer.from(style.body), 'base64')}'`).sort();
-  assert.deepEqual([...csp['script-src']].sort(), scriptHashes);
-  assert.deepEqual([...csp['style-src-elem']].sort(), styleHashes);
-  assert.deepEqual(csp['script-src-attr'], ["'none'"]);
-  assert(!csp['script-src'].includes("'unsafe-inline'"));
-  assert(!csp['script-src'].includes("'unsafe-eval'"));
-  assert.deepEqual(csp['object-src'], ["'none'"]);
-  assert.deepEqual(csp['base-uri'], ["'none'"]);
-  // Edition Diff lazily fetches one immutable fingerprint artifact. The
-  // policy permits only same-origin connections; the runtime also rejects
-  // cross-origin URLs before fetching.
+  const scripts = extractBodies(html, 'script'), styles = extractBodies(html, 'style');
+  assert.deepEqual([...csp['script-src']].sort(), scripts.map(script => `'sha256-${hash(Buffer.from(script.body), 'base64')}'`).sort());
+  assert.deepEqual([...csp['style-src-elem']].sort(), styles.map(style => `'sha256-${hash(Buffer.from(style.body), 'base64')}'`).sort());
+  for (const directive of ['default-src', 'script-src-attr', 'style-src-attr', 'object-src', 'base-uri', 'form-action', 'worker-src', 'frame-src']) assert.deepEqual(csp[directive], ["'none'"], directive);
   assert.deepEqual(csp['connect-src'], ["'self'"]);
-
-  const executable = scripts.filter(script => !/\btype=["']application\/(?:ld\+json|json)["']/i.test(script.attributes));
-  assert.equal(executable.length, 7);
-  executable.forEach((script, index) => new vm.Script(script.body, { filename: `inline-script-${index + 1}.js` }));
-  executable
-    .filter(script => !/\bid=["']network-view-engine["']/i.test(script.attributes))
-    .forEach(script => assert(!/\.innerHTML\s*=|\.outerHTML\s*=|insertAdjacentHTML\s*\(|document\.write\s*\(/.test(script.body), 'HTML injection sink found'));
-  assert(!/\.outerHTML\s*=|insertAdjacentHTML\s*\(|document\.write\s*\(/.test(networkEngines[0].body), 'Unsafe third-party network-engine DOM sink found');
-  assert(!/\.innerHTML\s*=|\.outerHTML\s*=|insertAdjacentHTML\s*\(|document\.write\s*\(/.test(opportunityEngines[0].body), 'Unsafe Opportunity View DOM sink found');
-
+  for (const script of scripts.filter(script => !/\btype=["']application\/(?:ld\+json|json)["']/i.test(script.attributes))) new vm.Script(script.body);
+  assert(!/\.innerHTML\s*=|\.outerHTML\s*=|insertAdjacentHTML\s*\(|document\.write\s*\(/.test(html), 'Unsafe HTML injection sink');
   const markup = html.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '').replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, '');
-  assert(!/\son[a-z][\w-]*\s*=/i.test(markup));
-  assert(!/javascript\s*:/i.test(markup));
-  assert(!/<base\b/i.test(markup));
+  assert(!/\son[a-z][\w-]*\s*=|javascript\s*:|<base\b/i.test(markup), 'Unsafe static markup');
   const ids = [...markup.matchAll(/\sid=["']([^"']+)["']/gi)].map(match => match[1]);
-  assert.equal(new Set(ids).size, ids.length, 'Duplicate static HTML id values');
-
-  const alternates = [
-    ['application/ld+json', './ai-research-tech-tree.jsonld'],
-    ['application/json', './ai-research-tech-tree.json'],
-    ['application/x-ndjson', './ai-research-tech-tree.ndjson']
-  ];
-  for (const [type, href] of alternates) {
-    const linkTags = [...html.matchAll(/<link\b[^>]*>/gi)].map(match => match[0]);
-    assert(linkTags.some(tag => /\brel=["']alternate["']/i.test(tag) && tag.includes(`type="${type}"`) && tag.includes(`href="${href}"`)), `Missing alternate ${href}`);
+  assert.equal(new Set(ids).size, ids.length, 'Duplicate static IDs');
+  for (const href of ['./ai-research-tech-tree.jsonld', './ai-research-tech-tree.json', './ai-research-tech-tree.ndjson', './data/opportunities/diffusion-models.alpha.json']) {
+    assert([...html.matchAll(/<link\b[^>]*>/gi)].some(([tag]) => /rel="alternate"/.test(tag) && tag.includes(`href="${href}"`)), `Missing alternate ${href}`);
   }
-  const linkTags = [...html.matchAll(/<link\b[^>]*>/gi)].map(match => match[0]);
-  const opportunityHref = './data/opportunities/diffusion-models.alpha.json';
-  const opportunityAlternates = linkTags.filter(tag => (
-    /\brel=["']alternate["']/i.test(tag) &&
-    tag.includes('type="application/json"') &&
-    tag.includes(`href="${opportunityHref}"`)
-  ));
-  assert.equal(opportunityAlternates.length, 1, `Expected exactly one alternate ${opportunityHref}`);
-  assert(
-    !linkTags.some(tag => tag.includes('href="./src/data/opportunities/diffusion-models.alpha.json"')),
-    'Legacy Opportunity data URL must not be advertised as a discovery alternate.'
-  );
-  const noScriptBlocks = [...html.matchAll(/<noscript>([\s\S]*?)<\/noscript>/gi)].map(match => match[1]);
-  assert(noScriptBlocks.length, 'Missing no-JavaScript fallback');
-  const noScript = noScriptBlocks.join('\n');
-  const staticBody = noScript.match(/<tbody>([\s\S]*?)<\/tbody>/i)?.[1];
-  assert(staticBody, 'Missing static index table');
-  assert.equal((staticBody.match(/<tr\b/gi) || []).length, 339);
-  alternates.forEach(([, href]) => assert(noScript.includes(`href="${href}"`), `No-JS view omits ${href}`));
-  for (const label of ['Download graph (JSON-LD)', 'Download normalized data (JSON)', 'Download streaming records (NDJSON)']) {
-    assert((html.match(new RegExp(label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g')) || []).length >= 2, `Download label missing: ${label}`);
-  }
-  assert(html.includes('Machine-readable data'));
-  assert(html.includes(data.dataset.edition));
-  assert(html.includes('Added synchronized JSON-LD, JSON and NDJSON knowledge-graph exports with stable identifiers.'));
-  assert(html.includes('Landmark works and primary sources'));
-  assert(html.includes('Linked works or papers'));
-  assert(html.includes("Frege's Begriffsschrift → Hilbert's formalist program"));
-  assert(!/id=["']stats["']/.test(html));
-  return { scriptCount: scripts.length, styleCount: styles.length };
+  const fallback = html.match(/<noscript>([\s\S]*?)<\/noscript>/i)?.[1];
+  assert(fallback, 'Missing no-JavaScript index');
+  for (const node of data.nodes) assert(fallback.includes(`./nodes/${encodeURIComponent(node.id)}/`), `No-JS index omits ${node.id}`);
+  return { scriptCount: scripts.length, styleCount: styles.length, workspace: true };
 }
-
 function deterministicRegeneration(current) {
   if (process.env.KG_SKIP_SUBPROCESS === '1') return { skipped: true };
   const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'ai-tree-kg-validate-'));
   try {
     assert(tempDir.startsWith(path.resolve(os.tmpdir()) + path.sep));
-    fs.copyFileSync(path.join(ROOT, FILES.html), path.join(tempDir, FILES.html));
+
     fs.copyFileSync(path.join(ROOT, FILES.generator), path.join(tempDir, FILES.generator));
     fs.copyFileSync(path.join(ROOT, FILES.canonicalLoader), path.join(tempDir, FILES.canonicalLoader));
     fs.mkdirSync(path.join(tempDir, 'src', 'data'), { recursive: true });
@@ -549,7 +459,7 @@ function deterministicRegeneration(current) {
       maxBuffer: 10 * 1024 * 1024,
       windowsHide: true
     });
-    for (const key of ['html', 'jsonld', 'json', 'ndjson']) {
+    for (const key of ['jsonld', 'json', 'ndjson']) {
       const regenerated = fs.readFileSync(path.join(tempDir, FILES[key]));
       assert.equal(Buffer.compare(regenerated, current[key]), 0, `Generator is not deterministic for ${FILES[key]}`);
     }
@@ -559,7 +469,7 @@ function deterministicRegeneration(current) {
   return { skipped: false };
 }
 
-function runMutationProbes(document, data, embedded, sidecar) {
+function runMutationProbes(document, data, html) {
   let probes = 0;
   const duplicate = clone(document);
   duplicate['@graph'][1]['@id'] = duplicate['@graph'][0]['@id'];
@@ -577,9 +487,9 @@ function runMutationProbes(document, data, embedded, sidecar) {
   prefix['@context'].tree = `${document['@id']}#vocab-`;
   assert.throws(() => assertJsonLdTerms(prefix));
   probes += 1;
-  const changed = Buffer.from(embedded);
-  changed[changed.length - 1] ^= 1;
-  assert.notEqual(Buffer.compare(changed, sidecar), 0);
+  const changed = html.replace('<script id="atlas-app">', '<script id="atlas-app">/* tampered */');
+  assert.notEqual(changed, html);
+  assert.throws(() => assertHtmlIntegration(changed, data));
   return probes + 1;
 }
 
@@ -592,13 +502,11 @@ function main() {
     json: read(FILES.json),
     ndjson: read(FILES.ndjson),
     layout: read(FILES.layout),
-    bundle: read(FILES.bundle),
     opportunityData: read(FILES.opportunityData),
-    opportunityBundle: read(FILES.opportunityBundle),
     presentationData: read(FILES.presentationData)
   };
-  assert.equal(Buffer.compare(buffers.index, buffers.html), 0, 'Generated index.html differs from the canonical HTML artifact');
-  const html = buffers.html.toString('utf8');
+  assert.match(buffers.html.toString('utf8'), /meta http-equiv="refresh"/i, 'Compatibility artifact must redirect to index.html');
+  const html = buffers.index.toString('utf8');
   const jsonldRaw = buffers.jsonld.toString('utf8');
   const data = JSON.parse(buffers.json.toString('utf8'));
   const document = JSON.parse(jsonldRaw);
@@ -642,22 +550,12 @@ function main() {
   assertGraphClosure(document, data.namespace.datasetIri);
   assertGraphParity(data, document);
   assertNdjsonParity(data, records);
-  const csp = assertHtmlIntegration(
-    html,
-    buffers.jsonld,
-    data,
-    buffers.layout,
-    buffers.bundle,
-    buffers.opportunityData,
-    buffers.opportunityBundle,
-    buffers.presentationData
-  );
+  const csp = assertHtmlIntegration(html, data);
   const determinism = deterministicRegeneration(buffers);
-  const graphBody = extractBodies(html, 'script').find(script => /\btype=["']application\/ld\+json["']/i.test(script.attributes)).body;
-  const mutationProbes = runMutationProbes(document, data, Buffer.from(graphBody), buffers.jsonld);
+  const mutationProbes = runMutationProbes(document, data, html);
 
   const report = {};
-  for (const key of ['html', 'index', 'jsonld', 'json', 'ndjson', 'layout', 'bundle', 'opportunityData', 'opportunityBundle']) {
+  for (const key of ['html', 'index', 'jsonld', 'json', 'ndjson', 'layout', 'opportunityData']) {
     const buffer = buffers[key];
     report[FILES[key]] = {
       bytes: buffer.length,

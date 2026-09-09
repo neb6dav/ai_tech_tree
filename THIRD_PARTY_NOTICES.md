@@ -24,25 +24,20 @@ The atlas uses Wikipedia pages and revision identifiers for orientation, chronol
 
 ## Software
 
-### @cosmos.gl/graph 3.4.0
+The desktop workspace has no third-party runtime dependencies. Development and
+validation tools are pinned in `package-lock.json`; their package metadata and
+installed license files retain the applicable terms. Current direct tools are
+Playwright, Lighthouse, chrome-launcher, entities, and axe-core. They are not
+shipped inside the application.
 
-The 2-D Network view uses `@cosmos.gl/graph` version 3.4.0, distributed under the MIT License. The project does not use or bundle `@cosmograph/cosmograph`.
+Earlier releases used `@cosmos.gl/graph` 3.4.0 and esbuild 0.25.12 (MIT).
+Their bundles and associated transitive graphics dependencies were removed in
+the desktop workspace candidate. Historical sources and notices remain in Git:
+[Cosmos](https://github.com/cosmosgl/graph),
+[esbuild](https://github.com/evanw/esbuild).
 
-- Source: <https://github.com/cosmosgl/graph>
-- Package: <https://www.npmjs.com/package/@cosmos.gl/graph>
-
-### esbuild 0.25.12
-
-The development build uses esbuild version 0.25.12 under the MIT License.
-
-- Source: <https://github.com/evanw/esbuild>
-
-### Transitive dependencies
-
-Exact direct and transitive package versions and integrity hashes are recorded in `package-lock.json`. Their license identifiers are recorded in package metadata, and retained legal comments are emitted with the generated network bundle where provided by the packages. Notable transitive families include luma.gl, math.gl, probe.gl, D3 modules, DOMPurify, gl-matrix, random, and seedrandom; each remains under its own license.
-
-Run `npm ci` from the committed lockfile to reproduce the dependency tree. If a dependency or bundled asset changes, update this notice and review the resulting license obligations before release.
-
+Run `npm ci` from the committed lockfile to reproduce the development tools.
+Review licenses when changing dependencies or bundled assets.
 ## Corrections
 
 If an attribution, rights statement, source link, or public-domain designation is incomplete or incorrect, open a correction issue. Rights concerns should identify the affected stable node or relationship ID and the work in question without uploading restricted material.

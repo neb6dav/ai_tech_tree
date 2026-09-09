@@ -9,7 +9,7 @@ const DEFAULT_OUTPUT_DIRECTORY = path.resolve(__dirname, '..', '_site');
 const NODE_PAGE_MEDIA_TYPE = 'text/html; charset=utf-8';
 const SOCIAL_IMAGE_WIDTH = 1200;
 const SOCIAL_IMAGE_HEIGHT = 630;
-const SOCIAL_IMAGE_ALT = 'Transformer lineage map showing 117 nodes and 196 connections; evidence varies by relationship; not exhaustive causality.';
+const SOCIAL_IMAGE_ALT = 'AI Research Tech Tree: explore ideas and inspect connection evidence.';
 
 function nodePageError(message) {
   return new Error(`generate-node-pages: ${message}`);
@@ -278,6 +278,7 @@ function buildIndexes(atlas) {
     return result;
   };
   return {
+    nodeById: makeMap(atlas.nodes, 'nodes'),
     laneById: makeMap(atlas.lanes, 'lanes'),
     paperById: makeMap(atlas.papers, 'papers'),
     workById: makeMap(atlas.landmarkWorks, 'landmarkWorks'),
@@ -303,6 +304,14 @@ function contextForNode(atlas, indexes, node) {
   });
   const sourceIds = [...new Set(assessments.flatMap(assessment => Array.isArray(assessment.sourceIds) ? assessment.sourceIds : []))];
   const wikipediaSources = sourceIds.map(id => indexes.wikipediaById.get(id)).filter(Boolean);
+  const relationships = atlas.relationships
+    .filter(relationship => relationship?.sourceNodeId === node.id || relationship?.targetNodeId === node.id)
+    .map(relationship => {
+      const relatedId = relationship.sourceNodeId === node.id ? relationship.targetNodeId : relationship.sourceNodeId;
+      const relatedNode = indexes.nodeById.get(relatedId);
+      if (!relatedNode) throw nodePageError(`relationship ${relationship.id || '(unknown)'} references missing node ${relatedId}`);
+      return { relationship, relatedNode, direction: relationship.sourceNodeId === node.id ? 'Outgoing' : 'Incoming' };
+    });
   return {
     atlas,
     node,
@@ -311,8 +320,39 @@ function contextForNode(atlas, indexes, node) {
     works,
     assessments,
     wikipediaSources,
+    relationships,
     citationWorks: works.map(item => item.work).filter(isBibTeXEligible)
   };
+}
+
+function renderRelatedRecord(item, basePath) {
+  const { relationship, relatedNode, direction } = item;
+  const href = `${basePath}nodes/${encodeURIComponent(relatedNode.id)}/`;
+  const details = [direction, humanize(relationship.relationshipType || relationship.legacyKind),
+    `Evidence: ${humanize(relationship.evidenceGrade)}`,
+    relationship.reviewed === true ? 'Reviewed' : 'Review pending']
+    .map(escapeHtml).join(' · ');
+  return `<li><a href="${escapeHtml(href)}">${escapeHtml(relatedNode.title || relatedNode.id)}</a><span class="source-meta">${details}</span></li>`;
+}
+
+function renderResearchTextList(items, className = 'research-list') {
+  if (!Array.isArray(items)) return '';
+  const values = items.map(nonEmptyText).filter(Boolean);
+  return values.length > 0 ? `<ul class="${className}">${values.map(value => `<li>${escapeHtml(value)}</li>`).join('')}</ul>` : '';
+}
+
+function renderResearchResources(resources) {
+  if (!resources || typeof resources !== 'object' || Array.isArray(resources)) return '';
+  const sections = [];
+  for (const [label, values] of [['Code', resources.code], ['Datasets', resources.datasets], ['Benchmarks', resources.benchmarks]]) {
+    if (!Array.isArray(values) || values.length === 0) continue;
+    sections.push(`<h4>${label}</h4><ul class="research-list">${values.map(value => {
+      const text = nonEmptyText(value);
+      const href = safeSourceUrl(text);
+      return `<li>${href ? renderSourceLink(href, escapeHtml(text)) : escapeHtml(text || '')}</li>`;
+    }).join('')}</ul>`);
+  }
+  return sections.join('');
 }
 
 function renderNodePage(context, options = {}) {
@@ -354,6 +394,12 @@ function renderNodePage(context, options = {}) {
   const wikipediaSources = context.wikipediaSources || [];
   const assessments = context.assessments || [];
   const citationWorks = context.citationWorks || [];
+  const relationships = context.relationships || [];
+  const questions = [...new Set([
+    ...(Array.isArray(node.questions) ? node.questions : []),
+    ...(Array.isArray(node.research?.questions) ? node.research.questions : [])
+  ].map(nonEmptyText).filter(Boolean))];
+  const direction = node.direction && typeof node.direction === 'object' ? node.direction : null;
 
   const worksSection = works.length > 0
     ? `<h3>Landmark works</h3><ol class="sources">${works.map(renderLandmarkWork).join('')}</ol>`
@@ -370,6 +416,15 @@ function renderNodePage(context, options = {}) {
   const assessmentSection = assessments.length > 0
     ? `<ol class="assessments">${assessments.map(renderEvidenceAssessment).join('')}</ol>`
     : '<p>No node-level evidence assessment is recorded for this entry.</p>';
+  const relatedSection = relationships.length > 0
+    ? `<section aria-labelledby="related-title"><h2 id="related-title">Related records</h2><p>These links reflect recorded atlas relationships. A relationship’s evidence grade and review state describe the record; they do not establish causality.</p><ul class="related-records">${relationships.map(item => renderRelatedRecord(item, projectBasePath)).join('')}</ul></section>`
+    : '';
+  const researchSection = questions.length > 0 || direction
+    ? `<section aria-labelledby="research-title"><h2 id="research-title">Research questions and open direction</h2>${questions.length > 0 ? `<h3>Questions</h3>${renderResearchTextList(questions)}` : ''}${direction ? `<h3>${escapeHtml(direction.question ? 'Open direction' : 'Recorded direction')}</h3>${direction.question ? `<p>${escapeHtml(direction.question)}</p>` : ''}${direction.closureCriteria ? `<h4>Closure criteria</h4><p>${escapeHtml(direction.closureCriteria)}</p>` : ''}${direction.claimState ? `<p class="source-meta">Claim state: ${escapeHtml(humanize(direction.claimState))}${direction.confidence ? ` · ${escapeHtml(humanize(direction.confidence))} confidence` : ''}</p>` : ''}${direction.partialResults ? `<h4>Partial results</h4>${renderResearchTextList(direction.partialResults)}` : ''}${direction.counterexamples ? `<h4>Counterexamples and limits</h4>${renderResearchTextList(direction.counterexamples)}` : ''}${direction.noveltyReview ? `<h4>Novelty review</h4><p>${direction.noveltyReview.status ? `<strong>Status:</strong> ${escapeHtml(humanize(direction.noveltyReview.status))}. ` : ''}${direction.noveltyReview.checkedAt ? `<strong>Checked:</strong> ${escapeHtml(direction.noveltyReview.checkedAt)}. ` : ''}${direction.noveltyReview.scope ? `${escapeHtml(direction.noveltyReview.scope)} ` : ''}${direction.noveltyReview.note ? escapeHtml(direction.noveltyReview.note) : ''}</p>` : ''}${direction.resources ? `<h4>Resources</h4>${renderResearchResources(direction.resources)}${direction.resources.estimated ? `<p class="source-meta"><strong>Estimated effort:</strong> ${escapeHtml(Object.entries(direction.resources.estimated).map(([key, value]) => `${humanize(key)}: ${value}`).join(' · '))}</p>` : ''}` : ''}${direction.crowdedness ? `<p class="source-meta"><strong>Crowdedness:</strong> ${escapeHtml(direction.crowdedness)}</p>` : ''}${direction.tractability ? `<p class="source-meta"><strong>Tractability:</strong> ${escapeHtml(direction.tractability)}</p>` : ''}${direction.starters ? `<h4>Suggested starting points</h4>${renderResearchTextList(direction.starters)}` : ''}` : ''}</section>`
+    : '';
+  const edition = nonEmptyText(atlas.dataset?.edition) || 'Unspecified edition';
+  const datasetIdentifier = nonEmptyText(atlas.dataset?.identifier);
+  const provenance = `<p>Edition: ${escapeHtml(edition)}${atlas.dataset?.asOf ? ` · As of ${escapeHtml(atlas.dataset.asOf)}` : ''}</p>${datasetIdentifier ? `<p>Dataset identifier: <code>${escapeHtml(datasetIdentifier)}</code></p>` : ''}${atlas.dataset?.dataDigest ? `<p>Canonical data digest: <code>${escapeHtml(atlas.dataset.dataDigest)}</code></p>` : ''}`;
   const bibtexSection = citationWorks.length > 0
     ? `<section id="bibtex" aria-labelledby="bibtex-title"><h2 id="bibtex-title">BibTeX for eligible linked works</h2><p>These entries use only bibliographic fields already present in the atlas.</p>${citationWorks.map(work => `<h3>${escapeHtml(work.title)}</h3><pre><code>${escapeHtml(renderBibTeX(work))}</code></pre>`).join('')}</section>`
     : '';
@@ -380,6 +435,7 @@ function renderNodePage(context, options = {}) {
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="color-scheme" content="light dark">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 40 40%22%3E%3Crect width=%2240%22 height=%2240%22 rx=%228%22 fill=%22%23b34319%22/%3E%3Cpath d=%22M10 10L20 20L30 10M20 20V31%22 fill=%22none%22 stroke=%22%23fffdf9%22 stroke-width=%224%22/%3E%3C/svg%3E">
 <meta name="robots" content="index,follow">
 <title>${escapeHtml(title)} — AI Research Tech Tree</title>
 <meta name="description" content="${escapeHtml(summary)}">
@@ -395,11 +451,11 @@ function renderNodePage(context, options = {}) {
 <meta property="og:image:height" content="${SOCIAL_IMAGE_HEIGHT}">
 <meta property="og:image:alt" content="${escapeHtml(SOCIAL_IMAGE_ALT)}">
 <style>
-:root{color-scheme:light dark;--bg:#f6f4ef;--panel:#fffdfa;--ink:#17202a;--muted:#58616b;--line:#c7c1b7;--accent:#075985;--code:#eee9df}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:1rem/1.58 system-ui,-apple-system,"Segoe UI",sans-serif}a{color:var(--accent);text-underline-offset:.18em}header,main,footer{width:min(52rem,calc(100% - 2rem));margin-inline:auto}header{padding:1.25rem 0}.site-name{color:var(--muted);margin:.6rem 0 0}article{background:var(--panel);border:1px solid var(--line);border-radius:.75rem;padding:clamp(1.25rem,4vw,2.5rem);box-shadow:0 .25rem 1.25rem #0000000d}h1{font-size:clamp(2rem,6vw,3.35rem);line-height:1.08;margin:.25rem 0 1.25rem}h2{margin-top:2.25rem;border-top:1px solid var(--line);padding-top:1.5rem}h3{margin-top:1.5rem}dl{display:grid;grid-template-columns:max-content 1fr;gap:.35rem 1.25rem;margin:0 0 1.5rem}dt{color:var(--muted);font-weight:650}dd{margin:0}.summary{font-size:1.16rem}.sources,.assessments{padding-left:1.35rem}.sources li,.assessments li{margin:.9rem 0}.source-meta{display:block;color:var(--muted);font-size:.9rem}.sources p,.assessments p{margin:.25rem 0}pre{overflow:auto;background:var(--code);border:1px solid var(--line);border-radius:.4rem;padding:1rem;white-space:pre-wrap;overflow-wrap:anywhere}footer{color:var(--muted);padding:1.5rem 0 3rem}@media(prefers-color-scheme:dark){:root{--bg:#101418;--panel:#181e23;--ink:#f2eee7;--muted:#b5bdc5;--line:#46515b;--accent:#7dd3fc;--code:#0d1216}}@media(forced-colors:active){article,pre{border:1px solid CanvasText;box-shadow:none}}@media(max-width:34rem){dl{grid-template-columns:1fr;gap:.05rem}dd{margin-bottom:.6rem}}
+:root{color-scheme:light dark;--bg:#f6f4ef;--panel:#fffdfa;--ink:#17202a;--muted:#58616b;--line:#c7c1b7;--accent:#075985;--code:#eee9df}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:1rem/1.58 system-ui,-apple-system,"Segoe UI",sans-serif}a{color:var(--accent);text-underline-offset:.18em}header,main,footer{width:min(52rem,calc(100% - 2rem));margin-inline:auto}header{padding:1.25rem 0}.site-name{color:var(--muted);margin:.6rem 0 0}article{background:var(--panel);border:1px solid var(--line);border-radius:.75rem;padding:clamp(1.25rem,4vw,2.5rem);box-shadow:0 .25rem 1.25rem #0000000d}h1{font-size:clamp(2rem,6vw,3.35rem);line-height:1.08;margin:.25rem 0 1.25rem}h2{margin-top:2.25rem;border-top:1px solid var(--line);padding-top:1.5rem}h3{margin-top:1.5rem}h4{margin-top:1.1rem;margin-bottom:.2rem}dl{display:grid;grid-template-columns:max-content 1fr;gap:.35rem 1.25rem;margin:0 0 1.5rem}dt{color:var(--muted);font-weight:650}dd{margin:0}.summary{font-size:1.16rem}.sources,.assessments,.related-records,.research-list{padding-left:1.35rem}.sources li,.assessments li,.related-records li,.research-list li{margin:.9rem 0}.source-meta{display:block;color:var(--muted);font-size:.9rem}.sources p,.assessments p{margin:.25rem 0}pre{overflow:auto;background:var(--code);border:1px solid var(--line);border-radius:.4rem;padding:1rem;white-space:pre-wrap;overflow-wrap:anywhere}footer{color:var(--muted);padding:1.5rem 0 3rem}@media(prefers-color-scheme:dark){:root{--bg:#101418;--panel:#181e23;--ink:#f2eee7;--muted:#b5bdc5;--line:#46515b;--accent:#7dd3fc;--code:#0d1216}}@media(forced-colors:active){article,pre{border:1px solid CanvasText;box-shadow:none}}@media(max-width:34rem){dl{grid-template-columns:1fr;gap:.05rem}dd{margin-bottom:.6rem}}
 </style>
 </head>
 <body>
-<header><a href="${escapeHtml(backlink)}">← Explore this node in the interactive atlas</a><p class="site-name">AI Research Tech Tree · static node record</p></header>
+<header><nav aria-label="Breadcrumb"><a href="${escapeHtml(projectBasePath)}">AI Research Tech Tree</a> <span aria-hidden="true">/</span> <span>Nodes</span> <span aria-hidden="true">/</span> <span aria-current="page">${escapeHtml(title)}</span></nav><p><a href="${escapeHtml(backlink)}">← Explore this node in the interactive atlas</a></p><p class="site-name">AI Research Tech Tree · static node record</p></header>
 <main>
 <article>
 <h1>${escapeHtml(title)}</h1>
@@ -407,10 +463,12 @@ function renderNodePage(context, options = {}) {
 <section aria-labelledby="summary-title"><h2 id="summary-title">Summary</h2><p class="summary">${escapeHtml(summary)}</p></section>
 <section aria-labelledby="works-title"><h2 id="works-title">Works and sources</h2>${worksSection}${papersSection}${wikipediaSection}${noSources}</section>
 <section aria-labelledby="evidence-title"><h2 id="evidence-title">Evidence caveat</h2><p>${escapeHtml(caveat)}</p>${assessmentSection}</section>
+${relatedSection}
+${researchSection}
 ${bibtexSection}
 </article>
 </main>
-<footer><a href="${escapeHtml(canonicalDataPath)}">Download the canonical JSON dataset</a></footer>
+<footer><p><a href="${escapeHtml(backlink)}">Open this record in the primary atlas</a> · <a href="${escapeHtml(canonicalDataPath)}">Download the canonical JSON dataset</a></p>${provenance}</footer>
 </body>
 </html>
 `;
@@ -420,7 +478,7 @@ function buildNodePageArtifacts(atlas, options = {}) {
   assertObject(atlas, 'atlas');
   assertObject(atlas.dataset, 'atlas.dataset');
   if (!Array.isArray(atlas.nodes)) throw nodePageError('atlas.nodes must be an array');
-  for (const label of ['lanes', 'papers', 'landmarkWorks', 'wikipediaSources', 'paperLinks', 'landmarkWorkLinks', 'evidenceAssessments']) {
+  for (const label of ['lanes', 'papers', 'landmarkWorks', 'wikipediaSources', 'paperLinks', 'landmarkWorkLinks', 'evidenceAssessments', 'relationships']) {
     if (!Array.isArray(atlas[label])) throw nodePageError(`atlas.${label} must be an array`);
   }
   const indexes = buildIndexes(atlas);

@@ -31,22 +31,23 @@ For relationships, also state source → target direction, relationship meaning,
 ## Generated artifacts
 
 - [ ] I changed maintained source rather than hand-editing generated output.
-- [ ] I ran the build and committed its generated changes to `index.html`, `network-atlas.bundle.js`, `opportunity-atlas.bundle.js`, `network-layout-v1.json`, and/or the graph sidecars as applicable.
+- [ ] I ran the build and committed its generated changes to `index.html`, the compatibility redirect, `nodes/`, sitemap, and/or graph sidecars as applicable.
 - [ ] I inspected the generated diff for unrelated changes.
 
 ## Validation
 
 - [ ] `npm ci`
 - [ ] `npm run build`
-- [ ] `npm run test:fast` (ordinary pull-request validation)
+- [ ] `npm run test:fast`
+- [ ] `node --test tests/workspace-browser.test.mjs` with Chromium installed
 - [ ] `git diff --exit-code` after committing generated artifacts
 - [ ] I tested relevant behavior in light and dark themes.
-- [ ] I tested relevant behavior in Timeline, Network, Opportunity, and List views, or explained why a view is unaffected.
+- [ ] I tested relevant behavior in Explore, Learn, Opportunity, and List views, or explained why a view is unaffected.
 - [ ] I checked keyboard and reduced-motion behavior when the interface changed.
 
-Maintainers preparing a release candidate additionally install Chromium and
-run `npm test`; that manually dispatched tier adds the full browser and
-Lighthouse checks.
+Maintainers preparing a release candidate install Chromium, Firefox and WebKit,
+run `npm test`, and repeat the browser suite with `AI_TREE_BROWSER=firefox` and
+`AI_TREE_BROWSER=webkit`. That manual tier adds Lighthouse and engine coverage.
 
 ## Material AI assistance
 

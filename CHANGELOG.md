@@ -4,7 +4,25 @@ All notable public changes to the AI Research Tech Tree will be documented here.
 
 ## [Unreleased]
 
-No unreleased public changes are currently recorded.
+### 2.0.0-rc.1 desktop workspace candidate
+
+- Replace the previous Timeline/Network interface with a focused native SVG
+  neighborhood and a persistent reading/evidence pane, immediate search,
+  shareable selection, and browser history.
+- Add in-pane learning paths, complete Opportunity corpus browsing, and richer
+  static reading pages with connections, questions, sources, and provenance.
+- Add a 22-relationship Transformer evidence pilot and a seven-step source tour.
+  The supplemental notes remain AI-assisted drafts pending curator review;
+  canonical evidence grades and all three machine exports are unchanged.
+- Remove Cosmos, unused graphics tooling, duplicate legacy HTML, and obsolete
+  renderer tests. Preserve static delivery, CSP, canonical IDs, citation identity,
+  compatibility endpoints, and the future combinatorial research roadmap.
+- Add behavioral browser and axe checks, a staged local preview command, and
+  screenshots of the implemented desktop interface.
+
+This is a review candidate, not a tagged or deployed release. See
+[the design decision](docs/DESKTOP_REDESIGN.md) and
+[the validation record](docs/DESKTOP_VALIDATION.md).
 
 ## [1.2.1] - 2026-09-03
 

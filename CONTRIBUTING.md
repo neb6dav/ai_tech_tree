@@ -55,9 +55,9 @@ A search-result snippet, unsourced model output, or citation title alone is not 
    npm run test:fast
    ```
 
-   `npm run test:fast` is the ordinary pull-request validation tier. Maintainers should install Chromium and run `npm test` for the manually dispatched release-candidate tier, which adds the browser and Lighthouse gates.
+   Pull requests run `npm run test:fast` plus `node --test tests/workspace-browser.test.mjs` with Chromium installed. The manually dispatched candidate tier runs `npm test` and repeats the browser suite with Firefox and WebKit; it adds Lighthouse measurement.
 
-5. Inspect the generated diff and the application in both light and dark themes and, when relevant, in Timeline, Network, Opportunity, and List views.
+5. Inspect the generated diff and the application in both light and dark themes and, when relevant, in Explore, Learn, Opportunity, and List views. `npm run preview` serves the staged site locally.
 6. Commit maintained-source changes and the generated artifact changes produced by the build.
 7. From the committed tree, rerun `npm run build`, `npm run test:fast`, and `git diff --exit-code` to prove that generation is reproducible and complete. The maintainer release-candidate check additionally reruns `npm test` after Chromium is installed.
 8. Complete every applicable section of the pull-request template.
@@ -66,14 +66,13 @@ Maintained historical data lives under `src/data/atlas/`: `manifest.json` fixes
 the 15-lane shard paths and sidecars, nodes are authored in
 `nodes/<lane>.json`, and relationships are authored in
 `relationships/<target-lane>.json`. Do not edit the historical records embedded
-in `ai-research-tech-tree.html`; they are generated projections. The HTML file
-remains the maintained application shell. Other maintained source includes
-`src/network-view.js`, `src/opportunity-view.js`,
-`src/opportunity-layout.cjs`, `src/data/opportunities/`, and the build, layout,
-injection, export, and validation scripts. Generated files include `index.html`,
-`network-atlas.bundle.js`, `opportunity-atlas.bundle.js`,
-`network-layout-v1.json`, and the JSON, JSON-LD, and NDJSON historical graph
-exports. See the README for the complete boundary and frozen v1 contract.
+in `index.html`; they are generated projections. The maintained interface lives
+under `src/workspace/`. Other sources include `src/research/`,
+`src/data/opportunities/`, the compatibility redirects, and build/export scripts.
+Generated files include `index.html`, `ai-research-tech-tree.html`, `nodes/`,
+`sitemap.xml`, and the JSON, JSON-LD, and NDJSON exports. The historical
+`network-layout-v1.json` remains a frozen compatibility artifact. See the README
+for the development workflow and public contract.
 
 ## Pull-request scope
 

@@ -8,6 +8,13 @@ This is a comprehensive discussion record, organized by topic rather than a verb
 
 This document does not authorize implementation, a fork, a new repository, a merge, a release, or deployment. The user explicitly stopped an earlier proposed build and requested discussion only. The subsequent authorization was to write this file.
 
+**Later decision:** after reviewing Claude's critique and confirming that the
+combinatorial research roadmap would remain open, the owner authorized proceeding
+with the revised implementation plan. This document remains the discussion record;
+[RD-018](docs/ROADMAP_DECISIONS.md#rd-018--build-a-desktop-research-workspace-and-preserve-combinatorial-exploration)
+and [the desktop redesign decision](docs/DESKTOP_REDESIGN.md) describe the current
+scope and acceptance criteria.
+
 ## 1. Product goals and priorities
 
 The initial request was to look at the project with fresh eyes and make it capable of producing a "wow" reaction on Hacker News. Phase 2 should develop it into a legitimate research tool. Education is also a core use case. The governing instruction was: **"Above all, KISS."** Low ongoing maintenance is a major design constraint.
@@ -338,24 +345,24 @@ The conversation produced design recommendations and image artifacts. It did not
 
 Eight final mockup images were saved across three sets. All were generated with the built-in image generation tool. Exact prompts are retained with each set; the comparison prompt file also records the final corrections.
 
-These artifacts currently live in the local workspace **outside this Git repository**. The relative links below resolve from this checkout in its original `C:\Projects\Work` layout. They will not resolve as committed assets on GitHub. This documentation task does not copy or add the images to the repository.
+These artifacts currently live in the local workspace **outside this Git repository**. The paths below are an archival inventory relative to the original checkout under `C:\Projects\Work`; they are not published repository assets. The abandoned image concepts are not part of the implementation.
 
 | Set | Local artifact | Purpose |
 | --- | --- | --- |
-| Initial concepts, 2026-09-07 | [01-explore.png](../output/ai-tech-tree-mockups-2026-09-07/01-explore.png) | Dark desktop atlas with simplified navigation. |
-| Initial concepts, 2026-09-07 | [02-research.png](../output/ai-tech-tree-mockups-2026-09-07/02-research.png) | Focused desktop research view and inspector. |
-| Initial concepts, 2026-09-07 | [03-mobile.png](../output/ai-tech-tree-mockups-2026-09-07/03-mobile.png) | Early small-screen concept; not a current launch priority. |
-| Clean-slate concepts, 2026-09-07 | [01-field-guide-home.png](../output/ai-tech-tree-from-scratch-2026-09-07/01-field-guide-home.png) | Editorial discovery homepage. |
-| Clean-slate concepts, 2026-09-07 | [02-idea-page.png](../output/ai-tech-tree-from-scratch-2026-09-07/02-idea-page.png) | Transformer reading page and inline evidence. |
-| Clean-slate concepts, 2026-09-07 | [03-question-mobile.png](../output/ai-tech-tree-from-scratch-2026-09-07/03-question-mobile.png) | Open-question record on a narrow screen. |
-| Comparisons, 2026-09-08 | [01-current-vs-proposed.png](../output/ai-tech-tree-comparison-2026-09-08/01-current-vs-proposed.png) | Reconstructed live layout beside the proposed field guide. |
-| Comparisons, 2026-09-08 | [02-what-a-graphics-library-adds.png](../output/ai-tech-tree-comparison-2026-09-08/02-what-a-graphics-library-adds.png) | Shared design with optional deeper graph investigation. |
+| Initial concepts, 2026-09-07 | `../output/ai-tech-tree-mockups-2026-09-07/01-explore.png` | Dark desktop atlas with simplified navigation. |
+| Initial concepts, 2026-09-07 | `../output/ai-tech-tree-mockups-2026-09-07/02-research.png` | Focused desktop research view and inspector. |
+| Initial concepts, 2026-09-07 | `../output/ai-tech-tree-mockups-2026-09-07/03-mobile.png` | Early small-screen concept; not a current launch priority. |
+| Clean-slate concepts, 2026-09-07 | `../output/ai-tech-tree-from-scratch-2026-09-07/01-field-guide-home.png` | Editorial discovery homepage. |
+| Clean-slate concepts, 2026-09-07 | `../output/ai-tech-tree-from-scratch-2026-09-07/02-idea-page.png` | Transformer reading page and inline evidence. |
+| Clean-slate concepts, 2026-09-07 | `../output/ai-tech-tree-from-scratch-2026-09-07/03-question-mobile.png` | Open-question record on a narrow screen. |
+| Comparisons, 2026-09-08 | `../output/ai-tech-tree-comparison-2026-09-08/01-current-vs-proposed.png` | Reconstructed live layout beside the proposed field guide. |
+| Comparisons, 2026-09-08 | `../output/ai-tech-tree-comparison-2026-09-08/02-what-a-graphics-library-adds.png` | Shared design with optional deeper graph investigation. |
 
 Supporting local notes and prompts:
 
-- Initial concepts: [README](../output/ai-tech-tree-mockups-2026-09-07/README.md), [prompts](../output/ai-tech-tree-mockups-2026-09-07/PROMPTS.md).
-- Clean-slate concepts: [design notes](../output/ai-tech-tree-from-scratch-2026-09-07/DESIGN.md), [prompts](../output/ai-tech-tree-from-scratch-2026-09-07/PROMPTS.md).
-- Comparisons: [README](../output/ai-tech-tree-comparison-2026-09-08/README.md), [prompts and corrections](../output/ai-tech-tree-comparison-2026-09-08/PROMPTS.md).
+- Initial concepts: `../output/ai-tech-tree-mockups-2026-09-07/README.md`, `../output/ai-tech-tree-mockups-2026-09-07/PROMPTS.md`.
+- Clean-slate concepts: `../output/ai-tech-tree-from-scratch-2026-09-07/DESIGN.md`, `../output/ai-tech-tree-from-scratch-2026-09-07/PROMPTS.md`.
+- Comparisons: `../output/ai-tech-tree-comparison-2026-09-08/README.md`, `../output/ai-tech-tree-comparison-2026-09-08/PROMPTS.md`.
 
 The mockups predate the explicit desktop-first correction. No new image set demonstrating the final large-diagram/persistent-pane recommendation was generated after that correction in this conversation.
 
@@ -368,7 +375,7 @@ Repository references:
 - [Canonical atlas loader](canonical-atlas.js).
 - [Knowledge-graph generation](generate-knowledge-graph.js).
 - [Application build](build.js).
-- [Existing Cosmos network adapter](src/network-view.js).
+- [Historical Cosmos network adapter](https://github.com/neb6dav/ai_tech_tree/blob/628d807d7853ee2a73e3ecec6acae25f5f9e905d/src/network-view.js).
 - [UI layout gate](ui-layout-gate.js).
 - [Public artifact staging configuration](config/pages-stage.v1.json).
 - [Pages release workflow](.github/workflows/pages.yml).

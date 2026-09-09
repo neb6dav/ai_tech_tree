@@ -13,7 +13,7 @@ concurrency:
 
 jobs:
   pr-integrity:
-    name: Fast data, generation, and HTML integrity
+    name: Data, HTML integrity, and Chromium accessibility
     if: ${{ github.event_name == 'pull_request' }}
     runs-on: ubuntu-24.04
     timeout-minutes: 20
@@ -40,6 +40,12 @@ jobs:
 
       - name: Run fast data, generation, and HTML integrity gates
         run: npm run test:fast
+
+      - name: Install Chromium for behavior and accessibility checks
+        run: npx playwright install --with-deps chromium
+
+      - name: Check staged workspace behavior and accessibility
+        run: node --test tests/workspace-browser.test.mjs
 
       - name: Verify generated artifacts are committed
         shell: bash
@@ -74,14 +80,19 @@ jobs:
       - name: Install exact dependencies
         run: npm ci
 
-      - name: Install Chromium for the browser gate
-        run: npx playwright install --with-deps chromium
+      - name: Install browser engines for the candidate gate
+        run: npx playwright install --with-deps chromium firefox webkit
 
       - name: Build generated artifacts
         run: npm run build
 
       - name: Run full validation suite
         run: npm test
+
+      - name: Verify Firefox and WebKit behavior and accessibility
+        run: |
+          AI_TREE_BROWSER=firefox node --test tests/workspace-browser.test.mjs
+          AI_TREE_BROWSER=webkit node --test tests/workspace-browser.test.mjs
 
       - name: Verify generated artifacts are committed
         shell: bash

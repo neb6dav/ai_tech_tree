@@ -238,17 +238,23 @@ test('fails a raw-byte regression and a stale social baseline', async t => {
   assert(report.failures.some(check => check.name === 'socialImage.baselineSha256'));
 });
 
-test('rejects incomplete reviewed platform DOM peaks', async t => {
+test('accepts measured platforms without inventing measurements for other systems', async t => {
+  const current = await fixture({ mutateBudget(budget) { delete budget.regressionGuards.activeDomElements.reviewedPeaksByPlatform.linux; } });
+  t.after(() => fs.rm(current.root, { recursive: true, force: true }));
+  assert.equal(evaluatePerformanceBudget({ repositoryRoot: current.root }).status, 'PASS');
+});
+
+test('rejects missing reviewed platform DOM measurements', async t => {
   const current = await fixture({
     mutateBudget(budget) {
-      delete budget.regressionGuards.activeDomElements.reviewedPeaksByPlatform.linux;
+      budget.regressionGuards.activeDomElements.reviewedPeaksByPlatform = {};
     }
   });
   t.after(() => fs.rm(current.root, { recursive: true, force: true }));
 
   assert.throws(
     () => evaluatePerformanceBudget({ repositoryRoot: current.root }),
-    /reviewed DOM peaks must contain exactly linux and win32/u
+    /reviewed DOM peaks must identify at least one measured platform/u
   );
 });
 

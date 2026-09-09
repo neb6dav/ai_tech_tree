@@ -14,10 +14,7 @@ const {
   loadCanonicalAtlas
 } = require('../canonical-atlas.js');
 const {
-  applyCanonicalAtlas,
   buildExports,
-  buildCanonicalArtifacts,
-  extractModel,
   safeJson
 } = require('../generate-knowledge-graph.js');
 const {
@@ -41,12 +38,6 @@ function sha256(value) {
   return crypto.createHash('sha256').update(value, 'utf8').digest('hex');
 }
 
-function replaceOnce(value, pattern, replacement, label) {
-  const matches = [...value.matchAll(pattern)];
-  assert.equal(matches.length, 1, `${label} replacement count changed`);
-  return value.replace(pattern, replacement);
-}
-
 function withFixture(mutate, assertion) {
   const fixtureRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'ai-tree-canonical-atlas-'));
   const fixtureData = path.join(fixtureRoot, 'atlas');
@@ -61,10 +52,13 @@ function withFixture(mutate, assertion) {
 }
 
 test('canonical shadow assembles the exact legacy semantic model', () => {
-  const legacy = extractModel(read('ai-research-tech-tree.html'));
   const canonical = loadCanonicalAtlas();
 
-  assert.deepEqual(canonical.legacyModel, legacy);
+  const legacy = canonical.legacyModel;
+  assert.equal(legacy.nodes.filter(node => node.statusProfile.kind === 'development').length, 324);
+  assert.equal(legacy.nodes.filter(node => node.statusProfile.kind === 'open_direction').length, 15);
+  assert.equal(legacy.relationships.length, 711);
+  assert.equal(legacy.nodes.length, 339);
   assert.deepEqual(canonical.catalog.eras, legacy.eras);
   assert.deepEqual(canonical.catalog.relationshipTypes, legacy.relationshipTypes);
   assert.deepEqual(canonical.sidecars.researchGuide.data, legacy.researchGuide);
@@ -141,146 +135,15 @@ test('canonical shadow reproduces every generated dataset byte and layout byte',
   assert.equal(sha256(layoutBody), 'f3b888046699599fbfb95b6c32ab55dc128f58d7a1dd2bf7d9f8b7d1c3bde120');
 });
 
-test('canonical cutover atomically restores every embedded data projection byte', () => {
+test('no-script index exposes canonical ordered node links', () => {
   const canonical = loadCanonicalAtlas();
-  const html = read('ai-research-tech-tree.html');
-  assert.equal(applyCanonicalAtlas(html, canonical), html);
-
-  let projectionCount = 0;
-  let poisoned = html.replace(
-    /(\/\* ============ [^\r\n]+ ============ \*\/\n)P\(\n[\s\S]*?\n\);/g,
-    (_match, heading) => {
-      projectionCount += 1;
-      return `${heading}P(\n{"id":"stale-${projectionCount}"}\n);`;
-    }
-  );
-  assert.equal(projectionCount, 16, 'all 15 lanes and the research-expansion projection must be poisoned');
-  poisoned = replaceOnce(
-    poisoned,
-    /(const WIKI_AUDIT = Object\.freeze\()[^\r\n]*(\);\n<\/script>)/g,
-    '$1{}$2',
-    'Wikipedia audit'
-  );
-  poisoned = replaceOnce(
-    poisoned,
-    /(const RESEARCH_GUIDE=Object\.freeze\()[^\r\n]*(\);\n<\/script>)/g,
-    '$1{}$2',
-    'research guide'
-  );
-  poisoned = replaceOnce(
-    poisoned,
-    /(<noscript><style>#bootPending\{display:none!important\}<\/style><section id="noscript"[\s\S]*?<tbody>)[\s\S]*?(<\/tbody><\/table><\/div><\/section><\/noscript>)/g,
-    '$1<tr><td>stale</td></tr>$2',
-    'no-script index'
-  );
-  poisoned = replaceOnce(
-    poisoned,
-    /const STATUS = \{[\s\S]*?const ERAS = \[[\s\S]*?\];(?=\n\n\/\* ---------- editorial model, chronology and validation ---------- \*\/)/g,
-    'const STATUS = {};\nconst LANES = [];\nconst ERAS = [];',
-    'catalog'
-  );
-  poisoned = replaceOnce(poisoned, /const PROJECT_META=Object\.freeze\([\s\S]*?\);(?=\nconst DATE_OVERRIDES=)/g, 'const PROJECT_META=Object.freeze({});', 'project');
-  poisoned = replaceOnce(poisoned, /const DATE_OVERRIDES=Object\.freeze\([\s\S]*?\);(?=function formatNodeDate)/g, 'const DATE_OVERRIDES=Object.freeze({});', 'date overrides');
-  poisoned = replaceOnce(poisoned, /const DESCRIPTION_REPAIRS=Object\.freeze\([\s\S]*?\);(?=Object\.entries\(DESCRIPTION_REPAIRS\))/g, 'const DESCRIPTION_REPAIRS=Object.freeze({});', 'description repairs');
-  poisoned = replaceOnce(
-    poisoned,
-    /const RELATION_TYPES=Object\.freeze\([\s\S]*?\);const EDGE_META_OVERRIDES=Object\.freeze\([\s\S]*?\);(?=function structuralEdgeMeta)/g,
-    'const RELATION_TYPES=Object.freeze({});const EDGE_META_OVERRIDES=Object.freeze({});',
-    'relationship metadata'
-  );
-  poisoned = replaceOnce(poisoned, /(const DIRECTION_CARD_DATA=)[^\r\n]*(;\nfunction frozenList)/g, '$1{}$2', 'direction cards');
-  poisoned = replaceOnce(
-    poisoned,
-    /PAPER_ROLE_OVERRIDES=Object\.freeze\([\s\S]*?\);(?=let activeResearchFilter=)/g,
-    'PAPER_ROLE_OVERRIDES=Object.freeze({});',
-    'paper role overrides'
-  );
-  poisoned = replaceOnce(
-    poisoned,
-    /const AUDIT_NODE_FINGERPRINTS=Object\.freeze\([\s\S]*?\);const AUDIT_EDGE_FINGERPRINTS=Object\.freeze\([\s\S]*?\);(?=const staleNodeFingerprintIds=)/g,
-    'const AUDIT_NODE_FINGERPRINTS=Object.freeze({});const AUDIT_EDGE_FINGERPRINTS=Object.freeze({});',
-    'review fingerprints'
-  );
-  poisoned = replaceOnce(
-    poisoned,
-    /(<script\b[^>]*\btype="application\/ld\+json"[^>]*>)[\s\S]*?(<\/script>)/g,
-    '$1{}$2',
-    'JSON-LD'
-  );
-  assert.notEqual(poisoned, html);
-
-  const artifacts = buildCanonicalArtifacts(poisoned, canonical);
-  assert.equal(artifacts.html, html);
-  assert.equal(artifacts.jsonLdBody, read('ai-research-tech-tree.jsonld'));
-  assert.equal(artifacts.plainBody, read('ai-research-tech-tree.json'));
-  assert.equal(artifacts.ndjsonBody, read('ai-research-tech-tree.ndjson'));
-});
-
-test('canonical cutover fails closed instead of accepting missing or digest-drifted authority', () => {
-  const html = read('ai-research-tech-tree.html');
-  const missingLane = html.replace(
-    /(\/\* ============ [^\r\n]+ ============ \*\/\n)P\(\n[\s\S]*?\n\);/u,
-    '$1'
-  );
-  assert.throws(
-    () => buildCanonicalArtifacts(missingLane, loadCanonicalAtlas()),
-    /Expected exactly 16 canonical data projections/u
-  );
-
-  const drifted = loadCanonicalAtlas();
-  drifted.manifest.expected.dataDigest = '0'.repeat(64);
-  assert.throws(
-    () => buildCanonicalArtifacts(html, drifted),
-    /Canonical data digest changed/u
-  );
-});
-
-test('canonical cutover rejects release-shell and normalized sidecar drift', () => {
-  const html = read('ai-research-tech-tree.html');
-  const staleVersion = html.replace(
-    '<meta name="ai-tree-version" content="1.2.1">',
-    '<meta name="ai-tree-version" content="stale">'
-  );
-  assert.notEqual(staleVersion, html);
-  assert.throws(
-    () => buildCanonicalArtifacts(staleVersion, loadCanonicalAtlas()),
-    /Canonical release shell version metadata/u
-  );
-
-  const staleInventory = html.replace(
-    'This no-JavaScript view contains all 324 mapped developments and 15 open directions.',
-    'This no-JavaScript view contains all 323 mapped developments and 15 open directions.'
-  );
-  assert.notEqual(staleInventory, html);
-  assert.throws(
-    () => buildCanonicalArtifacts(staleInventory, loadCanonicalAtlas()),
-    /Canonical release shell no-script inventory counts/u
-  );
-
-  const wikipediaDrift = loadCanonicalAtlas();
-  wikipediaDrift.nodes.find(node => node.id === 'markov').audit.development.note = 'normalized-copy drift';
-  assert.throws(
-    () => buildCanonicalArtifacts(html, wikipediaDrift),
-    /Canonical browser projection does not reproduce the assembled canonical model/u
-  );
-
-  const researchDrift = loadCanonicalAtlas();
-  researchDrift.nodes.find(node => node.id === 'rlhf').research.sources[0].title = 'Normalized-copy drift';
-  assert.throws(
-    () => buildCanonicalArtifacts(html, researchDrift),
-    /Canonical browser projection does not reproduce the assembled canonical model/u
-  );
-});
-
-test('no-script sidecar is the exact ordered legacy projection', () => {
-  const canonical = loadCanonicalAtlas();
-  const html = read('ai-research-tech-tree.html');
-  const body = /<noscript><style>#bootPending[\s\S]*?<tbody>([\s\S]*?)<\/tbody><\/table>/i.exec(html)?.[1];
-  assert(body, 'legacy no-script table is missing');
-  const rows = [...body.matchAll(/<tr>[\s\S]*?<\/tr>/g)].map(match => match[0]);
+  const html = read('index.html');
+  const body = /<noscript>[\s\S]*?<ul>([\s\S]*?)<\/ul>/i.exec(html)?.[1];
+  assert(body, 'canonical no-script node list is missing');
+  const rows = [...body.matchAll(/<li>[\s\S]*?<\/li>/g)].map(match => match[0]);
 
   assert.deepEqual(canonical.sidecars.noScript.rows.map(row => row.nodeId), canonical.nodes.map(node => node.id));
-  assert.deepEqual(canonical.sidecars.noScript.rows.map(row => row.rowHtml), rows);
+  assert.deepEqual(rows.map(row => row.match(/href="\.\/nodes\/([^/]+)\/"/)?.[1]), canonical.nodes.map(node => node.id));
 });
 
 test('loader fails closed when a required shard is missing', () => {
@@ -358,7 +221,7 @@ test('loader rejects relationship-origin drift and incomplete no-script projecti
 });
 
 test('legacy parity detects semantic drift in every declared canonical sidecar', () => {
-  const legacy = extractModel(read('ai-research-tech-tree.html'));
+  const legacy = loadCanonicalAtlas().legacyModel;
 
   withFixture(
     fixture => {

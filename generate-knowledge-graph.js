@@ -1339,12 +1339,28 @@ function buildCanonicalArtifacts(html, canonical) {
   };
 }
 
+// Export-only path used by the workspace build.  The interactive shell is a
+// separate presentation surface and must not be fed through the legacy HTML
+// projection; the canonical model remains the sole source for machine exports.
+function buildExportArtifacts(canonical) {
+  assert(canonical && canonical.legacyModel, 'Assembled canonical atlas is required');
+  const { plain, datasetGraph, ndjsonRecords } = buildExports(canonical.legacyModel);
+  assert(
+    plain.dataset.dataDigest === canonical.manifest.expected.dataDigest,
+    `Canonical data digest changed: expected ${canonical.manifest.expected.dataDigest}, found ${plain.dataset.dataDigest}`
+  );
+  return {
+    plain,
+    jsonLdBody: safeJson(datasetGraph),
+    plainBody: JSON.stringify(plain, null, 2) + '\n',
+    ndjsonBody: ndjsonRecords.map(record => JSON.stringify(record)).join('\n') + '\n'
+  };
+}
+
 function main() {
   const canonical = loadCanonicalAtlas();
-  const html = fs.readFileSync(htmlPath, 'utf8').replace(/\r\n/g, '\n');
-  const artifacts = buildCanonicalArtifacts(html, canonical);
+  const artifacts = buildExportArtifacts(canonical);
 
-  fs.writeFileSync(htmlPath, artifacts.html, 'utf8');
   fs.writeFileSync(jsonLdPath, artifacts.jsonLdBody, 'utf8');
   fs.writeFileSync(jsonPath, artifacts.plainBody, 'utf8');
   fs.writeFileSync(ndjsonPath, artifacts.ndjsonBody, 'utf8');
@@ -1354,7 +1370,6 @@ function main() {
     dataDigest: artifacts.plain.dataset.dataDigest,
     counts: artifacts.plain.dataset.counts,
     bytes: {
-      html: Buffer.byteLength(artifacts.html),
       jsonld: Buffer.byteLength(artifacts.jsonLdBody),
       json: Buffer.byteLength(artifacts.plainBody),
       ndjson: Buffer.byteLength(artifacts.ndjsonBody)
@@ -1368,6 +1383,7 @@ module.exports = {
   applyCanonicalAtlas,
   applyKnowledgeGraph,
   buildCanonicalArtifacts,
+  buildExportArtifacts,
   buildExports,
   extractModel,
   main,

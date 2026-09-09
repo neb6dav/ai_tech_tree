@@ -1,201 +1,110 @@
 # AI Research Tech Tree
 
-The AI Research Tech Tree is a public, evidence-linked atlas of artificial-intelligence research developments, open directions, landmark works, and recorded relationships. It combines a chronological Timeline, a structural Network, a capability-oriented Opportunity View, and an accessible List.
+Explore how ideas in AI connect, and inspect the evidence behind each connection.
 
-**Public/live release: `v1.2.1` Stable.** Release-prep PR #14 was squash-merged into durable `main` as `59d4d90ebcb8bb8b230d9cea2286214a3d2011a5`; annotated tag `v1.2.1` (object `49ddf1d74def95a4582cf2c3f9a391b4d5e99619`) targets that commit. GitHub Pages run `33715374446`, job `100523342659`, passed and deployed on 2026-09-03. The live manifest reports version `1.2.1`, tag `v1.2.1`, commit `59d4d90`, Stable state, clean source, required-clean source, matching committed inputs, and data digest `865174514ba64e20d6f2a90471a6766b6d5fa18f5b0e62c85d9601de077a50f2`. The citable dataset identity remains v1.0.0 in [`CITATION.cff`](CITATION.cff), edition `2026-08-21-stable-1`, because this UI release makes no semantic dataset changes. The full exact merged-tree hosted browser/Lighthouse suite was not rerun; that limitation does not invalidate the successful deployment or live byte reconciliation. Each staged build records its exact commit, tag state, and checksums in `release-manifest.json`; pull-request previews and untagged builds remain non-release artifacts. The atlas remains a curated research aid, not a complete literature review, a peer-reviewed historical account, or a claim that every displayed relationship is causal. Records expose their available sources and review state so that gaps can be inspected and improved in public.
+[Open the published atlas](https://neb6dav.github.io/ai_tech_tree/) · [Read the Transformer record](https://neb6dav.github.io/ai_tech_tree/nodes/transformer/) · [Suggest a correction](https://github.com/neb6dav/ai_tech_tree/issues/new/choose)
 
-The bounded `v0.1.1`, `v0.2.0`, and `v0.2.2` source checkpoints are preserved
-in [`PLAN.md`](PLAN.md). The authorized `v1.0.0` release freezes the citable
-dataset contract described below; the public `v1.2.1` UI release preserves
-that contract while updating presentation and navigation.
+This repository contains 339 curated records, 711 recorded relationships, linked
+papers, and 15 open research directions. It supports learning and source discovery;
+the map is selective and is not a peer-reviewed scientific knowledge base.
 
-- Public site: <https://neb6dav.github.io/ai_tech_tree/>
-- Repository: <https://github.com/neb6dav/ai_tech_tree>
-- Maintainer: [@neb6dav](https://github.com/neb6dav)
-- Corrections and additions: [open a structured issue](https://github.com/neb6dav/ai_tech_tree/issues/new/choose) or submit a pull request
+## Desktop workspace
 
-## What the views mean
+The desktop redesign uses a focused SVG map and a persistent reading/evidence
+pane. Search the complete atlas, inspect a relationship, follow a learning path,
+or open a readable record page. A smaller visible neighborhood does not remove
+records or connections from the underlying data.
 
-- **Timeline** emphasizes chronology and research branches.
-- **Network** reveals the structure of recorded associations, including hubs, bridges, leaves, and cross-branch links.
-- **Opportunity** follows one historical development into documented capabilities, refinements, applications, constraints, competing approaches, and explicitly hypothesis-grade research opportunities. The first bounded map covers diffusion models.
-- **List** provides a searchable, keyboard-friendly representation of the complete filtered result set.
+![Desktop candidate showing the Transformer neighborhood and its reading pane](docs/images/desktop-workspace.png)
 
-Network positions are computed from recorded associations. Visual proximity, centrality, cluster membership, and node position do **not** by themselves establish chronology, importance, similarity, consensus, intellectual influence, or causality. Consult each record and relationship's evidence and review state.
+The redesigned workspace is a release candidate on its development branch.
+The published site remains the separately tagged v1.2.1 release until an approved
+promotion. See [the validation record](docs/DESKTOP_VALIDATION.md),
+[the redesign decision](docs/DESKTOP_REDESIGN.md) and
+[the release/decision ledger](docs/ROADMAP_DECISIONS.md) for scope and status.
 
-The Opportunity View is a separate, time-oriented capability graph rather than a restyling of the historical atlas. Its paths use a uniform width: width does not encode volume, importance, value, certainty, or remaining opportunity. Solid, dashed, and colored paths communicate declared relationship and evidence categories. Opportunity status is local to the named branch and context; the project does not claim that a technology is globally “fully exploited.” Typed cross-links connect records back to their corresponding Timeline and Network entries.
+## Read the evidence
 
-The current diffusion alpha has an auditable boundary: 60 nodes, 94 relationships (93 report rows plus one explicitly contextual editorial connectivity edge), 78 source URLs, eight branches, eight constraints, eight hypothesis cards, and nine unresolved claims. It remains `imported_unreviewed` pending source-by-source human review.
+Relationship meaning and evidence strength are separate. Direct, partial,
+contextual, editorial, unassessed, and hypothesis grades are not interchangeable.
+Most relationships still need individual source review. A visible connection
+or nearby position does not by itself establish influence, causality, or novelty.
 
-## Evidence vocabulary
+The [Transformer source-review pilot](src/research/transformer-evidence-pilot.json)
+adds narrow primary-source notes for its 22 recorded connections. These notes
+are AI-assisted drafts pending curator review. They do not change canonical
+evidence grades or the citable dataset. Missing or unresolved evidence stays
+visible rather than being filled with a plausible story.
 
-The atlas deliberately separates a relationship from the strength of the evidence attached to it. Current records may use states such as:
+[Methodology](METHODOLOGY.md) · [Contribution requirements](CONTRIBUTING.md)
 
-- **Direct**: a source explicitly supports the stated relationship.
-- **Partial**: a source supports part, but not all, of the stated relationship.
-- **Contextual or indirect**: sources support the surrounding history but do not explicitly establish the edge.
-- **Editorial association**: a curator-added connection useful for navigation or interpretation; it is not presented as a proven causal lineage.
-- **Unassessed**: the record or edge has not yet received the indicated review.
-- **Hypothesis**: a deliberately speculative research connection or open direction.
-- **No source found in the current audit**: the review did not locate supporting evidence in its stated source set. This is not proof that the claim is false.
+## Research roadmap
 
-See [METHODOLOGY.md](METHODOLOGY.md) for the inclusion, sourcing, relationship, and review rules.
+The Opportunity corpus records capabilities, constraints, refinements,
+applications, competing approaches, and explicit hypotheses. Its diffusion alpha
+contains 60 nodes, 94 relationships, 78 source URLs, eight constraints, and eight
+hypothesis cards. Its import status remains `imported_unreviewed`.
 
-## Repository map
+Future Combinatorial Lens and Hypothesis Workbench capabilities remain on the
+[roadmap](PLAN.md#potential-later-editions--combinatorial-exploration). They would
+help compare ideas and develop testable proposals while retaining source IDs,
+provenance, uncertainty, and human review. A dataset-derived candidate is not
+proof of a discovery or a globally novel combination.
 
-The public `v1.2.1` UI release and its v1.0.0 dataset citation keep a single-file application shell while the historical atlas is authored in a strict 15-lane canonical dataset. The build projects that canonical data into the application and the machine-readable publication artifacts.
+## Data and citation
 
-### Maintained source
+- [JSON](ai-research-tech-tree.json), [JSON-LD](ai-research-tech-tree.jsonld), and
+  [NDJSON](ai-research-tech-tree.ndjson) describe the historical atlas.
+- The [Opportunity data](src/data/opportunities/diffusion-models.alpha.json) and
+  [schema](src/data/opportunities/opportunity-map.schema.json) have a separate
+  authority and remain available at their existing public `/data/opportunities/`
+  URLs. Compatibility paths are retained.
+- Static `/nodes/<id>/` pages and application `#node=<id>` links refer to the same
+  stable canonical records. Downloads support retrieval and research workflows.
+- [CITATION.cff](CITATION.cff) identifies the v1.0.0 dataset, edition
+  `2026-08-21-stable-1`. An interface release does not silently create a new
+  dataset edition. Consult the sources before making scientific claims.
 
-- `ai-research-tech-tree.html` — maintained application shell; its embedded historical-atlas projections are generated from the canonical atlas and are not a second authoring source
-- `src/data/atlas/manifest.json`, `catalog.json`, sidecars, and the `nodes/` and `relationships/` lane shards — canonical historical-atlas authoring source
-- `canonical-atlas.js` — strict built-in loader and assembler for the canonical atlas
-- `src/compatibility/ai-research-tech-tree.html` — state-preserving public compatibility redirect to the root application
-- `src/network-view.js` — 2-D WebGL network-view source
-- `src/opportunity-view.js` and `src/opportunity-layout.cjs` — accessible Opportunity View renderer and deterministic layout logic
-- `src/data/opportunities/diffusion-models.alpha.json` — maintained diffusion-models Opportunity map, published canonically at `data/opportunities/diffusion-models.alpha.json`
-- `src/data/opportunities/opportunity-map.schema.json` and `validate-opportunity-data.js` — canonical schema and evidence-aware validation rules, published at `data/opportunities/opportunity-map.schema.json`
-- `src/compatibility/opportunity-map.schema.json` — delegating schema retained at the former public `src/data/...` URL
-- `generate-knowledge-graph.js` — canonical-data projector and machine-readable graph exporter
-- build, layout, and injection scripts — deterministic generation of the network layout and deployable page
-- `release-gate.js`, `ui-layout-gate.js`, `accessibility-gate.js`, `network-gate.js`, and `opportunity-gate.js` — validation gates
-- publication, methodology, governance, and contribution files in the repository root and `.github/`
+## Develop locally
 
-### Generated files; do not edit directly
+Use Node.js 24 and npm 11. The lockfile is authoritative.
 
-- `index.html` — GitHub Pages entry point
-- `network-atlas.bundle.js` — locally bundled `@cosmos.gl/graph` network renderer
-- `opportunity-atlas.bundle.js` — locally bundled Opportunity View renderer
-- `network-layout-v1.json` — deterministic, versioned network coordinates
-- `ai-research-tech-tree.json`
-- `ai-research-tech-tree.jsonld`
-- `ai-research-tech-tree.ndjson`
-
-The JSON, JSON-LD, and NDJSON exports currently describe the historical atlas. Their dataset human URL resolves to `./`, and each of the 339 atlas records resolves directly to `./#node=<stable-id>`; the former published HTML filename remains only a compatibility entry point. The Opportunity map remains a separate, schema-linked JSON graph and is advertised from the page as an alternate machine-readable representation; this prevents capability assessments and hypotheses from being silently recast as historical lineage.
-
-### Use with LLM research systems
-
-The machine-readable exports and the 339 static node pages delivered in the public `v1.2.1` UI release are designed to be ingestible by retrieval systems and LLM-assisted research workflows. Stable IDs, typed relationships, chronology, lanes, evidence grades, review states, provenance, and durable source links can help a research agent retrieve relevant lineages, compare traditions, follow supporting or contradictory context, and identify documented evidence gaps. The static pages are a crawlable representation of the same canonical records, not a second semantic dataset; later combinatorial tools are intended to expose underexplored intersections without silently promoting them to facts.
-
-This is a navigation and retrieval substrate, not an authoritative scientific knowledge base, a training corpus warranty, or evidence that an automatically suggested connection is true or novel. LLM workflows should preserve the atlas's evidence distinctions, treat contextual, editorial, unassessed, and hypothesis-grade relationships accordingly, and inspect the cited primary sources before making scientific claims.
-
-`ai-research-tech-tree.original.html` is an archival pre-repair baseline retained for provenance. It is not the current application source.
-
-Generated artifacts remain committed through the public `v1.2.1` UI release so releases can be inspected, downloaded, and served without a build service. Change maintained source, run the build, inspect the resulting diff, and commit the regenerated artifacts with the source change.
-
-## v1 public contract
-
-The citable dataset identity remains version `1.0.0`, release state `Stable`,
-edition `2026-08-21-stable-1`, dated 2026-08-21. The public application/UI
-release is `v1.2.1`; it changes presentation and research navigation without
-changing the canonical dataset. The historical-atlas review cutoff remains
-`2026-08-04`; the edition date does not imply that every historical record was
-re-reviewed on 2026-08-21. The diffusion Opportunity map remains an `alpha`
-dataset dated `2026-08-19` with import state `imported_unreviewed`. Stable
-application code therefore does not imply publication-level validation of that
-separate map.
-
-The following publication paths are stable:
-
-- `/` for the application;
-- `/ai-research-tech-tree.html` as the state-preserving compatibility alias;
-- `/ai-research-tech-tree.json`, `/ai-research-tech-tree.jsonld`, and
-  `/ai-research-tech-tree.ndjson` for the historical exports;
-- `/data/opportunities/diffusion-models.alpha.json` and
-  `/data/opportunities/opportunity-map.schema.json` for the Opportunity map;
-- `/src/data/opportunities/diffusion-models.alpha.json` and
-  `/src/data/opportunities/opportunity-map.schema.json` as compatibility paths;
-- `/CITATION.cff`, `/release-manifest.json`, `/social-card.png`, `/robots.txt`,
-  and `/sitemap.xml` for publication support.
-
-The historical export keeps schema version `2`, generator version `1.3.1`,
-dataset IRI `urn:uuid:7d0547f2-6239-5a56-82a3-1c846701c866`, and the matching
-`#vocab-` vocabulary IRI. The Opportunity map and its canonical schema remain
-at schema version `1.0.0`; the schema `$id` is
-`https://neb6dav.github.io/ai_tech_tree/data/opportunities/opportunity-map.schema.json`.
-The deterministic Network coordinates retain schema `1.0.0`, layout
-`network-v1`, algorithm `deterministic-lane-force-v1`, and seed
-`ai-research-tech-tree-network-v1`.
-
-Every existing exported record ID is frozen at the v1 candidate baseline,
-including historical lanes, classifications, nodes, relationships, evidence
-assessments, papers and links, landmark works and links, and Wikipedia sources,
-plus Opportunity records and its map and visual-band IDs. The ordered identity
-inventories are locked by SHA-256 in the publication-compatibility test:
-
-- historical export: `f5cff253d7a70641cf1f9a9058561f6d69bbae2d365166a7883694b3ef90241a`;
-- Opportunity records: `65afb35bc56b6d771312cc59a2ab3d4a7b48828b54a2262b7efb18d845702b33`.
-
-Correcting prose, evidence, dates, or relationships must not silently rename an
-existing record. Any exceptional identity correction or future inventory
-addition requires explicit compatibility review and a deliberate update to the
-locked baseline.
-
-Canonical historical authoring uses schema `1.0.0` and the fixed lane order
-`roots`, `symbolic`, `search`, `rl`, `neural`, `training`, `language`, `vision`,
-`generative`, `prob`, `alt`, `robotics`, `safety`, `systems`, `science`. Nodes
-live in `src/data/atlas/nodes/<lane>.json`; relationships live in
-`src/data/atlas/relationships/<target-lane>.json`; `manifest.json` fixes those
-paths and the six approved sidecars. Embedded HTML records and machine-readable
-exports are projections, not alternate authoring sources.
-
-## Build and validate
-
-The repository declares Node.js 24.x and npm 11.x as its artifact-producing toolchain families. Those declarations do not freeze a Node or npm patch release, and the `ubuntu-24.04` Actions label does not make the evolving hosted runner image immutable. Calibration and validation reports therefore record the exact observed runtime and browser versions. Reproduce the checked-in artifacts with:
-
-```text
+```sh
 npm ci
 npm run build
-npm run test:fast
-git diff --exit-code
+npm run preview
 ```
 
-`npm run test:fast` is the ordinary pull-request tier: it runs the data, accessibility, layout, Network, Opportunity, canonical-data, staging, contract, and deterministic artifact-budget gates without a browser or preview upload. Maintainers can install Chromium and run `npm test` for the manual release-candidate tier; that full suite assembles `_site`, exercises all four views in headless Chromium at desktop and mobile sizes, and runs Lighthouse. The browser gate blocks external requests, console errors and warnings, missing runtime fragments, broken deep links or focus restoration, and active-DOM drift from the reviewed platform peaks (`7,244` on Windows and `7,244` on Linux) as well as any breach of the unchanged `8,000` ceiling.
+Open the local URL printed by `preview`. It serves the staged publication,
+including downloads and compatibility paths. In another terminal:
 
-At the `v0.2.2` checkpoint, Lighthouse is a blocking regression signal against the staged application on a controlled, uncompressed, `no-store` local origin. The source calibration used five independent mobile-profile runs on Windows x64 with Node.js v24.14.1, Lighthouse 13.4.1, Playwright 1.62.1, and Playwright Chromium 151.0.7922.34 revision 1234. Each gate uses the independent median of three runs.
+```sh
+npx playwright install chromium firefox webkit
+npm run test:fast
+npm test
+```
 
-| Metric | Five-run Windows median | Blocking limit | Local three-run gate |
-| --- | ---: | ---: | ---: |
-| Performance score | 53 | at least 42 | 50 |
-| First Contentful Paint | 22,728.84345 ms | at most 27,500 ms | 22,734.979 ms |
-| Largest Contentful Paint | 22,900.34345 ms | at most 27,500 ms | 22,893.525 ms |
-| Total Blocking Time | 166 ms | at most 550 ms | 248 ms |
-| Cumulative Layout Shift | 0.00082719 | at most 0.02 | 0.00082719 |
+The build generates the self-contained application, machine exports, reading
+pages, and sitemap. No framework or backend is required. Browser checks use
+Playwright. Chromium runs by default; set `AI_TREE_BROWSER=firefox` or `webkit`
+to run `node --test tests/workspace-browser.test.mjs` against another engine.
 
-The v1.2.1 Stable release was fully verified locally on Windows at implementation commit `98d0c4a7bda01cc15303bd0a4939bc0829b98181`: 28/28 browser tests, HTML `4,591,487` bytes, gzip `664,842` bytes, artifact SHA-256 `a8365ca06bf53d74457c540e906b436e0b38e2a0d3386eff2fd2866713e90691`, and Lighthouse medians of score `53`, FCP `23,188.613 ms`, LCP `23,361.613 ms`, TBT `157 ms`, and CLS `0`. Release-prep PR #14 squash commit `59d4d90ebcb8bb8b230d9cea2286214a3d2011a5` is the tagged and deployed release commit. Publication remains 339 nodes, 711 relationships, and 339 node URLs with zero semantic changes; the semantic digest remains `865174514ba64e20d6f2a90471a6766b6d5fa18f5b0e62c85d9601de077a50f2`. The full exact merged-tree hosted browser/Lighthouse RC rerun was not performed; live deployment and byte reconciliation passed.
+Canonical authoring files live under `src/data/atlas/`; Opportunity records live
+under `src/data/opportunities/`. The desktop UI lives under `src/workspace/`.
+Generated publication artifacts remain committed. Test results and measurement
+environments belong in the validation record, not in the product's opening copy.
 
-The original Windows-only score and TBT limits proved too narrow on the configured Ubuntu runner. Two independent hosted attempts against the exact same application bytes both produced score medians of `47`, with TBT medians of `362.5` and `362` ms; the six raw samples ranged from score `44` to `48` and TBT `325` to `440.5` ms, with no audit warnings. The cross-platform score floor is therefore five points below the hosted median, while the TBT ceiling rounds to about 25% above the hosted maximum. The paint ceilings and CLS ceiling are unchanged. The normal hosted gate then passed all five revised limits on `ubuntu-24.04` in Actions run `32489666292`, completing the `v0.2.2` source checkpoint. These measurements do not represent live GitHub Pages delivery or real-user field performance.
+## Contribute
 
-The release manifest records the target package version, dataset edition, publication state, exact full commit, observed Node and npm versions, and every payload file's media type, byte count, and SHA-256. In clean-source mode, staging also proves that the configuration, metadata, individual artifacts, and complete directory inputs are regular committed blobs from the advertised `HEAD`; symlinks, gitlinks, Git LFS pointers, replacement objects, index concealment flags, dirty submodules, and generated or Git-administration input paths fail closed. The manifest cannot contain its own digest without a cryptographic self-reference, so it explicitly excludes itself. Local dirty-tree staging remains available for pre-commit review but is labeled non-clean and cannot be deployed.
+Report a bug or propose a correction through issues. For content changes, name
+the affected IDs, the exact claim, a durable source and locator, and what remains
+uncertain. Disclose material AI assistance. Follow [CONTRIBUTING.md](CONTRIBUTING.md)
+for review and validation; the maintainer retains editorial responsibility.
 
-The static contract uses a pinned browser-compatible HTML attribute decoder, rejects nested `iframe[srcdoc]` browsing contexts, validates live-document fragments without treating inert `<template>` contents as targets, and checks JSON Schema reference closure and application-state ID uniqueness. Runtime-created fragments are verified by the Chromium smoke gate. Nested JSON Schema `$id` scopes are intentionally prohibited until the validator implements their full base-URI semantics.
+## License
 
-The stable Opportunity endpoints are `./data/opportunities/diffusion-models.alpha.json` and `./data/opportunities/opportunity-map.schema.json`. The former `./src/data/opportunities/...` endpoints remain available for compatibility: the data is an exact second publication of the maintained JSON, while the old schema URL is a small schema with its own truthful `$id` that delegates to the stable canonical schema. The public `./ai-research-tech-tree.html` alias likewise redirects to `./` and preserves query and hash state when JavaScript is available; its no-JavaScript fallback redirects to the root application.
+Software: [MIT](LICENSE-CODE). Original atlas prose, annotations, and graph data:
+[CC BY-SA 4.0](LICENSE-CONTENT). Linked third-party works retain their own rights;
+see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
-GitHub Actions runs the fast, non-browser integrity tier for pull requests and does not upload a preview from that path. A maintainer can manually dispatch the release-candidate mode for full browser/Lighthouse validation and a downloadable preview artifact. There is no automatic post-merge `main` rerun. Under RD-006, RD-007, and RD-016, Pages is one manual protected-`main` job that checks out the exact annotated `v1.2.1` tag, builds, stages, checks release identity, and uploads and deploys the artifact without rerunning the full suite. The v1.2.1 public deployment passed; the full exact merged-tree hosted browser/Lighthouse suite remains an explicitly unperformed additional check.
-
-## Contributing
-
-The easiest contribution is a structured issue:
-
-- correct a node, date, description, or source;
-- propose a development or open research direction; or
-- correct or add a relationship.
-
-Opportunity-map contributions must also name the local status scope, evidence grade, and supporting source IDs. Candidate applications and open opportunities remain explicitly hypothesis-grade until their stated evidence threshold is met; adding a plausible idea is not the same as documenting a demonstrated capability.
-
-For a pull request, identify the affected stable IDs, state the exact proposed claim, provide a source with a durable locator, distinguish evidence from interpretation, disclose material AI assistance, run the build and tests, and include the generated artifact diff. Full requirements are in [CONTRIBUTING.md](CONTRIBUTING.md).
-
-GitHub issues and pull requests are the project's track-changes system. The maintainer retains final editorial responsibility for what is included and how uncertain claims are represented.
-
-## Citation
-
-Use the repository's **Cite this repository** control or [CITATION.cff](CITATION.cff). The file remains synchronized to the tagged `v1.0.0` dataset release and edition `2026-08-21-stable-1`; the public `v1.2.1` UI release does not change it. A future archive may add a DOI without changing stable atlas IDs.
-
-## Licensing
-
-- Software and build tooling: [MIT](LICENSE-CODE)
-- Original atlas prose, annotations, and graph data: [CC BY-SA 4.0](LICENSE-CONTENT)
-- Linked or quoted third-party works are not relicensed: see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)
-
-Created and maintained by [@neb6dav](https://github.com/neb6dav). Contributions are reviewed through the project's public editorial process.
+Created and maintained by [@neb6dav](https://github.com/neb6dav).

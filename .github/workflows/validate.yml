@@ -84,12 +84,14 @@ jobs:
         run: npx playwright install --with-deps chromium firefox webkit
 
       - name: Build generated artifacts
+        id: candidate_build
         run: npm run build
 
       - name: Run full validation suite
         run: npm test
 
       - name: Verify Firefox and WebKit behavior and accessibility
+        if: ${{ !cancelled() && steps.candidate_build.outcome == 'success' }}
         run: |
           AI_TREE_BROWSER=firefox node --test tests/workspace-browser.test.mjs
           AI_TREE_BROWSER=webkit node --test tests/workspace-browser.test.mjs

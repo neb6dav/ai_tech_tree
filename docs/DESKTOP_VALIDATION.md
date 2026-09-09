@@ -13,8 +13,8 @@ parity, generated reading pages, compatibility URLs and staged resource closure.
 
 | Measurement | Candidate | Comparison or limit |
 | --- | ---: | ---: |
-| Initial HTML, raw bytes | 1,498,246 | Published v1.2.1: 4,591,487 |
-| Initial HTML, gzip level 9 | 204,337 bytes | Limit: 245,760 bytes |
+| Initial HTML, raw bytes | 1,498,309 | Published v1.2.1: 4,591,487 |
+| Initial HTML, gzip level 9 | 204,356 bytes | Limit: 245,760 bytes |
 | Observed active DOM peak | 1,116 elements | Limit: 3,500 |
 | Canonical records / relationships | 339 / 711 | Unchanged |
 | Static record pages / sitemap URLs | 339 / 340 | Unchanged |
@@ -38,9 +38,10 @@ learning paths, all Opportunity collections, sharing, dialogs, narrow reading,
 offline operation and script-disabled access. axe-core 4.13.0 scans the
 interactive views and representative reading pages.
 
-Chromium and Firefox each passed all 11 tests on the final staged UI, including
-the full axe rule set. Windows WebKit encountered intermittent Playwright
-element-stability timeouts; it is not reported as a passing full suite.
+Chromium and Firefox each passed all 11 tests, including the full axe rule set.
+Chromium passed again after the mobile caption correction. Windows WebKit
+finished at 7/11 with intermittent Playwright element-stability timeouts; it is
+not reported as a passing full suite.
 Windows WebKit also cannot supply the canvas pixel data needed by axe color contrast;
 that one rule is explicitly excluded on that engine/platform combination.
 Chromium, Firefox and Linux WebKit retain the full rule set. Browser console and
@@ -48,16 +49,21 @@ page errors remain failures on every engine. WebKit testing does not constitute
 testing Safari on macOS.
 
 Lighthouse 13.4.1 passed the existing budget with three Windows localhost runs:
-median score 58, first and largest contentful paint 8,035.488 ms, total blocking
+median score 58, first and largest contentful paint 8,034.546 ms, total blocking
 time 0 ms and cumulative layout shift 0. The model transferred the uncompressed
 1.50 MB document. Its score remains below the future 90-point target.
 The measured initial HTML SHA-256 is
-`f418f81d7421a2ae5fd75dacdb01510784637f4a21d7f6af95b4d72cd3155634`.
+`afc6dc402d2a219ffe15a31bfd678acdf351e358556ddd6137a939ee362df5b1`.
+
+The first Ubuntu candidate run found a 0.0361 layout shift while the mobile map
+caption expanded. Reserving its measured 112 px height keeps the map stationary
+during initialization. A controlled delayed-load check measured 0.0058 residual
+shift after the correction. The 0.02 budget is unchanged.
 
 Lighthouse retains the historical simulated mobile profile for comparison.
 These localhost results describe that model and environment; they are not
-live-origin measurements or a desktop performance score. Ubuntu confirmation
-is recorded in the candidate workflow run.
+live-origin measurements or a desktop performance score. Final Ubuntu results
+and the exact tested commit are linked from [PR #17](https://github.com/neb6dav/ai_tech_tree/pull/17).
 
 ## Review and promotion boundaries
 

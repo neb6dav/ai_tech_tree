@@ -2,9 +2,43 @@
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
+const vm = require('node:vm');
 const test = require('node:test');
 const ROOT = path.resolve(__dirname, '..');
 const { loadCanonicalAtlas } = require('../canonical-atlas.js');
+const graphStateSource = fs.readFileSync(path.join(ROOT, 'src/workspace/graph-state.js'), 'utf8');
+
+function workspaceLogic() {
+  const context = { Set, Map, Array, Math, String, Number, window: {} };
+  vm.runInNewContext(graphStateSource, context);
+  return context.window.AtlasWorkspaceLogic;
+}
+
+test('chronology layout is deterministic, year ordered, lane aware, and collision safe', () => {
+  const atlas = loadCanonicalAtlas();
+  const positions = workspaceLogic().chronologyLayout({ nodes: atlas.nodes, catalog: atlas.catalog });
+  assert.equal(positions.size, 339);
+  assert.equal(positions.lanes.length, 15);
+  assert.equal(positions.eras.length, 13);
+  const repeated = workspaceLogic().chronologyLayout({ nodes: atlas.nodes.slice().reverse(), catalog: atlas.catalog });
+  for (const [id, point] of positions) assert.equal(JSON.stringify(repeated.get(id)), JSON.stringify(point), `layout must not depend on input order: ${id}`);
+  const byYear = new Map();
+  for (const node of atlas.nodes) {
+    const point = positions.get(node.id);
+    const year = node.dateOverride?.start || node.year;
+    if (!byYear.has(year)) byYear.set(year, point.x);
+    assert.equal(point.x, byYear.get(year));
+    const lane = positions.lanes.find(lane => lane.id === node.laneId);
+    assert.ok(point.y >= lane.y0 && point.y <= lane.y1, `${node.id} must stay in its lane`);
+  }
+  const years = [...byYear.keys()].sort((a, b) => a - b);
+  for (let index = 1; index < years.length; index += 1) assert.ok(byYear.get(years[index]) > byYear.get(years[index - 1]), 'later years must appear to the right');
+  const points = atlas.nodes.map(node => positions.get(node.id));
+  for (let index = 0; index < points.length; index += 1) for (let other = index + 1; other < points.length; other += 1) {
+    const distance = Math.hypot(points[index].x - points[other].x, points[index].y - points[other].y);
+    assert.ok(distance >= 8, `overlapping markers: ${atlas.nodes[index].id}/${atlas.nodes[other].id} (${distance})`);
+  }
+});
 
 test('workspace payload preserves canonical identity and complete graph', () => {
   const atlas = loadCanonicalAtlas();

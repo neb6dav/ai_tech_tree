@@ -35,7 +35,7 @@
     "activeDomElements": {
       "maximum": 3500,
       "reviewedPeaksByPlatform": {
-        "win32": 1116
+        "win32": 2516
       }
     },
     "mobileLighthouse": {
@@ -143,8 +143,8 @@
       "path": "social-card.png",
       "maximumBytes": 500000,
       "baseline": {
-        "bytes": 68714,
-        "sha256": "bae23c3e3c95480274456f2d96517e730be9a750f8e3bb08c48afbb6fbff3cb1"
+        "bytes": 174565,
+        "sha256": "034ed3f0011f1f5e3305529c8495073126a8c406c8f8197236e3f683689032c8"
       }
     }
   },

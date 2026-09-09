@@ -115,11 +115,11 @@ test('desktop viewport matrix keeps the selected node in the map and detail pane
   }
 });
 
-test('map nodes and edges are selectable, showing review evidence, while Fit and all connections preserve a bounded map', async () => {
+test('Focus keeps local node and edge inspection while Full tree remains available', async () => {
   const sessionState = await session();
   const { context, page } = sessionState;
   try {
-    await openApp(page);
+    await openApp(page, '#scope=focus');
     const node = page.locator('svg [data-id]:not([data-id="transformer"])').first();
     const targetId = await node.getAttribute('data-id');
     assert.ok(targetId && targetId !== 'transformer', 'mouse target must be a different SVG node');
@@ -163,8 +163,83 @@ test('map nodes and edges are selectable, showing review evidence, while Fit and
     assert.notEqual(await page.locator('#map-content').getAttribute('transform'), zoomed || cameraBefore, 'Fit must change the camera');
     assert.ok(await page.locator('svg .node').count() < 339, 'Fit must keep the visible workspace bounded');
     await page.getByRole('button', { name: /reset/i }).click();
-    assert.match(await page.locator('#map-content').getAttribute('transform') || '', /translate\(0\s+0\)\s+scale\(1\)|^$/u, 'Reset must restore the identity camera');
+    assert.equal(await page.getByRole('button', { name: 'Full tree', exact: true }).getAttribute('aria-pressed'), 'true');
+    assert.equal(await page.locator('svg .node[data-id]').count(), 339, 'Reset must restore the complete tree');
   } finally { await closeSession(sessionState, 'map selection'); }
+});
+
+test('Full tree exposes the complete history and highlights legacy trajectories without removing records', async () => {
+  const sessionState = await session();
+  const { page } = sessionState;
+  try {
+    await openApp(page);
+    const full = page.getByRole('button', { name: 'Full tree', exact: true });
+    assert.equal(await full.getAttribute('aria-pressed'), 'true', 'the desktop starts with the full tree');
+    assert.equal(await page.locator('svg .node[data-id]').count(), 339);
+    assert.equal(new Set(await page.locator('svg .node[data-id]').evaluateAll(nodes => nodes.map(node => node.dataset.id))).size, 339);
+    assert.equal(await page.locator('svg .edge').count(), 711, 'all recorded relationships must remain drawn');
+    for (const [code, count] of [['x', 24], ['d', 40], ['r', 3]]) {
+      assert.equal(await page.locator(`svg .node[data-classification="${code}"]`).count(), count);
+    }
+    const highlight = page.getByLabel('Highlight', { exact: true });
+    assert.equal(await highlight.locator('option[value="x"]').innerText(), 'Ended / superseded (legacy)');
+    await highlight.selectOption('r');
+    assert.deepEqual((await page.locator('svg .node.highlighted').evaluateAll(nodes => nodes.map(node => node.dataset.id))).sort(), ['hopfield', 'itp', 'kgraphs']);
+    assert.equal(await page.locator('svg .node[data-id]').count(), 339, 'highlighting must retain global context');
+    await highlight.selectOption('x');
+    assert.equal(await page.locator('svg .node.highlighted').count(), 24);
+    await highlight.selectOption('d');
+    assert.equal(await page.locator('svg .node.highlighted').count(), 40);
+    await highlight.selectOption('all');
+    const search = page.getByLabel(/find a node/i);
+    await search.fill('hopfield');
+    await search.press('Enter');
+    await assertSelected(page, 'Hopfield networks');
+    assert.match(await page.locator('#map-content').getAttribute('transform'), /scale\(3\)/, 'search should zoom to its result');
+    assert.equal(await page.locator('svg .node[data-id]').count(), 339, 'search selection must preserve Full tree');
+    assert.match(await page.locator('#detail-panel').innerText(), /revived/i);
+    assert.match(await page.locator('#detail-panel').innerText(), /editorial/i);
+    await search.fill('mycin');
+    await search.press('Enter');
+    await assertSelected(page, 'MYCIN');
+    assert.match(await page.locator('#detail-panel').innerText(), /ended[\s\/]+(?:or\s+)?superseded/i);
+    assert.match(await page.locator('#detail-panel').innerText(), /partial/i);
+    await page.getByRole('button', { name: /fit map/i }).click();
+    const map = await page.locator('#atlas-map').boundingBox();
+    for (const id of ['turing36', 'hopfield', 'mycin', 'transformer', 'gap_tabular']) {
+      const box = await page.locator(`svg .node[data-id="${id}"]`).boundingBox();
+      assert.ok(map && box && box.x >= map.x && box.y >= map.y && box.x + box.width <= map.x + map.width && box.y + box.height <= map.y + map.height, `Fit must include ${id}`);
+    }
+    const hopfield = page.getByRole('button', { name: 'Open Hopfield networks', exact: true });
+    await hopfield.focus();
+    await hopfield.press('Enter');
+    await assertSelected(page, 'Hopfield networks');
+    assert.equal(await page.evaluate(() => document.activeElement?.dataset.id), 'hopfield', 'selection should retain keyboard focus');
+    await page.keyboard.press('ArrowRight');
+    assert.equal(await page.evaluate(() => document.activeElement?.dataset.id), await page.locator('svg .node.selected').getAttribute('data-id'));
+    assert.equal(await page.locator('svg .node').count(), 339);
+    await assertAccessible(page, 'Full tree history');
+  } finally { await closeSession(sessionState, 'Full tree history'); }
+});
+
+test('scope changes restore through history and keep the selected record', async () => {
+  const sessionState = await session();
+  const { page } = sessionState;
+  try {
+    await openApp(page, '#node=hopfield');
+    await page.getByRole('button', { name: 'Focus', exact: true }).click();
+    assert.equal(new URLSearchParams(new URL(page.url()).hash.slice(1)).get('scope'), 'focus');
+    assert.ok(await page.locator('svg .node[data-id]').count() < 339);
+    await assertSelected(page, 'Hopfield networks');
+    await page.goBack();
+    await page.waitForFunction(() => document.querySelectorAll('svg .node[data-id]').length === 339);
+    await assertSelected(page, 'Hopfield networks');
+    await page.goForward();
+    await page.waitForFunction(() => new URLSearchParams(location.hash.slice(1)).get('scope') === 'focus');
+    await page.reload({ waitUntil: 'networkidle' });
+    assert.equal(await page.getByRole('button', { name: 'Focus', exact: true }).getAttribute('aria-pressed'), 'true');
+    await assertSelected(page, 'Hopfield networks');
+  } finally { await closeSession(sessionState, 'scope history'); }
 });
 
 test('deep links restore a selected record and browser navigation returns to the prior selection', async () => {

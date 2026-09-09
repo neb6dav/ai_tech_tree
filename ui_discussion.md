@@ -15,6 +15,13 @@ with the revised implementation plan. This document remains the discussion recor
 and [the desktop redesign decision](docs/DESKTOP_REDESIGN.md) describe the current
 scope and acceptance criteria.
 
+**Full-tree correction:** after trying the candidate, the owner explicitly
+requested restoring the original full-tree concept, including dead ends,
+restarts and revivals. [RD-019](docs/ROADMAP_DECISIONS.md#rd-019--restore-the-full-chronological-tree)
+makes the chronological full tree the desktop default and retains Focus as a
+scope of the same map. The original legacy categories and audit caveats remain;
+no new failure or revival claims are introduced into the canonical data.
+
 ## 1. Product goals and priorities
 
 The initial request was to look at the project with fresh eyes and make it capable of producing a "wow" reaction on Hacker News. Phase 2 should develop it into a legitimate research tool. Education is also a core use case. The governing instruction was: **"Above all, KISS."** Low ongoing maintenance is a major design constraint.

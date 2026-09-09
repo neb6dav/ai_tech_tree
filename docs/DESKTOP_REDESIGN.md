@@ -1,6 +1,6 @@
 # Desktop research workspace
 
-Decision: [RD-018](ROADMAP_DECISIONS.md#rd-018--build-a-desktop-research-workspace-and-preserve-combinatorial-exploration), authorized 2026-09-09.
+Decisions: [RD-018](ROADMAP_DECISIONS.md#rd-018--build-a-desktop-research-workspace-and-preserve-combinatorial-exploration) and [RD-019](ROADMAP_DECISIONS.md#rd-019--restore-the-full-chronological-tree), authorized 2026-09-09.
 Discussion history: [ui_discussion.md](../ui_discussion.md).
 
 ## Intended result
@@ -10,11 +10,18 @@ actually claims, and open its supporting source. Make that first experience
 compelling enough to explore while retaining a foundation for research.
 
 The default desktop workspace gives approximately two thirds of its width to
-a readable SVG neighborhood and one third to a persistent record/evidence pane.
+a chronological SVG overview and one third to a persistent record/evidence pane.
 Search works immediately. Selecting a connection reveals its meaning, sources,
 and review state. Learning paths narrate in the pane without covering the map.
-The complete graph remains searchable; visible neighborhoods disclose omitted
-connections and offer access to the full relationship list.
+The full tree shows all 339 records and 711 relationships, with field lanes,
+time orientation and the original historical classification cues. A Focus scope
+offers close reading of a selected neighborhood. Search and record selection
+keep the full tree available; Fit shows the whole current scope.
+
+Dormant, ended/superseded and revived classifications can be highlighted while
+the surrounding tree remains visible. These are legacy editorial categories.
+The inspector exposes activity, trajectory and the map-status audit so that
+an ambiguous end or a sparse branch is not presented as a proven failure.
 
 ## Technical choices
 
@@ -63,7 +70,8 @@ for the current redesign.
 
 - All 339 canonical nodes and 711 relationships remain available, with unchanged
   IDs, evidence states, dataset digest, citations, and JSON/JSON-LD/NDJSON bytes.
-- Search, node/edge selection, full connection access, learning steps, reading
+- Full tree/Focus, chronology, historical highlighting, search, node/edge selection,
+  full connection access, learning steps, reading
   pages, Opportunity records, theme, Fit/zoom, sharing, and browser Back work.
 - Keyboard interaction and focus are meaningful; dialogs, if used, contain
   focus and close with Escape. Core use works offline with no external requests.

@@ -23,7 +23,7 @@
     })), opp = data.opportunity || {}, OS = new Map((opp.sources || []).map(function(s) {
       return [s.id, s];
     }));
-    var state = { selectedNodeId: "transformer", selectedEdgeKey: null, opportunityCardId: null, view: "explore", query: "", tourId: "pilot", tourStep: 0, showAllConnections: false, camera: { x: 0, y: 0, scale: 1 } }, svg = document.getElementById("atlas-map"), content = document.getElementById("map-content"), detail = document.getElementById("detail-panel"), list = document.getElementById("list-panel"), search = document.getElementById("node-search"), results = document.getElementById("search-results");
+    var state = { selectedNodeId: "transformer", selectedEdgeKey: null, opportunityCardId: null, view: "explore", query: "", tourId: "pilot", tourStep: 0, scope: "full", highlight: "all", showAllConnections: false, camera: { x: 0, y: 0, scale: 1 } }, svg = document.getElementById("atlas-map"), content = document.getElementById("map-content"), detail = document.getElementById("detail-panel"), list = document.getElementById("list-panel"), search = document.getElementById("node-search"), results = document.getElementById("search-results");
     var el = function(t, x, c) {
       var n = document.createElement(t);
       if (x !== void 0) n.textContent = x;
@@ -32,6 +32,7 @@
     }, node = function(id) {
       return N.get(id);
     };
+    var mapWidth = 1000, fullLayout = logic.chronologyLayout(data, { width: 1000, height: 650, left: 220 });
     function url(s) {
       try {
         var u = new URL(s && (s.revisionUrl || s.url || s.canonicalUrl));
@@ -57,6 +58,9 @@
       state.selectedEdgeKey = null;
       state.view = "explore";
       state.tourStep = 0;
+      state.camera = { x: 0, y: 0, scale: 1 };
+      state.scope = p.get("scope") === "focus" ? "focus" : "full";
+      state.highlight = ["all", "x", "d", "r"].indexOf(p.get("highlight")) >= 0 ? p.get("highlight") : "all";
       state.query = hashParams.get("q") || queryParams.get("q") || "";
       search.value = state.query;
       if (id && N.has(id)) state.selectedNodeId = id;
@@ -75,7 +79,7 @@
       var step = Number(p.get("step"));
       if (Number.isInteger(step) && step >= 0) state.tourStep = step;
       var tourSteps = tourData().steps || [];
-      if (state.view === "learn" && tourSteps.length) { state.tourStep = Math.min(state.tourStep, tourSteps.length - 1); var tourStep = tourSteps[state.tourStep]; if (tourStep.nodeId && N.has(tourStep.nodeId)) state.selectedNodeId = tourStep.nodeId; state.selectedEdgeKey = tourStep.relationshipKey && E.has(tourStep.relationshipKey) ? tourStep.relationshipKey : null; }
+      if (state.view === "learn" && tourSteps.length) { state.scope = "focus"; state.camera = { x: 0, y: 0, scale: 1 }; state.tourStep = Math.min(state.tourStep, tourSteps.length - 1); var tourStep = tourSteps[state.tourStep]; if (tourStep.nodeId && N.has(tourStep.nodeId)) state.selectedNodeId = tourStep.nodeId; state.selectedEdgeKey = tourStep.relationshipKey && E.has(tourStep.relationshipKey) ? tourStep.relationshipKey : null; }
       if (state.selectedEdgeKey) {
         var selectedEdge = E.get(state.selectedEdgeKey);
         if (state.selectedNodeId !== selectedEdge.sourceNodeId && state.selectedNodeId !== selectedEdge.targetNodeId) state.selectedNodeId = selectedEdge.sourceNodeId;
@@ -91,6 +95,8 @@
       if (state.view === "learn" && state.tourId !== "pilot") p.set("tour", state.tourId);
       if (state.view === "opportunity" && state.opportunityCardId) p.set("opportunity", state.opportunityCardId);
       if (state.query) p.set("q", state.query);
+      if (state.scope === "focus") p.set("scope", "focus");
+      if (state.highlight !== "all") p.set("highlight", state.highlight);
       var query = new URLSearchParams(location.search);
       ["node", "view", "q"].forEach(function(key) { query.delete(key); });
       (replace ? history.replaceState : history.pushState).call(history, null, "", location.pathname + (query.size ? "?" + query.toString() : "") + (p.toString() ? "#" + p.toString() : ""));
@@ -103,6 +109,7 @@
       state.showAllConnections = false;
       state.view = "explore";
       detail.scrollTop = 0;
+      if (searching && state.scope === "full") centerRecord(id);
       write(false);
       render();
     }
@@ -142,6 +149,22 @@
       detail.appendChild(el("h2", n.title, "record-title"));
       var open = el("a", "Open reading page", "source-link"); open.href = "nodes/" + encodeURIComponent(n.id) + "/"; detail.appendChild(open);
       detail.appendChild(el("p", n.description || "No description recorded.", "record-desc"));
+      var classification = (data.catalog.classifications || {})[logic.classification(n)] || {}, profile = n.statusProfile || {}, statusAudit = n.audit && n.audit.mapStatus;
+      detail.appendChild(el("div", (classification.g || "") + " " + (classification.n || "Unclassified"), "history-status"));
+      var historyNote = el("details", null, "history-evidence"), summary = el("summary", "Historical status and evidence");
+      historyNote.appendChild(summary);
+      historyNote.appendChild(el("p", "Activity: " + humanize(profile.activity || "not_assessed") + " · Trajectory: " + humanize(profile.trajectory || "not_assessed")));
+      historyNote.appendChild(el("p", "Status confidence: " + humanize(profile.confidence || "unrated") + (profile.asOf ? " · As of " + profile.asOf : "")));
+      if (profile.rationale) historyNote.appendChild(el("p", profile.rationale));
+      historyNote.appendChild(el("p", "Status review: " + humanize(statusAudit && statusAudit.state || "not_assessed") + (statusAudit && statusAudit.confidence ? " · " + humanize(statusAudit.confidence) : "")));
+      if (statusAudit && statusAudit.note) historyNote.appendChild(el("p", statusAudit.note));
+      (statusAudit && statusAudit.sources || []).forEach(function(source) { historyNote.appendChild(link(source)); });
+      if (["x", "d", "r"].indexOf(logic.classification(n)) >= 0) historyNote.open = true;
+      detail.appendChild(historyNote);
+      if (n.dateOverride) {
+        detail.appendChild(el("p", "Recorded dates: " + (n.dateOverride.label || [n.dateOverride.start, n.dateOverride.end].filter(Boolean).join("–")), "record-kicker"));
+        (n.dateOverride.milestones || []).forEach(function(milestone) { detail.appendChild(el("p", typeof milestone === "string" ? milestone : [milestone.year, milestone.label || milestone.title || milestone.note].filter(Boolean).join(" · "))); });
+      }
       sourceList(detail, (n.research && n.research.works || []).concat(n.research && n.research.sources || []), "Primary papers and supplemental reading");
       var a = n.audit && n.audit.development, c = el("div", null, "evidence-card");
       c.appendChild(el("span", "Record match: " + humanize(a && a.state || "contextual") + " \xB7 " + humanize(a && a.confidence || "unrated"), "badge"));
@@ -247,7 +270,116 @@
         detail.appendChild(d2);
       }
     }
+    function svgElement(tag, attrs, text) {
+      var result = document.createElementNS("http://www.w3.org/2000/svg", tag);
+      Object.keys(attrs || {}).forEach(function(key) { result.setAttribute(key, attrs[key]); });
+      if (text !== undefined) result.textContent = text;
+      return result;
+    }
+    function centerRecord(id) {
+      var at = fullLayout.get(id);
+      if (at) state.camera = { x: mapWidth / 2 - at.x * 3, y: 325 - at.y * 3, scale: 3 };
+    }
+    function renderFullMap() {
+      var selected = state.selectedNodeId, camera = state.camera, positions = fullLayout;
+      var active = document.activeElement, restoreFocus = active && svg.contains(active), focusId = active && active.dataset && active.dataset.id, focusEdge = active && active.dataset && active.dataset.edgeId;
+      content.replaceChildren();
+      var defs = svgElement("defs"), marker = svgElement("marker", { id: "tree-arrow", markerWidth: 5, markerHeight: 5, refX: 4, refY: 2.5, orient: "auto", markerUnits: "userSpaceOnUse" });
+      marker.appendChild(svgElement("path", { d: "M0,0 L5,2.5 L0,5 Z", class: "tree-arrow" }));
+      defs.appendChild(marker); content.appendChild(defs);
+      var guides = svgElement("g", { class: "chronology-guides", "aria-hidden": "true" });
+      positions.lanes.forEach(function(lane, index) {
+        guides.appendChild(svgElement("rect", { x: 215, y: lane.y0, width: mapWidth - 235, height: lane.y1 - lane.y0, class: "lane-band" + (index % 2 ? " alternate" : "") }));
+        var title = lane.label.toLowerCase().replace(/\b\w/g, function(c) { return c.toUpperCase(); });
+        var label = svgElement("text", { x: 207, y: lane.y + 4, "text-anchor": "end", class: "lane-label" }, title.length > 23 ? title.slice(0, 21) + "…" : title);
+        label.appendChild(svgElement("title", {}, lane.label)); guides.appendChild(label);
+      });
+      positions.eras.forEach(function(era, index) {
+        var band = svgElement("rect", { x: era.x0 - 4, y: 28, width: Math.max(4, era.x1 - era.x0 + 8), height: 7, class: "era-band" + (index % 2 ? " alternate" : "") });
+        band.appendChild(svgElement("title", {}, era.y0 + "–" + era.y1 + ": " + era.label)); guides.appendChild(band);
+      });
+      var lastTick = -100;
+      positions.ticks.forEach(function(tick, index) {
+        if (tick.x - lastTick < 48 && index !== positions.ticks.length - 1) return;
+        if (index !== positions.ticks.length - 1 && tick.x > mapWidth - 75) return;
+        lastTick = tick.x;
+        guides.appendChild(svgElement("line", { x1: tick.x, x2: tick.x, y1: 40, y2: 612, class: "year-line" }));
+        guides.appendChild(svgElement("text", { x: tick.x, y: 21, "text-anchor": "middle", class: "year-label" }, tick.year));
+      });
+      content.appendChild(guides);
+      var edgeLayer = svgElement("g"), hits = svgElement("g"), nodesLayer = svgElement("g"), labels = svgElement("g", { class: "overview-labels", "aria-hidden": "true" });
+      data.relationships.forEach(function(edge) {
+        var a = positions.get(edge.sourceNodeId), b = positions.get(edge.targetNodeId);
+        if (!a || !b) return;
+        var adjacent = edge.sourceNodeId === selected || edge.targetNodeId === selected;
+        var dx = b.x - a.x, dy = b.y - a.y, length = Math.hypot(dx, dy) || 1;
+        var endX = b.x - dx / length * 5, endY = b.y - dy / length * 5, bend = Math.max(8, Math.abs(dx) * 0.45);
+        var path = "M" + a.x + "," + a.y + " C" + (a.x + bend) + "," + a.y + " " + (endX - bend) + "," + endY + " " + endX + "," + endY;
+        var classes = "edge" + (adjacent ? " related " + (edge.sourceNodeId === selected ? "outgoing" : "incoming") : "") + (edge.key === state.selectedEdgeKey ? " selected" : "");
+        edgeLayer.appendChild(svgElement("path", { d: path, class: classes, "data-grade": edge.evidenceGrade || "unassessed", "data-kind": edge.legacyKind, "marker-end": "url(#tree-arrow)" }));
+        if (adjacent) {
+          var hit = svgElement("path", { d: path, class: "edge-hit", "data-edge-id": edge.key, tabindex: "0", role: "button", "aria-label": "Inspect relationship from " + node(edge.sourceNodeId).title + " to " + node(edge.targetNodeId).title });
+          hit.onclick = function() { selectEdge(edge.key); };
+          hit.onkeydown = function(event) { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); selectEdge(edge.key); } };
+          hits.appendChild(hit);
+        }
+      });
+      var ordered = data.nodes.slice().sort(function(a, b) { var pa = positions.get(a.id), pb = positions.get(b.id); return pa.x - pb.x || pa.y - pb.y; });
+      ordered.forEach(function(n, index) {
+        var at = positions.get(n.id), code = logic.classification(n), classification = (data.catalog.classifications || {})[code] || {};
+        var g = svgElement("g", { transform: "translate(" + at.x + " " + at.y + ")", class: "node" + (n.id === selected ? " selected" : "") + (logic.highlighted(n, state.highlight) ? " highlighted" : " faded"), "data-id": n.id, "data-classification": code, tabindex: n.id === selected ? "0" : "-1", role: "button", "aria-label": "Open " + n.title, "aria-description": (classification.n || "") + "; " + at.year + ". Use arrow keys to browse." });
+        g.appendChild(svgElement("title", {}, n.title + " · " + at.year + " · " + (classification.n || "")));
+        g.appendChild(svgElement("circle", { r: 4.3, class: "marker-target" }));
+        g.appendChild(svgElement("text", { x: 0, y: 0, "text-anchor": "middle", "dominant-baseline": "central", class: "history-glyph" }, classification.g || "●"));
+        g.onclick = function() { selectNode(n.id); };
+        g.onkeydown = function(event) {
+          if (event.key === "Enter" || event.key === " ") { event.preventDefault(); selectNode(n.id); }
+          if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].indexOf(event.key) >= 0) {
+            event.preventDefault();
+            var next = ordered[Math.max(0, Math.min(ordered.length - 1, index + (event.key === "ArrowLeft" || event.key === "ArrowUp" ? -1 : 1)))];
+            selectNode(next.id);
+            var nextPoint = positions.get(next.id), px = nextPoint.x * state.camera.scale + state.camera.x, py = nextPoint.y * state.camera.scale + state.camera.y;
+            if (px < 30 || px > mapWidth - 30 || py < 40 || py > 610) { centerRecord(next.id); renderMap(); }
+            var target = Array.from(content.querySelectorAll(".node")).find(function(item) { return item.dataset.id === next.id; });
+            if (target) target.focus({ preventScroll: true });
+          }
+        };
+        nodesLayer.appendChild(g);
+      });
+      // Text is a separate layer: marker hit areas stay small and labels never overlap each other.
+      var occupied = [], anchors = new Set(["turing36", "perceptron", "mycin", "backprop", "alexnet", "transformer", "hopfield", "itp", "kgraphs"]);
+      ordered.slice().sort(function(a, b) { var rank = function(n) { return n.id === selected ? 0 : state.highlight !== "all" && logic.highlighted(n, state.highlight) ? 1 : anchors.has(n.id) ? 2 : 3; }; return rank(a) - rank(b); }).forEach(function(n) {
+        var at = positions.get(n.id), isSelected = n.id === selected, matches = logic.highlighted(n, state.highlight);
+        if (!isSelected && (!matches || camera.scale < 2 && !anchors.has(n.id) && state.highlight === "all")) return;
+        var px = at.x * camera.scale + camera.x, py = at.y * camera.scale + camera.y;
+        if (px < 215 && camera.scale === 1 || px < 5 || px > mapWidth - 15 || py < 40 || py > 610) return;
+        var text = n.title.length > 26 ? n.title.slice(0, 24) + "…" : n.title, width = text.length * 8 + 12, x = Math.min(mapWidth - 20 - width, px + 9), y = py - 22;
+        var box = { x: x, y: y, w: width, h: 18 };
+        if (!isSelected && occupied.some(function(b) { return box.x < b.x + b.w + 6 && box.x + box.w + 6 > b.x && box.y < b.y + b.h + 3 && box.y + box.h + 3 > b.y; })) return;
+        occupied.push(box);
+        var label = svgElement("g", { transform: "translate(" + ((x - camera.x) / camera.scale) + " " + ((y - camera.y) / camera.scale) + ") scale(" + (1 / camera.scale) + ")", class: isSelected ? "selected-label" : "" });
+        label.appendChild(svgElement("rect", { x: 0, y: 0, width: width, height: 21, rx: 3 }));
+        label.appendChild(svgElement("text", { x: 6, y: 15 }, text)); labels.appendChild(label);
+      });
+      content.append(edgeLayer, hits, nodesLayer, labels);
+      content.setAttribute("transform", "translate(" + camera.x + " " + camera.y + ") scale(" + camera.scale + ")");
+      if (restoreFocus) {
+        var focusTarget = Array.from(content.querySelectorAll(".node, .edge-hit")).find(function(item) { return focusId && item.dataset.id === focusId || focusEdge && item.dataset.edgeId === focusEdge; });
+        (focusTarget || svg).focus({ preventScroll: true });
+      }
+      document.getElementById("map-title").textContent = "Full tree · 1879–2026";
+      document.getElementById("map-count").textContent = data.nodes.length + " records · " + data.relationships.length + " relationships";
+    }
     function renderMap() {
+      svg.classList.toggle("full-tree", state.scope === "full");
+      var bounds = svg.getBoundingClientRect(), nextWidth = state.scope === "full" && bounds.height ? Math.max(1000, Math.round(650 * bounds.width / bounds.height)) : 1000;
+      if (nextWidth !== mapWidth) {
+        mapWidth = nextWidth;
+        fullLayout = logic.chronologyLayout(data, { width: mapWidth, height: 650, left: 220 });
+        state.camera = { x: 0, y: 0, scale: 1 };
+      }
+      svg.setAttribute("viewBox", "0 0 " + mapWidth + " 650");
+      if (state.scope === "full") return renderFullMap();
       var active = document.activeElement, restoreMapFocus = active && svg.contains(active), focusId = active && active.dataset ? active.dataset.id : null, focusEdgeId = active && active.dataset ? active.dataset.edgeId : null;
       content.replaceChildren();
       var id = state.selectedNodeId, all = logic.connections(data, id), hood = logic.boundedNeighborhood(data, id, 11), ids = new Set(hood.nodes.map(function(n) {
@@ -368,7 +500,7 @@
       list.appendChild(grid);
     }
     function tourData() { var tours = data.presentation && data.presentation.tours || []; if (state.tourId === "pilot" && pilot.tour) return pilot.tour; return tours.find(function(t) { return t.slug === state.tourId; }) || tours[0] || {}; }
-    function selectTourStep(index) { var steps = tourData().steps || []; if (!steps.length) return; state.tourStep = Math.max(0, Math.min(steps.length - 1, index)); var step = steps[state.tourStep]; state.selectedNodeId = step.nodeId || state.selectedNodeId; state.selectedEdgeKey = step.relationshipKey || null; state.view = "learn"; write(false); render(); }
+    function selectTourStep(index) { var steps = tourData().steps || []; if (!steps.length) return; state.scope = "focus"; state.tourStep = Math.max(0, Math.min(steps.length - 1, index)); var step = steps[state.tourStep]; state.selectedNodeId = step.nodeId || state.selectedNodeId; state.selectedEdgeKey = step.relationshipKey || null; state.view = "learn"; write(false); render(); }
     function renderLearn() {
       var restoreControl = detail.contains(document.activeElement) ? document.activeElement.id : null;
       detail.replaceChildren();
@@ -557,6 +689,11 @@
       }
     }
     function render() {
+      document.querySelectorAll("[data-scope]").forEach(function(b) { b.setAttribute("aria-pressed", String(b.dataset.scope === state.scope)); });
+      if (scopeFilter) { scopeFilter.value = state.highlight; scopeFilter.parentElement.hidden = state.scope !== "full"; }
+      document.querySelector(".map-scope").hidden = state.view === "opportunity";
+      document.getElementById("classification-legend").hidden = state.view === "opportunity" || state.scope !== "full";
+      document.querySelector(".map-hint").textContent = state.scope === "full" ? "Years spaced for readability · select an idea · scroll to zoom" : "Select a line for evidence · drag to pan · scroll to zoom";
       document.querySelectorAll("[data-view]").forEach(function(b) {
         b.setAttribute("aria-pressed", b.dataset.view === state.view);
       });
@@ -645,6 +782,9 @@
         render();
       };
     });
+    var scopeButtons = document.querySelectorAll("[data-scope]"), scopeFilter = document.getElementById("classification-filter");
+    scopeButtons.forEach(function(b) { b.onclick = function() { state.scope = b.dataset.scope === "focus" ? "focus" : "full"; state.camera = { x: 0, y: 0, scale: 1 }; state.view = "explore"; scopeButtons.forEach(function(x) { x.setAttribute("aria-pressed", String(x === b)); }); write(false); render(); }; });
+    if (scopeFilter) { scopeFilter.value = state.highlight; scopeFilter.onchange = function() { state.highlight = scopeFilter.value; write(false); render(); }; }
     document.querySelector("[data-action=fit]").onclick = function() {
       state.camera = { x: 0, y: 0, scale: 1 };
       renderMap();
@@ -652,6 +792,13 @@
     document.querySelector("[data-action=reset]").onclick = function() {
       state.camera = { x: 0, y: 0, scale: 1 };
       state.showAllConnections = false;
+      state.scope = "full";
+      state.view = "explore";
+      state.highlight = "all";
+      state.query = "";
+      search.value = "";
+      closeSearch();
+      write(false);
       render();
     };
     function svgPoint(clientX, clientY) {
@@ -661,7 +808,7 @@
       return { x: (clientX - rect.left) / rect.width * 1000, y: (clientY - rect.top) / rect.height * 650 };
     }
     function zoomAt(clientX, clientY, amount) {
-      var point = svgPoint(clientX, clientY), oldScale = state.camera.scale, nextScale = Math.max(0.55, Math.min(2.4, oldScale + amount));
+      var point = svgPoint(clientX, clientY), oldScale = state.camera.scale, nextScale = Math.max(0.55, Math.min(state.scope === "full" ? 8 : 2.4, oldScale + amount));
       if (nextScale === oldScale) return;
       var worldX = (point.x - state.camera.x) / oldScale, worldY = (point.y - state.camera.y) / oldScale;
       state.camera.scale = nextScale;
@@ -671,11 +818,11 @@
     }
     document.querySelector("[data-action=zoom-in]").onclick = function() {
       var rect = svg.getBoundingClientRect();
-      zoomAt(rect.left + rect.width / 2, rect.top + rect.height / 2, 0.1);
+      zoomAt(rect.left + rect.width / 2, rect.top + rect.height / 2, state.scope === "full" ? state.camera.scale * 0.3 : 0.1);
     };
     document.querySelector("[data-action=zoom-out]").onclick = function() {
       var rect = svg.getBoundingClientRect();
-      zoomAt(rect.left + rect.width / 2, rect.top + rect.height / 2, -0.1);
+      zoomAt(rect.left + rect.width / 2, rect.top + rect.height / 2, state.scope === "full" ? -state.camera.scale * 0.3 : -0.1);
     };
     document.querySelector("[data-action=share]").onclick = function() {
       var h = location.href;
@@ -721,6 +868,7 @@
       dragging = false;
       dragStart = null;
       dragPointerId = null;
+      if (state.scope === "full") renderMap();
     });
     svg.addEventListener("pointercancel", function(event) {
       if (dragPointerId !== event.pointerId) return;
@@ -731,7 +879,7 @@
     svg.addEventListener("wheel", function(event) {
       if (!svg.contains(event.target)) return;
       event.preventDefault();
-      zoomAt(event.clientX, event.clientY, event.deltaY < 0 ? 0.1 : -0.1);
+      zoomAt(event.clientX, event.clientY, (event.deltaY < 0 ? 1 : -1) * (state.scope === "full" ? state.camera.scale * 0.15 : 0.1));
     }, { passive: false });
     document.addEventListener("click", function(event) { if (!event.target.closest(".search")) closeSearch(); });
     window.addEventListener("popstate", function() {
@@ -741,6 +889,9 @@
     window.addEventListener("hashchange", function() {
       parse();
       render();
+    });
+    window.addEventListener("resize", function() {
+      if (state.view === "explore" || state.view === "learn") renderMap();
     });
     parse();
     try {

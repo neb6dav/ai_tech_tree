@@ -10,12 +10,14 @@ the map is selective and is not a peer-reviewed scientific knowledge base.
 
 ## Desktop workspace
 
-The desktop redesign uses a focused SVG map and a persistent reading/evidence
-pane. Search the complete atlas, inspect a relationship, follow a learning path,
-or open a readable record page. A smaller visible neighborhood does not remove
-records or connections from the underlying data.
+The desktop redesign opens the full chronological tree beside a persistent
+reading/evidence pane. Follow ideas across fields, highlight dormant,
+ended/superseded or revived work, and switch to Focus for a close reading.
+Search the complete atlas, inspect a relationship, follow a learning path,
+or open a readable record page. Historical categories retain their original
+uncertainty and source-review notes.
 
-![Desktop candidate showing the Transformer neighborhood and its reading pane](docs/images/desktop-workspace.png)
+![Desktop candidate showing the full historical tree and its reading pane](docs/images/desktop-workspace.png)
 
 The redesigned workspace is a release candidate on its development branch.
 The published site remains the separately tagged v1.2.1 release until an approved

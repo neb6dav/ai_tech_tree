@@ -7,8 +7,10 @@ All notable public changes to the AI Research Tech Tree will be documented here.
 ### 2.0.0-rc.1 desktop workspace candidate
 
 - Replace the previous Timeline/Network interface with a focused native SVG
-  neighborhood and a persistent reading/evidence pane, immediate search,
+  full chronological tree, a Focus scope and a persistent reading/evidence pane, immediate search,
   shareable selection, and browser history.
+- Restore field lanes, historical orientation and highlights for dormant,
+  ended/superseded and revived work, with status audit caveats in the inspector.
 - Add in-pane learning paths, complete Opportunity corpus browsing, and richer
   static reading pages with connections, questions, sources, and provenance.
 - Add a 22-relationship Transformer evidence pilot and a seven-step source tour.

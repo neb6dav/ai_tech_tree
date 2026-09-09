@@ -420,6 +420,30 @@ in `ui_discussion.md`; implementation decisions and acceptance are recorded in
   results and remaining human/browser checks without treating a preview as a
   public release or an automated check as independent reader validation.
 
+## RD-019 — Restore the full chronological tree
+
+Authorized by the owner on 2026-09-09 after reviewing the desktop candidate.
+The local-neighborhood-only implementation omitted an essential part of the
+atlas. This decision supersedes that default in RD-018.
+
+- Explore opens the full historical tree, retaining all 339 records and 711
+  recorded relationships, chronological orientation, field lanes and the
+  original distinctions between dormancy, ended/superseded work and revival.
+- Full tree and Focus are scopes of the same map. Selection keeps the overview
+  available; Fit returns to the whole current scope. Search, shared URLs and
+  browser history preserve understandable scope and selection.
+- Highlighting a historical classification keeps the surrounding records
+  visible. Sparse labels at overview scale become more detailed when zoomed.
+- The legacy ended/superseded bucket is not proof of failure. Revival is a node
+  trajectory, not an invented relationship. A terminal in this edition only
+  means it has no recorded downstream connection. Show status audit notes and
+  uncertainty beside the selected record.
+- Keep native SVG, a deterministic local layout and the existing inspector.
+  Canonical records, exports, evidence grades and dataset identity are unchanged.
+- The candidate's PR checks include Chromium behavior and axe; the full manual
+  gate additionally runs Firefox, WebKit and Lighthouse. Publication continues
+  to require a separate approved promotion.
+
 ## Explicit deferrals
 
 ### Through v0.2.0
